@@ -337,19 +337,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_Capture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Capture Virtual Machine operation. </param>
+        /// <param name="content"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineCaptureResult>> CaptureAsync(WaitUntil waitUntil, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualMachineCaptureResult>> CaptureAsync(WaitUntil waitUntil, VirtualMachineCaptureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.Capture");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.CaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineCaptureResult>(new VirtualMachineCaptureResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineRestClient.CaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<VirtualMachineCaptureResult>(new VirtualMachineCaptureResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -367,19 +367,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_Capture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Capture Virtual Machine operation. </param>
+        /// <param name="content"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineCaptureResult> Capture(WaitUntil waitUntil, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<VirtualMachineCaptureResult> Capture(WaitUntil waitUntil, VirtualMachineCaptureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.Capture");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.Capture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineCaptureResult>(new VirtualMachineCaptureResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineRestClient.Capture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ComputeArmOperation<VirtualMachineCaptureResult>(new VirtualMachineCaptureResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -907,16 +907,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_Reimage
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> Parameters supplied to the Reimage Virtual Machine operation. </param>
+        /// <param name="content"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, VirtualMachineReimageOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, VirtualMachineReimageContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.Reimage");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -934,16 +934,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_Reimage
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> Parameters supplied to the Reimage Virtual Machine operation. </param>
+        /// <param name="content"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Reimage(WaitUntil waitUntil, VirtualMachineReimageOptions options = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(WaitUntil waitUntil, VirtualMachineReimageContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.Reimage");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ComputeArmOperation(_virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1155,19 +1155,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_InstallPatches
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="installPatchesInput"> Input for InstallPatches as directly received by the API. </param>
+        /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="installPatchesInput"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualMachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, VirtualMachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(installPatchesInput, nameof(installPatchesInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.InstallPatches");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.InstallPatchesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, installPatchesInput, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(new VirtualMachineInstallPatchesResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, installPatchesInput).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineRestClient.InstallPatchesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(new VirtualMachineInstallPatchesResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1185,19 +1185,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_InstallPatches
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="installPatchesInput"> Input for InstallPatches as directly received by the API. </param>
+        /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="installPatchesInput"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<VirtualMachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, VirtualMachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(installPatchesInput, nameof(installPatchesInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.InstallPatches");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.InstallPatches(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, installPatchesInput, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(new VirtualMachineInstallPatchesResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, installPatchesInput).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineRestClient.InstallPatches(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(new VirtualMachineInstallPatchesResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1215,19 +1215,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_RunCommand
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
+        /// <param name="input"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<RunCommandResult>> RunCommandAsync(WaitUntil waitUntil, RunCommandInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual async Task<ArmOperation<RunCommandResult>> RunCommandAsync(WaitUntil waitUntil, RunCommandInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.RunCommand");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<RunCommandResult>(new RunCommandResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<RunCommandResult>(new RunCommandResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1245,19 +1245,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_RunCommand
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
+        /// <param name="input"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<RunCommandResult> RunCommand(WaitUntil waitUntil, RunCommandInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual ArmOperation<RunCommandResult> RunCommand(WaitUntil waitUntil, RunCommandInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineResource.RunCommand");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<RunCommandResult>(new RunCommandResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken);
+                var operation = new ComputeArmOperation<RunCommandResult>(new RunCommandResultOperationSource(), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

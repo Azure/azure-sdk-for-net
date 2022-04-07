@@ -362,18 +362,18 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Vaults_UpdateAccessPolicy
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
+        /// <param name="vaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultAccessPolicyParameters"/> is null. </exception>
+        public virtual async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters vaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vaultAccessPolicyParameters, nameof(vaultAccessPolicyParameters));
 
             using var scope = _vaultClientDiagnostics.CreateScope("VaultResource.UpdateAccessPolicy");
             scope.Start();
             try
             {
-                var response = await _vaultRestClient.UpdateAccessPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationKind, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _vaultRestClient.UpdateAccessPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationKind, vaultAccessPolicyParameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -389,18 +389,18 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Vaults_UpdateAccessPolicy
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
+        /// <param name="vaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultAccessPolicyParameters"/> is null. </exception>
+        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters vaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vaultAccessPolicyParameters, nameof(vaultAccessPolicyParameters));
 
             using var scope = _vaultClientDiagnostics.CreateScope("VaultResource.UpdateAccessPolicy");
             scope.Start();
             try
             {
-                var response = _vaultRestClient.UpdateAccessPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationKind, parameters, cancellationToken);
+                var response = _vaultRestClient.UpdateAccessPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationKind, vaultAccessPolicyParameters, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -605,18 +605,18 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
         /// Operation Id: AfdProfiles_CheckHostNameAvailability
         /// </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkHostNameAvailabilityInput, nameof(checkHostNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -631,18 +631,18 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
         /// Operation Id: AfdProfiles_CheckHostNameAvailability
         /// </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkHostNameAvailabilityInput, nameof(checkHostNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken);
+                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

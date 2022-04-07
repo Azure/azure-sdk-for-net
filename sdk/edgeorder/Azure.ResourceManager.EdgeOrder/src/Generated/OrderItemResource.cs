@@ -311,19 +311,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ReturnOrderItem
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
+        /// <param name="details"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="returnOrderItemDetails"/> is null. </exception>
-        public virtual async Task<ArmOperation> ReturnOrderItemAsync(WaitUntil waitUntil, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<ArmOperation> ReturnOrderItemAsync(WaitUntil waitUntil, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
+            Argument.AssertNotNull(details, nameof(details));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.ReturnOrderItem");
             scope.Start();
             try
             {
-                var response = await _orderItemResourceRestClient.ReturnOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, returnOrderItemDetails, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation(_orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, returnOrderItemDetails).Request, response, OperationFinalStateVia.Location);
+                var response = await _orderItemResourceRestClient.ReturnOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(_orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -341,19 +341,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ReturnOrderItem
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
+        /// <param name="details"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="returnOrderItemDetails"/> is null. </exception>
-        public virtual ArmOperation ReturnOrderItem(WaitUntil waitUntil, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual ArmOperation ReturnOrderItem(WaitUntil waitUntil, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
+            Argument.AssertNotNull(details, nameof(details));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.ReturnOrderItem");
             scope.Start();
             try
             {
-                var response = _orderItemResourceRestClient.ReturnOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, returnOrderItemDetails, cancellationToken);
-                var operation = new EdgeOrderArmOperation(_orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, returnOrderItemDetails).Request, response, OperationFinalStateVia.Location);
+                var response = _orderItemResourceRestClient.ReturnOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken);
+                var operation = new EdgeOrderArmOperation(_orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

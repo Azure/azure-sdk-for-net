@@ -2134,16 +2134,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
-        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
+        /// <param name="content"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, string location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2162,16 +2162,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
-        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
+        /// <param name="content"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, string location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
             try
             {
-                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, content, cancellationToken);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -2918,16 +2918,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
-                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2946,16 +2946,16 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
-                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

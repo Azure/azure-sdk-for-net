@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
         /// Operation Id: DisasterRecoveryConfigs_FailOver
         /// </summary>
-        /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
+        /// <param name="failoverProperties"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> FailOverAsync(FailoverProperties parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> FailOverAsync(FailoverProperties failoverProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryResource.FailOver");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.FailOverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.FailOverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, failoverProperties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -296,15 +296,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
         /// Operation Id: DisasterRecoveryConfigs_FailOver
         /// </summary>
-        /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
+        /// <param name="failoverProperties"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response FailOver(FailoverProperties parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response FailOver(FailoverProperties failoverProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryResource.FailOver");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.FailOver(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.FailOver(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, failoverProperties, cancellationToken);
                 return response;
             }
             catch (Exception e)

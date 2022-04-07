@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/enableCustomHttps
         /// Operation Id: CdnCustomDomains_EnableCustomHttps
         /// </summary>
-        /// <param name="options"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
+        /// <param name="content"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CdnCustomDomainResource>> EnableCustomHttpsAsync(CustomDomainHttpsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnCustomDomainResource>> EnableCustomHttpsAsync(CustomDomainHttpsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CdnCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/enableCustomHttps
         /// Operation Id: CdnCustomDomains_EnableCustomHttps
         /// </summary>
-        /// <param name="options"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
+        /// <param name="content"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CdnCustomDomainResource> EnableCustomHttps(CustomDomainHttpsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<CdnCustomDomainResource> EnableCustomHttps(CustomDomainHttpsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var response = _cdnCustomDomainRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return Response.FromValue(new CdnCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

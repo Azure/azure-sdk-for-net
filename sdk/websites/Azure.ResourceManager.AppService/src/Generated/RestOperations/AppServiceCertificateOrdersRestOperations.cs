@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateReissueRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest)
+        internal HttpMessage CreateReissueRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -996,9 +996,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(reissueCertificateOrderRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1007,18 +1007,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
+        /// <param name="content"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReissueAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> ReissueAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(reissueCertificateOrderRequest, nameof(reissueCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
+            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1033,18 +1033,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
+        /// <param name="content"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Reissue(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        public Response Reissue(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(reissueCertificateOrderRequest, nameof(reissueCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, reissueCertificateOrderRequest);
+            using var message = CreateReissueRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRenewRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest)
+        internal HttpMessage CreateRenewRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1073,9 +1073,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(renewCertificateOrderRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1084,18 +1084,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
+        /// <param name="content"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RenewAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> RenewAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(renewCertificateOrderRequest, nameof(renewCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
+            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1110,18 +1110,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
+        /// <param name="content"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="renewCertificateOrderRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Renew(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        public Response Renew(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(renewCertificateOrderRequest, nameof(renewCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, renewCertificateOrderRequest);
+            using var message = CreateRenewRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1219,9 +1219,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameIdentifier);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(nameIdentifier);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateRetrieveSiteSealRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest)
+        internal HttpMessage CreateRetrieveSiteSealRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1296,9 +1296,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteSealRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1307,18 +1307,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="siteSealRequest"> Site seal request. </param>
+        /// <param name="content"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="siteSealRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteSeal>> RetrieveSiteSealAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteSeal>> RetrieveSiteSealAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(siteSealRequest, nameof(siteSealRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, siteSealRequest);
+            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1338,18 +1338,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="siteSealRequest"> Site seal request. </param>
+        /// <param name="content"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="siteSealRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteSeal> RetrieveSiteSeal(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        public Response<SiteSeal> RetrieveSiteSeal(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            Argument.AssertNotNull(siteSealRequest, nameof(siteSealRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, siteSealRequest);
+            using var message = CreateRetrieveSiteSealRequest(subscriptionId, resourceGroupName, certificateOrderName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
