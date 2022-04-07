@@ -91,9 +91,9 @@ function New-DataPlanePackageFolder() {
       [string]$namespace,
       [string]$sdkPath = "",
       [string]$inputfiles = "", # input files, separated by semicolon if more than one
+      [string]$readme = "",
       [string]$securityScope = "",
       [string]$securityHeaderName = "",
-      [string]$readme = "",
       [string]$AUTOREST_CONFIG_FILE = "autorest.md",
       [string]$outputJsonFile = "output.json"
   )
@@ -146,7 +146,7 @@ function New-DataPlanePackageFolder() {
     if ($securityHeaderName -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
-    
+
     # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
