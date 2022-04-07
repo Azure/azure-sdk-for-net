@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System.Linq;
 
     /// <summary>
-    /// Deny assignment principal.
+    /// The name of the entity last modified it
     /// </summary>
     public partial class Principal
     {
@@ -29,20 +29,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the Principal class.
         /// </summary>
-        /// <param name="id">Object ID of the Azure AD principal (user, group,
-        /// or service principal) to which the deny assignment applies. An
-        /// empty guid '00000000-0000-0000-0000-000000000000' as principal id
-        /// and principal type as 'Everyone' represents all users, groups and
-        /// service principals.</param>
-        /// <param name="type">Type of object represented by principal id
-        /// (user, group, or service principal). An empty guid
-        /// '00000000-0000-0000-0000-000000000000' as principal id and
-        /// principal type as 'Everyone' represents all users, groups and
-        /// service principals.</param>
-        public Principal(string id = default(string), string type = default(string))
+        /// <param name="id">The id of the principal made changes</param>
+        /// <param name="displayName">The name of the principal made
+        /// changes</param>
+        /// <param name="type">Type of principal such as user , group
+        /// etc</param>
+        /// <param name="email">Email of principal</param>
+        public Principal(string id = default(string), string displayName = default(string), string type = default(string), string email = default(string))
         {
             Id = id;
+            DisplayName = displayName;
             Type = type;
+            Email = email;
             CustomInit();
         }
 
@@ -52,24 +50,28 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets object ID of the Azure AD principal (user, group, or service
-        /// principal) to which the deny assignment applies. An empty guid
-        /// '00000000-0000-0000-0000-000000000000' as principal id and
-        /// principal type as 'Everyone' represents all users, groups and
-        /// service principals.
+        /// Gets or sets the id of the principal made changes
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets type of object represented by principal id (user, group, or
-        /// service principal). An empty guid
-        /// '00000000-0000-0000-0000-000000000000' as principal id and
-        /// principal type as 'Everyone' represents all users, groups and
-        /// service principals.
+        /// Gets or sets the name of the principal made changes
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of principal such as user , group etc
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets email of principal
+        /// </summary>
+        [JsonProperty(PropertyName = "email")]
+        public string Email { get; set; }
 
     }
 }

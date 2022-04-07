@@ -19,12 +19,6 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public const string User = "User";
         public const string Group = "Group";
         public const string ServicePrincipal = "ServicePrincipal";
-        public const string Unknown = "Unknown";
-        public const string DirectoryRoleTemplate = "DirectoryRoleTemplate";
         public const string ForeignGroup = "ForeignGroup";
-        public const string Application = "Application";
-        public const string MSI = "MSI";
-        public const string DirectoryObjectOrGroup = "DirectoryObjectOrGroup";
-        public const string Everyone = "Everyone";
     }
 }

@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Authorization
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2015-06-01";
+            string apiVersion = "2015-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

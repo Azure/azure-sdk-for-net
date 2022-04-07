@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
             }
-            string apiVersion = "2018-01-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// </return>
         public async Task<AzureOperationResponse<IPage<ProviderOperationsMetadata>>> ListWithHttpMessagesAsync(string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-01-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Authorization
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.Authorization
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -737,7 +737,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "denyAssignmentId");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "denyAssignmentId");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1096,7 +1096,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

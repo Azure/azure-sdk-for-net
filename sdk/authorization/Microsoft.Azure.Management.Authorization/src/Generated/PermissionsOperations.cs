@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Authorization
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2018-01-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Authorization
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2018-01-01-preview";
+            string apiVersion = "2022-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

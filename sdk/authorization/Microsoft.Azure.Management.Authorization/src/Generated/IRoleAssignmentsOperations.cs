@@ -215,40 +215,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// </exception>
         Task<AzureOperationResponse<RoleAssignment>> DeleteWithHttpMessagesAsync(string scope, string roleAssignmentName, string tenantId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Validate a role assignment create or update operation by scope and
-        /// name.
-        /// </summary>
-        /// <param name='scope'>
-        /// The scope of the operation or resource. Valid scopes are:
-        /// subscription (format: '/subscriptions/{subscriptionId}'), resource
-        /// group (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}',
-        /// or resource (format:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-        /// </param>
-        /// <param name='roleAssignmentName'>
-        /// The name of the role assignment. It can be any valid GUID.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters for the role assignment.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ValidationResponse>> ValidateWithHttpMessagesAsync(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// List all role assignments that apply to a scope.
         /// </summary>
         /// <param name='scope'>
@@ -368,35 +334,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<RoleAssignment>> DeleteByIdWithHttpMessagesAsync(string roleAssignmentId, string tenantId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Validate a role assignment create or update operation by ID.
-        /// </summary>
-        /// <param name='roleAssignmentId'>
-        /// The fully qualified ID of the role assignment including scope,
-        /// resource name, and resource type. Format:
-        /// /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}.
-        /// Example:
-        /// /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters for the role assignment.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ValidationResponse>> ValidateByIdWithHttpMessagesAsync(string roleAssignmentId, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all role assignments that apply to a subscription.
         /// </summary>
