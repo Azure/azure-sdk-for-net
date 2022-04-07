@@ -67,8 +67,8 @@ namespace Azure.Identity
             _clientId = resourceId.ToString();
         }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(new ManagedIdentityClient(pipeline, clientId))
+        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, bool preserveTransport = false)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = preserveTransport }))
         {
             _clientId = clientId;
         }

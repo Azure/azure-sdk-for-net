@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SharedGalleryImageVersionResource>> GetSharedGalleryImageVersionAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             return await GetSharedGalleryImageVersions().GetAsync(galleryImageVersionName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SharedGalleryImageVersionResource> GetSharedGalleryImageVersion(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             return GetSharedGalleryImageVersions().Get(galleryImageVersionName, cancellationToken);

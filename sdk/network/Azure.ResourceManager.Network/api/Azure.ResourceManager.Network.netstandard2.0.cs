@@ -371,8 +371,8 @@ namespace Azure.ResourceManager.Network
     public partial class ConnectionMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ConnectionMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ConnectionMonitorResource>, System.Collections.IEnumerable
     {
         protected ConnectionMonitorCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ConnectionMonitorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionMonitorName, Azure.ResourceManager.Network.Models.ConnectionMonitorInput parameters, string migrate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ConnectionMonitorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionMonitorName, Azure.ResourceManager.Network.Models.ConnectionMonitorInput parameters, string migrate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ConnectionMonitorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionMonitorName, Azure.ResourceManager.Network.Models.ConnectionMonitorCreateOrUpdateContent content, string migrate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ConnectionMonitorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionMonitorName, Azure.ResourceManager.Network.Models.ConnectionMonitorCreateOrUpdateContent content, string migrate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> Get(string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2632,8 +2632,8 @@ namespace Azure.ResourceManager.Network
     public partial class PacketCaptureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.IEnumerable
     {
         protected PacketCaptureCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packetCaptureName, Azure.ResourceManager.Network.Models.PacketCaptureInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packetCaptureName, Azure.ResourceManager.Network.Models.PacketCaptureInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packetCaptureName, Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packetCaptureName, Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PacketCaptureResource> Get(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5356,7 +5356,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallApplicationRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallApplicationRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? AzureFirewallRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5447,7 +5447,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallNatRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallNatRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? AzureFirewallNatRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5470,7 +5470,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallNetworkRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallNetworkRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? AzureFirewallRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5761,6 +5761,21 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.CommissionedState left, Azure.ResourceManager.Network.Models.CommissionedState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ConnectionMonitorCreateOrUpdateContent
+    {
+        public ConnectionMonitorCreateOrUpdateContent() { }
+        public bool? AutoStart { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
+        public string Location { get { throw null; } set { } }
+        public int? MonitoringIntervalInSeconds { get { throw null; } set { } }
+        public string Notes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorSource Source { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfiguration> TestConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestGroup> TestGroups { get { throw null; } }
+    }
     public partial class ConnectionMonitorDestination
     {
         public ConnectionMonitorDestination() { }
@@ -5782,14 +5797,14 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ConnectionMonitorEndpointFilter
     {
         public ConnectionMonitorEndpointFilter() { }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType? ConnectionMonitorEndpointFilterType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType? FilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItem> Items { get { throw null; } }
     }
     public partial class ConnectionMonitorEndpointFilterItem
     {
         public ConnectionMonitorEndpointFilterItem() { }
         public string Address { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType? ConnectionMonitorEndpointFilterItemType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType? ItemType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorEndpointFilterItemType : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType>
@@ -5845,21 +5860,6 @@ namespace Azure.ResourceManager.Network.Models
         public bool? PreferHttps { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.HttpHeader> RequestHeaders { get { throw null; } }
         public System.Collections.Generic.IList<string> ValidStatusCodeRanges { get { throw null; } }
-    }
-    public partial class ConnectionMonitorInput
-    {
-        public ConnectionMonitorInput() { }
-        public bool? AutoStart { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
-        public string Location { get { throw null; } set { } }
-        public int? MonitoringIntervalInSeconds { get { throw null; } set { } }
-        public string Notes { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorSource Source { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfiguration> TestConfigurations { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestGroup> TestGroups { get { throw null; } }
     }
     public partial class ConnectionMonitorOutput
     {
@@ -6849,7 +6849,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyFilterRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
     {
         public FirewallPolicyFilterRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? FirewallPolicyFilterRuleCollectionActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6961,7 +6961,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyNatRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
     {
         public FirewallPolicyNatRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? FirewallPolicyNatRuleCollectionActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7064,7 +7064,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FlowLogFormatParameters
     {
         public FlowLogFormatParameters() { }
-        public Azure.ResourceManager.Network.Models.FlowLogFormatType? FlowLogFormatType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FlowLogFormatType? FormatType { get { throw null; } set { } }
         public int? Version { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7102,8 +7102,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class GatewayLoadBalancerTunnelInterface
     {
         public GatewayLoadBalancerTunnelInterface() { }
-        public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType? GatewayLoadBalancerTunnelInterfaceType { get { throw null; } set { } }
         public int? Identifier { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType? InterfaceType { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol? Protocol { get { throw null; } set { } }
     }
@@ -8107,6 +8107,16 @@ namespace Azure.ResourceManager.Network.Models
         public P2SVpnProfileParameters() { }
         public Azure.ResourceManager.Network.Models.AuthenticationMethod? AuthenticationMethod { get { throw null; } set { } }
     }
+    public partial class PacketCaptureCreateOrUpdateContent
+    {
+        public PacketCaptureCreateOrUpdateContent(string target, Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation) { }
+        public long? BytesToCapturePerPacket { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PacketCaptureFilter> Filters { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation StorageLocation { get { throw null; } }
+        public string Target { get { throw null; } }
+        public int? TimeLimitInSeconds { get { throw null; } set { } }
+        public long? TotalBytesPerSession { get { throw null; } set { } }
+    }
     public partial class PacketCaptureFilter
     {
         public PacketCaptureFilter() { }
@@ -8115,16 +8125,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.PcProtocol? Protocol { get { throw null; } set { } }
         public string RemoteIPAddress { get { throw null; } set { } }
         public string RemotePort { get { throw null; } set { } }
-    }
-    public partial class PacketCaptureInput
-    {
-        public PacketCaptureInput(string target, Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation) { }
-        public long? BytesToCapturePerPacket { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PacketCaptureFilter> Filters { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation StorageLocation { get { throw null; } }
-        public string Target { get { throw null; } }
-        public int? TimeLimitInSeconds { get { throw null; } set { } }
-        public long? TotalBytesPerSession { get { throw null; } set { } }
     }
     public partial class PacketCaptureQueryStatusResult
     {
@@ -9424,8 +9424,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal VirtualWanSecurityProvider() { }
         public string Name { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? ProviderType { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? VirtualWanSecurityProviderType { get { throw null; } }
     }
     public partial class VirtualWanSecurityProviders
     {

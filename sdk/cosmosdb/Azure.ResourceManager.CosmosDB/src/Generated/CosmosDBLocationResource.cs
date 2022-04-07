@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RestorableDatabaseAccountResource>> GetRestorableDatabaseAccountAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             return await GetRestorableDatabaseAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RestorableDatabaseAccountResource> GetRestorableDatabaseAccount(string instanceId, CancellationToken cancellationToken = default)
         {
             return GetRestorableDatabaseAccounts().Get(instanceId, cancellationToken);
