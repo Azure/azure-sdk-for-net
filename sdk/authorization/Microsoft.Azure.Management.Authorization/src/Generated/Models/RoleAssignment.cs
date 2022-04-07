@@ -41,16 +41,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="scope">The role assignment scope.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
-        /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
-        /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
-        /// 'Everyone'</param>
+        /// 'ServicePrincipal', 'ForeignGroup'</param>
         /// <param name="description">Description of role assignment</param>
         /// <param name="condition">The conditions on the role assignment. This
         /// limits the resources it can be assigned to. e.g.:
         /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
         /// StringEqualsIgnoreCase 'foo_storage_container'</param>
         /// <param name="conditionVersion">Version of the condition. Currently
-        /// accepted value is '2.0'</param>
+        /// the only accepted value is '2.0'</param>
         /// <param name="createdOn">Time it was created</param>
         /// <param name="updatedOn">Time it was updated</param>
         /// <param name="createdBy">Id of the user who created the
@@ -123,8 +121,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Gets or sets the principal type of the assigned principal ID.
         /// Possible values include: 'User', 'Group', 'ServicePrincipal',
-        /// 'Unknown', 'DirectoryRoleTemplate', 'ForeignGroup', 'Application',
-        /// 'MSI', 'DirectoryObjectOrGroup', 'Everyone'
+        /// 'ForeignGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalType")]
         public string PrincipalType { get; set; }
@@ -145,8 +142,8 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string Condition { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the condition. Currently accepted value is
-        /// '2.0'
+        /// Gets or sets version of the condition. Currently the only accepted
+        /// value is '2.0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.conditionVersion")]
         public string ConditionVersion { get; set; }

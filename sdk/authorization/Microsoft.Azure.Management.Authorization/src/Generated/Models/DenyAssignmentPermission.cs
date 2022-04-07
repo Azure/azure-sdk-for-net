@@ -39,12 +39,17 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// does not grant access.</param>
         /// <param name="notDataActions">Data actions to exclude from that the
         /// deny assignment does not grant access.</param>
-        public DenyAssignmentPermission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>), IList<string> dataActions = default(IList<string>), IList<string> notDataActions = default(IList<string>))
+        /// <param name="condition">The conditions on the Deny assignment
+        /// permission. This limits the resources it applies to.</param>
+        /// <param name="conditionVersion">Version of the condition.</param>
+        public DenyAssignmentPermission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>), IList<string> dataActions = default(IList<string>), IList<string> notDataActions = default(IList<string>), string condition = default(string), string conditionVersion = default(string))
         {
             Actions = actions;
             NotActions = notActions;
             DataActions = dataActions;
             NotDataActions = notDataActions;
+            Condition = condition;
+            ConditionVersion = conditionVersion;
             CustomInit();
         }
 
@@ -80,6 +85,19 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "notDataActions")]
         public IList<string> NotDataActions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the conditions on the Deny assignment permission. This
+        /// limits the resources it applies to.
+        /// </summary>
+        [JsonProperty(PropertyName = "condition")]
+        public string Condition { get; set; }
+
+        /// <summary>
+        /// Gets or sets version of the condition.
+        /// </summary>
+        [JsonProperty(PropertyName = "conditionVersion")]
+        public string ConditionVersion { get; set; }
 
     }
 }

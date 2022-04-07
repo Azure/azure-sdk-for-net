@@ -74,9 +74,19 @@ namespace Microsoft.Azure.Management.Authorization
         IGlobalAdministratorOperations GlobalAdministrator { get; }
 
         /// <summary>
+        /// Gets the IDenyAssignmentsOperations.
+        /// </summary>
+        IDenyAssignmentsOperations DenyAssignments { get; }
+
+        /// <summary>
         /// Gets the IProviderOperationsMetadataOperations.
         /// </summary>
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IRoleAssignmentsOperations.
+        /// </summary>
+        IRoleAssignmentsOperations RoleAssignments { get; }
 
         /// <summary>
         /// Gets the IPermissionsOperations.
@@ -89,19 +99,49 @@ namespace Microsoft.Azure.Management.Authorization
         IRoleDefinitionsOperations RoleDefinitions { get; }
 
         /// <summary>
-        /// Gets the IDenyAssignmentsOperations.
+        /// Gets the IEligibleChildResourcesOperations.
         /// </summary>
-        IDenyAssignmentsOperations DenyAssignments { get; }
+        IEligibleChildResourcesOperations EligibleChildResources { get; }
 
         /// <summary>
-        /// Gets the IRoleAssignmentMetricsOperations.
+        /// Gets the IRoleAssignmentSchedulesOperations.
         /// </summary>
-        IRoleAssignmentMetricsOperations RoleAssignmentMetrics { get; }
+        IRoleAssignmentSchedulesOperations RoleAssignmentSchedules { get; }
 
         /// <summary>
-        /// Gets the IRoleAssignmentsOperations.
+        /// Gets the IRoleAssignmentScheduleInstancesOperations.
         /// </summary>
-        IRoleAssignmentsOperations RoleAssignments { get; }
+        IRoleAssignmentScheduleInstancesOperations RoleAssignmentScheduleInstances { get; }
+
+        /// <summary>
+        /// Gets the IRoleAssignmentScheduleRequestsOperations.
+        /// </summary>
+        IRoleAssignmentScheduleRequestsOperations RoleAssignmentScheduleRequests { get; }
+
+        /// <summary>
+        /// Gets the IRoleEligibilitySchedulesOperations.
+        /// </summary>
+        IRoleEligibilitySchedulesOperations RoleEligibilitySchedules { get; }
+
+        /// <summary>
+        /// Gets the IRoleEligibilityScheduleInstancesOperations.
+        /// </summary>
+        IRoleEligibilityScheduleInstancesOperations RoleEligibilityScheduleInstances { get; }
+
+        /// <summary>
+        /// Gets the IRoleEligibilityScheduleRequestsOperations.
+        /// </summary>
+        IRoleEligibilityScheduleRequestsOperations RoleEligibilityScheduleRequests { get; }
+
+        /// <summary>
+        /// Gets the IRoleManagementPoliciesOperations.
+        /// </summary>
+        IRoleManagementPoliciesOperations RoleManagementPolicies { get; }
+
+        /// <summary>
+        /// Gets the IRoleManagementPolicyAssignmentsOperations.
+        /// </summary>
+        IRoleManagementPolicyAssignmentsOperations RoleManagementPolicyAssignments { get; }
 
     }
 }

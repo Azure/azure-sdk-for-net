@@ -337,60 +337,6 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Validate a role assignment create or update operation by scope and name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// The scope of the operation or resource. Valid scopes are: subscription
-            /// (format: '/subscriptions/{subscriptionId}'), resource group (format:
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-            /// resource (format:
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-            /// </param>
-            /// <param name='roleAssignmentName'>
-            /// The name of the role assignment. It can be any valid GUID.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for the role assignment.
-            /// </param>
-            public static ValidationResponse Validate(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters)
-            {
-                return operations.ValidateAsync(scope, roleAssignmentName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Validate a role assignment create or update operation by scope and name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// The scope of the operation or resource. Valid scopes are: subscription
-            /// (format: '/subscriptions/{subscriptionId}'), resource group (format:
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
-            /// resource (format:
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
-            /// </param>
-            /// <param name='roleAssignmentName'>
-            /// The name of the role assignment. It can be any valid GUID.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for the role assignment.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ValidationResponse> ValidateAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ValidateWithHttpMessagesAsync(scope, roleAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// List all role assignments that apply to a scope.
             /// </summary>
             /// <param name='operations'>
@@ -583,54 +529,6 @@ namespace Microsoft.Azure.Management.Authorization
             public static async Task<RoleAssignment> DeleteByIdAsync(this IRoleAssignmentsOperations operations, string roleAssignmentId, string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleAssignmentId, tenantId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Validate a role assignment create or update operation by ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleAssignmentId'>
-            /// The fully qualified ID of the role assignment including scope, resource
-            /// name, and resource type. Format:
-            /// /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}.
-            /// Example:
-            /// /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for the role assignment.
-            /// </param>
-            public static ValidationResponse ValidateById(this IRoleAssignmentsOperations operations, string roleAssignmentId, RoleAssignmentCreateParameters parameters)
-            {
-                return operations.ValidateByIdAsync(roleAssignmentId, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Validate a role assignment create or update operation by ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleAssignmentId'>
-            /// The fully qualified ID of the role assignment including scope, resource
-            /// name, and resource type. Format:
-            /// /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}.
-            /// Example:
-            /// /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for the role assignment.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ValidationResponse> ValidateByIdAsync(this IRoleAssignmentsOperations operations, string roleAssignmentId, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ValidateByIdWithHttpMessagesAsync(roleAssignmentId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

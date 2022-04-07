@@ -619,7 +619,7 @@ namespace Authorization.Tests
                 var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var roleDefinition = client.RoleDefinitions.List(scope).ElementAt(1);
                 //RA with Condition version 1.0
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
