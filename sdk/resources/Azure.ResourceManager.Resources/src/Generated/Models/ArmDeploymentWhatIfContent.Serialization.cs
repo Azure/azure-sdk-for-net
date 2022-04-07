@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentInput : IUtf8JsonSerializable
+    public partial class ArmDeploymentWhatIfContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,17 +22,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
         }
     }

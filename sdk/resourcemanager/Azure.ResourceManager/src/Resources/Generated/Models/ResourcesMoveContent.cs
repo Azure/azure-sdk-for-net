@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Parameters of move resources. </summary>
-    public partial class ResourcesMoveInfo
+    public partial class ResourcesMoveContent
     {
-        /// <summary> Initializes a new instance of ResourcesMoveInfo. </summary>
-        public ResourcesMoveInfo()
+        /// <summary> Initializes a new instance of ResourcesMoveContent. </summary>
+        public ResourcesMoveContent()
         {
-            Resources = new ChangeTrackingList<ResourceIdentifier>();
+            Resources = new ChangeTrackingList<string>();
         }
 
         /// <summary> The IDs of the resources. </summary>
-        public IList<ResourceIdentifier> Resources { get; }
+        public IList<string> Resources { get; }
         /// <summary> The target resource group. </summary>
         public string TargetResourceGroup { get; set; }
     }

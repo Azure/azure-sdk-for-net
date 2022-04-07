@@ -1,15 +1,21 @@
-# Azure ResourceManager client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), which provide core capabilities that are shared amongst all Azure SDKs, including:
+# Quickstart Tutorial - Resource Management
 
-- The intuitive Azure Identity library.
-- An HTTP pipeline with custom policies.
-- Error handling.
-- Distributed tracing.
+We are excited to announce that a new set of management libraries are
+released now. Those packages share a number of new features
+such as Azure Identity support, HTTP pipeline, error-handling.,etc, and
+they also follow the new Azure SDK guidelines which create easy-to-use
+APIs that are idiomatic, compatible, and dependable.
 
-## Getting started 
+You can find the details of those new libraries
+[here](https://azure.github.io/azure-sdk/releases/latest/mgmt/dotnet.html)
 
-### Install the package
+In this basic quickstart guide, we will walk you through how to
+authenticate to Azure using the libraries and start interacting
+with Azure resources. There are several possible approaches to
+authentication. This document illustrates the most common scenario.
+
+## Install the package
 
 Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
 
@@ -17,7 +23,7 @@ Install the Azure Resources management core library for .NET with [NuGet](https:
 Install-Package Azure.ResourceManager -Version 1.0.0
 ```
 
-### Prerequisites
+## Prerequisites
 Set up a way to authenticate to Azure with Azure Identity.
 
 Some options are:
@@ -27,7 +33,7 @@ Some options are:
 
 More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
-### Authenticate the Client
+## Authenticate the Client
 
 The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
 
@@ -298,49 +304,24 @@ ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGrou
 await resourceGroup.DeleteAsync(WaitUntil.Completed);
 ```
 
-For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
+## Code Samples
 
-## Azure ResourceManager Tests
+More code samples for using the management library for .NET can be found in the following locations
 
-To run test: ```dotnet test```
+- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK&terms=managing%20using%20Azure%20.NET%20SDK)
 
-To run test with code coverage and auto generate an html report: ```dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura```
+## Need help?
 
-Coverage report will be placed in your path relative to azure-proto-core-test in```/coverage``` in html format for viewing
-
-Reports can also be viewed VS or VsCode with the proper viewer plugin
-
-A terse report will also be displayed on the command line when running. 
-
-
-### run test with single file or test
-
-To run test with code coverage and auto generate an html report with just a single test: ```dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --filter <test-to-run>```
-
-## Troubleshooting
-
--   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Mgmt" label to the issue.
--   If you need help, check [previous
-    questions](https://stackoverflow.com/questions/tagged/azure+.net)
-    or ask new ones on StackOverflow using azure and .NET tags.
--   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
-
-## Next steps
-### More sample code
-
-- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample2_ManagingResourceGroups.md)
-- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample3_CreatingAVirtualNetwork.md)
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
-
-### Additional Documentation
-If you are migrating from the old SDK, check out this [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md).
-
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
+- File an issue via [Github
+  Issues](https://github.com/Azure/azure-sdk-for-net/issues) and
+  make sure you add the "Mgmt" label to the issue
+- Check [previous
+  questions](https://stackoverflow.com/questions/tagged/azure+.net)
+  or ask new ones on StackOverflow using azure and .NET tags.
 
 ## Contributing
 
-For details on contributing to this repository, see the [contributing
-guide][cg].
+For details on contributing to this repository, see the [contributing guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -357,6 +338,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
 more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
 
+<!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

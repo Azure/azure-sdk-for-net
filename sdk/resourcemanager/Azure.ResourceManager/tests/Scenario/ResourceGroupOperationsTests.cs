@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
-            var moveInfo = new ResourcesMoveInfo();
+            var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
             moveInfo.Resources.Add(aset.Id);
             _ = await rg1.MoveResourcesAsync(WaitUntil.Completed, moveInfo);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
-            var moveInfo = new ResourcesMoveInfo();
+            var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
             moveInfo.Resources.Add(aset.Id);
             var moveOp = await rg1.MoveResourcesAsync(WaitUntil.Started, moveInfo);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg2 = rg2Op.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
 
-            var moveInfo = new ResourcesMoveInfo();
+            var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
             moveInfo.Resources.Add(aset.Id);
             var validateOp = await rg1.ValidateMoveResourcesAsync(WaitUntil.Completed, moveInfo);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Tests
             var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
             GenericResource aset = await asetOp.WaitForCompletionAsync();
 
-            var moveInfo = new ResourcesMoveInfo();
+            var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
             moveInfo.Resources.Add(aset.Id);
             var validateOp = await rg1.ValidateMoveResourcesAsync(WaitUntil.Started, moveInfo);

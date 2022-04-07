@@ -6,18 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deployment operation parameters. </summary>
-    public partial class ArmDeploymentInput
+    /// <summary> Deployment What-if operation parameters. </summary>
+    public partial class ArmDeploymentWhatIfContent
     {
-        /// <summary> Initializes a new instance of ArmDeploymentInput. </summary>
+        /// <summary> Initializes a new instance of ArmDeploymentWhatIfContent. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ArmDeploymentInput(ArmDeploymentProperties properties)
+        public ArmDeploymentWhatIfContent(ArmDeploymentWhatIfProperties properties)
         {
             if (properties == null)
             {
@@ -25,14 +24,11 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The location to store the deployment data. </summary>
+        /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>
-        public ArmDeploymentProperties Properties { get; }
-        /// <summary> Deployment tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public ArmDeploymentWhatIfProperties Properties { get; }
     }
 }
