@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -35,6 +36,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The URL referencing a key encryption key in Key Vault. </summary>
         public string KeyUrl { get; set; }
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        internal WritableSubResource SourceVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVaultId
+        {
+            get => SourceVault is null ? default : SourceVault.Id;
+            set
+            {
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
+            }
+        }
     }
 }

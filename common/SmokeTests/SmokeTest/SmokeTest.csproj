@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp3.1;net461;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -35,5 +36,10 @@
 
     <!-- This is needed to resolve a build conflict and force the correct version -->
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1'">
+    <!-- This package is supports netcoreapp3.1 -->
+    <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
   </ItemGroup>
 </Project>

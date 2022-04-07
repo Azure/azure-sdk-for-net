@@ -20,42 +20,10 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGateway" /> object. </returns>
         public static ApplicationGateway GetApplicationGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ApplicationGateway.ValidateResourceId(id);
                 return new ApplicationGateway(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApplicationGatewayAvailableSslOptions
-        /// <summary> Gets an object representing a ApplicationGatewayAvailableSslOptions along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptions" /> object. </returns>
-        public static ApplicationGatewayAvailableSslOptions GetApplicationGatewayAvailableSslOptions(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewayAvailableSslOptions.ValidateResourceId(id);
-                return new ApplicationGatewayAvailableSslOptions(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApplicationGatewaySslPredefinedPolicy
-        /// <summary> Gets an object representing a ApplicationGatewaySslPredefinedPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationGatewaySslPredefinedPolicy" /> object. </returns>
-        public static ApplicationGatewaySslPredefinedPolicy GetApplicationGatewaySslPredefinedPolicy(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                ApplicationGatewaySslPredefinedPolicy.ValidateResourceId(id);
-                return new ApplicationGatewaySslPredefinedPolicy(client, id);
             }
             );
         }
@@ -68,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnection" /> object. </returns>
         public static ApplicationGatewayPrivateEndpointConnection GetApplicationGatewayPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ApplicationGatewayPrivateEndpointConnection.ValidateResourceId(id);
                 return new ApplicationGatewayPrivateEndpointConnection(client, id);
@@ -84,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationSecurityGroup" /> object. </returns>
         public static ApplicationSecurityGroup GetApplicationSecurityGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ApplicationSecurityGroup.ValidateResourceId(id);
                 return new ApplicationSecurityGroup(client, id);
@@ -100,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureFirewall" /> object. </returns>
         public static AzureFirewall GetAzureFirewall(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AzureFirewall.ValidateResourceId(id);
                 return new AzureFirewall(client, id);
@@ -116,7 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureWebCategory" /> object. </returns>
         public static AzureWebCategory GetAzureWebCategory(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AzureWebCategory.ValidateResourceId(id);
                 return new AzureWebCategory(client, id);
@@ -132,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BastionHost" /> object. </returns>
         public static BastionHost GetBastionHost(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 BastionHost.ValidateResourceId(id);
                 return new BastionHost(client, id);
@@ -141,17 +109,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region CustomIpPrefix
-        /// <summary> Gets an object representing a CustomIpPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        #region CustomIPPrefix
+        /// <summary> Gets an object representing a CustomIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomIpPrefix" /> object. </returns>
-        public static CustomIpPrefix GetCustomIpPrefix(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomIPPrefix" /> object. </returns>
+        public static CustomIPPrefix GetCustomIPPrefix(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
-                CustomIpPrefix.ValidateResourceId(id);
-                return new CustomIpPrefix(client, id);
+                CustomIPPrefix.ValidateResourceId(id);
+                return new CustomIPPrefix(client, id);
             }
             );
         }
@@ -164,7 +132,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosCustomPolicy" /> object. </returns>
         public static DdosCustomPolicy GetDdosCustomPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DdosCustomPolicy.ValidateResourceId(id);
                 return new DdosCustomPolicy(client, id);
@@ -180,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosProtectionPlan" /> object. </returns>
         public static DdosProtectionPlan GetDdosProtectionPlan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DdosProtectionPlan.ValidateResourceId(id);
                 return new DdosProtectionPlan(client, id);
@@ -196,7 +164,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DscpConfiguration" /> object. </returns>
         public static DscpConfiguration GetDscpConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DscpConfiguration.ValidateResourceId(id);
                 return new DscpConfiguration(client, id);
@@ -212,7 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorization" /> object. </returns>
         public static ExpressRouteCircuitAuthorization GetExpressRouteCircuitAuthorization(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCircuitAuthorization.ValidateResourceId(id);
                 return new ExpressRouteCircuitAuthorization(client, id);
@@ -228,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeering" /> object. </returns>
         public static ExpressRouteCircuitPeering GetExpressRouteCircuitPeering(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCircuitPeering.ValidateResourceId(id);
                 return new ExpressRouteCircuitPeering(client, id);
@@ -244,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnection" /> object. </returns>
         public static ExpressRouteCircuitConnection GetExpressRouteCircuitConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCircuitConnection.ValidateResourceId(id);
                 return new ExpressRouteCircuitConnection(client, id);
@@ -260,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnection" /> object. </returns>
         public static PeerExpressRouteCircuitConnection GetPeerExpressRouteCircuitConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PeerExpressRouteCircuitConnection.ValidateResourceId(id);
                 return new PeerExpressRouteCircuitConnection(client, id);
@@ -276,7 +244,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuit" /> object. </returns>
         public static ExpressRouteCircuit GetExpressRouteCircuit(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCircuit.ValidateResourceId(id);
                 return new ExpressRouteCircuit(client, id);
@@ -292,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnection" /> object. </returns>
         public static ExpressRouteCrossConnection GetExpressRouteCrossConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCrossConnection.ValidateResourceId(id);
                 return new ExpressRouteCrossConnection(client, id);
@@ -308,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeering" /> object. </returns>
         public static ExpressRouteCrossConnectionPeering GetExpressRouteCrossConnectionPeering(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteCrossConnectionPeering.ValidateResourceId(id);
                 return new ExpressRouteCrossConnectionPeering(client, id);
@@ -324,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePortsLocation" /> object. </returns>
         public static ExpressRoutePortsLocation GetExpressRoutePortsLocation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRoutePortsLocation.ValidateResourceId(id);
                 return new ExpressRoutePortsLocation(client, id);
@@ -340,7 +308,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePort" /> object. </returns>
         public static ExpressRoutePort GetExpressRoutePort(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRoutePort.ValidateResourceId(id);
                 return new ExpressRoutePort(client, id);
@@ -356,7 +324,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteLink" /> object. </returns>
         public static ExpressRouteLink GetExpressRouteLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteLink.ValidateResourceId(id);
                 return new ExpressRouteLink(client, id);
@@ -372,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicy" /> object. </returns>
         public static FirewallPolicy GetFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FirewallPolicy.ValidateResourceId(id);
                 return new FirewallPolicy(client, id);
@@ -388,7 +356,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroup" /> object. </returns>
         public static FirewallPolicyRuleCollectionGroup GetFirewallPolicyRuleCollectionGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FirewallPolicyRuleCollectionGroup.ValidateResourceId(id);
                 return new FirewallPolicyRuleCollectionGroup(client, id);
@@ -397,33 +365,33 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region IpAllocation
-        /// <summary> Gets an object representing a IpAllocation along with the instance operations that can be performed on it but with no data. </summary>
+        #region IPAllocation
+        /// <summary> Gets an object representing a IPAllocation along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpAllocation" /> object. </returns>
-        public static IpAllocation GetIpAllocation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPAllocation" /> object. </returns>
+        public static IPAllocation GetIPAllocation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
-                IpAllocation.ValidateResourceId(id);
-                return new IpAllocation(client, id);
+                IPAllocation.ValidateResourceId(id);
+                return new IPAllocation(client, id);
             }
             );
         }
         #endregion
 
-        #region IpGroup
-        /// <summary> Gets an object representing a IpGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region IPGroup
+        /// <summary> Gets an object representing a IPGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IpGroup" /> object. </returns>
-        public static IpGroup GetIpGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPGroup" /> object. </returns>
+        public static IPGroup GetIPGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
-                IpGroup.ValidateResourceId(id);
-                return new IpGroup(client, id);
+                IPGroup.ValidateResourceId(id);
+                return new IPGroup(client, id);
             }
             );
         }
@@ -436,7 +404,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancer" /> object. </returns>
         public static LoadBalancer GetLoadBalancer(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LoadBalancer.ValidateResourceId(id);
                 return new LoadBalancer(client, id);
@@ -452,7 +420,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BackendAddressPool" /> object. </returns>
         public static BackendAddressPool GetBackendAddressPool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 BackendAddressPool.ValidateResourceId(id);
                 return new BackendAddressPool(client, id);
@@ -468,7 +436,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FrontendIPConfiguration" /> object. </returns>
         public static FrontendIPConfiguration GetFrontendIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FrontendIPConfiguration.ValidateResourceId(id);
                 return new FrontendIPConfiguration(client, id);
@@ -484,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="InboundNatRule" /> object. </returns>
         public static InboundNatRule GetInboundNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 InboundNatRule.ValidateResourceId(id);
                 return new InboundNatRule(client, id);
@@ -500,7 +468,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancingRule" /> object. </returns>
         public static LoadBalancingRule GetLoadBalancingRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LoadBalancingRule.ValidateResourceId(id);
                 return new LoadBalancingRule(client, id);
@@ -516,7 +484,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="OutboundRule" /> object. </returns>
         public static OutboundRule GetOutboundRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OutboundRule.ValidateResourceId(id);
                 return new OutboundRule(client, id);
@@ -532,7 +500,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Probe" /> object. </returns>
         public static Probe GetProbe(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Probe.ValidateResourceId(id);
                 return new Probe(client, id);
@@ -548,7 +516,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NatGateway" /> object. </returns>
         public static NatGateway GetNatGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NatGateway.ValidateResourceId(id);
                 return new NatGateway(client, id);
@@ -564,7 +532,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterface" /> object. </returns>
         public static NetworkInterface GetNetworkInterface(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkInterface.ValidateResourceId(id);
                 return new NetworkInterface(client, id);
@@ -580,7 +548,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
         public static NetworkInterfaceIPConfiguration GetNetworkInterfaceIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkInterfaceIPConfiguration.ValidateResourceId(id);
                 return new NetworkInterfaceIPConfiguration(client, id);
@@ -596,7 +564,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfiguration" /> object. </returns>
         public static NetworkInterfaceTapConfiguration GetNetworkInterfaceTapConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkInterfaceTapConfiguration.ValidateResourceId(id);
                 return new NetworkInterfaceTapConfiguration(client, id);
@@ -612,7 +580,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkProfile" /> object. </returns>
         public static NetworkProfile GetNetworkProfile(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkProfile.ValidateResourceId(id);
                 return new NetworkProfile(client, id);
@@ -628,7 +596,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkSecurityGroup" /> object. </returns>
         public static NetworkSecurityGroup GetNetworkSecurityGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkSecurityGroup.ValidateResourceId(id);
                 return new NetworkSecurityGroup(client, id);
@@ -644,7 +612,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityRule" /> object. </returns>
         public static SecurityRule GetSecurityRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SecurityRule.ValidateResourceId(id);
                 return new SecurityRule(client, id);
@@ -660,7 +628,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DefaultSecurityRule" /> object. </returns>
         public static DefaultSecurityRule GetDefaultSecurityRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DefaultSecurityRule.ValidateResourceId(id);
                 return new DefaultSecurityRule(client, id);
@@ -676,7 +644,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualAppliance" /> object. </returns>
         public static NetworkVirtualAppliance GetNetworkVirtualAppliance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkVirtualAppliance.ValidateResourceId(id);
                 return new NetworkVirtualAppliance(client, id);
@@ -692,7 +660,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualApplianceSite" /> object. </returns>
         public static VirtualApplianceSite GetVirtualApplianceSite(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualApplianceSite.ValidateResourceId(id);
                 return new VirtualApplianceSite(client, id);
@@ -708,7 +676,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSku" /> object. </returns>
         public static NetworkVirtualApplianceSku GetNetworkVirtualApplianceSku(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkVirtualApplianceSku.ValidateResourceId(id);
                 return new NetworkVirtualApplianceSku(client, id);
@@ -724,7 +692,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkWatcher" /> object. </returns>
         public static NetworkWatcher GetNetworkWatcher(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkWatcher.ValidateResourceId(id);
                 return new NetworkWatcher(client, id);
@@ -740,7 +708,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PacketCapture" /> object. </returns>
         public static PacketCapture GetPacketCapture(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PacketCapture.ValidateResourceId(id);
                 return new PacketCapture(client, id);
@@ -756,7 +724,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ConnectionMonitor" /> object. </returns>
         public static ConnectionMonitor GetConnectionMonitor(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ConnectionMonitor.ValidateResourceId(id);
                 return new ConnectionMonitor(client, id);
@@ -772,7 +740,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FlowLog" /> object. </returns>
         public static FlowLog GetFlowLog(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FlowLog.ValidateResourceId(id);
                 return new FlowLog(client, id);
@@ -788,7 +756,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateEndpoint" /> object. </returns>
         public static PrivateEndpoint GetPrivateEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpoint.ValidateResourceId(id);
                 return new PrivateEndpoint(client, id);
@@ -804,7 +772,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateDnsZoneGroup" /> object. </returns>
         public static PrivateDnsZoneGroup GetPrivateDnsZoneGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateDnsZoneGroup.ValidateResourceId(id);
                 return new PrivateDnsZoneGroup(client, id);
@@ -820,7 +788,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateLinkService" /> object. </returns>
         public static PrivateLinkService GetPrivateLinkService(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateLinkService.ValidateResourceId(id);
                 return new PrivateLinkService(client, id);
@@ -836,7 +804,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -852,7 +820,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPAddress" /> object. </returns>
         public static PublicIPAddress GetPublicIPAddress(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PublicIPAddress.ValidateResourceId(id);
                 return new PublicIPAddress(client, id);
@@ -868,7 +836,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPPrefix" /> object. </returns>
         public static PublicIPPrefix GetPublicIPPrefix(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PublicIPPrefix.ValidateResourceId(id);
                 return new PublicIPPrefix(client, id);
@@ -884,7 +852,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilter" /> object. </returns>
         public static RouteFilter GetRouteFilter(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RouteFilter.ValidateResourceId(id);
                 return new RouteFilter(client, id);
@@ -900,7 +868,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilterRule" /> object. </returns>
         public static RouteFilterRule GetRouteFilterRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RouteFilterRule.ValidateResourceId(id);
                 return new RouteFilterRule(client, id);
@@ -916,7 +884,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteTable" /> object. </returns>
         public static RouteTable GetRouteTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RouteTable.ValidateResourceId(id);
                 return new RouteTable(client, id);
@@ -932,7 +900,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Route" /> object. </returns>
         public static Route GetRoute(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Route.ValidateResourceId(id);
                 return new Route(client, id);
@@ -948,7 +916,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityPartnerProvider" /> object. </returns>
         public static SecurityPartnerProvider GetSecurityPartnerProvider(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SecurityPartnerProvider.ValidateResourceId(id);
                 return new SecurityPartnerProvider(client, id);
@@ -964,7 +932,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicy" /> object. </returns>
         public static ServiceEndpointPolicy GetServiceEndpointPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceEndpointPolicy.ValidateResourceId(id);
                 return new ServiceEndpointPolicy(client, id);
@@ -980,7 +948,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinition" /> object. </returns>
         public static ServiceEndpointPolicyDefinition GetServiceEndpointPolicyDefinition(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceEndpointPolicyDefinition.ValidateResourceId(id);
                 return new ServiceEndpointPolicyDefinition(client, id);
@@ -996,7 +964,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
         public static VirtualNetwork GetVirtualNetwork(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetwork.ValidateResourceId(id);
                 return new VirtualNetwork(client, id);
@@ -1012,7 +980,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="Subnet" /> object. </returns>
         public static Subnet GetSubnet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Subnet.ValidateResourceId(id);
                 return new Subnet(client, id);
@@ -1028,7 +996,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkPeering" /> object. </returns>
         public static VirtualNetworkPeering GetVirtualNetworkPeering(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkPeering.ValidateResourceId(id);
                 return new VirtualNetworkPeering(client, id);
@@ -1044,7 +1012,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGateway" /> object. </returns>
         public static VirtualNetworkGateway GetVirtualNetworkGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkGateway.ValidateResourceId(id);
                 return new VirtualNetworkGateway(client, id);
@@ -1060,7 +1028,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnection" /> object. </returns>
         public static VirtualNetworkGatewayConnection GetVirtualNetworkGatewayConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkGatewayConnection.ValidateResourceId(id);
                 return new VirtualNetworkGatewayConnection(client, id);
@@ -1076,7 +1044,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LocalNetworkGateway" /> object. </returns>
         public static LocalNetworkGateway GetLocalNetworkGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LocalNetworkGateway.ValidateResourceId(id);
                 return new LocalNetworkGateway(client, id);
@@ -1092,7 +1060,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRule" /> object. </returns>
         public static VirtualNetworkGatewayNatRule GetVirtualNetworkGatewayNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkGatewayNatRule.ValidateResourceId(id);
                 return new VirtualNetworkGatewayNatRule(client, id);
@@ -1108,7 +1076,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkTap" /> object. </returns>
         public static VirtualNetworkTap GetVirtualNetworkTap(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkTap.ValidateResourceId(id);
                 return new VirtualNetworkTap(client, id);
@@ -1124,7 +1092,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouter" /> object. </returns>
         public static VirtualRouter GetVirtualRouter(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualRouter.ValidateResourceId(id);
                 return new VirtualRouter(client, id);
@@ -1140,7 +1108,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouterPeering" /> object. </returns>
         public static VirtualRouterPeering GetVirtualRouterPeering(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualRouterPeering.ValidateResourceId(id);
                 return new VirtualRouterPeering(client, id);
@@ -1149,17 +1117,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualWAN
-        /// <summary> Gets an object representing a VirtualWAN along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualWan
+        /// <summary> Gets an object representing a VirtualWan along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWAN" /> object. </returns>
-        public static VirtualWAN GetVirtualWAN(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWan" /> object. </returns>
+        public static VirtualWan GetVirtualWan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
-                VirtualWAN.ValidateResourceId(id);
-                return new VirtualWAN(client, id);
+                VirtualWan.ValidateResourceId(id);
+                return new VirtualWan(client, id);
             }
             );
         }
@@ -1172,7 +1140,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSite" /> object. </returns>
         public static VpnSite GetVpnSite(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnSite.ValidateResourceId(id);
                 return new VpnSite(client, id);
@@ -1188,7 +1156,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLink" /> object. </returns>
         public static VpnSiteLink GetVpnSiteLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnSiteLink.ValidateResourceId(id);
                 return new VpnSiteLink(client, id);
@@ -1204,7 +1172,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnServerConfiguration" /> object. </returns>
         public static VpnServerConfiguration GetVpnServerConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnServerConfiguration.ValidateResourceId(id);
                 return new VpnServerConfiguration(client, id);
@@ -1220,7 +1188,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHub" /> object. </returns>
         public static VirtualHub GetVirtualHub(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualHub.ValidateResourceId(id);
                 return new VirtualHub(client, id);
@@ -1236,7 +1204,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubVirtualNetworkConnection" /> object. </returns>
         public static HubVirtualNetworkConnection GetHubVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HubVirtualNetworkConnection.ValidateResourceId(id);
                 return new HubVirtualNetworkConnection(client, id);
@@ -1252,7 +1220,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGateway" /> object. </returns>
         public static VpnGateway GetVpnGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnGateway.ValidateResourceId(id);
                 return new VpnGateway(client, id);
@@ -1268,7 +1236,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnConnection" /> object. </returns>
         public static VpnConnection GetVpnConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnConnection.ValidateResourceId(id);
                 return new VpnConnection(client, id);
@@ -1284,7 +1252,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLinkConnection" /> object. </returns>
         public static VpnSiteLinkConnection GetVpnSiteLinkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnSiteLinkConnection.ValidateResourceId(id);
                 return new VpnSiteLinkConnection(client, id);
@@ -1300,7 +1268,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGatewayNatRule" /> object. </returns>
         public static VpnGatewayNatRule GetVpnGatewayNatRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VpnGatewayNatRule.ValidateResourceId(id);
                 return new VpnGatewayNatRule(client, id);
@@ -1316,7 +1284,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="P2SVpnGateway" /> object. </returns>
         public static P2SVpnGateway GetP2SVpnGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 P2SVpnGateway.ValidateResourceId(id);
                 return new P2SVpnGateway(client, id);
@@ -1332,7 +1300,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2" /> object. </returns>
         public static VirtualHubRouteTableV2 GetVirtualHubRouteTableV2(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualHubRouteTableV2.ValidateResourceId(id);
                 return new VirtualHubRouteTableV2(client, id);
@@ -1348,7 +1316,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteGateway" /> object. </returns>
         public static ExpressRouteGateway GetExpressRouteGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteGateway.ValidateResourceId(id);
                 return new ExpressRouteGateway(client, id);
@@ -1364,7 +1332,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteConnection" /> object. </returns>
         public static ExpressRouteConnection GetExpressRouteConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExpressRouteConnection.ValidateResourceId(id);
                 return new ExpressRouteConnection(client, id);
@@ -1380,7 +1348,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BgpConnection" /> object. </returns>
         public static BgpConnection GetBgpConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 BgpConnection.ValidateResourceId(id);
                 return new BgpConnection(client, id);
@@ -1389,17 +1357,17 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region HubIpConfiguration
-        /// <summary> Gets an object representing a HubIpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region HubIPConfiguration
+        /// <summary> Gets an object representing a HubIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubIpConfiguration" /> object. </returns>
-        public static HubIpConfiguration GetHubIpConfiguration(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HubIPConfiguration" /> object. </returns>
+        public static HubIPConfiguration GetHubIPConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
-                HubIpConfiguration.ValidateResourceId(id);
-                return new HubIpConfiguration(client, id);
+                HubIPConfiguration.ValidateResourceId(id);
+                return new HubIPConfiguration(client, id);
             }
             );
         }
@@ -1412,7 +1380,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubRouteTable" /> object. </returns>
         public static HubRouteTable GetHubRouteTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HubRouteTable.ValidateResourceId(id);
                 return new HubRouteTable(client, id);
@@ -1428,7 +1396,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicy" /> object. </returns>
         public static WebApplicationFirewallPolicy GetWebApplicationFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebApplicationFirewallPolicy.ValidateResourceId(id);
                 return new WebApplicationFirewallPolicy(client, id);

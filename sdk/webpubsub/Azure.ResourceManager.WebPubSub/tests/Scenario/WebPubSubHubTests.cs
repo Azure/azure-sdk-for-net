@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             WebPubSubHubData data = new WebPubSubHubData(webPubSubHubProperties)
             {
             };
-            var hub = await collection.CreateOrUpdateAsync(true, name, data);
+            var hub = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return hub.Value;
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             var deleteWebPubSubHub = await collection.GetAsync(webPubSubHubName);
-            await deleteWebPubSubHub.Value.DeleteAsync(true);
+            await deleteWebPubSubHub.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

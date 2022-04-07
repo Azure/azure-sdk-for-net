@@ -28,10 +28,32 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </summary>
         public DeploymentMode Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
-        public DebugSetting DebugSetting { get; set; }
+        internal DebugSetting DebugSetting { get; set; }
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
+        public string DebugDetailLevel
+        { 
+            get => DebugSetting is null ? default : DebugSetting.DetailLevel;
+            set
+            {
+                if (DebugSetting is null)
+                    DebugSetting = new DebugSetting();
+                DebugSetting.DetailLevel = value;
+            }
+        }
         /// <summary> The deployment on error behavior. </summary>
         public OnErrorDeployment OnErrorDeployment { get; set; }
         /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </summary>
-        public ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
+        internal ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
+        /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
+        public ExpressionEvaluationOptionsScopeType? ExpressionEvaluationScope
+        {
+            get => ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.Scope;
+            set
+            {
+                if (ExpressionEvaluationOptions is null)
+                    ExpressionEvaluationOptions = new ExpressionEvaluationOptions();
+                ExpressionEvaluationOptions.Scope = value;
+            }
+        }
     }
 }

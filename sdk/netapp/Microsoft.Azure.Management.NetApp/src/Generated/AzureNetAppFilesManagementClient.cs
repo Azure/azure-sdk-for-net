@@ -142,6 +142,11 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual IVolumeGroupsOperations VolumeGroups { get; private set; }
 
         /// <summary>
+        /// Gets the ISubvolumesOperations.
+        /// </summary>
+        public virtual ISubvolumesOperations Subvolumes { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureNetAppFilesManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -395,8 +400,9 @@ namespace Microsoft.Azure.Management.NetApp
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
             VolumeGroups = new VolumeGroupsOperations(this);
+            Subvolumes = new SubvolumesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-08-01";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

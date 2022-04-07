@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
-            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
+            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifest.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _dataPolicyManifestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _dataPolicyManifestRestClient.GetByPolicyMode(Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _dataPolicyManifestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

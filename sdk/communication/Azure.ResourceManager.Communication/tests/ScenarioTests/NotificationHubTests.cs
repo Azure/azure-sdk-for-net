@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus2")));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus2")));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
             foreach (var communicationService in list)
             {
-                await communicationService.DeleteAsync(true);
+                await communicationService.DeleteAsync(WaitUntil.Completed);
             }
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             orderItemResource = getOrderItemResourceResponse.Value;
 
             // Delete
-            var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(true);
+            var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(WaitUntil.Completed);
             await deleteOrderItemByNameOperation.WaitForCompletionResponseAsync();
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 GetDefaultOrderItemDetails(), addressDetails, orderId);
 
             // Create
-            var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(true, _orderItemName, orderItemResourceData);
+            var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _orderItemName, orderItemResourceData);
             await createOrderItemOperation.WaitForCompletionAsync();
         }
 

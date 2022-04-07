@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     exceptions.Count - MaxExceptionCountToSave);
 
                 // we'll add our new exception and parent it to the root exception (first one in the list)
-                exceptions.Add(new TelemetryExceptionDetails(countExceededException, null, exceptions[0]));
+                exceptions.Add(new TelemetryExceptionDetails(countExceededException, countExceededException.Message, exceptions[0]));
             }
 
             Exceptions = exceptions;

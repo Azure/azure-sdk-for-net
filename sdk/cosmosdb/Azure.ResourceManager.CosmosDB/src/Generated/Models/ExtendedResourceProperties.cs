@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The system generated resource properties associated with SQL databases, SQL containers, Gremlin databases and Gremlin graphs. </summary>
-    public partial class ExtendedResourceProperties
+    internal partial class ExtendedResourceProperties
     {
         /// <summary> Initializes a new instance of ExtendedResourceProperties. </summary>
         public ExtendedResourceProperties()

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application notification policy. </summary>
-    public partial class ApplicationNotificationPolicy
+    internal partial class ApplicationNotificationPolicy
     {
         /// <summary> Initializes a new instance of ApplicationNotificationPolicy. </summary>
         /// <param name="notificationEndpoints"> The managed application notification endpoint. </param>

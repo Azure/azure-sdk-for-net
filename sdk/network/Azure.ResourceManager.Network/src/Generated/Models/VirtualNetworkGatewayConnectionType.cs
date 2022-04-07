@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string IPsecValue = "IPsec";
         private const string Vnet2VnetValue = "Vnet2Vnet";
         private const string ExpressRouteValue = "ExpressRoute";
-        private const string VPNClientValue = "VPNClient";
+        private const string VpnClientValue = "VPNClient";
 
         /// <summary> IPsec. </summary>
         public static VirtualNetworkGatewayConnectionType IPsec { get; } = new VirtualNetworkGatewayConnectionType(IPsecValue);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ExpressRoute. </summary>
         public static VirtualNetworkGatewayConnectionType ExpressRoute { get; } = new VirtualNetworkGatewayConnectionType(ExpressRouteValue);
         /// <summary> VPNClient. </summary>
-        public static VirtualNetworkGatewayConnectionType VPNClient { get; } = new VirtualNetworkGatewayConnectionType(VPNClientValue);
+        public static VirtualNetworkGatewayConnectionType VpnClient { get; } = new VirtualNetworkGatewayConnectionType(VpnClientValue);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are not the same. </summary>

@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         private ClientDiagnostics DiskPoolClientDiagnostics => _diskPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPool.ResourceType.Namespace, DiagnosticOptions);
-        private DiskPoolsRestOperations DiskPoolRestClient => _diskPoolRestClient ??= new DiskPoolsRestOperations(DiskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskPool.ResourceType));
+        private DiskPoolsRestOperations DiskPoolRestClient => _diskPoolRestClient ??= new DiskPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskPool.ResourceType));
         private ClientDiagnostics DiskPoolZonesClientDiagnostics => _diskPoolZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DiskPoolZonesRestOperations DiskPoolZonesRestClient => _diskPoolZonesRestClient ??= new DiskPoolZonesRestOperations(DiskPoolZonesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private DiskPoolZonesRestOperations DiskPoolZonesRestClient => _diskPoolZonesRestClient ??= new DiskPoolZonesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(ResourceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

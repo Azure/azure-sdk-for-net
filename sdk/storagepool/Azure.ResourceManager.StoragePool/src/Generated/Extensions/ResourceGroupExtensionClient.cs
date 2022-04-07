@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An object representing collection of DiskPools and their operations over a DiskPool. </returns>
         public virtual DiskPoolCollection GetDiskPools()
         {
-            return new DiskPoolCollection(Client, Id);
+            return GetCachedClient(Client => new DiskPoolCollection(Client, Id));
         }
     }
 }

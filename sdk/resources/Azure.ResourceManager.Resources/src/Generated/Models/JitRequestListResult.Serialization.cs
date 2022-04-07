@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class JitRequestListResult
+    internal partial class JitRequestListResult
     {
         internal static JitRequestListResult DeserializeJitRequestListResult(JsonElement element)
         {

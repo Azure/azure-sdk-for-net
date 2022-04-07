@@ -26,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_EventHubs_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_EventHubs_CreateNamespace
 string namespaceName = "myNamespace";
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
 EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
 ```
 
@@ -45,7 +45,7 @@ Now that we have the namespace, we can manage the event hubs inside this namespa
 
 ```C# Snippet:Managing_EventHubs_CreateEventHub
 string eventhubName = "myEventhub";
-EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(true, eventhubName, new EventHubData())).Value;
+EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
 ```
 
 ***List all eventhubs***
@@ -81,6 +81,6 @@ if (await eventHubCollection.ExistsAsync("bar"))
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub
 EventHub eventHub = await eventHubCollection.GetAsync("myEventhub");
-await eventHub.DeleteAsync(true);
+await eventHub.DeleteAsync(WaitUntil.Completed);
 ```
 

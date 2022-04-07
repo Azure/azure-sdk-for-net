@@ -3,11 +3,13 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
-require: https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+title: CdnManagementClient
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdn.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdnwebapplicationfirewall.json
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
@@ -15,9 +17,30 @@ operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
-
 modelerfour:
-  lenient-model-deduplication: true
+  naming:
+    preserve-uppercase-max-length: 2
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
@@ -26,7 +49,25 @@ no-property-type-replacement:
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
+  LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
+  LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
+  LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
+  LogAnalytics_GetLogAnalyticsLocations: GetLogAnalyticsLocations
+  LogAnalytics_GetWafLogAnalyticsMetrics: GetWafLogAnalyticsMetrics
+  LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
 directive:
+  - from: cdnwebapplicationfirewall.json
+    where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules
+    transform: $['x-ms-client-name'] = 'RateLimitSettings'
+  - from: cdnwebapplicationfirewall.json
+    where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.customRules
+    transform: $['x-ms-client-name'] = 'CustomSettings'
+  - from: swagger-document
+    where: $.definitions.CdnEndpoint
+    transform: $['x-ms-client-name'] = 'CdnEndpointReference'
+  - from: swagger-document
+    where: $.definitions.DeliveryRuleAction.properties.name['x-ms-enum'].name
+    transform: return "DeliveryRuleActionType"
   - from: swagger-document
     where: $.definitions
     transform: >
@@ -67,66 +108,6 @@ directive:
                 }
             }
         }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
@@ -193,24 +174,6 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsMetrics
-      to: AfdProfiles_GetLogAnalyticsMetrics
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsRankings
-      to: AfdProfiles_GetLogAnalyticsRankings
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsLocations
-      to: AfdProfiles_GetLogAnalyticsLocations
-  - rename-operation:
-      from: LogAnalytics_GetLogAnalyticsResources
-      to: AfdProfiles_GetLogAnalyticsResources
-  - rename-operation:
-      from: LogAnalytics_GetWafLogAnalyticsMetrics
-      to: AfdProfiles_GetWafLogAnalyticsMetrics
-  - rename-operation:
-      from: LogAnalytics_GetWafLogAnalyticsRankings
-      to: AfdProfiles_GetWafLogAnalyticsRankings
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
@@ -295,4 +258,9 @@ directive:
               }
           }
       }
+  - from: cdn.json
+    where: $.definitions.CacheExpirationActionParameters.properties.cacheDuration
+    transform: >
+      $["format"] = "duration";
+      $["x-ms-format"] = "duration-constant";
 ```

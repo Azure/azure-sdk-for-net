@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true,rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
                 Location = "global",
                 DataLocation = "UnitedStates",
             };
-            ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
+            ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
             CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-            await communicationService.DeleteAsync(true);
+            await communicationService.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
         }
     }

@@ -36,6 +36,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> The calculated ranking for the current request. </summary>
         public IReadOnlyList<PersonalizerRankedAction> Ranking { get; }
+
         /// <summary> The eventId for the round trip from request to response. </summary>
         public string EventId { get; }
         /// <summary>

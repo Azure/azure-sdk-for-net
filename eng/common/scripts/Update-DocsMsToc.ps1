@@ -38,11 +38,12 @@ param(
   [Parameter(Mandatory = $true)]
   [string] $OutputLocation
 )
-Set-StrictMode -Version 3
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+
+Set-StrictMode -Version 3
 
 function GetClientPackageNode($clientPackage) {
   $packageInfo = &$GetDocsMsTocDataFn `
@@ -139,23 +140,26 @@ for ($i = 0; $i -lt $metadata.Count; $i++) {
         Write-Host "File metadata already added for $($metadata[$i].Package). Keeping the first entry found."
         continue
       }
-
-      Add-Member `
-        -InputObject $metadata[$i] `
-        -MemberType NoteProperty `
-        -Name FileMetadata `
-        -Value $fileEntry
+      if (!($metadata[$i].PSObject.Members.Name -contains "GroupId") -or ($fileEntry.Group -eq $metadata[$i].GroupId)) {
+        Add-Member `
+          -InputObject $metadata[$i] `
+          -MemberType NoteProperty `
+          -Name FileMetadata `
+          -Value $fileEntry
+      }
     }
   }
 }
 
 $packagesForToc = @{}
-foreach ($metadataEntry in (GetPackageLookup $metadata).Values) {
+$allPackages = GetPackageLookup $metadata
+foreach ($metadataKey in $allPackages.Keys) {
+  $metadataEntry = $allPackages[$metadataKey]
   if (!$metadataEntry.ServiceName) {
-    LogWarning "Empty ServiceName for package `"$($metadataEntry.Package)`". Skipping."
+    LogWarning "Empty ServiceName for package `"$metadataKey`". Skipping."
     continue
   }
-  $packagesForToc[$metadataEntry.Package] = $metadataEntry
+  $packagesForToc[$metadataKey] = $metadataEntry
 }
 
 # Get unique service names and sort alphabetically to act as the service nodes
@@ -182,7 +186,7 @@ foreach ($service in $serviceNameList) {
 
   # Client packages get individual entries
   $clientPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('client' -eq $_.Type) })
-  $clientPackages = $clientPackages | Sort-Object -Property Package
+  $clientPackages = $clientPackages | Sort-Object 'Package', 'GroupId' | Get-Unique
   if ($clientPackages) {
     foreach ($clientPackage in $clientPackages) {
       $packageItems += GetClientPackageNode -clientPackage $clientPackage

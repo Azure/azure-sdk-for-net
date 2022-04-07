@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         private ClientDiagnostics ResourceHealthMetadataClientDiagnostics => _resourceHealthMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(ResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,56 +53,56 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceCertificateOrders and their operations over a AppServiceCertificateOrder. </returns>
         public virtual AppServiceCertificateOrderCollection GetAppServiceCertificateOrders()
         {
-            return new AppServiceCertificateOrderCollection(Client, Id);
+            return GetCachedClient(Client => new AppServiceCertificateOrderCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AppServiceDomains in the AppServiceDomain. </summary>
         /// <returns> An object representing collection of AppServiceDomains and their operations over a AppServiceDomain. </returns>
         public virtual AppServiceDomainCollection GetAppServiceDomains()
         {
-            return new AppServiceDomainCollection(Client, Id);
+            return GetCachedClient(Client => new AppServiceDomainCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AppServiceEnvironments in the AppServiceEnvironment. </summary>
         /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironment. </returns>
         public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
-            return new AppServiceEnvironmentCollection(Client, Id);
+            return GetCachedClient(Client => new AppServiceEnvironmentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AppServicePlans in the AppServicePlan. </summary>
         /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlan. </returns>
         public virtual AppServicePlanCollection GetAppServicePlans()
         {
-            return new AppServicePlanCollection(Client, Id);
+            return GetCachedClient(Client => new AppServicePlanCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Certificates in the Certificate. </summary>
         /// <returns> An object representing collection of Certificates and their operations over a Certificate. </returns>
         public virtual CertificateCollection GetCertificates()
         {
-            return new CertificateCollection(Client, Id);
+            return GetCachedClient(Client => new CertificateCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of KubeEnvironments in the KubeEnvironment. </summary>
         /// <returns> An object representing collection of KubeEnvironments and their operations over a KubeEnvironment. </returns>
         public virtual KubeEnvironmentCollection GetKubeEnvironments()
         {
-            return new KubeEnvironmentCollection(Client, Id);
+            return GetCachedClient(Client => new KubeEnvironmentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
         public virtual StaticSiteARMResourceCollection GetStaticSiteARMResources()
         {
-            return new StaticSiteARMResourceCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSiteARMResourceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of WebSites in the WebSite. </summary>
         /// <returns> An object representing collection of WebSites and their operations over a WebSite. </returns>
         public virtual WebSiteCollection GetWebSites()
         {
-            return new WebSiteCollection(Client, Id);
+            return GetCachedClient(Client => new WebSiteCollection(Client, Id));
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Move");
             scope.Start();
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Validate");
             scope.Start();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.ValidateMove");
             scope.Start();

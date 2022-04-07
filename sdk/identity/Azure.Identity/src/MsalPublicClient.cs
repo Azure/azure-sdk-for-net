@@ -20,8 +20,8 @@ namespace Azure.Identity
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool isPiiLoggingEnabled, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             RedirectUrl = redirectUrl;
             _beforeBuildClient = beforeBuildClient;

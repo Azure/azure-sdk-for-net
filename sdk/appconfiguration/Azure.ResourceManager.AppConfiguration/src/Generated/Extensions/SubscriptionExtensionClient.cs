@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         private ClientDiagnostics ConfigurationStoreClientDiagnostics => _configurationStoreClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
-        private ConfigurationStoresRestOperations ConfigurationStoreRestClient => _configurationStoreRestClient ??= new ConfigurationStoresRestOperations(ConfigurationStoreClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ConfigurationStore.ResourceType));
+        private ConfigurationStoresRestOperations ConfigurationStoreRestClient => _configurationStoreRestClient ??= new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ConfigurationStore.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckAppConfigurationNameAvailability");
             scope.Start();

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
 
             // Create
-            var createAddressOperation = await _addressResourceCollection.CreateOrUpdateAsync(true, addressName, addressResourceData);
+            var createAddressOperation = await _addressResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, addressName, addressResourceData);
             await createAddressOperation.WaitForCompletionAsync();
         }
 

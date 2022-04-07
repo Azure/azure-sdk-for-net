@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="ConfigurationStore" /> object. </returns>
         public static ConfigurationStore GetConfigurationStore(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ConfigurationStore.ValidateResourceId(id);
                 return new ConfigurationStore(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateLinkResource.ValidateResourceId(id);
                 return new PrivateLinkResource(client, id);

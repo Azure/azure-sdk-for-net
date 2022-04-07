@@ -81,13 +81,12 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   # The $PackageMetadata could be $null if there is no associated metadata entry
   # based on how the metadata CSV is filtered
   $service = $PackageInfo.ServiceDirectory.ToLower()
-  if ($PackageMetadata -and $PackageMetadata.ServiceName) {
-    # Normalize service name "Key Vault" -> "keyvault"
+  if ($PackageMetadata -and $PackageMetadata.MSDocService) {
+    # Use MSDocService in csv metadata to override the service directory
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
-    # probably from metadata
-    $service = $PackageMetadata.ServiceName.ToLower().Replace(" ", "")
+    $service = $PackageMetadata.MSDocService
   }
-
+  Write-Host "The service of package: $service"
   # Generate the release tag for use in link substitution
   $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
   Write-Host "The tag of package: $tag"

@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.Cdn.Models
         public static string ToSerialString(this MinimumTlsVersion value) => value switch
         {
             MinimumTlsVersion.None => "None",
-            MinimumTlsVersion.TLS10 => "TLS10",
-            MinimumTlsVersion.TLS12 => "TLS12",
+            MinimumTlsVersion.Tls10 => "TLS10",
+            MinimumTlsVersion.Tls12 => "TLS12",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MinimumTlsVersion value.")
         };
 
         public static MinimumTlsVersion ToMinimumTlsVersion(this string value)
         {
             if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return MinimumTlsVersion.None;
-            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return MinimumTlsVersion.TLS10;
-            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return MinimumTlsVersion.TLS12;
+            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return MinimumTlsVersion.Tls10;
+            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return MinimumTlsVersion.Tls12;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MinimumTlsVersion value.");
         }
     }

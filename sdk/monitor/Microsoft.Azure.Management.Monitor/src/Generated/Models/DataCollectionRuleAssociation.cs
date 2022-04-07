@@ -40,12 +40,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="provisioningState">The resource provisioning state.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed'</param>
-        public DataCollectionRuleAssociation(string description = default(string), string dataCollectionRuleId = default(string), string dataCollectionEndpointId = default(string), string provisioningState = default(string))
+        /// <param name="metadata">Metadata about the resource</param>
+        public DataCollectionRuleAssociation(string description = default(string), string dataCollectionRuleId = default(string), string dataCollectionEndpointId = default(string), string provisioningState = default(string), DataCollectionRuleAssociationMetadata metadata = default(DataCollectionRuleAssociationMetadata))
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
             DataCollectionEndpointId = dataCollectionEndpointId;
             ProvisioningState = provisioningState;
+            Metadata = metadata;
             CustomInit();
         }
 
@@ -80,6 +82,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets metadata about the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata")]
+        public DataCollectionRuleAssociationMetadata Metadata { get; private set; }
 
     }
 }

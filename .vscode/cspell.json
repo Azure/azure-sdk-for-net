@@ -153,6 +153,16 @@
         "vSphere"
       ]
     },
+	{
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
+      ]
+    },
     {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": ["Fqdns"]

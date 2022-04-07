@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected MongoDBCollectionCollection MongoDBCollectionCollection { get => _mongoDBDatabase.GetMongoDBCollections(); }
+        protected MongoDBCollectionCollection MongoDBCollectionCollection => _mongoDBDatabase.GetMongoDBCollections();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _mongoDBDatabase.Delete(true);
-            _databaseAccount.Delete(true);
+            _mongoDBDatabase.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             MongoDBCollection collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
             if (collection != null)
             {
-                await collection.DeleteAsync(true);
+                await collection.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            MongoDBCollectionCreateUpdateOptions updateOptions = new MongoDBCollectionCreateUpdateOptions(collection.Id, _collectionName, collection.Data.Type, null,
+            MongoDBCollectionCreateUpdateData updateOptions = new MongoDBCollectionCreateUpdateData(collection.Id, _collectionName, collection.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, collection.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(false, _collectionName, updateOptions)).WaitForCompletionAsync();
+            collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.Id);
             collection2 = await MongoDBCollectionCollection.GetAsync(_collectionName);
             VerifyMongoDBCollections(collection, collection2);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput = await collection.GetDatabaseAccountMongodbDatabaseCollectionThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountMongodbDatabaseCollectionThroughputSetting throughput = await collection.GetDatabaseAccountMongodbDatabaseCollectionThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBCollectionToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -148,25 +148,25 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBCollectionDelete()
         {
             var collection = await CreateMongoDBCollection(null);
-            await collection.DeleteAsync(true);
+            await collection.DeleteAsync(WaitUntil.Completed);
 
             collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
             Assert.Null(collection);
         }
 
-        protected async Task<MongoDBCollection> CreateMongoDBCollection(AutoscaleSettings autoscale)
+        internal async Task<MongoDBCollection> CreateMongoDBCollection(AutoscaleSettings autoscale)
         {
             _collectionName = Recording.GenerateAssetName("mongodb-collection-");
             return await CreateMongoDBCollection(_collectionName, autoscale, MongoDBCollectionCollection);
         }
         internal static async Task<MongoDBCollection> CreateMongoDBCollection(string name, AutoscaleSettings autoscale, MongoDBCollectionCollection mongoDBContainerCollection)
         {
-            MongoDBCollectionCreateUpdateOptions mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateUpdateOptions(AzureLocation.WestUS,
+            MongoDBCollectionCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateUpdateData(AzureLocation.WestUS,
                 new MongoDBCollectionResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var mongoDBContainerLro = await mongoDBContainerCollection.CreateOrUpdateAsync(true, name, mongoDBDatabaseCreateUpdateOptions);
+            var mongoDBContainerLro = await mongoDBContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, mongoDBDatabaseCreateUpdateOptions);
             return mongoDBContainerLro.Value;
         }
 

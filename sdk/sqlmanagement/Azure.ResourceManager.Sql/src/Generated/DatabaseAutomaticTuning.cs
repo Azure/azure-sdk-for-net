@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _databaseAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string databaseAutomaticTuningApiVersion);
-            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_databaseAutomaticTuningClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAutomaticTuningApiVersion);
+            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseAutomaticTuning_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAutomaticTuning>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAutomaticTuning>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _databaseAutomaticTuningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _databaseAutomaticTuningClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _databaseAutomaticTuningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _databaseAutomaticTuningClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAutomaticTuning(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAutomaticTuning>> UpdateAsync(DatabaseAutomaticTuningData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAutomaticTuning>> UpdateAsync(DatabaseAutomaticTuningData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

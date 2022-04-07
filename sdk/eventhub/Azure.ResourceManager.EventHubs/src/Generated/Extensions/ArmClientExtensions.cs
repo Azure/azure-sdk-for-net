@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="EventHubCluster" /> object. </returns>
         public static EventHubCluster GetEventHubCluster(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EventHubCluster.ValidateResourceId(id);
                 return new EventHubCluster(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="EventHubNamespace" /> object. </returns>
         public static EventHubNamespace GetEventHubNamespace(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EventHubNamespace.ValidateResourceId(id);
                 return new EventHubNamespace(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
         public static NetworkRuleSet GetNetworkRuleSet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkRuleSet.ValidateResourceId(id);
                 return new NetworkRuleSet(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
         public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NamespaceAuthorizationRule.ValidateResourceId(id);
                 return new NamespaceAuthorizationRule(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
         public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EventHubAuthorizationRule.ValidateResourceId(id);
                 return new EventHubAuthorizationRule(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
         public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DisasterRecoveryAuthorizationRule.ValidateResourceId(id);
                 return new DisasterRecoveryAuthorizationRule(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="EventHub" /> object. </returns>
         public static EventHub GetEventHub(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EventHub.ValidateResourceId(id);
                 return new EventHub(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
         public static DisasterRecovery GetDisasterRecovery(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DisasterRecovery.ValidateResourceId(id);
                 return new DisasterRecovery(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="ConsumerGroup" /> object. </returns>
         public static ConsumerGroup GetConsumerGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ConsumerGroup.ValidateResourceId(id);
                 return new ConsumerGroup(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> Returns a <see cref="SchemaGroup" /> object. </returns>
         public static SchemaGroup GetSchemaGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SchemaGroup.ValidateResourceId(id);
                 return new SchemaGroup(client, id);

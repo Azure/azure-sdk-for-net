@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _migrateMySqlStatusWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
-            _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(_migrateMySqlStatusWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrateMySqlStatusWebAppsApiVersion);
+            _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrateMySqlStatusWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MigrateMySqlStatus>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateMySqlStatus>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _migrateMySqlStatusWebAppsClientDiagnostics.CreateScope("MigrateMySqlStatus.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _migrateMySqlStatusWebAppsRestClient.GetMigrateMySqlStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _migrateMySqlStatusWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MigrateMySqlStatus(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _migrateMySqlStatusWebAppsRestClient.GetMigrateMySqlStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _migrateMySqlStatusWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MigrateMySqlStatus(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

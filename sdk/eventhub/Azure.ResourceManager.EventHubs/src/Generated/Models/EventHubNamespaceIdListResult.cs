@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List Namespace IDs operation. </summary>
-    public partial class EventHubNamespaceIdListResult
+    internal partial class EventHubNamespaceIdListResult
     {
         /// <summary> Initializes a new instance of EventHubNamespaceIdListResult. </summary>
         internal EventHubNamespaceIdListResult()

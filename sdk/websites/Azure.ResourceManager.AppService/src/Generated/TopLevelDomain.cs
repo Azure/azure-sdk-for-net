@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
-            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TopLevelDomain>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopLevelDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _topLevelDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _topLevelDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

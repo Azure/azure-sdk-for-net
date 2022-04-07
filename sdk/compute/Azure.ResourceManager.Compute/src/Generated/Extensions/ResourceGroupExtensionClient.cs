@@ -36,105 +36,105 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of AvailabilitySets and their operations over a AvailabilitySet. </returns>
         public virtual AvailabilitySetCollection GetAvailabilitySets()
         {
-            return new AvailabilitySetCollection(Client, Id);
+            return GetCachedClient(Client => new AvailabilitySetCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ProximityPlacementGroups in the ProximityPlacementGroup. </summary>
         /// <returns> An object representing collection of ProximityPlacementGroups and their operations over a ProximityPlacementGroup. </returns>
         public virtual ProximityPlacementGroupCollection GetProximityPlacementGroups()
         {
-            return new ProximityPlacementGroupCollection(Client, Id);
+            return GetCachedClient(Client => new ProximityPlacementGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DedicatedHostGroups in the DedicatedHostGroup. </summary>
         /// <returns> An object representing collection of DedicatedHostGroups and their operations over a DedicatedHostGroup. </returns>
         public virtual DedicatedHostGroupCollection GetDedicatedHostGroups()
         {
-            return new DedicatedHostGroupCollection(Client, Id);
+            return GetCachedClient(Client => new DedicatedHostGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SshPublicKeys in the SshPublicKey. </summary>
         /// <returns> An object representing collection of SshPublicKeys and their operations over a SshPublicKey. </returns>
         public virtual SshPublicKeyCollection GetSshPublicKeys()
         {
-            return new SshPublicKeyCollection(Client, Id);
+            return GetCachedClient(Client => new SshPublicKeyCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
         public virtual VirtualMachineCollection GetVirtualMachines()
         {
-            return new VirtualMachineCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSets in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSets and their operations over a VirtualMachineScaleSet. </returns>
         public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
         {
-            return new VirtualMachineScaleSetCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineScaleSetCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Images in the Image. </summary>
         /// <returns> An object representing collection of Images and their operations over a Image. </returns>
         public virtual ImageCollection GetImages()
         {
-            return new ImageCollection(Client, Id);
+            return GetCachedClient(Client => new ImageCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RestorePointGroups in the RestorePointGroup. </summary>
         /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroup. </returns>
         public virtual RestorePointGroupCollection GetRestorePointGroups()
         {
-            return new RestorePointGroupCollection(Client, Id);
+            return GetCachedClient(Client => new RestorePointGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of CapacityReservationGroups in the CapacityReservationGroup. </summary>
         /// <returns> An object representing collection of CapacityReservationGroups and their operations over a CapacityReservationGroup. </returns>
         public virtual CapacityReservationGroupCollection GetCapacityReservationGroups()
         {
-            return new CapacityReservationGroupCollection(Client, Id);
+            return GetCachedClient(Client => new CapacityReservationGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Disks in the Disk. </summary>
         /// <returns> An object representing collection of Disks and their operations over a Disk. </returns>
         public virtual DiskCollection GetDisks()
         {
-            return new DiskCollection(Client, Id);
+            return GetCachedClient(Client => new DiskCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Snapshots in the Snapshot. </summary>
         /// <returns> An object representing collection of Snapshots and their operations over a Snapshot. </returns>
         public virtual SnapshotCollection GetSnapshots()
         {
-            return new SnapshotCollection(Client, Id);
+            return GetCachedClient(Client => new SnapshotCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DiskEncryptionSets in the DiskEncryptionSet. </summary>
         /// <returns> An object representing collection of DiskEncryptionSets and their operations over a DiskEncryptionSet. </returns>
         public virtual DiskEncryptionSetCollection GetDiskEncryptionSets()
         {
-            return new DiskEncryptionSetCollection(Client, Id);
+            return GetCachedClient(Client => new DiskEncryptionSetCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DiskAccesses in the DiskAccess. </summary>
         /// <returns> An object representing collection of DiskAccesses and their operations over a DiskAccess. </returns>
         public virtual DiskAccessCollection GetDiskAccesses()
         {
-            return new DiskAccessCollection(Client, Id);
+            return GetCachedClient(Client => new DiskAccessCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Galleries in the Gallery. </summary>
         /// <returns> An object representing collection of Galleries and their operations over a Gallery. </returns>
         public virtual GalleryCollection GetGalleries()
         {
-            return new GalleryCollection(Client, Id);
+            return GetCachedClient(Client => new GalleryCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of CloudServices in the CloudService. </summary>
         /// <returns> An object representing collection of CloudServices and their operations over a CloudService. </returns>
         public virtual CloudServiceCollection GetCloudServices()
         {
-            return new CloudServiceCollection(Client, Id);
+            return GetCachedClient(Client => new CloudServiceCollection(Client, Id));
         }
     }
 }

@@ -70,7 +70,7 @@ AzureLocation location = AzureLocation.WestUS2;
 string resourceGroupName = "QuickStartRG";
 
 ResourceGroupData resourceGroupData = new ResourceGroupData(location);
-ArmOperation<ResourceGroup> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(true, resourceGroupName, resourceGroupData);
+ArmOperation<ResourceGroup> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
 ResourceGroup resourceGroup = resourceGroupOperation.Value;
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
@@ -105,7 +105,7 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 string virtualMachineName = "quickstartvm";
 AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
 AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
-ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(true, virtualMachineName + "_aSet", availabilitySetData);
+ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
 AvailabilitySet availabilitySet = availabilitySetOperation.Value;
 ```
 
@@ -143,12 +143,9 @@ VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subn
 ```C# Snippet:Create_Vnet_and_Subnet
 string virtualNetworkName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
-AddressSpace addressSpace = new AddressSpace();
-addressSpace.AddressPrefixes.Add("10.0.0.0/16");
 
 VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
 {
-    AddressSpace = addressSpace,
     Subnets =
     {
         new SubnetData()
@@ -159,7 +156,8 @@ VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
     }
 };
 VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
-ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(true, virtualNetworkName, virtualNetworkData);
+virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
+ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
 VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
 ```
 
@@ -182,7 +180,7 @@ NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgNa
 string networkSecurityGroupName = virtualMachineName + "_nsg";
 NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
 NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
-ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
 ```
 
@@ -227,9 +225,9 @@ NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new Networ
 
 NetworkInterfaceData nicData = new NetworkInterfaceData();
 nicData.Location = location;
-nicData.IpConfigurations.Add(networkInterfaceIPConfiguration);
+nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
 NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
-ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(true, networkInterfaceName, nicData);
+ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
 NetworkInterface networkInterface = networkInterfaceOperation.Value;
 ```
 
@@ -293,14 +291,13 @@ VirtualMachineData virutalMachineData = new VirtualMachineData(location);
 virutalMachineData.OSProfile.AdminUsername = "admin-username";
 virutalMachineData.OSProfile.AdminPassword = "admin-p4$$w0rd";
 virutalMachineData.OSProfile.ComputerName = "computer-name";
-virutalMachineData.AvailabilitySet = new WritableSubResource();
-virutalMachineData.AvailabilitySet.Id = availabilitySet.Id;
+virutalMachineData.AvailabilitySetId = availabilitySet.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
 nicReference.Id = networkInterface.Id;
 virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
 VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
-ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(true, virtualMachineName, virutalMachineData);
+ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
 VirtualMachine virtualMachine = virtualMachineOperation.Value;
 Console.WriteLine("VM ID: " + virtualMachine.Id);
 ```

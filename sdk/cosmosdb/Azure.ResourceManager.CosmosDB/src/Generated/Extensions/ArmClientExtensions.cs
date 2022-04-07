@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccount" /> object. </returns>
         public static DatabaseAccount GetDatabaseAccount(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccount.ValidateResourceId(id);
                 return new DatabaseAccount(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
         public static SqlDatabase GetSqlDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlDatabase.ValidateResourceId(id);
                 return new SqlDatabase(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountSqlDatabaseThroughputSetting GetDatabaseAccountSqlDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountSqlDatabaseThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountSqlDatabaseThroughputSetting(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> object. </returns>
         public static DatabaseAccountSqlDatabaseContainerThroughputSetting GetDatabaseAccountSqlDatabaseContainerThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountSqlDatabaseContainerThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountSqlDatabaseContainerThroughputSetting(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountMongodbDatabaseThroughputSetting GetDatabaseAccountMongodbDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountMongodbDatabaseThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountMongodbDatabaseThroughputSetting(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> object. </returns>
         public static DatabaseAccountMongodbDatabaseCollectionThroughputSetting GetDatabaseAccountMongodbDatabaseCollectionThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountMongodbDatabaseCollectionThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSetting" /> object. </returns>
         public static DatabaseAccountTableThroughputSetting GetDatabaseAccountTableThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountTableThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountTableThroughputSetting(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> object. </returns>
         public static DatabaseAccountCassandraKeyspaceThroughputSetting GetDatabaseAccountCassandraKeyspaceThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountCassandraKeyspaceThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountCassandraKeyspaceThroughputSetting(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> object. </returns>
         public static DatabaseAccountCassandraKeyspaceTableThroughputSetting GetDatabaseAccountCassandraKeyspaceTableThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountCassandraKeyspaceTableThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountGremlinDatabaseThroughputSetting GetDatabaseAccountGremlinDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountGremlinDatabaseThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountGremlinDatabaseThroughputSetting(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> object. </returns>
         public static DatabaseAccountGremlinDatabaseGraphThroughputSetting GetDatabaseAccountGremlinDatabaseGraphThroughputSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAccountGremlinDatabaseGraphThroughputSetting.ValidateResourceId(id);
                 return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlContainer" /> object. </returns>
         public static SqlContainer GetSqlContainer(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlContainer.ValidateResourceId(id);
                 return new SqlContainer(client, id);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlStoredProcedure" /> object. </returns>
         public static SqlStoredProcedure GetSqlStoredProcedure(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlStoredProcedure.ValidateResourceId(id);
                 return new SqlStoredProcedure(client, id);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlUserDefinedFunction" /> object. </returns>
         public static SqlUserDefinedFunction GetSqlUserDefinedFunction(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlUserDefinedFunction.ValidateResourceId(id);
                 return new SqlUserDefinedFunction(client, id);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlTrigger" /> object. </returns>
         public static SqlTrigger GetSqlTrigger(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlTrigger.ValidateResourceId(id);
                 return new SqlTrigger(client, id);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabase" /> object. </returns>
         public static MongoDBDatabase GetMongoDBDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MongoDBDatabase.ValidateResourceId(id);
                 return new MongoDBDatabase(client, id);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollection" /> object. </returns>
         public static MongoDBCollection GetMongoDBCollection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MongoDBCollection.ValidateResourceId(id);
                 return new MongoDBCollection(client, id);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosTable" /> object. </returns>
         public static CosmosTable GetCosmosTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CosmosTable.ValidateResourceId(id);
                 return new CosmosTable(client, id);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspace" /> object. </returns>
         public static CassandraKeyspace GetCassandraKeyspace(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CassandraKeyspace.ValidateResourceId(id);
                 return new CassandraKeyspace(client, id);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTable" /> object. </returns>
         public static CassandraTable GetCassandraTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CassandraTable.ValidateResourceId(id);
                 return new CassandraTable(client, id);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabase" /> object. </returns>
         public static GremlinDatabase GetGremlinDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GremlinDatabase.ValidateResourceId(id);
                 return new GremlinDatabase(client, id);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraph" /> object. </returns>
         public static GremlinGraph GetGremlinGraph(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GremlinGraph.ValidateResourceId(id);
                 return new GremlinGraph(client, id);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBLocation" /> object. </returns>
         public static CosmosDBLocation GetCosmosDBLocation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CosmosDBLocation.ValidateResourceId(id);
                 return new CosmosDBLocation(client, id);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateLinkResource.ValidateResourceId(id);
                 return new PrivateLinkResource(client, id);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="RestorableDatabaseAccount" /> object. </returns>
         public static RestorableDatabaseAccount GetRestorableDatabaseAccount(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorableDatabaseAccount.ValidateResourceId(id);
                 return new RestorableDatabaseAccount(client, id);
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
         public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ClusterResource.ValidateResourceId(id);
                 return new ClusterResource(client, id);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DataCenterResource" /> object. </returns>
         public static DataCenterResource GetDataCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DataCenterResource.ValidateResourceId(id);
                 return new DataCenterResource(client, id);

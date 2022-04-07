@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _osFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSFamily.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(OSFamily.ResourceType, out string osFamilyCloudServiceOperatingSystemsApiVersion);
-            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_osFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osFamilyCloudServiceOperatingSystemsApiVersion);
+            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public async virtual Task<Response<OSFamily>> GetAsync(string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSFamily>> GetAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken);
                 if (response.Value == null)
-                    throw _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public async virtual Task<Response<OSFamily>> GetIfExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSFamily>> GetIfExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="AddressResource" /> object. </returns>
         public static AddressResource GetAddressResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AddressResource.ValidateResourceId(id);
                 return new AddressResource(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="OrderResource" /> object. </returns>
         public static OrderResource GetOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OrderResource.ValidateResourceId(id);
                 return new OrderResource(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="OrderItemResource" /> object. </returns>
         public static OrderItemResource GetOrderItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OrderItemResource.ValidateResourceId(id);
                 return new OrderItemResource(client, id);

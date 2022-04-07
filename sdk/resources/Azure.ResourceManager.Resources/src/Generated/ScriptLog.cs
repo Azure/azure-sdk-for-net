@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string scriptLogDeploymentScriptsApiVersion);
-            _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(_scriptLogDeploymentScriptsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
+            _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ScriptLog>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScriptLog>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ScriptLog.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _scriptLogDeploymentScriptsRestClient.GetLogsDefaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _scriptLogDeploymentScriptsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScriptLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _scriptLogDeploymentScriptsRestClient.GetLogsDefault(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
                 if (response.Value == null)
-                    throw _scriptLogDeploymentScriptsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScriptLog(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

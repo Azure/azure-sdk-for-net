@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Tests
 
             var genericResources = Client.GetGenericResources();
             var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(true, resourceId, null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(true, null, ConstructGenericAvailabilitySet()));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, resourceId, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, null, ConstructGenericAvailabilitySet()));
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(rgId)));
         }
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Tests
             var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var createOp = await genericResources.CreateOrUpdateAsync(false, resourceId, null);
+                var createOp = await genericResources.CreateOrUpdateAsync(WaitUntil.Started, resourceId, null);
                 _ = await createOp.WaitForCompletionAsync();
             });
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var createOp = await genericResources.CreateOrUpdateAsync(false, null, ConstructGenericAvailabilitySet());
+                var createOp = await genericResources.CreateOrUpdateAsync(WaitUntil.Started, null, ConstructGenericAvailabilitySet());
                 _ = await createOp.WaitForCompletionAsync();
             });
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";

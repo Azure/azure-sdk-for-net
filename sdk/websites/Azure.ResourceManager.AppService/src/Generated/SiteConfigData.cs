@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SiteConfigData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="numberOfWorkers"> Number of workers. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? requestTracingEnabled, DateTimeOffset? requestTracingExpirationTime, bool? remoteDebuggingEnabled, string remoteDebuggingVersion, bool? httpLoggingEnabled, bool? acrUseManagedIdentityCreds, string acrUserManagedIdentityID, int? logsDirectorySizeLimit, bool? detailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? webSocketsEnabled, bool? alwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? autoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? vnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? localMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IpSecurityRestriction> ipSecurityRestrictions, IList<IpSecurityRestriction> scmIpSecurityRestrictions, bool? scmIpSecurityRestrictionsUseMain, bool? http20Enabled, SupportedTlsVersions? minTlsVersion, SupportedTlsVersions? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? functionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess) : base(id, name, type, systemData, kind)
+        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? requestTracingEnabled, DateTimeOffset? requestTracingExpirationTime, bool? remoteDebuggingEnabled, string remoteDebuggingVersion, bool? httpLoggingEnabled, bool? acrUseManagedIdentityCreds, string acrUserManagedIdentityID, int? logsDirectorySizeLimit, bool? detailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? webSocketsEnabled, bool? alwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? autoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? vnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? localMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IpSecurityRestriction> ipSecurityRestrictions, IList<IpSecurityRestriction> scmIpSecurityRestrictions, bool? scmIpSecurityRestrictionsUseMain, bool? http20Enabled, SupportedTlsVersions? minTlsVersion, SupportedTlsVersions? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? functionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess) : base(id, name, resourceType, systemData, kind)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -257,7 +257,18 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Site load balancing. </summary>
         public SiteLoadBalancing? LoadBalancing { get; set; }
         /// <summary> This is work around for polymorphic types. </summary>
-        public Experiments Experiments { get; set; }
+        internal Experiments Experiments { get; set; }
+        /// <summary> List of ramp-up rules. </summary>
+        public IList<RampUpRule> ExperimentsRampUpRules
+        {
+            get
+            {
+                if (Experiments is null)
+                    Experiments = new Experiments();
+                return Experiments.RampUpRules;
+            }
+        }
+
         /// <summary> Site limits. </summary>
         public SiteLimits Limits { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -277,9 +288,33 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Push endpoint settings. </summary>
         public PushSettings Push { get; set; }
         /// <summary> Information about the formal API definition for the app. </summary>
-        public ApiDefinitionInfo ApiDefinition { get; set; }
+        internal ApiDefinitionInfo ApiDefinition { get; set; }
+        /// <summary> The URL of the API definition. </summary>
+        public string ApiDefinitionUrl
+        {
+            get => ApiDefinition is null ? default : ApiDefinition.Url;
+            set
+            {
+                if (ApiDefinition is null)
+                    ApiDefinition = new ApiDefinitionInfo();
+                ApiDefinition.Url = value;
+            }
+        }
+
         /// <summary> Azure API management settings linked to the app. </summary>
-        public ApiManagementConfig ApiManagementConfig { get; set; }
+        internal ApiManagementConfig ApiManagementConfig { get; set; }
+        /// <summary> APIM-Api Identifier. </summary>
+        public string ApiManagementConfigId
+        {
+            get => ApiManagementConfig is null ? default : ApiManagementConfig.Id;
+            set
+            {
+                if (ApiManagementConfig is null)
+                    ApiManagementConfig = new ApiManagementConfig();
+                ApiManagementConfig.Id = value;
+            }
+        }
+
         /// <summary> Auto-swap slot name. </summary>
         public string AutoSwapSlotName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

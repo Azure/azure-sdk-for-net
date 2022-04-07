@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Type, r2.Type);
+            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             Assert.AreEqual(sscd1.Name, sscd2.Name);
             Assert.AreEqual(sscd1.Id, sscd2.Id);
-            Assert.AreEqual(sscd1.Type, sscd2.Type);
+            Assert.AreEqual(sscd1.ResourceType, sscd2.ResourceType);
             Assert.AreEqual(sscd1.Branch, sscd2.Branch);
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="CommunicationService" /> object. </returns>
         public static CommunicationService GetCommunicationService(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CommunicationService.ValidateResourceId(id);
                 return new CommunicationService(client, id);

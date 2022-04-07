@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sourceControlApiVersion);
-            _sourceControlRestClient = new WebSiteManagementRestOperations(_sourceControlClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
+            _sourceControlRestClient = new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SourceControl>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControl>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControl.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _sourceControlRestClient.GetSourceControlAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sourceControlClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _sourceControlRestClient.GetSourceControl(Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sourceControlClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Helps with categorization of errors. </summary>
+    /// <summary>
+    /// Helps with categorization of errors. If you get an enum with a value of <see cref="int.MaxValue"/>, that means the service has returned a new category, and you
+    /// should upgrade to the latest SDK.
+    /// </summary>
     [CodeGenModel("MediaJobErrorCategory")]
     public enum MediaJobErrorCategory
     {
@@ -21,6 +21,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The error is configuration related. </summary>
         Configuration,
         /// <summary> The error is related to data in the input files. </summary>
-        Content
+        Content,
+        /// <summary> The error is related to account information. </summary>
+        Account
     }
 }

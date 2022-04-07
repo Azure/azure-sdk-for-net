@@ -19,7 +19,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "LinkedService";
         }
 
         /// <summary> Initializes a new instance of LinkedService. </summary>
@@ -31,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "LinkedService";
+            Type = type;
             ConnectVia = connectVia;
             Description = description;
             Parameters = parameters;

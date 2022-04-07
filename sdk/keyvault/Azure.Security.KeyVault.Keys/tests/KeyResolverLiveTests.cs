@@ -20,8 +20,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         public KeyResolver Resolver { get { return GetResolver(); } }

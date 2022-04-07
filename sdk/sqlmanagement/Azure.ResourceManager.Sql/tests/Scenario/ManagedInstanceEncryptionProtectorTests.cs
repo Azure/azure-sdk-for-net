@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 ServerKeyType =  "ServiceManaged",
                 AutoRotationEnabled = false,
             };
-            var encryption = await collection.CreateOrUpdateAsync(true, encryptionProtectorName, data);
+            var encryption = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);
             Assert.IsNotNull(encryption.Value.Data);
             Assert.AreEqual(encryptionProtectorName, encryption.Value.Data.Name);
             Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyName);

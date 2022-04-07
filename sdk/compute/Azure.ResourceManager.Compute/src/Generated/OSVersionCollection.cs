@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersion.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(OSVersion.ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
-            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_osVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
                 if (response.Value == null)
-                    throw _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 

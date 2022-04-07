@@ -128,7 +128,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// operation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), double? completionPercent = default(double?), string publicNetworkAccess = default(string))
+        /// <param name="dataAccessAuthMode">Possible values include:
+        /// 'AzureActiveDirectory', 'None'</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), double? completionPercent = default(double?), string publicNetworkAccess = default(string), string dataAccessAuthMode = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -164,6 +166,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SecurityProfile = securityProfile;
             CompletionPercent = completionPercent;
             PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
             CustomInit();
         }
 
@@ -409,6 +412,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'AzureActiveDirectory',
+        /// 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataAccessAuthMode")]
+        public string DataAccessAuthMode { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             _tableService = _storageAccount.GetTableService();
             _tableService = await _tableService.GetAsync();
             _tableCollection = _tableService.GetTables();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 var storageAccountCollection = _resourceGroup.GetStorageAccounts();
                 await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
                 {
-                    await account.DeleteAsync(true);
+                    await account.DeleteAsync(WaitUntil.Completed);
                 }
                 _resourceGroup = null;
                 _storageAccount = null;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(true, tableName)).Value;
+            Table table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName)).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(await _tableCollection.ExistsAsync(tableName + "1"));
 
             //delete table
-            await table1.DeleteAsync(true);
+            await table1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
             Assert.IsFalse(await _tableCollection.ExistsAsync(tableName));
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(true, tableName1)).Value;
-            Table table2 = (await _tableCollection.CreateOrUpdateAsync(true, tableName2)).Value;
+            Table table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName1)).Value;
+            Table table2 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName2)).Value;
 
             //validate two tables
             Table table3 = null;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Cors = cors,
             };
-            _tableService = (await _tableService.CreateOrUpdateAsync(true, parameter)).Value;
+            _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //validate
             Assert.AreEqual(_tableService.Data.Cors.CorsRulesValue.Count, 1);

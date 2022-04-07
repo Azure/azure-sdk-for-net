@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
-            _basicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(_basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
+            _basicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFtpAllowed
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<BasicPublishingCredentialsPolicyFtp>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BasicPublishingCredentialsPolicyFtp>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateScope("BasicPublishingCredentialsPolicyFtp.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _basicPublishingCredentialsPolicyFtpWebAppsRestClient.GetFtpAllowedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BasicPublishingCredentialsPolicyFtp(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _basicPublishingCredentialsPolicyFtpWebAppsRestClient.GetFtpAllowed(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BasicPublishingCredentialsPolicyFtp(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowed
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<ArmOperation<BasicPublishingCredentialsPolicyFtp>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BasicPublishingCredentialsPolicyFtp>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _basicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<BasicPublishingCredentialsPolicyFtp>(Response.FromValue(new BasicPublishingCredentialsPolicyFtp(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowed
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual ArmOperation<BasicPublishingCredentialsPolicyFtp> CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BasicPublishingCredentialsPolicyFtp> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _basicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowed(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
                 var operation = new AppServiceArmOperation<BasicPublishingCredentialsPolicyFtp>(Response.FromValue(new BasicPublishingCredentialsPolicyFtp(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

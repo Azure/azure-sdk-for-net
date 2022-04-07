@@ -20,15 +20,22 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions Conditions { get; set; }
 
         /// <summary>
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
+        /// </summary>
+        public FileLastWrittenMode? FileLastWrittenMode { get; set; }
+
+        /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
-        /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
-        /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        ///// <summary>
+        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        ///// hashing on uploads.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

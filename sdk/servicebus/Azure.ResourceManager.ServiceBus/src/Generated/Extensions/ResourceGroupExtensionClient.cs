@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusNamespaces and their operations over a ServiceBusNamespace. </returns>
         public virtual ServiceBusNamespaceCollection GetServiceBusNamespaces()
         {
-            return new ServiceBusNamespaceCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusNamespaceCollection(Client, Id));
         }
     }
 }

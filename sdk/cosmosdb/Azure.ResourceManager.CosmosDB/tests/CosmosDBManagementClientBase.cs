@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         protected async Task CommonGlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(false, SessionRecording.GenerateAssetName($"dbaccount-"),
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"dbaccount-"),
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
@@ -42,16 +42,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ArmClient = GetArmClient();
         }
 
-        protected CosmosDBManagementClientBase(bool isAsync)
-            : base(isAsync)
-        {
-            Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
-        }
-
-        protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode mode)
+        protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode? mode = default)
             : base(isAsync, mode)
         {
-            Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..primaryMasterKey");
+            JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
+            JsonPathSanitizers.Add("$..secondaryMasterKey");
+            JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
 
         protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
@@ -66,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS2, locations)
+            var createParameters = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS2, locations)
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -83,11 +80,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             createParameters.Tags.Add("key1", "value1");
             createParameters.Tags.Add("key2", "value2");
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createParameters);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createParameters);
             return accountLro.Value;
         }
 
-        protected static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
+        internal static CreateUpdateOptions BuildDatabaseCreateUpdateOptions(int testThroughput1, AutoscaleSettings autoscale)
         {
             return new CreateUpdateOptions
             {

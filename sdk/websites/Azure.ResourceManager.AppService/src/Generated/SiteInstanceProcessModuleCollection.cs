@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
-            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(_siteInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
+            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public async virtual Task<Response<SiteInstanceProcessModule>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcessModule>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public async virtual Task<Response<SiteInstanceProcessModule>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcessModule>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 

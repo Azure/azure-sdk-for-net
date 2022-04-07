@@ -3,9 +3,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             return lro.Value;
         }
 
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var setName = Recording.GenerateAssetName("testAS-");
             var availabilitySet = await CreateAvailabilitySetAsync(setName);
-            await availabilitySet.DeleteAsync(true);
+            await availabilitySet.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var updatedPlatformFaultDomainCount = 3;
-            var update = new AvailabilitySetUpdateOptions()
+            var update = new PatchableAvailabilitySetData()
             {
                 PlatformFaultDomainCount = updatedPlatformFaultDomainCount
             };
@@ -72,6 +74,54 @@ namespace Azure.ResourceManager.Compute.Tests
             var set = await CreateAvailabilitySetAsync(setName);
             var locations = await set.GetAvailableLocationsAsync();
             Assert.IsNotEmpty(locations);
+        }
+
+        [RecordedTest]
+        public async Task PlacementGroupId()
+        {
+            var asetName = Recording.GenerateAssetName("aset-");
+            AvailabilitySet aset = await CreateAvailabilitySetAsync(asetName);
+            var beforeAdd = aset.Data.ProximityPlacementGroupId;
+
+            ResourceGroup rg = Client.GetResourceGroup(ResourceGroup.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
+            var proxGrpName = Recording.GenerateAssetName("proxGrp-");
+            ProximityPlacementGroup proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
+
+            PatchableAvailabilitySetData updateOptions = new PatchableAvailabilitySetData();
+            updateOptions.ProximityPlacementGroupId = proxGrp.Id;
+            aset = await aset.UpdateAsync(updateOptions);
+            var addIdResult = aset.Data.ProximityPlacementGroupId;
+
+            updateOptions.ProximityPlacementGroupId = null;
+            aset = await aset.UpdateAsync(updateOptions);
+            var removeIdResult = aset.Data.ProximityPlacementGroupId;
+
+            var asetName2 = Recording.GenerateAssetName("aset-");
+            AvailabilitySet aset2 = await CreateAvailabilitySetAsync(asetName2);
+            var newBeforeAdd = aset2.Data.ProximityPlacementGroup?.Id;
+
+            PatchableAvailabilitySetData updateOptions2 = new PatchableAvailabilitySetData();
+            updateOptions2.ProximityPlacementGroup = new Resources.Models.WritableSubResource();
+            updateOptions2.ProximityPlacementGroup.Id = proxGrp.Id;
+            aset2 = await aset2.UpdateAsync(updateOptions2);
+            var newAddIdResult = aset2.Data.ProximityPlacementGroup.Id;
+
+            updateOptions2.ProximityPlacementGroup.Id = null;
+            aset2 = await aset2.UpdateAsync(updateOptions2);
+            var newRemoveIdResult = aset2.Data.ProximityPlacementGroup?.Id;
+
+            updateOptions2.ProximityPlacementGroup.Id = proxGrp.Id;
+            aset2 = await aset2.UpdateAsync(updateOptions2);
+            Assert.NotNull(aset2.Data.ProximityPlacementGroup.Id);
+
+            updateOptions2.ProximityPlacementGroup = null;
+            aset2 = await aset2.UpdateAsync(updateOptions2);
+            var newRemoveOuterIdResult = aset2.Data.ProximityPlacementGroup?.Id;
+
+            Assert.AreEqual(beforeAdd, newBeforeAdd);
+            Assert.AreEqual(addIdResult, newAddIdResult);
+            Assert.AreEqual(removeIdResult, newRemoveIdResult);
+            Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
         }
     }
 }

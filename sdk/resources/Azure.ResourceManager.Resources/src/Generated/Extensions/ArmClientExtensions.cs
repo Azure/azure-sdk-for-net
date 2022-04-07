@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="Deployment" /> object. </returns>
         public static Deployment GetDeployment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Deployment.ValidateResourceId(id);
                 return new Deployment(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="Application" /> object. </returns>
         public static Application GetApplication(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Application.ValidateResourceId(id);
                 return new Application(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ApplicationDefinition" /> object. </returns>
         public static ApplicationDefinition GetApplicationDefinition(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ApplicationDefinition.ValidateResourceId(id);
                 return new ApplicationDefinition(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="JitRequest" /> object. </returns>
         public static JitRequest GetJitRequest(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 JitRequest.ValidateResourceId(id);
                 return new JitRequest(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="DeploymentScript" /> object. </returns>
         public static DeploymentScript GetDeploymentScript(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeploymentScript.ValidateResourceId(id);
                 return new DeploymentScript(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
         public static ScriptLog GetScriptLog(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ScriptLog.ValidateResourceId(id);
                 return new ScriptLog(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpec" /> object. </returns>
         public static TemplateSpec GetTemplateSpec(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 TemplateSpec.ValidateResourceId(id);
                 return new TemplateSpec(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecVersion" /> object. </returns>
         public static TemplateSpecVersion GetTemplateSpecVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 TemplateSpecVersion.ValidateResourceId(id);
                 return new TemplateSpecVersion(client, id);

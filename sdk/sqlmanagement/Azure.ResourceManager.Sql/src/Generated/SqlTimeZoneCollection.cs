@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlTimeZone.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlTimeZone.ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
-            _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(_sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
+            _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
-        public async virtual Task<Response<SqlTimeZone>> GetAsync(string timeZoneId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlTimeZone>> GetAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlTimeZoneTimeZonesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZone(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlTimeZoneTimeZonesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZone(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
-        public async virtual Task<Response<SqlTimeZone>> GetIfExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlTimeZone>> GetIfExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 

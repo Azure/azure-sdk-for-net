@@ -8,7 +8,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -31,17 +30,12 @@ namespace Azure.ResourceManager.TestFramework
         public TestRecording SessionRecording { get; private set; }
 
         private ArmClient _cleanupClient;
-        private bool _waitForCleanup;
+        private WaitUntil _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            SessionEnvironment = new TEnvironment();
-            SessionEnvironment.Mode = Mode;
-            Initialize();
-        }
+            AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
-        {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
@@ -49,13 +43,7 @@ namespace Azure.ResourceManager.TestFramework
 
         private void Initialize()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
-                pollField.SetValue(null, TimeSpan.Zero);
-            }
-
-            _waitForCleanup = Mode == RecordedTestMode.Live;
+            _waitForCleanup = Mode == RecordedTestMode.Live ? WaitUntil.Completed : WaitUntil.Started;
         }
 
         private ArmClient GetCleanupClient()
@@ -89,22 +77,22 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (string.IsNullOrEmpty(endpoint))
             {
-                return ArmEnvironment.AzureCloud;
+                return ArmEnvironment.AzurePublicCloud;
             }
 
             var baseUri = new Uri(endpoint);
 
-            if (baseUri == ArmEnvironment.AzureCloud.BaseUri)
-                return ArmEnvironment.AzureCloud;
+            if (baseUri == ArmEnvironment.AzurePublicCloud.Endpoint)
+                return ArmEnvironment.AzurePublicCloud;
 
-            if (baseUri == ArmEnvironment.AzureChinaCloud.BaseUri)
-                return ArmEnvironment.AzureChinaCloud;
+            if (baseUri == ArmEnvironment.AzureChina.Endpoint)
+                return ArmEnvironment.AzureChina;
 
-            if (baseUri == ArmEnvironment.AzureGermanCloud.BaseUri)
-                return ArmEnvironment.AzureGermanCloud;
+            if (baseUri == ArmEnvironment.AzureGerman.Endpoint)
+                return ArmEnvironment.AzureGerman;
 
-            if (baseUri == ArmEnvironment.AzureUSGovernment.BaseUri)
-                return ArmEnvironment.AzureUSGovernment;
+            if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
+                return ArmEnvironment.AzureGovernment;
 
             return new ArmEnvironment(new Uri(endpoint), TestEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.TestFramework
                     try
                     {
                         var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
-                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
+                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -137,7 +125,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
+                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -156,7 +144,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
@@ -170,7 +158,7 @@ namespace Azure.ResourceManager.TestFramework
 
             if (SessionRecording != null)
             {
-                await SessionRecording.DisposeAsync(true);
+                await SessionRecording.DisposeAsync();
             }
 
             GlobalClient = null;
@@ -226,19 +214,16 @@ namespace Azure.ResourceManager.TestFramework
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
                     var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
-                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
+                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
+                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                 });
             }
 
             if (!(GlobalClient is null))
                 throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
         }
-
-        protected override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
     }
 }

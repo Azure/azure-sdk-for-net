@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
@@ -46,17 +46,13 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
             //3. create Virtual network
             string vnetName = SessionRecording.GenerateAssetName("vnet-");
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -66,14 +62,15 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
                     }
                 },
             };
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
             SubnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             await StopSessionRecordingAsync();
         }
@@ -91,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -109,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
-            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
+            var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
             return managedInstance;
         }
@@ -145,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("westus2", list.FirstOrDefault().Data.Location.ToString());
 
             // 5.Delte
-            await managedInstance.DeleteAsync(true);
+            await managedInstance.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

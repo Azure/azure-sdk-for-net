@@ -172,11 +172,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         [Ignore("Used only for the migration guide")]
         private async Task MigrationGuide()
         {
+            {
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_Create
             CertificateClient client = new CertificateClient(
                 new Uri("https://myvault.vault.azure.net"),
                 new DefaultAzureCredential());
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_Create
+            }
 
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())
@@ -197,6 +199,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
 
+            {
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCustomPolicy
             CertificatePolicy policy = new CertificatePolicy("issuer-name", "CN=customdomain.com")
             {
@@ -222,12 +225,14 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 }
             };
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
+            }
 
+            {
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
 #if SNIPPET
             CertificatePolicy policy = CertificatePolicy.Default;
 #else
-            policy = CertificatePolicy.Default;
+            CertificatePolicy policy = CertificatePolicy.Default;
 #endif
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
             {
@@ -289,6 +294,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                     // which returns RecoverDeletedCertificateOperation you can await like DeleteCertificateOperation above.
                 }
                 #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_DeleteCertificate
+            }
             }
         }
     }

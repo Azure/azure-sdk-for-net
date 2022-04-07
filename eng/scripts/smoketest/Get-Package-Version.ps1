@@ -23,44 +23,45 @@ function Get-SmokeTestPkgProperties
 
     $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2"
     $allPackages = Get-AllPkgProperties
-    $trackTwoPackages = $allPackages.Where({ $_.IsNewSdk })
+    $newPackages = $allPackages.Where({ $_.IsNewSdk })
 
-    $azureCorePkgInfo = $trackTwoPackages.Where({ $_.Name -eq "Azure.Core"})
+    $azureCorePkgInfo = $newPackages.Where({ $_.Name -eq "Azure.Core"})
     $azureCoreVer = [AzureEngSemanticVersion]::ParseVersionString($azureCorePkgInfo.Version)
     $azureCoreVer.IsPreRelease = $false
     $azureCoreVerBase = $azureCoreVer.ToString()
 
-    $azureCoreMinDate = (Get-Date).addMonths(-1).ToString("yyyyMM")
+    # Pick a version of core that is at least one day old but no older then one month old
+    # Using at least one day old to ensure all the packages had a chance to build for that day
+    $azureCoreMinDate = (Get-Date).addMonths(-1).ToString("yyyyMMdd")
+    $azureCoreMaxDate = (Get-Date).AddDays(-1).ToString("yyyyMMdd")
 
     $azureCorePkg = Find-Package -Name 'Azure.Core' `
         -Source $NugetSource `
         -AllowPrereleaseVersions `
         -MinimumVersion "$azureCoreVerBase-alpha.$azureCoreMinDate" `
-        -MaximumVersion "$azureCoreVerBase-alphab" `
+        -MaximumVersion "$azureCoreVerBase-alpha.$azureCoreMaxDate.99" `
         -Force
-
+    Write-Host "$azureCoreVerBase-alpha.$azureCoreMinDate"
+    Write-Host "$azureCoreVerBase-alpha.$azureCoreMaxDate.99"
     Write-Host "Azure.Core Version: $($azureCorePkg.Version)"
     # azureCoreVerExtension follows the format of -alpha.<yyyymmdd>.1
     $azureCoreVerExtension = $azureCorePkg.Version.Replace($azureCoreVerBase, "")
     $azureCoreVerDateStr = $azureCoreVerExtension.split(".")[1]
-    $azureCoreVerDate = [DateTime]::ParseExact($azureCoreVerDateStr, "yyyyMMdd", $null)
-    # Parsing Azure.Core's latest version and make the min version for other packages one month prior to that.
-    # This will exclude stale packages that aren't being updated regularly
-    $pkgMinVer = $azureCoreVerDate.addMonths(-1).ToString("yyyyMMdd")
 
     $SmokeTestPackageInfo = @()
-    
-    foreach ($pkg in $trackTwoPackages) {
+
+    foreach ($pkg in $newPackages) {
         $pkgVersion = [AzureEngSemanticVersion]::ParseVersionString($pkg.Version)
         $pkgVersion.IsPreRelease = $false
         $pkgVersionBase = $pkgVersion.ToString()
 
+        $pkgVersionAlpha = "$pkgVersionBase-alpha.$azureCoreVerDateStr"
         $pkgInfo = Find-Package -Name $pkg.Name `
             -Source $NugetSource `
             -AllowPrereleaseVersions `
-            -MinimumVersion "$pkgVersionBase-alpha.$pkgMinVer" `
-            -MaximumVersion "$pkgVersionBase$azureCoreVerExtension" `
-            -Force
+            -MinimumVersion "$pkgVersionAlpha.1" `
+            -MaximumVersion "$pkgVersionAlpha.99" `
+            -ErrorAction SilentlyContinue
 
         if ($pkgInfo) {
             Write-Host "Found $($pkgInfo.Name) $($pkgInfo.Version)"
@@ -68,28 +69,8 @@ function Get-SmokeTestPkgProperties
             $SmokeTestPackageInfo += $pkg
         }
         else {
-            Write-Warning "Cannot find alpha version of package $($pkg.Name) after $pkgMinver and before $azureCoreVerDateStr"
-            Write-Warning "This may be due to the package being stale or unpublished"
-            $latestPkg = Find-Package -Name $pkg.Name `
-                -Source $NugetSource `
-                -AllowPrereleaseVersions `
-                -Force
-
-            if ($latestPkg) {
-                Write-Host "Found latest version $($latestPkg.Name) $($latestPkg.Version)"
-                $pkg.DevVersion = $latestPkg.Version
-                $SmokeTestPackageInfo += $pkg
-            } else {
-                Write-Warning "Did not find any matching package $($pkg.Name)"
-                Write-Warning "This error may be due to package not being published"
-            }
-        } 
-    }
-    Write-Host "Smoke Test Package Info:"
-    foreach ($pkgInfo in $SmokeTestPackageInfo) {
-        Write-Host $pkgInfo
+            Write-Host "Skipping package $($pkg.Name) because could not find a version $pkgVersionAlpha"
+        }
     }
     return $SmokeTestPackageInfo
 }
-
-Get-SmokeTestPkgProperties($ArtifactsPath)

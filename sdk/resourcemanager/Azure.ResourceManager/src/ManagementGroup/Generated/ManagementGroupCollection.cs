@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Management
         {
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ManagementGroup.ResourceType, out string managementGroupApiVersion);
-            _managementGroupRestClient = new ManagementGroupsRestOperations(_managementGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
+            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation<ManagementGroup>> CreateOrUpdateAsync(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroup>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(createManagementGroupRequest, nameof(createManagementGroupRequest));
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ArmOperation<ManagementGroup> CreateOrUpdate(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroup> CreateOrUpdate(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(createManagementGroupRequest, nameof(createManagementGroupRequest));
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = _managementGroupRestClient.CreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
                 var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managementGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Management
             {
                 var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
-                    throw _managementGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 

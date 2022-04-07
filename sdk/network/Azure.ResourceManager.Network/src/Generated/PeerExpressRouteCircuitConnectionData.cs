@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="expressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the circuit. </param>
         /// <param name="peerExpressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </param>
         /// <param name="addressPrefix"> /29 IP address space to carve out Customer addresses for tunnels. </param>
@@ -30,11 +31,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the express route circuit connection resource. </param>
         /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
         /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
-        internal PeerExpressRouteCircuitConnectionData(string id, string name, string etag, string type, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
+        internal PeerExpressRouteCircuitConnectionData(string id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
             AddressPrefix = addressPrefix;
@@ -49,11 +50,35 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
-        public WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                    ExpressRouteCircuitPeering = new WritableSubResource();
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
-        public WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
+        internal WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PeerExpressRouteCircuitPeeringId
+        {
+            get => PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
+            set
+            {
+                if (PeerExpressRouteCircuitPeering is null)
+                    PeerExpressRouteCircuitPeering = new WritableSubResource();
+                PeerExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Express Route Circuit connection state. </summary>

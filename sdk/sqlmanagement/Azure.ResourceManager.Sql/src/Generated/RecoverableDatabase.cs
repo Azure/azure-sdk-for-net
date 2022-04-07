@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _recoverableDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string recoverableDatabaseApiVersion);
-            _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(_recoverableDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableDatabaseApiVersion);
+            _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: RecoverableDatabases_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RecoverableDatabase>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoverableDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recoverableDatabaseClientDiagnostics.CreateScope("RecoverableDatabase.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _recoverableDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _recoverableDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoverableDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _recoverableDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _recoverableDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoverableDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

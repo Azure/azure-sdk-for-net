@@ -26,31 +26,31 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _clientSecret = clientSecret;
             RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _assertionCallback = assertionCallback;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _asyncAssertionCallback = assertionCallback;
             RegionalAuthority = regionalAuthority;

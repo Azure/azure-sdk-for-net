@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
-                    await eventHubNamespace.DeleteAsync(true);
+                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
                 }
                 _resourceGroup = null;
             }
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, new EventHubNamespaceData(AzureLocation.EastUS))).Value;
+            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubNamespaceData(AzureLocation.EastUS))).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(true, ruleName, ruleParameter)).Value;
+            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 PartnerNamespace = eHNamespace2.Id
             };
-            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(true, disasterRecoveryName, parameter)).Value;
+            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
             Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //wait for completion, this may take several minutes in live and record mode
             armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             System.Console.WriteLine(i);
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailabilityOptions(disasterRecoveryName));
+            CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckDisasterRecoveryNameAvailabilityAsync(new CheckNameAvailabilityOptions(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
             List<DisasterRecoveryAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await armDisasterRecovery.BreakPairingAsync();
             armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;
-            await armDisasterRecovery.DeleteAsync(true);
+            await armDisasterRecovery.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

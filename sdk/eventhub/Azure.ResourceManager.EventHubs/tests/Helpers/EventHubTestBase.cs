@@ -9,7 +9,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
-using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
@@ -21,14 +20,12 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new EventHubRecordedTestSanitizer();
-        }
 
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new EventHubRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+            JsonPathSanitizers.Add("$..keyName");
         }
 
         [SetUp]
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
             ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -59,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNameAvailabilityNamespaceAsync(new CheckNameAvailabilityOptions(namespaceName));
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckEventHubNameAvailabilityAsync(new CheckNameAvailabilityOptions(namespaceName));
                 if (res.NameAvailable==true)
                 {
                     return namespaceName;
@@ -80,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             if (useDefaults)
             {
                 Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
-                Assert.AreEqual(SkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
+                Assert.AreEqual(EventHubsSkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
             }
         }
     }

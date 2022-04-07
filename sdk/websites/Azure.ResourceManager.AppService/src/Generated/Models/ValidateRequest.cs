@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Initializes a new instance of ValidateRequest. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public ValidateRequest(string name, ValidateResourceTypes type, string location)
+        public ValidateRequest(string name, ValidateResourceTypes validateResourceType, string location)
         {
             if (name == null)
             {
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             Name = name;
-            Type = type;
+            ValidateResourceType = validateResourceType;
             Location = location;
         }
 
         /// <summary> Resource name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
-        public ValidateResourceTypes Type { get; }
+        public ValidateResourceTypes ValidateResourceType { get; }
         /// <summary> Expected location of the resource. </summary>
         public string Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>

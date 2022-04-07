@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VMSS VM Extension operation response. </summary>
-    public partial class VirtualMachineScaleSetVmExtensionsListResult
+    internal partial class VirtualMachineScaleSetVmExtensionsListResult
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
         internal VirtualMachineScaleSetVmExtensionsListResult()

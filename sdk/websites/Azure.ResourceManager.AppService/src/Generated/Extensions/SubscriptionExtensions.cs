@@ -35,12 +35,72 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(subscription).GetTopLevelDomains();
         }
 
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static async Task<Response<TopLevelDomain>> GetTopLevelDomainAsync(this Subscription subscription, string name, CancellationToken cancellationToken = default)
+        {
+            return await subscription.GetTopLevelDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public static Response<TopLevelDomain> GetTopLevelDomain(this Subscription subscription, string name, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetTopLevelDomains().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DeletedSites in the DeletedSite. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedSites and their operations over a DeletedSite. </returns>
         public static DeletedSiteCollection GetDeletedSites(this Subscription subscription)
         {
             return GetExtensionClient(subscription).GetDeletedSites();
+        }
+
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public static async Task<Response<DeletedSite>> GetDeletedSiteAsync(this Subscription subscription, string deletedSiteId, CancellationToken cancellationToken = default)
+        {
+            return await subscription.GetDeletedSites().GetAsync(deletedSiteId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        public static Response<DeletedSite> GetDeletedSite(this Subscription subscription, string deletedSiteId, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetDeletedSites().Get(deletedSiteId, cancellationToken);
         }
 
         /// <summary>
@@ -78,7 +138,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public async static Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this Subscription subscription, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public static async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this Subscription subscription, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appServiceCertificateOrder, nameof(appServiceCertificateOrder));
 
@@ -110,7 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public async static Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(this Subscription subscription, NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(this Subscription subscription, NameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
@@ -166,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -352,7 +412,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
-        public async static Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -390,7 +450,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public async static Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(this Subscription subscription, string location, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(this Subscription subscription, string location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -508,7 +568,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response> ResetAllFiltersRecommendationAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response> ResetAllFiltersRecommendationAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).ResetAllFiltersRecommendationAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -535,7 +595,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async static Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(this Subscription subscription, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(this Subscription subscription, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -626,7 +686,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async static Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -658,7 +718,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).GetSubscriptionDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -687,7 +747,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this Subscription subscription, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this Subscription subscription, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
@@ -704,7 +764,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GeoRegion> GetGeoRegions(this Subscription subscription, SkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public static Pageable<GeoRegion> GetGeoRegions(this Subscription subscription, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
@@ -776,7 +836,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response<SkuInfos>> GetSkusAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<SkuInfos>> GetSkusAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).GetSkusAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -802,7 +862,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async static Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this Subscription subscription, VnetParameters parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this Subscription subscription, VnetParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -836,7 +896,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
-        public async static Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(this Subscription subscription, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        public static async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(this Subscription subscription, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(staticSitesWorkflowPreviewRequest, nameof(staticSitesWorkflowPreviewRequest));

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of security rule collection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> NVA inbound security rule type. </param>
+        /// <param name="resourceType"> NVA inbound security rule type. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(string id, string name, string etag, string type, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
+        internal InboundSecurityRule(string id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Rules = rules;
             ProvisioningState = provisioningState;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> NVA inbound security rule type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> List of allowed rules. </summary>
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>

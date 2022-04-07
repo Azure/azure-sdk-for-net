@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application management policy. </summary>
-    public partial class ApplicationManagementPolicy
+    internal partial class ApplicationManagementPolicy
     {
         /// <summary> Initializes a new instance of ApplicationManagementPolicy. </summary>
         public ApplicationManagementPolicy()

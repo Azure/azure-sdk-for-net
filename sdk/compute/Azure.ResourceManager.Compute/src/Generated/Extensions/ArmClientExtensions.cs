@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="AvailabilitySet" /> object. </returns>
         public static AvailabilitySet GetAvailabilitySet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AvailabilitySet.ValidateResourceId(id);
                 return new AvailabilitySet(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="ProximityPlacementGroup" /> object. </returns>
         public static ProximityPlacementGroup GetProximityPlacementGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ProximityPlacementGroup.ValidateResourceId(id);
                 return new ProximityPlacementGroup(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHostGroup" /> object. </returns>
         public static DedicatedHostGroup GetDedicatedHostGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DedicatedHostGroup.ValidateResourceId(id);
                 return new DedicatedHostGroup(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHost" /> object. </returns>
         public static DedicatedHost GetDedicatedHost(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DedicatedHost.ValidateResourceId(id);
                 return new DedicatedHost(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SshPublicKey" /> object. </returns>
         public static SshPublicKey GetSshPublicKey(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SshPublicKey.ValidateResourceId(id);
                 return new SshPublicKey(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtensionImage" /> object. </returns>
         public static VirtualMachineExtensionImage GetVirtualMachineExtensionImage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineExtensionImage.ValidateResourceId(id);
                 return new VirtualMachineExtensionImage(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtension" /> object. </returns>
         public static VirtualMachineExtension GetVirtualMachineExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineExtension.ValidateResourceId(id);
                 return new VirtualMachineExtension(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
         public static VirtualMachine GetVirtualMachine(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachine.ValidateResourceId(id);
                 return new VirtualMachine(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSet" /> object. </returns>
         public static VirtualMachineScaleSet GetVirtualMachineScaleSet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSet.ValidateResourceId(id);
                 return new VirtualMachineScaleSet(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Image" /> object. </returns>
         public static Image GetImage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Image.ValidateResourceId(id);
                 return new Image(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePointGroup" /> object. </returns>
         public static RestorePointGroup GetRestorePointGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorePointGroup.ValidateResourceId(id);
                 return new RestorePointGroup(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
         public static RestorePoint GetRestorePoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorePoint.ValidateResourceId(id);
                 return new RestorePoint(client, id);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservationGroup" /> object. </returns>
         public static CapacityReservationGroup GetCapacityReservationGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CapacityReservationGroup.ValidateResourceId(id);
                 return new CapacityReservationGroup(client, id);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservation" /> object. </returns>
         public static CapacityReservation GetCapacityReservation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CapacityReservation.ValidateResourceId(id);
                 return new CapacityReservation(client, id);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtension" /> object. </returns>
         public static VirtualMachineScaleSetExtension GetVirtualMachineScaleSetExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSetExtension.ValidateResourceId(id);
                 return new VirtualMachineScaleSetExtension(client, id);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
         public static VirtualMachineScaleSetRollingUpgrade GetVirtualMachineScaleSetRollingUpgrade(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSetRollingUpgrade.ValidateResourceId(id);
                 return new VirtualMachineScaleSetRollingUpgrade(client, id);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtension" /> object. </returns>
         public static VirtualMachineScaleSetVmExtension GetVirtualMachineScaleSetVmExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSetVmExtension.ValidateResourceId(id);
                 return new VirtualMachineScaleSetVmExtension(client, id);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVm" /> object. </returns>
         public static VirtualMachineScaleSetVm GetVirtualMachineScaleSetVm(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSetVm.ValidateResourceId(id);
                 return new VirtualMachineScaleSetVm(client, id);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineRunCommand" /> object. </returns>
         public static VirtualMachineRunCommand GetVirtualMachineRunCommand(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineRunCommand.ValidateResourceId(id);
                 return new VirtualMachineRunCommand(client, id);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> object. </returns>
         public static VirtualMachineScaleSetVirtualMachineRunCommand GetVirtualMachineScaleSetVirtualMachineRunCommand(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineScaleSetVirtualMachineRunCommand.ValidateResourceId(id);
                 return new VirtualMachineScaleSetVirtualMachineRunCommand(client, id);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Disk" /> object. </returns>
         public static Disk GetDisk(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Disk.ValidateResourceId(id);
                 return new Disk(client, id);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Snapshot" /> object. </returns>
         public static Snapshot GetSnapshot(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Snapshot.ValidateResourceId(id);
                 return new Snapshot(client, id);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskEncryptionSet" /> object. </returns>
         public static DiskEncryptionSet GetDiskEncryptionSet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DiskEncryptionSet.ValidateResourceId(id);
                 return new DiskEncryptionSet(client, id);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskAccess" /> object. </returns>
         public static DiskAccess GetDiskAccess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DiskAccess.ValidateResourceId(id);
                 return new DiskAccess(client, id);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskRestorePoint" /> object. </returns>
         public static DiskRestorePoint GetDiskRestorePoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DiskRestorePoint.ValidateResourceId(id);
                 return new DiskRestorePoint(client, id);
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="Gallery" /> object. </returns>
         public static Gallery GetGallery(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Gallery.ValidateResourceId(id);
                 return new Gallery(client, id);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImage" /> object. </returns>
         public static GalleryImage GetGalleryImage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GalleryImage.ValidateResourceId(id);
                 return new GalleryImage(client, id);
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImageVersion" /> object. </returns>
         public static GalleryImageVersion GetGalleryImageVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GalleryImageVersion.ValidateResourceId(id);
                 return new GalleryImageVersion(client, id);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplication" /> object. </returns>
         public static GalleryApplication GetGalleryApplication(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GalleryApplication.ValidateResourceId(id);
                 return new GalleryApplication(client, id);
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplicationVersion" /> object. </returns>
         public static GalleryApplicationVersion GetGalleryApplicationVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GalleryApplicationVersion.ValidateResourceId(id);
                 return new GalleryApplicationVersion(client, id);
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGallery" /> object. </returns>
         public static SharedGallery GetSharedGallery(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SharedGallery.ValidateResourceId(id);
                 return new SharedGallery(client, id);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImage" /> object. </returns>
         public static SharedGalleryImage GetSharedGalleryImage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SharedGalleryImage.ValidateResourceId(id);
                 return new SharedGalleryImage(client, id);
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImageVersion" /> object. </returns>
         public static SharedGalleryImageVersion GetSharedGalleryImageVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SharedGalleryImageVersion.ValidateResourceId(id);
                 return new SharedGalleryImageVersion(client, id);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RoleInstance" /> object. </returns>
         public static RoleInstance GetRoleInstance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RoleInstance.ValidateResourceId(id);
                 return new RoleInstance(client, id);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceRole" /> object. </returns>
         public static CloudServiceRole GetCloudServiceRole(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CloudServiceRole.ValidateResourceId(id);
                 return new CloudServiceRole(client, id);
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudService" /> object. </returns>
         public static CloudService GetCloudService(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CloudService.ValidateResourceId(id);
                 return new CloudService(client, id);
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="OSVersion" /> object. </returns>
         public static OSVersion GetOSVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OSVersion.ValidateResourceId(id);
                 return new OSVersion(client, id);
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="OSFamily" /> object. </returns>
         public static OSFamily GetOSFamily(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OSFamily.ValidateResourceId(id);
                 return new OSFamily(client, id);

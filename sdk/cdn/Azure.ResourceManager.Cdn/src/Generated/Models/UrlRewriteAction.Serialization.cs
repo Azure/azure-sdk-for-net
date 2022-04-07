@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static UrlRewriteAction DeserializeUrlRewriteAction(JsonElement element)
         {
             UrlRewriteActionParameters parameters = default;
-            DeliveryRuleAction name = default;
+            DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = new DeliveryRuleAction(property.Value.GetString());
+                    name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
             }

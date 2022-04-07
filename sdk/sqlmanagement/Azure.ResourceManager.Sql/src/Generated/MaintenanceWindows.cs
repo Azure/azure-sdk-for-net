@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _maintenanceWindowsMaintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string maintenanceWindowsMaintenanceWindowsApiVersion);
-            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(_maintenanceWindowsMaintenanceWindowsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
+            _maintenanceWindowsMaintenanceWindowsRestClient = new MaintenanceWindowsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowsMaintenanceWindowsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
-        public async virtual Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceWindows>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken);
                 if (response.Value == null)
-                    throw _maintenanceWindowsMaintenanceWindowsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindows(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
         /// Operation Id: MaintenanceWindows_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="parameters"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> CreateOrUpdateAsync(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current
         /// Operation Id: MaintenanceWindows_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
         /// <param name="parameters"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(bool waitForCompletion, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, parameters, cancellationToken);
                 var operation = new SqlArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }

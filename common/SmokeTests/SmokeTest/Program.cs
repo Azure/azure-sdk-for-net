@@ -1,10 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 
 // The goal of the smoke tests is to ensure that each of the Azure SDK
 // packages can be used in the same project without causing conflicts.
@@ -24,9 +27,11 @@ using System.Reflection;
 
 const string AssemblyFileMask = "*.dll";
 
+var IsDevOpsHost = (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")));
 LogInformation($"Smoke Test run starting...{ Environment.NewLine }");
 
 var returnCode = 0;
+var totalTypeCount = 0;
 
 // Starting with the entry assembly as the root, walk all references, both
 // direct and transient to process them.
@@ -48,18 +53,42 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
             ProcessType(type);
         }
     }
+    catch (ReflectionTypeLoadException) when (assembly.FullName.StartsWith("System."))
+    {
+        // Not expected, but not impactful.  System assemblies aren't indicative of
+        // transitive dependency conflicts.
+    }
+    catch (ReflectionTypeLoadException ex)
+    {
+        // Not expected; this typically indicates an issue with loading an assembly
+        // and may indicate a version conflict with transitive dependencies.
+
+        var builder = new StringBuilder($"{Environment.NewLine }[{ assembly.FullName }] could not load types for inspection.  Error: { ex }{ Environment.NewLine } \tLoad Error Details:{ Environment.NewLine }");
+
+        foreach (var loadEx in ex.LoaderExceptions)
+        {
+            builder.Append("\t\t - ");
+            builder.AppendLine(loadEx.Message);
+        }
+
+        builder.Append(Environment.NewLine);
+
+        ReportError();
+        LogError(builder.ToString());
+    }
     catch (Exception ex)
     {
         ReportError();
         LogError($"{Environment.NewLine }[{ assembly.FullName }] could not be fully processed.  Error: { ex }{ Environment.NewLine }");
     }
 
-    LogInformation($"Completed assembly: [{ assembly.FullName }].  { typeCount } types inspected.{ Environment.NewLine }");
+    totalTypeCount += typeCount;
+    LogInformation($"Completed assembly: [{ assembly.FullName }].  {typeCount:n0} types inspected.{ Environment.NewLine }");
 }
 
 // End the test run and report on the state.
 
-LogInformation($"{ Environment.NewLine }Smoke Test run complete.");
+LogInformation($"{ Environment.NewLine }Smoke Test run complete.  Total types inspected: {totalTypeCount:n0}");
 
 if (returnCode == 0)
 {
@@ -78,16 +107,46 @@ void ReportError() => returnCode = -1;
 
 void LogError(string message, ConsoleColor? color = default)
 {
-    Console.ForegroundColor = color ?? ConsoleColor.Red;
-    Console.Error.WriteLine(message);
-    Console.ResetColor();
+    if (IsDevOpsHost)
+    {
+        Console.WriteLine($"##vso[task.LogIssue type=error;]{ message }");
+    }
+    else
+    {
+        var previousForeground = Console.ForegroundColor;
+        Console.ForegroundColor = color ?? ConsoleColor.Red;
+
+        try
+        {
+            Console.Error.WriteLine(message);
+        }
+        finally
+        {
+            Console.ForegroundColor = previousForeground;
+        }
+    }
 }
 
 void LogInformation(string message, ConsoleColor? color = default)
 {
-    Console.ForegroundColor = color ?? Console.ForegroundColor;
-    Console.WriteLine(message);
-    Console.ResetColor();
+    if (IsDevOpsHost)
+    {
+        Console.WriteLine($"[debug]{ message })");
+    }
+    else
+    {
+        var previousForeground = Console.ForegroundColor;
+        Console.ForegroundColor = color ?? Console.ForegroundColor;
+
+        try
+        {
+            Console.WriteLine(message);
+        }
+        finally
+        {
+            Console.ForegroundColor = previousForeground;
+        }
+    }
 }
 
 void ProcessType(Type type)
@@ -118,26 +177,18 @@ void ProcessType(Type type)
 
                 if (IsAzureClientType(type))
                 {
-                    Console.WriteLine($"\tConstructed: '{ type.FullName }'");
+                    LogInformation($"\tConstructed: '{ type.FullName }'");
                 }
             }
-            catch (TargetInvocationException ex) when (ex.InnerException is NotImplementedException)
+            catch (TargetInvocationException ex) when (ShouldIgnoreInvocationException(ex))
             {
-                // Expected; this occurs when the parameterless constructor is present but has been marked obsolete.  Since we do
-                // not report types without a parameterless constructor, ignore the type and do not log.
+                // Expected; this is a known scenario where the type is not impactful to the
+                // Azure SDK experience and cane be safely ignored.
             }
-            catch (TargetInvocationException ex) when (ex.InnerException is FileNotFoundException fileEx)
+            catch (COMException)
             {
-                // Expected; this indicates that a library is not available on a platform.  For
-                // example, System.Windows.Forms on macOS.
-
-                LogInformation($"\t[{ fileEx.FileName }] needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
-            }
-            catch (TargetInvocationException ex) when ((ex.InnerException is PlatformNotSupportedException) || (ex.InnerException is NotSupportedException))
-            {
-                // Expected; this indicates that a type is not available on a platform.  For example, Windows Principal-related types on Linux.
-
-                LogInformation($"\t[{ type.FullName }] is not available on this platform.  This is expected for some platform-specific types.");
+                // Expected; this is a known scenario where the type is not impactful to the
+                // Azure SDK experience and cane be safely ignored.
             }
         }
     }
@@ -168,7 +219,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
             {
                 assembliesToProcess.Push(Assembly.LoadFrom(file));
             }
-            catch (BadImageFormatException)
+            catch (Exception ex) when ((ex is BadImageFormatException) || ((ex is FileLoadException fileEx) && (ShouldIgnoreFileLoadException(fileEx))))
             {
                 // Expected; this occurs when an assembly is not compiled for the current framework
                 // or platform and is most often seen for platform-specific interop assemblies.
@@ -190,38 +241,53 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
         assembliesToProcess.Push(assembly);
     }
 
-    // Process the selected assemblies recursively, capturing references discovered along the way.
+    // Process the selected assemblies.
 
     while (assembliesToProcess.Count > 0)
     {
         var assembly = assembliesToProcess.Pop();
-        processedAssemblies.Add(assembly.FullName);
 
-        foreach (var refAssembly in assembly.GetReferencedAssemblies())
+        if ((!assembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(assembly.FullName)))
         {
-            if (!processedAssemblies.Contains(refAssembly.FullName))
-            {
-                try
-                {
-                    assembliesToProcess.Push(Assembly.Load(refAssembly.FullName));
-                }
-                catch (BadImageFormatException)
-                {
-                    // Expected; this occurs when an assembly is not compiled for the current framework
-                    // or platform and is most often seen for platform-specific interop assemblies.
-
-                    LogInformation($"[{ refAssembly.FullName }] was not in the correct format to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
-                }
-                catch (Exception ex)
-                {
-                    ReportError();
-                    LogError($"{Environment.NewLine }[{ refAssembly.FullName }] could not be loaded for inspection.  Error: { ex }{ Environment.NewLine }");
-                }
-            }
+            processedAssemblies.Add(assembly.FullName);
+            yield return assembly;
         }
-
-        yield return assembly;
     }
 }
 
 bool IsAzureClientType(Type type) => (type.Namespace?.Contains("Azure.") ?? false) && (type.Name?.EndsWith("Client") ?? false);
+
+bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationException) => targetInvocationException.InnerException switch
+{
+    // Occurs when the parameterless constructor is present but has been marked obsolete.
+    NotImplementedException => true,
+    InvalidOperationException => true,
+
+    // Occurs when the parameterless constructor is present but the type cannot be constructed due to failing an internal state validation.
+    ArgumentException => true,
+    NullReferenceException => true,
+
+    // Occurs when the type is not supported on the current target/platform.
+    FileNotFoundException => true,
+    DllNotFoundException => true,
+    PlatformNotSupportedException => true,
+    NotSupportedException => true,
+    TypeLoadException => true,
+    TypeInitializationException => true,
+    ThreadStateException => true,
+
+    // Occurs when the assembly is locked; this is most likely a framework assembly.
+    IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
+
+    // By default, do not ignore.
+    _ => false
+};
+
+bool ShouldIgnoreFileLoadException(FileLoadException ex) => ex switch
+{
+    // Occurs when the assembly is not supported on the target framework/platform.
+    _ when (ex.Message.ToLower().Contains("operation is not supported")) => true,
+
+    // By default, do not ignore.
+    _ => false
+};

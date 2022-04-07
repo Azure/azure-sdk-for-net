@@ -19,7 +19,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets or sets Azure cloud environment.
         /// </summary>
-        public ArmEnvironment Environment { get; set; } = ArmEnvironment.AzureCloud;
+        public ArmEnvironment Environment { get; set; } = ArmEnvironment.AzurePublicCloud;
 
         /// <summary>
         /// Sets the api version to use for a given resource type.

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceCertificateOrder" /> object. </returns>
         public static AppServiceCertificateOrder GetAppServiceCertificateOrder(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AppServiceCertificateOrder.ValidateResourceId(id);
                 return new AppServiceCertificateOrder(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceCertificateResource" /> object. </returns>
         public static AppServiceCertificateResource GetAppServiceCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AppServiceCertificateResource.ValidateResourceId(id);
                 return new AppServiceCertificateResource(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="CertificateOrderDetector" /> object. </returns>
         public static CertificateOrderDetector GetCertificateOrderDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CertificateOrderDetector.ValidateResourceId(id);
                 return new CertificateOrderDetector(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentDetector" /> object. </returns>
         public static HostingEnvironmentDetector GetHostingEnvironmentDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostingEnvironmentDetector.ValidateResourceId(id);
                 return new HostingEnvironmentDetector(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDetector" /> object. </returns>
         public static SiteDetector GetSiteDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDetector.ValidateResourceId(id);
                 return new SiteDetector(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDetector" /> object. </returns>
         public static SiteSlotDetector GetSiteSlotDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDetector.ValidateResourceId(id);
                 return new SiteSlotDetector(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceDomain" /> object. </returns>
         public static AppServiceDomain GetAppServiceDomain(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AppServiceDomain.ValidateResourceId(id);
                 return new AppServiceDomain(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="DomainOwnershipIdentifier" /> object. </returns>
         public static DomainOwnershipIdentifier GetDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DomainOwnershipIdentifier.ValidateResourceId(id);
                 return new DomainOwnershipIdentifier(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="TopLevelDomain" /> object. </returns>
         public static TopLevelDomain GetTopLevelDomain(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 TopLevelDomain.ValidateResourceId(id);
                 return new TopLevelDomain(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceEnvironment" /> object. </returns>
         public static AppServiceEnvironment GetAppServiceEnvironment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AppServiceEnvironment.ValidateResourceId(id);
                 return new AppServiceEnvironment(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AseV3NetworkingConfiguration" /> object. </returns>
         public static AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AseV3NetworkingConfiguration.ValidateResourceId(id);
                 return new AseV3NetworkingConfiguration(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePool" /> object. </returns>
         public static HostingEnvironmentMultiRolePool GetHostingEnvironmentMultiRolePool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostingEnvironmentMultiRolePool.ValidateResourceId(id);
                 return new HostingEnvironmentMultiRolePool(client, id);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentWorkerPool" /> object. </returns>
         public static HostingEnvironmentWorkerPool GetHostingEnvironmentWorkerPool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostingEnvironmentWorkerPool.ValidateResourceId(id);
                 return new HostingEnvironmentWorkerPool(client, id);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnection" /> object. </returns>
         public static HostingEnvironmentPrivateEndpointConnection GetHostingEnvironmentPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostingEnvironmentPrivateEndpointConnection.ValidateResourceId(id);
                 return new HostingEnvironmentPrivateEndpointConnection(client, id);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnection" /> object. </returns>
         public static StaticSitePrivateEndpointConnection GetStaticSitePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSitePrivateEndpointConnection.ValidateResourceId(id);
                 return new StaticSitePrivateEndpointConnection(client, id);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePrivateEndpointConnection" /> object. </returns>
         public static SitePrivateEndpointConnection GetSitePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SitePrivateEndpointConnection.ValidateResourceId(id);
                 return new SitePrivateEndpointConnection(client, id);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnection" /> object. </returns>
         public static SiteSlotPrivateEndpointConnection GetSiteSlotPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotPrivateEndpointConnection.ValidateResourceId(id);
                 return new SiteSlotPrivateEndpointConnection(client, id);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServicePlan" /> object. </returns>
         public static AppServicePlan GetAppServicePlan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 AppServicePlan.ValidateResourceId(id);
                 return new AppServicePlan(client, id);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelay" /> object. </returns>
         public static ServerfarmHybridConnectionNamespaceRelay GetServerfarmHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerfarmHybridConnectionNamespaceRelay.ValidateResourceId(id);
                 return new ServerfarmHybridConnectionNamespaceRelay(client, id);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelay" /> object. </returns>
         public static SiteHybridConnectionNamespaceRelay GetSiteHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteHybridConnectionNamespaceRelay.ValidateResourceId(id);
                 return new SiteHybridConnectionNamespaceRelay(client, id);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelay" /> object. </returns>
         public static SiteSlotHybridConnectionNamespaceRelay GetSiteSlotHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotHybridConnectionNamespaceRelay.ValidateResourceId(id);
                 return new SiteSlotHybridConnectionNamespaceRelay(client, id);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
         public static HybridConnectionLimits GetHybridConnectionLimits(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HybridConnectionLimits.ValidateResourceId(id);
                 return new HybridConnectionLimits(client, id);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnection" /> object. </returns>
         public static ServerfarmVirtualNetworkConnection GetServerfarmVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerfarmVirtualNetworkConnection.ValidateResourceId(id);
                 return new ServerfarmVirtualNetworkConnection(client, id);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnection" /> object. </returns>
         public static SiteSlotVirtualNetworkConnection GetSiteSlotVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotVirtualNetworkConnection.ValidateResourceId(id);
                 return new SiteSlotVirtualNetworkConnection(client, id);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnection" /> object. </returns>
         public static SiteVirtualNetworkConnection GetSiteVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteVirtualNetworkConnection.ValidateResourceId(id);
                 return new SiteVirtualNetworkConnection(client, id);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGateway" /> object. </returns>
         public static ServerfarmVirtualNetworkConnectionGateway GetServerfarmVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerfarmVirtualNetworkConnectionGateway.ValidateResourceId(id);
                 return new ServerfarmVirtualNetworkConnectionGateway(client, id);
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGateway" /> object. </returns>
         public static SiteSlotVirtualNetworkConnectionGateway GetSiteSlotVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotVirtualNetworkConnectionGateway.ValidateResourceId(id);
                 return new SiteSlotVirtualNetworkConnectionGateway(client, id);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGateway" /> object. </returns>
         public static SiteVirtualNetworkConnectionGateway GetSiteVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteVirtualNetworkConnectionGateway.ValidateResourceId(id);
                 return new SiteVirtualNetworkConnectionGateway(client, id);
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="Certificate" /> object. </returns>
         public static Certificate GetCertificate(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Certificate.ValidateResourceId(id);
                 return new Certificate(client, id);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnostic" /> object. </returns>
         public static SiteDiagnostic GetSiteDiagnostic(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDiagnostic.ValidateResourceId(id);
                 return new SiteDiagnostic(client, id);
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnostic" /> object. </returns>
         public static SiteSlotDiagnostic GetSiteSlotDiagnostic(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDiagnostic.ValidateResourceId(id);
                 return new SiteSlotDiagnostic(client, id);
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnosticAnalysis" /> object. </returns>
         public static SiteDiagnosticAnalysis GetSiteDiagnosticAnalysis(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDiagnosticAnalysis.ValidateResourceId(id);
                 return new SiteDiagnosticAnalysis(client, id);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysis" /> object. </returns>
         public static SiteSlotDiagnosticAnalysis GetSiteSlotDiagnosticAnalysis(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDiagnosticAnalysis.ValidateResourceId(id);
                 return new SiteSlotDiagnosticAnalysis(client, id);
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnosticDetector" /> object. </returns>
         public static SiteDiagnosticDetector GetSiteDiagnosticDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDiagnosticDetector.ValidateResourceId(id);
                 return new SiteDiagnosticDetector(client, id);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnosticDetector" /> object. </returns>
         public static SiteSlotDiagnosticDetector GetSiteSlotDiagnosticDetector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDiagnosticDetector.ValidateResourceId(id);
                 return new SiteSlotDiagnosticDetector(client, id);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="DeletedSite" /> object. </returns>
         public static DeletedSite GetDeletedSite(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeletedSite.ValidateResourceId(id);
                 return new DeletedSite(client, id);
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="KubeEnvironment" /> object. </returns>
         public static KubeEnvironment GetKubeEnvironment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 KubeEnvironment.ValidateResourceId(id);
                 return new KubeEnvironment(client, id);
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentRecommendation" /> object. </returns>
         public static HostingEnvironmentRecommendation GetHostingEnvironmentRecommendation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostingEnvironmentRecommendation.ValidateResourceId(id);
                 return new HostingEnvironmentRecommendation(client, id);
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteRecommendation" /> object. </returns>
         public static SiteRecommendation GetSiteRecommendation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteRecommendation.ValidateResourceId(id);
                 return new SiteRecommendation(client, id);
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteResourceHealthMetadata" /> object. </returns>
         public static SiteResourceHealthMetadata GetSiteResourceHealthMetadata(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteResourceHealthMetadata.ValidateResourceId(id);
                 return new SiteResourceHealthMetadata(client, id);
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadata" /> object. </returns>
         public static SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotResourceHealthMetadata.ValidateResourceId(id);
                 return new SiteSlotResourceHealthMetadata(client, id);
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="User" /> object. </returns>
         public static User GetUser(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 User.ValidateResourceId(id);
                 return new User(client, id);
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SourceControl" /> object. </returns>
         public static SourceControl GetSourceControl(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SourceControl.ValidateResourceId(id);
                 return new SourceControl(client, id);
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteARMResource" /> object. </returns>
         public static StaticSiteARMResource GetStaticSiteARMResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSiteARMResource.ValidateResourceId(id);
                 return new StaticSiteARMResource(client, id);
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteBuildARMResource" /> object. </returns>
         public static StaticSiteBuildARMResource GetStaticSiteBuildARMResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSiteBuildARMResource.ValidateResourceId(id);
                 return new StaticSiteBuildARMResource(client, id);
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionApp" /> object. </returns>
         public static StaticSiteBuildUserProvidedFunctionApp GetStaticSiteBuildUserProvidedFunctionApp(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSiteBuildUserProvidedFunctionApp.ValidateResourceId(id);
                 return new StaticSiteBuildUserProvidedFunctionApp(client, id);
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionApp" /> object. </returns>
         public static StaticSiteUserProvidedFunctionApp GetStaticSiteUserProvidedFunctionApp(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSiteUserProvidedFunctionApp.ValidateResourceId(id);
                 return new StaticSiteUserProvidedFunctionApp(client, id);
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewARMResource" /> object. </returns>
         public static StaticSiteCustomDomainOverviewARMResource GetStaticSiteCustomDomainOverviewARMResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 StaticSiteCustomDomainOverviewARMResource.ValidateResourceId(id);
                 return new StaticSiteCustomDomainOverviewARMResource(client, id);
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSite" /> object. </returns>
         public static WebSite GetWebSite(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebSite.ValidateResourceId(id);
                 return new WebSite(client, id);
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlot" /> object. </returns>
         public static SiteSlot GetSiteSlot(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlot.ValidateResourceId(id);
                 return new SiteSlot(client, id);
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteBackup" /> object. </returns>
         public static SiteBackup GetSiteBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteBackup.ValidateResourceId(id);
                 return new SiteBackup(client, id);
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBackup" /> object. </returns>
         public static SiteSlotBackup GetSiteSlotBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotBackup.ValidateResourceId(id);
                 return new SiteSlotBackup(client, id);
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtp" /> object. </returns>
         public static BasicPublishingCredentialsPolicyFtp GetBasicPublishingCredentialsPolicyFtp(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 BasicPublishingCredentialsPolicyFtp.ValidateResourceId(id);
                 return new BasicPublishingCredentialsPolicyFtp(client, id);
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicy" /> object. </returns>
         public static ScmSiteBasicPublishingCredentialsPolicy GetScmSiteBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ScmSiteBasicPublishingCredentialsPolicy.ValidateResourceId(id);
                 return new ScmSiteBasicPublishingCredentialsPolicy(client, id);
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
         public static FtpSiteSlotBasicPublishingCredentialsPolicy GetFtpSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FtpSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
                 return new FtpSiteSlotBasicPublishingCredentialsPolicy(client, id);
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
         public static ScmSiteSlotBasicPublishingCredentialsPolicy GetScmSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ScmSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
                 return new ScmSiteSlotBasicPublishingCredentialsPolicy(client, id);
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigAppsetting" /> object. </returns>
         public static SiteConfigAppsetting GetSiteConfigAppsetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteConfigAppsetting.ValidateResourceId(id);
                 return new SiteConfigAppsetting(client, id);
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigConnectionString" /> object. </returns>
         public static SiteConfigConnectionString GetSiteConfigConnectionString(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteConfigConnectionString.ValidateResourceId(id);
                 return new SiteConfigConnectionString(client, id);
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigAppSetting" /> object. </returns>
         public static SiteSlotConfigAppSetting GetSiteSlotConfigAppSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotConfigAppSetting.ValidateResourceId(id);
                 return new SiteSlotConfigAppSetting(client, id);
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigConnectionString" /> object. </returns>
         public static SiteSlotConfigConnectionString GetSiteSlotConfigConnectionString(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotConfigConnectionString.ValidateResourceId(id);
                 return new SiteSlotConfigConnectionString(client, id);
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteConfig" /> object. </returns>
         public static LogsSiteConfig GetLogsSiteConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LogsSiteConfig.ValidateResourceId(id);
                 return new LogsSiteConfig(client, id);
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteSlotConfig" /> object. </returns>
         public static LogsSiteSlotConfig GetLogsSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LogsSiteSlotConfig.ValidateResourceId(id);
                 return new LogsSiteSlotConfig(client, id);
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public static SlotConfigNamesResource GetSlotConfigNamesResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SlotConfigNamesResource.ValidateResourceId(id);
                 return new SlotConfigNamesResource(client, id);
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteConfig" /> object. </returns>
         public static WebSiteConfig GetWebSiteConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebSiteConfig.ValidateResourceId(id);
                 return new WebSiteConfig(client, id);
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigSnapshot" /> object. </returns>
         public static SiteConfigSnapshot GetSiteConfigSnapshot(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteConfigSnapshot.ValidateResourceId(id);
                 return new SiteConfigSnapshot(client, id);
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotConfig" /> object. </returns>
         public static WebSiteSlotConfig GetWebSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebSiteSlotConfig.ValidateResourceId(id);
                 return new WebSiteSlotConfig(client, id);
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigSnapshot" /> object. </returns>
         public static SiteSlotConfigSnapshot GetSiteSlotConfigSnapshot(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotConfigSnapshot.ValidateResourceId(id);
                 return new SiteSlotConfigSnapshot(client, id);
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteContinuousWebJob" /> object. </returns>
         public static SiteContinuousWebJob GetSiteContinuousWebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteContinuousWebJob.ValidateResourceId(id);
                 return new SiteContinuousWebJob(client, id);
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotContinuousWebJob" /> object. </returns>
         public static SiteSlotContinuousWebJob GetSiteSlotContinuousWebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotContinuousWebJob.ValidateResourceId(id);
                 return new SiteSlotContinuousWebJob(client, id);
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDeployment" /> object. </returns>
         public static SiteDeployment GetSiteDeployment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDeployment.ValidateResourceId(id);
                 return new SiteDeployment(client, id);
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDeployment" /> object. </returns>
         public static SiteSlotDeployment GetSiteSlotDeployment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDeployment.ValidateResourceId(id);
                 return new SiteSlotDeployment(client, id);
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifier" /> object. </returns>
         public static SiteDomainOwnershipIdentifier GetSiteDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteDomainOwnershipIdentifier.ValidateResourceId(id);
                 return new SiteDomainOwnershipIdentifier(client, id);
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifier" /> object. </returns>
         public static SiteSlotDomainOwnershipIdentifier GetSiteSlotDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotDomainOwnershipIdentifier.ValidateResourceId(id);
                 return new SiteSlotDomainOwnershipIdentifier(client, id);
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteExtension" /> object. </returns>
         public static SiteExtension GetSiteExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteExtension.ValidateResourceId(id);
                 return new SiteExtension(client, id);
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
         public static SiteInstanceExtension GetSiteInstanceExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteInstanceExtension.ValidateResourceId(id);
                 return new SiteInstanceExtension(client, id);
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotExtension" /> object. </returns>
         public static SiteSlotExtension GetSiteSlotExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotExtension.ValidateResourceId(id);
                 return new SiteSlotExtension(client, id);
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
         public static SiteSlotInstanceExtension GetSiteSlotInstanceExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotInstanceExtension.ValidateResourceId(id);
                 return new SiteSlotInstanceExtension(client, id);
@@ -1252,7 +1252,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteFunction" /> object. </returns>
         public static SiteFunction GetSiteFunction(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteFunction.ValidateResourceId(id);
                 return new SiteFunction(client, id);
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotFunction" /> object. </returns>
         public static SiteSlotFunction GetSiteSlotFunction(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotFunction.ValidateResourceId(id);
                 return new SiteSlotFunction(client, id);
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteHostNameBinding" /> object. </returns>
         public static SiteHostNameBinding GetSiteHostNameBinding(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteHostNameBinding.ValidateResourceId(id);
                 return new SiteHostNameBinding(client, id);
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotHostNameBinding" /> object. </returns>
         public static SiteSlotHostNameBinding GetSiteSlotHostNameBinding(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotHostNameBinding.ValidateResourceId(id);
                 return new SiteSlotHostNameBinding(client, id);
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteHybridConnection" /> object. </returns>
         public static SiteHybridConnection GetSiteHybridConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteHybridConnection.ValidateResourceId(id);
                 return new SiteHybridConnection(client, id);
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotHybridconnection" /> object. </returns>
         public static SiteSlotHybridconnection GetSiteSlotHybridconnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotHybridconnection.ValidateResourceId(id);
                 return new SiteSlotHybridconnection(client, id);
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstance" /> object. </returns>
         public static SiteInstance GetSiteInstance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteInstance.ValidateResourceId(id);
                 return new SiteInstance(client, id);
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstance" /> object. </returns>
         public static SiteSlotInstance GetSiteSlotInstance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotInstance.ValidateResourceId(id);
                 return new SiteSlotInstance(client, id);
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceProcess" /> object. </returns>
         public static SiteInstanceProcess GetSiteInstanceProcess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteInstanceProcess.ValidateResourceId(id);
                 return new SiteInstanceProcess(client, id);
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteProcess" /> object. </returns>
         public static SiteProcess GetSiteProcess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteProcess.ValidateResourceId(id);
                 return new SiteProcess(client, id);
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceProcess" /> object. </returns>
         public static SiteSlotInstanceProcess GetSiteSlotInstanceProcess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotInstanceProcess.ValidateResourceId(id);
                 return new SiteSlotInstanceProcess(client, id);
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotProcess" /> object. </returns>
         public static SiteSlotProcess GetSiteSlotProcess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotProcess.ValidateResourceId(id);
                 return new SiteSlotProcess(client, id);
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceProcessModule" /> object. </returns>
         public static SiteInstanceProcessModule GetSiteInstanceProcessModule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteInstanceProcessModule.ValidateResourceId(id);
                 return new SiteInstanceProcessModule(client, id);
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteProcessModule" /> object. </returns>
         public static SiteProcessModule GetSiteProcessModule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteProcessModule.ValidateResourceId(id);
                 return new SiteProcessModule(client, id);
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessModule" /> object. </returns>
         public static SiteSlotInstanceProcessModule GetSiteSlotInstanceProcessModule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotInstanceProcessModule.ValidateResourceId(id);
                 return new SiteSlotInstanceProcessModule(client, id);
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotProcessModule" /> object. </returns>
         public static SiteSlotProcessModule GetSiteSlotProcessModule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotProcessModule.ValidateResourceId(id);
                 return new SiteSlotProcessModule(client, id);
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteNetworkConfig" /> object. </returns>
         public static SiteNetworkConfig GetSiteNetworkConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteNetworkConfig.ValidateResourceId(id);
                 return new SiteNetworkConfig(client, id);
@@ -1524,7 +1524,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotNetworkConfig" /> object. </returns>
         public static SiteSlotNetworkConfig GetSiteSlotNetworkConfig(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotNetworkConfig.ValidateResourceId(id);
                 return new SiteSlotNetworkConfig(client, id);
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePremierAddon" /> object. </returns>
         public static SitePremierAddon GetSitePremierAddon(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SitePremierAddon.ValidateResourceId(id);
                 return new SitePremierAddon(client, id);
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotPremierAddOn" /> object. </returns>
         public static SiteSlotPremierAddOn GetSiteSlotPremierAddOn(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotPremierAddOn.ValidateResourceId(id);
                 return new SiteSlotPremierAddOn(client, id);
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePrivateAccess" /> object. </returns>
         public static SitePrivateAccess GetSitePrivateAccess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SitePrivateAccess.ValidateResourceId(id);
                 return new SitePrivateAccess(client, id);
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotPrivateAccess" /> object. </returns>
         public static SiteSlotPrivateAccess GetSiteSlotPrivateAccess(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotPrivateAccess.ValidateResourceId(id);
                 return new SiteSlotPrivateAccess(client, id);
@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePublicCertificate" /> object. </returns>
         public static SitePublicCertificate GetSitePublicCertificate(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SitePublicCertificate.ValidateResourceId(id);
                 return new SitePublicCertificate(client, id);
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotPublicCertificate" /> object. </returns>
         public static SiteSlotPublicCertificate GetSiteSlotPublicCertificate(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotPublicCertificate.ValidateResourceId(id);
                 return new SiteSlotPublicCertificate(client, id);
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSiteextension" /> object. </returns>
         public static SiteSiteextension GetSiteSiteextension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSiteextension.ValidateResourceId(id);
                 return new SiteSiteextension(client, id);
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotSiteextension" /> object. </returns>
         public static SiteSlotSiteextension GetSiteSlotSiteextension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotSiteextension.ValidateResourceId(id);
                 return new SiteSlotSiteextension(client, id);
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="MigrateMySqlStatus" /> object. </returns>
         public static MigrateMySqlStatus GetMigrateMySqlStatus(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MigrateMySqlStatus.ValidateResourceId(id);
                 return new MigrateMySqlStatus(client, id);
@@ -1684,7 +1684,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="NetworkFeatures" /> object. </returns>
         public static NetworkFeatures GetNetworkFeatures(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkFeatures.ValidateResourceId(id);
                 return new NetworkFeatures(client, id);
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotSourcecontrol" /> object. </returns>
         public static SiteSlotSourcecontrol GetSiteSlotSourcecontrol(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotSourcecontrol.ValidateResourceId(id);
                 return new SiteSlotSourcecontrol(client, id);
@@ -1716,7 +1716,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSourceControl" /> object. </returns>
         public static SiteSourceControl GetSiteSourceControl(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSourceControl.ValidateResourceId(id);
                 return new SiteSourceControl(client, id);
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteTriggeredwebJob" /> object. </returns>
         public static SiteTriggeredwebJob GetSiteTriggeredwebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteTriggeredwebJob.ValidateResourceId(id);
                 return new SiteTriggeredwebJob(client, id);
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotTriggeredWebJob" /> object. </returns>
         public static SiteSlotTriggeredWebJob GetSiteSlotTriggeredWebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotTriggeredWebJob.ValidateResourceId(id);
                 return new SiteSlotTriggeredWebJob(client, id);
@@ -1764,7 +1764,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteTriggeredWebJobHistory" /> object. </returns>
         public static SiteTriggeredWebJobHistory GetSiteTriggeredWebJobHistory(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteTriggeredWebJobHistory.ValidateResourceId(id);
                 return new SiteTriggeredWebJobHistory(client, id);
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobHistory" /> object. </returns>
         public static SiteSlotTriggeredWebJobHistory GetSiteSlotTriggeredWebJobHistory(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotTriggeredWebJobHistory.ValidateResourceId(id);
                 return new SiteSlotTriggeredWebJobHistory(client, id);
@@ -1796,7 +1796,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotWebJob" /> object. </returns>
         public static SiteSlotWebJob GetSiteSlotWebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteSlotWebJob.ValidateResourceId(id);
                 return new SiteSlotWebJob(client, id);
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteWebJob" /> object. </returns>
         public static SiteWebJob GetSiteWebJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SiteWebJob.ValidateResourceId(id);
                 return new SiteWebJob(client, id);
