@@ -199,18 +199,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript
         /// Operation Id: VirtualNetworkGateways_VpnDeviceConfigurationScript
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="content"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<string>> VpnDeviceConfigurationScriptAsync(VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<string>> VpnDeviceConfigurationScriptAsync(VpnDeviceScriptContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.VpnDeviceConfigurationScript");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayRestClient.VpnDeviceConfigurationScriptAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworkGatewayRestClient.VpnDeviceConfigurationScriptAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript
         /// Operation Id: VirtualNetworkGateways_VpnDeviceConfigurationScript
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="content"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<string> VpnDeviceConfigurationScript(VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<string> VpnDeviceConfigurationScript(VpnDeviceScriptContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _virtualNetworkGatewayClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.VpnDeviceConfigurationScript");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayRestClient.VpnDeviceConfigurationScript(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _virtualNetworkGatewayRestClient.VpnDeviceConfigurationScript(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -252,19 +252,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_SetSharedKey
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
+        /// <param name="connectionSharedKey"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConnectionSharedKey>> SetSharedKeyAsync(WaitUntil waitUntil, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionSharedKey"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConnectionSharedKey>> SetSharedKeyAsync(WaitUntil waitUntil, ConnectionSharedKey connectionSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(connectionSharedKey, nameof(connectionSharedKey));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.SetSharedKey");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayConnectionRestClient.SetSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ConnectionSharedKey>(new ConnectionSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateSetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualNetworkGatewayConnectionRestClient.SetSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionSharedKey, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ConnectionSharedKey>(new ConnectionSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateSetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionSharedKey).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,19 +282,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_SetSharedKey
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
+        /// <param name="connectionSharedKey"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ConnectionSharedKey> SetSharedKey(WaitUntil waitUntil, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionSharedKey"/> is null. </exception>
+        public virtual ArmOperation<ConnectionSharedKey> SetSharedKey(WaitUntil waitUntil, ConnectionSharedKey connectionSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(connectionSharedKey, nameof(connectionSharedKey));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.SetSharedKey");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayConnectionRestClient.SetSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<ConnectionSharedKey>(new ConnectionSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateSetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualNetworkGatewayConnectionRestClient.SetSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionSharedKey, cancellationToken);
+                var operation = new NetworkArmOperation<ConnectionSharedKey>(new ConnectionSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateSetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionSharedKey).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -356,19 +356,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_ResetSharedKey
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
+        /// <param name="connectionResetSharedKey"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConnectionResetSharedKey>> ResetSharedKeyAsync(WaitUntil waitUntil, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionResetSharedKey"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConnectionResetSharedKey>> ResetSharedKeyAsync(WaitUntil waitUntil, ConnectionResetSharedKey connectionResetSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(connectionResetSharedKey, nameof(connectionResetSharedKey));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.ResetSharedKey");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayConnectionRestClient.ResetSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ConnectionResetSharedKey>(new ConnectionResetSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateResetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualNetworkGatewayConnectionRestClient.ResetSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionResetSharedKey, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ConnectionResetSharedKey>(new ConnectionResetSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateResetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionResetSharedKey).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,19 +386,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_ResetSharedKey
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
+        /// <param name="connectionResetSharedKey"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ConnectionResetSharedKey> ResetSharedKey(WaitUntil waitUntil, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionResetSharedKey"/> is null. </exception>
+        public virtual ArmOperation<ConnectionResetSharedKey> ResetSharedKey(WaitUntil waitUntil, ConnectionResetSharedKey connectionResetSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(connectionResetSharedKey, nameof(connectionResetSharedKey));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.ResetSharedKey");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayConnectionRestClient.ResetSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<ConnectionResetSharedKey>(new ConnectionResetSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateResetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualNetworkGatewayConnectionRestClient.ResetSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionResetSharedKey, cancellationToken);
+                var operation = new NetworkArmOperation<ConnectionResetSharedKey>(new ConnectionResetSharedKeyOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateResetSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionResetSharedKey).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -416,16 +416,16 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_StartPacketCapture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
+        /// <param name="vpnPacketCaptureStartParameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.StartPacketCapture");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayConnectionRestClient.StartPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualNetworkGatewayConnectionRestClient.StartPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStartParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStartParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -443,16 +443,16 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_StartPacketCapture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
+        /// <param name="vpnPacketCaptureStartParameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.StartPacketCapture");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayConnectionRestClient.StartPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualNetworkGatewayConnectionRestClient.StartPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStartParameters, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStartParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -470,19 +470,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_StopPacketCapture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
+        /// <param name="vpnPacketCaptureStopParameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnPacketCaptureStopParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vpnPacketCaptureStopParameters, nameof(vpnPacketCaptureStopParameters));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.StopPacketCapture");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayConnectionRestClient.StopPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualNetworkGatewayConnectionRestClient.StopPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStopParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStopParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -500,19 +500,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualNetworkGatewayConnections_StopPacketCapture
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
+        /// <param name="vpnPacketCaptureStopParameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnPacketCaptureStopParameters"/> is null. </exception>
+        public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vpnPacketCaptureStopParameters, nameof(vpnPacketCaptureStopParameters));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.StopPacketCapture");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayConnectionRestClient.StopPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualNetworkGatewayConnectionRestClient.StopPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStopParameters, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnPacketCaptureStopParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

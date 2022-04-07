@@ -304,16 +304,16 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}/lease
         /// Operation Id: FileShares_Lease
         /// </summary>
-        /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="content"> Lease Share request body. </param>
         /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LeaseShareResponse>> LeaseAsync(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LeaseShareResponse>> LeaseAsync(LeaseShareContent content = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Lease");
             scope.Start();
             try
             {
-                var response = await _fileShareRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, content, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -328,16 +328,16 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}/lease
         /// Operation Id: FileShares_Lease
         /// </summary>
-        /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="content"> Lease Share request body. </param>
         /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LeaseShareResponse> Lease(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        public virtual Response<LeaseShareResponse> Lease(LeaseShareContent content = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Lease");
             scope.Start();
             try
             {
-                var response = _fileShareRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken);
+                var response = _fileShareRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, content, xMsSnapshot, cancellationToken);
                 return response;
             }
             catch (Exception e)

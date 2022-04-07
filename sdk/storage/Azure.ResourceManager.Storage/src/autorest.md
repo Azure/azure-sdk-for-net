@@ -44,6 +44,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  SAS: Sas
   
 directive:
   - rename-model:

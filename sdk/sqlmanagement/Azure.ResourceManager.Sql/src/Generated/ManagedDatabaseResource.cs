@@ -756,19 +756,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_CompleteRestore
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> The definition for completing the restore of this managed database. </param>
+        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> CompleteRestoreAsync(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation> CompleteRestoreAsync(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedDatabaseRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -786,19 +786,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabases_CompleteRestore
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> The definition for completing the restore of this managed database. </param>
+        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation CompleteRestore(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
+        public virtual ArmOperation CompleteRestore(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
 
             using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
             scope.Start();
             try
             {
-                var response = _managedDatabaseRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _managedDatabaseRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -997,18 +997,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_Update
         /// </summary>
-        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response> UpdateManagedDatabaseSensitivityLabelAsync(SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        public virtual async Task<Response> UpdateManagedDatabaseSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1023,18 +1023,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_Update
         /// </summary>
-        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response UpdateManagedDatabaseSensitivityLabel(SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        public virtual Response UpdateManagedDatabaseSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1139,18 +1139,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_UpdateRecommended
         /// </summary>
-        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response> UpdateRecommendedManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
+        public virtual async Task<Response> UpdateRecommendedManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1165,18 +1165,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_UpdateRecommended
         /// </summary>
-        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response UpdateRecommendedManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
+        public virtual Response UpdateRecommendedManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
 
             using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
                 return response;
             }
             catch (Exception e)

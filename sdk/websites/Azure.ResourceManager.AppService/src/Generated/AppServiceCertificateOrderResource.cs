@@ -326,18 +326,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
         /// Operation Id: AppServiceCertificateOrders_Reissue
         /// </summary>
-        /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
+        /// <param name="content"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
-        public virtual async Task<Response> ReissueAsync(ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ReissueAsync(ReissueCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(reissueCertificateOrderRequest, nameof(reissueCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.Reissue");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrderRestClient.ReissueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrderRestClient.ReissueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -352,18 +352,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
         /// Operation Id: AppServiceCertificateOrders_Reissue
         /// </summary>
-        /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
+        /// <param name="content"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
-        public virtual Response Reissue(ReissueCertificateOrderRequest reissueCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Reissue(ReissueCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(reissueCertificateOrderRequest, nameof(reissueCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.Reissue");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.Reissue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, reissueCertificateOrderRequest, cancellationToken);
+                var response = _appServiceCertificateOrderRestClient.Reissue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -378,18 +378,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
         /// Operation Id: AppServiceCertificateOrders_Renew
         /// </summary>
-        /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
+        /// <param name="content"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renewCertificateOrderRequest"/> is null. </exception>
-        public virtual async Task<Response> RenewAsync(RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> RenewAsync(RenewCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(renewCertificateOrderRequest, nameof(renewCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.Renew");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrderRestClient.RenewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrderRestClient.RenewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -404,18 +404,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
         /// Operation Id: AppServiceCertificateOrders_Renew
         /// </summary>
-        /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
+        /// <param name="content"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renewCertificateOrderRequest"/> is null. </exception>
-        public virtual Response Renew(RenewCertificateOrderRequest renewCertificateOrderRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Renew(RenewCertificateOrderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(renewCertificateOrderRequest, nameof(renewCertificateOrderRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.Renew");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.Renew(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, renewCertificateOrderRequest, cancellationToken);
+                var response = _appServiceCertificateOrderRestClient.Renew(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -526,18 +526,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
         /// Operation Id: AppServiceCertificateOrders_RetrieveSiteSeal
         /// </summary>
-        /// <param name="siteSealRequest"> Site seal request. </param>
+        /// <param name="content"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteSealRequest"/> is null. </exception>
-        public virtual async Task<Response<SiteSeal>> RetrieveSiteSealAsync(SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SiteSeal>> RetrieveSiteSealAsync(SiteSealContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(siteSealRequest, nameof(siteSealRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.RetrieveSiteSeal");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateOrderRestClient.RetrieveSiteSealAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateOrderRestClient.RetrieveSiteSealAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -552,18 +552,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
         /// Operation Id: AppServiceCertificateOrders_RetrieveSiteSeal
         /// </summary>
-        /// <param name="siteSealRequest"> Site seal request. </param>
+        /// <param name="content"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteSealRequest"/> is null. </exception>
-        public virtual Response<SiteSeal> RetrieveSiteSeal(SiteSealRequest siteSealRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SiteSeal> RetrieveSiteSeal(SiteSealContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(siteSealRequest, nameof(siteSealRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.RetrieveSiteSeal");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.RetrieveSiteSeal(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteSealRequest, cancellationToken);
+                var response = _appServiceCertificateOrderRestClient.RetrieveSiteSeal(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

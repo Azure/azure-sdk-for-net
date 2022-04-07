@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 }
             };
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
-            await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, new FailoverPolicies(failoverPolicyList));
+            await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, failoverPolicies);
 
             DatabaseAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account3, updateOptions);
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.Primary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Primary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Secondary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.SecondaryReadonly));
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
