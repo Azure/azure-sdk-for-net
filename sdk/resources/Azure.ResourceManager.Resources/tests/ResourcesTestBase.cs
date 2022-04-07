@@ -63,12 +63,6 @@ namespace Azure.ResourceManager.Resources.Tests
             })
         };
 
-        protected static JitRequestData CreateJitRequestData(AzureLocation location)
-        {
-            var jData = new JitRequestData(location);
-            return jData;
-        }
-
         protected static ArmDeploymentProperties CreateDeploymentProperties()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
