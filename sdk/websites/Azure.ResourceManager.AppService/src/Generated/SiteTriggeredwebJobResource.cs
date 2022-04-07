@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteTriggeredWebJobHistoryResource>> GetSiteTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
         {
             return await GetSiteTriggeredWebJobHistories().GetAsync(id, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteTriggeredWebJobHistoryResource> GetSiteTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
         {
             return GetSiteTriggeredWebJobHistories().Get(id, cancellationToken);

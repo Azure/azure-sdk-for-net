@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> templateHash = default;
             Optional<IReadOnlyList<SubResource>> outputResources = default;
             Optional<IReadOnlyList<SubResource>> validatedResources = default;
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error);
+            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value);
         }
     }
 }

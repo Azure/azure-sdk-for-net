@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkGatewayNatRuleResource>> GetVirtualNetworkGatewayNatRuleAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
             return await GetVirtualNetworkGatewayNatRules().GetAsync(natRuleName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VirtualNetworkGatewayNatRuleResource> GetVirtualNetworkGatewayNatRule(string natRuleName, CancellationToken cancellationToken = default)
         {
             return GetVirtualNetworkGatewayNatRules().Get(natRuleName, cancellationToken);

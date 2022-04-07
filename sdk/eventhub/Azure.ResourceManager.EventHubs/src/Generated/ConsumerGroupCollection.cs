@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _consumerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,66 +309,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = GetIfExists(consumerGroupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
-        /// Operation Id: ConsumerGroups_Get
-        /// </summary>
-        /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public virtual async Task<Response<ConsumerGroupResource>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
-
-            using var scope = _consumerGroupClientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _consumerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ConsumerGroupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ConsumerGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
-        /// Operation Id: ConsumerGroups_Get
-        /// </summary>
-        /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
-        public virtual Response<ConsumerGroupResource> GetIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
-
-            using var scope = _consumerGroupClientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _consumerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ConsumerGroupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ConsumerGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

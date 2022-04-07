@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<OperationStatus> status = default;
-            Optional<IReadOnlyList<ErrorEntity>> errors = default;
+            Optional<IReadOnlyList<ResponseError>> errors = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> modifiedTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -53,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorEntity> array = new List<ErrorEntity>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorEntity.DeserializeErrorEntity(item));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
                     }
                     errors = array;
                     continue;

@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
-        /// </summary>
-        /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AppServicePlanResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AppServicePlanResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
-        /// </summary>
-        /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AppServicePlanResource> GetIfExists(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<AppServicePlanResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
         /// Operation Id: Applications_Update
         /// </summary>
-        /// <param name="data"> Object containing Application definitions. </param>
+        /// <param name="patch"> Object containing Application definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<VirtualApplicationResource>> UpdateAsync(PatchableVirtualApplicationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<VirtualApplicationResource>> UpdateAsync(VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = await _virtualApplicationApplicationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplicationApplicationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
         /// Operation Id: Applications_Update
         /// </summary>
-        /// <param name="data"> Object containing Application definitions. </param>
+        /// <param name="patch"> Object containing Application definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<VirtualApplicationResource> Update(PatchableVirtualApplicationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<VirtualApplicationResource> Update(VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationResource.Update");
             scope.Start();
             try
             {
-                var response = _virtualApplicationApplicationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _virtualApplicationApplicationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new VirtualApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

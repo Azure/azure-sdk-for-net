@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.6 (2022-01-30)
 
@@ -122,7 +132,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
 StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;

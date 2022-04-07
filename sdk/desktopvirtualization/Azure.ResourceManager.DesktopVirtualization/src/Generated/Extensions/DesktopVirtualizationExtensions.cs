@@ -160,6 +160,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
@@ -175,6 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
@@ -198,6 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ScalingPlanResource>> GetScalingPlanAsync(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetScalingPlans().GetAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
@@ -213,6 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ScalingPlanResource> GetScalingPlan(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetScalingPlans().Get(scalingPlanName, cancellationToken);
@@ -236,6 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
@@ -251,6 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
@@ -274,6 +280,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<HostPoolResource>> GetHostPoolAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetHostPools().GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
@@ -289,6 +296,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<HostPoolResource> GetHostPool(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetHostPools().Get(hostPoolName, cancellationToken);

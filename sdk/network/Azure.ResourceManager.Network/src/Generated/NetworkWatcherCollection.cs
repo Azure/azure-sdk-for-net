@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(networkWatcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,66 +276,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(networkWatcherName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
-        /// Operation Id: NetworkWatchers_Get
-        /// </summary>
-        /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public virtual async Task<Response<NetworkWatcherResource>> GetIfExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-
-            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<NetworkWatcherResource>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
-        /// Operation Id: NetworkWatchers_Get
-        /// </summary>
-        /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public virtual Response<NetworkWatcherResource> GetIfExists(string networkWatcherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-
-            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<NetworkWatcherResource>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

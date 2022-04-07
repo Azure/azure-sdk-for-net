@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await blobContainerDeleteOperation.WaitForCompletionResponseAsync();
 
             //validate if deleted successfully
-            BlobContainerResource blobContainer3 = await _blobContainerCollection.GetIfExistsAsync(containerName);
-            Assert.IsNull(blobContainer3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _blobContainerCollection.GetAsync(containerName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName));
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task LockImmutabilityPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task ExtendImmutabilityPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -447,12 +447,12 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateParameters createParameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent createParameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
             StorageAccountResource sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName1, createParameters)).Value;
             StorageAccountResource destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createParameters)).Value;
 
             //update 2 accounts properties
-            var updateparameter = new PatchableStorageAccountData
+            var updateparameter = new StorageAccountPatch
             {
                 AllowCrossTenantReplication = true,
                 EnableHttpsTrafficOnly = true
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainerSoftDelete()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task PITR()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainersVLW()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };

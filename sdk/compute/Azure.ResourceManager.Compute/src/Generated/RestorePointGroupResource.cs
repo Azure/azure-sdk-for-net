@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             return await GetRestorePoints().GetAsync(restorePointName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
         {
             return GetRestorePoints().Get(restorePointName, cancellationToken);
@@ -231,18 +233,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RestorePointGroupResource>> UpdateAsync(PatchableRestorePointGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<RestorePointGroupResource>> UpdateAsync(RestorePointGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,18 +259,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RestorePointGroupResource> Update(PatchableRestorePointGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<RestorePointGroupResource> Update(RestorePointGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -43,8 +43,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> GetAsync(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetIfExists(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> GetIfExistsAsync(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -105,8 +103,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.Models.RegistrationInfo>> RetrieveRegistrationTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableHostPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableHostPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MsixPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>, System.Collections.IEnumerable
     {
@@ -119,8 +117,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> GetAsync(string msixPackageFullName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> GetIfExists(string msixPackageFullName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> GetIfExistsAsync(string msixPackageFullName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -151,8 +147,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableMsixPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableMsixPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ScalingPlanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>, System.Collections.IEnumerable
     {
@@ -165,8 +161,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> GetAsync(string scalingPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> GetIfExists(string scalingPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> GetIfExistsAsync(string scalingPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -200,8 +194,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableScalingPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableScalingPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SessionHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>, System.Collections.IEnumerable
     {
@@ -212,8 +206,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>> GetAsync(string sessionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> GetIfExists(string sessionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>> GetIfExistsAsync(string sessionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -252,8 +244,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSession(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetUserSessionAsync(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.UserSessionCollection GetUserSessions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableSessionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableSessionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class UserSessionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>, System.Collections.IEnumerable
     {
@@ -264,8 +256,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetAsync(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetIfExists(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetIfExistsAsync(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -307,8 +297,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> GetAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> GetIfExists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> GetIfExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -342,8 +330,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> GetAsync(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> GetIfExists(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> GetIfExistsAsync(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -385,8 +371,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualApplicationResource : Azure.ResourceManager.ArmResource
     {
@@ -399,8 +385,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualDesktopCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>, System.Collections.IEnumerable
     {
@@ -411,8 +397,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> GetAsync(string desktopName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> GetIfExists(string desktopName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> GetIfExistsAsync(string desktopName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -435,8 +419,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualDesktopData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualDesktopData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualWorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>, System.Collections.IEnumerable
     {
@@ -449,8 +433,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> GetIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> GetIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -481,8 +463,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.PatchableVirtualWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -622,6 +604,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.HealthCheckResult left, Azure.ResourceManager.DesktopVirtualization.Models.HealthCheckResult right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class HostPoolPatch : Azure.ResourceManager.Models.ResourceData
+    {
+        public HostPoolPatch() { }
+        public string CustomRdpProperty { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType? LoadBalancerType { get { throw null; } set { } }
+        public int? MaxSessionLimit { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType? PreferredAppGroupType { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationInfoPatch RegistrationInfo { get { throw null; } set { } }
+        public int? Ring { get { throw null; } set { } }
+        public string SsoadfsAuthority { get { throw null; } set { } }
+        public string SsoClientId { get { throw null; } set { } }
+        public string SsoClientSecretKeyVaultPath { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.SsoSecretType? SsoSecretType { get { throw null; } set { } }
+        public bool? StartVmOnConnect { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public bool? ValidationEnvironment { get { throw null; } set { } }
+        public string VmTemplate { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostPoolType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType>
     {
@@ -710,89 +713,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string MinVersion { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
     }
-    public partial class PatchableHostPoolData : Azure.ResourceManager.Models.ResourceData
+    public partial class MsixPackagePatch : Azure.ResourceManager.Models.ResourceData
     {
-        public PatchableHostPoolData() { }
-        public string CustomRdpProperty { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType? LoadBalancerType { get { throw null; } set { } }
-        public int? MaxSessionLimit { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType? PreferredAppGroupType { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationInfoPatch RegistrationInfo { get { throw null; } set { } }
-        public int? Ring { get { throw null; } set { } }
-        public string SsoadfsAuthority { get { throw null; } set { } }
-        public string SsoClientId { get { throw null; } set { } }
-        public string SsoClientSecretKeyVaultPath { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.SsoSecretType? SsoSecretType { get { throw null; } set { } }
-        public bool? StartVmOnConnect { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public bool? ValidationEnvironment { get { throw null; } set { } }
-        public string VmTemplate { get { throw null; } set { } }
-    }
-    public partial class PatchableMsixPackageData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PatchableMsixPackageData() { }
+        public MsixPackagePatch() { }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
         public bool? IsRegularRegistration { get { throw null; } set { } }
-    }
-    public partial class PatchableScalingPlanData
-    {
-        public PatchableScalingPlanData() { }
-        public string Description { get { throw null; } set { } }
-        public string ExclusionTag { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingHostPoolReference> HostPoolReferences { get { throw null; } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType? HostPoolType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule> Schedules { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string TimeZone { get { throw null; } set { } }
-    }
-    public partial class PatchableSessionHostData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PatchableSessionHostData() { }
-        public bool? AllowNewSession { get { throw null; } set { } }
-        public string AssignedUser { get { throw null; } set { } }
-    }
-    public partial class PatchableVirtualApplicationData
-    {
-        public PatchableVirtualApplicationData() { }
-        public Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType? ApplicationType { get { throw null; } set { } }
-        public string CommandLineArguments { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.CommandLineSetting? CommandLineSetting { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string FilePath { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public int? IconIndex { get { throw null; } set { } }
-        public string IconPath { get { throw null; } set { } }
-        public string MsixPackageApplicationId { get { throw null; } set { } }
-        public string MsixPackageFamilyName { get { throw null; } set { } }
-        public bool? ShowInPortal { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PatchableVirtualApplicationGroupData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PatchableVirtualApplicationGroupData() { }
-        public string Description { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PatchableVirtualDesktopData
-    {
-        public PatchableVirtualDesktopData() { }
-        public string Description { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PatchableVirtualWorkspaceData
-    {
-        public PatchableVirtualWorkspaceData() { }
-        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersonalDesktopAssignmentType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType>
@@ -901,6 +827,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string HostPoolArmPath { get { throw null; } set { } }
         public bool? ScalingPlanEnabled { get { throw null; } set { } }
     }
+    public partial class ScalingPlanPatch
+    {
+        public ScalingPlanPatch() { }
+        public string Description { get { throw null; } set { } }
+        public string ExclusionTag { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingHostPoolReference> HostPoolReferences { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType? HostPoolType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule> Schedules { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string TimeZone { get { throw null; } set { } }
+    }
     public partial class ScalingSchedule
     {
         public ScalingSchedule() { }
@@ -983,6 +921,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm left, Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SessionHostPatch : Azure.ResourceManager.Models.ResourceData
+    {
+        public SessionHostPatch() { }
+        public bool? AllowNewSession { get { throw null; } set { } }
+        public string AssignedUser { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SessionHostStatus : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus>
@@ -1101,5 +1045,43 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.UpdateState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.UpdateState left, Azure.ResourceManager.DesktopVirtualization.Models.UpdateState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VirtualApplicationGroupPatch : Azure.ResourceManager.Models.ResourceData
+    {
+        public VirtualApplicationGroupPatch() { }
+        public string Description { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class VirtualApplicationPatch
+    {
+        public VirtualApplicationPatch() { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType? ApplicationType { get { throw null; } set { } }
+        public string CommandLineArguments { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.CommandLineSetting? CommandLineSetting { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string FilePath { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public int? IconIndex { get { throw null; } set { } }
+        public string IconPath { get { throw null; } set { } }
+        public string MsixPackageApplicationId { get { throw null; } set { } }
+        public string MsixPackageFamilyName { get { throw null; } set { } }
+        public bool? ShowInPortal { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class VirtualDesktopPatch
+    {
+        public VirtualDesktopPatch() { }
+        public string Description { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class VirtualWorkspacePatch
+    {
+        public VirtualWorkspacePatch() { }
+        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }

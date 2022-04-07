@@ -76,6 +76,15 @@ rename-rules:
   Urls: Uris
 
 directive:
+# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "ResourcesResponseError" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+# TODO - remove when ErrorAdditionalInfo is introduced to Azure.Core and marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorAdditionalInfo
+    transform: $["x-ms-client-name"] = "ResourcesErrorAdditionalInfo" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -163,6 +172,8 @@ directive:
       $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
       $["Identity"]["properties"]["principalId"]["format"] = "uuid";
       $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
+      $["JitRequestProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
+      $["ApplicationProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
       $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceData";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
@@ -188,6 +199,7 @@ directive:
       $.ApplicationAuthorization.properties.principalId.format = 'uuid';
       $.JitAuthorizationPolicies.properties.principalId.format = 'uuid';
       $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
+      $.ApplicationClientDetails.properties.oid['x-ms-client-name'] = 'ObjectId';
       $.ApplicationClientDetails.properties.oid.format = 'uuid';
       $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
       $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
@@ -210,7 +222,6 @@ directive:
       $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
       $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
       $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["x-ms-client-name"] = "Interval";
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
@@ -246,6 +257,9 @@ directive:
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
       $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
+      $.Dependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.BasicDependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.TargetResource.properties.resourceType['x-ms-format'] = 'resource-type';
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
@@ -313,6 +327,10 @@ directive:
     where: $.definitions.DeploymentProperties.properties.onErrorDeployment
     transform: >
       $["x-ms-client-name"] = "ErrorDeployment"
+  - from: deploymentScripts.json
+    where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
+    transform: >
+      $.additionalProperties = undefined
 ```
 
 ### Tag: package-track2-preview

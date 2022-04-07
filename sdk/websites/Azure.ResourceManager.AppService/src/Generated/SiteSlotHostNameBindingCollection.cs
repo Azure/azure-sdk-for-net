@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(hostName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// Operation Id: WebApps_GetHostNameBindingSlot
-        /// </summary>
-        /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotHostNameBindingResource>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-
-            using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotHostNameBindingResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHostNameBindingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// Operation Id: WebApps_GetHostNameBindingSlot
-        /// </summary>
-        /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<SiteSlotHostNameBindingResource> GetIfExists(string hostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-
-            using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotHostNameBindingResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHostNameBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

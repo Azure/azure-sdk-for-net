@@ -1,14 +1,14 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2022-04-07)
 
 ### Features Added
-
-### Breaking Changes
+* Added `SignalROptions`. Users can configure service endpoints, service transport type, and JSON object serialization with `SignalROptions` in the startup class.
+* Support customizing client endpoint and server endpoint in multiple ways. It is useful when you want to integrate with application gateway.
 
 ### Bugs Fixed
-
-### Other Changes
+* Fixed the message order problem.
+* Fixed the ackable message timeout problem when multiple SignalR endpoints exist.
 
 ## 1.7.0 (2022-02-22)
 **Following are the all changes in 1.7.0-beta.2 and 1.7.0-beta.1 versions.**

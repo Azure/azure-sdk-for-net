@@ -20,6 +20,9 @@ namespace Azure.Identity.Tests
         public AuthorizationCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
+
         [SetUp]
         public void Setup()
         {

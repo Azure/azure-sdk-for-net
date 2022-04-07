@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                var response = GetIfExists(resourceName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
-        /// Operation Id: WebPubSub_Get
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<Response<WebPubSubResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<WebPubSubResource>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
-        /// Operation Id: WebPubSub_Get
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<WebPubSubResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<WebPubSubResource>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

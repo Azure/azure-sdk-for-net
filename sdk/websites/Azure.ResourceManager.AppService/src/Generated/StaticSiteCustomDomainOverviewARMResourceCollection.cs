@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(domainName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
-        /// </summary>
-        /// <param name="domainName"> The custom domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<StaticSiteCustomDomainOverviewARMResource>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
-        /// </summary>
-        /// <param name="domainName"> The custom domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<StaticSiteCustomDomainOverviewARMResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<StaticSiteCustomDomainOverviewARMResource>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

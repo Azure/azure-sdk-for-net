@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
-        internal ResourceGroupExportResult(BinaryData template, ErrorDetail error)
+        internal ResourceGroupExportResult(BinaryData template, ResponseError error)
         {
             Template = template;
             Error = error;
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The template content. </summary>
         public BinaryData Template { get; }
         /// <summary> The template export error. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
     }
 }

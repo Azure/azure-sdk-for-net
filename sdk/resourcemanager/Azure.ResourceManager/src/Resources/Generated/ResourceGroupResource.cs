@@ -201,18 +201,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// Operation Id: ResourceGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to update a resource group. </param>
+        /// <param name="patch"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupResource>> UpdateAsync(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ResourceGroupResource>> UpdateAsync(ResourceGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _resourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,18 +227,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// Operation Id: ResourceGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to update a resource group. </param>
+        /// <param name="patch"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ResourceGroupResource> Update(PatchableResourceGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ResourceGroupResource> Update(ResourceGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
+                var response = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
                 return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            FileShareResource fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
-            Assert.IsNull(fileShare3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };

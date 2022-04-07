@@ -11,8 +11,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, Azure.ResourceManager.Storage.Models.ListContainersInclude? include = default(Azure.ResourceManager.Storage.Models.ListContainersInclude?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, Azure.ResourceManager.Storage.Models.ListContainersInclude? include = default(Azure.ResourceManager.Storage.Models.ListContainersInclude?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobContainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.BlobContainerResource> GetIfExists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobContainerResource>> GetIfExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.BlobContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.BlobContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.BlobContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.BlobContainerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -74,8 +72,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobInventoryPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobInventoryPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobInventoryPolicyResource>> GetAsync(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName blobInventoryPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.BlobInventoryPolicyResource> GetIfExists(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName blobInventoryPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobInventoryPolicyResource>> GetIfExistsAsync(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName blobInventoryPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.BlobInventoryPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.BlobInventoryPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.BlobInventoryPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.BlobInventoryPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -134,8 +130,6 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource> Get(string location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource>> GetAsync(string location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource> GetIfExists(string location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource>> GetIfExistsAsync(string location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DeletedAccountData : Azure.ResourceManager.Models.ResourceData
     {
@@ -167,8 +161,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource>> GetAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource> GetIfExists(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource>> GetIfExistsAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.EncryptionScopeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.EncryptionScopeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.EncryptionScopeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.EncryptionScopeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -229,8 +221,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.FileShareResource> GetAll(string maxpagesize = null, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.FileShareResource> GetAllAsync(string maxpagesize = null, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileShareResource>> GetAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.FileShareResource> GetIfExists(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileShareResource>> GetIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.FileShareResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.FileShareResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.FileShareResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.FileShareResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -312,8 +302,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.LocalUserResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.LocalUserResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.LocalUserResource>> GetAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.LocalUserResource> GetIfExists(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.LocalUserResource>> GetIfExistsAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.LocalUserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.LocalUserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.LocalUserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.LocalUserResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -376,8 +364,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource>> GetAsync(string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource> GetIfExists(string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource>> GetIfExistsAsync(string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.ObjectReplicationPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -414,8 +400,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -462,16 +446,14 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.StorageAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StorageAccountResource>, System.Collections.IEnumerable
     {
         protected StorageAccountCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageAccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.Storage.Models.StorageAccountCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageAccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.Storage.Models.StorageAccountCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageAccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageAccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Get(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> GetAsync(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> GetIfExists(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> GetIfExistsAsync(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.StorageAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.StorageAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.StorageAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StorageAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -577,8 +559,8 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeUserDelegationKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Update(Azure.ResourceManager.Storage.Models.PatchableStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> UpdateAsync(Azure.ResourceManager.Storage.Models.PatchableStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Update(Azure.ResourceManager.Storage.Models.StorageAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> UpdateAsync(Azure.ResourceManager.Storage.Models.StorageAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class StorageExtensions
     {
@@ -627,8 +609,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAll(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAllAsync(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageQueueResource>> GetAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.StorageQueueResource> GetIfExists(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageQueueResource>> GetIfExistsAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.StorageQueueResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.StorageQueueResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.StorageQueueResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StorageQueueResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -664,8 +644,6 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.TableResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.TableResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.TableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.TableResource> GetIfExists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.TableResource>> GetIfExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.TableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.TableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.TableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.TableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1731,34 +1709,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ObjectType left, Azure.ResourceManager.Storage.Models.ObjectType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PatchableStorageAccountData
-    {
-        public PatchableStorageAccountData() { }
-        public Azure.ResourceManager.Storage.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public bool? AllowBlobPublicAccess { get { throw null; } set { } }
-        public bool? AllowCrossTenantReplication { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.AllowedCopyScope? AllowedCopyScope { get { throw null; } set { } }
-        public bool? AllowSharedKeyAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.CustomDomain CustomDomain { get { throw null; } set { } }
-        public bool? DefaultToOAuthAuthentication { get { throw null; } set { } }
-        public bool? EnableHttpsTrafficOnly { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.Encryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.ImmutableStorageAccount ImmutableStorageWithVersioning { get { throw null; } set { } }
-        public bool? IsLocalUserEnabled { get { throw null; } set { } }
-        public bool? IsSftpEnabled { get { throw null; } set { } }
-        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.NetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.RoutingPreference RoutingPreference { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.SasPolicy SasPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Permissions : System.IEquatable<Azure.ResourceManager.Storage.Models.Permissions>
     {
@@ -2163,9 +2113,9 @@ namespace Azure.ResourceManager.Storage.Models
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
-    public partial class StorageAccountCreateParameters
+    public partial class StorageAccountCreateOrUpdateContent
     {
-        public StorageAccountCreateParameters(Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind kind, string location) { }
+        public StorageAccountCreateOrUpdateContent(Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind kind, string location) { }
         public Azure.ResourceManager.Storage.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public bool? AllowBlobPublicAccess { get { throw null; } set { } }
         public bool? AllowCrossTenantReplication { get { throw null; } set { } }
@@ -2230,6 +2180,34 @@ namespace Azure.ResourceManager.Storage.Models
         public string Queue { get { throw null; } }
         public string Table { get { throw null; } }
         public string Web { get { throw null; } }
+    }
+    public partial class StorageAccountPatch
+    {
+        public StorageAccountPatch() { }
+        public Azure.ResourceManager.Storage.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public bool? AllowBlobPublicAccess { get { throw null; } set { } }
+        public bool? AllowCrossTenantReplication { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.AllowedCopyScope? AllowedCopyScope { get { throw null; } set { } }
+        public bool? AllowSharedKeyAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.CustomDomain CustomDomain { get { throw null; } set { } }
+        public bool? DefaultToOAuthAuthentication { get { throw null; } set { } }
+        public bool? EnableHttpsTrafficOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.Encryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.ImmutableStorageAccount ImmutableStorageWithVersioning { get { throw null; } set { } }
+        public bool? IsLocalUserEnabled { get { throw null; } set { } }
+        public bool? IsSftpEnabled { get { throw null; } set { } }
+        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.NetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.RoutingPreference RoutingPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.SasPolicy SasPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class StorageAccountRegenerateKeyParameters
     {

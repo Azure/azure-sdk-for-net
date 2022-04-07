@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(loadBalancerName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,68 +310,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(loadBalancerName, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
-        /// Operation Id: LoadBalancers_Get
-        /// </summary>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public virtual async Task<Response<LoadBalancerResource>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
-
-            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LoadBalancerResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
-        /// Operation Id: LoadBalancers_Get
-        /// </summary>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public virtual Response<LoadBalancerResource> GetIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
-
-            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LoadBalancerResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

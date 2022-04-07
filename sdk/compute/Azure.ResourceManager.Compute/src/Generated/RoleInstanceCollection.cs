@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(roleInstanceName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,68 +246,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(roleInstanceName, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
-        /// Operation Id: CloudServiceRoleInstances_Get
-        /// </summary>
-        /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public virtual async Task<Response<RoleInstanceResource>> GetIfExistsAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
-
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RoleInstanceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RoleInstanceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
-        /// Operation Id: CloudServiceRoleInstances_Get
-        /// </summary>
-        /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public virtual Response<RoleInstanceResource> GetIfExists(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
-
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _roleInstanceCloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<RoleInstanceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RoleInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

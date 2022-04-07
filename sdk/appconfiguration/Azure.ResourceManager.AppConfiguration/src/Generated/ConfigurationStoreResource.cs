@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
@@ -154,9 +157,47 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             return GetPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of KeyValueResources in the ConfigurationStore. </summary>
+        /// <returns> An object representing collection of KeyValueResources and their operations over a KeyValueResource. </returns>
+        public virtual KeyValueCollection GetKeyValues()
+        {
+            return GetCachedClient(Client => new KeyValueCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<KeyValueResource>> GetKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            return await GetKeyValues().GetAsync(keyValueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KeyValueResource> GetKeyValue(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            return GetKeyValues().Get(keyValueName, cancellationToken);
         }
 
         /// <summary>
@@ -265,19 +306,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The options for updating a configuration store. </param>
+        /// <param name="patch"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigurationStoreResource>> UpdateAsync(WaitUntil waitUntil, PatchableConfigurationStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfigurationStoreResource>> UpdateAsync(WaitUntil waitUntil, ConfigurationStorePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.Update");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _configurationStoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,19 +336,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The options for updating a configuration store. </param>
+        /// <param name="patch"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationStoreResource> Update(WaitUntil waitUntil, PatchableConfigurationStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ConfigurationStoreResource> Update(WaitUntil waitUntil, ConfigurationStorePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.Update");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _configurationStoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -321,7 +362,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Lists the access key for the specified configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/ListKeys
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys
         /// Operation Id: ConfigurationStores_ListKeys
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -364,7 +405,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Lists the access key for the specified configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/ListKeys
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys
         /// Operation Id: ConfigurationStores_ListKeys
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -407,10 +448,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Regenerates an access key for the specified configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/RegenerateKey
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey
         /// Operation Id: ConfigurationStores_RegenerateKey
         /// </summary>
-        /// <param name="options"> The options for regenerating an access key. </param>
+        /// <param name="options"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
@@ -433,10 +474,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary>
         /// Regenerates an access key for the specified configuration store.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/RegenerateKey
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey
         /// Operation Id: ConfigurationStores_RegenerateKey
         /// </summary>
-        /// <param name="options"> The options for regenerating an access key. </param>
+        /// <param name="options"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<ApiKey> RegenerateKey(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
@@ -448,58 +489,6 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _configurationStoreRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists a configuration store key-value.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeyValue
-        /// Operation Id: ConfigurationStores_ListKeyValue
-        /// </summary>
-        /// <param name="options"> The options for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.GetKeyValue");
-            scope.Start();
-            try
-            {
-                var response = await _configurationStoreRestClient.ListKeyValueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists a configuration store key-value.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeyValue
-        /// Operation Id: ConfigurationStores_ListKeyValue
-        /// </summary>
-        /// <param name="options"> The options for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<KeyValue> GetKeyValue(ListKeyValueOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.GetKeyValue");
-            scope.Start();
-            try
-            {
-                var response = _configurationStoreRestClient.ListKeyValue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return response;
             }
             catch (Exception e)

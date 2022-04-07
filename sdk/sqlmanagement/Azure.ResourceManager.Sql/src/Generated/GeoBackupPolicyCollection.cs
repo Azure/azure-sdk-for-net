@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(geoBackupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _geoBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,58 +256,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(geoBackupPolicyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/geoBackupPolicies/{geoBackupPolicyName}
-        /// Operation Id: GeoBackupPolicies_Get
-        /// </summary>
-        /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GeoBackupPolicyResource>> GetIfExistsAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _geoBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<GeoBackupPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/geoBackupPolicies/{geoBackupPolicyName}
-        /// Operation Id: GeoBackupPolicies_Get
-        /// </summary>
-        /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GeoBackupPolicyResource> GetIfExists(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _geoBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<GeoBackupPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>> GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyAsync(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -114,6 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);

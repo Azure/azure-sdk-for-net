@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());

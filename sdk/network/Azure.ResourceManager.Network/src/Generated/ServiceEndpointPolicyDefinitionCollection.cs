@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPolicyDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
-        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
-        /// </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<ServiceEndpointPolicyDefinitionResource>> GetIfExistsAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
-
-            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serviceEndpointPolicyDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceEndpointPolicyDefinitionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
-        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
-        /// </summary>
-        /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
-        public virtual Response<ServiceEndpointPolicyDefinitionResource> GetIfExists(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
-
-            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serviceEndpointPolicyDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceEndpointPolicyDefinitionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

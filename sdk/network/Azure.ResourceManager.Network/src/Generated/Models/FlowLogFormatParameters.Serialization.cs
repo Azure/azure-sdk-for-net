@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FlowLogFormatType))
+            if (Optional.IsDefined(FormatType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(FlowLogFormatType.Value.ToString());
+                writer.WriteStringValue(FormatType.Value.ToString());
             }
             if (Optional.IsDefined(Version))
             {

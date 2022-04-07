@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(publicCertificateName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
-        /// Operation Id: WebApps_GetPublicCertificateSlot
-        /// </summary>
-        /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotPublicCertificateResource>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-
-            using var scope = _siteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotPublicCertificateResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
-        /// Operation Id: WebApps_GetPublicCertificateSlot
-        /// </summary>
-        /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public virtual Response<SiteSlotPublicCertificateResource> GetIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-
-            using var scope = _siteSlotPublicCertificateWebAppsClientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotPublicCertificateResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

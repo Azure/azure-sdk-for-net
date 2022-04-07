@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
+            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
             Assert.AreEqual(afdSecurityPolicyName, afdSecurityPolicy.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecurityPolicy.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, afdSecurityPolicyName, null));
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
             _ = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
             int count = 0;
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
-            AfdSecurityPolicy getAfdSecurityPolicy = await afdProfile.GetAfdSecurityPolicies().GetAsync(afdSecurityPolicyName);
+            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
+            AfdSecurityPolicyResource getAfdSecurityPolicy = await afdProfile.GetAfdSecurityPolicies().GetAsync(afdSecurityPolicyName);
             ResourceDataHelper.AssertValidAfdSecurityPolicy(afdSecurityPolicy, getAfdSecurityPolicy);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecurityPolicies().GetAsync(null));
         }

@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(diskName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
-        /// Operation Id: Disks_Get
-        /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual async Task<Response<DiskResource>> GetIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DiskResource>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
-        /// Operation Id: Disks_Get
-        /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual Response<DiskResource> GetIfExists(string diskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<DiskResource>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

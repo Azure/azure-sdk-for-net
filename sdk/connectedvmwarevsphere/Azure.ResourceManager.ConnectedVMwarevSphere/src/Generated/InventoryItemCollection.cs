@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,66 +303,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = GetIfExists(inventoryItemName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}/inventoryItems/{inventoryItemName}
-        /// Operation Id: InventoryItems_Get
-        /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<Response<InventoryItemResource>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
-
-            using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<InventoryItemResource>(null, response.GetRawResponse());
-                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}/inventoryItems/{inventoryItemName}
-        /// Operation Id: InventoryItems_Get
-        /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<InventoryItemResource> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
-
-            using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<InventoryItemResource>(null, response.GetRawResponse());
-                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverAzureADAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,58 +286,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(administratorName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
-        /// Operation Id: ServerAzureADAdministrators_Get
-        /// </summary>
-        /// <param name="administratorName"> The name of server active directory administrator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerAzureADAdministratorResource>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverAzureADAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerAzureADAdministratorResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministratorResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
-        /// Operation Id: ServerAzureADAdministrators_Get
-        /// </summary>
-        /// <param name="administratorName"> The name of server active directory administrator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerAzureADAdministratorResource> GetIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serverAzureADAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerAzureADAdministratorResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

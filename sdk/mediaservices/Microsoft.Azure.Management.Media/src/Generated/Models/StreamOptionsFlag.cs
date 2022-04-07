@@ -34,10 +34,18 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// The live event provides lower end to end latency by reducing its
-        /// internal buffers. This could result in more client buffering during
-        /// playback if network bandwidth is low.
+        /// internal buffers.
         /// </summary>
         public static readonly StreamOptionsFlag LowLatency = "LowLatency";
+
+        /// <summary>
+        /// The live event is optimized for end to end latency. This option is
+        /// only available for encoding live events with RTMP input. The
+        /// outputs can be streamed using HLS or DASH formats. The outputs'
+        /// archive or DVR rewind length is limited to 6 hours. Use
+        /// "LowLatency" stream option for all other scenarios.
+        /// </summary>
+        public static readonly StreamOptionsFlag LowLatencyV2 = "LowLatencyV2";
 
 
         /// <summary>

@@ -139,26 +139,6 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Sql_GetAManagedDatabasesIfExists
-            ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
-
-            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
-            if (managedInstance != null)
-            {
-                Console.WriteLine(managedDatabase.Data.Name);
-            }
-
-            if (await managedDatabaseCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task DeleteManagedDatabases()
         {
             #region Snippet:Managing_Sql_DeleteAManagedDatabases

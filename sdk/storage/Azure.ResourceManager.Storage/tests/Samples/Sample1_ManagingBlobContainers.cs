@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
+            StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
             ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Started, accountName, parameters);
@@ -72,23 +72,6 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
             Console.WriteLine(blobContainer.Id.Name);
-            #endregion
-        }
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainerResource blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
-            if (blobContainer != null)
-            {
-                Console.WriteLine(blobContainer.Id.Name);
-            }
-            if (await blobContainerCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("blob container 'bar' exists");
-            }
             #endregion
         }
         [Test]

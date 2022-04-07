@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);

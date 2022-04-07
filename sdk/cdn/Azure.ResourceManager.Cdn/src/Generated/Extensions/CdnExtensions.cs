@@ -96,32 +96,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
-        /// Operation Id: Profiles_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetProfilesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
-        /// Operation Id: Profiles_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetProfiles(cancellationToken);
-        }
-
-        /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
         /// Operation Id: CheckNameAvailabilityWithSubscription
@@ -186,6 +160,32 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
+        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetProfilesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetProfiles(cancellationToken);
+        }
+
+        /// <summary>
         /// Check the quota and actual usage of the CDN profiles under the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
         /// Operation Id: ResourceUsage_List
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
         /// Operation Id: ManagedRuleSets_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
         /// Operation Id: ManagedRuleSets_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -255,30 +255,32 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Retrieve protection policy with specified name within a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -302,6 +304,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -309,7 +312,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Retrieve protection policy with specified name within a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -317,10 +320,214 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkEndpointNameAvailabilityInput"/> is null. </exception>
+        public static async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkEndpointNameAvailabilityInput, nameof(checkEndpointNameAvailabilityInput));
+
+            return await GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(checkEndpointNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkEndpointNameAvailabilityInput"/> is null. </exception>
+        public static Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkEndpointNameAvailabilityInput, nameof(checkEndpointNameAvailabilityInput));
+
+            return GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(checkEndpointNameAvailabilityInput, cancellationToken);
+        }
+
+        #region AfdCustomDomainResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AfdCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdCustomDomainResource" /> object. </returns>
+        public static AfdCustomDomainResource GetAfdCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdCustomDomainResource.ValidateResourceId(id);
+                return new AfdCustomDomainResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdEndpointResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdEndpointResource.CreateResourceIdentifier" /> to create an <see cref="AfdEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdEndpointResource" /> object. </returns>
+        public static AfdEndpointResource GetAfdEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdEndpointResource.ValidateResourceId(id);
+                return new AfdEndpointResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdOriginGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdOriginGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdOriginGroupResource.CreateResourceIdentifier" /> to create an <see cref="AfdOriginGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdOriginGroupResource" /> object. </returns>
+        public static AfdOriginGroupResource GetAfdOriginGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdOriginGroupResource.ValidateResourceId(id);
+                return new AfdOriginGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdOriginResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdOriginResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdOriginResource.CreateResourceIdentifier" /> to create an <see cref="AfdOriginResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdOriginResource" /> object. </returns>
+        public static AfdOriginResource GetAfdOriginResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdOriginResource.ValidateResourceId(id);
+                return new AfdOriginResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdRouteResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdRouteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdRouteResource.CreateResourceIdentifier" /> to create an <see cref="AfdRouteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdRouteResource" /> object. </returns>
+        public static AfdRouteResource GetAfdRouteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdRouteResource.ValidateResourceId(id);
+                return new AfdRouteResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdRuleSetResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdRuleSetResource.CreateResourceIdentifier" /> to create an <see cref="AfdRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdRuleSetResource" /> object. </returns>
+        public static AfdRuleSetResource GetAfdRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdRuleSetResource.ValidateResourceId(id);
+                return new AfdRuleSetResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdRuleResource.CreateResourceIdentifier" /> to create an <see cref="AfdRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdRuleResource" /> object. </returns>
+        public static AfdRuleResource GetAfdRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdRuleResource.ValidateResourceId(id);
+                return new AfdRuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdSecurityPolicyResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="AfdSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdSecurityPolicyResource" /> object. </returns>
+        public static AfdSecurityPolicyResource GetAfdSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdSecurityPolicyResource.ValidateResourceId(id);
+                return new AfdSecurityPolicyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AfdSecretResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AfdSecretResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AfdSecretResource.CreateResourceIdentifier" /> to create an <see cref="AfdSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AfdSecretResource" /> object. </returns>
+        public static AfdSecretResource GetAfdSecretResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AfdSecretResource.ValidateResourceId(id);
+                return new AfdSecretResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         #region ProfileResource
         /// <summary>

@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             // check for exists vm template
-            vmtemplate1 = await _virtualMachineTemplateCollection.GetIfExistsAsync(vmtemplateName);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
+            bool exists = await _virtualMachineTemplateCollection.ExistsAsync(vmtemplateName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

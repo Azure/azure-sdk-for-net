@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Secret data model. </summary>
-    public partial class SecretData : KeyVaultResource
+    public partial class SecretData : KeyVaultResourceData
     {
         /// <summary> Initializes a new instance of SecretData. </summary>
         /// <param name="properties"> Properties of the secret. </param>

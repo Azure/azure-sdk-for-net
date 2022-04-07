@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(azCliVersion));
             }
 
-            Outputs = new ChangeTrackingDictionary<string, BinaryData>();
-            SupportingScriptUris = new ChangeTrackingList<string>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzCliVersion = azCliVersion;
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, BinaryData> outputs, Uri primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -103,11 +102,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IReadOnlyDictionary<string, BinaryData> Outputs { get; }
+        public BinaryData Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public Uri PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; }
+        public IList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
