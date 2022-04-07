@@ -848,7 +848,7 @@ namespace Compute.Tests
             Assert.Equal(advancedSettingsIn.Count, advancedSettingsOut.Count);
             foreach(KeyValuePair<string, string> kvp in advancedSettingsIn)
             {
-                Assert.True(advancedSettingsOut.ContainsKey(kvp.Value));
+                Assert.True(advancedSettingsOut.ContainsKey(kvp.Key));
                 Assert.Equal(kvp.Value, advancedSettingsOut[kvp.Key]);
             }
         }
