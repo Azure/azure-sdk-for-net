@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
             Optional<string> id = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
+            return new ArmDependency(Optional.ToList(dependsOn), id.Value, Optional.ToNullable(resourceType), resourceName.Value);
         }
     }
 }

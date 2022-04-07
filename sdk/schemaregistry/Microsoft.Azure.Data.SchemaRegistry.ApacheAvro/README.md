@@ -138,16 +138,16 @@ try
 {
     Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
 }
-catch (AvroSerializationException exception)
+catch (SchemaRegistryAvroException exception)
 {
     // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
     // serialize the data.
     Console.WriteLine(exception);
 
     // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
-    if (exception.SerializedSchemaId != null)
+    if (exception.SchemaId != null)
     {
-        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SerializedSchemaId);
+        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
         Console.WriteLine(schema.Definition);
     }
 }

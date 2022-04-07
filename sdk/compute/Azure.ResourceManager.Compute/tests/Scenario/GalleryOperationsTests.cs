@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var description = "This is a gallery for test";
-            var update = new PatchableGalleryData()
+            var update = new GalleryPatch()
             {
                 Description = description
             };

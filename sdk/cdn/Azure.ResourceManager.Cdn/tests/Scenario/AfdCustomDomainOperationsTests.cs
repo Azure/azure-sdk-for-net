@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             AfdCustomDomainResource afdCustomDomain = await afdProfile.GetAfdCustomDomains().GetAsync("customdomain4afd-azuretest-net");
-            PatchableAfdCustomDomainData updateOptions = new PatchableAfdCustomDomainData
+            AfdCustomDomainPatch updateOptions = new AfdCustomDomainPatch
             {
                 TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
                 {

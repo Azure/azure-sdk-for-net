@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             AfdRouteResource afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
-            PatchableAfdRouteData updateOptions = new PatchableAfdRouteData
+            AfdRoutePatch updateOptions = new AfdRoutePatch
             {
                 EnabledState = EnabledState.Disabled
             };

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourcesErrorAdditionalInfo
+    internal partial class ResourcesErrorAdditionalInfo
     {
         internal static ResourcesErrorAdditionalInfo DeserializeResourcesErrorAdditionalInfo(JsonElement element)
         {

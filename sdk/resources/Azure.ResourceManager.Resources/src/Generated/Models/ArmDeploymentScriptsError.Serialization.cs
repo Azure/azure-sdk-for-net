@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentScriptsError DeserializeArmDeploymentScriptsError(JsonElement element)
         {
-            Optional<ResourcesResponseError> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
