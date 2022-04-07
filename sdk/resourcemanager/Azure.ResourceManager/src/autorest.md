@@ -328,6 +328,9 @@ directive:
       from: Resource
       to: TrackedResourceExtendedData
   - rename-model:
+      from: ResourcesMoveInfo
+      to: ResourcesMoveContent
+  - rename-model:
       from: ProviderRegistrationRequest
       to: ResourceProviderRegistrationOptions
   - from: resources.json
