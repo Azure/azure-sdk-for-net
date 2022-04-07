@@ -1,0 +1,132 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "219",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-100395d886085348a9006323f8fb4b91-104377c428e18a43-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "e1b96874f5f9e9a94df7ef8ce41fd18f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversationItem": {
+            "text": "How are you?",
+            "participantId": "1",
+            "id": "1",
+            "modality": "text"
+          }
+        },
+        "parameters": {
+          "projectName": "OrchestrationProject",
+          "deploymentName": "ShabanTest"
+        },
+        "kind": "CustomConversation"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "87f6934b-5ec3-496b-81aa-cdf4e12adfb2",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 05 Apr 2022 12:33:57 GMT",
+        "Pragma": "no-cache",
+        "request-id": "87f6934b-5ec3-496b-81aa-cdf4e12adfb2",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "205"
+      },
+      "ResponseBody": {
+        "kind": "CustomConversationResult",
+        "results": {
+          "query": "How are you?",
+          "prediction": {
+            "topIntent": "ChitChat-QnA",
+            "projectKind": "workflow",
+            "intents": {
+              "ChitChat-QnA": {
+                "confidenceScore": 0.99826396,
+                "targetKind": "question_answering",
+                "result": {
+                  "answers": [
+                    {
+                      "questions": [
+                        "How\u0027d you sleep last night?",
+                        "Are you doing good?",
+                        "Are you feeling well?",
+                        "How are you doing?",
+                        "How is the day treating you?",
+                        "Are you feeling OK?",
+                        "How are you?",
+                        "How\u0027s it hangin?",
+                        "How\u0027s tricks?",
+                        "Are you doing OK?",
+                        "Hey, how are you?",
+                        "How are you feeling?",
+                        "How are ya?",
+                        "How are things?",
+                        "How are you going?",
+                        "How art thou?",
+                        "Greetings, Bot. How are you doing?",
+                        "Are you feeling good?",
+                        "Are you doing well?",
+                        "How are things going?",
+                        "How\u0027s it going?",
+                        "Say, how are you doing?",
+                        "How\u0027s the day treating you?",
+                        "How\u0027s life?",
+                        "How\u0027s life treating you?",
+                        "How are you today?",
+                        "Yo, how are you?",
+                        "How you doing?",
+                        "How you doing bot?",
+                        "How ya doing?",
+                        "How is the day treating ya?",
+                        "How\u0027s it hanging?"
+                      ],
+                      "answer": "I\u0027m doing great, thanks for asking!",
+                      "confidenceScore": 1.0,
+                      "id": 72,
+                      "source": "qna_chitchat_friendly.tsv",
+                      "metadata": {
+                        "editorial": "chitchat"
+                      },
+                      "dialog": {
+                        "isContextOnly": false,
+                        "prompts": []
+                      }
+                    }
+                  ]
+                }
+              },
+              "EmailIntent": {
+                "confidenceScore": 0.7892474,
+                "targetKind": "conversation"
+              },
+              "RestaurantIntent": {
+                "confidenceScore": 0.53074795,
+                "targetKind": "luis"
+              },
+              "None": {
+                "confidenceScore": 0.16826314,
+                "targetKind": "non_linked"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
+    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
+    "RandomSeed": "686593992"
+  }
+}
