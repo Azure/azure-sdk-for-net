@@ -11,8 +11,6 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Relaxed `ServiceBusMessage` validation to allow the `SessionId` property to be changed after the `PartitionKey` property is already set.
