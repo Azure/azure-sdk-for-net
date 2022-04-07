@@ -414,10 +414,20 @@ namespace Azure.Storage.Test.Shared
             return Directory.CreateDirectory(Path.Combine(parentPath, string.IsNullOrEmpty(directoryName) ? Recording.Random.NewGuid().ToString() : directoryName)).FullName;
         }
 
-        public string CreateRandomFile(string parentPath, string fileName = default)
+        public async Task<string> CreateRandomFileAsync(string parentPath, string fileName = default, long size = 0)
         {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, string.IsNullOrEmpty(fileName) ? Recording.Random.NewGuid().ToString() : fileName)))
+            using (FileStream fs = File.OpenWrite(Path.Combine(parentPath, string.IsNullOrEmpty(fileName) ? Recording.Random.NewGuid().ToString() : fileName)))
             {
+                int bufferSize = Constants.MB;
+                byte[] data = new byte[bufferSize];
+                while (fs.Position + bufferSize < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (fs.Position < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(size - fs.Position), 0, (int)(size - fs.Position));
+                }
                 return fs.Name;
             }
         }

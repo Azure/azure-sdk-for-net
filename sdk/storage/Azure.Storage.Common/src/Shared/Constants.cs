@@ -679,6 +679,11 @@ namespace Azure.Storage
         /// </summary>
         internal static class DataMovement
         {
+            internal const int InitialMainPoolSize = 32;
+            internal const int InitialDownloadFileThreads = 32; // Max is 3000
+            internal const int CpuTuningMultiplier = 16;
+            internal const int MaxJobPartReaders = 64;
+
             /// <summary>
             /// If there are multiple log files or job state files
             ///
@@ -686,7 +691,7 @@ namespace Azure.Storage
             /// </summary>
             internal const int DuplicateFileNameLimit = 100;
 
-            internal const string DefaultLogTransferFiles = ".azstoragedml";
+            internal const string DefaultTransferFilesPath = ".azstoragedml";
 
             /// <summary>
             ///  Constants used for logger extensions

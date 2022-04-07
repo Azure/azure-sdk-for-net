@@ -309,13 +309,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            string permissions = "0777";
-            string umask = "0057";
+            string permissions = "0740";
 
             // Act
             await file.CreateAsync(
-                permissions: permissions,
-                umask: umask);
+                permissions: permissions);
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();

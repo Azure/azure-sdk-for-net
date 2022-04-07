@@ -359,6 +359,15 @@ namespace Azure.Storage.Blobs.Specialized
                     null));
         }
 
+        /// <summary>
+        /// Constructor for deep copy
+        /// </summary>
+        /// <param name="client"></param>
+        protected BlockBlobClient(BlockBlobClient client) :
+            base(client.Uri, client.ClientConfiguration, null)
+        {
+        }
+
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
         {
             if (options?._clientSideEncryptionOptions != default)
@@ -465,6 +474,66 @@ namespace Azure.Storage.Blobs.Specialized
                 blobUri: Uri,
                 clientConfiguration: newClientConfiguration);
         }
+
+        #region protected static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Internal call to the Single Shot upload
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="content"></param>
+        /// <param name="options"></param>
+        /// <param name="operationName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected static Response<BlobContentInfo> PutBlob(
+            BlockBlobClient client,
+            Stream content,
+            BlobUploadOptions options,
+            string operationName,
+            CancellationToken cancellationToken = default)
+            => client.UploadInternal(
+                  content,
+                  options?.HttpHeaders,
+                  options?.Metadata,
+                  options?.Tags,
+                  options?.Conditions,
+                  options?.AccessTier,
+                  options?.ImmutabilityPolicy,
+                  options?.LegalHold,
+                  options?.ProgressHandler,
+                  operationName,
+                  false,
+                  cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Internal call to the Single Shot upload
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="content"></param>
+        /// <param name="options"></param>
+        /// <param name="operationName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected static async Task<Response<BlobContentInfo>> PutBlobAsync(
+            BlockBlobClient client,
+            Stream content,
+            BlobUploadOptions options,
+            string operationName,
+            CancellationToken cancellationToken = default)
+            => await client.UploadInternal(
+                  content,
+                  options?.HttpHeaders,
+                  options?.Metadata,
+                  options?.Tags,
+                  options?.Conditions,
+                  options?.AccessTier,
+                  options?.ImmutabilityPolicy,
+                  options?.LegalHold,
+                  options?.ProgressHandler,
+                  operationName,
+                  true,
+                  cancellationToken).ConfigureAwait(false);
+        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a new BlockBlobURL object identical to the source but with the specified version ID.
