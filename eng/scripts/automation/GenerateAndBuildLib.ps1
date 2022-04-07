@@ -6,7 +6,7 @@ function Get-SwaggerInfo()
         [string]$dir,
         [string]$AUTOREST_CONFIG_FILE = "autorest.md"
     )
-    Set-Location $dir
+    Push-Location $dir
     $swaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/blob\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $rawSwaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $swaggerNoCommitRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(blob\/)?(?<branch>.*)\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
@@ -32,6 +32,7 @@ function Get-SwaggerInfo()
         Write-Error $_
     }
     Write-Host "Cannot find swagger info"
+    Pop-Location
     exit 1
 }
 
@@ -43,6 +44,7 @@ function New-DataPlanePackageFolder() {
       [string]$inputfiles = "", # input files, separated by semicolon if more than one
       [string]$securityScope = "",
       [string]$securityHeaderName = "",
+      [string]$readme = "",
       [string]$AUTOREST_CONFIG_FILE = "autorest.md",
       [string]$outputJsonFile = "output.json"
   )
@@ -51,42 +53,61 @@ function New-DataPlanePackageFolder() {
 
   $inputfile = ""
   $fileArray = $inputfiles.Split(";")
-  if ($inputfiles -ne "" && $fileArray.Length -gt 0) {
-    $inputfile = $fileArray[0];
+  if (($inputfiles -ne "") -And ($fileArray.Length -gt 0)) {
+    $inputfile = "- " + $fileArray[0];
     for ($i = 1; $i -lt $fileArray.Count ; $i++) {
         $inputfile = $inputfile + [Environment]::NewLine + "- " + $fileArray[$i]
     }
   }
-  $projectFolder="$sdkPath/sdk/$service/$namespace"
-  if (Test-Path -Path $projectFolder) {
+
+  $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
+  $apifolder = (Join-Path $projectFolder "api")
+  Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
+  if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
     Write-Host "Path exists!"
       # update the input-file url if needed.
     if ($inputfile -ne "") {
         Write-Host "Updating autorest.md file."
-        $inputfileRex = "input-file *:"
-        $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+        $inputfileRex = "input-file *:*"
+        # $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
         if (Test-Path -Path $file) {
             (Get-Content $file) -notmatch "- .*.json" |Out-File $file
             (Get-Content $file) -replace $inputfileRex, ("input-file:" + [Environment]::NewLine + "- " + "$inputfile") | Set-Content $file
             if ( $? -ne $True) {
-            Write-Error "Failed to update autorest.md. exit code: $?"
-            exit 1
+                Write-Error "Failed to update autorest.md. exit code: $?"
+                exit 1
             }
         } else {
             Write-Error "autorest.md doesn't exist."
             exit 1
         }
     }
+    if ($readme -ne "") {
+        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
+        if (Test-Path -Path $file) {
+            Write-Host "Updating autorest.md file."
+            $inputfileRex = "input-file *:*"
+            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
+            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+            $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
+            (Get-Content $file) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $file
+            if ( $? -ne $True) {
+                Write-Error "Failed to update autorest.md. exit code: $?"
+                exit 1
+            }
+        } 
+    }
   } else {
     Write-Host "Path doesn't exist. create template."
-    if ($inputfile -eq "") {
+    if ($inputfile -eq "" -And $readme -eq "") {
         Write-Error "Error: input file should not be empty."
         exit 1
     }
     dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
-    Set-Location $projectFolder
+    Push-Location $projectFolder
     $namespaceArray = $namespace.Split(".")
     if ( $namespaceArray.Count -lt 3) {
         Write-Error "Error: invalid namespace name."
@@ -95,7 +116,10 @@ function New-DataPlanePackageFolder() {
 
     $libraryName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --groupName $groupName --swagger $inputfile --includeCI true --force"
+    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --groupName $groupName --includeCI true --force"
+    if ($inputfile -ne "") {
+        $dotnetNewCmd = $dotnetNewCmd + " --swagger $inputfile"
+    }
     if ($securityScope -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
     }
@@ -103,19 +127,46 @@ function New-DataPlanePackageFolder() {
     if ($securityHeaderName -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
+
+    # if ($readme -ne "") {
+    #     $dotnetNewCmd = $dotnetNewCmd + " --autorestInput $readme --includeTestSample false --autorestParamters `"--data-plane=true --csharp`"";
+    # }
     # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
+    if ($readme -ne "") {
+        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
+        if (Test-Path -Path $file) {
+            Write-Host "Updating autorest.md file."
+            $inputfileRex = "input-file *:"
+            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
+            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+            # $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
+            (Get-Content $file) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $file
+            if ( $? -ne $True) {
+                Write-Error "Failed to update autorest.md. exit code: $?"
+                exit 1
+            }
+        } 
+    }
     # dotnet sln
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
     dotnet sln remove tests\$namespace.Tests.csproj
     dotnet sln add tests\$namespace.Tests.csproj
+    Pop-Location
   }
 
+  Push-Location $sdkPath
+  $relativeFolderPath = Resolve-Path $projectFolder -Relative
+  Pop-Location
+
   $outputJson = [PSCustomObject]@{
+    service = $service
+    packageName = $namespace
     projectFolder = $projectFolder
+    path = @($relativeFolderPath)
   }
 
   $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
@@ -145,7 +196,6 @@ function New-MgmtPackageFolder() {
       $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName"
       Write-Host "Create project folder $projectFolder"
       New-Item -Path $projectFolder -ItemType Directory
-      # Set-Location $projectFolder
       Push-Location $projectFolder
       dotnet new azuremgmt --provider $packageName --includeCI true --force
       Pop-Location
@@ -189,22 +239,40 @@ function Invoke-Generate() {
         [string]$sdkfolder= ""
     )
     $sdkfolder = $sdkfolder -replace "\\", "/"
-    Set-Location $sdkfolder/src
+    Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+    Pop-Location
+}
+
+function Invoke-Pack() {
+    param(
+        [string]$sdkfolder= ""
+    )
+    $sdkfolder = $sdkfolder -replace "\\", "/"
+    Push-Location $sdkfolder
+    dotnet pack
+    Pop-Location
 }
 function Get-ResourceProviderFromReadme($readmeFile) {
-    $readmeFileRegex = "(?<specName>.*)/resource-manager/readme.md"
+    $readmeFileRegex = "(?<specName>.*)/(?<serviceType>.*)/readme.md"
+    $readmeFileRegexWithSpec = "specification/(?<specName>.*)/(?<serviceType>.*)/readme.md"
     try
     {
+        if ($readmeFile -match $readmeFileRegexWithSpec)
+        {
+            return $matches["specName"], $matches["serviceType"]
+        }
         if ($readmeFile -match $readmeFileRegex)
         {
-            return $matches["specName"]
+            return $matches["specName"], $matches["serviceType"]
         }
+        
     }
     catch
     {
-        Write-Error "Error parsing readme info"
+        Write-Error "Error parsing reademe info"
         Write-Error $_
     }
-    Write-Host "Cannot find resource provider info"
+    Write-Host "Cannot find resouce provider info"
+    # exit 1
 }
