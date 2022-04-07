@@ -40,8 +40,6 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
-using System;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -62,7 +60,7 @@ To reduce both the number of clients needed to perform common tasks and the amou
 
 To accomplish this, we're introducing 3 standard types for all resources in Azure:
 
-### **[Resource].cs**
+### **[Resource]Resource.cs**
 
 This represents a full resource client object which contains a **Data** property exposing the details as a **[Resource]Data** type.
 It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
