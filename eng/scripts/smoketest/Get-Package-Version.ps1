@@ -64,12 +64,12 @@ function Get-SmokeTestPkgProperties
             -ErrorAction SilentlyContinue
 
         if ($pkgInfo) {
-            Write-Host "Found $($pkgInfo.Name) $($pkgInfo.Version)"
+            Write-Debug "Found $($pkgInfo.Name) $($pkgInfo.Version)"
             $pkg.DevVersion = $pkgInfo.Version
             $SmokeTestPackageInfo += $pkg
         }
         else {
-            Write-Host "Skipping package $($pkg.Name) because could not find a version $pkgVersionAlpha"
+            Write-Debug "Skipping package $($pkg.Name) because could not find a version $pkgVersionAlpha"
         }
     }
     return $SmokeTestPackageInfo
