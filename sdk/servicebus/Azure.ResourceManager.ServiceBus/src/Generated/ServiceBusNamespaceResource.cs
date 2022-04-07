@@ -534,18 +534,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/CheckNameAvailability
         /// Operation Id: DisasterRecoveryConfigs_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkNameAvailability, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -560,18 +560,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/CheckNameAvailability
         /// Operation Id: DisasterRecoveryConfigs_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkNameAvailability, cancellationToken);
                 return response;
             }
             catch (Exception e)

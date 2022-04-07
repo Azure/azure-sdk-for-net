@@ -146,15 +146,15 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppConfigurationNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckAppConfigurationNameAvailabilityAsync(Id.SubscriptionId, checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckAppConfigurationNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -169,15 +169,15 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/checkNameAvailability
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public virtual Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppConfigurationNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckAppConfigurationNameAvailability(Id.SubscriptionId, checkNameAvailabilityParameters, cancellationToken);
+                var response = DefaultRestClient.CheckAppConfigurationNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

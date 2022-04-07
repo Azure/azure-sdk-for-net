@@ -239,21 +239,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
+        /// <param name="inboundSecurityRule"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
+        public virtual async Task<ArmOperation<InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(inboundSecurityRule, nameof(inboundSecurityRule));
 
             using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.CreateOrUpdateInboundSecurityRule");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -272,21 +272,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
+        /// <param name="inboundSecurityRule"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<InboundSecurityRule> CreateOrUpdateInboundSecurityRule(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
+        public virtual ArmOperation<InboundSecurityRule> CreateOrUpdateInboundSecurityRule(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(inboundSecurityRule, nameof(inboundSecurityRule));
 
             using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.CreateOrUpdateInboundSecurityRule");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule, cancellationToken);
+                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

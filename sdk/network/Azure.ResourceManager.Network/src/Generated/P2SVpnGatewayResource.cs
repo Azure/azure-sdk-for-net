@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_GenerateVpnProfile
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="content"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVpnProfileAsync(WaitUntil waitUntil, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVpnProfileAsync(WaitUntil waitUntil, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.GenerateVpnProfile");
             scope.Start();
             try
             {
-                var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.GenerateVpnProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.GenerateVpnProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -277,19 +277,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_GenerateVpnProfile
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="content"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<VpnProfileResponse> GenerateVpnProfile(WaitUntil waitUntil, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<VpnProfileResponse> GenerateVpnProfile(WaitUntil waitUntil, P2SVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.GenerateVpnProfile");
             scope.Start();
             try
             {
-                var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.GenerateVpnProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.GenerateVpnProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGenerateVpnProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -359,19 +359,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<ArmOperation<P2SVpnConnectionHealth>> GetP2SVpnConnectionHealthDetailedAsync(WaitUntil waitUntil, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<P2SVpnConnectionHealth>> GetP2SVpnConnectionHealthDetailedAsync(WaitUntil waitUntil, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.GetP2SVpnConnectionHealthDetailed");
             scope.Start();
             try
             {
-                var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<P2SVpnConnectionHealth>(new P2SVpnConnectionHealthOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
+                var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<P2SVpnConnectionHealth>(new P2SVpnConnectionHealthOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -389,19 +389,19 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual ArmOperation<P2SVpnConnectionHealth> GetP2SVpnConnectionHealthDetailed(WaitUntil waitUntil, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<P2SVpnConnectionHealth> GetP2SVpnConnectionHealthDetailed(WaitUntil waitUntil, P2SVpnConnectionHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.GetP2SVpnConnectionHealthDetailed");
             scope.Start();
             try
             {
-                var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailed(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new NetworkArmOperation<P2SVpnConnectionHealth>(new P2SVpnConnectionHealthOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
+                var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.GetP2SVpnConnectionHealthDetailed(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<P2SVpnConnectionHealth>(new P2SVpnConnectionHealthOperationSource(), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

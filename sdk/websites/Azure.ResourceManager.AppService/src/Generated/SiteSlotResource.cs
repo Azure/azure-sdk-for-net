@@ -2559,21 +2559,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
             try
             {
-                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, key, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2590,21 +2590,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public virtual Response<KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
+        public virtual Response<KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
             try
             {
-                var response = _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, key, cancellationToken);
+                var response = _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, info, cancellationToken);
                 return response;
             }
             catch (Exception e)

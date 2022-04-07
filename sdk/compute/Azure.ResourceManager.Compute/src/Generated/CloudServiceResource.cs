@@ -423,16 +423,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Restart
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Restart");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudServiceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -450,16 +450,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Restart
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Restart(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Restart(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Restart");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudServiceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -477,16 +477,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Reimage
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Reimage");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudServiceRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -504,16 +504,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Reimage
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Reimage(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Reimage");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudServiceRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -531,16 +531,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Rebuild
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RebuildAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RebuildAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Rebuild");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRestClient.RebuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudServiceRestClient.RebuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -558,16 +558,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_Rebuild
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Rebuild(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Rebuild(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Rebuild");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.Rebuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudServiceRestClient.Rebuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -585,16 +585,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_DeleteInstances
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.DeleteInstances");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudServiceRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -612,16 +612,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServices_DeleteInstances
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> List of cloud service role instance names. </param>
+        /// <param name="roleInstances"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.DeleteInstances");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudServiceRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances, cancellationToken);
+                var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstances).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -640,16 +640,16 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="updateDomainIdentifier"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
             try
             {
-                var response = await _cloudServicesUpdateDomainRestClient.WalkUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudServicesUpdateDomainRestClient.WalkUpdateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, updateDomainIdentifier, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, updateDomainIdentifier).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -668,16 +668,16 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="updateDomainIdentifier"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
             try
             {
-                var response = _cloudServicesUpdateDomainRestClient.WalkUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudServicesUpdateDomainRestClient.WalkUpdateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, updateDomainIdentifier, cancellationToken);
+                var operation = new ComputeArmOperation(_cloudServicesUpdateDomainClientDiagnostics, Pipeline, _cloudServicesUpdateDomainRestClient.CreateWalkUpdateDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateDomain, updateDomainIdentifier).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

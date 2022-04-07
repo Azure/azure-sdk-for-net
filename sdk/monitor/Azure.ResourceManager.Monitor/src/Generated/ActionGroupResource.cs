@@ -246,18 +246,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe
         /// Operation Id: ActionGroups_EnableReceiver
         /// </summary>
-        /// <param name="enableRequest"> The receiver to re-enable. </param>
+        /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enableRequest"/> is null. </exception>
-        public virtual async Task<Response> EnableReceiverAsync(EnableRequest enableRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> EnableReceiverAsync(EnableContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(enableRequest, nameof(enableRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.EnableReceiverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enableRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _actionGroupRestClient.EnableReceiverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -272,18 +272,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe
         /// Operation Id: ActionGroups_EnableReceiver
         /// </summary>
-        /// <param name="enableRequest"> The receiver to re-enable. </param>
+        /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enableRequest"/> is null. </exception>
-        public virtual Response EnableReceiver(EnableRequest enableRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response EnableReceiver(EnableContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(enableRequest, nameof(enableRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.EnableReceiver(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enableRequest, cancellationToken);
+                var response = _actionGroupRestClient.EnableReceiver(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

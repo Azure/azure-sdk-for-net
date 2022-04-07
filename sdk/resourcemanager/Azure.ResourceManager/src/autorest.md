@@ -328,9 +328,6 @@ directive:
   - rename-model:
       from: Resource
       to: TrackedResourceExtendedData
-  - rename-model:
-      from: ProviderRegistrationRequest
-      to: ResourceProviderRegistrationOptions
   - from: resources.json
     where: $.definitions.Provider
     transform:
@@ -638,8 +635,6 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-override-operation-name:
-  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
       from: CreateManagementGroupChildInfo
@@ -653,7 +648,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityOptions
+      to: ManagementGroupCheckNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -663,10 +658,6 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
-  - from: management.json
-    where: $.parameters.CheckNameAvailabilityParameter
-    transform: >
-      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -742,5 +733,5 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityOptions.properties.type['x-ms-format'] = 'resource-type';
+      $.ManagementGroupCheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

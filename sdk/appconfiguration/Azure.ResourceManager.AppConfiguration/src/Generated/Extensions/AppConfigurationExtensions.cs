@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(checkNameAvailabilityParameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

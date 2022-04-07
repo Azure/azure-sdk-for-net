@@ -246,15 +246,15 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub
         /// Operation Id: CommunicationService_LinkNotificationHub
         /// </summary>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
             scope.Start();
             try
             {
-                var response = await _communicationServiceRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub
         /// Operation Id: CommunicationService_LinkNotificationHub
         /// </summary>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
             scope.Start();
             try
             {
-                var response = _communicationServiceRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _communicationServiceRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -336,18 +336,18 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey
         /// Operation Id: CommunicationService_RegenerateKey
         /// </summary>
-        /// <param name="options"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _communicationServiceRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationServiceRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -362,18 +362,18 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey
         /// Operation Id: CommunicationService_RegenerateKey
         /// </summary>
-        /// <param name="options"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<CommunicationServiceKeys> RegenerateKey(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CommunicationServiceKeys> RegenerateKey(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationServiceClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _communicationServiceRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _communicationServiceRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
