@@ -512,7 +512,7 @@ try {
         $ProvisionerApplicationOid = $sp.Id
     }
 
-    $serviceName = GetServiceName $ServiceDirectory
+    $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
 
     $ResourceGroupName = if ($ResourceGroupName) {
         $ResourceGroupName

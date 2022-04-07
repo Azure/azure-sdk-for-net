@@ -132,7 +132,7 @@ $context = Get-AzContext
 
 if (!$ResourceGroupName) {
     if ($CI) {
-        $envVarName = (BuildServiceDirectoryPrefix (GetServiceName $ServiceDirectory)) + "RESOURCE_GROUP"
+        $envVarName = (BuildServiceDirectoryPrefix (GetServiceLeafDirectoryName $ServiceDirectory)) + "RESOURCE_GROUP"
         $ResourceGroupName = [Environment]::GetEnvironmentVariable($envVarName)
         if (!$ResourceGroupName) {
             Write-Error "Could not find resource group name environment variable '$envVarName'"
