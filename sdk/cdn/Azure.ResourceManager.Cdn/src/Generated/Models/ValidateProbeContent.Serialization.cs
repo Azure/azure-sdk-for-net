@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CheckHostNameAvailabilityInput : IUtf8JsonSerializable
+    public partial class ValidateProbeContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hostName");
-            writer.WriteStringValue(HostName);
+            writer.WritePropertyName("probeURL");
+            writer.WriteStringValue(ProbeUri.AbsoluteUri);
             writer.WriteEndObject();
         }
     }

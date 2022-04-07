@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Input of CheckHostNameAvailability API. </summary>
-    public partial class CheckHostNameAvailabilityInput
+    public partial class CheckHostNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckHostNameAvailabilityInput. </summary>
+        /// <summary> Initializes a new instance of CheckHostNameAvailabilityContent. </summary>
         /// <param name="hostName"> The host name to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public CheckHostNameAvailabilityInput(string hostName)
+        public CheckHostNameAvailabilityContent(string hostName)
         {
             if (hostName == null)
             {

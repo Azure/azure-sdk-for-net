@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task CheckNameAvailability()
         {
-            var rq = new CheckNameAvailabilityContent();
+            var rq = new ManagementGroupNameAvailabilityContent();
             rq.Name = "this-should-not-exist";
             var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
             Assert.IsTrue(rs.Value.NameAvailable);

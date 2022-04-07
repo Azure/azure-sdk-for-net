@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The input for OrchestrationServiceState. </summary>
-    public partial class OrchestrationServiceStateInput
+    public partial class OrchestrationServiceStateContent
     {
-        /// <summary> Initializes a new instance of OrchestrationServiceStateInput. </summary>
+        /// <summary> Initializes a new instance of OrchestrationServiceStateContent. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
-        public OrchestrationServiceStateInput(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action)
+        public OrchestrationServiceStateContent(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action)
         {
             ServiceName = serviceName;
             Action = action;

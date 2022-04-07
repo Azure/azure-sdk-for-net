@@ -648,7 +648,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupCheckNameAvailabilityRequest
+      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -733,5 +733,5 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupCheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

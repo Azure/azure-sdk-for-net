@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Input of the validate probe API. </summary>
-    public partial class ValidateProbeInput
+    public partial class ValidateProbeContent
     {
-        /// <summary> Initializes a new instance of ValidateProbeInput. </summary>
+        /// <summary> Initializes a new instance of ValidateProbeContent. </summary>
         /// <param name="probeUri"> The probe URL to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
-        public ValidateProbeInput(Uri probeUri)
+        public ValidateProbeContent(Uri probeUri)
         {
             if (probeUri == null)
             {

@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> Management group name availability check parameters. </summary>
-    public partial class ManagementGroupCheckNameAvailabilityContent
+    public partial class ManagementGroupNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ManagementGroupCheckNameAvailabilityContent. </summary>
-        public ManagementGroupCheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of ManagementGroupNameAvailabilityContent. </summary>
+        public ManagementGroupNameAvailabilityContent()
         {
             ResourceType = "Microsoft.Management/managementGroups";
         }

@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ThrottledRequestsInput : IUtf8JsonSerializable
+    public partial class RequestRateByIntervalContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("intervalLength");
+            writer.WriteStringValue(IntervalLength.ToSerialString());
             writer.WritePropertyName("blobContainerSasUri");
             writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
             writer.WritePropertyName("fromTime");

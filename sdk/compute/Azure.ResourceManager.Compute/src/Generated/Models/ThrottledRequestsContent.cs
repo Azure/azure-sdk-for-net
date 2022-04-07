@@ -9,26 +9,20 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Api request input for LogAnalytics getRequestRateByInterval Api. </summary>
-    public partial class RequestRateByIntervalInput : LogAnalyticsInputBase
+    /// <summary> Api request input for LogAnalytics getThrottledRequests Api. </summary>
+    public partial class ThrottledRequestsContent : LogAnalyticsInputBase
     {
-        /// <summary> Initializes a new instance of RequestRateByIntervalInput. </summary>
+        /// <summary> Initializes a new instance of ThrottledRequestsContent. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
-        /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public RequestRateByIntervalInput(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime)
+        public ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime) : base(blobContainerSasUri, fromTime, toTime)
         {
             if (blobContainerSasUri == null)
             {
                 throw new ArgumentNullException(nameof(blobContainerSasUri));
             }
-
-            IntervalLength = intervalLength;
         }
-
-        /// <summary> Interval value in minutes used to create LogAnalytics call rate logs. </summary>
-        public IntervalInMins IntervalLength { get; }
     }
 }

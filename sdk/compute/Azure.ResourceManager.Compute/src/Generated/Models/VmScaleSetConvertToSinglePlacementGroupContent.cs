@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The VmScaleSetConvertToSinglePlacementGroupInput. </summary>
-    public partial class VmScaleSetConvertToSinglePlacementGroupInput
+    public partial class VmScaleSetConvertToSinglePlacementGroupContent
     {
-        /// <summary> Initializes a new instance of VmScaleSetConvertToSinglePlacementGroupInput. </summary>
-        public VmScaleSetConvertToSinglePlacementGroupInput()
+        /// <summary> Initializes a new instance of VmScaleSetConvertToSinglePlacementGroupContent. </summary>
+        public VmScaleSetConvertToSinglePlacementGroupContent()
         {
         }
 

@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Input of CheckNameAvailability API. </summary>
-    public partial class CheckEndpointNameAvailabilityInput
+    public partial class CheckEndpointNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckEndpointNameAvailabilityInput. </summary>
+        /// <summary> Initializes a new instance of CheckEndpointNameAvailabilityContent. </summary>
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckEndpointNameAvailabilityInput(string name, ResourceType resourceType)
+        public CheckEndpointNameAvailabilityContent(string name, ResourceType resourceType)
         {
             if (name == null)
             {
