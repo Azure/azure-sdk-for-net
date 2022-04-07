@@ -14,9 +14,9 @@ head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
-  - tag: package-common-type
+#   - tag: package-common-type
   - tag: package-resources
-  - tag: package-management
+#   - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -114,18 +114,16 @@ output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
-    # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
+    # - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
-  - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
   # subscription does not have name and type
@@ -137,14 +135,12 @@ request-path-to-resource-data:
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
-  /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
   /: Microsoft.Resources/tenants
@@ -164,7 +160,6 @@ operation-groups-to-omit:
   - AuthorizationOperations
   - ResourceCheck
 override-operation-name:
-  ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
   Tags_DeleteValue: DeletePredefinedTagValue
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
