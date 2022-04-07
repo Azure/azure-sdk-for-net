@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplate parameters)
+        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(exportTemplate);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -371,17 +371,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="exportTemplate"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exportTemplate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportTemplate, nameof(exportTemplate));
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, exportTemplate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -396,17 +396,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="exportTemplate"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exportTemplate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
+        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportTemplate, nameof(exportTemplate));
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, exportTemplate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
