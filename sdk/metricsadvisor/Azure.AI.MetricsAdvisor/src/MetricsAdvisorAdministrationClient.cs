@@ -163,7 +163,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 int? skip = options?.Skip;
                 int? maxPageSize = options?.MaxPageSize;
 
-                AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsValuesAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsRawsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)
@@ -203,7 +203,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 int? skip = options?.Skip;
                 int? maxPageSize = options?.MaxPageSize;
 
-                Pageable<BinaryData> pageableBinaryData = GetDataFeedsValues(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                Pageable<BinaryData> pageableBinaryData = GetDataFeedsRaws(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)

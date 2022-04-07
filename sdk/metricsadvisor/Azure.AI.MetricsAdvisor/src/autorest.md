@@ -70,7 +70,7 @@ directive:
   - from: swagger-document
     where: $..[?(@.operationId === "MetricsAdvisorAdministration_listDataFeeds")]
     transform: >
-        $.operationId = "MetricsAdvisorAdministration_listDataFeedsValues";
+        $.operationId = "MetricsAdvisorAdministration_listDataFeedsRaw";
 ```
 
 ### Make Endpoint type as Uri
