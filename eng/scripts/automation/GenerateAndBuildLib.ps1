@@ -36,6 +36,55 @@ function Get-SwaggerInfo()
     exit 1
 }
 
+function Update-AutorestConfigFile() {
+    param (
+        [string]$autorestFilePath,
+        [string]$inputfile = "",
+        [string]$readme = ""
+    )
+    if (Test-Path -Path $autorestFilePath) {
+        if ($readme -ne "") {
+            Write-Host "Updating autorest.md file to config required readme file."
+            $requirRex = "require*:*";
+            $inputfileRex = "input-file *:*"
+            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+            if ((Get-Content $autorestFilePath | Select-String -Pattern $requirRex).Matches.Success) {
+                (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
+                (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
+                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
+                (Get-Content $autorestFilePath) -replace $requirRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $autorestFilePath
+            } elseif ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
+                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
+                $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
+                (Get-Content $autorestFilePath) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $autorestFilePath
+            }
+            if ( $? -ne $True) {
+                Write-Error "Failed to update autorest.md. exit code: $?"
+                exit 1
+            }
+        } elseif ($inputfile -ne "") {
+            Write-Host "Updating autorest.md file to update input-file."
+            $inputfileRex = "input-file *:*"
+            if ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
+                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
+                (Get-Content $autorestFilePath) -replace $inputfileRex, ("input-file:" + [Environment]::NewLine + "$inputfile") | Set-Content $autorestFilePath
+            } else {
+                $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
+                $fileContent = Get-Content -Path $autorestFilePath
+                $fileContent[$startNum - 1] += ([Environment]::NewLine + "input-file:" + [Environment]::NewLine + "$inputfile")
+                $fileContent | Set-Content $autorestFilePath
+            }
+            
+            if ( $? -ne $True) {
+                Write-Error "Failed to update autorest.md. exit code: $?"
+                exit 1
+            }
+        }   
+    } else {
+        Write-Error "autorest.md doesn't exist."
+        exit 1
+    }
+}
 function New-DataPlanePackageFolder() {
   param(
       [string]$service,
@@ -65,39 +114,9 @@ function New-DataPlanePackageFolder() {
   Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
   if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
     Write-Host "Path exists!"
-      # update the input-file url if needed.
-    if ($inputfile -ne "") {
-        Write-Host "Updating autorest.md file."
-        $inputfileRex = "input-file *:*"
-        # $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
-        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-        if (Test-Path -Path $file) {
-            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
-            (Get-Content $file) -replace $inputfileRex, ("input-file:" + [Environment]::NewLine + "- " + "$inputfile") | Set-Content $file
-            if ( $? -ne $True) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
-            }
-        } else {
-            Write-Error "autorest.md doesn't exist."
-            exit 1
-        }
-    }
-    if ($readme -ne "") {
-        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-        if (Test-Path -Path $file) {
-            Write-Host "Updating autorest.md file."
-            $inputfileRex = "input-file *:*"
-            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
-            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
-            $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
-            (Get-Content $file) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $file
-            if ( $? -ne $True) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
-            }
-        } 
-    }
+    # update the input-file url if needed.
+    $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
+    Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "" -And $readme -eq "") {
@@ -127,29 +146,13 @@ function New-DataPlanePackageFolder() {
     if ($securityHeaderName -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
-
-    # if ($readme -ne "") {
-    #     $dotnetNewCmd = $dotnetNewCmd + " --autorestInput $readme --includeTestSample false --autorestParamters `"--data-plane=true --csharp`"";
-    # }
+    
     # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
-    if ($readme -ne "") {
-        $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-        if (Test-Path -Path $file) {
-            Write-Host "Updating autorest.md file."
-            $inputfileRex = "input-file *:"
-            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
-            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
-            # $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
-            (Get-Content $file) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $file
-            if ( $? -ne $True) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
-            }
-        } 
-    }
+    $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
+    Update-AutorestConfigFile -autorestFilePath $file -inputfile -readme $readme
     # dotnet sln
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
