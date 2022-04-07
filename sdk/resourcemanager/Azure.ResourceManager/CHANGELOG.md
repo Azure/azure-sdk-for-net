@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2022-04-07)
+## 1.0.0 (2022-04-08)
 This is the first stable release of the Azure Resources management core library. 
 
 ### Breaking Changes
