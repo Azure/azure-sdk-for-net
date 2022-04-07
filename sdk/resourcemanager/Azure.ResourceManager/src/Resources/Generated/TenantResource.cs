@@ -222,45 +222,6 @@ namespace Azure.ResourceManager.Resources
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceLinkResources in the Tenant. </summary>
-        /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceLinkResources and their operations over a ResourceLinkResource. </returns>
-        public virtual ResourceLinkCollection GetResourceLinks(string scope)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            return new ResourceLinkCollection(Client, Id, scope);
-        }
-
-        /// <summary>
-        /// Gets a resource link with the specified ID.
-        /// Request Path: /{linkId}
-        /// Operation Id: ResourceLinks_Get
-        /// </summary>
-        /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceLinkResource>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceLinks(scope).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a resource link with the specified ID.
-        /// Request Path: /{linkId}
-        /// Operation Id: ResourceLinks_Get
-        /// </summary>
-        /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ResourceLinkResource> GetResourceLink(string scope, CancellationToken cancellationToken = default)
-        {
-            return GetResourceLinks(scope).Get(cancellationToken);
-        }
-
         /// <summary> Gets a collection of SubscriptionResources in the Tenant. </summary>
         /// <returns> An object representing collection of SubscriptionResources and their operations over a SubscriptionResource. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
@@ -311,8 +272,8 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope0.Start();
+                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
                 try
                 {
                     var response = await _providersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -320,14 +281,14 @@ namespace Azure.ResourceManager.Resources
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<TenantResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope0.Start();
+                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
                 try
                 {
                     var response = await _providersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -335,7 +296,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -355,8 +316,8 @@ namespace Azure.ResourceManager.Resources
         {
             Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope0.Start();
+                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
                 try
                 {
                     var response = _providersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
@@ -364,14 +325,14 @@ namespace Azure.ResourceManager.Resources
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<TenantResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope0.Start();
+                using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
                 try
                 {
                     var response = _providersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
@@ -379,7 +340,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -400,8 +361,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
-            scope0.Start();
+            using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
+            scope.Start();
             try
             {
                 var response = await _providersRestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
@@ -409,7 +370,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -428,8 +389,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
-            scope0.Start();
+            using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
+            scope.Start();
             try
             {
                 var response = _providersRestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
@@ -437,7 +398,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
