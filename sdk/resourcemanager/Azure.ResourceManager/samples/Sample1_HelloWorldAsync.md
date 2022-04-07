@@ -6,7 +6,6 @@ Namespaces for this example:
 ```C# Snippet:Hello_World_Async_Namespaces
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 ```

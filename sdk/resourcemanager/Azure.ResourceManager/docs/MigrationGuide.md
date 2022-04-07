@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 ```C# Snippet:Using_Statements
 using System;
 using System.Linq;
-using Azure.Core;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
