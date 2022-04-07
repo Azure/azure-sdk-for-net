@@ -78,7 +78,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
         /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="utterance"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="utterance"/> or <paramref name="project"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
@@ -116,7 +117,8 @@ namespace Azure.AI.Language.Conversations
         /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
         /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="utterance"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="utterance"/> or <paramref name="project"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<AnalyzeConversationTaskResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
