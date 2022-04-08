@@ -1150,7 +1150,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         // Reset the partition state and options to ensure that future attempts
                         // are safe and do not risk data loss by reusing the same producer group identifier.
 
-                            if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
                         {
                             partitionOptions = new PartitionPublishingOptions();
                             Options.PartitionOptions[options.PartitionId] = partitionOptions;
