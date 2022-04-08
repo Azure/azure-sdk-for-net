@@ -717,7 +717,6 @@ namespace Azure.Messaging.ServiceBus
         /// canceled, the processor will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
             {
