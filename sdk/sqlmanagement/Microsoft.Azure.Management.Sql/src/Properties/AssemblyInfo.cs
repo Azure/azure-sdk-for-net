@@ -21,4 +21,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure SQL Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL.")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("2.1.1.0")]
+[assembly: AssemblyFileVersion("2.2.1.0")]
