@@ -1,5 +1,5 @@
 # Developer driven evolution
-Convenience API is an additive layer on top of protocol mathod so it could produce improved user experience.
+Convenience API is an additive layer on top of protocol method so it could produce improved user experience.
 
 To add a convenience API that takes and returns strongly-typed input and output models instead of raw JSON, steps are:
 1. [Create the models](#create-the-models)
