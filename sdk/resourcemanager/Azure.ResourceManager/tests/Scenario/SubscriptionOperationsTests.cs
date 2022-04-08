@@ -181,41 +181,6 @@ namespace Azure.ResourceManager.Tests
             //Assert.IsNotNull(testFeature.Data.Type);
         }
 
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task AddTag()
-        {
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.AddTagAsync(TagKey, TagValue);
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.AreEqual(subscription2.Value.Data.Tags[TagKey], TagValue);
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.RemoveTagAsync(TagKey);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var key = Recording.GenerateAssetName("TagKey-");
-            var value = Recording.GenerateAssetName("TagValue-");
-            var tags = new Dictionary<string, string>();
-            var subscription2 = await subscription.SetTagsAsync(tags);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
-        }
-
         [RecordedTest]
         public async Task ValidateResourceInRestApi()
         {

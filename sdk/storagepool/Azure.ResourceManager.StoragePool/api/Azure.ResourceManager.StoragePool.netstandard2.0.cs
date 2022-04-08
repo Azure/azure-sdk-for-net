@@ -3,8 +3,8 @@ namespace Azure.ResourceManager.StoragePool
     public partial class DiskPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>, System.Collections.IEnumerable
     {
         protected DiskPoolCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string diskPoolName, Azure.ResourceManager.StoragePool.Models.DiskPoolCreate diskPoolCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string diskPoolName, Azure.ResourceManager.StoragePool.Models.DiskPoolCreate diskPoolCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string diskPoolName, Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string diskPoolName, Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource> Get(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.StoragePool
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableDiskPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableDiskPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.DiskPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.DiskPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IscsiTargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.IscsiTargetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.IscsiTargetResource>, System.Collections.IEnumerable
     {
         protected IscsiTargetCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string iscsiTargetName, Azure.ResourceManager.StoragePool.Models.IscsiTargetCreate iscsiTargetCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string iscsiTargetName, Azure.ResourceManager.StoragePool.Models.IscsiTargetCreate iscsiTargetCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string iscsiTargetName, Azure.ResourceManager.StoragePool.Models.IscsiTargetCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string iscsiTargetName, Azure.ResourceManager.StoragePool.Models.IscsiTargetCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StoragePool.IscsiTargetResource> Get(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.StoragePool
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StoragePool.IscsiTargetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.IscsiTargetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableIscsiTargetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableIscsiTargetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.IscsiTargetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTargetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.IscsiTargetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class StoragePoolExtensions
     {
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         public string InitiatorIqn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MappedLuns { get { throw null; } }
     }
-    public partial class DiskPoolCreate : Azure.ResourceManager.Models.ResourceData
+    public partial class DiskPoolCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
-        public DiskPoolCreate(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, string location, string subnetId) { }
+        public DiskPoolCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, string location, string subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
@@ -137,6 +137,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
         public string SubnetId { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DiskPoolPatch
+    {
+        public DiskPoolPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
+        public string ManagedBy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DiskPoolZoneInfo
@@ -185,15 +194,23 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode left, Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IscsiTargetCreate : Azure.ResourceManager.Models.ResourceData
+    public partial class IscsiTargetCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
-        public IscsiTargetCreate(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode) { }
+        public IscsiTargetCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode) { }
         public Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode AclMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.IscsiLun> Luns { get { throw null; } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.Acl> StaticAcls { get { throw null; } }
         public string TargetIqn { get { throw null; } set { } }
+    }
+    public partial class IscsiTargetPatch : Azure.ResourceManager.Models.ResourceData
+    {
+        public IscsiTargetPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.IscsiLun> Luns { get { throw null; } }
+        public string ManagedBy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.Acl> StaticAcls { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalStatus : System.IEquatable<Azure.ResourceManager.StoragePool.Models.OperationalStatus>
@@ -224,23 +241,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal OutboundEnvironmentEndpoint() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.EndpointDependency> Endpoints { get { throw null; } }
-    }
-    public partial class PatchableDiskPoolData
-    {
-        public PatchableDiskPoolData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
-        public string ManagedBy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PatchableIscsiTargetData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PatchableIscsiTargetData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.IscsiLun> Luns { get { throw null; } }
-        public string ManagedBy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.Acl> StaticAcls { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningStates : System.IEquatable<Azure.ResourceManager.StoragePool.Models.ProvisioningStates>

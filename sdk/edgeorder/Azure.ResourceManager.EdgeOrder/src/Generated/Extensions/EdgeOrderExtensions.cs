@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListProductFamilies
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListProductFamilies
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListConfigurations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListConfigurations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
         }
 
         /// <summary>

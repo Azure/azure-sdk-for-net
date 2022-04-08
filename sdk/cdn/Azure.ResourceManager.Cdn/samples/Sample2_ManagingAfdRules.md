@@ -85,7 +85,7 @@ AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
 // Now we can get the rule with GetAsync()
 AfdRuleResource rule = await ruleCollection.GetAsync("myAfdRule");
 // With UpdateAsync(), we can update the rule
-PatchableAfdRuleData input = new PatchableAfdRuleData
+AfdRulePatch input = new AfdRulePatch
 {
     Order = 2
 };

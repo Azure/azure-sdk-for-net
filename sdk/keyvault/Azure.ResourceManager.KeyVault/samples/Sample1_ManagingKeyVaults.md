@@ -69,7 +69,7 @@ VaultProperties.NetworkAcls = new NetworkRuleSet()
 };
 VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS, VaultProperties);
 
 var rawVault = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Started, vaultName, parameters).ConfigureAwait(false);
 VaultResource vault = await rawVault.WaitForCompletionAsync();
