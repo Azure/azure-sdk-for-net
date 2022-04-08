@@ -1,14 +1,10 @@
 # Release History
 
-## 4.11.0-beta.1 (Unreleased)
+## 4.11.0-beta.1 (2022-04-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Partner Topic support for channels
 
 ## 4.10.0 (2022-04-05)
 
