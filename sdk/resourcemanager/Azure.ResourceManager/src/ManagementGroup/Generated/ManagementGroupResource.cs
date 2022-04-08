@@ -357,5 +357,57 @@ namespace Azure.ResourceManager.ManagementGroups
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary>
+        /// Checks if the specified management group name is valid and unique
+        /// Request Path: /providers/Microsoft.Management/checkNameAvailability
+        /// Operation Id: ManagementGroups_CheckNameAvailability
+        /// </summary>
+        /// <param name="content"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _managementGroupRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the specified management group name is valid and unique
+        /// Request Path: /providers/Microsoft.Management/checkNameAvailability
+        /// Operation Id: ManagementGroups_CheckNameAvailability
+        /// </summary>
+        /// <param name="content"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _managementGroupRestClient.CheckNameAvailability(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
