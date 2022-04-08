@@ -7,29 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of service health statuses in a location. </summary>
-    internal partial class OperationsHealthListResult
+    /// <summary> The response to a list IPv6 firewall rules request. </summary>
+    internal partial class IPv6FirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of OperationsHealthListResult. </summary>
-        internal OperationsHealthListResult()
+        /// <summary> Initializes a new instance of IPv6FirewallRuleListResult. </summary>
+        internal IPv6FirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<OperationsHealth>();
+            Value = new ChangeTrackingList<IPv6FirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of OperationsHealthListResult. </summary>
+        /// <summary> Initializes a new instance of IPv6FirewallRuleListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal OperationsHealthListResult(IReadOnlyList<OperationsHealth> value, string nextLink)
+        internal IPv6FirewallRuleListResult(IReadOnlyList<IPv6FirewallRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<OperationsHealth> Value { get; }
+        public IReadOnlyList<IPv6FirewallRuleData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

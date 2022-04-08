@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UnlinkContent : IUtf8JsonSerializable
+    public partial class ManagedServerDnsAliasCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForcedTermination))
+            if (Optional.IsDefined(CreateDnsRecord))
             {
-                writer.WritePropertyName("forcedTermination");
-                writer.WriteBooleanValue(ForcedTermination.Value);
+                writer.WritePropertyName("createDnsRecord");
+                writer.WriteBooleanValue(CreateDnsRecord.Value);
             }
             writer.WriteEndObject();
         }
