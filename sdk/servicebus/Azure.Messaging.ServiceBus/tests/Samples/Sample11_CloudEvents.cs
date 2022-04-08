@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
 #endif
+
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
