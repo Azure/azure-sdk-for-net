@@ -238,12 +238,13 @@ stages:
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
-          - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-            - template: /eng/pipelines/templates/jobs/smoke.tests.yml
-              parameters:
-                Daily: false
-                Artifact: ${{ artifact }}
-                ArtifactName: ${{ parameters.ArtifactName }}
+          - ${{if ne(artifact.skipPublishPackage, 'true')}}:
+            - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+              - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+                parameters:
+                  Daily: false
+                  Artifact: ${{ artifact }}
+                  ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
