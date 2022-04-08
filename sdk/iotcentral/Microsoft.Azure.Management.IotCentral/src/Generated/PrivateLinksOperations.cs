@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.IotCentral
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// PrivateLinksOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<IotCentralClient>, IOperations
+    internal partial class PrivateLinksOperations : IServiceOperations<IotCentralClient>, IPrivateLinksOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the PrivateLinksOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(IotCentralClient client)
+        internal PrivateLinksOperations(IotCentralClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,17 @@ namespace Microsoft.Azure.Management.IotCentral
         public IotCentralClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available IoT Central Resource Provider operations.
+        /// Get a private link resource of a IoT Central Application.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the IoT Central application.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The ARM resource name of the IoT Central application.
+        /// </param>
+        /// <param name='groupId'>
+        /// The private link resource name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,11 +83,27 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateLinkResource>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (groupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -87,12 +112,19 @@ namespace Microsoft.Azure.Management.IotCentral
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.IoTCentral/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateLinkResources/{groupId}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -186,7 +218,7 @@ namespace Microsoft.Azure.Management.IotCentral
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<PrivateLinkResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +231,7 @@ namespace Microsoft.Azure.Management.IotCentral
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,10 +251,13 @@ namespace Microsoft.Azure.Management.IotCentral
         }
 
         /// <summary>
-        /// Lists all of the available IoT Central Resource Provider operations.
+        /// Get all private link resources of a IoT Central Application.
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the IoT Central application.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The ARM resource name of the IoT Central application.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -245,11 +280,23 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (nextPageLink == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -258,14 +305,22 @@ namespace Microsoft.Azure.Management.IotCentral
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateLinkResources").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -354,7 +409,7 @@ namespace Microsoft.Azure.Management.IotCentral
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IEnumerable<PrivateLinkResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -367,7 +422,7 @@ namespace Microsoft.Azure.Management.IotCentral
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<PrivateLinkResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

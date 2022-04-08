@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='appPatch'>
             /// The IoT Central application metadata and security metadata.
             /// </param>
-            public static App Update(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch)
+            public static AppsUpdateHeaders Update(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch)
             {
                 return operations.UpdateAsync(resourceGroupName, resourceName, appPatch).GetAwaiter().GetResult();
             }
@@ -151,11 +151,11 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<App> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppsUpdateHeaders> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, appPatch, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 
@@ -171,9 +171,9 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='resourceName'>
             /// The ARM resource name of the IoT Central application.
             /// </param>
-            public static void Delete(this IAppsOperations operations, string resourceGroupName, string resourceName)
+            public static AppsDeleteHeaders Delete(this IAppsOperations operations, string resourceGroupName, string resourceName)
             {
-                operations.DeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,9 +191,12 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppsDeleteHeaders> DeleteAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -425,7 +428,7 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='appPatch'>
             /// The IoT Central application metadata and security metadata.
             /// </param>
-            public static App BeginUpdate(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch)
+            public static AppsUpdateHeaders BeginUpdate(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, resourceName, appPatch).GetAwaiter().GetResult();
             }
@@ -448,11 +451,11 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<App> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppsUpdateHeaders> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, AppPatch appPatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, appPatch, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 
@@ -468,9 +471,9 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='resourceName'>
             /// The ARM resource name of the IoT Central application.
             /// </param>
-            public static void BeginDelete(this IAppsOperations operations, string resourceGroupName, string resourceName)
+            public static AppsDeleteHeaders BeginDelete(this IAppsOperations operations, string resourceGroupName, string resourceName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -488,9 +491,12 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppsDeleteHeaders> BeginDeleteAsync(this IAppsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

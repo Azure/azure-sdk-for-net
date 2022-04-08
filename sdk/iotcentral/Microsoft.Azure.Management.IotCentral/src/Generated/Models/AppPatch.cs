@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         /// <param name="tags">Instance tags</param>
         /// <param name="sku">A valid instance SKU.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// application. Possible values include: 'Creating', 'Deleting',
+        /// 'Updating', 'Succeeded', 'Failed', 'Canceled'</param>
         /// <param name="applicationId">The ID of the application.</param>
         /// <param name="displayName">The display name of the
         /// application.</param>
@@ -47,17 +50,28 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// scratch.</param>
         /// <param name="state">The current state of the application. Possible
         /// values include: 'created', 'suspended'</param>
+        /// <param name="publicNetworkAccess">Whether requests from the public
+        /// network are allowed. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="networkRuleSets">Network Rule Set Properties of this
+        /// IoT Central application.</param>
+        /// <param name="privateEndpointConnections">Private endpoint
+        /// connections created on this IoT Central application.</param>
         /// <param name="identity">The managed identities for the IoT Central
         /// application.</param>
-        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string), SystemAssignedServiceIdentity identity = default(SystemAssignedServiceIdentity))
+        public AppPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), AppSkuInfo sku = default(AppSkuInfo), string provisioningState = default(string), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string), string publicNetworkAccess = default(string), NetworkRuleSets networkRuleSets = default(NetworkRuleSets), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), SystemAssignedServiceIdentity identity = default(SystemAssignedServiceIdentity))
         {
             Tags = tags;
             Sku = sku;
+            ProvisioningState = provisioningState;
             ApplicationId = applicationId;
             DisplayName = displayName;
             Subdomain = subdomain;
             Template = template;
             State = state;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkRuleSets = networkRuleSets;
+            PrivateEndpointConnections = privateEndpointConnections;
             Identity = identity;
             CustomInit();
         }
@@ -78,6 +92,14 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public AppSkuInfo Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provisioning state of the application. Possible
+        /// values include: 'Creating', 'Deleting', 'Updating', 'Succeeded',
+        /// 'Failed', 'Canceled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets the ID of the application.
@@ -114,6 +136,27 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string State { get; set; }
 
         /// <summary>
+        /// Gets or sets whether requests from the public network are allowed.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets network Rule Set Properties of this IoT Central
+        /// application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkRuleSets")]
+        public NetworkRuleSets NetworkRuleSets { get; set; }
+
+        /// <summary>
+        /// Gets private endpoint connections created on this IoT Central
+        /// application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets or sets the managed identities for the IoT Central
         /// application.
         /// </summary>
@@ -131,6 +174,16 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
             if (Identity != null)
             {

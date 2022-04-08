@@ -19,14 +19,23 @@ namespace Microsoft.Azure.Management.IotCentral
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// PrivateLinksOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IPrivateLinksOperations
     {
         /// <summary>
-        /// Lists all of the available IoT Central Resource Provider
-        /// operations.
+        /// Get a private link resource of a IoT Central Application.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the IoT Central
+        /// application.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The ARM resource name of the IoT Central application.
+        /// </param>
+        /// <param name='groupId'>
+        /// The private link resource name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -42,13 +51,16 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateLinkResource>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the available IoT Central Resource Provider
-        /// operations.
+        /// Get all private link resources of a IoT Central Application.
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the IoT Central
+        /// application.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The ARM resource name of the IoT Central application.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,6 +77,6 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -76,6 +76,16 @@ namespace Microsoft.Azure.Management.IotCentral
         IAppsOperations Apps { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinksOperations.
+        /// </summary>
+        IPrivateLinksOperations PrivateLinks { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

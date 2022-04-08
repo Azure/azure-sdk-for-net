@@ -81,6 +81,16 @@ namespace Microsoft.Azure.Management.IotCentral
         public virtual IAppsOperations Apps { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinksOperations.
+        /// </summary>
+        public virtual IPrivateLinksOperations PrivateLinks { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -327,9 +337,11 @@ namespace Microsoft.Azure.Management.IotCentral
         private void Initialize()
         {
             Apps = new AppsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinks = new PrivateLinksOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-06-01";
+            ApiVersion = "2021-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

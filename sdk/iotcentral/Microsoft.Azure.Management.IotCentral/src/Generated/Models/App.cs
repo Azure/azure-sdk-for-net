@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
     /// The IoT Central application.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class App : Resource
+    public partial class App : IResource
     {
         /// <summary>
         /// Initializes a new instance of the App class.
@@ -34,12 +35,10 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <summary>
         /// Initializes a new instance of the App class.
         /// </summary>
-        /// <param name="location">The resource location.</param>
         /// <param name="sku">A valid instance SKU.</param>
-        /// <param name="id">The ARM resource identifier.</param>
-        /// <param name="name">The ARM resource name.</param>
-        /// <param name="type">The resource type.</param>
-        /// <param name="tags">The resource tags.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// application. Possible values include: 'Creating', 'Deleting',
+        /// 'Updating', 'Succeeded', 'Failed', 'Canceled'</param>
         /// <param name="applicationId">The ID of the application.</param>
         /// <param name="displayName">The display name of the
         /// application.</param>
@@ -51,16 +50,26 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// scratch.</param>
         /// <param name="state">The current state of the application. Possible
         /// values include: 'created', 'suspended'</param>
+        /// <param name="publicNetworkAccess">Whether requests from the public
+        /// network are allowed. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="networkRuleSets">Network Rule Set Properties of this
+        /// IoT Central application.</param>
+        /// <param name="privateEndpointConnections">Private endpoint
+        /// connections created on this IoT Central application.</param>
         /// <param name="identity">The managed identities for the IoT Central
         /// application.</param>
-        public App(string location, AppSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string), SystemAssignedServiceIdentity identity = default(SystemAssignedServiceIdentity))
-            : base(location, id, name, type, tags)
+        public App(AppSkuInfo sku, string provisioningState = default(string), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string), string state = default(string), string publicNetworkAccess = default(string), NetworkRuleSets networkRuleSets = default(NetworkRuleSets), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), SystemAssignedServiceIdentity identity = default(SystemAssignedServiceIdentity))
         {
+            ProvisioningState = provisioningState;
             ApplicationId = applicationId;
             DisplayName = displayName;
             Subdomain = subdomain;
             Template = template;
             State = state;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkRuleSets = networkRuleSets;
+            PrivateEndpointConnections = privateEndpointConnections;
             Sku = sku;
             Identity = identity;
             CustomInit();
@@ -70,6 +79,14 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the provisioning state of the application. Possible
+        /// values include: 'Creating', 'Deleting', 'Updating', 'Succeeded',
+        /// 'Failed', 'Canceled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets the ID of the application.
@@ -106,6 +123,27 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string State { get; set; }
 
         /// <summary>
+        /// Gets or sets whether requests from the public network are allowed.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets network Rule Set Properties of this IoT Central
+        /// application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkRuleSets")]
+        public NetworkRuleSets NetworkRuleSets { get; set; }
+
+        /// <summary>
+        /// Gets private endpoint connections created on this IoT Central
+        /// application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets or sets a valid instance SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -124,12 +162,21 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
             if (Sku != null)
             {

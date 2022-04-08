@@ -16,32 +16,33 @@ namespace Microsoft.Azure.Management.IotCentral.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of error response.
+    /// The error detail.
     /// </summary>
-    public partial class CloudErrorBody
+    public partial class ErrorDetail
     {
         /// <summary>
-        /// Initializes a new instance of the CloudErrorBody class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
-        public CloudErrorBody()
+        public ErrorDetail()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CloudErrorBody class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
-        /// <param name="target">The target of the particular error.</param>
-        /// <param name="details">A list of additional details about the
-        /// error.</param>
-        public CloudErrorBody(string code = default(string), string message = default(string), string target = default(string), IList<CloudErrorBody> details = default(IList<CloudErrorBody>))
+        /// <param name="target">The error target.</param>
+        /// <param name="details">The error details.</param>
+        /// <param name="additionalInfo">The error additional info.</param>
+        public ErrorDetail(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetail> details = default(IList<ErrorDetail>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -63,16 +64,22 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets the target of the particular error.
+        /// Gets the error target.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
         /// <summary>
-        /// Gets or sets a list of additional details about the error.
+        /// Gets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<CloudErrorBody> Details { get; set; }
+        public IList<ErrorDetail> Details { get; private set; }
+
+        /// <summary>
+        /// Gets the error additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; private set; }
 
     }
 }
