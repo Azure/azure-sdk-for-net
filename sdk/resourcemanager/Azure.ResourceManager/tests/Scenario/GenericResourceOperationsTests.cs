@@ -12,10 +12,6 @@ namespace Azure.ResourceManager.Tests
     [Parallelizable]
     public class GenericResourceOperationsTests : ResourceManagerTestBase
     {
-        private string _tagKey;
-        private string TagKey => _tagKey ??= Recording.GenerateAssetName("TagKey-");
-        private string _tagValue;
-        private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
         public GenericResourceOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
