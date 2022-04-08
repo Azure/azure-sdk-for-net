@@ -273,7 +273,7 @@ function Get-ResourceProviderFromReadme($readmeFile) {
     }
     catch
     {
-        Write-Error "Error parsing reademe info"
+        Write-Error "Error parsing readme info"
         Write-Error $_
     }
     Write-Host "Cannot find resouce provider info"
