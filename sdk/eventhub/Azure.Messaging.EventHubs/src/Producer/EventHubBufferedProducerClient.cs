@@ -64,11 +64,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The default interval to delay for events to be available when building a batch to publish.</summary>
         private static readonly TimeSpan DefaultPublishingDelayInterval = TimeSpan.FromMilliseconds(25);
 
-        /// <summary>
-        ///   The set of client options to use when options were not passed when the producer was instantiated.
-        /// </summary>
-        ///
-        private static EventHubBufferedProducerClientOptions DefaultOptions { get; } =
+        /// <summary>The set of client options to use when options were not passed when the producer was instantiated.</summary>
+        private static readonly EventHubBufferedProducerClientOptions DefaultOptions =
             new EventHubBufferedProducerClientOptions
             {
                 RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
