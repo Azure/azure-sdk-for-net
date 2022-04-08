@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Resources.Tests
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [RecordedTest]
+        [TestCase]
         public async Task AddTag()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(templateSpec2.Value.Data.Tags[TagKey], TagValue);
         }
 
-        [RecordedTest]
+        [TestCase]
         public async Task RemoveTag()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.IsFalse(templateSpec2.Value.Data.Tags.ContainsKey(TagKey));
         }
 
-        [RecordedTest]
+        [TestCase]
         public async Task SetTags()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
