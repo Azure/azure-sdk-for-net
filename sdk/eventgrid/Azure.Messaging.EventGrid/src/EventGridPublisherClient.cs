@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid
         private readonly RequestUriBuilder _uriBuilder;
         private readonly HttpPipeline _pipeline;
 
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class for mocking.</summary>
+        /// <summary>Initializes a new instance of the <see cref="EventGridPublisherClient"/> class for mocking.</summary>
         protected EventGridPublisherClient()
         {
         }
 
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The key credential used to authenticate with the service.</param>
         public EventGridPublisherClient(Uri endpoint, AzureKeyCredential credential)
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid
         {
         }
 
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The key credential used to authenticate with the service.</param>
         /// <param name="options">The set of options to use for configuring the client.</param>
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The token credential used to authenticate with the service.</param>
         /// <param name="options">The set of options to use for configuring the client.</param>
@@ -220,19 +220,50 @@ namespace Azure.Messaging.EventGrid
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
         public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> cloudEvents, CancellationToken cancellationToken = default)
-            => await SendCloudEventsInternal(cloudEvents, true /*async*/, cancellationToken).ConfigureAwait(false);
+            => await SendCloudEventsInternal(cloudEvents, null, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
         public virtual Response SendEvents(IEnumerable<CloudEvent> cloudEvents, CancellationToken cancellationToken = default)
-            => SendCloudEventsInternal(cloudEvents, false /*async*/, cancellationToken).EnsureCompleted();
+            => SendCloudEventsInternal(cloudEvents, null, false /*async*/, cancellationToken).EnsureCompleted();
+
+        /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
+        /// <param name="cloudEvent"> The set of events to be published to Event Grid.</param>
+        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> SendEventAsync(CloudEvent cloudEvent, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
+            => await SendEventsAsync(new CloudEvent[] { cloudEvent }, options, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
+        /// <param name="cloudEvent"> The set of events to be published to Event Grid.</param>
+        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        [ForwardsClientCalls]
+        public virtual Response SendEvent(CloudEvent cloudEvent, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
+            => SendEvents(new CloudEvent[] { cloudEvent }, options, cancellationToken);
+
+        /// <summary> Publishes a set of CloudEvents to an Event Grid topic.</summary>
+        /// <param name="cloudEvents"> The set of events to be published to Event Grid.</param>
+        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> cloudEvents, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
+            => await SendCloudEventsInternal(cloudEvents, options, true /*async*/, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
+        /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
+        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public virtual Response SendEvents(IEnumerable<CloudEvent> cloudEvents, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
+            => SendCloudEventsInternal(cloudEvents, options, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="events"> The set of events to be published to Event Grid. </param>
+        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
         /// <param name="async">Whether to invoke the operation asynchronously.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async Task<Response> SendCloudEventsInternal(IEnumerable<CloudEvent> events, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response> SendCloudEventsInternal(IEnumerable<CloudEvent> events, SendCloudEventsOptions options, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
             scope.Start();
@@ -243,6 +274,13 @@ namespace Azure.Messaging.EventGrid
                 Argument.AssertNotNull(events, nameof(events));
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/cloudevents-batch+json; charset=utf-8");
+
+                string channelName = options?.ChannelName;
+                if (channelName != null)
+                {
+                    request.Headers.Add("aeg-channel-name", channelName);
+                }
+
                 CloudEventRequestContent content = new CloudEventRequestContent(events);
                 request.Content = content;
 
