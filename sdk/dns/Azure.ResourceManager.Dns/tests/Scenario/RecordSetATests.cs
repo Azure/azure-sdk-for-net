@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -29,6 +31,7 @@ namespace Azure.ResourceManager.Dns.Tests.Tests
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
+
             await StopSessionRecordingAsync();
         }
 
@@ -41,6 +44,10 @@ namespace Azure.ResourceManager.Dns.Tests.Tests
 
         public async Task CreateDnsZone()
         {
+            // Castle.DynamicProxy.Generators.GeneratorException
+            //  Can not create proxy for type Azure.ResourceManager.Dns.ResourceGroupResourceExtensionClient because it is not accessible.
+            //  Make it public, or internal and mark your assembly with
+            //  [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2, PublicKey=*******")] attribute, because assembly Azure.ResourceManager.Dns is strong-named.
             var collection = _resourceGroup.GetDnsZones();
             string zoneName = "dns20220402.com";
             DnsZoneData data = new DnsZoneData(AzureLocation.WestUS2)
