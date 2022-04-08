@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Storage.Tests
             ranges.Add(new Models.BlobRestoreRange("container3/blob3", ""));
 
             //start restore
-            Models.BlobRestoreParameters parameters = new Models.BlobRestoreParameters(Recording.Now.AddSeconds(-1).ToUniversalTime(), ranges);
+            BlobRestoreContent parameters = new Models.BlobRestoreContent(Recording.Now.AddSeconds(-1).ToUniversalTime(), ranges);
             ArmOperation<BlobRestoreStatus> restoreOperation = _storageAccount.RestoreBlobRanges(WaitUntil.Started, parameters);
 
             //wait for restore completion

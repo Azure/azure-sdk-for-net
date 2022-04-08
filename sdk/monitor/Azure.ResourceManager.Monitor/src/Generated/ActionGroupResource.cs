@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
         /// Operation Id: ActionGroups_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}
         /// Operation Id: ActionGroups_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -246,18 +246,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe
         /// Operation Id: ActionGroups_EnableReceiver
         /// </summary>
-        /// <param name="enableRequest"> The receiver to re-enable. </param>
+        /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enableRequest"/> is null. </exception>
-        public virtual async Task<Response> EnableReceiverAsync(EnableRequest enableRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> EnableReceiverAsync(EnableContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(enableRequest, nameof(enableRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = await _actionGroupRestClient.EnableReceiverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enableRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _actionGroupRestClient.EnableReceiverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -272,18 +272,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe
         /// Operation Id: ActionGroups_EnableReceiver
         /// </summary>
-        /// <param name="enableRequest"> The receiver to re-enable. </param>
+        /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enableRequest"/> is null. </exception>
-        public virtual Response EnableReceiver(EnableRequest enableRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response EnableReceiver(EnableContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(enableRequest, nameof(enableRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.EnableReceiver");
             scope.Start();
             try
             {
-                var response = _actionGroupRestClient.EnableReceiver(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enableRequest, cancellationToken);
+                var response = _actionGroupRestClient.EnableReceiver(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(key2);
 
             //regenerate key and verify the key's change
-            StorageAccountRegenerateKeyParameters keyParameters = new StorageAccountRegenerateKeyParameters("key2");
+            StorageAccountRegenerateKeyContent keyParameters = new StorageAccountRegenerateKeyContent("key2");
             StorageAccountListKeysResult regenKeys = await account1.RegenerateKeyAsync(keyParameters);
             StorageAccountKey regenKey2 = regenKeys.Keys.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
@@ -1053,9 +1053,9 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
-            Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
-            AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
+            Response<ListAccountSasResponse> result = await account.GetAccountSasAsync(accountSasParameters);
+            AccountSasContent resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
@@ -1075,9 +1075,9 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
-            Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
-            AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
+            Response<ListAccountSasResponse> result = await account.GetAccountSasAsync(accountSasParameters);
+            AccountSasContent resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
@@ -1096,14 +1096,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1))
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1))
             {
                 Protocols = HttpProtocol.HttpsHttp,
                 SharedAccessStartOn = Recording.UtcNow,
                 KeyToSign = "key1"
             };
-            Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
-            AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
+            Response<ListAccountSasResponse> result = await account.GetAccountSasAsync(accountSasParameters);
+            AccountSasContent resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
@@ -1125,14 +1125,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
-            ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
+            ServiceSasContent serviceSasParameters = new ServiceSasContent(canonicalizedResource: canonicalizedResourceParameter)
             {
                 Resource = "c",
                 Permissions = "rl",
                 SharedAccessExpiryOn = Recording.UtcNow.AddHours(1),
             };
-            Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
-            ServiceSasParameters resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
+            Response<ListServiceSasResponse> result = await account.GetServiceSasAsync(serviceSasParameters);
+            ServiceSasContent resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
             Assert.NotNull(serviceSasParameters.SharedAccessExpiryOn);
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
-            ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
+            ServiceSasContent serviceSasParameters = new ServiceSasContent(canonicalizedResource: canonicalizedResourceParameter)
             {
                 Resource = "c",
                 Permissions = "rl"
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Storage.Tests
             try
             {
                 //should fail
-                Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
+                Response<ListServiceSasResponse> result = await account.GetServiceSasAsync(serviceSasParameters);
             }
             catch (Exception ex)
             {
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
-            ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
+            ServiceSasContent serviceSasParameters = new ServiceSasContent(canonicalizedResource: canonicalizedResourceParameter)
             {
                 Resource = "c",
                 Permissions = "rdwlacup",
@@ -1188,8 +1188,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 KeyToSign = "key1"
             };
 
-            Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
-            ServiceSasParameters resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
+            Response<ListServiceSasResponse> result = await account.GetServiceSasAsync(serviceSasParameters);
+            ServiceSasContent resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
             Assert.AreEqual(serviceSasParameters.Protocols, resultCredentials.Protocols);

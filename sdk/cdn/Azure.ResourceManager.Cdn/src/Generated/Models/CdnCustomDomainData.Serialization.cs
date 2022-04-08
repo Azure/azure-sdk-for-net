@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<CustomDomainResourceState> resourceState = default;
             Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
             Optional<CustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
-            Optional<CustomDomainHttpsOptions> customHttpsParameters = default;
+            Optional<CustomDomainHttpsContent> customHttpsParameters = default;
             Optional<string> validationData = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
                                 customHttpsParameters = null;
                                 continue;
                             }
-                            customHttpsParameters = CustomDomainHttpsOptions.DeserializeCustomDomainHttpsOptions(property0.Value);
+                            customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("validationData"))

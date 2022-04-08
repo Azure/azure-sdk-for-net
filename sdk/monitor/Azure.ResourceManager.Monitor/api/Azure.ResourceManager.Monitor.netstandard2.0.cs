@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string actionGroupName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response EnableReceiver(Azure.ResourceManager.Monitor.Models.EnableRequest enableRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> EnableReceiverAsync(Azure.ResourceManager.Monitor.Models.EnableRequest enableRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response EnableReceiver(Azure.ResourceManager.Monitor.Models.EnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> EnableReceiverAsync(Azure.ResourceManager.Monitor.Models.EnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.ActionGroupResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1098,6 +1098,11 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.ReceiverStatus? Status { get { throw null; } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
+    public partial class EnableContent
+    {
+        public EnableContent(string receiverName) { }
+        public string ReceiverName { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Enabled : System.IEquatable<Azure.ResourceManager.Monitor.Models.Enabled>
     {
@@ -1115,11 +1120,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.Enabled (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.Enabled left, Azure.ResourceManager.Monitor.Models.Enabled right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class EnableRequest
-    {
-        public EnableRequest(string receiverName) { }
-        public string ReceiverName { get { throw null; } }
     }
     public partial class ErrorAdditionalInfo
     {

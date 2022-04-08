@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = await CommunicationServiceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, options, cancellationToken).ConfigureAwait(false);
+                var response = await CommunicationServiceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckCommunicationNameAvailability(NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<NameAvailability> CheckCommunicationNameAvailability(NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = CommunicationServiceRestClient.CheckNameAvailability(Id.SubscriptionId, options, cancellationToken);
+                var response = CommunicationServiceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
