@@ -327,12 +327,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             options.MaximumSizeInBytes ??= MaximumMessageSize;
             Argument.AssertInRange(options.MaximumSizeInBytes.Value, EventHubProducerClient.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
 
-            // If idempotent publishing is enabled, a specialized transport batch is needed to
-            // support sequencing semantics during send operations.
-
-            return ((ActiveFeatures & TransportProducerFeatures.IdempotentPublishing) == 0)
-                ? new AmqpEventBatch(MessageConverter, options, ActiveFeatures)
-                : new IdempotentAmqpEventBatch(MessageConverter, options, ActiveFeatures);
+            return AmqpTransportEventBatch.CreateForActiveFeatures(MessageConverter, options, ActiveFeatures);
         }
 
         /// <summary>

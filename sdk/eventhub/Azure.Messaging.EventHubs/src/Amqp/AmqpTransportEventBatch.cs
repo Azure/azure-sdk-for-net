@@ -100,6 +100,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///   Serves as a factory, creating the appropriate AMQP transport batch
+        ///   type for the set of active features.
+        /// </summary>
+        ///
+        /// <param name="messageConverter">The message converter to use for data transformations.</param>
+        /// <param name="options">The requested set of batch options.</param>
+        /// <param name="activeFeatures">The active features.</param>
+        ///
+        /// <returns>The <see cref="AmqpTransportEventBatch" /> that supports the <paramref name="activeFeatures" />.</returns>
+        ///
+        public static AmqpTransportEventBatch CreateForActiveFeatures(AmqpMessageConverter messageConverter,
+                                                                      CreateBatchOptions options,
+                                                                      TransportProducerFeatures activeFeatures) =>
+            activeFeatures switch
+            {
+                _ when ((activeFeatures & TransportProducerFeatures.IdempotentPublishing) != 0) => new IdempotentAmqpEventBatch(messageConverter, options, activeFeatures),
+                _ => new AmqpEventBatch(messageConverter, options, activeFeatures)
+            };
+
+        /// <summary>
         ///   Measures an AMQP message and calculates the number of bytes that it requires
         ///   if included in the batch.
         /// </summary>
