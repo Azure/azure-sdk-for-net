@@ -13,8 +13,8 @@ head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
-  - tag: package-common-type-2022-04
-  - tag: package-resources-2022-04
+#   - tag: package-common-type-2022-04
+#   - tag: package-resources-2022-04
   - tag: package-management-2022-04
 ```
 
@@ -598,12 +598,12 @@ output-folder: $(this-folder)/ManagementGroup/Generated
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
+    - C:\Users\dapzhang\Documents\workspace\azure-rest-api-specs/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
 request-path-to-parent:
   /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-positions:
-  /providers/Microsoft.Management/checkNameAvailability: collection
+  ManagementGroups_CheckNameAvailability: collection
 operation-groups-to-omit:
   - HierarchySettings
   - ManagementGroupSubscriptions
