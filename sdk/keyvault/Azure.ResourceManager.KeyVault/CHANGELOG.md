@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.8 (2022-04-08)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.7 (2022-03-31)
 
@@ -127,7 +128,7 @@ SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync(
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
 ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
 VaultResource vault = lro.Value;
@@ -148,5 +149,5 @@ After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
 VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, properties);
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```

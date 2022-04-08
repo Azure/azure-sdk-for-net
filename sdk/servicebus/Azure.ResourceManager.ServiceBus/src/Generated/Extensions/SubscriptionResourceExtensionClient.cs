@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceBusNameAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, checkNameAvailability, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -160,15 +160,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceBusNameAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, parameters, cancellationToken);
+                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, checkNameAvailability, cancellationToken);
                 return response;
             }
             catch (Exception e)

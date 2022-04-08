@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.8 (2022-04-08)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.7 (2022-03-31)
 

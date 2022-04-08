@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 for (int i = 0; i < model.Data.JitAccessPolicy.JitApprovers.Count; ++i)
                 {
                     Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].DisplayName, getResult.Data.JitAccessPolicy.JitApprovers[i].DisplayName);
-                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].JitApproverType, getResult.Data.JitAccessPolicy.JitApprovers[i].JitApproverType);
+                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].ApproverType, getResult.Data.JitAccessPolicy.JitApprovers[i].ApproverType);
                 }
                 Assert.AreEqual(model.Data.JitAccessPolicy.MaximumJitAccessDuration, getResult.Data.JitAccessPolicy.MaximumJitAccessDuration);
             }
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.Resources.Tests
                 {
                     Assert.AreEqual(model.Data.Artifacts[i].Name, getResult.Data.Artifacts[i].Name);
                     Assert.AreEqual(model.Data.Artifacts[i].Uri, getResult.Data.Artifacts[i].Uri);
-                    Assert.AreEqual(model.Data.Artifacts[i].ArmApplicationArtifactType, getResult.Data.Artifacts[i].ArmApplicationArtifactType);
+                    Assert.AreEqual(model.Data.Artifacts[i].ArtifactType, getResult.Data.Artifacts[i].ArtifactType);
                 }
             }
             if (model.Data.CreatedBy != null || getResult.Data.CreatedBy != null)
             {
                 Assert.NotNull(model.Data.CreatedBy);
                 Assert.NotNull(getResult.Data.CreatedBy);
-                Assert.AreEqual(model.Data.CreatedBy.Oid, getResult.Data.CreatedBy.Oid);
+                Assert.AreEqual(model.Data.CreatedBy.ObjectId, getResult.Data.CreatedBy.ObjectId);
                 Assert.AreEqual(model.Data.CreatedBy.Puid, getResult.Data.CreatedBy.Puid);
                 Assert.AreEqual(model.Data.CreatedBy.ApplicationId, getResult.Data.CreatedBy.ApplicationId);
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Resources.Tests
             {
                 Assert.NotNull(model.Data.UpdatedBy);
                 Assert.NotNull(getResult.Data.UpdatedBy);
-                Assert.AreEqual(model.Data.UpdatedBy.Oid, getResult.Data.UpdatedBy.Oid);
+                Assert.AreEqual(model.Data.UpdatedBy.ObjectId, getResult.Data.UpdatedBy.ObjectId);
                 Assert.AreEqual(model.Data.UpdatedBy.Puid, getResult.Data.UpdatedBy.Puid);
                 Assert.AreEqual(model.Data.UpdatedBy.ApplicationId, getResult.Data.UpdatedBy.ApplicationId);
             }

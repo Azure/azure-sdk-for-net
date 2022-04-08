@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var patchableForwardingRuleData = new PatchableForwardingRuleData();
+            var patchableForwardingRuleData = new ForwardingRulePatch();
             patchableForwardingRuleData.Metadata.Add(newTagKey, newTagValue);
 
             // ACT

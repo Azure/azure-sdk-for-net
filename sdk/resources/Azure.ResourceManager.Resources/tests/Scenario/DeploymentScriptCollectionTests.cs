@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -126,11 +127,13 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Status.ExpirationOn, getResult.Status.ExpirationOn);
                 //Assert.AreEqual(model.Status.Error, getResult.Status.Error);
             }
-            Assert.AreEqual(model.Outputs.Count, getResult.Outputs.Count);
-            foreach (var kv in model.Outputs)
+            var modelOutputs = model.Outputs.ToObjectFromJson<Dictionary<string, object>>();
+            var getOutputs = getResult.Outputs.ToObjectFromJson<Dictionary<string, object>>();
+            Assert.AreEqual(modelOutputs.Count, getOutputs.Count);
+            foreach (var kv in modelOutputs)
             {
-                Assert.IsTrue(getResult.Outputs.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value.ToArray(), getResult.Outputs[kv.Key].ToArray());
+                Assert.IsTrue(getOutputs.ContainsKey(kv.Key));
+                Assert.AreEqual(kv.Value.ToString(), getOutputs[kv.Key].ToString());
             }
             Assert.AreEqual(model.PrimaryScriptUri, getResult.PrimaryScriptUri);
             Assert.AreEqual(model.SupportingScriptUris, getResult.SupportingScriptUris);

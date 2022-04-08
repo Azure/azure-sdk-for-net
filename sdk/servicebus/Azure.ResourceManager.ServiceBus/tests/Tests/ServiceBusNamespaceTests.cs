@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            PatchableServiceBusNamespaceData parameters = new PatchableServiceBusNamespaceData(DefaultLocation);
+            ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);

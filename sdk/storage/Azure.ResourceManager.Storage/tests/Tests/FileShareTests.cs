@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
             string proposedLeaseID2 = "dd761232-ed42-11ce-bacd-00aa0057b444";
             LeaseShareResponse leaseResponse;
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
@@ -312,24 +312,24 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
             //renew lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             // change lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
             Assert.AreEqual(proposedLeaseID2, leaseResponse.LeaseId);
 
             //break lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Break) { BreakPeriod = 20 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Break) { BreakPeriod = 20 });
             Assert.AreEqual("20", leaseResponse.LeaseTimeSeconds);
 
             //release lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
             Assert.IsNull(leaseResponse.LeaseId);
 
             //lease share snapshot
             leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"),
-                parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+                content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
