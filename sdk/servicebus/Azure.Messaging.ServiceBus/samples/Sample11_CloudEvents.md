@@ -5,6 +5,7 @@ The Azure.Core library contains the [CloudEvent](https://docs.microsoft.com/dotn
 ```C# Snippet:ServiceBusCloudEvents
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
+
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
