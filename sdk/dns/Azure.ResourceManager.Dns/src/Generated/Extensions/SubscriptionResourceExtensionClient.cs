@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
         /// Operation Id: DnsResourceReference_GetByTargetResources
         /// </summary>
-        /// <param name="dnsResourceReferenceRequest"> Properties for dns resource reference request. </param>
+        /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesDnsResourceReferenceAsync(DnsResourceReferenceRequest dnsResourceReferenceRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesDnsResourceReferenceAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
             scope.Start();
             try
             {
-                var response = await DnsResourceReferenceRestClient.GetByTargetResourcesAsync(Id.SubscriptionId, dnsResourceReferenceRequest, cancellationToken).ConfigureAwait(false);
+                var response = await DnsResourceReferenceRestClient.GetByTargetResourcesAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -162,15 +162,15 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
         /// Operation Id: DnsResourceReference_GetByTargetResources
         /// </summary>
-        /// <param name="dnsResourceReferenceRequest"> Properties for dns resource reference request. </param>
+        /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DnsResourceReferenceResult> GetByTargetResourcesDnsResourceReference(DnsResourceReferenceRequest dnsResourceReferenceRequest, CancellationToken cancellationToken = default)
+        public virtual Response<DnsResourceReferenceResult> GetByTargetResourcesDnsResourceReference(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
             scope.Start();
             try
             {
-                var response = DnsResourceReferenceRestClient.GetByTargetResources(Id.SubscriptionId, dnsResourceReferenceRequest, cancellationToken);
+                var response = DnsResourceReferenceRestClient.GetByTargetResources(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

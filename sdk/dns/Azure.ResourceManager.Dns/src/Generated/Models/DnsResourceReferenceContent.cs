@@ -12,10 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the properties of the Dns Resource Reference Request. </summary>
-    public partial class DnsResourceReferenceRequest
+    public partial class DnsResourceReferenceContent
     {
-        /// <summary> Initializes a new instance of DnsResourceReferenceRequest. </summary>
-        public DnsResourceReferenceRequest()
+        /// <summary> Initializes a new instance of DnsResourceReferenceContent. </summary>
+        public DnsResourceReferenceContent()
         {
             TargetResources = new ChangeTrackingList<WritableSubResource>();
         }

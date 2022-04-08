@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Dns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetByTargetResourcesRequest(string subscriptionId, DnsResourceReferenceRequest dnsResourceReferenceRequest)
+        internal HttpMessage CreateGetByTargetResourcesRequest(string subscriptionId, DnsResourceReferenceContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.Dns
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dnsResourceReferenceRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Returns the DNS records specified by the referencing targetResourceIds. </summary>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="dnsResourceReferenceRequest"> Properties for dns resource reference request. </param>
+        /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dnsResourceReferenceRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesAsync(string subscriptionId, DnsResourceReferenceRequest dnsResourceReferenceRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesAsync(string subscriptionId, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(dnsResourceReferenceRequest, nameof(dnsResourceReferenceRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetByTargetResourcesRequest(subscriptionId, dnsResourceReferenceRequest);
+            using var message = CreateGetByTargetResourcesRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Returns the DNS records specified by the referencing targetResourceIds. </summary>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="dnsResourceReferenceRequest"> Properties for dns resource reference request. </param>
+        /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dnsResourceReferenceRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DnsResourceReferenceResult> GetByTargetResources(string subscriptionId, DnsResourceReferenceRequest dnsResourceReferenceRequest, CancellationToken cancellationToken = default)
+        public Response<DnsResourceReferenceResult> GetByTargetResources(string subscriptionId, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(dnsResourceReferenceRequest, nameof(dnsResourceReferenceRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetByTargetResourcesRequest(subscriptionId, dnsResourceReferenceRequest);
+            using var message = CreateGetByTargetResourcesRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

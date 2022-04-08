@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Describes a request to update a DNS zone. </summary>
-    internal partial class PatchableDnsZoneData
+    internal partial class DnsZonePatch
     {
-        /// <summary> Initializes a new instance of PatchableDnsZoneData. </summary>
-        public PatchableDnsZoneData()
+        /// <summary> Initializes a new instance of DnsZonePatch. </summary>
+        public DnsZonePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
