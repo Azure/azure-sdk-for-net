@@ -35,10 +35,8 @@ namespace Azure.Messaging.ServiceBus
         ///   The maximum number of retry attempts before considering the associated operation
         ///   to have failed.
         /// </summary>
-        ///
-        ///
         /// <value>The default retry limit is 3.</value>
-        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested retries is not between 0 and 100 (inclusive).</exception>
         public int MaxRetries
         {
             get => _maxRetries;
@@ -54,10 +52,8 @@ namespace Azure.Messaging.ServiceBus
         ///   The delay between retry attempts for a fixed approach or the delay
         ///   on which to base calculations for a backoff-based approach.
         /// </summary>
-        ///
-        ///
         /// <value>The default delay is 0.8 seconds.</value>
-        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is not between 1 millisecond and 5 minutes (inclusive).</exception>
         public TimeSpan Delay
         {
             get => _delay;
@@ -72,10 +68,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   The maximum permissible delay between retry attempts.
         /// </summary>
-        ///
-        ///
         /// <value>The default maximum delay is 60 seconds.</value>
-        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is negative.</exception>
         public TimeSpan MaxDelay
         {
             get => _maxDelay;
@@ -94,7 +88,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         ///
         /// <value>The default timeout is 60 seconds.</value>
-        ///
+        /// <exception cref="ArgumentException">Occurs when the requested timeout is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
         public TimeSpan TryTimeout
         {
             get => _tryTimeout;

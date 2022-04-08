@@ -97,8 +97,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The default timeout is 60 seconds.</value>
         ///
-        /// <exception cref="ArgumentException">Occurs when the requested delay is negative.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
+        /// <exception cref="ArgumentException">Occurs when the requested timeout is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
         ///
         public TimeSpan TryTimeout
         {
