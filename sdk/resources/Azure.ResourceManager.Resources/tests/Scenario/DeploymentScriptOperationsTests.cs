@@ -67,9 +67,11 @@ namespace Azure.ResourceManager.Resources.Tests
             string deployScriptName = Recording.GenerateAssetName("deployScript-D-");
             var deploymentScriptData = await GetDeploymentScriptDataAsync();
             var deploymentScript = (await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
-            var deploymentScript2 = (await deploymentScript.AddTagAsync(TagKey, TagValue)).Value;
-            var deploymentScript3 = await deploymentScript2.RemoveTagAsync(TagKey);
-            Assert.IsFalse(deploymentScript3.Value.Data.Tags.ContainsKey(TagKey));
+            var tagKey = Recording.GenerateAssetName("TagKey-");
+            var tagValue = Recording.GenerateAssetName("TagValue-");
+            var deploymentScript2 = (await deploymentScript.AddTagAsync(tagKey, tagValue)).Value;
+            var deploymentScript3 = await deploymentScript2.RemoveTagAsync(tagKey);
+            Assert.IsFalse(deploymentScript3.Value.Data.Tags.ContainsKey(tagKey));
         }
 
         [TestCase]
