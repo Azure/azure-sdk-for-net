@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal ArmDependency(IReadOnlyList<BasicArmDependency> dependsOn, string id, string resourceType, string resourceName)
+        internal ArmDependency(IReadOnlyList<BasicArmDependency> dependsOn, string id, ResourceType? resourceType, string resourceName)
         {
             DependsOn = dependsOn;
             Id = id;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the dependency. </summary>
         public string Id { get; }
         /// <summary> The dependency resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The dependency resource name. </summary>
         public string ResourceName { get; }
     }

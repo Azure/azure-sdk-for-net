@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerJobAgentJobExecutionStepResource>> GetServerJobAgentJobExecutionStepAsync(string stepName, CancellationToken cancellationToken = default)
         {
             return await GetServerJobAgentJobExecutionSteps().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerJobAgentJobExecutionStepResource> GetServerJobAgentJobExecutionStep(string stepName, CancellationToken cancellationToken = default)
         {
             return GetServerJobAgentJobExecutionSteps().Get(stepName, cancellationToken);

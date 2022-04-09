@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="port"> Port of gateway load balancer tunnel interface. </param>
         /// <param name="identifier"> Identifier of gateway load balancer tunnel interface. </param>
         /// <param name="protocol"> Protocol of gateway load balancer tunnel interface. </param>
-        /// <param name="gatewayLoadBalancerTunnelInterfaceType"> Traffic type of gateway load balancer tunnel interface. </param>
-        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? gatewayLoadBalancerTunnelInterfaceType)
+        /// <param name="interfaceType"> Traffic type of gateway load balancer tunnel interface. </param>
+        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? interfaceType)
         {
             Port = port;
             Identifier = identifier;
             Protocol = protocol;
-            GatewayLoadBalancerTunnelInterfaceType = gatewayLoadBalancerTunnelInterfaceType;
+            InterfaceType = interfaceType;
         }
 
         /// <summary> Port of gateway load balancer tunnel interface. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Protocol of gateway load balancer tunnel interface. </summary>
         public GatewayLoadBalancerTunnelProtocol? Protocol { get; set; }
         /// <summary> Traffic type of gateway load balancer tunnel interface. </summary>
-        public GatewayLoadBalancerTunnelInterfaceType? GatewayLoadBalancerTunnelInterfaceType { get; set; }
+        public GatewayLoadBalancerTunnelInterfaceType? InterfaceType { get; set; }
     }
 }
