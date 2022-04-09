@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<EndpointAccessResource>> ListCredentialsAsync(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TargetResourceEndpointAccess>> ListCredentialsAsync(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
@@ -434,9 +434,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        EndpointAccessResource value = default;
+                        TargetResourceEndpointAccess value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointAccessResource.DeserializeEndpointAccessResource(document.RootElement);
+                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="endpointName"/> is null. </exception>
-        public Response<EndpointAccessResource> ListCredentials(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
+        public Response<TargetResourceEndpointAccess> ListCredentials(string scope, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        EndpointAccessResource value = default;
+                        TargetResourceEndpointAccess value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointAccessResource.DeserializeEndpointAccessResource(document.RootElement);
+                        value = TargetResourceEndpointAccess.DeserializeTargetResourceEndpointAccess(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

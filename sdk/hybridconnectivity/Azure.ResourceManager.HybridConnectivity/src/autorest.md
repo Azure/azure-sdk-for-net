@@ -37,6 +37,9 @@ rename-rules:
   URI: Uri
 
 directive:
+  - rename-model:
+      from: EndpointAccessResource
+      to: TargetResourceEndpointAccess
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
     transform: >
