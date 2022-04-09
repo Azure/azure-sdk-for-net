@@ -42,5 +42,9 @@ directive:
     transform: >
       $["x-ms-client-name"] = "EndpointType";
       $["x-ms-enum"]["name"] = "EndpointType"
+  - from: swagger-document
+    where: $.parameters.ResourceUriParameter
+    transform: >
+      $["x-ms-client-name"] = "scope"
 
 ```
