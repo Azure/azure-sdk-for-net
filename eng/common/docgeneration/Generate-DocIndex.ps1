@@ -133,7 +133,9 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
      $sortedToc = $tocContent.Values | Sort-Object New, Type, ServiceName, DisplayName, Artifact
     foreach ($serviceMapping in $sortedToc) {
-        $artifact = $serviceMapping.Key
+        $artifact = $serviceMapping.Artifact
+        $serviceName = $serviceMapping.ServiceName
+        $displayName = $serviceMapping.DisplayName
         $serviceName = $serviceMapping.Value.ServiceName
         $displayName = $serviceMapping.Value.DisplayName
 
