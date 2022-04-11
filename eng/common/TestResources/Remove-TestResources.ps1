@@ -132,6 +132,10 @@ $context = Get-AzContext
 
 if (!$ResourceGroupName) {
     if ($CI) {
+        if (!$ServiceDirectory) {
+            Write-Warning "ServiceDirectory parameter is empty, nothing to remove"
+            exit 0
+        }
         $envVarName = (BuildServiceDirectoryPrefix (GetServiceLeafDirectoryName $ServiceDirectory)) + "RESOURCE_GROUP"
         $ResourceGroupName = [Environment]::GetEnvironmentVariable($envVarName)
         if (!$ResourceGroupName) {
