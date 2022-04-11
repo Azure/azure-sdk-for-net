@@ -310,10 +310,33 @@ namespace Azure.Search.Documents
             Debug.Assert(source != null);
             Debug.Assert(destination != null);
 
-            foreach (System.Reflection.PropertyInfo propertyInfo in typeof(SearchOptions).GetProperties())
-            {
-                propertyInfo.SetValue(destination, propertyInfo.GetValue(source));
-            }
+            destination.Facets = source.Facets;
+            destination.Filter = source.Filter;
+            destination.HighlightFields = source.HighlightFields;
+            destination.HighlightPostTag = source.HighlightPostTag;
+            destination.HighlightPreTag = source.HighlightPreTag;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
+            destination.MinimumCoverage = source.MinimumCoverage;
+            destination.OrderBy = source.OrderBy;
+            destination.QueryAnswer = source.QueryAnswer;
+            destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryCaption = source.QueryCaption;
+            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
+            destination.QueryLanguage = source.QueryLanguage;
+            destination.QuerySpeller = source.QuerySpeller;
+            destination.QueryType = source.QueryType;
+            destination.ScoringParameters = source.ScoringParameters;
+            destination.ScoringProfile = source.ScoringProfile;
+            destination.ScoringStatistics = source.ScoringStatistics;
+            destination.SearchFields = source.SearchFields;
+            destination.SearchMode = source.SearchMode;
+            destination.SearchText = source.SearchText;
+            destination.Select = source.Select;
+            destination.SemanticConfigurationName = source.SemanticConfigurationName;
+            destination.SemanticFields = source.SemanticFields;
+            destination.SessionId = source.SessionId;
+            destination.Size = source.Size;
+            destination.Skip = source.Skip;
         }
 
         /// <summary>

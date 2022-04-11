@@ -1029,17 +1029,19 @@ namespace Azure.Search.Documents.Tests
             source.QueryCaptionHighlightEnabled = false;
             // source.QueryType = null;
             source.Select = null;
+            source.SessionId = "SessionId";
             source.Size = 100;
             source.Skip = null;
 
             SearchOptions clonedSearchOptions = source.Clone();
 
             CollectionAssert.AreEquivalent(source.Facets, clonedSearchOptions.Facets); // A non-null collection with multiple items
-            Assert.AreEqual(source.Filter, clonedSearchOptions.Filter); // String value
+            Assert.AreEqual(source.Filter, clonedSearchOptions.Filter); // A string value
             Assert.IsNull(clonedSearchOptions.IncludeTotalCount); // An unset bool? value
             Assert.AreEqual(source.QueryCaptionHighlightEnabled, clonedSearchOptions.QueryCaptionHighlightEnabled); // A bool? value
             Assert.IsNull(source.QueryType); // An unset enum? value
             Assert.IsNull(clonedSearchOptions.Select); // A `null` collection
+            Assert.AreEqual(source.SessionId, clonedSearchOptions.SessionId); // A string value
             Assert.AreEqual(source.Size, clonedSearchOptions.Size); // An int? value
             Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
         }
