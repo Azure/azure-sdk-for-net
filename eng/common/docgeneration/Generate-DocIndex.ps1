@@ -102,6 +102,7 @@ function Get-TocMapping {
             TypeIndex = $typeIndex
             ServiceName = $serviceName
             DisplayName = $packageInfo[0].DisplayName.Trim()
+            Artifact = $artifact
        }
     }
     return $orderServiceMapping
