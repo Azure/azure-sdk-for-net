@@ -135,8 +135,8 @@ if (!$ResourceGroupName) {
         $envVarName = (BuildServiceDirectoryPrefix (GetServiceLeafDirectoryName $ServiceDirectory)) + "RESOURCE_GROUP"
         $ResourceGroupName = [Environment]::GetEnvironmentVariable($envVarName)
         if (!$ResourceGroupName) {
-            Write-Error "Could not find resource group name environment variable '$envVarName'"
-            exit 1
+            Write-Error "Could not find resource group name environment variable '$envVarName'. This is likely due to an earlier failure in the 'Deploy Test Resources' step above."
+            exit 0
         }
     } else {
         if (!$BaseName) {
