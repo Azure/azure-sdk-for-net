@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -148,6 +149,27 @@ namespace Azure.Storage.Blobs.Tests
             Assert.AreEqual(data.Length - (data.Length % 16) + 16, progress.List[progress.List.Count - 1]);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
+        }
+
+        [Test]
+        public override async Task OpenWriteAsync_DefaultOptions()
+        {
+            // Arrange
+            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
+            BlobClient client = GetResourceClient(disposingContainer.Container);
+
+            // Act
+            Exception exceptionThrown = null;
+            try
+            {
+                await client.OpenWriteAsync(overwrite: true);
+            }
+            catch (Exception ex)
+            {
+                exceptionThrown = ex;
+            }
+
+            Assert.Null(exceptionThrown);
         }
         #endregion
     }

@@ -83,6 +83,8 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
+            options ??= new BlockBlobOpenWriteOptions();
+
             Stream encryptionWriteStream = await _encryptor.EncryptedOpenWriteInternal(
                 async (encryptiondata, funcAsync, funcCancellationToken) =>
                 {

@@ -1797,6 +1797,8 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
+            options ??= new BlobOpenWriteOptions();
+
             if (UsingClientSideEncryption)
             {
                 // TODO #27253
