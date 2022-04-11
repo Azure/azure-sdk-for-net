@@ -126,26 +126,43 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotDisposed(_disposed, nameof(EventDataBatch));
 
-            // Calculate the size for the event, based on the AMQP message size and accounting for a
-            // bit of reserved overhead size.
+            // Reserve space for producer-owned fields that correspond to special
+            // features, if enabled.
 
-            var message = _messageConverter.CreateMessageFromEvent(eventData, _options.PartitionKey);
-
-            var size = _sizeBytes + message.SerializedMessageSize
-                + (message.SerializedMessageSize <= MaximumBytesSmallMessage
-                    ? OverheadBytesSmallMessage
-                    : OverheadBytesLargeMessage);
-
-            if (size > MaximumSizeInBytes)
+            if ((ActiveFeatures & TransportProducerFeatures.IdempotentPublishing) != 0)
             {
-                message.Dispose();
-                return false;
+                eventData.PendingPublishSequenceNumber = int.MaxValue;
+                eventData.PendingProducerGroupId = long.MaxValue;
+                eventData.PendingProducerOwnerLevel = short.MaxValue;
             }
 
-            _sizeBytes = size;
-            _batchMessages.Add(message);
+            try
+            {
+                // Calculate the size for the event, based on the AMQP message size and accounting for a
+                // bit of reserved overhead size.
 
-            return true;
+                var message = _messageConverter.CreateMessageFromEvent(eventData, _options.PartitionKey);
+
+                var size = _sizeBytes + message.SerializedMessageSize
+                    + (message.SerializedMessageSize <= MaximumBytesSmallMessage
+                        ? OverheadBytesSmallMessage
+                        : OverheadBytesLargeMessage);
+
+                if (size > MaximumSizeInBytes)
+                {
+                    message.Dispose();
+                    return false;
+                }
+
+                _sizeBytes = size;
+                _batchMessages.Add(message);
+
+                return true;
+            }
+            finally
+            {
+                eventData.ClearPublishingState();
+            }
         }
 
         /// <summary>
