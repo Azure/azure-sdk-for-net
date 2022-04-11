@@ -1,11 +1,9 @@
-# TODO: NEED TO UPDATE CONTAINER PUSH
+# TODO: how to update registry path
 
 Set-Location -Path ..\..\..\..\
 
-az acr login --name stresstestregistry
-
-docker build -f './sdk/eventhub/Azure.Messaging.EventHubs\stress\Dockerfile' -t '<registry path>:latest' .
-
-docker push '<registry path>:latest'
+docker build -f './sdk/eventhub/Azure.Messaging.EventHubs\stress\Dockerfile' -t 'netehtest:latest' .
 
 Set-Location -Path .\sdk\eventhub\Azure.Messaging.EventHubs\stress\
+
+docker run 'netehtest:latest'
