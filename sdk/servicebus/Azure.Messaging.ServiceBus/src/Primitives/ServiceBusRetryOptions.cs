@@ -10,7 +10,6 @@ namespace Azure.Messaging.ServiceBus
     ///    The set of options that can be specified to influence how
     ///    retry attempts are made, and a failure is eligible to be retried.
     /// </summary>
-    ///
     public class ServiceBusRetryOptions
     {
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
@@ -36,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   to have failed.
         /// </summary>
         /// <value>The default retry limit is 3.</value>
-        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested retries is not between 0 and 100 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested number of retries is not between 0 and 100 (inclusive).</exception>
         public int MaxRetries
         {
             get => _maxRetries;
@@ -86,7 +85,6 @@ namespace Azure.Messaging.ServiceBus
         ///   attempt or a retry.
         /// </summary>
         ///
-        ///
         /// <value>The default timeout is 60 seconds.</value>
         /// <exception cref="ArgumentException">Occurs when the requested timeout is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
@@ -116,7 +114,6 @@ namespace Azure.Messaging.ServiceBus
         ///   When populated, this custom policy will take precedence over the individual retry
         ///   options provided.
         /// </remarks>
-        ///
         public ServiceBusRetryPolicy CustomRetryPolicy { get; set; }
     }
 }

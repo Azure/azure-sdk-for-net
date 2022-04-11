@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The default retry limit is 3.</value>
         ///
-        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested retries is not between 0 and 100 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested number of retries is not between 0 and 100 (inclusive).</exception>
         ///
         public int MaximumRetries
         {
