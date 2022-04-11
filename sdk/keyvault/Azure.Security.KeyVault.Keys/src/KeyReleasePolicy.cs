@@ -54,6 +54,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the policy rules under which the key can be released encoded based on the <see cref="ContentType"/>.
         /// </summary>
+        /// <remarks>
+        /// For more information regarding the release policy grammar for Azure Key Vault, please refer to:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>https://aka.ms/policygrammarkeys for Azure Key Vault release policy grammar.</description>
+        /// </item>
+        /// <item>
+        /// <description>https://aka.ms/policygrammarmhsm for Azure Managed HSM release policy grammar.</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
         /// <example>
         /// The <see cref="EncodedPolicy"/> can be easily written to a file:
         /// <code snippet="Snippet:KeyReleasePolicy_ToStream" language="csharp">

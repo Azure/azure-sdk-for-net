@@ -18,7 +18,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ManagementLock and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagementLockResource" /> and their operations.
+    /// Each <see cref="ManagementLockResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="ManagementLockCollection" /> instance call the GetManagementLocks method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class ManagementLockCollection : ArmCollection, IEnumerable<ManagementLockResource>, IAsyncEnumerable<ManagementLockResource>
     {
         private readonly ClientDiagnostics _managementLockClientDiagnostics;
@@ -44,22 +48,22 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
         /// Operation Id: ManagementLocks_CreateOrUpdateByScope
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagementLockResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagementLockResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id, lockName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -77,22 +81,22 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
         /// Operation Id: ManagementLocks_CreateOrUpdateByScope
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagementLockResource> CreateOrUpdate(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagementLockResource> CreateOrUpdate(WaitUntil waitUntil, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
+                var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, data, cancellationToken);
                 var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -266,7 +270,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,66 +297,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(lockName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// Operation Id: ManagementLocks_GetByScope
-        /// </summary>
-        /// <param name="lockName"> The name of lock. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual async Task<Response<ManagementLockResource>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagementLockResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// Operation Id: ManagementLocks_GetByScope
-        /// </summary>
-        /// <param name="lockName"> The name of lock. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<ManagementLockResource> GetIfExists(string lockName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagementLockResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

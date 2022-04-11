@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static IsDeviceMatchConditionParameters DeserializeIsDeviceMatchConditionParameters(JsonElement element)
         {
-            IsDeviceMatchConditionParametersOdataType odataType = default;
+            IsDeviceMatchConditionParametersTypeName typeName = default;
             IsDeviceOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<IsDeviceMatchConditionParametersMatchValuesItem>> matchValues = default;
             Optional<IList<TransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new IsDeviceMatchConditionParametersOdataType(property.Value.GetString());
+                    typeName = new IsDeviceMatchConditionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new IsDeviceMatchConditionParameters(odataType, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new IsDeviceMatchConditionParameters(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

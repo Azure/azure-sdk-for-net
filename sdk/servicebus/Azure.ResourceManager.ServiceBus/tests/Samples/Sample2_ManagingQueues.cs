@@ -71,23 +71,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_ServiceBusQueues_GetQueueIfExists
-            ServiceBusQueueResource serviceBusQueue = await serviceBusQueueCollection.GetIfExistsAsync("foo");
-            if (serviceBusQueue != null)
-            {
-                Console.WriteLine("queue 'foo' exists");
-            }
-            if (await serviceBusQueueCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("queue 'bar' exists");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_ServiceBusQueues_DeleteQueue

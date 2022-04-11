@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
         /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
         /// <param name="agreedBy"> Client IP address. </param>
-        /// <param name="agreedAt"> Timestamp when the agreements were accepted. </param>
-        internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedAt)
+        /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
+        internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedOn)
         {
             AgreementKeys = agreementKeys;
             AgreedBy = agreedBy;
-            AgreedAt = agreedAt;
+            AgreedOn = agreedOn;
         }
 
         /// <summary> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Client IP address. </summary>
         public string AgreedBy { get; set; }
         /// <summary> Timestamp when the agreements were accepted. </summary>
-        public DateTimeOffset? AgreedAt { get; set; }
+        public DateTimeOffset? AgreedOn { get; set; }
     }
 }

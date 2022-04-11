@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("policyDefinitionId");
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsCollectionDefined(NotScopes))
+            if (Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("notScopes");
                 writer.WriteStartArray();
-                foreach (var item in NotScopes)
+                foreach (var item in ExcludedScopes)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicyAssignmentData DeserializePolicyAssignmentData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<SystemAssignedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -116,7 +116,12 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -247,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyAssignmentData(id, name, type, systemData, location.Value, identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
+            return new PolicyAssignmentData(id, name, type, systemData, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
         }
     }
 }

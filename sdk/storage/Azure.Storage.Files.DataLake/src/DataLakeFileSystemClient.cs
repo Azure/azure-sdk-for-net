@@ -2944,7 +2944,7 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="path">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
-        public virtual DataLakePathClient GetPathClient(string path)
+        internal virtual DataLakePathClient GetPathClient(string path)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri)
             {

@@ -35,10 +35,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="days">Indicates the number of days that the deleted
         /// item should be retained. The minimum specified value can be 1 and
         /// the maximum value can be 365.</param>
-        public DeleteRetentionPolicy(bool? enabled = default(bool?), int? days = default(int?))
+        /// <param name="allowPermanentDelete">This property when set to true
+        /// allows deletion of the soft deleted blob versions and snapshots.
+        /// This property cannot be used blob restore policy. This property
+        /// only applies to blob service and does not apply to containers or
+        /// file share.</param>
+        public DeleteRetentionPolicy(bool? enabled = default(bool?), int? days = default(int?), bool? allowPermanentDelete = default(bool?))
         {
             Enabled = enabled;
             Days = days;
+            AllowPermanentDelete = allowPermanentDelete;
             CustomInit();
         }
 
@@ -60,6 +66,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "days")]
         public int? Days { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property when set to true allows deletion of the
+        /// soft deleted blob versions and snapshots. This property cannot be
+        /// used blob restore policy. This property only applies to blob
+        /// service and does not apply to containers or file share.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowPermanentDelete")]
+        public bool? AllowPermanentDelete { get; set; }
 
         /// <summary>
         /// Validate the object.

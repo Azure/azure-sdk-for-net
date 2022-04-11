@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of DeletedVaultProperties. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
-        /// <param name="deletionDate"> The deleted date. </param>
-        /// <param name="scheduledPurgeDate"> The scheduled purged date. </param>
+        /// <param name="deletionOn"> The deleted date. </param>
+        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original vault. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
-        internal DeletedVaultProperties(string vaultId, string location, DateTimeOffset? deletionDate, DateTimeOffset? scheduledPurgeDate, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled)
+        internal DeletedVaultProperties(string vaultId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled)
         {
             VaultId = vaultId;
             Location = location;
-            DeletionDate = deletionDate;
-            ScheduledPurgeDate = scheduledPurgeDate;
+            DeletionOn = deletionOn;
+            ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
             PurgeProtectionEnabled = purgeProtectionEnabled;
         }
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The location of the original vault. </summary>
         public string Location { get; }
         /// <summary> The deleted date. </summary>
-        public DateTimeOffset? DeletionDate { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; }
+        public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Tags of the original vault. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Purge protection status of the original vault. </summary>

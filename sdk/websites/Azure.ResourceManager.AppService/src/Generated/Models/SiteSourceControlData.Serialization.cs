@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUrl))
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl");
-                writer.WriteStringValue(RepoUrl);
+                writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> repoUrl = default;
+            Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
             Optional<bool> isManualIntegration = default;
             Optional<bool> isGitHubAction = default;
@@ -122,7 +123,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("repoUrl"))
                         {
-                            repoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repoUrl = null;
+                                continue;
+                            }
+                            repoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))

@@ -51,9 +51,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlContainerResource container = await SqlContainerCollection.GetIfExistsAsync(_containerName);
-            if (container != null)
+            if (await SqlContainerCollection.ExistsAsync(_containerName))
             {
+                var id = SqlContainerCollection.Id;
+                id = SqlContainerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _containerName);
+                SqlContainerResource container = this.ArmClient.GetSqlContainerResource(id);
                 await container.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlContainers(container, container2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(AzureLocation.WestUS, container.Data.Resource)
+            var updateOptions = new SqlContainerCreateOrUpdateContent(AzureLocation.WestUS, container.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -113,7 +115,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             DatabaseAccountSqlDatabaseContainerThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
+                new ThroughputSettingsResource()
+                {
+                    Throughput = TestThroughput2,
+                }))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(container.Id, _containerName, container.Data.ResourceType, null,
+            var updateOptions = new SqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -176,8 +181,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var container = await CreateSqlContainer(null);
             await container.DeleteAsync(WaitUntil.Completed);
 
-            container = await SqlContainerCollection.GetIfExistsAsync(_containerName);
-            Assert.Null(container);
+            bool exists = await SqlContainerCollection.ExistsAsync(_containerName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlContainerResource> CreateSqlContainer(AutoscaleSettings autoscale)
@@ -187,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<SqlContainerResource> CreateSqlContainer(string name, AutoscaleSettings autoscale, SqlContainerCollection sqlContainerCollection)
         {
-            SqlContainerCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateData(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlContainerCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlContainerResource(name)
                 {
                     PartitionKey = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
@@ -250,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS, locations)
+            var createOptions = new DatabaseAccountCreateOrUpdateContent(AzureLocation.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),

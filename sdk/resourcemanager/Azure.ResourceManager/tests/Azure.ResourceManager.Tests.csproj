@@ -29,7 +29,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\CollectionTryGetTest\" />
     <Folder Include="SessionRecords\FeatureCollectionTests\" />
     <Folder Include="SessionRecords\LocationExpandedTests\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />

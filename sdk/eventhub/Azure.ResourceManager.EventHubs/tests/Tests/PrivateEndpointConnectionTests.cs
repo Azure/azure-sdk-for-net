@@ -90,12 +90,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await CreatePrivateEndpoint();
 
             List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnectionResource privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
+            string name = privateEndpointConnections[0].Data.Name;
+            Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(name));
+            var id = _privateEndpointConnectionCollection.Id;
+            id = PrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
+            PrivateEndpointConnectionResource privateEndpointConnection = Client.GetPrivateEndpointConnectionResource(id);
             Assert.IsNotNull(privateEndpointConnection);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
-            privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnection.Data.Name);
-            Assert.Null(privateEndpointConnection);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _privateEndpointConnectionCollection.GetAsync(name); });
+            Assert.AreEqual(404, exception.Status);
             privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, privateEndpointConnections.Count);
         }

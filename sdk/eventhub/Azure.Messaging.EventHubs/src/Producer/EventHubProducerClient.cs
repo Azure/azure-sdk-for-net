@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString) : this(connectionString, null, null)
         {
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       EventHubProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName) : this(connectionString, eventHubName, null)
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName,
@@ -482,58 +482,6 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return await Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   A set of information about the state of publishing for a partition, as observed by the <see cref="EventHubProducerClient" />.  This
-        ///   data can always be read, but will only be populated with information relevant to the active features for the producer client.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
-        ///
-        /// <remarks>
-        ///   The state of a partition is only understood by the <see cref="EventHubProducerClient" /> after events have been published to that
-        ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
-        /// </remarks>
-        ///
-        internal virtual async Task<PartitionPublishingPropertiesInternal> GetPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                                 CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-
-            // If the producer does not require stateful partitions, return an empty
-            // instance.
-
-            if (!RequiresStatefulPartitions(Options))
-            {
-                return PartitionPublishingPropertiesInternal.Empty;
-            }
-
-            // If the state has not yet been initialized, then do so now.
-
-            var partitionState = PartitionState.GetOrAdd(partitionId, new PartitionPublishingState(partitionId));
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            try
-            {
-                await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
-
-                if (!partitionState.IsInitialized)
-                {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
-                }
-
-                return CreatePublishingPropertiesFromPartitionState(Options, partitionState);
-            }
-            finally
-            {
-                partitionState.PublishingGuard.Release();
-            }
         }
 
         /// <summary>
@@ -825,6 +773,59 @@ namespace Azure.Messaging.EventHubs.Producer
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   A set of information about the state of publishing for a partition, as observed by the <see cref="EventHubProducerClient" />.  This
+        ///   data can always be read, but will only be populated with information relevant to the active features for the producer client.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
+        ///
+        /// <remarks>
+        ///   The state of a partition is only understood by the <see cref="EventHubProducerClient" /> after events have been published to that
+        ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                                   CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+
+            // If the producer does not require stateful partitions, return an empty
+            // instance.
+
+            if (!RequiresStatefulPartitions(Options))
+            {
+                return PartitionPublishingProperties.Empty;
+            }
+
+            // If the state has not yet been initialized, then do so now.
+
+            var partitionState = PartitionState.GetOrAdd(partitionId, new PartitionPublishingState(partitionId));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            try
+            {
+                await partitionState.PublishingGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                if (!partitionState.IsInitialized)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
+                }
+
+                return CreatePublishingPropertiesFromPartitionState(Options, partitionState);
+            }
+            finally
+            {
+                partitionState.PublishingGuard.Release();
+            }
+        }
+
+        /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  Because the batch is implicitly created, the size of the event set is not
         ///   validated until this method is invoked.  The call will fail if the size of the specified set of events exceeds the maximum allowable size of a single batch.
         /// </summary>
@@ -1026,7 +1027,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                         if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
                         {
-                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            partitionOptions = new PartitionPublishingOptions();
                             Options.PartitionOptions[options.PartitionId] = partitionOptions;
                         }
 
@@ -1151,7 +1152,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                             if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
                         {
-                            partitionOptions = new PartitionPublishingOptionsInternal();
+                            partitionOptions = new PartitionPublishingOptions();
                             Options.PartitionOptions[options.PartitionId] = partitionOptions;
                         }
 
@@ -1421,9 +1422,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of properties that represents the current state.</returns>
         ///
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static PartitionPublishingPropertiesInternal CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
+        private static PartitionPublishingProperties CreatePublishingPropertiesFromPartitionState(EventHubProducerClientOptions options,
                                                                                                           PartitionPublishingState state) =>
-                    new PartitionPublishingPropertiesInternal(options.EnableIdempotentPartitions,
+                    new PartitionPublishingProperties(options.EnableIdempotentPartitions,
                                                       state.ProducerGroupId,
                                                       state.OwnerLevel,
                                                       state.LastPublishedSequenceNumber);

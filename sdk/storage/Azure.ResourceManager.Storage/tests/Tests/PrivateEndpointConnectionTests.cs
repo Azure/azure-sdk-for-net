@@ -85,8 +85,11 @@ namespace Azure.ResourceManager.Storage.Tests
             await CreatePrivateEndpoint();
 
             List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnectionResource privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
-            Assert.IsNotNull(privateEndpointConnection);
+            string name = privateEndpointConnections[0].Data.Name;
+            Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(name));
+            var id = _privateEndpointConnectionCollection.Id;
+            id = PrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
+            PrivateEndpointConnectionResource privateEndpointConnection = Client.GetPrivateEndpointConnectionResource(id);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             //should return 404 rather than 400

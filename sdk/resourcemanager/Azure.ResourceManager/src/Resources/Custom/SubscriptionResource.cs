@@ -8,13 +8,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
+    [CodeGenSuppress("AddTagAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("AddTag", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("SetTagsAsync", typeof(IDictionary<string, string>), typeof(CancellationToken))]
+    [CodeGenSuppress("SetTags", typeof(IDictionary<string, string>), typeof(CancellationToken))]
+    [CodeGenSuppress("RemoveTagAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("RemoveTag", typeof(string), typeof(CancellationToken))]
     public partial class SubscriptionResource : ArmResource
     {
         /// RequestPath: /subscriptions/{subscriptionId}/resources
@@ -110,9 +116,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
         /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
+        public virtual ArmRestApiCollection GetArmRestApis(string azureNamespace)
         {
-            return new RestApiCollection(this, azureNamespace);
+            return new ArmRestApiCollection(this, azureNamespace);
         }
     }
 }

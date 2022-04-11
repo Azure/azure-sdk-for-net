@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of RegistrationInfoPatch. </summary>
-        /// <param name="expirationTime"> Expiration time of registration token. </param>
+        /// <param name="expirationOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
-        internal RegistrationInfoPatch(DateTimeOffset? expirationTime, RegistrationTokenOperation? registrationTokenOperation)
+        internal RegistrationInfoPatch(DateTimeOffset? expirationOn, RegistrationTokenOperation? registrationTokenOperation)
         {
-            ExpirationTime = expirationTime;
+            ExpirationOn = expirationOn;
             RegistrationTokenOperation = registrationTokenOperation;
         }
 
         /// <summary> Expiration time of registration token. </summary>
-        public DateTimeOffset? ExpirationTime { get; set; }
+        public DateTimeOffset? ExpirationOn { get; set; }
         /// <summary> The type of resetting the token. </summary>
         public RegistrationTokenOperation? RegistrationTokenOperation { get; set; }
     }

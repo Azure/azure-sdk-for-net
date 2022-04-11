@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("createdByType");
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastModifiedByType");
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedAt))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

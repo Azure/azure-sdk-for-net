@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Target resource. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        internal TargetResource(string id, string resourceName, string resourceType)
+        internal TargetResource(string id, string resourceName, ResourceType? resourceType)
         {
             Id = id;
             ResourceName = resourceName;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The name of the resource. </summary>
         public string ResourceName { get; }
         /// <summary> The type of the resource. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

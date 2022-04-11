@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<StatusTypes> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
-            Optional<IReadOnlyList<ErrorDetail>> errorDetails = default;
+            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUuid"))
@@ -66,10 +67,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorDetail> array = new List<ErrorDetail>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
                     }
                     errorDetails = array;
                     continue;

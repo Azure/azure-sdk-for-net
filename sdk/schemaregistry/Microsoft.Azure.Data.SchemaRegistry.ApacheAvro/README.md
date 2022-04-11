@@ -119,12 +119,12 @@ Console.WriteLine(deserialized.Age);
 Console.WriteLine(deserialized.Name);
 ```
 
-### Serialize and deserialize data using `BinaryContent` directly
+### Serialize and deserialize data using `MessageContent` directly
 
-It is also possible to serialize and deserialize using `BinaryContent`. Use this option if you are not integrating with any of the messaging libraries that work with `BinaryContent`.
-```C# Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
+It is also possible to serialize and deserialize using `MessageContent`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageContent`.
+```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageContent
 var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 ```
@@ -138,16 +138,16 @@ try
 {
     Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
 }
-catch (AvroSerializationException exception)
+catch (SchemaRegistryAvroException exception)
 {
     // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
     // serialize the data.
     Console.WriteLine(exception);
 
     // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
-    if (exception.SerializedSchemaId != null)
+    if (exception.SchemaId != null)
     {
-        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SerializedSchemaId);
+        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
         Console.WriteLine(schema.Definition);
     }
 }

@@ -54,9 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlTriggerResource trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            if (trigger != null)
+            if (await SqlTriggerCollection.ExistsAsync(_triggerName))
             {
+                var id = SqlTriggerCollection.Id;
+                id = SqlTriggerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _triggerName);
+                SqlTriggerResource trigger = this.ArmClient.GetSqlTriggerResource(id);
                 await trigger.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -82,10 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlTriggers(trigger, trigger2);
 
-            SqlTriggerCreateUpdateData updateOptions = new SqlTriggerCreateUpdateData(trigger.Id, _triggerName, trigger.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, trigger.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlTriggerCreateUpdateData(AzureLocation.WestUS, new Models.SqlTriggerResource(_triggerName)
+            var updateOptions = new SqlTriggerCreateOrUpdateContent(AzureLocation.WestUS, new Models.SqlTriggerResource(_triggerName)
             {
                 TriggerOperation = TriggerOperation.Create,
                 TriggerType = TriggerType.Post,
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var trigger = await CreateSqlTrigger(null);
             await trigger.DeleteAsync(WaitUntil.Completed);
 
-            trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            Assert.Null(trigger);
+            bool exists = await SqlTriggerCollection.ExistsAsync(_triggerName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlTriggerResource> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
-            SqlTriggerCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateData(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlTriggerResource(_triggerName)
                 {
                     TriggerOperation = TriggerOperation.All,

@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a SharedGalleryImageResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SharedGalleryImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedGalleryImageResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSharedGalleryImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SharedGalleryResource" /> using the GetSharedGalleryImage method.
+    /// </summary>
     public partial class SharedGalleryImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryImageResource"/> instance. </summary>
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SharedGalleryImageVersionResource>> GetSharedGalleryImageVersionAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             return await GetSharedGalleryImageVersions().GetAsync(galleryImageVersionName, cancellationToken).ConfigureAwait(false);
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SharedGalleryImageVersionResource> GetSharedGalleryImageVersion(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             return GetSharedGalleryImageVersions().Get(galleryImageVersionName, cancellationToken);

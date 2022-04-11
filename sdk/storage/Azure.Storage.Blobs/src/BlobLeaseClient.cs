@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// container's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
-        /// matches that associated with the blob or container.  Note that the]
+        /// matches that associated with the blob or container.  Note that the
         /// lease may be renewed even if it has expired as long as the blob or
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
