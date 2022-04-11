@@ -31,12 +31,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             // todo: update swagger to include this key.
             Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (activity.Kind == ActivityKind.Server)
+            switch (activity.Kind)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.MappedTags);
+                // we only have mapping for server spans
+                // todo: non-server spans
+                case ActivityKind.Server:
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
+                    Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref monitorTags.MappedTags);
+                    break;
+                case ActivityKind.Consumer:
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
+                    break;
             }
 
             SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);

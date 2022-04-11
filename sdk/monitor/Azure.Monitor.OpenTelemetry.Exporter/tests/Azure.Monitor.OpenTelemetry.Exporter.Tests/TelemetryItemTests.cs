@@ -209,6 +209,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void AiOperationNameIsSetForConsumerKind()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Consumer,
+                null,
+                startTime: DateTime.UtcNow);
+
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
+
+            Assert.Equal(ActivityName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
         public void AiLocationIpisSetAsNetPeerIpForServerSpans()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
