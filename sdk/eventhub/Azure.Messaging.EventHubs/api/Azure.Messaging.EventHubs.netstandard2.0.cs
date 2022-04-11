@@ -1,6 +1,6 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData : Azure.BinaryContent
+    public partial class EventData : Azure.Messaging.MessageContent
     {
         public EventData() { }
         public EventData(System.BinaryData eventBody) { }
@@ -146,6 +146,8 @@ namespace Azure.Messaging.EventHubs
         public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
         public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
         public static Azure.Messaging.EventHubs.PartitionProperties PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, long lastOffset, System.DateTimeOffset lastEnqueuedTime) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventHubs.Producer.PartitionPublishingProperties PartitionPublishingProperties(bool isIdempotentPublishingEnabled, long? producerGroupId, short? ownerLevel, int? lastPublishedSequenceNumber) { throw null; }
     }
     public enum EventHubsRetryMode
     {
@@ -461,6 +463,19 @@ namespace Azure.Messaging.EventHubs.Primitives
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public abstract partial class PluggableCheckpointStoreEventProcessor<TPartition> : Azure.Messaging.EventHubs.Primitives.EventProcessor<TPartition> where TPartition : Azure.Messaging.EventHubs.Primitives.EventProcessorPartition, new()
+    {
+        protected PluggableCheckpointStoreEventProcessor() { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
 }
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -628,6 +643,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public override int GetHashCode() { throw null; }
         public virtual System.Threading.Tasks.Task<string[]> GetPartitionIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.PartitionProperties> GetPartitionPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Producer.PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(Azure.Messaging.EventHubs.Producer.EventDataBatch eventBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventBatch, Azure.Messaging.EventHubs.Producer.SendEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -638,8 +655,41 @@ namespace Azure.Messaging.EventHubs.Producer
     {
         public EventHubProducerClientOptions() { }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal bool EnableIdempotentPartitions { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal System.Collections.Generic.Dictionary<string, Azure.Messaging.EventHubs.Producer.PartitionPublishingOptions> PartitionOptions { get { throw null; } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class PartitionPublishingOptions
+    {
+        public PartitionPublishingOptions() { }
+        public short? OwnerLevel { get { throw null; } set { } }
+        public long? ProducerGroupId { get { throw null; } set { } }
+        public int? StartingSequenceNumber { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class PartitionPublishingProperties
+    {
+        internal PartitionPublishingProperties() { }
+        public bool IsIdempotentPublishingEnabled { get { throw null; } }
+        public int? LastPublishedSequenceNumber { get { throw null; } }
+        public short? OwnerLevel { get { throw null; } }
+        public long? ProducerGroupId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

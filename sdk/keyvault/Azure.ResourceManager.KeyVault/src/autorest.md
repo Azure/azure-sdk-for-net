@@ -28,6 +28,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -67,5 +68,5 @@ directive:
   - from: swagger-document
     where: "$.definitions.Resource"
     transform: >
-      $["x-ms-client-name"] = "KeyVaultResource";
+      $["x-ms-client-name"] = "KeyVaultResourceData";
 ```

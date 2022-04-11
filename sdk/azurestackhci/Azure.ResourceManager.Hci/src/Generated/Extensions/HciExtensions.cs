@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Hci
     /// <summary> A class to add extension methods to Azure.ResourceManager.Hci. </summary>
     public static partial class HciExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HciCluster> GetHciClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciClusterResource> GetHciClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetHciClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHciClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HciCluster> GetHciClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciClusterResource> GetHciClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetHciClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHciClusters(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of HciClusters in the HciCluster. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HciClusters and their operations over a HciCluster. </returns>
-        public static HciClusterCollection GetHciClusters(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of HciClusterResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
+        public static HciClusterCollection GetHciClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetHciClusters();
+            return GetExtensionClient(resourceGroupResource).GetHciClusters();
         }
 
         /// <summary>
@@ -75,14 +75,15 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static async Task<Response<HciCluster>> GetHciClusterAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<HciClusterResource>> GetHciClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,59 +91,69 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static Response<HciCluster> GetHciCluster(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<HciClusterResource> GetHciCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetHciClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetHciClusters().Get(clusterName, cancellationToken);
         }
 
-        #region ArcSetting
-        /// <summary> Gets an object representing a ArcSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region ArcSettingResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcSetting" /> object. </returns>
-        public static ArcSetting GetArcSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcSettingResource" /> object. </returns>
+        public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ArcSetting.ValidateResourceId(id);
-                return new ArcSetting(client, id);
+                ArcSettingResource.ValidateResourceId(id);
+                return new ArcSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HciCluster
-        /// <summary> Gets an object representing a HciCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region HciClusterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciCluster" /> object. </returns>
-        public static HciCluster GetHciCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciClusterResource" /> object. </returns>
+        public static HciClusterResource GetHciClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HciCluster.ValidateResourceId(id);
-                return new HciCluster(client, id);
+                HciClusterResource.ValidateResourceId(id);
+                return new HciClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ArcExtension
-        /// <summary> Gets an object representing a ArcExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region ArcExtensionResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ArcExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcExtension" /> object. </returns>
-        public static ArcExtension GetArcExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcExtensionResource" /> object. </returns>
+        public static ArcExtensionResource GetArcExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ArcExtension.ValidateResourceId(id);
-                return new ArcExtension(client, id);
+                ArcExtensionResource.ValidateResourceId(id);
+                return new ArcExtensionResource(client, id);
             }
             );
         }

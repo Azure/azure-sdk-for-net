@@ -13,12 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.HybridConnectivity.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A Class representing a EndpointResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an EndpointResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EndpointResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetEndpointResource method.
+    /// </summary>
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
@@ -51,9 +55,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, DiagnosticOptions);
+            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string endpointResourceEndpointsApiVersion);
-            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, endpointResourceEndpointsApiVersion);
+            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointResourceEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -136,7 +140,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -188,18 +192,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Update
         /// </summary>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointResource"/> is null. </exception>
-        public virtual async Task<Response<EndpointResource>> UpdateAsync(EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<EndpointResource>> UpdateAsync(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, endpointResource, cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,18 +218,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Update
         /// </summary>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointResource"/> is null. </exception>
-        public virtual Response<EndpointResource> Update(EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<EndpointResource> Update(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, endpointResource, cancellationToken);
+                var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
                 return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

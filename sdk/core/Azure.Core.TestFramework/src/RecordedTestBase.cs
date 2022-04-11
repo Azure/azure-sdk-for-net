@@ -116,8 +116,9 @@ namespace Azure.Core.TestFramework
 
         /// <summary>
         /// Whether or not to compare bodies from the request and the recorded request during playback.
+        /// The default value is <value>true</value>.
         /// </summary>
-        public bool CompareBodies { get; set; }
+        public bool CompareBodies { get; set; } = true;
 
         /// <summary>
         /// Request headers whose values can change between recording and playback without causing request matching

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of provider permissions. </summary>
-    public partial class ProviderPermissionListResult
+    internal partial class ProviderPermissionListResult
     {
         /// <summary> Initializes a new instance of ProviderPermissionListResult. </summary>
         internal ProviderPermissionListResult()

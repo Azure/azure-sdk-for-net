@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ArmPolicyParameter(ParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
+        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
         {
             ParameterType = parameterType;
             AllowedValues = allowedValues;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The data type of the parameter. </summary>
-        public ParameterType? ParameterType { get; set; }
+        public ArmPolicyParameterType? ParameterType { get; set; }
         /// <summary> The allowed values for the parameter. </summary>
         public IList<BinaryData> AllowedValues { get; }
         /// <summary> The default value for the parameter if no value is provided. </summary>

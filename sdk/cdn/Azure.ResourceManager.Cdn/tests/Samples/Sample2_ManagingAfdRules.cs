@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
     public class Sample2_ManagingAfdRules
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -26,25 +26,25 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Create a new azure front door profile
             string AfdProfileName = "myAfdProfile";
             var input1 = new ProfileData("Global", new CdnSku { Name = CdnSkuName.StandardAzureFrontDoor });
-            ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, AfdProfileName, input1);
-            Profile AfdProfile = lro1.Value;
-            // Get the rule set collection from the specific azure front door profile and create a rule set
+            ArmOperation<ProfileResource> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, AfdProfileName, input1);
+            ProfileResource AfdProfileResource = lro1.Value;
+            // Get the rule set collection from the specific azure front door ProfileResource and create a rule set
             string ruleSetName = "myAfdRuleSet";
-            ArmOperation<AfdRuleSet> lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
-            AfdRuleSet ruleSet = lro2.Value;
+            ArmOperation<AfdRuleSetResource> lro2 = await AfdProfileResource.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
+            AfdRuleSetResource ruleSet = lro2.Value;
             // Get the rule collection from the specific rule set and create a rule
             string ruleName = "myAfdRule";
             AfdRuleData input3 = new AfdRuleData
             {
                 Order = 1
             };
-            input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
-            input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+            input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
+            input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
             {
                 CacheDuration = new TimeSpan(0, 0, 20)
             }));
-            ArmOperation<AfdRule> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input3);
-            AfdRule rule = lro3.Value;
+            ArmOperation<AfdRuleResource> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input3);
+            AfdRuleResource rule = lro3.Value;
             #endregion Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
         }
 
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_ListAllAzureFrontDoorRules
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // With GetAllAsync(), we can get a list of the rule in the collection
-            AsyncPageable<AfdRule> response = ruleCollection.GetAllAsync();
-            await foreach (AfdRule rule in response)
+            AsyncPageable<AfdRuleResource> response = ruleCollection.GetAllAsync();
+            await foreach (AfdRuleResource rule in response)
             {
                 Console.WriteLine(rule.Data.Name);
             }
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
-            AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
+            AfdRuleResource rule = await ruleCollection.GetAsync("myAfdRule");
             // With UpdateAsync(), we can update the rule
-            PatchableAfdRuleData input = new PatchableAfdRuleData
+            AfdRulePatch input = new AfdRulePatch
             {
                 Order = 2
             };
-            input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
-            input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+            input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
+            input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
             {
                 CacheDuration = new TimeSpan(0, 0, 30)
             }));
-            ArmOperation<AfdRule> lro = await rule.UpdateAsync(WaitUntil.Completed, input);
+            ArmOperation<AfdRuleResource> lro = await rule.UpdateAsync(WaitUntil.Completed, input);
             rule = lro.Value;
             #endregion Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
         }
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
-            AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
+            AfdRuleResource rule = await ruleCollection.GetAsync("myAfdRule");
             // With DeleteAsync(), we can delete the rule
             await rule.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;
         }

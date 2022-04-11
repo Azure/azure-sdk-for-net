@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -69,6 +72,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                 batch.Dispose();
                 batch = default;
             }
+        }
+
+        protected static void SimulateNetworkFailure(ServiceBusClient client)
+        {
+            var amqpClient = client.Connection.InnerClient;
+            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+                "ConnectionScope",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
+            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+                "ActiveConnection",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
+
+            activeConnection.Abort();
         }
     }
 }

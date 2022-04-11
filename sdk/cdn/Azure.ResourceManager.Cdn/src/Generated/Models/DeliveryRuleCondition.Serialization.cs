@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "ClientPort": return DeliveryRuleClientPortCondition.DeserializeDeliveryRuleClientPortCondition(element);
                     case "Cookies": return DeliveryRuleCookiesCondition.DeserializeDeliveryRuleCookiesCondition(element);
+                    case "HostName": return DeliveryRuleHostNameCondition.DeserializeDeliveryRuleHostNameCondition(element);
                     case "HttpVersion": return DeliveryRuleHttpVersionCondition.DeserializeDeliveryRuleHttpVersionCondition(element);
                     case "IsDevice": return DeliveryRuleIsDeviceCondition.DeserializeDeliveryRuleIsDeviceCondition(element);
                     case "PostArgs": return DeliveryRulePostArgsCondition.DeserializeDeliveryRulePostArgsCondition(element);
@@ -37,6 +39,9 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "RequestMethod": return DeliveryRuleRequestMethodCondition.DeserializeDeliveryRuleRequestMethodCondition(element);
                     case "RequestScheme": return DeliveryRuleRequestSchemeCondition.DeserializeDeliveryRuleRequestSchemeCondition(element);
                     case "RequestUri": return DeliveryRuleRequestUriCondition.DeserializeDeliveryRuleRequestUriCondition(element);
+                    case "ServerPort": return DeliveryRuleServerPortCondition.DeserializeDeliveryRuleServerPortCondition(element);
+                    case "SocketAddr": return DeliveryRuleSocketAddrCondition.DeserializeDeliveryRuleSocketAddrCondition(element);
+                    case "SslProtocol": return DeliveryRuleSslProtocolCondition.DeserializeDeliveryRuleSslProtocolCondition(element);
                     case "UrlFileExtension": return DeliveryRuleUrlFileExtensionCondition.DeserializeDeliveryRuleUrlFileExtensionCondition(element);
                     case "UrlFileName": return DeliveryRuleUrlFileNameCondition.DeserializeDeliveryRuleUrlFileNameCondition(element);
                     case "UrlPath": return DeliveryRuleUrlPathCondition.DeserializeDeliveryRuleUrlPathCondition(element);

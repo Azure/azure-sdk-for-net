@@ -27,8 +27,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Create a resource management group private link.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group the template will be deployed to.
-        /// The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='rmplName'>
         /// The name of the resource management private link.
@@ -56,8 +55,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Get a resource management private link(resource-level).
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group the template will be deployed to.
-        /// The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='rmplName'>
         /// The name of the resource management private link.
@@ -82,8 +80,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Delete a resource management private link.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group the template will be deployed to.
-        /// The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='rmplName'>
         /// The name of the resource management private link.
@@ -120,5 +117,27 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ResourceManagementPrivateLinkListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all the resource management private links in a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ResourceManagementPrivateLinkListResult>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

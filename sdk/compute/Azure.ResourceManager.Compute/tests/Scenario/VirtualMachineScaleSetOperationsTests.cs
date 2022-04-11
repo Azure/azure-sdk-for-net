@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
+        private async Task<VirtualMachineScaleSetResource> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
             var collection = await GetVirtualMachineScaleSetCollectionAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
-            VirtualMachineScaleSet vmss2 = await vmss.GetAsync();
+            VirtualMachineScaleSetResource vmss2 = await vmss.GetAsync();
 
             ResourceDataHelper.AssertVirtualMachineScaleSet(vmss.Data, vmss2.Data);
         }
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var ppgName = Recording.GenerateAssetName("testPPG-");
             var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
             var ppgLro = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, ppgName, ppgData);
-            ProximityPlacementGroup ppg = ppgLro.Value;
+            ProximityPlacementGroupResource ppg = ppgLro.Value;
             // update PPG requires the VM to be deallocated
             await vmss.DeallocateAsync(WaitUntil.Completed);
-            var update = new PatchableVirtualMachineScaleSetData()
+            var update = new VirtualMachineScaleSetPatch()
             {
                 ProximityPlacementGroup = new WritableSubResource()
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 }
             };
             var lro = await vmss.UpdateAsync(WaitUntil.Completed, update);
-            VirtualMachineScaleSet updatedVM = lro.Value;
+            VirtualMachineScaleSetResource updatedVM = lro.Value;
 
             Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
         }

@@ -29,6 +29,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, serviceVersion, mode)
         {
             _serviceVersion = serviceVersion;
+
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            CompareBodies = false;
         }
 
         [Test]

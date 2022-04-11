@@ -23,6 +23,8 @@ namespace Azure.Data.SchemaRegistry.Tests
                 InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
+        private string GenerateSchemaName() => Recording.GenerateId("test-", 10);
+
         private const string SchemaContent = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
         private const string SchemaContent_V2 = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee_V2\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
 
@@ -30,15 +32,15 @@ namespace Azure.Data.SchemaRegistry.Tests
         public async Task CanRegisterSchema()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = SchemaFormat.Avro;
 
             SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties);
+            AssertSchemaProperties(registerProperties, schemaName);
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(schemaProperties);
+            AssertSchemaProperties(schemaProperties, schemaName);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
 
@@ -46,19 +48,19 @@ namespace Azure.Data.SchemaRegistry.Tests
         public async Task CanRegisterNewVersionOfSchema()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = SchemaFormat.Avro;
 
             SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties);
+            AssertSchemaProperties(registerProperties, schemaName);
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(schemaProperties);
+            AssertSchemaProperties(schemaProperties, schemaName);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
             SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, SchemaContent_V2, schemaProperties.Format);
-            AssertSchemaProperties(newVersion);
+            AssertSchemaProperties(newVersion, schemaName);
             Assert.AreNotEqual(registerProperties.Id, newVersion.Id);
         }
 
@@ -66,15 +68,15 @@ namespace Azure.Data.SchemaRegistry.Tests
         public async Task CanGetSchemaId()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = SchemaFormat.Avro;
 
             SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties);
+            AssertSchemaProperties(registerProperties, schemaName);
 
             SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(schemaProperties);
+            AssertSchemaProperties(schemaProperties, schemaName);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
 
@@ -82,15 +84,15 @@ namespace Azure.Data.SchemaRegistry.Tests
         public async Task CanGetSchema()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = SchemaFormat.Avro;
 
             var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties);
+            AssertSchemaProperties(registerProperties, schemaName);
 
             SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchema(schema);
+            AssertSchema(schema, schemaName);
             AssertPropertiesAreEqual(registerProperties, schema.Properties);
         }
 
@@ -98,7 +100,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         public void CanCreateRegisterRequestForUnknownFormatType()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("JSON");
             Assert.That(
@@ -110,7 +112,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         public void CanCreateGetSchemaPropertiesRequestForUnknownFormatType()
         {
             var client = CreateClient();
-            var schemaName = "test1";
+            var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var format = new SchemaFormat("JSON");
             Assert.That(
@@ -118,21 +120,21 @@ namespace Azure.Data.SchemaRegistry.Tests
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
         }
 
-        private void AssertSchema(SchemaRegistrySchema schema)
+        private void AssertSchema(SchemaRegistrySchema schema, string schemaName)
         {
-            AssertSchemaProperties(schema.Properties);
+            AssertSchemaProperties(schema.Properties, schemaName);
             Assert.AreEqual(
                 Regex.Replace(SchemaContent, @"\s+", string.Empty),
                 Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 
-        private void AssertSchemaProperties(SchemaProperties properties)
+        private void AssertSchemaProperties(SchemaProperties properties, string schemaName)
         {
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
             Assert.AreEqual(SchemaFormat.Avro, properties.Format);
-            Assert.AreEqual("test1", properties.Name);
+            Assert.AreEqual(schemaName, properties.Name);
             Assert.AreEqual(TestEnvironment.SchemaRegistryGroup, properties.GroupName);
         }
 

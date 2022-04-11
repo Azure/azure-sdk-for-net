@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class SqlStoredProcedureOperationSource : IOperationSource<SqlStoredProcedure>
+    internal class SqlStoredProcedureOperationSource : IOperationSource<SqlStoredProcedureResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        SqlStoredProcedure IOperationSource<SqlStoredProcedure>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlStoredProcedureResource IOperationSource<SqlStoredProcedureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
-            return new SqlStoredProcedure(_client, data);
+            return new SqlStoredProcedureResource(_client, data);
         }
 
-        async ValueTask<SqlStoredProcedure> IOperationSource<SqlStoredProcedure>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlStoredProcedureResource> IOperationSource<SqlStoredProcedureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
-            return new SqlStoredProcedure(_client, data);
+            return new SqlStoredProcedureResource(_client, data);
         }
     }
 }

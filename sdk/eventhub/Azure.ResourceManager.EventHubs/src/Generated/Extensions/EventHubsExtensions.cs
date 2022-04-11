@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to Azure.ResourceManager.EventHubs. </summary>
     public static partial class EventHubsExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
         /// Operation Id: Clusters_ListAvailableClusterRegion
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetAvailableClusterRegionClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvailableClusterRegionClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
         /// Operation Id: Clusters_ListAvailableClusterRegion
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableCluster> GetAvailableClusterRegionClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<AvailableCluster> GetAvailableClusterRegionClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetAvailableClusterRegionClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvailableClusterRegionClusters(cancellationToken);
         }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubCluster> GetEventHubClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventHubClusterResource> GetEventHubClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetEventHubClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventHubClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubCluster> GetEventHubClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventHubClusterResource> GetEventHubClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetEventHubClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventHubClusters(cancellationToken);
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
         /// Operation Id: Namespaces_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubNamespace> GetEventHubNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventHubNamespaceResource> GetEventHubNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetEventHubNamespacesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventHubNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
         /// Operation Id: Namespaces_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubNamespace> GetEventHubNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventHubNamespaceResource> GetEventHubNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetEventHubNamespaces(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEventHubNamespaces(cancellationToken);
         }
 
         /// <summary>
@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(subscription).CheckEventHubNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckEventHubNameAvailabilityAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,32 +127,32 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscription).CheckEventHubNameAvailability(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckEventHubNameAvailability(options, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of EventHubClusters in the EventHubCluster. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EventHubClusters and their operations over a EventHubCluster. </returns>
-        public static EventHubClusterCollection GetEventHubClusters(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of EventHubClusterResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EventHubClusterResources and their operations over a EventHubClusterResource. </returns>
+        public static EventHubClusterCollection GetEventHubClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetEventHubClusters();
+            return GetExtensionClient(resourceGroupResource).GetEventHubClusters();
         }
 
         /// <summary>
@@ -160,14 +160,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static async Task<Response<EventHubCluster>> GetEventHubClusterAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<EventHubClusterResource>> GetEventHubClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetEventHubClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventHubClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -175,37 +176,23 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static Response<EventHubCluster> GetEventHubCluster(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<EventHubClusterResource> GetEventHubCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetEventHubClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetEventHubClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubNamespaces in the EventHubNamespace. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EventHubNamespaces and their operations over a EventHubNamespace. </returns>
-        public static EventHubNamespaceCollection GetEventHubNamespaces(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of EventHubNamespaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of EventHubNamespaceResources and their operations over a EventHubNamespaceResource. </returns>
+        public static EventHubNamespaceCollection GetEventHubNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetEventHubNamespaces();
-        }
-
-        /// <summary>
-        /// Gets the description of the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static async Task<Response<EventHubNamespace>> GetEventHubNamespaceAsync(this ResourceGroup resourceGroup, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetEventHubNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetEventHubNamespaces();
         }
 
         /// <summary>
@@ -213,187 +200,237 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static Response<EventHubNamespace> GetEventHubNamespace(this ResourceGroup resourceGroup, string namespaceName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<EventHubNamespaceResource>> GetEventHubNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetEventHubNamespaces().Get(namespaceName, cancellationToken);
+            return await resourceGroupResource.GetEventHubNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        #region EventHubCluster
-        /// <summary> Gets an object representing a EventHubCluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets the description of the specified namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
+        /// Operation Id: Namespaces_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventHubNamespaceResource> GetEventHubNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetEventHubNamespaces().Get(namespaceName, cancellationToken);
+        }
+
+        #region EventHubClusterResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubClusterResource.CreateResourceIdentifier" /> to create an <see cref="EventHubClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubCluster" /> object. </returns>
-        public static EventHubCluster GetEventHubCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubClusterResource" /> object. </returns>
+        public static EventHubClusterResource GetEventHubClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventHubCluster.ValidateResourceId(id);
-                return new EventHubCluster(client, id);
+                EventHubClusterResource.ValidateResourceId(id);
+                return new EventHubClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHubNamespace
-        /// <summary> Gets an object representing a EventHubNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubNamespaceResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubNamespaceResource.CreateResourceIdentifier" /> to create an <see cref="EventHubNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubNamespace" /> object. </returns>
-        public static EventHubNamespace GetEventHubNamespace(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubNamespaceResource" /> object. </returns>
+        public static EventHubNamespaceResource GetEventHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventHubNamespace.ValidateResourceId(id);
-                return new EventHubNamespace(client, id);
+                EventHubNamespaceResource.ValidateResourceId(id);
+                return new EventHubNamespaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetworkRuleSet
-        /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it but with no data. </summary>
+        #region NetworkRuleSetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public static NetworkRuleSet GetNetworkRuleSet(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
+        public static NetworkRuleSetResource GetNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkRuleSet.ValidateResourceId(id);
-                return new NetworkRuleSet(client, id);
+                NetworkRuleSetResource.ValidateResourceId(id);
+                return new NetworkRuleSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceAuthorizationRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
-        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
+        public static NamespaceAuthorizationRuleResource GetNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceAuthorizationRule.ValidateResourceId(id);
-                return new NamespaceAuthorizationRule(client, id);
+                NamespaceAuthorizationRuleResource.ValidateResourceId(id);
+                return new NamespaceAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHubAuthorizationRule
-        /// <summary> Gets an object representing a EventHubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubAuthorizationRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
-        public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
+        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventHubAuthorizationRule.ValidateResourceId(id);
-                return new EventHubAuthorizationRule(client, id);
+                EventHubAuthorizationRuleResource.ValidateResourceId(id);
+                return new EventHubAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DisasterRecoveryAuthorizationRule
-        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryAuthorizationRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="DisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
-        public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRuleResource" /> object. </returns>
+        public static DisasterRecoveryAuthorizationRuleResource GetDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DisasterRecoveryAuthorizationRule.ValidateResourceId(id);
-                return new DisasterRecoveryAuthorizationRule(client, id);
+                DisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+                return new DisasterRecoveryAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHub
-        /// <summary> Gets an object representing a EventHub along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHub" /> object. </returns>
-        public static EventHub GetEventHub(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
+        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventHub.ValidateResourceId(id);
-                return new EventHub(client, id);
+                EventHubResource.ValidateResourceId(id);
+                return new EventHubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DisasterRecovery
-        /// <summary> Gets an object representing a DisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="DisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
-        public static DisasterRecovery GetDisasterRecovery(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryResource" /> object. </returns>
+        public static DisasterRecoveryResource GetDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DisasterRecovery.ValidateResourceId(id);
-                return new DisasterRecovery(client, id);
+                DisasterRecoveryResource.ValidateResourceId(id);
+                return new DisasterRecoveryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConsumerGroup
-        /// <summary> Gets an object representing a ConsumerGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ConsumerGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ConsumerGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConsumerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ConsumerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsumerGroup" /> object. </returns>
-        public static ConsumerGroup GetConsumerGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConsumerGroupResource" /> object. </returns>
+        public static ConsumerGroupResource GetConsumerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConsumerGroup.ValidateResourceId(id);
-                return new ConsumerGroup(client, id);
+                ConsumerGroupResource.ValidateResourceId(id);
+                return new ConsumerGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SchemaGroup
-        /// <summary> Gets an object representing a SchemaGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SchemaGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaGroupResource.CreateResourceIdentifier" /> to create a <see cref="SchemaGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchemaGroup" /> object. </returns>
-        public static SchemaGroup GetSchemaGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SchemaGroupResource" /> object. </returns>
+        public static SchemaGroupResource GetSchemaGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SchemaGroup.ValidateResourceId(id);
-                return new SchemaGroup(client, id);
+                SchemaGroupResource.ValidateResourceId(id);
+                return new SchemaGroupResource(client, id);
             }
             );
         }

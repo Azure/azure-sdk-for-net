@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
+        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, resourceType, systemData)
+        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Hci
             PerNodeDetails = perNodeDetails;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The type of identity that created the resource. </summary>
         public Models.CreatedByType? CreatedByType { get; set; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The identity that last modified the resource. </summary>
         public string LastModifiedBy { get; set; }
         /// <summary> The type of identity that last modified the resource. </summary>
         public Models.CreatedByType? LastModifiedByType { get; set; }
         /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedAt { get; set; }
+        public DateTimeOffset? LastModifiedOn { get; set; }
     }
 }

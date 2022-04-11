@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="endOfLifeDate"> End-of-life date for the minor version. </param>
+        /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
         /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal FunctionAppRuntimeSettings(string runtimeVersion, bool? remoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, IReadOnlyDictionary<string, string> appSettingsDictionary, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary, IReadOnlyList<string> supportedFunctionsExtensionVersions, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeDate, bool? isAutoUpdate, bool? isEarlyAccess, bool? isDefault)
+        internal FunctionAppRuntimeSettings(string runtimeVersion, bool? remoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, IReadOnlyDictionary<string, string> appSettingsDictionary, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary, IReadOnlyList<string> supportedFunctionsExtensionVersions, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, bool? isDefault)
         {
             RuntimeVersion = runtimeVersion;
             RemoteDebuggingSupported = remoteDebuggingSupported;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsPreview = isPreview;
             IsDeprecated = isDeprecated;
             IsHidden = isHidden;
-            EndOfLifeDate = endOfLifeDate;
+            EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
             IsDefault = isDefault;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsHidden { get; }
         /// <summary> End-of-life date for the minor version. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; }
+        public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoUpdate { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

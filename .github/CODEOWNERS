@@ -27,7 +27,7 @@
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @chidozieononiwu @weshaggard @benbp
+/sdk/template/                                  @chidozieononiwu @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
 
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
@@ -80,8 +80,8 @@
 #/<NotInRepo>/            @antcp @AzureAppServiceCLI
 
 # ServiceLabel: %Attestation %Service Attention
-/sdk/attestation/            @anilba06 @larryosterman
-/sdk/attestation/azure-security-attestation                          @larryosterman @Azure/azure-sdk-write-attestation @anilba06
+/sdk/attestation/            @anilba06 @gkostal
+/sdk/attestation/azure-security-attestation                          @gkostal @Azure/azure-sdk-write-attestation @anilba06
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
@@ -192,11 +192,35 @@
 # ServiceLabel: %Commerce %Service Attention
 #/<NotInRepo>/            @ms-premp @qiaozha
 
+# PRLabel: %Communication - Calling Server
+/sdk/communication/Azure.Communication.CallingServer/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Chat
+/sdk/communication/Azure.Communication.Chat/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Common
+/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Identity
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Network Traversal
+/sdk/communication/Azure.Communication.NetworkTraversal/ @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Phone Numbers
+/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
+
+# PRLabel: %Communication - Short Codes
+/sdk/communication/Azure.Communication.ShortCodes/      @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - SMS
+/sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
+
+# PRLabel: %Communication - Resource Manager
+/sdk/communication/Azure.ResourceManager.Communication/
+
 # PRLabel: %Communication
 /sdk/communication/                                     @acsdevx-msft
-/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
-/sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
-/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
@@ -291,7 +315,7 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai @Aashish93-stack
+/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
@@ -679,3 +703,11 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos
 /sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml @shankarsama @DorothySun216 
+
+# ######## DPG ########
+
+# Onboarding Documentation and Quickstarts
+/doc/Data\ Plane\ Code\ Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
+
+# Client generation tooling
+/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe @annelo-msft

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Core;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Models
         /// <summary> Initializes a new instance of SystemData. </summary>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
+        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
+        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
         [SerializationConstructor]
-        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt)
+        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn)
         {
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> The identity that created the resource. </summary>
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Models
         /// <summary> The type of identity that created the resource. </summary>
         public CreatedByType? CreatedByType { get; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The identity that last modified the resource. </summary>
         public string LastModifiedBy { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
         public CreatedByType? LastModifiedByType { get; }
         /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
     }
 }

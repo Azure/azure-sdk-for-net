@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Dashboard
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dashboard. </summary>
     public static partial class DashboardExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
         /// Operation Id: Grafana_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GrafanaResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GrafanaResource> GetGrafanaResourcesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetGrafanaResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
         }
 
         /// <summary>
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
         /// Operation Id: Grafana_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GrafanaResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GrafanaResource> GetGrafanaResources(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetGrafanaResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetManagedGrafanas(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of GrafanaResources in the GrafanaResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
-        public static GrafanaResourceCollection GetGrafanaResources(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of ManagedGrafanaResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
+        public static ManagedGrafanaCollection GetManagedGrafanas(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetGrafanaResources();
+            return GetExtensionClient(resourceGroupResource).GetManagedGrafanas();
         }
 
         /// <summary>
@@ -75,14 +75,15 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static async Task<Response<GrafanaResource>> GetGrafanaResourceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetGrafanaResources().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetManagedGrafanas().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,27 +91,31 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static Response<GrafanaResource> GetGrafanaResource(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<ManagedGrafanaResource> GetManagedGrafana(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetGrafanaResources().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetManagedGrafanas().Get(workspaceName, cancellationToken);
         }
 
-        #region GrafanaResource
-        /// <summary> Gets an object representing a GrafanaResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedGrafanaResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedGrafanaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedGrafanaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGrafanaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GrafanaResource" /> object. </returns>
-        public static GrafanaResource GetGrafanaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedGrafanaResource" /> object. </returns>
+        public static ManagedGrafanaResource GetManagedGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GrafanaResource.ValidateResourceId(id);
-                return new GrafanaResource(client, id);
+                ManagedGrafanaResource.ValidateResourceId(id);
+                return new ManagedGrafanaResource(client, id);
             }
             );
         }
