@@ -29,6 +29,10 @@ namespace Azure.Messaging.EventHubs.Stress
             testsToRun.TryGetValue("BasicEventProcessorTest", out var runBasicEventProcessorTest);
             testsToRun.TryGetValue("EventProducerTest", out var runEventProcessorTest);
             testsToRun.TryGetValue("ProcessorEmptyReadTest", out var runProcessorEmptyReadTest);
+
+            testsToRun.TryGetValue("BasicBufferedProducerTest", out var runBasicBufferedProducerTest);
+            var azResourceNamesBBPT = new AzureResourceNames();
+
             var localRun = testsToRun.TryGetValue("local", out var local);
 
             var needBlobStorage = (runBasicEventProcessorTest || runProcessorEmptyReadTest);
@@ -38,8 +42,13 @@ namespace Azure.Messaging.EventHubs.Stress
             // Set the necessary connection string inputs
             if (localRun)
             {
-                Console.WriteLine($"need blob: {needBlobStorage}.");
                 PromptForConnectionStrings(azResourceStrings, needBlobStorage);
+                while (string.IsNullOrEmpty(instrumentationKey))
+                {
+                    Console.Write("Please provide the instrumentation key for the App Insights resource: ");
+                    instrumentationKey = Console.ReadLine().Trim();
+                    Console.WriteLine();
+                }
             }
             else
             {
@@ -59,13 +68,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     PromptForNames(azResourceNamesBPRT, false);
                 }
-
-            while (string.IsNullOrEmpty(instrumentationKey))
-            {
-                Console.Write("Please provide the instrumentation key for the App Insights resource: ");
-                instrumentationKey = Console.ReadLine().Trim();
-                Console.WriteLine();
-            }
 
                 int durationInHours = 72;
                 var basicPublicReadTest = new BasicPublishReadTest();
@@ -120,6 +122,18 @@ namespace Azure.Messaging.EventHubs.Stress
                 // }
 
                 // await ProcessorEmptyReadTestRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesPERT.EventHub, azResourceStrings.StorageConnectionString, azResourceNamesPERT.BlobContainer);
+            }
+
+            if (runBasicBufferedProducerTest)
+            {
+                if (localRun)
+                {
+                    PromptForNames(azResourceNamesBBPT, false);
+                }
+
+                int durationInHours = 72;
+                var testRun = new BasicBufferedProducerTest();
+                await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesBBPT.EventHub, instrumentationKey, durationInHours);
             }
         }
 

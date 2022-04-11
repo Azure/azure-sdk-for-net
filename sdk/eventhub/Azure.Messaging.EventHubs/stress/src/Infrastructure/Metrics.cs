@@ -29,7 +29,6 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier RunDuration = new MetricIdentifier("RunDuration");
 
         // Publisher statistics
-        public MetricIdentifier ConsumersToConnect = new MetricIdentifier("ConsumersToConnect");
         public MetricIdentifier BatchesCount = new MetricIdentifier("BatchesCount");
         public MetricIdentifier SentEventsCount = new MetricIdentifier("SentEventsCount");
         public MetricIdentifier SuccessfullyReceivedEventsCount = new MetricIdentifier("SuccessfullyReceivedEventsCount");
@@ -37,6 +36,9 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier ConsumerFailureCount = new MetricIdentifier("ConsumerFailureCount");
         public MetricIdentifier CorruptedBodyFailureCount = new MetricIdentifier("CorruptedBodyFailureCount");
         public MetricIdentifier CorruptedPropertiesFailureCount = new MetricIdentifier("CorruptedPropertiesFailureCount");
+
+        // Buffered Producer statistics
+        public MetricIdentifier EventsEnqueued = new MetricIdentifier("EventsEnqueued");
 
         // Statistics
         public MetricIdentifier TotalServiceOperations = new MetricIdentifier("MemorySamples");

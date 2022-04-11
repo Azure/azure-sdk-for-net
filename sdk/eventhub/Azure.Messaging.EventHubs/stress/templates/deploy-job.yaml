@@ -9,6 +9,6 @@ spec:
     - name: net-eh-stress
       image: {{ .Values.image }}
       imagePullPolicy: Always
-      command: ['dotnet', 'run', '{{ .Scenario }}', '--project'. './src']
+      command: ['dotnet', 'run', '{{ .Scenario }}', '--project'. './src', '-f', 'netcoreapp3']
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}
