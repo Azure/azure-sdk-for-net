@@ -1,6 +1,8 @@
 # Service driven evolution
 
-As a service evolves with non-breaking changes in the REST API, it may or may not cause breaking changes in the generated SDK. For instance, adding a new method in an existing path or in a new path won't cause breaking changes in the new SDK. But some changes like adding an optional query parameter could cause breaking changes in the generated SDK. In order to make the SDK backward compatible, we can add customized code such as overload methods. The following sections will show some examples of such scenarios and how to handle them.
+As a service evolves with non-breaking changes in the REST API, it may or may not cause breaking changes in the generated SDK. For instance, adding a new method in an existing path or in a new path won't cause breaking changes in the new SDK. See details [here](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#api-versioning). 
+
+However, even no breaking changes exist from the REST API perspective, some changes like adding an optional query parameter could still cause breaking changes in the generated SDK. In order to make the SDK backward compatible, we can add customized code such as overload methods for now. We will make it automatically in the near future. The following sections will show some examples of such scenarios and how to handle them.
 
 ## A method gets a new optional parameter
 
@@ -9,20 +11,13 @@ Generated code in a V1 client with a required query parameter and an optional qu
 ``` C#
 public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam, string optionalParam = null, RequestContext context = null)
 {
-    Argument.AssertNotNull(requiredParam, nameof(requiredParam));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PutRequiredOptional");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam, optionalParam, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 ```
 
@@ -31,20 +26,13 @@ Generated code in a V2 client with a new optional query parameter:
 ``` C#
 public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam, string optionalParam = null, string newParameter = null, RequestContext context = null)
 {
-    Argument.AssertNotNull(requiredParam, nameof(requiredParam));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PutRequiredOptional");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam, optionalParam, newParameter, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 ```
 
@@ -53,22 +41,18 @@ Since `context` is always the last parameter, V2 inserts the new optional parame
 ``` C#
 public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam, string optionalParam, RequestContext context)
 {
-    Argument.AssertNotNull(requiredParam, nameof(requiredParam));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PutRequiredOptional");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 ```
+
+**Notice:**
+Now the helper method has one mpre parameter, so we should call it with `newParameter` `null` as `CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);`.
 
 Now calling `client.PutRequiredOptionalAsync("requiredParam", "optionalParam", ErrorOptions.NoThrow)` with V2 will invoke the manual method we added.
 
@@ -79,32 +63,18 @@ Generated code in a V1 client with only `application/json` as the content type:
 ``` C#
 public virtual async Task<Response> PostParametersAsync(RequestContent content, RequestContext context = null)
 {
-    Argument.AssertNotNull(content, nameof(content));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PostParameters");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePostParametersRequest(content, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 
 internal HttpMessage CreatePostParametersRequest(RequestContent content, RequestContext context)
 {
-    var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-    var request = message.Request;
-    request.Method = RequestMethod.Post;
-    var uri = new RawRequestUriBuilder();
-    uri.Reset(_endpoint);
-    uri.AppendPath("/serviceDriven/parameters", false);
-    request.Uri = uri;
-    request.Headers.Add("Accept", "application/json");
+    ...
     request.Headers.Add("Content-Type", "application/json");
     request.Content = content;
     return message;
@@ -114,64 +84,108 @@ internal HttpMessage CreatePostParametersRequest(RequestContent content, Request
 Generated code in a V2 client with `image/jpeg` as a new content type in addition to `application/json`:
 
 ``` C#
-...
 /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;image/jpeg&quot;. </param>
-...
 public virtual async Task<Response> PostParametersAsync(RequestContent content, ContentType contentType, RequestContext context = null)
 {
-    Argument.AssertNotNull(content, nameof(content));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PostParameters");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePostParametersRequest(content, contentType, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 
 internal HttpMessage CreatePostParametersRequest(RequestContent content, ContentType contentType, RequestContext context)
 {
-    var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-    var request = message.Request;
-    request.Method = RequestMethod.Post;
-    var uri = new RawRequestUriBuilder();
-    uri.Reset(_endpoint);
-    uri.AppendPath("/serviceDriven/parameters", false);
-    request.Uri = uri;
-    request.Headers.Add("Accept", "application/json");
+    ...
     request.Headers.Add("Content-Type", contentType.ToString());
     request.Content = content;
     return message;
 }
 ```
 
-Since the V2 client added a required parameter, it breaks the code that is written for V1. We can manually add an overload method that has the same signature as V1 to make it backward compatible:
+Since the V2 client added a required parameter to an existing client method, it breaks the code that is written for the V1 client. We can manually add an overload method that has the same signature as V1 to make it backward compatible:
 
 ``` C#
 [EditorBrowsable(EditorBrowsableState.Never)]
 public virtual async Task<Response> PostParametersAsync(RequestContent content, RequestContext context = null)
 {
-    Argument.AssertNotNull(content, nameof(content));
-
-    using var scope = ClientDiagnostics.CreateScope("ParamsClient.PostParameters");
-    scope.Start();
+    ...
     try
     {
         using HttpMessage message = CreatePostParametersRequest(content, ContentType.ApplicationJson, context);
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
-    catch (Exception e)
-    {
-        scope.Failed(e);
-        throw;
-    }
+    ...
 }
 ```
 
-Notice that we leverage the `CreatePostParametersRequest` method in V2 but always pass in the `ContentType.ApplicationJson` as the `contentType` parameter in the manual method to make the behavior align with V1. We can add `[EditorBrowsable(EditorBrowsableState.Never)]` to the manual method to make it invisible in IDE if we don't want to confuse new customers that never used V1 with this overload method that uses a hard-coded content type in addition to the generated method that uses a `contentType` parameter.
+**Notice:**
+1. We leverage the `CreatePostParametersRequest` method in V2 but always pass in the `ContentType.ApplicationJson` as the `contentType` parameter in the manual method to make the behavior align with V1.
+2. Whether to add the attribute `[EditorBrowsable(EditorBrowsableState.Never)]` depends on whether you want to discourage callers from using this. E.g., if service add a new ContentType value to improve performance, you should add this attribute so new users wouldn't discover it, while if service has default preference of old ContentType value, you should not add this attribute to make it easy for users to discover the default.
+
+## A method changes a required parameter to optional
+
+Generated code in a V1 client with two required parameters:
+
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam1, string requiredParam2, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam1, requiredParam2, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+
+**Required input is changed to an optional input when it is in the last position (i.e., `requiredParam2`).**
+
+This case is safe to generate as:
+
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam1, string requiredParam2 = null, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam1, requiredParam2, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+
+**Required input is changed to an optional input when it is not in the last position (e.g., `requiredParam2`).**
+
+In this case, below generated code is not safe to go, which would end up passing the wrong values to the method parameters, without any warnings from the compiler.
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam2, string requiredParam1 = null, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam2, requiredParam1, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+You have to handle this via a manually-written convenience overload. E.g.,
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam2, string requiredParam1 = null, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(requiredParam1, requiredParam2, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+
+**Notice:** here when calling the helper method `CreatePutRequiredOptionalRequest`, we change the parameter order by putting `requiredParam1` before `requiredParam2`.
