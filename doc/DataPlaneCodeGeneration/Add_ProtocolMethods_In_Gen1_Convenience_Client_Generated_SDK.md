@@ -1,6 +1,6 @@
-# Add Protocol Methods In HLC Generated SDK
+# Add Protocol Methods In (Gen 1) Convenience Client Generated SDK
 
-In this tutorial, we will show how to add protocol methods to Data Plane Generation 1 Convenience Clients (HLCs) built on internal generated RestClients.  This is accomplished by adding generated protocol methods to the inner RestClient, and then manually adding them to the outer Convenience Client API.
+In this tutorial, we will show how to add protocol methods to Data Plane Generation 1 Convenience Clients built on internal generated RestClients.  This is accomplished by adding generated protocol methods to the inner RestClient, and then manually adding them to the outer Convenience Client API.
 
 ## Prerequisites
 
@@ -8,13 +8,13 @@ You should have a service RestClient generated in `azure-sdk-for-net/sdk/<servic
 
 ## Add protocol methods to RestClient
 
-In order to generate protocol methods in HLC generated RestClient, you'd have to define a `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of `operationId` defined in it's swagger definition.
+In order to generate protocol methods in the generated RestClient of (Gen 1) convenience client, you'd have to define a `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of `operationId` defined in it's swagger definition.
 
 For this tutorial we are going to use `Azure.Data.Tables` SDK. You can find swagger definition for Table service [here](https://github.com/Azure/azure-rest-api-specs/blob/2df8b07bf9af7c96066ca4dda21b79297307d108/specification/cosmos-db/data-plane/Microsoft.Tables/preview/2019-02-02/table.json), `autorest.md` file [here](https://github.com/azure-sdk/azure-sdk-for-net/blob/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/autorest.md) and `Generated` folder [here](https://github.com/azure-sdk/azure-sdk-for-net/tree/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/Generated).
 
 * ### Generated code before:
 
-In Generated folder, you will find `TableRestClient.Delete` and `ServiceRestClient.SetProperties` methods are already generated as per default HLC configuration.
+In Generated folder, you will find `TableRestClient.Delete` and `ServiceRestClient.SetProperties` methods are already generated as per default configuration of (Gen 1) convenience client.
 
 **(Generated/TableRestClient.cs)**:
 
