@@ -131,13 +131,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     New-Item -Path $YmlPath -Name "toc.yml" -Force
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
-    # Track 2 packages go first, then others.
-    $sortedToc = $tocContent.GetEnumerator() | Sort-Object {
-        $_.Value.NewIndex, 
-        $_.Value.TypeIndex, 
-        $_.Value.ServiceName, 
-        $_.Value.DisplayName,
-        $_.Key}
+     $sortedToc = $tocContent.Values | Sort-Object New, Type, ServiceName, DisplayName, Artifact
     foreach ($serviceMapping in $sortedToc) {
         $artifact = $serviceMapping.Key
         $serviceName = $serviceMapping.Value.ServiceName
