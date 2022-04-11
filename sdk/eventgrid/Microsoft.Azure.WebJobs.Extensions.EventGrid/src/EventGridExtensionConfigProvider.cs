@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = converter;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, true);
         }
 
         // default constructor
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, true);
         }
 
         public void Initialize(ExtensionConfigContext context)

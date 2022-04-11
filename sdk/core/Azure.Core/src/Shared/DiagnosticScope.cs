@@ -12,36 +12,29 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 
 namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
-        private static readonly AsyncLocal<bool> ClientCustomerScopeStarted = new AsyncLocal<bool>()
-        {
-            Value = false
-        };
-
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
-        private readonly bool _suppressNestedClientScopes;
+        private readonly bool _enableNestedClientScopes;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientScopes) :
-            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientScopes)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool enableNestedClientScopes) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, enableNestedClientScopes)
         {
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientScopes)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool enableNestedClientScopes)
         {
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
-            _suppressNestedClientScopes = suppressNestedClientScopes && (kind == ActivityKind.Internal || kind == ActivityKind.Client);
-            // ActivityKind.Internal and Client both can represent public API calls.
-            if (_suppressNestedClientScopes)
-            {
-                IsEnabled &= !ClientCustomerScopeStarted.Value;
-            }
+            // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
+            _enableNestedClientScopes = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? enableNestedClientScopes : true;
+
+            // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
+            IsEnabled = (source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource)) &&
+                (Activity.Current?.IsNestedScopeEnabled()).GetValueOrDefault(true);
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -103,10 +96,10 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
-            bool? started = _activityAdapter?.Start();
-            if (started.GetValueOrDefault() && _suppressNestedClientScopes)
+            Activity? started = _activityAdapter?.Start();
+            if (!_enableNestedClientScopes && started != null)
             {
-                ClientCustomerScopeStarted.Value = true;
+                started.SuppressNestedClientScopes();
             }
         }
 
@@ -119,10 +112,6 @@ namespace Azure.Core.Pipeline
         {
             // Reverse the Start order
             _activityAdapter?.Dispose();
-            if (_suppressNestedClientScopes)
-            {
-                ClientCustomerScopeStarted.Value = false;
-            }
         }
 
         public void Failed(Exception e)
@@ -282,7 +271,7 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
-            public bool Start()
+            public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
 
@@ -290,7 +279,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
-                        return false;
+                        return null;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)
@@ -317,7 +306,7 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
-                return true;
+                return _currentActivity;
             }
 
             private Activity? StartActivitySourceActivity()
@@ -389,8 +378,55 @@ namespace Azure.Core.Pipeline
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
-
+        private static Func<Activity, string, object?>? GetCustomPropertyMethod;
+        private static Action<Activity, string, object>? SetCustomPropertyMethod;
+        private static string AzureSdkScopeLabel = "az.sdk.scope";
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+
+        public static bool IsNestedScopeEnabled(this Activity activity)
+        {
+            if (GetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("GetCustomProperty");
+                if (method == null)
+                {
+                    GetCustomPropertyMethod = (_, _) => null;
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+
+                    GetCustomPropertyMethod = Expression.Lambda<Func<Activity, string, object>>(
+                        Expression.Convert(Expression.Call(ActivityParameter, method, nameParameter), typeof(object)),
+                        ActivityParameter, nameParameter).Compile();
+                }
+            }
+
+            return GetCustomPropertyMethod(activity, AzureSdkScopeLabel) == null;
+        }
+
+        public static void SuppressNestedClientScopes(this Activity activity)
+        {
+            if (SetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("SetCustomProperty");
+                if (method == null)
+                {
+                    SetCustomPropertyMethod = (_, _, _) => { };
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var valueParameter = Expression.Parameter(typeof(object));
+
+                    SetCustomPropertyMethod = Expression.Lambda<Action<Activity, string, object>>(
+                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
+                        ActivityParameter, nameParameter, valueParameter).Compile();
+                }
+            }
+
+            SetCustomPropertyMethod(activity, AzureSdkScopeLabel, bool.TrueString);
+        }
 
         public static void SetW3CFormat(this Activity activity)
         {

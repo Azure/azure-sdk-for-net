@@ -204,7 +204,9 @@ namespace Azure.Core.TestFramework
                         }
 
                         Activity parent = e.Activity.Parent;
-                        if (parent != null && !parent.Tags.Any(tag => tag.Key == "kind" && (tag.Value == "client" || tag.Value == "internal")))
+                        if (parent != null &&
+                            parent.Tags.Any(tag => tag.Key == "az.namespace") &&
+                            parent.Tags.Any(tag => tag.Key == "kind" && (tag.Value == "client" || tag.Value == "internal")))
                         {
                             throw new InvalidOperationException($"Client diagnostic scopes should not be nested except for backward compatibility reasons. Use ClientDiagnostics constructor overload to suppress nested scopes.");
                         }
