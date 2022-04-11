@@ -8,18 +8,6 @@ parameters:
 - name: NugetVersion
   type: string
   default: '5.4.x'
-- name: PartnerDropsSubscription
-  type: string
-  default: 'azuresdkpartnerdrops-kv Secrets'
-- name: PartnerDropsStorageName
-  type: string
-  default: 'azuresdkpartnerdrops'
-- name: PartnerDropsContainerName
-  type: string
-  default: 'mgmt-netsdk-signed'
-- name: PartnerDropsBlobDestPrefix
-  type: string
-  default: '$(System.DefinitionId)-$(Build.BuildId)-$(System.JobAttempt)'
 - name: DependsOn
   type: string
   default: Build
@@ -76,11 +64,13 @@ stages:
                         /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
                         /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
                         /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+                    condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
 
                   - task: NuGetToolInstaller@1
                     displayName: 'Use NuGet ${{ parameters.NugetVersion }}'
                     inputs:
                       versionSpec: ${{ parameters.NugetVersion }}
+                    condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
 
                   - task: NuGetCommand@2
                     displayName: 'Publish to Nuget'
@@ -89,14 +79,9 @@ stages:
                       packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
                       nuGetFeedType: external
                       publishFeedCredentials: Nuget.org
+                    condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
 
-                  - task: AzureFileCopy@2
-                    displayName: 'Copy Signed Files to Blob'
-                    inputs:
-                      SourcePath: '$(PIPELINE.WORKSPACE)/packages'
-                      azureSubscription: '${{ parameters.PartnerDropsSubscription }}'
-                      Destination: AzureBlob
-                      storage: '${{ parameters.PartnerDropsStorageName }}'
-                      ContainerName: '${{ parameters.PartnerDropsContainerName }}'
-                      BlobPrefix: '${{ parameters.PartnerDropsBlobDestPrefix }}'
-                    condition: and(succeeded(), ne(variables['SkipCopySignedFilestoBlob'], 'true'))
+                  - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+                    parameters:
+                      ArtifactPath: '$(PIPELINE.WORKSPACE)/packages'
+                      ArtifactName: 'packages-signed'
