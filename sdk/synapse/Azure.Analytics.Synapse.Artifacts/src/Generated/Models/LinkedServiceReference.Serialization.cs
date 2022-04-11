@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Analytics.Synapse.Artifacts;
@@ -23,10 +24,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -35,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LinkedServiceReferenceType type = default;
             string referenceName = default;
-            Optional<object> parameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -55,11 +62,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    parameters = dictionary;
                     continue;
                 }
             }
-            return new LinkedServiceReference(type, referenceName, parameters.Value);
+            return new LinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
         }
 
         internal partial class LinkedServiceReferenceConverter : JsonConverter<LinkedServiceReference>

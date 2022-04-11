@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-composite-v4
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/4884825e5dbc3236638cffe46531c02f2cbe9f84/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/318bf32be03bf155e040a84062f7d7aebaad6159/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 security: AADToken
