@@ -10,7 +10,9 @@ There are two tools to organize subclients and service client.
 
 - **Client hierarchy**: organize the client service and subclients via defining the parent-subclient hierarchy dependency.
 
-**Note**: You can combine those two approaches to define an client hierarchy with one top-level client and its subclient may have sub clients also. 
+**Note**: You can combine those two approaches to define an client hierarchy with one top-level client and its subclient may have sub clients also.
+
+In Following chapters, we will use [purview Account](https://github.com/Azure/azure-rest-api-specs/blob/b2bddfe2e59b5b14e559e0433b6e6d057bcff95d/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json) as example.
 
 ### Single top-level client
 
@@ -21,21 +23,30 @@ With multiple service clients it may be better to group them all under one top-l
 **Generated code before:**
 
 ``` C#
-//Generated\Client1Client.cs
-namespace Azure.Service.SubClients
+//Generated\AccountsClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-    public partial class Client1Client
+    public partial class AccountsClient
     {
-        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, SubClientsClientOptions options = null){}
+        public AccountsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
     }
 }
 
-//Generated\Client2Client.cs
-namespace Azure.Service.SubClients
+//Generated\CollectionsClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-    public partial class Client2Client
+    public partial class CollectionsClient
     {
-        public Client2Client(string endpoint, AzureKeyCredential credential, SubClientsClientOptions options = null){}
+        public CollectionsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
+    }
+}
+
+//Generated\ResourceSetRulesClient.cs
+namespace Azure.Analytics.Purview.Account
+{
+    public partial class ResourceSetRulesClient
+    {
+        public ResourceSetRulesClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
     }
 }
 ```
@@ -58,13 +69,13 @@ single-top-level-client: true
 **Generated code after:**
 
 ``` diff
-//Add Top-level-client as service client, Generated\SubClientsClient.cs
-namespace Azure.Service.SubClients
+//Add Top-level-client as service client, Generated\PurviewAccountClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-+   public partial class SubClientsClient
++   public partial class PurviewAccountClient
     {
-        private const string AuthorizationHeader = "Fake-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -73,73 +84,99 @@ namespace Azure.Service.SubClients
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of SubClientsClient for mocking. </summary>
-        protected SubClientsClient()
+        /// <summary> Initializes a new instance of PurviewAccountClient for mocking. </summary>
+        protected PurviewAccountClient()
         {
         }
 
-        /// <summary> Initializes a new instance of SubClientsClient. </summary>
+        /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public SubClientsClient(AzureKeyCredential credential, SubClientsClientOptions options = null)
+        public PurviewAccountClient(TokenCredential credential, PurviewAccountClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new SubClientsClientOptions();
+            options ??= new PurviewAccountClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
         }
 
-        /// <summary> Initializes a new instance of Client1. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="cachedParameter"> The String to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="cachedParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cachedParameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Client1 GetClient1Client(string endpoint, string cachedParameter)
+        /// <summary> Initializes a new instance of Accounts. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Accounts GetAccountsClient(string endpoint, string apiVersion = "2019-11-01-preview")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(cachedParameter, nameof(cachedParameter));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Client1(ClientDiagnostics, _pipeline, _keyCredential, endpoint, cachedParameter);
+            return new Accounts(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Client2. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public virtual Client2 GetClient2Client(string endpoint)
+        /// <summary> Initializes a new instance of Collections. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual Collections GetCollectionsClient(string endpoint, string apiVersion = "2019-11-01-preview")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Client2(ClientDiagnostics, _pipeline, _keyCredential, endpoint);
+            return new Collections(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ResourceSetRules. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public virtual ResourceSetRules GetResourceSetRulesClient(string endpoint, string apiVersion = "2019-11-01-preview")
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ResourceSetRules(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
     }
 }
 
-// SubClient: Client1 Generated\Client1.cs
-namespace Azure.Service.SubClients
+// SubClient: Accounts Generated\Accounts.cs
+namespace Azure.Analytics.Purview.Account
 {
--   public partial class Client1Client
-+   public partial class Client1
+-   public partial class AccountsClient
++   public partial class Accounts
     {
--       protected Client1Client(){}
-+       protected Client1(){}
--       public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, SubClientsClientOptions options = null){}
-+       internal Client1(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, string endpoint, string cachedParameter){}
+-       protected AccountsClient(){}
++       protected Accounts(){}
+-       public AccountsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++       internal Accounts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, string endpoint, string apiVersion)
     }
 }
 
-//subclient: Client2 Generated\Client2.cs
-namespace Azure.Service.SubClients
+//subclient: Collections Generated\Collections.cs
+namespace Azure.Analytics.Purview.Account
 {
--   public partial class Client2Client
-+   public partial class Client2
+-   public partial class CollectionsClient
++   public partial class Collections
     {
--       protected Client2Client()
-+       protected Client2()
--       public Client2Client(string endpoint, AzureKeyCredential credential, SubClientsClientOptions options = null){}
-+       internal Client2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, string endpoint) {}
+-       protected CollectionsClient()
++       protected Collections()
+-       public CollectionsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++       internal Collections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, string endpoint, string apiVersion) {}
+    }
+}
+
+//subclient: ResourceSetRules Generated\ResourceSetRules.cs
+namespace Azure.Analytics.Purview.Account
+{
+-   public partial class ResourceSetRulesClient
++   public partial class ResourceSetRules
+    {
+-       protected ResourceSetRulesClient()
++       protected ResourceSetRules()
+-       public ResourceSetRulesClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++       internal ResourceSetRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, string endpoint, string apiVersion) {}
     }
 }
 
@@ -157,21 +194,30 @@ Since CodeGenClientAttribute is applied to the client type, user will explicitly
 **Generated code before:**
 
 ``` C#
-//Generated\Client1Client.cs
-namespace Azure.Service.SubClients
+//Generated\AccountsClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-    public partial class Client1Client
+    public partial class AccountsClient
     {
-        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, SubClientsClientOptions options = null){}
+        public AccountsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
     }
 }
 
-//Generated\Client2Client.cs
-namespace Azure.Service.SubClients
+//Generated\CollectionsClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-    public partial class Client2Client
+    public partial class CollectionsClient
     {
-        public Client2Client(string endpoint, AzureKeyCredential credential, SubClientsClientOptions options = null){}
+        public CollectionsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
+    }
+}
+
+//Generated\ResourceSetRulesClient.cs
+namespace Azure.Analytics.Purview.Account
+{
+    public partial class ResourceSetRulesClient
+    {
+        public ResourceSetRulesClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
     }
 }
 ```
@@ -183,48 +229,64 @@ namespace Azure.Service.SubClients
 //Customizations.cs
 using Azure.Core;
 
-namespace Azure.Service.SubClients
+namespace Azure.Analytics.Purview.Account
 {
-    [CodeGenClient("Client2Client", ParentClient = typeof(Client1Client))]
-    public partial class Client2 { }
+    [CodeGenClient("CollectionsClient", ParentClient = typeof(AccountsClient))]
+    public partial class Collections { }
+    [CodeGenClient("ResourceSetRulesClient", ParentClient = typeof(AccountsClient))]
+    public partial class ResourceSetRules { }
 }
 ```
 
 **Generated code after:**
 
 ```diff
-namespace Azure.Service.SubClients
+namespace Azure.Analytics.Purview.Account
 {
--   public partial class SubClientsClientOptions : ClientOptions{}
-+   public partial class Client1ClientOptions : ClientOptions{}
+-   public partial class PurviewAccountClientOptions : ClientOptions
++   public partial class AccountsClientOptions : ClientOptions
 }
-//Promote Parent client to service client: Client1Client Generated\Client1Client.cs
-namespace Azure.Service.SubClients
+//Promote Parent client to service client: AccountsClient Generated\AccountsClient.cs
+namespace Azure.Analytics.Purview.Account
 {
-    public partial class Client1Client
+    public partial class AccountsClient
     {
--        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, SubClientsClientOptions options = null)
-+        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, Client1ClientOptions options = null)
-+        { }
+-        public AccountsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++        public AccountsClient(string endpoint, TokenCredential credential, AccountsClientOptions options = null){}
 
 +
 +        /// <summary> Initializes a new instance of Client2. </summary>
-+        public virtual Client2 GetClient2Client()
++        public virtual Collections GetCollectionsClient()
 +        { }
 +
++        public virtual ResourceSetRules GetResourceSetRulesClient()
++        { }
     }
 }
 
-//Sub client: Client2 Generated\Client2.cs
-namespace Azure.Service.SubClients
+//Subclient Collections: Client2 Generated\Collections.cs
+namespace Azure.Analytics.Purview.Account
 {
--   public partial class Client2Client
-+   public partial class Client2
+-   public partial class CollectionsClient
++   public partial class Collections
     {
--       protected Client2Client(){}
-+       protected Client2(){}
--       public Client2Client(string endpoint, AzureKeyCredential credential, SubClientsClientOptions options = null)
-+       internal Client2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, string endpoint){}
+-       protected CollectionsClient(){}
++       protected Collections(){}
+-       public CollectionsClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++       internal Collections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, string endpoint, string apiVersion){}
+    }
+}
+
+//Subclient ResourceSetRules: Client2 Generated\ResourceSetRules.cs
+namespace Azure.Analytics.Purview.Account
+{
+-   public partial class ResourceSetRulesClient
++   public partial class ResourceSetRules
+    {
+-       protected ResourceSetRulesClient(){}
++       protected ResourceSetRules(){}
+-       public ResourceSetRulesClient(string endpoint, TokenCredential credential, PurviewAccountClientOptions options = null){}
++       internal ResourceSetRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, string endpoint, string apiVersion){}
     }
 }
 
