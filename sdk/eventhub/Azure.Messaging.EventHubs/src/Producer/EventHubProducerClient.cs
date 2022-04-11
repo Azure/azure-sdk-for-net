@@ -1111,22 +1111,13 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Sequence the events for publishing.
 
-                    var lastSequence = partitionState.LastPublishedSequenceNumber.Value;
-                    var firstSequence = NextSequence(lastSequence);
-
-                    foreach (var eventData in eventSet)
-                    {
-                        lastSequence = NextSequence(lastSequence);
-                        eventData.PendingPublishSequenceNumber = lastSequence;
-                        eventData.PendingProducerGroupId = partitionState.ProducerGroupId;
-                        eventData.PendingProducerOwnerLevel = partitionState.OwnerLevel;
-                    }
+                    var lastSequence = eventBatch.SequenceBatch(partitionState.LastPublishedSequenceNumber.Value, partitionState.ProducerGroupId, partitionState.OwnerLevel);
 
                     // Publish the events.
 
                     resetStateOnError = true;
 
-                    EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
+                    EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, eventBatch.StartingPublishedSequenceNumber.Value, lastSequence);
                     await SendInternalAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
                     // Update state and commit the sequencing.  This needs only to happen at the batch level, as the contained
@@ -1134,16 +1125,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     EventHubsEventSource.Log.IdempotentSequenceUpdate(EventHubName, options.PartitionId, partitionState.LastPublishedSequenceNumber.Value, lastSequence);
                     partitionState.LastPublishedSequenceNumber = lastSequence;
-                    eventBatch.StartingPublishedSequenceNumber = firstSequence;
                 }
                 catch
                 {
                     // Clear the pending sequence numbers in the face of an exception.
 
-                    foreach (var eventData in eventSet)
-                    {
-                        eventData.ClearPublishingState();
-                    }
+                    eventBatch.ResetBatchSequencing();
 
                     if (resetStateOnError)
                     {

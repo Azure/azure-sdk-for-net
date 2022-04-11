@@ -262,6 +262,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override int Count { get; } = 400;
 
+            public override int? StartingSequenceNumber => 0;
+
             public override void Clear() => ClearInvoked = true;
 
             public override void Dispose() => DisposeInvoked = true;
@@ -276,6 +278,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 AsReadOnlyCollectionCalledWith = typeof(T);
                 return default;
+            }
+
+            public override int SequenceBatch(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => (lastSequenceNumber + 1);
+
+            public override void ResetBatchSequencing()
+            {
             }
         }
     }

@@ -1918,7 +1918,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static CreateBatchOptions GetEventBatchOptions(AmqpEventBatch batch) =>
             (CreateBatchOptions)
                 typeof(AmqpEventBatch)
-                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_options", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(batch);
 
         /// <summary>

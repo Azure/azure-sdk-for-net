@@ -557,6 +557,105 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.SequenceBatch" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void SequenceBatchAppliesPublishingProperties()
+        {
+            var expectedGroupId = 123;
+            var expectedOwnerLevel = (short)6;
+            var firstSequence = 0;
+            var sequenceIndex = -1;
+            var currentIndex = -1;
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var eventMessages = new AmqpMessage[5];
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex],
+
+                ApplyPublisherPropertiesToAmqpMessageHandler = (message, sequence, group, owner) =>
+                {
+                    ++sequenceIndex;
+
+                    Assert.That(sequence, Is.GreaterThan(firstSequence), $"The sequence number for index: { sequenceIndex } should be greater than the initial sequence number.");
+                    Assert.That(group, Is.EqualTo(expectedGroupId), $"The group for index: { sequenceIndex } should match.");
+                    Assert.That(owner, Is.EqualTo(expectedOwnerLevel), $"The owner for index: { sequenceIndex } should match.");
+                }
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+            }
+
+            // Add the messages to the batch; all should be accepted.
+
+            var batch = new AmqpEventBatch(mockConverter, options, default);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+            }
+
+            // Sequence the batch and validate the final state.
+
+            var lastSequence = batch.SequenceBatch(firstSequence, expectedGroupId, expectedOwnerLevel);
+            Assert.That(lastSequence, Is.EqualTo(firstSequence + eventMessages.Length), "The final sequence number should indicate a 1-by-1 advancement.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.SequenceBatch" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ResetBatchSequencingRemovesPublishingProperties()
+        {
+            var currentIndex = -1;
+            var removeCount = 0;
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var eventMessages = new AmqpMessage[5];
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex],
+                RemovePublishingPropertiesFromAmqpMessageHandler = (_m) => ++removeCount
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+            }
+
+            // Add the messages to the batch; all should be accepted.
+
+            var batch = new AmqpEventBatch(mockConverter, options, default);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+            }
+
+            // Sequence the batch and validate the final state.
+
+            batch.ResetBatchSequencing();
+            Assert.That(removeCount, Is.EqualTo(eventMessages.Length), "The publishing properties for each event should have been removed.");
+        }
+
+        /// <summary>
         ///   Reads the size reserved for AMQP message overhead in a batch using its private field.
         /// </summary>
         ///
@@ -566,8 +665,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static long GetReservedSize(AmqpEventBatch instance) =>
             (long)
-                typeof(AmqpTransportEventBatch)
-                    .GetProperty("ReservedOverheadBytes", BindingFlags.Instance | BindingFlags.NonPublic)
+                typeof(AmqpEventBatch)
+                    .GetField("_reservedOverheadBytes", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(instance);
 
         /// <summary>
@@ -579,9 +678,13 @@ namespace Azure.Messaging.EventHubs.Tests
             public Func<EventData, string, AmqpMessage> CreateMessageFromEventHandler = (_e, _p) => null;
             public Func<IEnumerable<EventData>, string, AmqpMessage> CreateBatchFromEventsHandler = (_e, _p) => null;
             public Func<IEnumerable<AmqpMessage>, string, AmqpMessage> CreateBatchFromMessagesHandler = (_m, _p) => null;
+            public Action<AmqpMessage, int?, long?, short?> ApplyPublisherPropertiesToAmqpMessageHandler = (_m, _s, _g, _o) => {};
+            public Action<AmqpMessage> RemovePublishingPropertiesFromAmqpMessageHandler = _m => {};
             public override AmqpMessage CreateMessageFromEvent(EventData source, string partitionKey = null) => CreateMessageFromEventHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);
+            public override void ApplyPublisherPropertiesToAmqpMessage(AmqpMessage message, int? sequenceNumber, long? groupId, short? ownerLevel) => ApplyPublisherPropertiesToAmqpMessageHandler(message, sequenceNumber, groupId, ownerLevel);
+            public override void RemovePublishingPropertiesFromAmqpMessage(AmqpMessage message) => RemovePublishingPropertiesFromAmqpMessageHandler(message);
         }
     }
 }

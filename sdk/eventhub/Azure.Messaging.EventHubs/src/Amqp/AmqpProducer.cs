@@ -327,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             options.MaximumSizeInBytes ??= MaximumMessageSize;
             Argument.AssertInRange(options.MaximumSizeInBytes.Value, EventHubProducerClient.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
 
-            return AmqpTransportEventBatch.CreateForActiveFeatures(MessageConverter, options, ActiveFeatures);
+            return new AmqpEventBatch(MessageConverter, options, ActiveFeatures);
         }
 
         /// <summary>

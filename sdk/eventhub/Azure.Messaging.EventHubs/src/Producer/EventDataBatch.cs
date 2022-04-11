@@ -44,6 +44,12 @@ namespace Azure.Messaging.EventHubs.Producer
         public long SizeInBytes => InnerBatch.SizeInBytes;
 
         /// <summary>
+        ///   The count of events contained in the batch.
+        /// </summary>
+        ///
+        public int Count => InnerBatch.Count;
+
+        /// <summary>
         ///   The publishing sequence number assigned to the first event in the batch at the time
         ///   the batch was successfully published.
         /// </summary>
@@ -60,13 +66,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        internal int? StartingPublishedSequenceNumber { get; set; } // Setter should be internal when member is made public
-
-        /// <summary>
-        ///   The count of events contained in the batch.
-        /// </summary>
-        ///
-        public int Count => InnerBatch.Count;
+        internal int? StartingPublishedSequenceNumber => InnerBatch.StartingSequenceNumber;
 
         /// <summary>
         ///   The set of options that should be used when publishing the batch.
@@ -238,6 +238,29 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>A read-only list of diagnostic identifiers.</returns>
         ///
         internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
+
+        /// <summary>
+        ///   Assigns message sequence numbers and publisher metadata to the batch in
+        ///   order to prepare it to be sent when certain features, such as idempotent retries,
+        ///   are active.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number assigned to the event that was most recently published to the associated partition successfully.</param>
+        /// <param name="producerGroupId">The identifier of the producer group for which publishing is being performed.</param>
+        /// <param name="ownerLevel">TThe owner level for which publishing is being performed.</param>
+        ///
+        /// <returns>The last sequence number applied to the batch.</returns>
+        ///
+        internal int SequenceBatch(int lastSequenceNumber,
+                                  long? producerGroupId,
+                                  short? ownerLevel) => InnerBatch.SequenceBatch(lastSequenceNumber, producerGroupId, ownerLevel);
+
+        /// <summary>
+        ///   Resets the batch to remove sequencing information and publisher metadata assigned
+        ///    by <see cref="SequenceBatch" />.
+        /// </summary>
+        ///
+        internal void ResetBatchSequencing() => InnerBatch.ResetBatchSequencing();
 
         /// <summary>
         ///   Locks the batch to prevent new events from being added while a service

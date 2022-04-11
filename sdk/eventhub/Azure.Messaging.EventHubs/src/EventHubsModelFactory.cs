@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -158,7 +160,7 @@ namespace Azure.Messaging.EventHubs
             batchOptions ??= new CreateBatchOptions();
             batchOptions.MaximumSizeInBytes ??= long.MaxValue;
 
-            var transportBatch = new ListTransportBatch(batchOptions.MaximumSizeInBytes.Value, batchSizeBytes, batchOptions, batchEventStore, tryAddCallback);
+            var transportBatch = new ListTransportBatch(batchOptions.MaximumSizeInBytes.Value, batchSizeBytes, batchEventStore, tryAddCallback);
             return new EventDataBatch(transportBatch, "Mock", "Mock", batchOptions);
         }
 
@@ -213,10 +215,22 @@ namespace Azure.Messaging.EventHubs
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.
         /// </summary>
         ///
-        private sealed class ListTransportBatch : IdempotentAmqpEventBatch
+        private sealed class ListTransportBatch : TransportEventBatch
         {
+            /// <summary>
+            ///  The converter to use for transforming events into AMQP messages.
+            /// </summary>
+            ///
+            private static AmqpMessageConverter MessageConverter { get; } = new AmqpMessageConverter();
+
+            /// <summary>The backing store for storing events in the batch.</summary>
+            private readonly IList<EventData> _backingStore;
+
             /// <summary>A callback to be invoked when an adding an event via <see cref="TryAdd"/></summary>
             private readonly Func<EventData, bool> _tryAddCallback;
+
+            /// <summary>The set of events that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
+            private List<AmqpMessage> _batchMessages;
 
             /// <summary>
             ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
@@ -239,25 +253,31 @@ namespace Azure.Messaging.EventHubs
             public override TransportProducerFeatures ActiveFeatures { get; } = TransportProducerFeatures.None;
 
             /// <summary>
+            ///   The count of events contained in the batch.
+            /// </summary>
+            ///
+            public override int Count => _backingStore.Count;
+
+            /// <summary>
+            ///     The first sequence number of the batch; if not sequenced, <c>null</c>.
+            /// </summary>
+            ///
+            public override int? StartingSequenceNumber => (_backingStore.Count == 0) ? null : _backingStore[0].PendingPublishSequenceNumber;
+
+            /// <summary>
             ///   Initializes a new instance of the <see cref="ListTransportBatch"/> class.
             /// </summary>
             ///
             /// <param name="maximumSizeInBytes"> The maximum size allowed for the batch, in bytes.</param>
             /// <param name="sizeInBytes">The size of the batch, in bytes; this will be treated as a static value for the property.</param>
-            /// <param name="options">The set of options to apply to the batch.</param>
             /// <param name="backingStore">The backing store for holding events in the batch.</param>
             /// <param name="tryAddCallback">A callback for deciding if a TryAdd attempt is successful.</param>
             ///
             internal ListTransportBatch(long maximumSizeInBytes,
                                         long sizeInBytes,
-                                        CreateBatchOptions options,
                                         IList<EventData> backingStore,
-                                        Func<EventData, bool> tryAddCallback) : base(new AmqpMessageConverter(), options, TransportProducerFeatures.None, backingStore)
-            {
-                MaximumSizeInBytes = maximumSizeInBytes;
-                SizeInBytes = sizeInBytes;
-                _tryAddCallback = tryAddCallback;
-            }
+                                        Func<EventData, bool> tryAddCallback) =>
+                (MaximumSizeInBytes, SizeInBytes, _backingStore, _tryAddCallback) = (maximumSizeInBytes, sizeInBytes, backingStore, tryAddCallback);
 
             /// <summary>
             ///   Attempts to add an event to the batch, ensuring that the size
@@ -272,11 +292,123 @@ namespace Azure.Messaging.EventHubs
             {
                 if (_tryAddCallback(eventData))
                 {
-                    BatchEvents.Add(eventData);
+                    _backingStore.Add(eventData);
                     return true;
                 }
 
                 return false;
+            }
+
+            /// <summary>
+            ///   Clears the batch, removing all events and resetting the
+            ///   available size.
+            /// </summary>
+            ///
+            public override void Clear() => _backingStore.Clear();
+
+            /// <summary>
+            ///   Represents the batch as a set of the AMQP-specific representations of an event.
+            /// </summary>
+            ///
+            /// <typeparam name="T">The transport-specific event representation being requested.</typeparam>
+            ///
+            /// <returns>The set of events as an enumerable of the requested type.</returns>
+            ///
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>()
+            {
+                if (typeof(T) == typeof(EventData))
+                {
+                    return _backingStore as IReadOnlyCollection<T>;
+                }
+                else if (typeof(T) == typeof(AmqpMessage))
+                {
+                    // The AMQP messages must be recreated for each transform request to
+                    // ensure that the idempotent publishing properties are current and correct.
+                    //
+                    // This is a safe pattern, because the method is internal and only invoked
+                    // during a send operation, during which the batch is locked to prevent
+                    // changes or parallel attempts to send.
+                    //
+                    // Multiple requests to produce the collection would happen if this batch instance
+                    // is being published more than once, which is only valid if a call to SendAsync fails
+                    // across all retries, making it a fairly rare occurrence.
+
+                    if (_batchMessages != null)
+                    {
+                        foreach (var message in _batchMessages)
+                        {
+                            message.Dispose();
+                        }
+                    }
+
+                    _batchMessages = new(_backingStore.Count);
+
+                    // Serialize the events in the batch into their AMQP transport format.  Because
+                    // the batch holds responsibility for disposing these, hold onto the references.
+
+                    foreach (var eventData in _backingStore)
+                    {
+                        _batchMessages.Add(MessageConverter.CreateMessageFromEvent(eventData));
+                    }
+
+                    return _batchMessages as IReadOnlyCollection<T>;
+                }
+
+                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
+            }
+
+            /// <summary>
+            ///   Assigns message sequence numbers and publisher metadata to the batch in
+            ///   order to prepare it to be sent when certain features, such as idempotent retries,
+            ///   are active.
+            /// </summary>
+            ///
+            /// <param name="lastSequenceNumber">The sequence number assigned to the event that was most recently published to the associated partition successfully.</param>
+            /// <param name="producerGroupId">The identifier of the producer group for which publishing is being performed.</param>
+            /// <param name="ownerLevel">TThe owner level for which publishing is being performed.</param>
+            ///
+            /// <returns>The last sequence number applied to the batch.</returns>
+            ///
+            public override int SequenceBatch(int lastSequenceNumber,
+                                              long? producerGroupId,
+                                              short? ownerLevel)
+            {
+                foreach (var eventData in _backingStore)
+                {
+                    if (unchecked(++lastSequenceNumber < 0))
+                    {
+                        lastSequenceNumber = 0;
+                    }
+
+                    eventData.PendingPublishSequenceNumber = lastSequenceNumber;
+                    eventData.PendingProducerGroupId = producerGroupId;
+                    eventData.PendingProducerOwnerLevel = ownerLevel;
+                }
+
+                return lastSequenceNumber;
+            }
+
+            /// <summary>
+            ///   Resets the batch to remove sequencing information and publisher metadata assigned
+            ///    by <see cref="SequenceBatch" />.
+            /// </summary>
+            ///
+            public override void ResetBatchSequencing()
+            {
+                foreach (var eventData in _backingStore)
+                {
+                    eventData.PendingPublishSequenceNumber = null;
+                    eventData.PendingProducerGroupId = null;
+                    eventData.PendingProducerOwnerLevel = null;
+                }
+            }
+
+            /// <summary>
+            ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.
+            /// </summary>
+            ///
+            public override void Dispose()
+            {
             }
         }
     }
