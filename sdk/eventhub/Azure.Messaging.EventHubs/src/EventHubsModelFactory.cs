@@ -369,9 +369,9 @@ namespace Azure.Messaging.EventHubs
             ///
             /// <returns>The last sequence number applied to the batch.</returns>
             ///
-            public override int SequenceBatch(int lastSequenceNumber,
-                                              long? producerGroupId,
-                                              short? ownerLevel)
+            public override int ApplyBatchSequencing(int lastSequenceNumber,
+                                                     long? producerGroupId,
+                                                     short? ownerLevel)
             {
                 foreach (var eventData in _backingStore)
                 {
@@ -390,7 +390,7 @@ namespace Azure.Messaging.EventHubs
 
             /// <summary>
             ///   Resets the batch to remove sequencing information and publisher metadata assigned
-            ///    by <see cref="SequenceBatch" />.
+            ///    by <see cref="ApplyBatchSequencing" />.
             /// </summary>
             ///
             public override void ResetBatchSequencing()

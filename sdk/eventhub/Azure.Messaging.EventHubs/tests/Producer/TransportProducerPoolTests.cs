@@ -505,7 +505,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
             public override void Clear() => throw new NotImplementedException();
-            public override int SequenceBatch(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => throw new NotImplementedException();
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => throw new NotImplementedException();
             public override void ResetBatchSequencing() => throw new NotImplementedException();
         }
     }

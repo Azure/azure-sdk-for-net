@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return default;
             }
 
-            public override int SequenceBatch(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => (lastSequenceNumber + 1);
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => (lastSequenceNumber + 1);
 
             public override void ResetBatchSequencing()
             {

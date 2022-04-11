@@ -251,13 +251,13 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The last sequence number applied to the batch.</returns>
         ///
-        internal int SequenceBatch(int lastSequenceNumber,
-                                  long? producerGroupId,
-                                  short? ownerLevel) => InnerBatch.SequenceBatch(lastSequenceNumber, producerGroupId, ownerLevel);
+        internal int ApplyBatchSequencing(int lastSequenceNumber,
+                                          long? producerGroupId,
+                                          short? ownerLevel) => InnerBatch.ApplyBatchSequencing(lastSequenceNumber, producerGroupId, ownerLevel);
 
         /// <summary>
         ///   Resets the batch to remove sequencing information and publisher metadata assigned
-        ///    by <see cref="SequenceBatch" />.
+        ///    by <see cref="ApplyBatchSequencing" />.
         /// </summary>
         ///
         internal void ResetBatchSequencing() => InnerBatch.ResetBatchSequencing();

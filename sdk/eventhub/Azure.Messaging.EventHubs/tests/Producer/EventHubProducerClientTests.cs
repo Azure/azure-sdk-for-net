@@ -1456,36 +1456,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateEvents(5).ToList();
             using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = "0" });
 
-            batch.SequenceBatch(0, null, null);
-            Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "Resending of events cannot be done with idempotent publishing.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void SendIdempotentDoesNotAllowResendingWithABatchContainingPublishedEvents()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var connection = new MockConnection(() => transportProducer);
-
-            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
-            {
-                EnableIdempotentPartitions = true
-            });
-
-            var events = EventGenerator.CreateEvents(5).Skip(4).Select(item =>
-            {
-                item.PendingPublishSequenceNumber = 5;
-                item.CommitPublishingState();
-
-                return item;
-            })
-            .ToList();
-
-            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = "0" });
+            batch.ApplyBatchSequencing(0, null, null);
             Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "Resending of events cannot be done with idempotent publishing.");
         }
 
@@ -1856,52 +1827,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await producer.SendAsync(batch, cancellationSource.Token), Throws.Exception, "The send operation should have failed.");
             Assert.That(mockTransportProducerPool.ExpirePooledProducerAsyncWasCalled, Is.True, "The transport producer should have been expired.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task SendIdempotentRollsOverSequenceNumbersToZeroWithABatch()
-        {
-            var expectedPartition = "5";
-            var eventCount = 6;
-            var startingSequence = int.MaxValue;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var mockTransport = new Mock<TransportProducer>();
-            var connection = new MockConnection(() => mockTransport.Object);
-
-            var events = EventGenerator.CreateEvents(eventCount).ToList();
-            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = expectedPartition });
-
-            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
-            {
-                EnableIdempotentPartitions = true
-            });
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedProperties);
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable("The events should have been sent using the transport producer.");
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            await producer.SendAsync(batch);
-            Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(0), "The batch did not roll over the starting sequence number to zero.");
-
-            var partitionStateCollection = GetPartitionState(producer);
-            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(batch.Count - 1), "The sequence number for partition state should have been updated.");
-
-            mockTransport.VerifyAll();
         }
 
         /// <summary>

@@ -1090,7 +1090,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 var resetStateOnError = false;
                 var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
-                var eventSet = eventBatch.AsReadOnlyCollection<EventData>() ;
 
                 try
                 {
@@ -1111,7 +1110,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Sequence the events for publishing.
 
-                    var lastSequence = eventBatch.SequenceBatch(partitionState.LastPublishedSequenceNumber.Value, partitionState.ProducerGroupId, partitionState.OwnerLevel);
+                    var lastSequence = eventBatch.ApplyBatchSequencing(partitionState.LastPublishedSequenceNumber.Value, partitionState.ProducerGroupId, partitionState.OwnerLevel);
 
                     // Publish the events.
 
@@ -1128,7 +1127,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 }
                 catch
                 {
-                    // Clear the pending sequence numbers in the face of an exception.
+                    // Clear the batch sequencing in the face of an exception.
 
                     eventBatch.ResetBatchSequencing();
 
@@ -1329,8 +1328,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private static void AssertIdempotentBatchNotPublished(EventDataBatch batch)
         {
-            if ((batch.StartingPublishedSequenceNumber.HasValue)
-                || (batch.AsReadOnlyCollection<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
+            if (batch.StartingPublishedSequenceNumber.HasValue)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.IdempotentAlreadyPublished));
             }

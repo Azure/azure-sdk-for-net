@@ -88,13 +88,13 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The last sequence number applied to the batch.</returns>
         ///
-        public abstract int SequenceBatch(int lastSequenceNumber,
-                                          long? producerGroupId,
-                                          short? ownerLevel);
+        public abstract int ApplyBatchSequencing(int lastSequenceNumber,
+                                                 long? producerGroupId,
+                                                 short? ownerLevel);
 
         /// <summary>
         ///   Resets the batch to remove sequencing information and publisher metadata assigned
-        ///    by <see cref="SequenceBatch" />.
+        ///    by <see cref="ApplyBatchSequencing" />.
         /// </summary>
         ///
         public abstract void ResetBatchSequencing();

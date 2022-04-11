@@ -557,7 +557,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.SequenceBatch" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.ApplyBatchSequencing" />
         ///   method.
         /// </summary>
         ///
@@ -607,12 +607,43 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Sequence the batch and validate the final state.
 
-            var lastSequence = batch.SequenceBatch(firstSequence, expectedGroupId, expectedOwnerLevel);
+            var lastSequence = batch.ApplyBatchSequencing(firstSequence, expectedGroupId, expectedOwnerLevel);
             Assert.That(lastSequence, Is.EqualTo(firstSequence + eventMessages.Length), "The final sequence number should indicate a 1-by-1 advancement.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.SequenceBatch" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.ApplyBatchSequencing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void SequenceBatchRollsOverSequenceNumbersToZero()
+        {
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) })
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            // Add the messages to the batch; all should be accepted.
+
+            var batch = new AmqpEventBatch(mockConverter, options, default);
+            Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, "The event should be accepted into the batch.");
+
+            // Sequence the batch and validate the final state.
+
+            var lastSequence = batch.ApplyBatchSequencing(int.MaxValue, null, null);
+            Assert.That(lastSequence, Is.EqualTo(0), "The sequence number should wrap around to 0.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.ApplyBatchSequencing" />
         ///   method.
         /// </summary>
         ///
