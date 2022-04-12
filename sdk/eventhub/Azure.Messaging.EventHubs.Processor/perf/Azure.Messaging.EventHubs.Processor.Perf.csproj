@@ -6,6 +6,10 @@
     <LangVersion>latest</LangVersion>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Processor.Perf.slnf" />
+    <None Remove="README.md" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="SharedSource\" />
