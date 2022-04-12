@@ -1,6 +1,6 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.10.0-beta.1 (2022-04-12)
 - This release contains bug fixes to improve quality.
 
 ## 12.9.0 (2022-03-10)
