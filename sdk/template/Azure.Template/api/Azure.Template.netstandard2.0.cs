@@ -3,15 +3,32 @@ namespace Azure.Template
     public partial class TemplateClient
     {
         protected TemplateClient() { }
-        public TemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.Generated.TemplateServiceClientOptions options = null) { }
+        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateClientOptions : Azure.Core.ClientOptions
     {
-        public TemplateClientOptions(Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion version = Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion.V1_0_0) { }
+        public TemplateClientOptions(Azure.Template.TemplateClientOptions.ServiceVersion version = Azure.Template.TemplateClientOptions.ServiceVersion.V7_0) { }
         public enum ServiceVersion
         {
-            V1_0_0 = 1,
+            V7_0 = 1,
         }
+    }
+}
+namespace Azure.Template.Models
+{
+    public partial class SecretBundle
+    {
+        internal SecretBundle() { }
+        public string ContentType { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Kid { get { throw null; } }
+        public bool? Managed { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public string Value { get { throw null; } }
     }
 }
