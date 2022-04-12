@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.0-beta.1 (2022-04-12)
 - Added support for service version 2021-06-08.
 
 ## 12.8.0 (2022-03-10)
