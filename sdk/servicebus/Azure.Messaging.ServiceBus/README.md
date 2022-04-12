@@ -242,7 +242,7 @@ await sender.SendMessagesAsync(messages);
 
 In order to receive a batch of messages from queue, topic or subscription:
 
-```C# Snippet:ServiceBusBatchReciveMessages
+```C# Snippet:ServiceBusSendAndReceiveBatch
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
 int maxMessagesToGetInOneBatch = 100;
