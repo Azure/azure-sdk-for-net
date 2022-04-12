@@ -62,7 +62,16 @@ internal static class EnvironmentReader
 
             try
             {
-                environment.Add(line.Slice(firstCharacterPos, separator).Trim().ToString(), line.Slice(separator + 1).Trim().ToString());
+                var parsedKey = line.Slice(firstCharacterPos, separator).Trim().ToString();
+                var parsedValue = line.Slice(separator + 1).Trim().ToString();
+                if (environment.ContainsKey(parsedKey))
+                {
+                    environment[parsedKey] = parsedValue;
+                }
+                else
+                {
+                    environment.Add(parsedKey, parsedValue);
+                }
             }
             catch (ArgumentException ex)
             {

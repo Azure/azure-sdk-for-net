@@ -52,9 +52,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 await Task.Delay(TimeSpan.FromMilliseconds(200));
             }
 
-            await Task.Delay(5000);
-            sendTask = BackgroundSend(producer, cancellationSource);
-
             producer.SendEventBatchSucceededAsync += args =>
             {
                 Console.WriteLine("received");
@@ -68,6 +65,9 @@ namespace Azure.Messaging.EventHubs.Stress
 
                 return Task.CompletedTask;
             };
+
+            await Task.Delay(5000);
+            sendTask = BackgroundSend(producer, cancellationSource);
 
             while (!cancellationSource.IsCancellationRequested)
             {
@@ -144,8 +144,9 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
 
                 await producer.EnqueueEventsAsync(events, cancellationSource);
+                events.Clear();
                 // change to enqueued
-                metrics.Client.GetMetric(metrics.EventsEnqueued).TrackValue(eventsPerPartition*partitionCount, metricDimension);
+                metrics.Client.GetMetric(metrics.EventsEnqueuedPerTest).TrackValue(eventsPerPartition*partitionCount, metricDimension);
 
                 delayInSec = RandomNumberGenerator.Next(1, 10);
                 await Task.Delay(TimeSpan.FromSeconds(delayInSec));
@@ -179,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Stress
                         {
                             if (HaveSameProperties(expectedEvent, receivedEvent.Data))
                             {
-                                metrics.Client.GetMetric(metrics.SuccessfullyReceivedEventsCount).TrackValue(1, metricDimension);
+                                metrics.Client.GetMetric(metrics.SuccessfullyReceivedEventsCountPerTest).TrackValue(1, metricDimension);
                             }
                             else
                             {

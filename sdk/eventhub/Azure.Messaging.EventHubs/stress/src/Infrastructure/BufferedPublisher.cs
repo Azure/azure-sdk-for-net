@@ -18,107 +18,113 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class BufferedPublisher
     {
-        private readonly string _connectionString;
-        private readonly string _eventHubName;
-        private readonly Metrics _metrics;
-        private readonly BufferedProducerTestConfig _testConfiguration;
+        public int ProducerCount = 2;
+        public int ConcurrentSends = 5;
+        public int PublishBatchSize = 50;
+        public int PublishingBodyMinBytes = 100;
+        public int PublishingBodyRegularMaxBytes = 757760;
+        public int LargeMessageRandomFactorPercent = 50;
+        public TimeSpan SendTimeout = TimeSpan.FromMinutes(3);
+        public TimeSpan? PublishingDelay = TimeSpan.FromMilliseconds(15);
 
-        public BufferedPublisher(BufferedProducerTestConfig testConfiguration,
-                                 Metrics metrics)
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref randomSeed)), false);
+        private static int randomSeed = Environment.TickCount;
+        //private long currentSequence = 0;
+        private string connectionString;
+        private string eventHubName;
+        private Metrics metrics;
+
+        public BufferedPublisher(string connectionStringIn, string eventHubNameIn, Metrics metricsIn)
         {
-            _connectionString = testConfiguration.EventHubsConnectionString;
-            _eventHubName = testConfiguration.EventHub;
-            _metrics = metrics;
-            _testConfiguration = testConfiguration;
+            connectionString = connectionStringIn;
+            eventHubName = eventHubNameIn;
+            metrics = metricsIn;
         }
 
         public async Task Start(CancellationToken cancellationToken)
         {
-            var enqueueTasks = new List<Task>();
+            var sendTasks = new List<Task>();
 
             while (!cancellationToken.IsCancellationRequested)
             {
                 using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-                // Create the buffered producer client and register the success and failure handlers
-
-                var options = new EventHubBufferedProducerClientOptions
-                {
-                    RetryOptions = new EventHubsRetryOptions
-                    {
-                        TryTimeout = _testConfiguration.SendTimeout,
-                        MaximumRetries = 15
-                    },
-                    MaximumWaitTime = _testConfiguration.MaxWaitTime
-                };
-                var producer = new EventHubBufferedProducerClient(_connectionString, _eventHubName, options);
-
                 try
                 {
+                    sendTasks.Clear();
+
+                    var options = new EventHubBufferedProducerClientOptions
+                    {
+                        RetryOptions = new EventHubsRetryOptions
+                        {
+                            TryTimeout = SendTimeout
+                        }
+                    };
+
+                    var producer = new EventHubBufferedProducerClient(connectionString, eventHubName, options);
                     producer.SendEventBatchSucceededAsync += args =>
                     {
-                        var numEvents = args.EventBatch.Count;
-
-                        _metrics.Client.GetMetric(_metrics.SuccessfullySentFromQueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
-                        _metrics.Client.GetMetric(_metrics.BatchesPublished).TrackValue(1);
+                        Console.WriteLine("received");
 
                         return Task.CompletedTask;
                     };
 
                     producer.SendEventBatchFailedAsync += args =>
                     {
-                        var numEvents = args.EventBatch.Count;
-
-                        _metrics.Client.GetMetric(_metrics.EventsNotSentAfterEnqueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
-                        _metrics.Client.TrackException(args.Exception);
+                        Console.WriteLine("not received");
 
                         return Task.CompletedTask;
                     };
 
-                    // Start concurrent enqueuing tasks
-
-                    if (_testConfiguration.ConcurrentSends > 1)
+                    await using (producer.ConfigureAwait(false))
                     {
-                        for (var index = 0; index < _testConfiguration.ConcurrentSends - 1; ++index)
+                        // Create a set of background tasks to handle all but one of the concurrent sends.  The final
+                        // send will be performed directly.
+
+                        if (ConcurrentSends > 1)
                         {
-                            enqueueTasks.Add(Task.Run(async () =>
+                            for (var index = 0; index < ConcurrentSends - 1; ++index)
                             {
-                                while (!cancellationToken.IsCancellationRequested)
+                                sendTasks.Add(Task.Run(async () =>
                                 {
-                                    await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
-
-                                    if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                    while (!backgroundCancellationSource.Token.IsCancellationRequested)
                                     {
-                                        await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                        await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
+
+                                        if ((PublishingDelay.HasValue) && (PublishingDelay.Value > TimeSpan.Zero))
+                                        {
+                                            await Task.Delay(PublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                        }
                                     }
-                                }
-                            }));
-                        }
-                    }
-                    // Perform one of the sends in the foreground, which will allow easier detection of a
-                    // processor-level issue.
-
-                    while (!cancellationToken.IsCancellationRequested)
-                    {
-                        try
-                        {
-                            await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
-
-                            if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                            {
-                                await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                                }));
                             }
                         }
-                        catch (TaskCanceledException)
+
+                        // Perform one of the sends in the foreground, which will allow easier detection of a
+                        // processor-level issue.
+
+                        while (!cancellationToken.IsCancellationRequested)
                         {
-                            backgroundCancellationSource.Cancel();
-                            await Task.WhenAll(enqueueTasks).ConfigureAwait(false);
+                            try
+                            {
+                                await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+
+                                if ((PublishingDelay.HasValue) && (PublishingDelay.Value > TimeSpan.Zero))
+                                {
+                                    await Task.Delay(PublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                                }
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                backgroundCancellationSource.Cancel();
+                                await Task.WhenAll(sendTasks).ConfigureAwait(false);
+                            }
                         }
                     }
                 }
                 catch (TaskCanceledException)
                 {
-                    // No action needed, the cancellation token has been cancelled.
+                    // No action needed.
                 }
                 catch (Exception ex) when
                     (ex is OutOfMemoryException
@@ -129,46 +135,66 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (Exception ex)
                 {
-                    // If this catch is hit, it means the producer has restarted, collect metrics.
+                    // If this catch is hit, there's a problem with the producer itself; cancel the
+                    // background sending and wait before allowing the producer to restart.
 
-                    _metrics.Client.GetMetric(_metrics.ProducerRestarted).TrackValue(1);
-                    _metrics.Client.TrackException(ex);
-                }
-                finally
-                {
-                    await producer.CloseAsync(false);
+                    backgroundCancellationSource.Cancel();
+                    await Task.WhenAll(sendTasks).ConfigureAwait(false);
+
+                    metrics.Client.GetMetric(metrics.BufferedProducerRestarted).TrackValue(1);
+                    metrics.Client.TrackTrace(ex.Message);
+                    //ErrorsObserved.Add(ex);
                 }
             }
         }
 
-        private async Task PerformEnqueue(EventHubBufferedProducerClient producer,
-                                          CancellationToken cancellationToken)
+        private async Task PerformSend(EventHubBufferedProducerClient producer,
+                                       CancellationToken cancellationToken)
         {
-            var events = EventGenerator.CreateEvents(_testConfiguration.MaximumEventListSize,
-                                                     _testConfiguration.EventEnqueueListSize,
-                                                     _testConfiguration.LargeMessageRandomFactorPercent,
-                                                     _testConfiguration.PublishingBodyMinBytes,
-                                                     _testConfiguration.PublishingBodyRegularMaxBytes);
+            var events = EventGenerator.CreateEvents(100);
 
             try
             {
+                //Interlocked.Increment(ref Metrics.PublishAttempts);
                 await producer.EnqueueEventsAsync(events, cancellationToken).ConfigureAwait(false);
 
-                _metrics.Client.GetMetric(_metrics.EventsEnqueued).TrackValue(_testConfiguration.EventEnqueueListSize);
+                metrics.Client.GetMetric(metrics.EventsEnqueuedPerTest).TrackValue(100);
+
+                //Interlocked.Increment(ref Metrics.BatchesPublished);
+                //Interlocked.Add(ref Metrics.EventsPublished, batch.Count);
+                // Interlocked.Add(ref Metrics.TotalPublshedSizeBytes, batch.SizeInBytes);
             }
             catch (TaskCanceledException)
             {
-                // Run is completed.
+                //Interlocked.Decrement(ref Metrics.PublishAttempts);
             }
-            catch (Exception ex)
+            catch (EventHubsException)
             {
-                var eventProperties = new Dictionary<String, String>();
-
-                // Track that the exception took place during the enqueuing of an event
-
-                eventProperties.Add("Process", "Enqueue");
-
-                _metrics.Client.TrackException(ex, eventProperties);
+                // Interlocked.Increment(ref Metrics.TotalExceptions);
+                // Interlocked.Increment(ref Metrics.SendExceptions);
+                // ex.TrackMetrics(Metrics);
+                // ErrorsObserved.Add(ex);
+            }
+            catch (OperationCanceledException)
+            {
+                // Interlocked.Increment(ref Metrics.TotalExceptions);
+                // Interlocked.Increment(ref Metrics.SendExceptions);
+                // Interlocked.Increment(ref Metrics.CanceledSendExceptions);
+                // ErrorsObserved.Add(ex);
+            }
+            catch (TimeoutException)
+            {
+                // Interlocked.Increment(ref Metrics.TotalExceptions);
+                // Interlocked.Increment(ref Metrics.SendExceptions);
+                // Interlocked.Increment(ref Metrics.TimeoutExceptions);
+                // ErrorsObserved.Add(ex);
+            }
+            catch (Exception)
+            {
+                // Interlocked.Increment(ref Metrics.TotalExceptions);
+                // Interlocked.Increment(ref Metrics.SendExceptions);
+                // Interlocked.Increment(ref Metrics.GeneralExceptions);
+                // ErrorsObserved.Add(ex);
             }
         }
     }

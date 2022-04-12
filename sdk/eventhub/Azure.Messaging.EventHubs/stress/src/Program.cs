@@ -19,6 +19,7 @@ namespace Azure.Messaging.EventHubs.Stress
     {
         public static async Task Main(string[] args)
         {
+            Console.WriteLine("setting up");
             var azResourceStrings = new AzureResourceConnectionStrings();
             var testsToRun = ParseArguments(args);
 
@@ -32,6 +33,9 @@ namespace Azure.Messaging.EventHubs.Stress
 
             testsToRun.TryGetValue("BasicBufferedProducerTest", out var runBasicBufferedProducerTest);
             var azResourceNamesBBPT = new AzureResourceNames();
+
+            testsToRun.TryGetValue("BufferedProducerTest", out var runBufferedProducerTest);
+            var azResourceNamesBPT = new AzureResourceNames();
 
             var localRun = testsToRun.TryGetValue("local", out var local);
 
@@ -47,11 +51,11 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     Console.Write("Please provide the instrumentation key for the App Insights resource: ");
                     instrumentationKey = Console.ReadLine().Trim();
-                    Console.WriteLine();
                 }
             }
             else
             {
+                Console.WriteLine("reading environment");
                 var ENV_FILE = Environment.GetEnvironmentVariable("ENV_FILE");
                 var environment = EnvironmentReader.LoadFromFile(ENV_FILE);
 
@@ -134,6 +138,18 @@ namespace Azure.Messaging.EventHubs.Stress
                 int durationInHours = 72;
                 var testRun = new BasicBufferedProducerTest();
                 await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesBBPT.EventHub, instrumentationKey, durationInHours);
+            }
+
+            if (runBufferedProducerTest)
+            {
+                if (localRun)
+                {
+                    PromptForNames(azResourceNamesBPT, false);
+                }
+
+                int durationInHours = 72;
+                var testRun = new BufferedProducerTest();
+                await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesBPT.EventHub, instrumentationKey, durationInHours);
             }
         }
 

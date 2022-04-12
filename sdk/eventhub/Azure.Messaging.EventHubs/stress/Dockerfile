@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env 
 
 # Copy in engineering system needed to build - TODO: cut this down to just what is needed
-COPY /sdk/eventhub/Azure.Messaging.EventHubs/stress /app/sdk/eventhub/Azure.Messaging.EventHubs/stress
+COPY /sdk/eventhub/Azure.Messaging.EventHubs/ /app/sdk/eventhub/Azure.Messaging.EventHubs/
 COPY /eng /app/eng
 COPY /tools /app/tools
 COPY ./*.proj /app
@@ -21,9 +21,8 @@ COPY /artifacts/bin/Azure.Messaging.EventHubs.Stress/Debug /app/bin/Debug
 # Copy in the dll files to be ready to run
 FROM build-env as publish
 WORKDIR /app
-COPY --from=build-env /app/bin /app/bin
+COPY --from=build-env /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Debug /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Debug
 COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Shared /app/sdk/evethub/Azure.Messaging.EventHubs.Shared
 COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs/stress /app/sdk/eventhub/Azure.Messaging.EventHubs/stress
 
-WORKDIR /sdk/eventhub/Azure.Messaging.EventHubs/stress/src
-ENTRYPOINT [ "dotnet", "run", "-f", "netcoreapp3.1"]
+WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Debug/net6.0

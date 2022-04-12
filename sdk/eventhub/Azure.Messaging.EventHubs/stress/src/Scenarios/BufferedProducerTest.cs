@@ -10,55 +10,83 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
-using System.Diagnostics.Tracing;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
-    internal class BufferedProducerTest
+    public class BufferedProducerTest
     {
-        private Metrics _metrics;
-        private BufferedProducerTestConfig _testConfiguration;
+        private Metrics metrics;
 
-        public BufferedProducerTest(BufferedProducerTestConfig testConfiguration)
+        public async Task Run(string connectionString, string eventHubName, string appInsightsKey, int durationInHours)
         {
-            _testConfiguration = testConfiguration;
-            _metrics = new Metrics(testConfiguration.InstrumentationKey);
-        }
+            metrics = new Metrics(appInsightsKey);
+            using var publishCancellationSource = new CancellationTokenSource();
 
-        public async Task Run()
-        {
-            // Create a new metrics instance for the given test run.
-            _metrics = new Metrics(_testConfiguration.InstrumentationKey);
+            var runDuration = TimeSpan.FromHours(durationInHours);
+            publishCancellationSource.CancelAfter(runDuration);
 
-            // Set up cancellation token
-            using var enqueueingCancellationSource = new CancellationTokenSource();
-            var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
-            enqueueingCancellationSource.CancelAfter(runDuration);
-
-            using var azureEventListener = new AzureEventSourceListener(SendHeardException, EventLevel.Error);
-
-            var enqueuingTasks = default(IEnumerable<Task>);
-
-            // Start two buffered producer background tasks
             try
             {
-                enqueuingTasks = Enumerable
+                var testRun = TestRun(connectionString, eventHubName, publishCancellationSource.Token).ConfigureAwait(false);
+
+                while (!publishCancellationSource.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(45), publishCancellationSource.Token);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        metrics.Client.TrackTrace("Run is ending");
+                    }
+
+                    metrics.Client.TrackTrace("continuing.. ");
+
+                    // report metrics
+                }
+                // final report metrics
+            }
+            catch (Exception ex) when
+                (ex is OutOfMemoryException
+                || ex is StackOverflowException
+                || ex is ThreadAbortException)
+            {
+                Environment.FailFast(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                metrics.Client.TrackTrace(ex.Message);
+            }
+        }
+
+        private async Task TestRun(string connectionString, string eventHubName, CancellationToken cancellationToken)
+        {
+            using var process = Process.GetCurrentProcess();
+
+            var publishingTasks = default(IEnumerable<Task>);
+            var runDuration = Stopwatch.StartNew();
+
+            try
+            {
+                // Begin publishing events in the background.
+
+                publishingTasks = Enumerable
                     .Range(0, 2)
-                    .Select(_ => Task.Run(() => new BufferedPublisher(_testConfiguration, _metrics).Start(enqueueingCancellationSource.Token)))
+                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(cancellationToken)))
                     .ToList();
 
-                // Periodically update garbage collection metrics
-                while (!enqueueingCancellationSource.Token.IsCancellationRequested)
-                {
-                    UpdateEnvironmentStatistics(_metrics);
-                    await Task.Delay(TimeSpan.FromMinutes(1), enqueueingCancellationSource.Token).ConfigureAwait(false);
-                }
+                // Update metrics.
 
-                await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    // Metrics.UpdateEnvironmentStatistics(process);
+                    // Interlocked.Exchange(ref Metrics.RunDurationMilliseconds, runDuration.Elapsed.TotalMilliseconds);
+
+                    await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (TaskCanceledException)
             {
@@ -69,32 +97,34 @@ namespace Azure.Messaging.EventHubs.Stress
                 || ex is StackOverflowException
                 || ex is ThreadAbortException)
             {
-                _metrics.Client.TrackException(ex);
-                Environment.FailFast(ex.Message);
+                throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _metrics.Client.TrackException(ex);
+                // Interlocked.Increment(ref Metrics.TotalExceptions);
+                // Interlocked.Increment(ref Metrics.GeneralExceptions);
+                // ErrorsObserved.Add(ex);
             }
-            finally
-            {
-                // Flush and wait for all metrics to be aggregated and sent to application insights
-                _metrics.Client.Flush();
-                await Task.Delay(60000).ConfigureAwait(false);
-            }
-        }
 
-        private void UpdateEnvironmentStatistics(Metrics _metrics)
-        {
-            _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-            _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-            _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
-        }
+            // The run is ending.  Clean up the outstanding background operations and
+            // complete the necessary metrics tracking.
 
-        private void SendHeardException(EventWrittenEventArgs args, string level)
-        {
-            var output = args.ToString();
-            _metrics.Client.TrackTrace($"EventWritten: {output} Level: {level}.");
+            // try
+            // {
+            //     publishCancellationSource.Cancel();
+            //     await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+            // }
+            // catch (Exception ex)
+            // {
+            //     Interlocked.Increment(ref Metrics.TotalExceptions);
+            //     Interlocked.Increment(ref Metrics.GeneralExceptions);
+            //     ErrorsObserved.Add(ex);
+            // }
+            // finally
+            // {
+            //     runDuration.Stop();
+            //     IsRunning = false;
+            // }
         }
     }
 }
