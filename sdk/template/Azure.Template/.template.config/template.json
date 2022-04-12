@@ -2,14 +2,14 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "chunyu@microsoft.com",
   "classifications": [ "Azure", "ClassLibrary" ],
-  "identity": "Azure.ServiceTemplate.TemplateProject",
+  "identity": "Azure.Sample.Template",
   "name": "Azure DataPlane SDK template: client project",
-  "shortName": "dataplane",
+  "shortName": "dpg",
   "tags": {
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "Azure.ServiceTemplate.Template",
+  "sourceName": "Azure.Sample.Template",
   "preferNameDirectory": true,
   "guids": [
     "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
@@ -26,15 +26,33 @@
       "modifiers": [
         {
           "exclude": [
-            "content/**/*"
+            ".content/**/*",
+            "api/**/*",
+            "samples/**/*.md",
+            "tests/**/*.cs",
+            "perf/**/*.cs",
+            "stress/**/*.cs",
+            "src/autorest.cs"
           ]
         }
       ]
     },
     {
-      "source": "./content",
+      "source": ".content",
       "target": "../",
       "condition": "(includeCI)"
+    },
+    {
+      "source": ".content/stress",
+      "target": "./stress"
+    },
+    {
+      "source": ".content/tests",
+      "target": "./tests"
+    },
+    {
+      "source": ".content/src",
+      "target": "./src"
     }
   ],
   "symbols": {
