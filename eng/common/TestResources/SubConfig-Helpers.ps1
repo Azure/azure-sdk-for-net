@@ -5,7 +5,7 @@ function BuildServiceDirectoryPrefix([string]$serviceName) {
 # If the ServiceDirectory has multiple segments use the last directory name
 # e.g. D:\foo\bar -> bar or foo/bar -> bar
 function GetServiceLeafDirectoryName([string]$serviceDirectory) {
-    return Split-Path -Leaf $serviceDirectory
+    return $serviceDirectory ? (Split-Path -Leaf $serviceDirectory) : ""
 }
 
 function GetUserName() {
