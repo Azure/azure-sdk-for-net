@@ -6,10 +6,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
     <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
     <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
