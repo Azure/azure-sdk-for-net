@@ -8,7 +8,8 @@
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-		    Improving sanitization of exception messages. For details, see "CVE-2022-26907 - Security Update Guide - Microsoft - Azure SDK for .NET Information Disclosure Vulnerability": https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-26907
+		    - Improving sanitization of exception messages. For details, see "CVE-2022-26907 - Security Update Guide - Microsoft - Azure SDK for .NET Information Disclosure Vulnerability": https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-26907
+		    - Optimize performance of parsing JSON content
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
