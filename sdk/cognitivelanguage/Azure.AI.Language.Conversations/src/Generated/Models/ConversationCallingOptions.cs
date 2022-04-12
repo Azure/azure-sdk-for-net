@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations
         {
         }
 
-        /// <summary> The language of the query. </summary>
+        /// <summary> The language of the query in BCP 47 language representation.. </summary>
         public string Language { get; set; }
         /// <summary> If true, the service will return more detailed information. </summary>
         public bool? Verbose { get; set; }

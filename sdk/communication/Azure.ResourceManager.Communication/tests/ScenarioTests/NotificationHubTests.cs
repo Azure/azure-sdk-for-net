@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Communication.Tests
 
             // Link NotificationHub
             var linkNotificationHubResponse = await resource.LinkNotificationHubAsync(
-                new LinkNotificationHubOptions(_notificationHubsResourceId, _notificationHubsConnectionString));
+                new LinkNotificationHubContent(_notificationHubsResourceId, _notificationHubsConnectionString));
             Assert.AreEqual(_notificationHubsResourceId, linkNotificationHubResponse.Value.ResourceId);
         }
     }

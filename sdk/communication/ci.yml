@@ -44,9 +44,4 @@ extends:
       safeName: AzureResourceManagerCommunication
     - name: Azure.Communication.ShortCodes
       safeName: AzureCommunicationShortCodes
-      skipTagRepository: true
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
+      skipReleaseStage: true

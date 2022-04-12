@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters)
+        internal HttpMessage CreateRenameRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition resourceMoveDefinition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(resourceMoveDefinition);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1139,19 +1139,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to rename. </param>
-        /// <param name="parameters"> The resource move definition for renaming this database. </param>
+        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="resourceMoveDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RenameAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RenameAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
 
-            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, serverName, databaseName, resourceMoveDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1167,19 +1167,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to rename. </param>
-        /// <param name="parameters"> The resource move definition for renaming this database. </param>
+        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="resourceMoveDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Rename(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public Response Rename(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
 
-            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, serverName, databaseName, resourceMoveDefinition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateImportRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters)
+        internal HttpMessage CreateImportRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition importExistingDatabaseDefinition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(importExistingDatabaseDefinition);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1222,19 +1222,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="parameters"> The database import request parameters. </param>
+        /// <param name="importExistingDatabaseDefinition"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="importExistingDatabaseDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ImportAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ImportAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition importExistingDatabaseDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(importExistingDatabaseDefinition, nameof(importExistingDatabaseDefinition));
 
-            using var message = CreateImportRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateImportRequest(subscriptionId, resourceGroupName, serverName, databaseName, importExistingDatabaseDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1251,19 +1251,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="parameters"> The database import request parameters. </param>
+        /// <param name="importExistingDatabaseDefinition"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="importExistingDatabaseDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Import(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public Response Import(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition importExistingDatabaseDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(importExistingDatabaseDefinition, nameof(importExistingDatabaseDefinition));
 
-            using var message = CreateImportRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateImportRequest(subscriptionId, resourceGroupName, serverName, databaseName, importExistingDatabaseDefinition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters)
+        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition exportDatabaseDefinition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(exportDatabaseDefinition);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1307,19 +1307,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="exportDatabaseDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
 
-            using var message = CreateExportRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateExportRequest(subscriptionId, resourceGroupName, serverName, databaseName, exportDatabaseDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1336,19 +1336,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="exportDatabaseDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Export(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public Response Export(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
 
-            using var message = CreateExportRequest(subscriptionId, resourceGroupName, serverName, databaseName, parameters);
+            using var message = CreateExportRequest(subscriptionId, resourceGroupName, serverName, databaseName, exportDatabaseDefinition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

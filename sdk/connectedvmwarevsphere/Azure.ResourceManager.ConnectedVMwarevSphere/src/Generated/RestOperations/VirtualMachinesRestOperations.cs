@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineOptions options)
+        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -386,17 +386,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
-        /// <param name="options"> Virtualmachine stop action payload. </param>
+        /// <param name="content"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, virtualMachineName, options);
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, virtualMachineName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -412,17 +412,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
-        /// <param name="options"> Virtualmachine stop action payload. </param>
+        /// <param name="content"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Stop(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineOptions options = null, CancellationToken cancellationToken = default)
+        public Response Stop(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, virtualMachineName, options);
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, virtualMachineName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

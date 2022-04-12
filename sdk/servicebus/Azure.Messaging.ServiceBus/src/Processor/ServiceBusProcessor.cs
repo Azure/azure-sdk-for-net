@@ -717,7 +717,6 @@ namespace Azure.Messaging.ServiceBus
         /// canceled, the processor will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
             {
@@ -729,9 +728,17 @@ namespace Azure.Messaging.ServiceBus
                     Logger.StopProcessingStart(Identifier);
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    // Cancel the current running task.
+                    // Cancel the current running task. Catch any exception that are triggered due to customer token registrations, and
+                    // log these as warnings as we don't want to forego stopping due to these exceptions.
+                    try
+                    {
+                        RunningTaskTokenSource.Cancel();
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.ProcessorStoppingCancellationWarning(Identifier, exception.ToString());
+                    }
 
-                    RunningTaskTokenSource.Cancel();
                     RunningTaskTokenSource.Dispose();
                     RunningTaskTokenSource = null;
 
