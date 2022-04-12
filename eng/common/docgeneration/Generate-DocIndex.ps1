@@ -134,8 +134,6 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
         $artifact = $serviceMapping.Artifact
         $serviceName = $serviceMapping.ServiceName
         $displayName = $serviceMapping.DisplayName
-        $serviceName = $serviceMapping.Value.ServiceName
-        $displayName = $serviceMapping.Value.DisplayName
 
         # handle spaces in service name, EG "Confidential Ledger"
         # handle / in service name, EG "Database for MySQL/PostgreSQL". Leaving a "/" present will generate a bad link location.
