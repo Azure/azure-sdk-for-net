@@ -86,11 +86,8 @@ function Get-TocMapping {
         
         # Define the order of "New", "Type", if not match, return the length of the array.
         $CustomOrder_New = "true", "false", ""
-        $newIndex = if ($CustomOrder_New.IndexOf($packageInfo[0].New.ToLower()) -eq -1) {
-            $CustomOrder_New.Count
-        } else {
-            $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
-        }
+        $newIndex = $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
+        $newIndex = $newIndex -eq -1 ?  $CustomOrder_New.Count : $newIndex
         $CustomOrder_Type = "client", "mgmt", "compat", "spring", ""
         $typeIndex = $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
         $typeIndex = $typeIndex -eq -1 ? $CustomOrder_Type.Count : $typeIndex
