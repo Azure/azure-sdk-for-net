@@ -19,6 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LinkTables = new ChangeTrackingList<LinkTableRequest>();
         }
 
+        /// <summary> Initializes a new instance of EditTablesRequest. </summary>
+        /// <param name="linkTables"> Edit link tables request. </param>
+        internal EditTablesRequest(IList<LinkTableRequest> linkTables)
+        {
+            LinkTables = linkTables;
+        }
+
         /// <summary> Edit link tables request. </summary>
         public IList<LinkTableRequest> LinkTables { get; }
     }

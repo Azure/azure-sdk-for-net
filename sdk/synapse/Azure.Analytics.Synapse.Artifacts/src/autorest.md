@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-composite-v4
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/318bf32be03bf155e040a84062f7d7aebaad6159/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/4884825e5dbc3236638cffe46531c02f2cbe9f84/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 security: AADToken
@@ -74,12 +74,14 @@ directive:
           path.endsWith("DatasetDataElement") ||
           path.endsWith("DatasetSchemaDataElement") ||
           path.endsWith("DatasetStorageFormat") ||
+          path.endsWith("EditTablesRequest") ||
           path.endsWith("EvaluateDataFlowExpressionRequest") ||
           path.endsWith("ExposureControlRequest") ||
           path.endsWith("ExposureControlResponse") ||
           path.endsWith("GetSsisObjectMetadataRequest") ||
           path.endsWith("JsonFormat") ||
           path.endsWith("JsonFormatFilePattern") ||
+          path.endsWith("LinkTableRequest") ||
           path.endsWith("OrcFormat") ||
           path.endsWith("ParquetFormat") ||
           path.endsWith("RerunTriggerListResponse") ||

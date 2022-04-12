@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -31,6 +32,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        internal static EditTablesRequest DeserializeEditTablesRequest(JsonElement element)
+        {
+            Optional<IList<LinkTableRequest>> linkTables = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("linkTables"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<LinkTableRequest> array = new List<LinkTableRequest>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkTableRequest.DeserializeLinkTableRequest(item));
+                    }
+                    linkTables = array;
+                    continue;
+                }
+            }
+            return new EditTablesRequest(Optional.ToList(linkTables));
+        }
+
         internal partial class EditTablesRequestConverter : JsonConverter<EditTablesRequest>
         {
             public override void Write(Utf8JsonWriter writer, EditTablesRequest model, JsonSerializerOptions options)
@@ -39,7 +64,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override EditTablesRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEditTablesRequest(document.RootElement);
             }
         }
     }

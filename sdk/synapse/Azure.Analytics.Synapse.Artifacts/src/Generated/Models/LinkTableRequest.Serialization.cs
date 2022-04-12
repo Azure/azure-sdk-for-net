@@ -41,6 +41,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        internal static LinkTableRequest DeserializeLinkTableRequest(JsonElement element)
+        {
+            Optional<string> id = default;
+            Optional<LinkTableRequestSource> source = default;
+            Optional<LinkTableRequestTarget> target = default;
+            Optional<string> operationType = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    source = LinkTableRequestSource.DeserializeLinkTableRequestSource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("target"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    target = LinkTableRequestTarget.DeserializeLinkTableRequestTarget(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationType"))
+                {
+                    operationType = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new LinkTableRequest(id.Value, source.Value, target.Value, operationType.Value);
+        }
+
         internal partial class LinkTableRequestConverter : JsonConverter<LinkTableRequest>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequest model, JsonSerializerOptions options)
@@ -49,7 +91,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override LinkTableRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLinkTableRequest(document.RootElement);
             }
         }
     }

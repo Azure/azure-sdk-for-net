@@ -15,6 +15,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
+        /// <summary> Initializes a new instance of LinkTableRequest. </summary>
+        /// <param name="id"> Link table id. </param>
+        /// <param name="source"> Source table properties for link table request. </param>
+        /// <param name="target"> Target table properties for link table request. </param>
+        /// <param name="operationType"> Link table operation type. </param>
+        internal LinkTableRequest(string id, LinkTableRequestSource source, LinkTableRequestTarget target, string operationType)
+        {
+            Id = id;
+            Source = source;
+            Target = target;
+            OperationType = operationType;
+        }
+
         /// <summary> Link table id. </summary>
         public string Id { get; set; }
         /// <summary> Source table properties for link table request. </summary>
