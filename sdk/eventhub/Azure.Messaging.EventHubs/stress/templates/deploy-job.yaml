@@ -9,6 +9,9 @@ spec:
     - name: net-eh-stress
       image: {{ .Values.image }}
       imagePullPolicy: Always
-      command: ['dotnet', 'run', '{{ .Scenario }}', '--project'. './src', '-f', 'netcoreapp3']
+      command: [ 'dotnet']
+      args:
+      - 'Azure.Messaging.EventHubs.Stress.dll'
+      - {{ .Scenario }}
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}

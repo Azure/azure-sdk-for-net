@@ -1,9 +1,6 @@
 # TODO: how to update registry path
 
 Set-Location -Path ..\..\..\..\
+Set-Location -Path .\artifacts\bin\Azure.Messaging.EventHubs.Stress\Debug\netcoreapp3.1
 
-docker build -f './sdk/eventhub/Azure.Messaging.EventHubs\stress\Dockerfile' -t 'netehtest:latest' .
-
-Set-Location -Path .\sdk\eventhub\Azure.Messaging.EventHubs\stress\
-
-docker run 'netehtest:latest'
+dotnet Azure.Messaging.EventHubs.Stress.dll BasicPublishReadTest
