@@ -1,7 +1,8 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 5.5.0
+## Version 6.0.0
 ###  Feature Additions
+### Breaking Changes
 - Fixed Expression mode for SqlServerStoredProcedureActivity
 - Added Policy property into ExecutePipelineActivity
 
