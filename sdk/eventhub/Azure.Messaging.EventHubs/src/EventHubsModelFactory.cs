@@ -316,45 +316,41 @@ namespace Azure.Messaging.EventHubs
             ///
             public override IReadOnlyCollection<T> AsReadOnlyCollection<T>()
             {
-                if (typeof(T) == typeof(EventData))
+                if (typeof(T) != typeof(AmqpMessage))
                 {
-                    return _backingStore as IReadOnlyCollection<T>;
-                }
-                else if (typeof(T) == typeof(AmqpMessage))
-                {
-                    // The AMQP messages must be recreated for each transform request to
-                    // ensure that the idempotent publishing properties are current and correct.
-                    //
-                    // This is a safe pattern, because the method is internal and only invoked
-                    // during a send operation, during which the batch is locked to prevent
-                    // changes or parallel attempts to send.
-                    //
-                    // Multiple requests to produce the collection would happen if this batch instance
-                    // is being published more than once, which is only valid if a call to SendAsync fails
-                    // across all retries, making it a fairly rare occurrence.
-
-                    if (_batchMessages != null)
-                    {
-                        foreach (var message in _batchMessages)
-                        {
-                            message.Dispose();
-                        }
-                    }
-
-                    _batchMessages = new(_backingStore.Count);
-
-                    // Serialize the events in the batch into their AMQP transport format.  Because
-                    // the batch holds responsibility for disposing these, hold onto the references.
-
-                    foreach (var eventData in _backingStore)
-                    {
-                        _batchMessages.Add(MessageConverter.CreateMessageFromEvent(eventData));
-                    }
-
-                    return _batchMessages as IReadOnlyCollection<T>;
+                    throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
                 }
 
-                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
+                // The AMQP messages must be recreated for each transform request to
+                // ensure that the idempotent publishing properties are current and correct.
+                //
+                // This is a safe pattern, because the method is internal and only invoked
+                // during a send operation, during which the batch is locked to prevent
+                // changes or parallel attempts to send.
+                //
+                // Multiple requests to produce the collection would happen if this batch instance
+                // is being published more than once, which is only valid if a call to SendAsync fails
+                // across all retries, making it a fairly rare occurrence.
+
+                if (_batchMessages != null)
+                {
+                    foreach (var message in _batchMessages)
+                    {
+                        message.Dispose();
+                    }
+                }
+
+                _batchMessages = new(_backingStore.Count);
+
+                // Serialize the events in the batch into their AMQP transport format.  Because
+                // the batch holds responsibility for disposing these, hold onto the references.
+
+                foreach (var eventData in _backingStore)
+                {
+                    _batchMessages.Add(MessageConverter.CreateMessageFromEvent(eventData));
+                }
+
+                return _batchMessages as IReadOnlyCollection<T>;
             }
 
             /// <summary>
