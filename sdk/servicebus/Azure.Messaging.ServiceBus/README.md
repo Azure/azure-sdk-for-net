@@ -182,7 +182,7 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-### Send and receive a batch of messages
+### Send a batch of messages
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
@@ -237,6 +237,31 @@ messages.Add(new ServiceBusMessage("First"));
 messages.Add(new ServiceBusMessage("Second"));
 // send the messages
 await sender.SendMessagesAsync(messages);
+```
+### Receive a batch of messages
+
+In order to receive a batch of messages from queue, topic or subscription:
+
+```C# Snippet:ServiceBusBatchReciveMessages
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+int maxMessagesToGetInOneBatch = 100;
+
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// create a receiver that we can use to receive the message
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// receive a batch of messages
+IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessageAsync(maxMessagesToGetInOneBatch);
+
+// go through each of the messages and get the message body as string
+foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
+{
+    string body = receivedMessage.Body.ToString();
+    Console.WriteLine(body);
+}
 ```
 
 ### Complete a message
