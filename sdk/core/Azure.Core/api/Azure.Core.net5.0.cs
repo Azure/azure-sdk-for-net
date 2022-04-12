@@ -399,7 +399,7 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
-        public bool AreNestedClientSpansEnabled { get { throw null; } set { } }
+        public bool IsNestingClientSpansEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>

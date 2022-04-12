@@ -38,7 +38,7 @@ namespace Azure.Core
                 LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
                 IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
                 IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
-                AreNestedClientSpansEnabled = diagnosticsOptions.AreNestedClientSpansEnabled;
+                IsNestingClientSpansEnabled  = diagnosticsOptions.IsNestingClientSpansEnabled ;
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Azure.Core
                 LoggedQueryParameters = new List<string> { "api-version" };
                 IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
                 IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
-                AreNestedClientSpansEnabled = true;
+                IsNestingClientSpansEnabled  = true;
             }
         }
 
@@ -88,9 +88,9 @@ namespace Azure.Core
         public bool IsDistributedTracingEnabled { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets value indicating whether distributed tracing spans created for inner public method calls should be suppressed.
+        /// Gets or sets value indicating whether nested distributed tracing spans are going to be created for client methods when called by other instrumented client methods.
         /// </summary>
-        public bool AreNestedClientSpansEnabled { get; set; }
+        public bool IsNestingClientSpansEnabled  { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating whether the "User-Agent" header containing <see cref="ApplicationId"/>, client library package name and version, <see cref="RuntimeInformation.FrameworkDescription"/>

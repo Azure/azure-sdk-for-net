@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
             DiagnosticsOptions testOptions = new DiagnosticsOptions();
             if (enableNestedScopes.HasValue)
             {
-                testOptions.AreNestedClientSpansEnabled = enableNestedScopes.Value;
+                testOptions.IsNestingClientSpansEnabled = enableNestedScopes.Value;
             }
 
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", testOptions);
