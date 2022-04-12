@@ -12,56 +12,98 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Dns.Tests.Tests
+namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
     internal class RecordSetATests : DnsServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
-
-        private ResourceIdentifier _resourceGroupIdentifier;
-
-        public RecordSetATests(bool isAsync) : base(isAsync)
-        {
-        }
+        private DnsZoneResource _dnsZone;
+        //public RecordSetATests(bool isAsync) : base(isAsync)
+        //{
+        //}
 
         [OneTimeSetUp]
-        public async Task GlobalSetUp()
+        public async Task OnetimeSetup()
         {
-            string rgName = SessionRecording.GenerateAssetName("Dns-RG-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource rg = rgLro.Value;
-            _resourceGroupIdentifier = rg.Id;
+            // Create Resource Group
+            Random random = new Random();
+            string rgName = $"dns-rg-{random.Next(9999)}";
+            _resourceGroup = await CreateAResourceGroup(rgName);
+            Assert.IsNotNull(_resourceGroup);
+            Assert.AreEqual(rgName, _resourceGroup.Data.Name);
 
-            await StopSessionRecordingAsync();
+            // Create Dns Zone
+            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
         }
 
-        [SetUp]
-        public async Task TestSetUp()
+        [TearDown]
+        public async Task TearDown()
         {
-            var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-        }
-
-        public async Task CreateDnsZone()
-        {
-            // Castle.DynamicProxy.Generators.GeneratorException
-            //  Can not create proxy for type Azure.ResourceManager.Dns.ResourceGroupResourceExtensionClient because it is not accessible.
-            //  Make it public, or internal and mark your assembly with
-            //  [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2, PublicKey=*******")] attribute, because assembly Azure.ResourceManager.Dns is strong-named.
-            var collection = _resourceGroup.GetDnsZones();
-            string zoneName = "dns20220402.com";
-            DnsZoneData data = new DnsZoneData(AzureLocation.WestUS2)
+            var list = await _dnsZone.GetRecordSetAs().GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
             {
-            };
-            var dns = await collection.CreateOrUpdateAsync(WaitUntil.Completed, zoneName, data);
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [Test]
-        [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task Create()
         {
-            await CreateDnsZone();
-            var dns = await _resourceGroup.GetDnsZoneAsync("dns20220402.com");
+            var collection = _dnsZone.GetRecordSetAs();
+            string name = "a";
+            var recordSetAResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
+            Assert.IsNotNull(recordSetAResource);
+            Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
+        }
+
+        [Test]
+        public async Task Delete()
+        {
+            var collection = _dnsZone.GetRecordSetAs();
+            string name = "a";
+            var recordSetAResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
+            Assert.IsTrue(collection.Exists(name));
+
+            await recordSetAResource.Value.DeleteAsync(WaitUntil.Completed);
+            Assert.IsFalse(collection.Exists(name));
+        }
+
+        [Test]
+        public async Task Exist()
+        {
+            var collection = _dnsZone.GetRecordSetAs();
+            string name = "a";
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
+            Assert.IsTrue(collection.Exists(name));
+        }
+
+        [Test]
+        public async Task Get()
+        {
+            var collection = _dnsZone.GetRecordSetAs();
+            string name = "a";
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
+
+            var recordSetAResource = await collection.GetAsync(name);
+            Assert.IsNotNull(recordSetAResource);
+            Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
+        }
+
+        [Test]
+        public async Task GetAll()
+        {
+            var collection = _dnsZone.GetRecordSetAs();
+            string name = "a";
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
+
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(list);
+            Assert.AreEqual(name, list.FirstOrDefault().Data.Name);
         }
     }
 }
