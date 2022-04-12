@@ -2,15 +2,76 @@
 
 ## Subclients
 
-There are two categories of clients: service clients and their subclients. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service. Please refer to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients) for more detail information.
+autorest requires each operation in swagger file to define a unique string parameter `operationId` (this is different from [official OpenAPI specification](https://swagger.io/docs/specification/paths-and-operations/#operationId)). If parameter value contains underscore, then part after underscore will be treated as operation name, and part before underscore will be treated as the name of the operation group to which this operation belongs. Otherwise, operation will be attributed to the group without a name::
 
-There are two tools to organize subclients and service client.
+```js
+"paths": {
+  "/namedgroup/op": {
+    "get": {
+      "operationId": "NamedGroup_Op1",
+    }
+  },
+  "/nogroup/op": {
+    "get": {
+      "operationId": "Op2",
+    }
+  }
+}
+```
+
+```yaml
+operationGroups:
+  - !OperationGroup 
+    $key: NamedGroup
+    operations:
+      - !Operation 
+        language: !Languages 
+          default:
+            name: Op1
+    language: !Languages 
+      default:
+        name: NamedGroup
+  - !OperationGroup 
+    $key: ''
+    operations:
+      - !Operation 
+        language: !Languages 
+          default:
+            name: Op2
+    language: !Languages 
+      default:
+        name: ''
+language: !Languages 
+  default:
+    name: MyService
+```
+
+For each operation group, **autorest.csharp** generates individual client type called using `$"{operationGroups.language.default.name}Client"` format when group has a name or `$"{language.default.name}Client"` format when group name is empty.
+
+```cs
+public partial class NamedGroupClient
+{
+    public virtual async Task<Response> Op1Async(RequestContext options = null);
+    public virtual Response Op1(RequestContext options = null);
+}
+```
+```cs
+public partial class MyServiceClient
+{
+    public virtual async Task<Response> Op2Async(RequestContext options = null);
+    public virtual Response Op2(RequestContext options = null);
+}
+```
+
+We need to organize those clients into two categories: **service clients** and their **subclients**. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service. Please refer to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients) for more detail information.
+
+There are two ways to organize subclients and service client.
 
 - **Single top-level client**: define one top-level service client with the name <service_name>Client, all other clients will be its subclient.
 
 - **Client hierarchy**: organize the client service and subclients via defining the parent-subclient hierarchy dependency.
 
-**Note**: You can combine those two approaches to define an client hierarchy with one top-level client and its subclient may have sub clients also.
+**Note**: You can combine those two ways to define an client hierarchy with one top-level client and its subclient may have sub clients also.
 
 In Following chapters, we will use [purview Account](https://github.com/Azure/azure-rest-api-specs/blob/b2bddfe2e59b5b14e559e0433b6e6d057bcff95d/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json) as example.
 
