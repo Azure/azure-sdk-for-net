@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ReplicationLinksOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of replication links on database.
+            /// Deletes a database replication link. Cannot be done during failover.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,15 +35,18 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be dropped.
             /// </param>
-            public static IPage<ReplicationLink> ListByDatabase(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName)
+            /// <param name='linkId'>
+            /// The ID of the replication link to be deleted.
+            /// </param>
+            public static void Delete(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
-                return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of replication links on database.
+            /// Deletes a database replication link. Cannot be done during failover.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,17 +59,17 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be dropped.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReplicationLink>> ListByDatabaseAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -124,7 +127,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the replication link.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,17 +141,19 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
             /// </param>
-            public static void Delete(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            public static void Failover(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
-                operations.DeleteAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+                operations.FailoverAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the replication link.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,20 +166,22 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailoverAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database. This operation might result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,18 +194,19 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
-            public static ReplicationLink Failover(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            public static void FailoverAllowDataLoss(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
-                return operations.FailoverAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+                operations.FailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database. This operation might result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,25 +219,21 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationLink> FailoverAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailoverAllowDataLossAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.FailoverAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server allowing data
-            /// loss.
+            /// Deletes a database replication link in forced or friendly way.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -241,19 +246,21 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
-            public static ReplicationLink FailoverAllowDataLoss(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            public static void Unlink(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters)
             {
-                return operations.FailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+                operations.UnlinkAsync(resourceGroupName, serverName, databaseName, linkId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server allowing data
-            /// loss.
+            /// Deletes a database replication link in forced or friendly way.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,17 +273,65 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationLink> FailoverAllowDataLossAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UnlinkAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.FailoverAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
+                (await operations.UnlinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links on database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static IPage<ReplicationLink> ListByDatabase(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links on database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReplicationLink>> ListByDatabaseAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -325,7 +380,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -338,18 +394,19 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
-            public static ReplicationLink BeginFailover(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            public static void BeginFailover(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
-                return operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -362,25 +419,22 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationLink> BeginFailoverAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginFailoverAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server allowing data
-            /// loss.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database. This operation might result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -393,19 +447,19 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
-            public static ReplicationLink BeginFailoverAllowDataLoss(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            public static void BeginFailoverAllowDataLoss(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
-                return operations.BeginFailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+                operations.BeginFailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Fails over from the current primary server to this server allowing data
-            /// loss.
+            /// Sets which replica database is primary by failing over from the current
+            /// primary replica database. This operation might result in data loss.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -418,20 +472,74 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database.
+            /// The name of the database that has the replication link to be failed over.
             /// </param>
             /// <param name='linkId'>
-            /// The name of the replication link.
+            /// The ID of the replication link to be failed over.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationLink> BeginFailoverAllowDataLossAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginFailoverAllowDataLossAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginFailoverAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginFailoverAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            public static void BeginUnlink(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters)
+            {
+                operations.BeginUnlinkAsync(resourceGroupName, serverName, databaseName, linkId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUnlinkAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUnlinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

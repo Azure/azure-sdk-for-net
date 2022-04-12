@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A managed server dns alias creation request.
+    /// Represents the parameters for Unlink Replication Link request.
     /// </summary>
-    public partial class ManagedServerDnsAliasCreation
+    public partial class UnlinkParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedServerDnsAliasCreation
-        /// class.
+        /// Initializes a new instance of the UnlinkParameters class.
         /// </summary>
-        public ManagedServerDnsAliasCreation()
+        public UnlinkParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedServerDnsAliasCreation
-        /// class.
+        /// Initializes a new instance of the UnlinkParameters class.
         /// </summary>
-        /// <param name="createDnsRecord">Whether or not DNS record should be
-        /// created for this alias.</param>
-        public ManagedServerDnsAliasCreation(bool? createDnsRecord = default(bool?))
+        /// <param name="forcedTermination">Determines whether link will be
+        /// terminated in a forced or a friendly way.</param>
+        public UnlinkParameters(bool? forcedTermination = default(bool?))
         {
-            CreateDnsRecord = createDnsRecord;
+            ForcedTermination = forcedTermination;
             CustomInit();
         }
 
@@ -45,11 +43,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets whether or not DNS record should be created for this
-        /// alias.
+        /// Gets or sets determines whether link will be terminated in a forced
+        /// or a friendly way.
         /// </summary>
-        [JsonProperty(PropertyName = "createDnsRecord")]
-        public bool? CreateDnsRecord { get; set; }
+        [JsonProperty(PropertyName = "forcedTermination")]
+        public bool? ForcedTermination { get; set; }
 
     }
 }

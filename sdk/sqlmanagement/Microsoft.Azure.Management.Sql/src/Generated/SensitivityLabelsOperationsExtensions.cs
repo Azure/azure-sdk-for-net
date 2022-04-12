@@ -198,6 +198,134 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Enables sensitivity recommendations on a given column (recommendations are
+            /// enabled by default on all columns)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='columnName'>
+            /// The name of the column.
+            /// </param>
+            public static void EnableRecommendation(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
+            {
+                operations.EnableRecommendationAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enables sensitivity recommendations on a given column (recommendations are
+            /// enabled by default on all columns)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='columnName'>
+            /// The name of the column.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task EnableRecommendationAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.EnableRecommendationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Disables sensitivity recommendations on a given column
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='columnName'>
+            /// The name of the column.
+            /// </param>
+            public static void DisableRecommendation(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
+            {
+                operations.DisableRecommendationAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables sensitivity recommendations on a given column
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='columnName'>
+            /// The name of the column.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableRecommendationAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableRecommendationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets the sensitivity label of a given column
             /// </summary>
             /// <param name='operations'>
@@ -407,188 +535,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Disables sensitivity recommendations on a given column
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The name of the schema.
-            /// </param>
-            /// <param name='tableName'>
-            /// The name of the table.
-            /// </param>
-            /// <param name='columnName'>
-            /// The name of the column.
-            /// </param>
-            public static void DisableRecommendation(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
-            {
-                operations.DisableRecommendationAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Disables sensitivity recommendations on a given column
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The name of the schema.
-            /// </param>
-            /// <param name='tableName'>
-            /// The name of the table.
-            /// </param>
-            /// <param name='columnName'>
-            /// The name of the column.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DisableRecommendationAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DisableRecommendationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Enables sensitivity recommendations on a given column (recommendations are
-            /// enabled by default on all columns)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The name of the schema.
-            /// </param>
-            /// <param name='tableName'>
-            /// The name of the table.
-            /// </param>
-            /// <param name='columnName'>
-            /// The name of the column.
-            /// </param>
-            public static void EnableRecommendation(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
-            {
-                operations.EnableRecommendationAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Enables sensitivity recommendations on a given column (recommendations are
-            /// enabled by default on all columns)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The name of the schema.
-            /// </param>
-            /// <param name='tableName'>
-            /// The name of the table.
-            /// </param>
-            /// <param name='columnName'>
-            /// The name of the column.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task EnableRecommendationAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.EnableRecommendationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the sensitivity labels of a given database
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<SensitivityLabel> ListByDatabase(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, ODataQuery<SensitivityLabel> odataQuery = default(ODataQuery<SensitivityLabel>))
-            {
-                return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the sensitivity labels of a given database
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SensitivityLabel>> ListByDatabaseAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, ODataQuery<SensitivityLabel> odataQuery = default(ODataQuery<SensitivityLabel>), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the sensitivity labels of a given database
             /// </summary>
             /// <param name='operations'>
@@ -651,40 +597,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<SensitivityLabel>> ListRecommendedByDatabaseNextAsync(this ISensitivityLabelsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRecommendedByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the sensitivity labels of a given database
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SensitivityLabel> ListByDatabaseNext(this ISensitivityLabelsOperations operations, string nextPageLink)
-            {
-                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the sensitivity labels of a given database
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SensitivityLabel>> ListByDatabaseNextAsync(this ISensitivityLabelsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
