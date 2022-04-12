@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Rest.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -26,6 +27,7 @@ namespace Microsoft.Rest
 
             this.CopyHeaders(httpRequest.Headers);
             this.CopyHeaders(httpRequest.GetContentHeaders());
+            HttpRequestSanitizer.SanitizerHeaders(Headers);
 
             this.Content = content;
             this.Method = httpRequest.Method;
