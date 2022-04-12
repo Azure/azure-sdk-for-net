@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Gets list of physical partitions and their properties.
         /// </summary>
-        [JsonProperty(PropertyName = "physicalPartitionThroughputInfoCollection")]
+        [JsonProperty(PropertyName = "physicalPartitionStorageInfoCollection")]
         public IList<PhysicalPartitionStorageInfo> PhysicalPartitionStorageInfoCollectionProperty { get; private set; }
 
     }

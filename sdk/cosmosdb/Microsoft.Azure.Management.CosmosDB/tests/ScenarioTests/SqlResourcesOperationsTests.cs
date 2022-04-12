@@ -11,6 +11,8 @@ using System.Threading;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -160,7 +162,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                
                 Assert.NotNull(sqlContainerGetResults);
 
                 IEnumerable<SqlContainerGetResults> sqlContainers = client.ListSqlContainersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
@@ -262,7 +270,7 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
-        public void SqlClientEncryptionKeyTest()
+        public void SqlClientEncryptionTests()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -287,10 +295,10 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(sqlDatabaseGetResults);
                 Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
-                var clientEncryptionKeyName = TestUtilities.GenerateName("clientEncryptionKey");
+                var clientEncryptionKeyName1 = TestUtilities.GenerateName("clientEncryptionKey");
                 ClientEncryptionKeyResource clientEncryptionKeyResource = new ClientEncryptionKeyResource()
                 {
-                    Id = clientEncryptionKeyName,
+                    Id = clientEncryptionKeyName1,
                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
                     KeyWrapMetadata = new KeyWrapMetadata
                     {
@@ -311,7 +319,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName,
+                    clientEncryptionKeyName1,
                     clientEncryptionKeyCreateUpdateParameters);
 
                 Thread.Sleep(10000);
@@ -320,7 +328,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                    clientEncryptionKeyName1).GetAwaiter().GetResult().Body;
                 Assert.NotNull(clientEncryptionKeyRetrieved);
                 Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
                 Assert.Equal(clientEncryptionKeyResource.EncryptionAlgorithm, clientEncryptionKeyRetrieved.Resource.EncryptionAlgorithm);
@@ -337,7 +345,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName,
+                    clientEncryptionKeyName1,
                     clientEncryptionKeyCreateUpdateParameters);
 
                 Thread.Sleep(10000);
@@ -345,10 +353,10 @@ namespace CosmosDB.Tests.ScenarioTests
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     databaseName,
-                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                    clientEncryptionKeyName1).GetAwaiter().GetResult().Body;
                 Assert.NotNull(clientEncryptionKeyRetrieved);
                 Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
-                Assert.Equal(clientEncryptionKeyName, clientEncryptionKeyRetrieved.Name);
+                Assert.Equal(clientEncryptionKeyName1, clientEncryptionKeyRetrieved.Name);
                 Assert.Equal(clientEncryptionKeyResource.WrappedDataEncryptionKey.Length, clientEncryptionKeyRetrieved.Resource.WrappedDataEncryptionKey.Length);
 
                 var clientEncryptionKeyName2 = TestUtilities.GenerateName("clientEncryptionKey");
@@ -389,10 +397,68 @@ namespace CosmosDB.Tests.ScenarioTests
                 foreach (ClientEncryptionKeyGetResults clientEncryptionKeyListElement in clientEncryptionKeyList)
                 {
                     count++;
-                    Assert.True(clientEncryptionKeyListElement.Name == clientEncryptionKeyName || clientEncryptionKeyListElement.Name == clientEncryptionKeyName2);
+                    Assert.True(clientEncryptionKeyListElement.Name == clientEncryptionKeyName1 || clientEncryptionKeyListElement.Name == clientEncryptionKeyName2);
                 }
 
                 Assert.Equal(2, count);
+
+                var containerWithClientEncryptionPolicy = TestUtilities.GenerateName("containerWithClientEncryptionPolicy");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerWithClientEncryptionPolicy,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        },
+                        ClientEncryptionPolicy = new ClientEncryptionPolicy
+                        {
+                            PolicyFormatVersion = 1,
+                            IncludedPaths = new List<ClientEncryptionIncludedPath>
+                            {
+                                 new ClientEncryptionIncludedPath()
+                                 {
+                                     Path = "/path1",
+                                     ClientEncryptionKeyId = clientEncryptionKeyName1,
+                                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                                     EncryptionType = "Randomized"
+                                 },
+                                 new ClientEncryptionIncludedPath()
+                                 {
+                                     Path = "/path2",
+                                     ClientEncryptionKeyId = clientEncryptionKeyName2,
+                                     EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                                     EncryptionType = "Deterministic"
+                                 }
+                            }
+                        }
+                    }
+                };
+
+                Thread.Sleep(10000);
+                SqlContainerGetResults sqlContainerGetResults =  client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerWithClientEncryptionPolicy,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                Assert.Equal(2, sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.Count);
+                ClientEncryptionIncludedPath includedPath = sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.ElementAt(0);
+                Assert.Equal("/path1", includedPath.Path);
+                Assert.Equal(clientEncryptionKeyName1, includedPath.ClientEncryptionKeyId);
+                Assert.Equal("AEAD_AES_256_CBC_HMAC_SHA256", includedPath.EncryptionAlgorithm);
+                Assert.Equal("Randomized", includedPath.EncryptionType);
+
+                includedPath = sqlContainerGetResults.Resource.ClientEncryptionPolicy.IncludedPaths.ElementAt(1);
+                Assert.Equal("/path2", includedPath.Path);
+                Assert.Equal(clientEncryptionKeyName2, includedPath.ClientEncryptionKeyId);
+                Assert.Equal("AEAD_AES_256_CBC_HMAC_SHA256", includedPath.EncryptionAlgorithm);
+                Assert.Equal("Deterministic", includedPath.EncryptionType);
 
                 client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabaseGetResults.Name);
             }

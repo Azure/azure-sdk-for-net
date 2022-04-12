@@ -2029,8 +2029,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         {
             // Send request
             AzureOperationResponse<PhysicalPartitionStorageInfoCollection> _response = await BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            var post_response = await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-            return post_response;
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
