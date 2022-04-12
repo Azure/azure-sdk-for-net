@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -201,14 +200,6 @@ namespace Azure.Core.TestFramework
                         if (!e.Activity.Tags.Any(tag => tag.Key == "az.namespace"))
                         {
                             throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with the AzureResourceProviderNamespace attribute specifying the appropriate provider. This attribute should be included in AssemblyInfo, and can be included by pulling in AzureResourceProviderNamespaceAttribute.cs using the AzureCoreSharedSources alias.");
-                        }
-
-                        Activity parent = e.Activity.Parent;
-                        if (parent != null &&
-                            parent.Tags.Any(tag => tag.Key == "az.namespace") &&
-                            parent.Tags.Any(tag => tag.Key == "kind" && (tag.Value == "client" || tag.Value == "internal")))
-                        {
-                            throw new InvalidOperationException($"Client diagnostic scopes should not be nested except for backward compatibility reasons. Use ClientDiagnostics constructor overload to suppress nested scopes.");
                         }
 
                         if (lastException != null && !e.IsFailed)
