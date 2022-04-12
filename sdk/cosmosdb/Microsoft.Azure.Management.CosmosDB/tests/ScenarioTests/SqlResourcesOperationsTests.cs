@@ -53,9 +53,7 @@ namespace CosmosDB.Tests.ScenarioTests
             ServiceClientCredentials clientCredentials = ApplicationTokenProvider.LoginSilentAsync("microsoft.com", new ClientCredential("31d3a9a2-dfd4-44f9-92a8-8027e1908f0e", "Fe77Q~ATR5liSMznNmnSq0hOYMu9oHUR8sh5U")).Result;
             CosmosDBManagementClient cosmosDBManagementClient = new CosmosDBManagementClient(new Uri(@"https://centraluseuap.management.azure.com/"), clientCredentials);
             cosmosDBManagementClient.SubscriptionId = "85b37e9a-5df2-4551-9d7b-4ba4faadbf8c";
-            var databases = cosmosDBManagementClient.SqlResources.ListSqlDatabases("merge_test", "sql-merge-amarsa");
-            var result = cosmosDBManagementClient.SqlResources.ListSqlContainerPartitionMerge("merge_test", "sql-merge-amarsa", "sql_merge_test", "sql_merge_test_container", new MergeParameters(true));
-
+            
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
