@@ -92,11 +92,8 @@ function Get-TocMapping {
             $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
         }
         $CustomOrder_Type = "client", "mgmt", "compat", "spring", ""
-        $typeIndex = if ($CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower()) -eq -1) {
-            $CustomOrder_Type.Count
-        } else {
-            $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
-        }
+        $typeIndex = $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
+        $typeIndex = $typeIndex -eq -1 ? $CustomOrder_Type.Count : $typeIndex
         $orderServiceMapping[$artifact] = [PSCustomObject][ordered]@{
             NewIndex = $newIndex
             TypeIndex = $typeIndex
