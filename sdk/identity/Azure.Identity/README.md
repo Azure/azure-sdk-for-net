@@ -125,7 +125,8 @@ var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new
 var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
-### Requesting access token for Azure resource with scope
+### Request access token for Azure resource with scope
+
 Sometimes an access token is needed as a bearer token in an OAuth 2.0 flow. The `DefaultAzureCredential` can be used to retrive the access token via the `TokenRequestContext`.
 
 ```C# Snippet:AccessToken
