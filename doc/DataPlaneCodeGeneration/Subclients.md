@@ -2,7 +2,7 @@
 
 ## Subclients
 
-autorest requires each operation in swagger file to define a unique string parameter `operationId` (this is different from [official OpenAPI specification](https://swagger.io/docs/specification/paths-and-operations/#operationId)). If parameter value contains underscore, then part after underscore will be treated as operation name, and part before underscore will be treated as the name of the operation group to which this operation belongs. Otherwise, operation will be attributed to the group without a name::
+autorest requires each operation in swagger file to define a unique string parameter `operationId` (this is different from [official OpenAPI specification](https://swagger.io/docs/specification/paths-and-operations/#operationId)). If parameter value contains underscore, then the part after underscore will be treated as operation name, and the part before underscore will be treated as the name of the operation group which this operation belongs to. Otherwise, operation will be attributed to the group without a name::
 
 ```js
 "paths": {
@@ -19,34 +19,7 @@ autorest requires each operation in swagger file to define a unique string param
 }
 ```
 
-```yaml
-operationGroups:
-  - !OperationGroup 
-    $key: NamedGroup
-    operations:
-      - !Operation 
-        language: !Languages 
-          default:
-            name: Op1
-    language: !Languages 
-      default:
-        name: NamedGroup
-  - !OperationGroup 
-    $key: ''
-    operations:
-      - !Operation 
-        language: !Languages 
-          default:
-            name: Op2
-    language: !Languages 
-      default:
-        name: ''
-language: !Languages 
-  default:
-    name: MyService
-```
-
-For each operation group, **autorest.csharp** generates individual client type called using `$"{operationGroups.language.default.name}Client"` format when group has a name or `$"{language.default.name}Client"` format when group name is empty.
+For each operation group, **autorest.csharp** generates individual client type called using `<operationGroupName>Client` format when group has a name or `<serviceName>Client` format when group name is empty.
 
 ```cs
 public partial class NamedGroupClient
@@ -55,6 +28,7 @@ public partial class NamedGroupClient
     public virtual Response Op1(RequestContext options = null);
 }
 ```
+
 ```cs
 public partial class MyServiceClient
 {
@@ -81,7 +55,7 @@ With multiple service clients it may be better to group them all under one top-l
 
 <details>
 
-**Generated code before:**
+**Generate Code, and generated code is:**
 
 ``` C#
 //Generated\AccountsClient.cs
@@ -112,7 +86,9 @@ namespace Azure.Analytics.Purview.Account
 }
 ```
 
-**Add customize configuration (set single-top-level-client):**
+**Add customize configuration:**
+
+Add `single-top-level-clinet: true` in the autorest configuration.
 
 ``` md
 ### AutoRest Configuration
@@ -127,7 +103,7 @@ security-header-name: Fake-Subscription-Key
 single-top-level-client: true
 ```
 
-**Generated code after:**
+**Regenerate the code, and Generated code after:**
 
 ``` diff
 //Add Top-level-client as service client, Generated\PurviewAccountClient.cs
@@ -252,7 +228,7 @@ Since CodeGenClientAttribute is applied to the client type, user will explicitly
 
 <details>
 
-**Generated code before:**
+**Generate Code, and Generated code is:**
 
 ``` C#
 //Generated\AccountsClient.cs
@@ -299,7 +275,7 @@ namespace Azure.Analytics.Purview.Account
 }
 ```
 
-**Generated code after:**
+**Regenerate code, and Generated code after:**
 
 ```diff
 namespace Azure.Analytics.Purview.Account
