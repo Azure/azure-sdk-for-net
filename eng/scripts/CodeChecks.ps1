@@ -103,10 +103,9 @@ try {
         | % {
             $readmePath = $_
             $readmeContent = Get-Content $readmePath
-            if ($readmeContent -Match "dotnet add .*--version.*$")
+            if ($readmeContent -Match "dotnet add .*--version")
             {
-                LogError "Specific versions should not be specified in the installation instructions. For beta versions, include the --prelease flag."
-                break
+                LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
             }
             
             if ($readmeContent -Match "dotnet add")
@@ -125,9 +124,9 @@ try {
                 }
                 if ($hasGa)
                 {
-                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease).*$")){
+                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)")){
                         LogError `
-"No GA installation instructions found in [$readmePath] but there was a GA entry in the Changelog [$changelogPath]. `
+"No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
     Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
     instructions for installing a beta that does include the --prerelease flag."
                     }
@@ -150,7 +149,7 @@ try {
     run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code.`
     `
-To reproduce this error localy run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
+To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
         }
     }
 }
