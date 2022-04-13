@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIxLTExLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.21.47003",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/54.0.0"
@@ -385,7 +385,7 @@
           "Mon, 28 Feb 2022 18:24:01 GMT"
         ],
         "Content-Length": [
-          "723"
+          "717"
         ],
         "Content-Type": [
           "application/json"
@@ -448,7 +448,7 @@
           "Mon, 28 Feb 2022 18:24:02 GMT"
         ],
         "Content-Length": [
-          "711"
+          "705"
         ],
         "Content-Type": [
           "application/json"
@@ -1617,7 +1617,7 @@
           "Mon, 28 Feb 2022 18:26:56 GMT"
         ],
         "Content-Length": [
-          "134"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1678,7 +1678,7 @@
           "Mon, 28 Feb 2022 18:27:46 GMT"
         ],
         "Content-Length": [
-          "184"
+          "2102"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1791,7 +1791,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
+          "11993"
         ],
         "x-ms-correlation-request-id": [
           "a9038d42-7d7c-434c-a0be-6bddfd587b9d"
@@ -1819,8 +1819,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMi0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1851,7 +1851,7 @@
           "1dd4a513-80d2-48f0-9e0b-256c4c914d14"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
+          "11992"
         ],
         "x-ms-request-id": [
           "45ba649c-92dd-4b63-b74e-b668ac1ef583"
@@ -1885,8 +1885,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMi0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2254,7 +2254,7 @@
           "Mon, 28 Feb 2022 18:28:57 GMT"
         ],
         "Content-Length": [
-          "134"
+          "133"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2418,7 +2418,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
           "3baa9bd3-996c-4030-bfa8-5b0378fe8355"
@@ -2484,7 +2484,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-request-id": [
           "af7f6b9c-0fa8-4bd9-9535-7a1e6bd90d1b"
@@ -2700,7 +2700,7 @@
           "Mon, 28 Feb 2022 18:30:00 GMT"
         ],
         "Content-Length": [
-          "723"
+          "717"
         ],
         "Content-Type": [
           "application/json"
@@ -2763,7 +2763,7 @@
           "Mon, 28 Feb 2022 18:30:00 GMT"
         ],
         "Content-Length": [
-          "711"
+          "705"
         ],
         "Content-Type": [
           "application/json"
@@ -3637,7 +3637,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1211"
+          "1210"
         ]
       },
       "ResponseHeaders": {
@@ -3685,7 +3685,7 @@
           "Mon, 28 Feb 2022 18:30:13 GMT"
         ],
         "Content-Length": [
-          "2074"
+          "2073"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3993,7 +3993,7 @@
           "Mon, 28 Feb 2022 18:32:54 GMT"
         ],
         "Content-Length": [
-          "2103"
+          "2102"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4060,7 +4060,7 @@
           "Mon, 28 Feb 2022 18:32:54 GMT"
         ],
         "Content-Length": [
-          "2103"
+          "2102"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4407,7 +4407,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "474"
+          "472"
         ]
       },
       "ResponseHeaders": {
@@ -4458,7 +4458,7 @@
           "Mon, 28 Feb 2022 18:33:36 GMT"
         ],
         "Content-Length": [
-          "565"
+          "563"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4489,6 +4489,9 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "Retry-After": [
+          "10"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;49999,Microsoft.Compute/GetOperation30Min;399972"
@@ -4655,8 +4658,8 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
         ],
         "x-ms-correlation-request-id": [
           "ae10c3dd-557d-4c6d-9870-a3780381f2be"
@@ -4671,7 +4674,7 @@
           "Mon, 28 Feb 2022 18:33:39 GMT"
         ],
         "Content-Length": [
-          "565"
+          "1136"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4689,6 +4692,12 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ba9095f2-5876-4a5a-a9a5-91fb5ea0583a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.700.21.56803",
           "OSName/Windows",
@@ -4702,6 +4711,15 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/DiskOperations/0e71a033-4da7-4ed4-b301-982ac9828ae3?p=de3c97e5-a7f4-4bba-b1fb-feac30234d51&monitor=true&api-version=2021-08-01"
+        ],
+        "Retry-After": [
+          "2"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/DiskOperations/0e71a033-4da7-4ed4-b301-982ac9828ae3?p=de3c97e5-a7f4-4bba-b1fb-feac30234d51&api-version=2021-08-01"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;49998,Microsoft.Compute/GetOperation30Min;399971"
@@ -4735,7 +4753,7 @@
           "Mon, 28 Feb 2022 18:33:41 GMT"
         ],
         "Content-Length": [
-          "1364"
+          "563"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4799,7 +4817,7 @@
           "Mon, 28 Feb 2022 18:33:41 GMT"
         ],
         "Content-Length": [
-          "1139"
+          "1362"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4868,8 +4886,8 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
         ],
         "x-ms-correlation-request-id": [
           "e02588a0-2407-4b55-a130-e091f25b6cb3"
@@ -4884,7 +4902,7 @@
           "Mon, 28 Feb 2022 18:33:41 GMT"
         ],
         "Content-Length": [
-          "565"
+          "1137"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5012,7 +5030,7 @@
           "Mon, 28 Feb 2022 18:33:44 GMT"
         ],
         "Content-Length": [
-          "1139"
+          "1137"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5046,7 +5064,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "474"
+          "472"
         ]
       },
       "ResponseHeaders": {
@@ -5097,7 +5115,7 @@
           "Mon, 28 Feb 2022 18:33:44 GMT"
         ],
         "Content-Length": [
-          "565"
+          "563"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5161,7 +5179,7 @@
           "Mon, 28 Feb 2022 18:33:46 GMT"
         ],
         "Content-Length": [
-          "1364"
+          "1362"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5225,7 +5243,7 @@
           "Mon, 28 Feb 2022 18:33:46 GMT"
         ],
         "Content-Length": [
-          "1139"
+          "1137"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5365,7 +5383,7 @@
           "Mon, 28 Feb 2022 18:33:47 GMT"
         ],
         "Content-Length": [
-          "2554"
+          "2550"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -6034,7 +6052,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
+          "11994"
         ],
         "x-ms-request-id": [
           "c6b8f4d7-f7f6-4c89-8968-c0f781c66c2e"
@@ -6376,7 +6394,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
+          "11993"
         ],
         "x-ms-request-id": [
           "ac397b4f-697d-48fe-b4a8-1e044c0b3bda"

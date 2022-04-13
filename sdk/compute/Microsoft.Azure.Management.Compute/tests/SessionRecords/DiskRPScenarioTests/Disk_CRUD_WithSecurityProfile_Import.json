@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIxLTExLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.21.47003",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/54.0.0"
@@ -504,7 +504,7 @@
         "x-ms-correlation-request-id": [
           "3e7c4888-b323-4cda-afb9-56ecb4109518"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -781,7 +781,7 @@
         "x-ms-correlation-request-id": [
           "c7597521-c9e2-4c1e-9e9b-0e859da624c5"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -1055,7 +1055,7 @@
         "x-ms-correlation-request-id": [
           "b8c41e51-17e9-4ccc-89ac-64526439500b"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -1288,7 +1288,7 @@
           "Mon, 28 Feb 2022 18:38:07 GMT"
         ],
         "Content-Length": [
-          "444"
+          "442"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1322,7 +1322,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1217"
+          "1216"
         ]
       },
       "ResponseHeaders": {
@@ -1370,7 +1370,7 @@
           "Mon, 28 Feb 2022 18:38:08 GMT"
         ],
         "Content-Length": [
-          "2080"
+          "2127"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1678,7 +1678,7 @@
           "Mon, 28 Feb 2022 18:40:48 GMT"
         ],
         "Content-Length": [
-          "2109"
+          "2156"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1745,7 +1745,7 @@
           "Mon, 28 Feb 2022 18:40:48 GMT"
         ],
         "Content-Length": [
-          "2109"
+          "2156"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1758,8 +1758,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/virtualMachines?api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXM/YXBpLXZlcnNpb249MjAyMi0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2399,7 +2399,7 @@
           "Mon, 28 Feb 2022 18:42:01 GMT"
         ],
         "Content-Length": [
-          "1249"
+          "1247"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2469,7 +2469,7 @@
           "Mon, 28 Feb 2022 18:42:01 GMT"
         ],
         "Content-Length": [
-          "1249"
+          "1247"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2535,7 +2535,7 @@
           "-1"
         ],
         "Content-Length": [
-          "219"
+          "218"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Compute/disks/diskrp8707' under resource group 'crptestar3284' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
@@ -2736,7 +2736,7 @@
           "Mon, 28 Feb 2022 18:42:33 GMT"
         ],
         "Content-Length": [
-          "456"
+          "458"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
