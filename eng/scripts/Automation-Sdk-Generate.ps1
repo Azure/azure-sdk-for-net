@@ -25,29 +25,24 @@ Write-Host "Updating autorest.md files for all the changed swaggers."
 $sdksInfo = @{}
 $headSha = $inputFileContent.headSha
 $repoHttpsUrl = $inputFileContent.repoHttpsUrl
+$regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
 foreach ($path in $autorestFilesPath) {
   $fileContent = Get-Content $path
   foreach ($inputFilePath in $inputFilePaths) {
-    $isUpdatedLines = $false
     $escapedInputFilePath = [System.Text.RegularExpressions.Regex]::Escape($inputFilePath)
-    $regexForMatchingShaAndPath = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]$escapedInputFilePath"
-    $updatedLines = foreach ($line in $fileContent) {
-      if ($line -match $regexForMatchingShaAndPath) {
-        $line -replace $regexForMatchingShaAndPath, "$repoHttpsUrl/blob/$headSha/$inputFilePath"
+    $regexForMatchingShaAndPath = $regexToFindSha + $escapedInputFilePath
 
-        $isUpdatedLines = $true
+    foreach ($line in $fileContent) {
+      if ($line -match $regexForMatchingShaAndPath) {
+        $fileContent -replace $regexToFindSha, "$repoHttpsUrl/blob/$headSha/" | Set-Content -Path $path
+
         $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
         if (!$sdksInfo.ContainsKey($sdkpath)) {
           $specReadmePath = $inputFileContent.relatedReadmeMdFiles -match $inputFilePath
           $sdksInfo.Add($sdkpath, $specReadmePath)
         }
+        break
       }
-      else {
-        $line
-      }
-    }
-    if ($isUpdatedLines) {
-      $updatedLines | Out-File -FilePath $path
     }
   }
 }
