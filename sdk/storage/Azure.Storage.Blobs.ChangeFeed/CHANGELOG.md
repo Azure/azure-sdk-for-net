@@ -1,14 +1,7 @@
 # Release History
 
-## 12.0.0-preview.23 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.0.0-preview.23 (2022-04-13)
+- Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.PreviousInfo.WasBlobSoftDeleted was not being deserialized correctly.
 
 ## 12.0.0-preview.22 (2022-04-12)
 - Added support for service version 2021-06-08.
