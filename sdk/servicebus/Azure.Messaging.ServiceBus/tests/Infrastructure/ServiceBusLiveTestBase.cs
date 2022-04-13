@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 "ActiveConnection",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
 
-            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
+            activeConnection.Abort();
         }
     }
 }

@@ -49,9 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CosmosTableResource table = await TableCollection.GetIfExistsAsync(_databaseName);
-            if (table != null)
+            if (await TableCollection.ExistsAsync(_databaseName))
             {
+                var id = TableCollection.Id;
+                id = CosmosTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                CosmosTableResource table = this.ArmClient.GetCosmosTableResource(id);
                 await table.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyTables(table, table2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            TableCreateUpdateData updateOptions = new TableCreateUpdateData(AzureLocation.WestUS, table.Data.Resource)
+            var updateOptions = new CosmosTableCreateOrUpdateContent(AzureLocation.WestUS, table.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -154,8 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateTable(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await TableCollection.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await TableCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<CosmosTableResource> CreateTable(AutoscaleSettings autoscale)
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CosmosTableResource> CreateTable(string name, AutoscaleSettings autoscale, CosmosTableCollection collection)
         {
-            TableCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new CosmosTableCreateOrUpdateContent(AzureLocation.WestUS,
                 new TableResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

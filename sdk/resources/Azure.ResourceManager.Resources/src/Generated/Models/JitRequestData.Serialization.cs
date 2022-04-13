@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -63,13 +64,13 @@ namespace Azure.ResourceManager.Resources
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> applicationResourceId = default;
-            Optional<string> publisherTenantId = default;
+            Optional<Guid> publisherTenantId = default;
             Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
             Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<JitRequestState> jitRequestState = default;
-            Optional<ApplicationClientDetails> createdBy = default;
-            Optional<ApplicationClientDetails> updatedBy = default;
+            Optional<ArmApplicationDetails> createdBy = default;
+            Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -123,7 +124,12 @@ namespace Azure.ResourceManager.Resources
                         }
                         if (property0.NameEquals("publisherTenantId"))
                         {
-                            publisherTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publisherTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("jitAuthorizationPolicies"))
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jitRequestState"))
@@ -178,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"))
@@ -188,14 +194,14 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new JitRequestData(id, name, type, systemData, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestData(id, name, type, systemData, tags, location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }

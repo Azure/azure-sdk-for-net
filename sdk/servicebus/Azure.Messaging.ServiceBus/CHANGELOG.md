@@ -1,6 +1,6 @@
 # Release History
 
-## 7.8.0-beta.2 (Unreleased)
+## 7.8.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.8.0-beta.2 (2022-04-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
+
+### Bugs Fixed
+
+- Relaxed `ServiceBusMessage` validation to allow the `SessionId` property to be changed after the `PartitionKey` property is already set.
+
+### Other Changes
+
+- Removed allocations and boxing from `EventSource` logging. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 7.8.0-beta.1 (2022-03-10)
 

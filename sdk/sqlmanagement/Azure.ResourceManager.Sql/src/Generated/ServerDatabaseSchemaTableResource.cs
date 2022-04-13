@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerDatabaseSchemaTableResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerDatabaseSchemaTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerDatabaseSchemaTableResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerDatabaseSchemaTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerDatabaseSchemaResource" /> using the GetServerDatabaseSchemaTable method.
+    /// </summary>
     public partial class ServerDatabaseSchemaTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerDatabaseSchemaTableResource"/> instance. </summary>
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerDatabaseSchemaTableColumnResource>> GetServerDatabaseSchemaTableColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
             return await GetServerDatabaseSchemaTableColumns().GetAsync(columnName, cancellationToken).ConfigureAwait(false);
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerDatabaseSchemaTableColumnResource> GetServerDatabaseSchemaTableColumn(string columnName, CancellationToken cancellationToken = default)
         {
             return GetServerDatabaseSchemaTableColumns().Get(columnName, cancellationToken);

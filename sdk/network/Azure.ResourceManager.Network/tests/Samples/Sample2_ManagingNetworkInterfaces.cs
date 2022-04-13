@@ -106,26 +106,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-            NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-
-            NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
-            if (virtualNetwork != null)
-            {
-                Console.WriteLine(virtualNetwork.Data.Name);
-            }
-
-            if (await networkInterfaceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Network interface 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task DeleteNetworkInterface()
         {
             #region Snippet:Managing_Networks_DeleteANetworkInterface

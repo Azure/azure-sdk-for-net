@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -30,6 +31,7 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
+        private readonly bool _logAccountDetails;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -47,6 +49,7 @@ namespace Azure.Identity
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -84,6 +87,13 @@ namespace Azure.Identity
                 }
 
                 var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+
+                if (_logAccountDetails)
+                {
+                    var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                }
+
                 return scope.Succeeded(accessToken);
             }
             catch (Exception e)
@@ -134,7 +144,8 @@ namespace Azure.Identity
                 }
             }
 
-            switch (exceptions.Count) {
+            switch (exceptions.Count)
+            {
                 case 0:
                     throw new CredentialUnavailableException("No installed instance of Visual Studio was able to get credentials.");
                 case 1:

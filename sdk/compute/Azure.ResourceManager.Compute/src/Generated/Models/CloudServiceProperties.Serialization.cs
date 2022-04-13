@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,20 +16,20 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageUrl))
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl");
-                writer.WriteStringValue(PackageUrl);
+                writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration");
                 writer.WriteStringValue(Configuration);
             }
-            if (Optional.IsDefined(ConfigurationUrl))
+            if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl");
-                writer.WriteStringValue(ConfigurationUrl);
+                writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StartCloudService))
             {
@@ -70,9 +71,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceProperties DeserializeCloudServiceProperties(JsonElement element)
         {
-            Optional<string> packageUrl = default;
+            Optional<Uri> packageUrl = default;
             Optional<string> configuration = default;
-            Optional<string> configurationUrl = default;
+            Optional<Uri> configurationUrl = default;
             Optional<bool> startCloudService = default;
             Optional<bool> allowModelOverride = default;
             Optional<CloudServiceUpgradeMode> upgradeMode = default;
@@ -86,7 +87,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("packageUrl"))
                 {
-                    packageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        packageUrl = null;
+                        continue;
+                    }
+                    packageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configuration"))
@@ -96,7 +102,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("configurationUrl"))
                 {
-                    configurationUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        configurationUrl = null;
+                        continue;
+                    }
+                    configurationUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startCloudService"))

@@ -17,7 +17,12 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A Class representing a NamespaceDisasterRecoveryAuthorizationRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a NamespaceDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNamespaceDisasterRecoveryAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DisasterRecoveryResource" /> using the GetNamespaceDisasterRecoveryAuthorizationRule method.
+    /// </summary>
     public partial class NamespaceDisasterRecoveryAuthorizationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource"/> instance. </summary>

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            FileShareResource fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
-            Assert.IsNull(fileShare3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareResource shareSnapshot2 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName1, new FileShareData(), expand: "snapshots")).Value;
 
             //get single share snapshot
-            FileShareResource shareSnapshot = await _fileShareCollection.GetAsync(fileShareName1, "stats", shareSnapshot1.Data.SnapshotTime.Value.UtcDateTime.ToString("o"));
-            Assert.AreEqual(shareSnapshot.Data.SnapshotTime, shareSnapshot1.Data.SnapshotTime);
+            FileShareResource shareSnapshot = await _fileShareCollection.GetAsync(fileShareName1, "stats", shareSnapshot1.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
+            Assert.AreEqual(shareSnapshot.Data.SnapshotOn, shareSnapshot1.Data.SnapshotOn);
 
             //list share with snapshot
             List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
             SignedIdentifier sig1 = new SignedIdentifier("testSig1",
-                new AccessPolicy(startTime: start1,
-                    expiryTime: end1,
+                new AccessPolicy(startOn: start1,
+                    expiryOn: end1,
                     permission: "rw"));
             SignedIdentifier sig2 = new SignedIdentifier("testSig2",
-                new AccessPolicy(startTime: start2,
-                    expiryTime: end2,
+                new AccessPolicy(startOn: start2,
+                    expiryOn: end2,
                     permission: "rwdl"));
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
             string proposedLeaseID2 = "dd761232-ed42-11ce-bacd-00aa0057b444";
             LeaseShareResponse leaseResponse;
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
@@ -312,27 +312,27 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
             //renew lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             // change lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
             Assert.AreEqual(proposedLeaseID2, leaseResponse.LeaseId);
 
             //break lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Break) { BreakPeriod = 20 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Break) { BreakPeriod = 20 });
             Assert.AreEqual("20", leaseResponse.LeaseTimeSeconds);
 
             //release lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
             Assert.IsNull(leaseResponse.LeaseId);
 
             //lease share snapshot
-            leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotTime.Value.UtcDateTime.ToString("o"),
-                parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"),
+                content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
-            shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotTime.Value.UtcDateTime.ToString("o"));
+            shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
             Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
             Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);

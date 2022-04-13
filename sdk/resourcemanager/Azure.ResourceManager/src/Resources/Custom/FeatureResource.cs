@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.Core;
 
 [assembly:CodeGenSuppressType("ErrorDefinition")]
 [assembly:CodeGenSuppressType("FeatureErrorResponse")]

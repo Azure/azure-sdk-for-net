@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The child information of a management group used during creation. </summary>
     public partial class ManagementGroupChildOptions
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Management.Models
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
-        public ManagementGroupChildType? ManagementGroupChildType { get; }
+        public ManagementGroupChildType? ChildType { get; }
         /// <summary> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
         /// <summary> The name of the child entity. </summary>
