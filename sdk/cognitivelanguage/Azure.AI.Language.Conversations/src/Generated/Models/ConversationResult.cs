@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of ConversationResult. </summary>
         /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query. </param>
+        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation.. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
         internal ConversationResult(string query, string detectedLanguage, ConversationPrediction prediction)
         {
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> The same query given in request. </summary>
         public string Query { get; }
-        /// <summary> The detected language from the query. </summary>
+        /// <summary> The detected language from the query in BCP 47 language representation.. </summary>
         public string DetectedLanguage { get; }
         /// <summary> The predicted result for the query. </summary>
         public ConversationPrediction Prediction { get; }

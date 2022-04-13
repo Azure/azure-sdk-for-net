@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            AfdPurgeOptions purgeParameters = new AfdPurgeOptions(new List<string>
+            AfdPurgeContent purgeParameters = new AfdPurgeContent(new List<string>
             {
                 "/*"
             });

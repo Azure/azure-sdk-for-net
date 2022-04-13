@@ -20,6 +20,8 @@ namespace Azure.AI.Language.Conversations
             Optional<string> target = default;
             Optional<IReadOnlyList<Error>> details = default;
             Optional<InnerErrorModel> innererror = default;
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -62,8 +64,10 @@ namespace Azure.AI.Language.Conversations
                     innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value);
                     continue;
                 }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            additionalProperties = additionalPropertiesDictionary;
+            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
         }
     }
 }

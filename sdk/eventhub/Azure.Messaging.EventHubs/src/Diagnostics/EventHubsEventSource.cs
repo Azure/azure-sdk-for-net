@@ -2453,6 +2453,54 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an exception while canceling the main task
+        ///   while attempting to stop processing during a call to <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or
+        ///   <see cref="EventProcessor{TPartition}.StopProcessing" />.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(120, Level = EventLevel.Warning, Message = "Error observed during token cancellation while attempting to stop the processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  This is most often caused by a CancellationToken.Register callback throwing.  Error Message: '{3}'")]
+        public virtual void ProcessorStoppingCancellationWarning(string identifier,
+                                                                 string eventHubName,
+                                                                 string consumerGroup,
+                                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(120, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an exception while canceling the main task
+        ///   while attempting to stop processing during a call to <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or
+        ///   <see cref="EventProcessor{TPartition}.StopProcessing" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition of the processor.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(121, Level = EventLevel.Warning, Message = "Error observed during token cancellation while attempting to stop the partition '{0}' processing task for the processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  This is most often caused by a CancellationToken.Register callback throwing.  Error Message: '{4}'")]
+        public virtual void PartitionProcessorStoppingCancellationWarning(string partitionId,
+                                                                          string identifier,
+                                                                          string eventHubName,
+                                                                          string consumerGroup,
+                                                                          string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(121, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that the publishing of events has completed, writing into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
