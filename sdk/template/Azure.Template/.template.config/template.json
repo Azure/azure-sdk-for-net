@@ -176,7 +176,7 @@
     "securityScopePrefix": {
       "type": "generated",
       "generator": "switch",
-      "replaces": "securityScopePrefix",
+      "replaces": "securityScopePrefix:",
       "parameters": {
         "evaluator": "C++",
         "datatype": "string",
@@ -195,7 +195,7 @@
     "securityHeaderNamePrefix": {
       "type": "generated",
       "generator": "switch",
-      "replaces": "securityHeaderNamePrefix",
+      "replaces": "securityHeaderNamePrefix:",
       "parameters": {
         "evaluator": "C++",
         "datatype": "string",

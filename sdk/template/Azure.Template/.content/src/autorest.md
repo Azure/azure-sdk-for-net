@@ -6,12 +6,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-- SwaggerFileLink
+input-file: SwaggerFileLink
 namespace: Azure.ServiceTemplate.Template
 public-clients: true
 data-plane: true
 securityTypes
-securityScopePrefix securityScopes
-securityHeaderNamePrefix securityHeaderName
+securityScopePrefix: securityScopes
+securityHeaderNamePrefix: securityHeaderName
 ```

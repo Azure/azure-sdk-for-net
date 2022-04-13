@@ -11,4 +11,13 @@ description: Samples for the Azure.Template client library.
 
 # Azure.Template Samples
 
-- [Creating Resource](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.Template/samples/Sample1_CreateResource.md)
+These code samples show common scenario operations with the Azure Template client library.
+
+|**Sample Name**|**Description**|
+|----------------|-------------|
+|[Sample1_HelloWorld][sample_helloworld] |Get secrets synchronously.|
+|[Sample1_HelloWorld_Async][sample_helloworld_async] |Get secrets asynchronously.|
+
+<!-- LINKS -->
+[sample_helloworld]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs
+[sample_helloworld_async]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorldAsync.cs
