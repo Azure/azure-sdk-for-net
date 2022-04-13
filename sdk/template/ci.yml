@@ -13,6 +13,7 @@ trigger:
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
     # eng/common code changes trigger template pipeline for basic checking.
     - eng/common/
+#endif
 
 pr:
   branches:

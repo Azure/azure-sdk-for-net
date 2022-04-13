@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.WebPubSub
     }
     public static partial class WebPubSubExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.WebPubSub.Models.NameAvailability> CheckWebPubSubNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.WebPubSub.Models.NameAvailabilityParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.Models.NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.WebPubSub.Models.NameAvailabilityParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.WebPubSub.Models.NameAvailability> CheckWebPubSubNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.WebPubSub.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.Models.NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.WebPubSub.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.WebPubSub.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.WebPubSub.SharedPrivateLinkResource GetSharedPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubHubCollection GetWebPubSubHubs() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.PrivateLink> GetWebPubSubPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.Models.PrivateLink> GetWebPubSubPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys> RegenerateKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>> RegenerateKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys> RegenerateKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>> RegenerateKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class ManagedIdentity
     {
         public ManagedIdentity() { }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? IdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class NameAvailabilityParameters
+    public partial class NameAvailabilityContent
     {
-        public NameAvailabilityParameters(string resourceType, string name) { }
+        public NameAvailabilityContent(string resourceType, string name) { }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.ProvisioningState left, Azure.ResourceManager.WebPubSub.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RegenerateKeyParameters
+    public partial class RegenerateKeyContent
     {
-        public RegenerateKeyParameters() { }
+        public RegenerateKeyContent() { }
         public Azure.ResourceManager.WebPubSub.Models.KeyType? KeyType { get { throw null; } set { } }
     }
     public partial class ResourceLogCategory
@@ -457,8 +457,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class UpstreamAuthSettings
     {
         public UpstreamAuthSettings() { }
+        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? AuthType { get { throw null; } set { } }
         public string ManagedIdentityResource { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? UpstreamAuthType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UpstreamAuthType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType>

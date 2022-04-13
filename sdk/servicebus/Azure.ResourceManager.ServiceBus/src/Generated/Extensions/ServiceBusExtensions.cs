@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
-            return await GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailabilityAsync(checkNameAvailability, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailability"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
-            return GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailability(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailability(checkNameAvailability, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);

@@ -3023,7 +3023,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(null)]
         [TestCase(BlobCopySourceTagsMode.Replace)]

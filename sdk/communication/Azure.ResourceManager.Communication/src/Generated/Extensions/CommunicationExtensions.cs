@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<NameAvailability> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
+        public static Response<NameAvailability> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(options, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCommunicationServices().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CommunicationServiceResource> GetCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCommunicationServices().Get(communicationServiceName, cancellationToken);

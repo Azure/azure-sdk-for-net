@@ -60,23 +60,23 @@ namespace Azure.ResourceManager.StoragePool
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
         /// Operation Id: DiskPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
-        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
+        /// <param name="content"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public virtual async Task<ArmOperation<DiskPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DiskPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskPoolName, DiskPoolCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _diskPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _diskPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,23 +93,23 @@ namespace Azure.ResourceManager.StoragePool
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
         /// Operation Id: DiskPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
-        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
+        /// <param name="content"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public virtual ArmOperation<DiskPoolResource> CreateOrUpdate(WaitUntil waitUntil, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DiskPoolResource> CreateOrUpdate(WaitUntil waitUntil, string diskPoolName, DiskPoolCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, content, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
