@@ -14,16 +14,16 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Rooms.Tests
 {
-    public class RoomsClientLiveTests : RoomsClientLiveTestBase
+    public class RoomsClientLastVersionLiveTest : RoomsClientLiveTestBase
     {
-        public RoomsClientLiveTests(bool isAsync) : base(isAsync)
+        public RoomsClientLastVersionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
         public async Task AcsRoomRequestLiveTest()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2021_04_07_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
@@ -36,7 +36,7 @@ namespace Azure.Communication.Rooms.Tests
             try
             {
                 List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
-                RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Presenter");
+                RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Attendee");
                 RoomParticipant participant2 = new RoomParticipant(communicationUser2, "Attendee");
                 createRoomParticipants.Add(participant1);
                 createRoomParticipants.Add(participant2);
@@ -48,8 +48,6 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(2, createRoomParticipantsResult.Count, "Expected CreateRoom participants count to be 2");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant1.Identifier), "Expected CreateRoom to contain user1");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant2.Identifier), "Expected CreateRoom to contain user2");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant1.RoleName), "Expected CreateRoom to contain role1");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant2.RoleName), "Expected CreateRoom to contain role2");
 
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -69,8 +67,6 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(2, getRoomParticipantsResult.Count, "Expected GetRoom participants count to be 2");
                 Assert.IsTrue(getRoomParticipantsResult.Any(x => x.Identifier == participant1.Identifier), "Expected GetRoom to contain user1");
                 Assert.IsTrue(getRoomParticipantsResult.Any(x => x.Identifier == participant2.Identifier), "Expected GetRoom to contain user2");
-                Assert.IsTrue(getRoomParticipantsResult.Any(x => x.RoleName == participant1.RoleName), "Expected GetRoom to contain role1");
-                Assert.IsTrue(getRoomParticipantsResult.Any(x => x.RoleName == participant2.RoleName), "Expected GetRoom to contain role2");
 
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
                 Assert.AreEqual(204, deleteRoomResponse.Status);
@@ -96,11 +92,11 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser5 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
             var communicationUser6 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2021_04_07_Preview);
 
-            RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Presenter");
-            RoomParticipant participant2 = new RoomParticipant(communicationUser2, "Organizer");
-            RoomParticipant participant4 = new RoomParticipant(communicationUser4, "Consumer");
+            RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Attendee");
+            RoomParticipant participant2 = new RoomParticipant(communicationUser2, "Attendee");
+            RoomParticipant participant4 = new RoomParticipant(communicationUser4, "Attendee");
             RoomParticipant participant5 = new RoomParticipant(communicationUser5, "Attendee");
             RoomParticipant participant6 = new RoomParticipant(communicationUser6, "Attendee");
 
@@ -121,8 +117,6 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(2, createRoomParticipantsResult.Count, "Expected CreateRoom participants count to be 2");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant1.Identifier), "Expected CreateRoom to contain user1");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant2.Identifier), "Expected CreateRoom to contain user2");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant1.RoleName), "Expected CreateRoom to contain role1");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant2.RoleName), "Expected CreateRoom to contain role2");
 
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -137,8 +131,8 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(4, addRoomParticipantsResult.Count, "Expected Room participants count to be 4");
                 Assert.IsTrue(addRoomParticipantsResult.Any(x => x.Identifier == participant4.Identifier), "Expected AddParticipants to contain user4");
                 Assert.IsTrue(addRoomParticipantsResult.Any(x => x.Identifier == participant5.Identifier), "Expected AddParticipants to contain user5");
-                Assert.IsTrue(addRoomParticipantsResult.Any(x => x.RoleName == participant4.RoleName), "Expected AddParticipants to contain role4");
-                Assert.IsTrue(addRoomParticipantsResult.Any(x => x.RoleName == participant5.RoleName), "Expected AddParticipants to contain rol55");
+                Assert.IsTrue(addRoomParticipantsResult.Any(x => x.RoleName == null), "Expected AddParticipants to contain role4");
+                Assert.IsTrue(addRoomParticipantsResult.Any(x => x.RoleName == null), "Expected AddParticipants to contain rol55");
 
                 // Remove participants is not working temporarily due to json merge patch not supported at .net.
                 /*
@@ -172,11 +166,11 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2021_04_07_Preview);
 
-            RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Presenter");
-            RoomParticipant participant2 = new RoomParticipant(communicationUser2, "Organizer");
-            RoomParticipant participant4 = new RoomParticipant(communicationUser1, "Consumer");
+            RoomParticipant participant1 = new RoomParticipant(communicationUser1, "Attendee");
+            RoomParticipant participant2 = new RoomParticipant(communicationUser2, "Attendee");
+            RoomParticipant participant4 = new RoomParticipant(communicationUser1, "Attendee");
             RoomParticipant participant5 = new RoomParticipant(communicationUser2, "Attendee");
 
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
@@ -196,8 +190,8 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(2, createRoomParticipantsResult.Count, "Expected CreateRoom participants count to be 2");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant1.Identifier), "Expected CreateRoom to contain user1");
                 Assert.IsTrue(createRoomParticipantsResult.Any(x => x.Identifier == participant2.Identifier), "Expected CreateRoom to contain user2");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant1.RoleName), "Expected CreateRoom to contain role1");
-                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == participant2.RoleName), "Expected CreateRoom to contain role2");
+                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == null), "Expected CreateRoom to contain role1");
+                Assert.IsTrue(createRoomParticipantsResult.Any(x => x.RoleName == null), "Expected CreateRoom to contain role2");
 
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -212,8 +206,8 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.AreEqual(2, updateRoomParticipantsResult.Count, "Expected Room participants count to be 4");
                 Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.Identifier == participant4.Identifier), "Expected AddParticipants to contain user4");
                 Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.Identifier == participant5.Identifier), "Expected AddParticipants to contain user5");
-                Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.RoleName == participant4.RoleName), "Expected AddParticipants to contain role4");
-                Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.RoleName == participant5.RoleName), "Expected AddParticipants to contain role5");
+                Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.RoleName == null), "Expected AddParticipants to contain role4");
+                Assert.IsTrue(updateRoomParticipantsResult.Any(x => x.RoleName == null), "Expected AddParticipants to contain role5");
 
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
                 Assert.AreEqual(204, deleteRoomResponse.Status);
@@ -232,7 +226,7 @@ namespace Azure.Communication.Rooms.Tests
         [Test]
         public async Task AcsRoomTimePartialUpdateLiveTest()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2021_04_07_Preview);
 
             var validFrom = new DateTimeOffset(2022, 05, 01, 00, 00, 00, new TimeSpan(0, 0, 0));
             var validUntil = validFrom.AddDays(1);

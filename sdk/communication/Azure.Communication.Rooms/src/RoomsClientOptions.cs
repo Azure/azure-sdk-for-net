@@ -12,6 +12,7 @@ namespace Azure.Communication.Rooms
     public class RoomsClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2022_02_01_Preview;
+        internal const ServiceVersion LastVersion = ServiceVersion.V2021_04_07_Preview;
 
         internal string ApiVersion { get; }
 

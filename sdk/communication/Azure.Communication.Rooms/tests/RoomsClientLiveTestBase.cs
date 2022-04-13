@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Communication.Identity;
 using System.Threading.Tasks;
+using static Azure.Communication.Rooms.RoomsClientOptions;
 
 namespace Azure.Communication.Rooms.Tests
 {
@@ -18,10 +19,10 @@ namespace Azure.Communication.Rooms.Tests
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
-        protected RoomsClient CreateInstrumentedRoomsClient()
+        protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-            RoomsClient client = new RoomsClient(connectionString, CreateRoomsClientOptionsWithCorrelationVectorLogs());
+            RoomsClient client = new RoomsClient(connectionString, CreateRoomsClientOptionsWithCorrelationVectorLogs(version));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
@@ -42,9 +43,9 @@ namespace Azure.Communication.Rooms.Tests
                     TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
-        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs()
+        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
         {
-            RoomsClientOptions roomsClientOptions = new RoomsClientOptions();
+            RoomsClientOptions roomsClientOptions = new RoomsClientOptions(version);
             roomsClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(roomsClientOptions);
         }

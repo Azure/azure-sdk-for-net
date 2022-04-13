@@ -24,7 +24,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AcsRoomRequestSample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient();
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
@@ -73,7 +73,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AddRemoveParticipantsExample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient();
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
@@ -112,7 +112,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task RoomRequestsTroubleShooting()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient();
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
             #region Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
             try
             {
