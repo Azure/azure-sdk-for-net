@@ -259,7 +259,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies,
-                new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
+                new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 new ResponseClassifier());
 
             _version = options.VersionString;

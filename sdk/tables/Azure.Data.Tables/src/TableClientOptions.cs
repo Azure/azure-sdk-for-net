@@ -35,6 +35,12 @@ namespace Azure.Data.Tables
             };
         }
 
+        /// <summary>
+        ///  Enables tenant discovery through the authorization challenge when the client is configured to use a TokenCredential.
+        /// When <c>true</c>, the client will attempt an initial un-authorized request to prompt an OAuth challenge in order to discover the correct tenant for the resource.
+        /// </summary>
+        public bool EnableTenantDiscovery { get; set; }
+
         internal string VersionString { get; }
 
         /// <summary>

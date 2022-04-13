@@ -115,6 +115,11 @@ namespace Azure.Data.Tables.Tests
             };
             var options = InstrumentClientOptions(new TableClientOptions());
 
+            if (TestContext.CurrentContext.Test.Name.Contains("EnableTenantDiscovery"))
+            {
+                options.EnableTenantDiscovery = true;
+            }
+
             service = CreateService(ServiceUri, options);
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
