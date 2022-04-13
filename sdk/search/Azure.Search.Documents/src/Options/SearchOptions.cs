@@ -191,6 +191,7 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }
