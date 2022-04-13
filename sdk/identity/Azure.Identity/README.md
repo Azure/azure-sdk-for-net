@@ -134,7 +134,7 @@ var token = await credential.GetTokenAsync(
   new TokenRequestContext(new[] { "https://myvault.vault.azure.net/.default" }));
 ```
 
-> The scope `.default` is required in [client credentials](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) and [On-Behalf-Of](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) flows as there are not user interaction.
+> The scope `.default` is required in [client credentials](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) and [On-Behalf-Of](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) flows, as there isn't user interaction.
 
 ## Managed Identity Support
 
