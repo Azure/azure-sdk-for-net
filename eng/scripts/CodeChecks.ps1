@@ -103,6 +103,12 @@ try {
         | % {
             $readmePath = $_
             $readmeContent = Get-Content $readmePath
+            
+            if ($readmeContent -Match "Install-Package")
+            {
+                LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
+            }
+            
             if ($readmeContent -Match "dotnet add .*--version")
             {
                 LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
@@ -112,23 +118,38 @@ try {
             {
                 $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"
                 $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
-                $hasGa = $false;
+                $hasGa = $false
+                $hasRelease = $false
                 foreach ($key in $changeLogEntries.Keys)
                 {
                     $entry = $changeLogEntries[$key]
-                    if ($entry.ReleaseStatus -ne "(Unreleased)" -and $entry.ReleaseVersion -notmatch "beta")
+                    if ($entry.ReleaseStatus -ne "(Unreleased)")
                     {
-                        $hasGa = $true;
-                        break
+                        $hasRelease = $true
+                        if ($entry.ReleaseVersion -notmatch "beta")
+                        {
+                            $hasGa = $true
+                            break
+                        }
                     }
                 }
                 if ($hasGa)
                 {
-                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)")){
+                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)"))
+                    {
                         LogError `
 "No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
     Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
     instructions for installing a beta that does include the --prerelease flag."
+                    }
+                }
+                elseif ($hasRelease)
+                {
+                    if (-Not ($readmeContent -Match "dotnet add .*--prerelease$"))
+                    {
+                        LogError `
+"No beta installation instructions found in '$readmePath' but there was a beta entry in the Changelog '$changelogPath'. `
+    Ensure that there are installation instructions that contain the --prerelease flag."
                     }
                 }
             }

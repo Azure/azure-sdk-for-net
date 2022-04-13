@@ -19,7 +19,7 @@ For the best development experience, developers should use the official Microsof
 Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Spark/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.Synapse.Spark --version 0.1.0-preview.1
+dotnet add package Azure.Analytics.Synapse.Spark --prerelease
 ```
 
 ### Prerequisites

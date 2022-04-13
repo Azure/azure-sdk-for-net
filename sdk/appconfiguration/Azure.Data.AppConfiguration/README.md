@@ -15,8 +15,8 @@ Use the client library for App Configuration to:
 
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Data.AppConfiguration
+```dotnetcli
+dotnet add package Azure.Data.AppConfiguration
 ```
 
 ### Prerequisites

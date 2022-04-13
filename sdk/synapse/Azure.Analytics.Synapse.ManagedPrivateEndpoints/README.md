@@ -19,7 +19,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics managed private endpoints client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.ManagedPrivateEndpoints/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.Synapse.ManagedPrivateEndpoints --version 1.0.0-preview.1
+dotnet add package Azure.Analytics.Synapse.ManagedPrivateEndpoints --prerelease
 ```
 
 ### Prerequisites

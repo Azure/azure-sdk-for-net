@@ -17,7 +17,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Monitoring/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.Synapse.Monitoring --version 1.0.0-preview.1
+dotnet add package Azure.Analytics.Synapse.Monitoring --prerelease
 ```
 
 ### Prerequisites
