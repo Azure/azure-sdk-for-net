@@ -50,16 +50,13 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlCRUDTests()
         {
-            ServiceClientCredentials clientCredentials = ApplicationTokenProvider.LoginSilentAsync("microsoft.com", new ClientCredential("31d3a9a2-dfd4-44f9-92a8-8027e1908f0e", "Fe77Q~ATR5liSMznNmnSq0hOYMu9oHUR8sh5U")).Result;
-            CosmosDBManagementClient cosmosDBManagementClient = new CosmosDBManagementClient(new Uri(@"https://centraluseuap.management.azure.com/"), clientCredentials);
-            cosmosDBManagementClient.SubscriptionId = "85b37e9a-5df2-4551-9d7b-4ba4faadbf8c";
-            
+           
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
                 var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
-                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
 
                 var databaseName = TestUtilities.GenerateName("database");
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
@@ -264,6 +261,79 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabase.Name);
                 }
+            }
+        }
+
+        [Fact]
+        public void SqlPartitionMergeTests()
+        {
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+                this.fixture.ResourceGroupName = "canary-sdk-test";
+                var databaseAccountName = "canary-sdk-test-account";
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                SqlDatabaseGetResults sqlDatabaseGetResults2 = client.GetSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults2);
+                Assert.Equal(databaseName, sqlDatabaseGetResults2.Name);
+
+                VerifyEqualSqlDatabases(sqlDatabaseGetResults, sqlDatabaseGetResults2);               
+
+                var containerName = TestUtilities.GenerateName("container");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        }                      
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = 14000
+                    }
+                };
+
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                MergeParameters mergeParameters = new MergeParameters(isDryRun: true);
+                PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection = client.ListSqlContainerPartitionMerge(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, mergeParameters);
+                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+
+                client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).Wait();
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();
             }
         }
 
