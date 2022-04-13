@@ -19,6 +19,8 @@ $ErrorActionPreference = 'Stop'
 $Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 
+. (Join-Path $PSScriptRoot\..\common\scripts common.ps1)
+
 [string[]] $errors = @()
 
 function LogError([string]$message) {
@@ -93,6 +95,45 @@ try {
     Invoke-Block {
         & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
     }
+
+    Write-Host "Validating installation instructions"
+    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
+        | Resolve-Path `
+        | % { Get-ChildItem $_ -Filter "README.md" -Recurse } `
+        | % {
+            $readmePath = $_
+            $readmeContent = Get-Content $readmePath
+            if ($readmeContent -Match "dotnet add .*--version.*$")
+            {
+                LogError "Specific versions should not be specified in the installation instructions. For beta versions, include the --prelease flag."
+                break
+            }
+            
+            if ($readmeContent -Match "dotnet add")
+            {
+                $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"
+                $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
+                $hasGa = $false;
+                foreach ($key in $changeLogEntries.Keys)
+                {
+                    $entry = $changeLogEntries[$key]
+                    if ($entry.ReleaseStatus -ne "(Unreleased)" -and $entry.ReleaseVersion -notmatch "beta")
+                    {
+                        $hasGa = $true;
+                        break
+                    }
+                }
+                if ($hasGa)
+                {
+                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease).*$")){
+                        LogError `
+"No GA installation instructions found in [$readmePath] but there was a GA entry in the Changelog [$changelogPath]. `
+    Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
+    instructions for installing a beta that does include the --prerelease flag."
+                    }
+                }
+            }
+        }
 
     if (-not $ProjectDirectory)
     {
