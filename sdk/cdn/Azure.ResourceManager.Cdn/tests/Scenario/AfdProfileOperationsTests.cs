@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            CheckHostNameAvailabilityInput input = new CheckHostNameAvailabilityInput("customdomain4afdtest.azuretest.net");
+            CheckHostNameAvailabilityContent input = new CheckHostNameAvailabilityContent("customdomain4afdtest.azuretest.net");
             CheckNameAvailabilityOutput result = await afdProfile.CheckAfdProfileHostNameAvailabilityAsync(input);
             Assert.AreEqual(result.NameAvailable, true);
         }

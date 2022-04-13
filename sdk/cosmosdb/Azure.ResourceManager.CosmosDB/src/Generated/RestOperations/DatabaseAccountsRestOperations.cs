@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyInfo keyToRegenerate)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(keyToRegenerate);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -981,18 +981,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
+        /// <param name="content"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyToRegenerate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyInfo keyToRegenerate, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, keyToRegenerate);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1008,18 +1008,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
+        /// <param name="content"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyToRegenerate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyInfo keyToRegenerate, CancellationToken cancellationToken = default)
+        public Response RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(keyToRegenerate, nameof(keyToRegenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, keyToRegenerate);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
         /// Operation Id: CheckEndpointNameAvailability
         /// </summary>
-        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckEndpointNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, checkEndpointNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckEndpointNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
         /// Operation Id: CheckEndpointNameAvailability
         /// </summary>
-        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public virtual Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, checkEndpointNameAvailabilityInput, cancellationToken);
+                var response = DefaultRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
