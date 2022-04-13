@@ -27,29 +27,11 @@ Monitor query raises exceptions described in [`Azure Core`](https://github.com/A
 
 To troubleshoot issues with Azure.Monitor.Query library, it is important to first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-This library uses the standard [logging](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging) library for logging. Basic information about HTTP sessions, such as URLs and headers, is logged at the INFO level.
-Detailed DEBUG level logging, including request/response bodies and unredacted headers, can be enabled on a client with the logging_enable argument:
+This library uses the standard [logging](https://docs.microsoft.com/en-us/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the INFO level. The following code snippet will log to the console.
 
-//TODO
-```python
-import logging
-from azure.monitor.query import LogsQueryClient
-
-# Create a logger for the 'azure.monitor.query' SDK
-logger = logging.getLogger('azure.monitor.query')
-logger.setLevel(logging.DEBUG)
-
-# Configure a console output
-handler = logging.StreamHandler(stream=sys.stdout)
-logger.addHandler(handler)
-
-client = LogsQueryClient(credential, logging_enable=True)
-```
-
-Similarly, logging_enable can enable detailed logging for a single operation, even when it isn't enabled for the client:
-
-```python
-client.query_workspace(logging_enable=True)
+```csharp
+using Azure.Core.Diagnostics;
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 ### Authentication errors
@@ -140,17 +122,15 @@ timeout, the Azure Monitor Query library will automatically also extend the clie
 the server to respond. You don't need to configure your HTTP client to extend the response timeout as shown in the
 previous section.
 
-//TODO
-```python
-from azure.monitor.query import LogsQueryClient
-from azure.identity import DefaultAzureCredential
+```csharp
+using Azure;
+using Azure.Monitor.Query;
+using Azure.Monitor.Query.Models;
 
-credential = DefaultAzureCredential()
-
-client = LogsQueryClient(credential)
-
-client.query_workspace(
-    "{workspaceId}",
+string workspaceId = "<workspace_id>";
+var client = new LogsQueryClient(new DefaultAzureCredential());
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+    workspaceId,
     "{kusto-query-string}",
     timespan="{timespan}",
     server_timeout=600)
@@ -160,13 +140,20 @@ client.query_workspace(
 
 By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query
 client library will throw an exception to indicate to the user that the query was not fully successful. The data and
-the error can be accessed using the `partial_data` and `partial_error` fields.
+the error can be accessed using the `PartialFailure` and `Error` fields.
 
-```python
-response = client.query_workspace("{workspaceId}", "{kusto-query-string}", timespan="{timespan}")
+```csharp
+var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
+"{kusto-query-string}",
+timespan="{timespan}", new LogsQueryOptions()
+{
+    AllowPartialErrors = true
+});
 
-data = response.partial_data
-error = response.partial_error
+var partialFailure = LogsQueryResultStatus.PartialFailure;
+var status = results.Value.Status;
+var errorCode = results.Value.Error.Code;
+var errorMessage = results.Value.Error.Message;
 ```
 
 ## Troubleshooting Metrics Query
