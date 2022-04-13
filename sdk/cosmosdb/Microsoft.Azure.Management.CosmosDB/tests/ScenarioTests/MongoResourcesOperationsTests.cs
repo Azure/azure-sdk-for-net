@@ -128,7 +128,7 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 fixture.Init(context);
                 this.fixture.ResourceGroupName = "canary-sdk-test";
-                var databaseAccountName = "canary-sdk-test-account";
+                var databaseAccountName = "canary-sdk-test-mongo-account";
 
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
 
