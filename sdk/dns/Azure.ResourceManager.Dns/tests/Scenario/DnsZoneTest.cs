@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
             Assert.NotNull(dnsZone);
             Assert.Equals(dnsZoneName, dnsZone.Data.Name);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
             Assert.IsTrue(_resourceGroup.GetDnsZones().Exists(dnsZoneName));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [RecordedTest]
         public async Task Exist()
         {
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             Assert.IsTrue(_resourceGroup.GetDnsZones().Exists(dnsZoneName));
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             var dnsZone =await _resourceGroup.GetDnsZones().GetAsync(dnsZoneName);
             Assert.IsNotNull(dnsZone);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             var list = await _resourceGroup.GetDnsZones().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);

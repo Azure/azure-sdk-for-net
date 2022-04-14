@@ -9,7 +9,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Samples\" />
-  </ItemGroup>
 </Project>
