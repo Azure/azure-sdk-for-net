@@ -1514,8 +1514,8 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(sourceDatabaseAccount.Name, restorableDatabaseAccount.AccountName);
             Assert.True(restorableDatabaseAccount.OldestRestorableTime.HasValue);
             Assert.True(
-                restorableDatabaseAccount.OldestRestorableTime.Value > testStartTime && 
-                restorableDatabaseAccount.OldestRestorableTime.Value < DateTime.UtcNow);
+                restorableDatabaseAccount.OldestRestorableTime.Value >= testStartTime && 
+                restorableDatabaseAccount.OldestRestorableTime.Value <= DateTime.UtcNow);
         }
     }
 }
