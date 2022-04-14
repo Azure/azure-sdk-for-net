@@ -16,50 +16,49 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
     internal class RecordSetSoaTests : DnsServiceClientTestBase
     {
-        private ResourceGroupResource _resourceGroup;
-        private DnsZoneResource _dnsZone;
-        //public RecordSetSoaTests(bool isAsync) : base(isAsync)
+        //private ResourceGroupResource _resourceGroup;
+        //private DnsZoneResource _dnsZone;
+        public RecordSetSoaTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        //[OneTimeSetUp]
+        //public async Task OnetimeSetup()
         //{
+        //    string rgName = SessionRecording.GenerateAssetName("Dns-RG-");
+        //    var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+        //    _resourceGroup = rgLro.Value;
+
+        //    // Create Dns Zone
+        //    string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+        //    _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
+
+        //    await StopSessionRecordingAsync();
         //}
 
-        [OneTimeSetUp]
-        public async Task OnetimeSetup()
-        {
-            // Create Resource Group
-            Random random = new Random();
-            string rgName = $"dns-rg-{random.Next(9999)}";
-            _resourceGroup = await CreateAResourceGroup(rgName);
-            Assert.IsNotNull(_resourceGroup);
-            Assert.AreEqual(rgName, _resourceGroup.Data.Name);
+        //[Test]
+        //public async Task Exist()
+        //{
+        //    bool result = await _dnsZone.GetRecordSetSoas().ExistsAsync("@");
+        //    Assert.IsTrue(result);
+        //}
 
-            // Create Dns Zone
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.Soa.com";
-            _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-        }
+        //[Test]
+        //public async Task Get()
+        //{
+        //    var recordSetSoaResource = await _dnsZone.GetRecordSetSoas().GetAsync("@");
+        //    Assert.IsNotNull(recordSetSoaResource);
+        //    Assert.AreEqual("@", recordSetSoaResource.Value.Data.Name);
+        //    Assert.AreEqual("Succeeded", recordSetSoaResource.Value.Data.ProvisioningState);
+        //    Assert.AreEqual("dnszones/SOA", recordSetSoaResource.Value.Data.ResourceType.Type);
+        //}
 
-        [Test]
-        public async Task Exist()
-        {
-            bool result = await _dnsZone.GetRecordSetSoas().ExistsAsync("@");
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public async Task Get()
-        {
-            var recordSetSoaResource = await _dnsZone.GetRecordSetSoas().GetAsync("@");
-            Assert.IsNotNull(recordSetSoaResource);
-            Assert.AreEqual("@", recordSetSoaResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetSoaResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/SOA", recordSetSoaResource.Value.Data.ResourceType.Type);
-        }
-
-        [Test]
-        public async Task GetAll()
-        {
-            var list = await _dnsZone.GetRecordSetSoas().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
-            Assert.AreEqual("@", list.FirstOrDefault().Data.Name);
-        }
+        //[Test]
+        //public async Task GetAll()
+        //{
+        //    var list = await _dnsZone.GetRecordSetSoas().GetAllAsync().ToEnumerableAsync();
+        //    Assert.IsNotNull(list);
+        //    Assert.AreEqual("@", list.FirstOrDefault().Data.Name);
+        //}
     }
 }

@@ -16,94 +16,93 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
     internal class RecordSetSrvTests : DnsServiceClientTestBase
     {
-        private ResourceGroupResource _resourceGroup;
-        private DnsZoneResource _dnsZone;
-        //public RecordSetSrvTests(bool isAsync) : base(isAsync)
+        //private ResourceGroupResource _resourceGroup;
+        //private DnsZoneResource _dnsZone;
+        public RecordSetSrvTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        //[OneTimeSetUp]
+        //public async Task OnetimeSetup()
         //{
+        //    string rgName = SessionRecording.GenerateAssetName("Dns-RG-");
+        //    var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+        //    _resourceGroup = rgLro.Value;
+
+        //    // Create Dns Zone
+        //    string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.a.com";
+        //    _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
+
+        //    await StopSessionRecordingAsync();
         //}
 
-        [OneTimeSetUp]
-        public async Task OnetimeSetup()
-        {
-            // Create Resource Group
-            Random random = new Random();
-            string rgName = $"dns-rg-{random.Next(9999)}";
-            _resourceGroup = await CreateAResourceGroup(rgName);
-            Assert.IsNotNull(_resourceGroup);
-            Assert.AreEqual(rgName, _resourceGroup.Data.Name);
+        //[TearDown]
+        //public async Task TearDown()
+        //{
+        //    var list = await _dnsZone.GetRecordSetSrvs().GetAllAsync().ToEnumerableAsync();
+        //    foreach (var item in list)
+        //    {
+        //        await item.DeleteAsync(WaitUntil.Completed);
+        //    }
+        //}
 
-            // Create Dns Zone
-            string dnsZoneName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.Srv.com";
-            _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-        }
+        //[Test]
+        //public async Task Create()
+        //{
+        //    var collection = _dnsZone.GetRecordSetSrvs();
+        //    string name = "srv";
+        //    var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
+        //    Assert.IsNotNull(recordSetSrvResource);
+        //    Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
+        //    Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
+        //    Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
+        //}
 
-        [TearDown]
-        public async Task TearDown()
-        {
-            var list = await _dnsZone.GetRecordSetSrvs().GetAllAsync().ToEnumerableAsync();
-            foreach (var item in list)
-            {
-                await item.DeleteAsync(WaitUntil.Completed);
-            }
-        }
+        //[Test]
+        //public async Task Delete()
+        //{
+        //    var collection = _dnsZone.GetRecordSetSrvs();
+        //    string name = "srv";
+        //    var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
+        //    Assert.IsTrue(collection.Exists(name));
 
-        [Test]
-        public async Task Create()
-        {
-            var collection = _dnsZone.GetRecordSetSrvs();
-            string name = "srv";
-            var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
-            Assert.IsNotNull(recordSetSrvResource);
-            Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
-        }
+        //    await recordSetSrvResource.Value.DeleteAsync(WaitUntil.Completed);
+        //    Assert.IsFalse(collection.Exists(name));
+        //}
 
-        [Test]
-        public async Task Delete()
-        {
-            var collection = _dnsZone.GetRecordSetSrvs();
-            string name = "srv";
-            var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
-            Assert.IsTrue(collection.Exists(name));
+        //[Test]
+        //public async Task Exist()
+        //{
+        //    var collection = _dnsZone.GetRecordSetSrvs();
+        //    string name = "srv";
+        //    await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
+        //    Assert.IsTrue(collection.Exists(name));
+        //}
 
-            await recordSetSrvResource.Value.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(collection.Exists(name));
-        }
+        //[Test]
+        //public async Task Get()
+        //{
+        //    var collection = _dnsZone.GetRecordSetSrvs();
+        //    string name = "srv";
+        //    await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
 
-        [Test]
-        public async Task Exist()
-        {
-            var collection = _dnsZone.GetRecordSetSrvs();
-            string name = "srv";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
-            Assert.IsTrue(collection.Exists(name));
-        }
+        //    var recordSetSrvResource = await collection.GetAsync(name);
+        //    Assert.IsNotNull(recordSetSrvResource);
+        //    Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
+        //    Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
+        //    Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
+        //}
 
-        [Test]
-        public async Task Get()
-        {
-            var collection = _dnsZone.GetRecordSetSrvs();
-            string name = "srv";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
+        //[Test]
+        //public async Task GetAll()
+        //{
+        //    var collection = _dnsZone.GetRecordSetSrvs();
+        //    string name = "srv";
+        //    await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
 
-            var recordSetSrvResource = await collection.GetAsync(name);
-            Assert.IsNotNull(recordSetSrvResource);
-            Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
-        }
-
-        [Test]
-        public async Task GetAll()
-        {
-            var collection = _dnsZone.GetRecordSetSrvs();
-            string name = "srv";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordSetData() { });
-
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
-            Assert.AreEqual(name, list.FirstOrDefault().Data.Name);
-        }
+        //    var list = await collection.GetAllAsync().ToEnumerableAsync();
+        //    Assert.IsNotNull(list);
+        //    Assert.AreEqual(name, list.FirstOrDefault().Data.Name);
+        //}
     }
 }
