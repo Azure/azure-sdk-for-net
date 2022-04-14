@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-04-07)
+This is the first stable release of the Azure Resources management library. 
+
+### Breaking Changes
+
+Minor changes since the public beta release:
+- All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Tweaked some properties to right type.
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.0.0-beta.6 (2022-01-29)
 

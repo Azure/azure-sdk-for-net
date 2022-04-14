@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of VaultKey and their operations over its parent. </summary>
-    public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKey>, IAsyncEnumerable<VaultKey>
+    /// <summary>
+    /// A class representing a collection of <see cref="VaultKeyResource" /> and their operations.
+    /// Each <see cref="VaultKeyResource" /> in the collection will belong to the same instance of <see cref="VaultResource" />.
+    /// To get a <see cref="VaultKeyCollection" /> instance call the GetVaultKeys method from an instance of <see cref="VaultResource" />.
+    /// </summary>
+    public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKeyResource>, IAsyncEnumerable<VaultKeyResource>
     {
         private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;
         private readonly KeysRestOperations _vaultKeyKeysRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VaultKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vaultKeyKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKey.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VaultKey.ResourceType, out string vaultKeyKeysApiVersion);
-            _vaultKeyKeysRestClient = new KeysRestOperations(_vaultKeyKeysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyKeysApiVersion);
+            _vaultKeyKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKeyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VaultKeyResource.ResourceType, out string vaultKeyKeysApiVersion);
+            _vaultKeyKeysRestClient = new KeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vaultKeyKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Vault.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Vault.ResourceType), nameof(id));
+            if (id.ResourceType != VaultResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VaultResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,24 +59,24 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
         /// Operation Id: Keys_CreateIfNotExist
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyName"> The name of the key to be created. </param>
-        /// <param name="parameters"> The parameters used to create the specified key. </param>
+        /// <param name="content"> The parameters used to create the specified key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<VaultKey>> CreateOrUpdateAsync(bool waitForCompletion, string keyName, KeyCreateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<VaultKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vaultKeyKeysRestClient.CreateIfNotExistAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<VaultKey>(Response.FromValue(new VaultKey(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = await _vaultKeyKeysRestClient.CreateIfNotExistAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new KeyVaultArmOperation<VaultKeyResource>(Response.FromValue(new VaultKeyResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,24 +92,24 @@ namespace Azure.ResourceManager.KeyVault
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
         /// Operation Id: Keys_CreateIfNotExist
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyName"> The name of the key to be created. </param>
-        /// <param name="parameters"> The parameters used to create the specified key. </param>
+        /// <param name="content"> The parameters used to create the specified key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<VaultKey> CreateOrUpdate(bool waitForCompletion, string keyName, KeyCreateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<VaultKeyResource> CreateOrUpdate(WaitUntil waitUntil, string keyName, VaultKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vaultKeyKeysRestClient.CreateIfNotExist(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new KeyVaultArmOperation<VaultKey>(Response.FromValue(new VaultKey(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = _vaultKeyKeysRestClient.CreateIfNotExist(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, content, cancellationToken);
+                var operation = new KeyVaultArmOperation<VaultKeyResource>(Response.FromValue(new VaultKeyResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response<VaultKey>> GetAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKeyResource>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -136,8 +139,8 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _vaultKeyKeysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VaultKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<VaultKey> Get(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<VaultKeyResource> Get(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -165,8 +168,8 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 if (response.Value == null)
-                    throw _vaultKeyKeysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VaultKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Keys_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultKey> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VaultKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VaultKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultKey>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VaultKeyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vaultKeyKeysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +202,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            async Task<Page<VaultKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VaultKeyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vaultKeyKeysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +226,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Keys_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultKey> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VaultKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VaultKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VaultKey> FirstPageFunc(int? pageSizeHint)
+            Page<VaultKeyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vaultKeyKeysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +244,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            Page<VaultKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VaultKeyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vaultKeyKeysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -268,7 +271,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = GetIfExists(keyName, cancellationToken: cancellationToken);
+                var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -313,65 +316,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
-        /// Operation Id: Keys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response<VaultKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VaultKey>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
-        /// Operation Id: Keys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<VaultKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VaultKey>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<VaultKey> IEnumerable<VaultKey>.GetEnumerator()
+        IEnumerator<VaultKeyResource> IEnumerable<VaultKeyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +326,7 @@ namespace Azure.ResourceManager.KeyVault
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VaultKey> IAsyncEnumerable<VaultKey>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VaultKeyResource> IAsyncEnumerable<VaultKeyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

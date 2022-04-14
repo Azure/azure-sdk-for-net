@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Usage>> value = default;
+            Optional<IReadOnlyList<NetworkUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Usage> array = new List<Usage>();
+                    List<NetworkUsage> array = new List<NetworkUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Usage.DeserializeUsage(item));
+                        array.Add(NetworkUsage.DeserializeNetworkUsage(item));
                     }
                     value = array;
                     continue;

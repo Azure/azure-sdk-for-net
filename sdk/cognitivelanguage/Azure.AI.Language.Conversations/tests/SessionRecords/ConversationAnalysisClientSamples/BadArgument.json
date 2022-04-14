@@ -1,56 +1,60 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=invalid-project\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "61",
+        "Content-Length": "255",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "238b0aada316157815639f13573875c0",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c95d563b1f0329aad9d954c63f53d7bd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "We\u0027ll have 2 plates of seared salmon nigiri."
+        "analysisInput": {
+          "conversationItem": {
+            "text": "Send an email to Carol about the tomorrow\u0027s demo",
+            "participantId": "1",
+            "id": "1",
+            "modality": "text"
+          }
+        },
+        "parameters": {
+          "projectName": "invalid-project",
+          "deploymentName": "production"
+        },
+        "kind": "CustomConversation"
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "59ea92b1-47c5-424f-b9e3-a50d2c7f3bea",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Sun, 24 Oct 2021 11:11:02 GMT",
-        "pragma": "no-cache",
-        "request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
+        "Date": "Tue, 05 Apr 2022 12:33:59 GMT",
+        "Pragma": "no-cache",
+        "request-id": "59ea92b1-47c5-424f-b9e3-a50d2c7f3bea",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "155"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022Unauthorized\u0022,\n",
-        "    \u0022message\u0022: \u0022One or more authorization parameter is invalid or missing.\u0022,\n",
-        "    \u0022innerError\u0022: {\n",
-        "      \u0022code\u0022: \u0022Forbidden\u0022,\n",
-        "      \u0022message\u0022: \u0022The provided authorization parameters cannot access the requested resource.\u0022\n",
-        "    }\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "One or more authorization parameter is invalid or missing.",
+          "innerError": {
+            "code": "Forbidden",
+            "message": "The provided authorization parameters cannot access the requested resource."
+          }
+        }
+      }
     }
   ],
   "Variables": {
-    "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "376930274"
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "38619725"
   }
 }

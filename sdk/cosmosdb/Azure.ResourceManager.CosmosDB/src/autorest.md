@@ -49,6 +49,29 @@ operation-id-mappings:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
 - from: cosmos-db.json
   where: $.definitions.MetricDefinition.properties.resourceUri
@@ -153,6 +176,12 @@ directive:
 - rename-model:
     from: DatabaseAccountListKeysResult
     to: DatabaseAccountKeyList
+- rename-model:
+    from: SqlRoleAssignmentListResult
+    to: SqlRoleAssignmentList
+- rename-model:
+    from: SqlRoleDefinitionListResult
+    to: SqlRoleDefinitionList
 # This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
 - from: swagger-document
   where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings"].post
@@ -210,14 +239,8 @@ directive:
 # Rename for input parameters s/Parameters/Data/, per C# convention
 # rename parametes for cosmos-db.json
 - rename-model:
-    from: DatabaseAccountCreateUpdateParameters
-    to: DatabaseAccountCreateUpdateData
-- rename-model:
-    from: DatabaseAccountUpdateParameters
-    to: DatabaseAccountUpdateData
-- rename-model:
     from: DatabaseAccountRegenerateKeyParameters
-    to: DatabaseAccountRegenerateKeyData
+    to: DatabaseAccountRegenerateKeyInfo
 - rename-model:
     from: ThroughputSettingsUpdateParameters
     to: ThroughputSettingsUpdateData
@@ -257,7 +280,13 @@ directive:
 - rename-model:
     from: GremlinGraphCreateUpdateParameters
     to: GremlinGraphCreateUpdateData
-# TODO: rename for notebook.json and rback.json when adding them back
+- rename-model:
+    from: SqlRoleAssignmentCreateUpdateParameters
+    to: SqlRoleAssignmentCreateUpdateData
+- rename-model:
+    from: SqlRoleDefinitionCreateUpdateParameters
+    to: SqlRoleDefinitionCreateUpdateData
+# TODO: rename for notebook.json when adding it back
 
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
@@ -282,4 +311,5 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateLinkResources.json
   - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/restorable.json
   - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/managedCassandra.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/rbac.json
 ```

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,28 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class CustomerCertificate : Certificate
     {
         /// <summary> Initializes a new instance of CustomerCertificate. </summary>
-        /// <param name="certificateUrl"> Complete Url to the certificate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateUrl"/> is null. </exception>
-        internal CustomerCertificate(string certificateUrl)
+        internal CustomerCertificate()
         {
-            if (certificateUrl == null)
-            {
-                throw new ArgumentNullException(nameof(certificateUrl));
-            }
-
-            CertificateUrl = certificateUrl;
             SubjectAlternativeNames = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        internal WritableSubResource SecretSource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource.Id;
+            set => SecretSource.Id = value;
+        }
+
         /// <summary> Certificate version. </summary>
-        public string Version { get; }
+        public string SecretVersion { get; }
         /// <summary> Certificate issuing authority. </summary>
         public string CertificateAuthority { get; }
-        /// <summary> Complete Url to the certificate. </summary>
-        public string CertificateUrl { get; }
         /// <summary> Whether to use the latest version for the certificate. </summary>
         public bool? UseLatestVersion { get; }
         /// <summary> The list of SANs. </summary>
         public IReadOnlyList<string> SubjectAlternativeNames { get; }
+        /// <summary> Certificate thumbprint. </summary>
+        public string Thumbprint { get; }
     }
 }

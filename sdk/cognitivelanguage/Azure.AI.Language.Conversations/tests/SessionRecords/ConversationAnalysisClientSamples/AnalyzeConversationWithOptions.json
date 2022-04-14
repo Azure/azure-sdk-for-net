@@ -1,74 +1,145 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischOne\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "61",
+        "Content-Length": "289",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "a909c2fbc7399ff1c172b8d14210c066",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "8d9930751564b86c02b23cc9fa9a223e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "We\u0027ll have 2 plates of seared salmon nigiri."
+        "analysisInput": {
+          "conversationItem": {
+            "text": "Send an email to Carol about the tomorrow\u0027s demo.",
+            "participantId": "1",
+            "id": "1",
+            "modality": "text"
+          },
+          "isLoggingEnabled": true
+        },
+        "parameters": {
+          "projectName": "SampleProject",
+          "deploymentName": "MoTest",
+          "verbose": true
+        },
+        "kind": "CustomConversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6c519bb2-cd47-4f7f-921e-fbf34c71fcca",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "a54356b8-bbf2-419a-b279-7c9c9924d401",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 24 Oct 2021 11:11:01 GMT",
-        "pragma": "no-cache",
-        "request-id": "6c519bb2-cd47-4f7f-921e-fbf34c71fcca",
+        "Date": "Tue, 05 Apr 2022 12:33:59 GMT",
+        "Pragma": "no-cache",
+        "request-id": "a54356b8-bbf2-419a-b279-7c9c9924d401",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "56"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "91"
       },
       "ResponseBody": {
-        "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
-        "prediction": {
-          "topIntent": "Order",
-          "projectKind": "conversation",
-          "intents": [
-            {
-              "category": "Order",
-              "confidenceScore": 1
-            }
-          ],
-          "entities": [
-            {
-              "category": "OrderItem",
-              "text": "2 plates",
-              "offset": 11,
-              "length": 8,
-              "confidenceScore": 1
-            },
-            {
-              "category": "OrderItem",
-              "text": "seared salmon nigiri",
-              "offset": 23,
-              "length": 20,
-              "confidenceScore": 1
-            }
-          ]
+        "kind": "CustomConversationResult",
+        "results": {
+          "query": "Send an email to Carol about the tomorrow\u0027s demo.",
+          "prediction": {
+            "topIntent": "Read",
+            "projectKind": "conversation",
+            "intents": [
+              {
+                "category": "Read",
+                "confidenceScore": 0.72393185
+              },
+              {
+                "category": "Send",
+                "confidenceScore": 0.14929298
+              },
+              {
+                "category": "Setup",
+                "confidenceScore": 0.076164305
+              },
+              {
+                "category": "Find",
+                "confidenceScore": 0.04118208
+              },
+              {
+                "category": "Set",
+                "confidenceScore": 0.00614006
+              },
+              {
+                "category": "Call",
+                "confidenceScore": 0.0025622917
+              },
+              {
+                "category": "Open",
+                "confidenceScore": 0.000411571
+              },
+              {
+                "category": "None",
+                "confidenceScore": 0.00028198693
+              },
+              {
+                "category": "Play",
+                "confidenceScore": 3.289273E-05
+              }
+            ],
+            "entities": [
+              {
+                "category": "Contact",
+                "text": "Carol",
+                "offset": 17,
+                "length": 5,
+                "confidenceScore": 1,
+                "extraInformation": [
+                  {
+                    "extraInformationKind": "EntitySubtype",
+                    "value": "person.name"
+                  }
+                ]
+              },
+              {
+                "category": "MeetingDate",
+                "text": "tomorrow",
+                "offset": 33,
+                "length": 8,
+                "confidenceScore": 1,
+                "resolutions": [
+                  {
+                    "resolutionKind": "DateTimeResolution",
+                    "dateTimeSubKind": "Date",
+                    "timex": "2022-04-06",
+                    "value": "2022-04-06"
+                  }
+                ],
+                "extraInformation": [
+                  {
+                    "extraInformationKind": "EntitySubtype",
+                    "value": "datetime.date"
+                  }
+                ]
+              },
+              {
+                "category": "Location",
+                "text": "demo",
+                "offset": 44,
+                "length": 4,
+                "confidenceScore": 1
+              }
+            ]
+          }
         }
       }
     }
   ],
   "Variables": {
-    "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_PROJECT": "antischOne",
-    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1035149547"
+    "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": "MoTest",
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "AZURE_CONVERSATIONS_PROJECT_NAME": "SampleProject",
+    "RandomSeed": "1753638427"
   }
 }

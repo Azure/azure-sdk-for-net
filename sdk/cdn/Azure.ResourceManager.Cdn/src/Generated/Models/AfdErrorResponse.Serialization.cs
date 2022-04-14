@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static AfdErrorResponse DeserializeAfdErrorResponse(JsonElement element)
         {
-            Optional<ErrorResponse> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }

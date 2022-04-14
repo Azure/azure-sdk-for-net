@@ -14,12 +14,17 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A Class representing a ClusterResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ClusterResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ClusterResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetClusterResource method.
+    /// </summary>
     public partial class ClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ClusterResource"/> instance. </summary>
@@ -52,9 +57,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clusterResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _clusterResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string clusterResourceCassandraClustersApiVersion);
-            _clusterResourceCassandraClustersRestClient = new CassandraClustersRestOperations(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, clusterResourceCassandraClustersApiVersion);
+            _clusterResourceCassandraClustersRestClient = new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, clusterResourceCassandraClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,11 +89,41 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataCenterResources in the DataCenterResource. </summary>
+        /// <summary> Gets a collection of DataCenterResources in the ClusterResource. </summary>
         /// <returns> An object representing collection of DataCenterResources and their operations over a DataCenterResource. </returns>
         public virtual DataCenterResourceCollection GetDataCenterResources()
         {
-            return new DataCenterResourceCollection(Client, Id);
+            return GetCachedClient(Client => new DataCenterResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Get
+        /// </summary>
+        /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataCenterResource>> GetDataCenterResourceAsync(string dataCenterName, CancellationToken cancellationToken = default)
+        {
+            return await GetDataCenterResources().GetAsync(dataCenterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a managed Cassandra data center.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}
+        /// Operation Id: CassandraDataCenters_Get
+        /// </summary>
+        /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataCenterResource> GetDataCenterResource(string dataCenterName, CancellationToken cancellationToken = default)
+        {
+            return GetDataCenterResources().Get(dataCenterName, cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: CassandraClusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ClusterResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Get");
             scope.Start();
@@ -105,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clusterResourceCassandraClustersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clusterResourceCassandraClustersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,9 +179,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
         /// Operation Id: CassandraClusters_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Delete");
             scope.Start();
@@ -154,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _clusterResourceCassandraClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -170,9 +205,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
         /// Operation Id: CassandraClusters_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Delete");
             scope.Start();
@@ -180,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _clusterResourceCassandraClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -196,21 +231,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
         /// Operation Id: CassandraClusters_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="body"> Parameters to provide for specifying the managed Cassandra cluster. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters to provide for specifying the managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<ArmOperation<ClusterResource>> UpdateAsync(bool waitForCompletion, ClusterResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ClusterResource>> UpdateAsync(WaitUntil waitUntil, ClusterResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Update");
             scope.Start();
             try
             {
-                var response = await _clusterResourceCassandraClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = await _clusterResourceCassandraClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -226,21 +261,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
         /// Operation Id: CassandraClusters_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="body"> Parameters to provide for specifying the managed Cassandra cluster. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters to provide for specifying the managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<ClusterResource> Update(bool waitForCompletion, ClusterResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ClusterResource> Update(WaitUntil waitUntil, ClusterResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Update");
             scope.Start();
             try
             {
-                var response = _clusterResourceCassandraClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = _clusterResourceCassandraClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<ClusterResource>(new ClusterResourceOperationSource(Client), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -256,11 +291,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommand
         /// Operation Id: CassandraClusters_InvokeCommand
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Specification which command to run where. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<ArmOperation<CommandOutput>> InvokeCommandAsync(bool waitForCompletion, CommandPostBody body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommandOutput>> InvokeCommandAsync(WaitUntil waitUntil, CommandPostBody body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -270,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _clusterResourceCassandraClustersRestClient.InvokeCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<CommandOutput>(new CommandOutputOperationSource(), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -286,11 +321,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommand
         /// Operation Id: CassandraClusters_InvokeCommand
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Specification which command to run where. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CommandOutput> InvokeCommand(bool waitForCompletion, CommandPostBody body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommandOutput> InvokeCommand(WaitUntil waitUntil, CommandPostBody body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -300,7 +335,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _clusterResourceCassandraClustersRestClient.InvokeCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
                 var operation = new CosmosDBArmOperation<CommandOutput>(new CommandOutputOperationSource(), _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -316,9 +351,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/deallocate
         /// Operation Id: CassandraClusters_Deallocate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeallocateAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Deallocate");
             scope.Start();
@@ -326,7 +361,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _clusterResourceCassandraClustersRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -342,9 +377,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/deallocate
         /// Operation Id: CassandraClusters_Deallocate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Deallocate(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Deallocate");
             scope.Start();
@@ -352,7 +387,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _clusterResourceCassandraClustersRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -368,9 +403,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/start
         /// Operation Id: CassandraClusters_Start
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Start");
             scope.Start();
@@ -378,7 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _clusterResourceCassandraClustersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -394,9 +429,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/start
         /// Operation Id: CassandraClusters_Start
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Start");
             scope.Start();
@@ -404,7 +439,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _clusterResourceCassandraClustersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -421,7 +456,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: CassandraClusters_Status
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CassandraClusterPublicStatus>> StatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraClusterPublicStatus>> StatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResource.Status");
             scope.Start();
@@ -468,7 +503,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -477,9 +512,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -508,9 +543,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -529,7 +564,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -537,10 +572,10 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -567,10 +602,10 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -589,7 +624,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -597,9 +632,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -626,9 +661,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

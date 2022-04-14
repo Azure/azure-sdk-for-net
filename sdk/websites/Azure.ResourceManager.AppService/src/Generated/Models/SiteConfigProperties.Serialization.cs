@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("requestTracingEnabled");
                 }
             }
-            if (Optional.IsDefined(RequestTracingExpirationTime))
+            if (Optional.IsDefined(RequestTracingExpirationOn))
             {
-                if (RequestTracingExpirationTime != null)
+                if (RequestTracingExpirationOn != null)
                 {
                     writer.WritePropertyName("requestTracingExpirationTime");
-                    writer.WriteStringValue(RequestTracingExpirationTime.Value, "O");
+                    writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
                 }
                 else
                 {
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("acrUseManagedIdentityCreds");
                 }
             }
-            if (Optional.IsDefined(AcrUserManagedIdentityID))
+            if (Optional.IsDefined(AcrUserManagedIdentityId))
             {
-                if (AcrUserManagedIdentityID != null)
+                if (AcrUserManagedIdentityId != null)
                 {
                     writer.WritePropertyName("acrUserManagedIdentityID");
-                    writer.WriteStringValue(AcrUserManagedIdentityID);
+                    writer.WriteStringValue(AcrUserManagedIdentityId);
                 }
                 else
                 {
@@ -654,13 +654,13 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("keyVaultReferenceIdentity");
                 }
             }
-            if (Optional.IsCollectionDefined(IpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
-                if (IpSecurityRestrictions != null)
+                if (IPSecurityRestrictions != null)
                 {
                     writer.WritePropertyName("ipSecurityRestrictions");
                     writer.WriteStartArray();
-                    foreach (var item in IpSecurityRestrictions)
+                    foreach (var item in IPSecurityRestrictions)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -671,13 +671,13 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("ipSecurityRestrictions");
                 }
             }
-            if (Optional.IsCollectionDefined(ScmIpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
-                if (ScmIpSecurityRestrictions != null)
+                if (ScmIPSecurityRestrictions != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictions");
                     writer.WriteStartArray();
-                    foreach (var item in ScmIpSecurityRestrictions)
+                    foreach (var item in ScmIPSecurityRestrictions)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -688,12 +688,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (Optional.IsDefined(ScmIpSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(ScmIPSecurityRestrictionsUseMain))
             {
-                if (ScmIpSecurityRestrictionsUseMain != null)
+                if (ScmIPSecurityRestrictionsUseMain != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictionsUseMain");
-                    writer.WriteBooleanValue(ScmIpSecurityRestrictionsUseMain.Value);
+                    writer.WriteBooleanValue(ScmIPSecurityRestrictionsUseMain.Value);
                 }
                 else
                 {
@@ -907,8 +907,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> managedServiceIdentityId = default;
             Optional<int?> xManagedServiceIdentityId = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IList<IpSecurityRestriction>> ipSecurityRestrictions = default;
-            Optional<IList<IpSecurityRestriction>> scmIpSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> ipSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> scmIpSecurityRestrictions = default;
             Optional<bool?> scmIpSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
             Optional<SupportedTlsVersions?> minTlsVersion = default;
@@ -1476,10 +1476,10 @@ namespace Azure.ResourceManager.AppService.Models
                         ipSecurityRestrictions = null;
                         continue;
                     }
-                    List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item));
+                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -1491,10 +1491,10 @@ namespace Azure.ResourceManager.AppService.Models
                         scmIpSecurityRestrictions = null;
                         continue;
                     }
-                    List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item));
+                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                     }
                     scmIpSecurityRestrictions = array;
                     continue;

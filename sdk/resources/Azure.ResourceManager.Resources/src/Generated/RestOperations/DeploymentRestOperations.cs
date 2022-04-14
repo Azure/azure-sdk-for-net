@@ -12,38 +12,32 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     internal partial class DeploymentRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of DeploymentRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public DeploymentRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DeploymentRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
+        internal Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,7 +53,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -69,20 +63,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<DeploymentOperation>> GetAtScopeAsync(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ArmDeploymentOperation>> GetAtScopeAsync(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetAtScopeRequest(scope, deploymentName, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,13 +76,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperation value = default;
+                        ArmDeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
+                        value = ArmDeploymentOperation.DeserializeArmDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -106,20 +92,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
-        public Response<DeploymentOperation> GetAtScope(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ArmDeploymentOperation> GetAtScope(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetAtScopeRequest(scope, deploymentName, operationId);
             _pipeline.Send(message, cancellationToken);
@@ -127,17 +105,17 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperation value = default;
+                        ArmDeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
+                        value = ArmDeploymentOperation.DeserializeArmDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
+        internal Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,7 +134,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -166,16 +144,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentOperationsListResult>> ListAtScopeAsync(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ArmDeploymentOperationsListResult>> ListAtScopeAsync(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var message = CreateListAtScopeRequest(scope, deploymentName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -183,13 +156,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -199,16 +172,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentOperationsListResult> ListAtScope(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ArmDeploymentOperationsListResult> ListAtScope(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var message = CreateListAtScopeRequest(scope, deploymentName, top);
             _pipeline.Send(message, cancellationToken);
@@ -216,17 +184,17 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
+        internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -236,7 +204,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -247,20 +215,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public async Task<Response<DeploymentOperationsListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ArmDeploymentOperationsListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var message = CreateListAtScopeNextPageRequest(nextLink, scope, deploymentName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -268,13 +228,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -285,20 +245,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
-        public Response<DeploymentOperationsListResult> ListAtScopeNextPage(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ArmDeploymentOperationsListResult> ListAtScopeNextPage(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var message = CreateListAtScopeNextPageRequest(nextLink, scope, deploymentName, top);
             _pipeline.Send(message, cancellationToken);
@@ -306,13 +258,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

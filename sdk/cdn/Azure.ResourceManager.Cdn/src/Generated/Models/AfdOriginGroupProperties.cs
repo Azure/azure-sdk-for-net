@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class AfdOriginGroupProperties : AfdOriginGroupUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginGroupProperties. </summary>
-        public AfdOriginGroupProperties()
+        internal AfdOriginGroupProperties()
         {
         }
 

@@ -18,6 +18,9 @@ namespace Azure.Identity.Tests
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
+
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
         {
@@ -239,22 +242,32 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
         }
 
+        public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
+        {
+            private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+
+            public ExtendedInteractiveBrowserCredentialOptions(Action<PublicClientApplicationBuilder> beforeBuildClient)
+            {
+                _beforeBuildClient = beforeBuildClient;
+            }
+
+            Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
+        }
+
         [Test]
-        public async Task InvokesBeforeBuildClient()
+        public async Task InvokesBeforeBuildClientOnExtendedOptions()
         {
             bool beforeBuildClientInvoked = false;
 
             var cancelSource = new CancellationTokenSource(2000);
 
-            var options = new InteractiveBrowserCredentialOptions
+            var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
             {
-                BeforeBuildClient = builder =>
-                {
-                    Assert.NotNull(builder);
-                    beforeBuildClientInvoked = true;
-                    cancelSource.Cancel();
-                }
-            };
+                Assert.NotNull(builder);
+                beforeBuildClientInvoked = true;
+                cancelSource.Cancel();
+            }
+            );
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(options));
 

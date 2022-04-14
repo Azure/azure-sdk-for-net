@@ -70,7 +70,7 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_04_10) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_06_08) { }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
@@ -89,6 +89,7 @@ namespace Azure.Storage.Queues
             V2020_12_06 = 9,
             V2021_02_12 = 10,
             V2021_04_10 = 11,
+            V2021_06_08 = 12,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
@@ -380,7 +381,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_04_10) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_06_08) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions

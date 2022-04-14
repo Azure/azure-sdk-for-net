@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
-            await templateSpec.DeleteAsync(true);
+            TemplateSpecResource templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(WaitUntil.Completed, templateSpecName, templateSpecData)).Value;
+            await templateSpec.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpec.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

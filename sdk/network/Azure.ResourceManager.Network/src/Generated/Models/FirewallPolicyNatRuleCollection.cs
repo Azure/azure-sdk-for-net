@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of action. </summary>
         public FirewallPolicyNatRuleCollectionActionType? ActionType
         {
-            get => Action is null ? default : Action.Type;
+            get => Action is null ? default : Action.ActionType;
             set
             {
                 if (Action is null)
                     Action = new FirewallPolicyNatRuleCollectionAction();
-                Action.Type = value;
+                Action.ActionType = value;
             }
         }
 

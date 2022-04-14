@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
         /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ErrorEntity customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, type, systemData, kind)
+        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, resourceType, systemData, kind)
         {
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
             CustomDomainVerificationTest = customDomainVerificationTest;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> DNS verification test result. </summary>
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
         /// <summary> Raw failure information if DNS verification fails. </summary>
-        public ErrorEntity CustomDomainVerificationFailureInfo { get; }
+        public ResponseError CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HasConflictOnScaleUnit { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

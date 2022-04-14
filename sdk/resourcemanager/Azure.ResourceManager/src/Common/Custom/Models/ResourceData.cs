@@ -4,9 +4,8 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.Core;
 
-[assembly: CodeGenSuppressType("Resource")]
+[assembly: CodeGenSuppressType("ArmResourceData")]
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
@@ -22,14 +21,14 @@ namespace Azure.ResourceManager.Models
         /// <summary> Initializes a new instance of Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         [SerializationConstructor]
-        protected ResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData)
+        protected ResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             SystemData = systemData;
         }
 
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Models
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
-        public ResourceType Type { get; }
+        public ResourceType ResourceType { get; }
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
         public SystemData SystemData { get; }
     }

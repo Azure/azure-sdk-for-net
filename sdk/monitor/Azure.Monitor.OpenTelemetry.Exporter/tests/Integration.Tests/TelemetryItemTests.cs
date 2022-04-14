@@ -98,12 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
 
             var mockTransmitter = new MockTransmitter();
-            var processor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = EmptyConnectionString,
-                },
-                transmitter: mockTransmitter));
+            var processor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(mockTransmitter));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -125,12 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             // SETUP
             var mockTransmitter = new MockTransmitter();
-            var processor = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = EmptyConnectionString,
-                },
-                transmitter: mockTransmitter));
+            var processor = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(mockTransmitter));
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
@@ -166,18 +156,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             var mockTransmitter = new MockTransmitter();
 
-            var azureMonitorExporterOptions = new AzureMonitorExporterOptions
-            {
-                ConnectionString = EmptyConnectionString,
-            };
+            var processor1 = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(mockTransmitter));
 
-            var processor1 = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
-                options: azureMonitorExporterOptions,
-                transmitter: mockTransmitter));
-
-            var processor2 = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(
-                options: azureMonitorExporterOptions,
-                transmitter: mockTransmitter));
+            var processor2 = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(mockTransmitter));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())

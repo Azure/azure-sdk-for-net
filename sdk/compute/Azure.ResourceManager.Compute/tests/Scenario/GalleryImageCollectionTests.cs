@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryImageCollectionTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private Gallery _gallery;
+        private ResourceGroupResource _resourceGroup;
+        private GalleryResource _gallery;
 
         public GalleryImageCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(true, galleryName, input);
+            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(WaitUntil.Completed, galleryName, input);
             _gallery = lro.Value;
             return _gallery.GetGalleryImages();
         }
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
-            GalleryImage image = lro.Value;
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
+            GalleryImageResource image = lro.Value;
             Assert.AreEqual(name, image.Data.Name);
         }
 
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
-            GalleryImage image1 = lro.Value;
-            GalleryImage image2 = await collection.GetAsync(name);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
+            GalleryImageResource image1 = lro.Value;
+            GalleryImageResource image2 = await collection.GetAsync(name);
 
             ResourceDataHelper.AssertGalleryImage(image1.Data, image2.Data);
         }
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await collection.CreateOrUpdateAsync(true, name, BasicGalleryImageData);
-            GalleryImage image = lro.Value;
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
+            GalleryImageResource image = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var name2 = Recording.GenerateAssetName("testImage_");
             var input1 = BasicGalleryImageData;
             var input2 = BasicGalleryImageData;
-            _ = await collection.CreateOrUpdateAsync(true, name1, input1);
-            _ = await collection.CreateOrUpdateAsync(true, name2, input2);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name1, input1);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input2);
             int count = 0;
             await foreach (var galleryImage in collection.GetAllAsync())
             {

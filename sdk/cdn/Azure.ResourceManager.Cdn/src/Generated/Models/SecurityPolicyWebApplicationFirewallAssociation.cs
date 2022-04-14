@@ -7,31 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> settings for security policy patterns to match. </summary>
-    public partial class SecurityPolicyWebApplicationFirewallAssociation
+    internal partial class SecurityPolicyWebApplicationFirewallAssociation
     {
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()
         {
-            Domains = new ChangeTrackingList<WritableSubResource>();
+            Domains = new ChangeTrackingList<ActivatedResourceReference>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         /// <param name="domains"> List of domains. </param>
         /// <param name="patternsToMatch"> List of paths. </param>
-        internal SecurityPolicyWebApplicationFirewallAssociation(IList<WritableSubResource> domains, IList<string> patternsToMatch)
+        internal SecurityPolicyWebApplicationFirewallAssociation(IList<ActivatedResourceReference> domains, IList<string> patternsToMatch)
         {
             Domains = domains;
             PatternsToMatch = patternsToMatch;
         }
 
         /// <summary> List of domains. </summary>
-        public IList<WritableSubResource> Domains { get; }
+        public IList<ActivatedResourceReference> Domains { get; }
         /// <summary> List of paths. </summary>
         public IList<string> PatternsToMatch { get; }
     }

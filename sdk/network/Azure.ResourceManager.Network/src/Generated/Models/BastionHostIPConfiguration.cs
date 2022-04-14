@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Ip configuration type. </param>
+        /// <param name="resourceType"> Ip configuration type. </param>
         /// <param name="subnet"> Reference of the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(string id, string name, string etag, string type, WritableSubResource subnet, WritableSubResource publicIPAddress, ProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id)
+        internal BastionHostIPConfiguration(string id, string name, string etag, string resourceType, WritableSubResource subnet, WritableSubResource publicIPAddress, ProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Ip configuration type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Reference of the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

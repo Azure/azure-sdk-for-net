@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        consoleScreenshotBlobUri = null;
                         continue;
                     }
                     consoleScreenshotBlobUri = new Uri(property.Value.GetString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        serialConsoleLogBlobUri = null;
                         continue;
                     }
                     serialConsoleLogBlobUri = new Uri(property.Value.GetString());

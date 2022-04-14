@@ -11,8 +11,11 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class RuleSetProperties : AfdStateProperties
     {
         /// <summary> Initializes a new instance of RuleSetProperties. </summary>
-        public RuleSetProperties()
+        internal RuleSetProperties()
         {
         }
+
+        /// <summary> The name of the profile which holds the rule set. </summary>
+        public string ProfileName { get; }
     }
 }

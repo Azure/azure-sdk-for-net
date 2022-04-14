@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             Optional<IReadOnlyList<RecommendedActionImpactRecord>> observedImpact = default;
             Optional<IReadOnlyList<RecommendedActionMetricInfo>> timeSeries = default;
             Optional<IReadOnlyList<string>> linkedObjects = default;
-            Optional<IReadOnlyDictionary<string, object>> details = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -344,10 +344,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             details = dictionary;
                             continue;

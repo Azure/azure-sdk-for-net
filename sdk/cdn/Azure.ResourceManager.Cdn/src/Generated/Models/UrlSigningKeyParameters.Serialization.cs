@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(SecretVersion);
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 

@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the private link resource that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal ApplicationGatewayPrivateLinkResource(string id, string name, string etag, string type, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id)
+        internal ApplicationGatewayPrivateLinkResource(string id, string name, string etag, string resourceType, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Group identifier of private link resource. </summary>
         public string GroupId { get; }
         /// <summary> Required member names of private link resource. </summary>

@@ -29,13 +29,13 @@ namespace Azure.Security.Attestation
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public PolicyCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetRequest()

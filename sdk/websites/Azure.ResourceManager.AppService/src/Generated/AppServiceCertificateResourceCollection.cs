@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceCertificateResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AppServiceCertificateResource" /> and their operations.
+    /// Each <see cref="AppServiceCertificateResource" /> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// To get an <see cref="AppServiceCertificateResourceCollection" /> instance call the GetAppServiceCertificateResources method from an instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// </summary>
     public partial class AppServiceCertificateResourceCollection : ArmCollection, IEnumerable<AppServiceCertificateResource>, IAsyncEnumerable<AppServiceCertificateResource>
     {
         private readonly ClientDiagnostics _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppServiceCertificateResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateResource.ResourceType.Namespace, DiagnosticOptions);
+            _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AppServiceCertificateResource.ResourceType, out string appServiceCertificateResourceAppServiceCertificateOrdersApiVersion);
-            _appServiceCertificateResourceAppServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(_appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateResourceAppServiceCertificateOrdersApiVersion);
+            _appServiceCertificateResourceAppServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateResourceAppServiceCertificateOrdersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppServiceCertificateOrder.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrder.ResourceType), nameof(id));
+            if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -55,24 +58,24 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdateCertificate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the certificate. </param>
-        /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async virtual Task<ArmOperation<AppServiceCertificateResource>> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AppServiceCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(keyVaultCertificate, nameof(keyVaultCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,24 +91,24 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdateCertificate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the certificate. </param>
-        /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
+        /// <param name="data"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public virtual ArmOperation<AppServiceCertificateResource> CreateOrUpdate(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AppServiceCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceCertificateResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(keyVaultCertificate, nameof(keyVaultCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceCertificateResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -135,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +167,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
-                    throw _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +270,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,66 +305,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
-        /// Operation Id: AppServiceCertificateOrders_GetCertificate
-        /// </summary>
-        /// <param name="name"> Name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AppServiceCertificateResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
-        /// Operation Id: AppServiceCertificateOrders_GetCertificate
-        /// </summary>
-        /// <param name="name"> Name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> GetIfExists(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<AppServiceCertificateResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

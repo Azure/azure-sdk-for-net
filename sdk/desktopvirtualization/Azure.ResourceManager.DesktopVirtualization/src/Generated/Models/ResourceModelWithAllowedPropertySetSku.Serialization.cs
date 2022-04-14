@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         internal static ResourceModelWithAllowedPropertySetSku DeserializeResourceModelWithAllowedPropertySetSku(JsonElement element)
         {
             string name = default;
-            Optional<SkuTier> tier = default;
+            Optional<DesktopVirtualizationSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToSkuTier();
+                    tier = property.Value.GetString().ToDesktopVirtualizationSkuTier();
                     continue;
                 }
                 if (property.NameEquals("size"))

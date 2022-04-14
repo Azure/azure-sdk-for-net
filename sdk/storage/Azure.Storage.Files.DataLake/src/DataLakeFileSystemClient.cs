@@ -227,7 +227,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _containerClient = BlobContainerClientInternals.Create(
                 _blobUri,
@@ -236,6 +237,8 @@ namespace Azure.Storage.Files.DataLake
             (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -395,7 +398,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _containerClient = BlobContainerClientInternals.Create(
                 _blobUri,
@@ -404,6 +408,8 @@ namespace Azure.Storage.Files.DataLake
             (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -435,6 +441,8 @@ namespace Azure.Storage.Files.DataLake
             (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri dfsUri, Uri blobUri)
@@ -2928,6 +2936,14 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// Create a new <see cref="DataLakePathClient"/> object by appending
+        /// <paramref name="path"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="DataLakePathClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="path">The name of the directory.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
         internal virtual DataLakePathClient GetPathClient(string path)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri)

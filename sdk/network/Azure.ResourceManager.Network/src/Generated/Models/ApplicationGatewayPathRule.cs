@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the path rule that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(string id, string name, string etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Path rules of URL path map. </summary>
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>

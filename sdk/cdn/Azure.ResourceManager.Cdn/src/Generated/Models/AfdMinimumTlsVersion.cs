@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public enum AfdMinimumTlsVersion
     {
         /// <summary> TLS10. </summary>
-        TLS10,
+        Tls10,
         /// <summary> TLS12. </summary>
-        TLS12
+        Tls12
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -24,35 +25,35 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="state"></param>
-        /// <param name="statusUrl"> Link to the GetStatusApi in Kudu. </param>
-        /// <param name="detectorUrl"> Link to the Diagnose and Solve Portal. </param>
-        /// <param name="consoleUrl"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUrl"> Link to the console to web app instance. </param>
+        /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
+        /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
+        /// <param name="consoleUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, SiteRuntimeState? state, string statusUrl, string detectorUrl, string consoleUrl, string healthCheckUrl, IDictionary<string, ContainerInfo> containers) : base(id, name, type, systemData, kind)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers) : base(id, name, resourceType, systemData, kind)
         {
             State = state;
-            StatusUrl = statusUrl;
-            DetectorUrl = detectorUrl;
-            ConsoleUrl = consoleUrl;
-            HealthCheckUrl = healthCheckUrl;
+            StatusUri = statusUri;
+            DetectorUri = detectorUri;
+            ConsoleUri = consoleUri;
+            HealthCheckUri = healthCheckUri;
             Containers = containers;
         }
 
         /// <summary> Gets or sets the state. </summary>
         public SiteRuntimeState? State { get; set; }
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
-        public string StatusUrl { get; set; }
+        public Uri StatusUri { get; set; }
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
-        public string DetectorUrl { get; set; }
+        public Uri DetectorUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public string ConsoleUrl { get; set; }
+        public Uri ConsoleUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public string HealthCheckUrl { get; set; }
+        public Uri HealthCheckUri { get; set; }
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         public IDictionary<string, ContainerInfo> Containers { get; }
     }

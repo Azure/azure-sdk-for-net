@@ -334,7 +334,18 @@ var queryStats = statsDoc.RootElement.GetProperty("query");
 Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
 ```
 
-Because the structure of the statistics payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response.
+Because the structure of the statistics payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response. The statistics are found within the `query` property of the JSON. For example:
+
+```json
+{
+  "query": {
+    "executionTime": 0.0156478,
+    "resourceUsage": {...},
+    "inputDatasetStatistics": {...},
+    "datasetStatistics": [{...}]
+  }
+}
+```
 
 #### Include visualization
 
@@ -368,7 +379,29 @@ var queryViz = vizDoc.RootElement.GetProperty("visualization");
 Console.WriteLine(queryViz.GetString());
 ```
 
-Because the structure of the visualization payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response.
+Because the structure of the visualization payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response. For example:
+
+```json
+{
+  "visualization": "columnchart",
+  "title": null,
+  "accumulate": false,
+  "isQuerySorted": false,
+  "kind": null,
+  "legend": null,
+  "series": null,
+  "yMin": "",
+  "yMax": "",
+  "xAxis": null,
+  "xColumn": null,
+  "xTitle": null,
+  "yAxis": null,
+  "yColumns": null,
+  "ySplit": null,
+  "yTitle": null,
+  "anomalyColumns": null
+}
+```
 
 ### Metrics query
 

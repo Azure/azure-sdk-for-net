@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class QueueTests : ServiceBusTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ServiceBusQueueCollection _queueCollection;
         public QueueTests(bool isAsync) : base(isAsync)
         {
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceData parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium
+                    Tier = ServiceBusSkuTier.Premium
                 }
             };
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, parameters)).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             _queueCollection = serviceBusNamespace.GetServiceBusQueues();
         }
         [Test]
@@ -42,21 +42,20 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             Assert.NotNull(queue);
             Assert.AreEqual(queue.Id.Name, queueName);
 
             //validate if created successfully
-            queue = await _queueCollection.GetIfExistsAsync(queueName);
-            Assert.NotNull(queue);
             Assert.IsTrue(await _queueCollection.ExistsAsync(queueName));
+            queue = await _queueCollection.GetAsync(queueName);
 
             //delete queue
-            await queue.DeleteAsync(true);
+            await queue.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            queue = await _queueCollection.GetIfExistsAsync(queueName);
-            Assert.Null(queue);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _queueCollection.GetAsync(queueName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _queueCollection.ExistsAsync(queueName));
         }
 
@@ -69,11 +68,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             for (int i = 0; i < 10; i++)
             {
                 string queueName = Recording.GenerateAssetName("queue" + i.ToString());
-                _ = await _queueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData());
+                _ = await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData());
             }
 
             //validate
-            List<ServiceBusQueue> list = await _queueCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusQueueResource> list = await _queueCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(10, list.Count);
             list = await _queueCollection.GetAllAsync(5, 5).ToEnumerableAsync();
             Assert.AreEqual(5, list.Count);
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             Assert.NotNull(queue);
             Assert.AreEqual(queue.Id.Name, queueName);
 
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 MaxSizeInMegabytes = 1024
             };
-            queue = (await _queueCollection.CreateOrUpdateAsync(true, queueName, parameters)).Value;
+            queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, parameters)).Value;
             Assert.AreEqual(queue.Data.MaxMessageSizeInKilobytes, 1024);
         }
 
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceQueueAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -126,12 +125,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceQueueAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<NamespaceQueueAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
             Assert.True(rules.Count == 1);
             bool isContainAuthorizationRuleName = false;
-            foreach (NamespaceQueueAuthorizationRule rule in rules)
+            foreach (NamespaceQueueAuthorizationRuleResource rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -142,12 +141,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //delete authorization rule
-            await authorizationRule.DeleteAsync(true);
+            await authorizationRule.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted
             Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             IgnoreTestInLiveMode();
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            ServiceBusQueue queue = (await _queueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+            ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             NamespaceQueueAuthorizationRuleCollection ruleCollection = queue.GetNamespaceQueueAuthorizationRules();
 
             //create authorization rule
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceQueueAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 

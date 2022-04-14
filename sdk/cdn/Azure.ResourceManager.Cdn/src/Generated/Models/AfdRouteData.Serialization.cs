@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -71,15 +71,17 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CompressionSettings))
+            if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("compressionSettings");
-                writer.WriteObjectValue(CompressionSettings);
-            }
-            if (Optional.IsDefined(QueryStringCachingBehavior))
-            {
-                writer.WritePropertyName("queryStringCachingBehavior");
-                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
@@ -109,16 +111,16 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
-            Optional<IList<WritableSubResource>> customDomains = default;
+            Optional<string> endpointName = default;
+            Optional<IList<ActivatedResourceReference>> customDomains = default;
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
             Optional<IList<WritableSubResource>> ruleSets = default;
             Optional<IList<AfdEndpointProtocols>> supportedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
-            Optional<object> compressionSettings = default;
-            Optional<AfdQueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Optional<AfdRouteCacheConfiguration> cacheConfiguration = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
             Optional<HttpsRedirect> httpsRedirect = default;
@@ -156,6 +158,11 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("endpointName"))
+                        {
+                            endpointName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("customDomains"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -163,10 +170,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<ActivatedResourceReference> array = new List<ActivatedResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(ActivatedResourceReference.DeserializeActivatedResourceReference(item));
                             }
                             customDomains = array;
                             continue;
@@ -231,24 +238,14 @@ namespace Azure.ResourceManager.Cdn
                             patternsToMatch = array;
                             continue;
                         }
-                        if (property0.NameEquals("compressionSettings"))
+                        if (property0.NameEquals("cacheConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                cacheConfiguration = null;
                                 continue;
                             }
-                            compressionSettings = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("queryStringCachingBehavior"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            queryStringCachingBehavior = property0.Value.GetString().ToAfdQueryStringCachingBehavior();
+                            cacheConfiguration = AfdRouteCacheConfiguration.DeserializeAfdRouteCacheConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("forwardingProtocol"))
@@ -315,7 +312,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdRouteData(id, name, type, systemData, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), compressionSettings.Value, Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdRouteData(id, name, type, systemData, endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

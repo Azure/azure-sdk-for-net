@@ -177,7 +177,7 @@ Your projects can be deployed using the `DeployProjectAsync` or the synchronous 
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
-Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
+Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
 Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -211,7 +211,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);

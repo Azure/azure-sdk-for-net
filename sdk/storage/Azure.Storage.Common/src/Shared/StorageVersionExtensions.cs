@@ -36,7 +36,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK
-            ServiceVersion.V2021_04_10;
+            ServiceVersion.V2021_06_08;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -46,7 +46,7 @@ namespace Azure.Storage
         /// </summary>
         internal const ServiceVersion MaxVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK
-            ServiceVersion.V2021_04_10;
+            ServiceVersion.V2021_06_08;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -71,6 +71,7 @@ namespace Azure.Storage
                 ServiceVersion.V2020_12_06 => "2020-12-06",
                 ServiceVersion.V2021_02_12 => "2021-02-12",
                 ServiceVersion.V2021_04_10 => "2021-04-10",
+                ServiceVersion.V2021_06_08 => "2021-06-08",
 #elif QueueSDK
                 // Queues just bumped the version number without changing the swagger
                 ServiceVersion.V2019_02_02 => "2018-11-09",
@@ -84,6 +85,7 @@ namespace Azure.Storage
                 ServiceVersion.V2020_12_06 => "2018-11-09",
                 ServiceVersion.V2021_02_12 => "2018-11-09",
                 ServiceVersion.V2021_04_10 => "2018-11-09",
+                ServiceVersion.V2021_06_08 => "2018-11-09",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
@@ -119,6 +121,8 @@ namespace Azure.Storage
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_02_12,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_04_10 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_04_10,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_06_08 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_06_08,
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
 #endif
