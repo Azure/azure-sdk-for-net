@@ -25,12 +25,6 @@ namespace Azure.Data.Tables.Tests
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
-        [RecordedTest]
-        public async Task EnableTenantDiscovery()
-        {
-            (await client.QueryAsync<TableEntity>().ToEnumerableAsync()).ToList();
-        }
-
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>

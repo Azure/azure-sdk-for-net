@@ -11,39 +11,24 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// The storage authorization policy which supports challenges including tenantId discovery.
+    /// The Tables authorization policy which supports challenges including tenantId discovery.
     /// </summary>
     internal class TableBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
     {
         private volatile string[] _scopes;
-        private volatile string tenantId;
+        private volatile string _tenantId;
         private readonly bool _enableTenantDiscovery;
 
         /// <summary>
         /// Initializes an instance of the <see cref="TableBearerTokenChallengeAuthorizationPolicy"/>.
         /// </summary>
-        /// <param name="credential"></param>
-        /// <param name="scope"></param>
-        /// <param name="enableTenantDiscovery"> </param>
+        /// <param name="credential">The credential to be used for fetching tokens.</param>
+        /// <param name="scope">The scope used by the credential.</param>
+        /// <param name="enableTenantDiscovery">Determines if tenant discovery should be enabled.</param>
         public TableBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool enableTenantDiscovery) : base(credential, scope)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             _scopes = new[] { scope };
-            _enableTenantDiscovery = enableTenantDiscovery;
-        }
-
-        /// <summary>
-        /// Initializes an instance of the <see cref="TableBearerTokenChallengeAuthorizationPolicy"/>.
-        /// </summary>
-        /// <param name="credential"></param>
-        /// <param name="scopes"></param>
-        /// <param name="enableTenantDiscovery"> </param>
-        public TableBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes, bool enableTenantDiscovery) : base(
-            credential,
-            scopes)
-        {
-            Argument.AssertNotNull(scopes, nameof(scopes));
-            _scopes = scopes.ToArray();
             _enableTenantDiscovery = enableTenantDiscovery;
         }
 
@@ -57,9 +42,9 @@ namespace Azure.Data.Tables
 
         private async ValueTask AuthorizeRequestInternal(HttpMessage message, bool async)
         {
-            if (tenantId != null || !_enableTenantDiscovery)
+            if (_tenantId != null || !_enableTenantDiscovery)
             {
-                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);
+                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: _tenantId);
                 if (async)
                 {
                     await base.AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -84,9 +69,9 @@ namespace Azure.Data.Tables
                 var authUri = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization_uri");
 
                 // tenantId should be the guid as seen in this example: https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize
-                tenantId = new Uri(authUri).Segments[1].Trim('/');
+                _tenantId = new Uri(authUri).Segments[1].Trim('/');
 
-                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);
+                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: _tenantId);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);

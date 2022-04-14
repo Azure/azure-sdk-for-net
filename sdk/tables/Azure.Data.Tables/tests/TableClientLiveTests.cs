@@ -29,12 +29,6 @@ namespace Azure.Data.Tables.Tests
         { }
 
         [RecordedTest]
-        public async Task EnableTenantDiscovery()
-        {
-            (await client.QueryAsync<TableEntity>().ToEnumerableAsync()).ToList();
-        }
-
-        [RecordedTest]
         public async Task UpsertAndQueryWithSingleQuoteNames([Values(true, false)] bool expressionQuery)
         {
             List<TableEntity> entityResults;

@@ -40,7 +40,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task UsesTokenProvidedByCredentials()
         {
-            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes, false);
+            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes[0], false);
 
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
@@ -51,7 +51,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task DoesNotSendUnAuthorizedRequestWhenEnableTenantDiscoveryIsFalse([Values(true, false)] bool enableTenantDiscovery)
         {
-            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes, false);
+            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes[0], false);
 
             MockTransport transport = CreateMockTransport(_ => new MockResponse(200));
 
@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task SendsUnUnAuthorizedRequestWhenEnableTenantDiscoveryIsTrue([Values(true, false)] bool enableTenantDiscovery)
         {
-            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes, enableTenantDiscovery);
+            var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes[0], enableTenantDiscovery);
             bool firstRequest = true;
             var challengeReponse = new MockResponse((int)HttpStatusCode.Unauthorized);
             if (enableTenantDiscovery)
