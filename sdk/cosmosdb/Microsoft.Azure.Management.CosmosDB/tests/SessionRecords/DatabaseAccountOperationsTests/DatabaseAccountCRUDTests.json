@@ -2415,7 +2415,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryMasterKey\": \"asSduv48Xnp6VJs8kVw2qGlEIwt3B8DsdGBKsB4F2g4At8KchPYYmMzp2OQqyUknksooCce7voAGPuLnsCagyg==\",\r\n  \"secondaryMasterKey\": \"UAHvhwZDKlqooK2N6F9SiziGPI2nyqmNmpaixWjP39rFhBY808lPLpSDHxB7MqEnzISKycz55HsJWVnAEDxNlQ==\",\r\n  \"primaryReadonlyMasterKey\": \"WLlomuGXmUPZHPRLpTmF7vRcBXeuPSa25OKqJ1XpECDxhuKv6lO0w0jG7ZwJ8oNKzqboQSrjKlfWsIASTAhXAw==\",\r\n  \"secondaryReadonlyMasterKey\": \"OH5Dlcz0r1GlnzHFo9Afb6IyuGV6NWgf8BNfvkzme4TfANisKAIJ8yGcC2V6Ah5i959RGTRPZrU4c5ej40Sv8A==\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryMasterKey\": \"Sanitized\",\r\n  \"secondaryMasterKey\": \"Santized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2604,7 +2604,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryReadonlyMasterKey\": \"WLlomuGXmUPZHPRLpTmF7vRcBXeuPSa25OKqJ1XpECDxhuKv6lO0w0jG7ZwJ8oNKzqboQSrjKlfWsIASTAhXAw==\",\r\n  \"secondaryReadonlyMasterKey\": \"OH5Dlcz0r1GlnzHFo9Afb6IyuGV6NWgf8BNfvkzme4TfANisKAIJ8yGcC2V6Ah5i959RGTRPZrU4c5ej40Sv8A==\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryReadonlyMasterKey\": \"Sanitized\",\r\n  \"secondaryReadonlyMasterKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
