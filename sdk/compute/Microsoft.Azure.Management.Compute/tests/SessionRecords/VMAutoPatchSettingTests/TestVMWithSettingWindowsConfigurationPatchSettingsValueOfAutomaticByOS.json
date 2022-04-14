@@ -482,7 +482,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "207"
+          "205"
         ]
       },
       "ResponseHeaders": {
@@ -530,7 +530,7 @@
           "Wed, 13 Apr 2022 19:03:26 GMT"
         ],
         "Content-Length": [
-          "769"
+          "763"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -655,7 +655,7 @@
           "Wed, 13 Apr 2022 19:03:27 GMT"
         ],
         "Content-Length": [
-          "770"
+          "764"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -725,7 +725,7 @@
           "Wed, 13 Apr 2022 19:03:28 GMT"
         ],
         "Content-Length": [
-          "770"
+          "764"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -759,7 +759,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "402"
+          "401"
         ]
       },
       "ResponseHeaders": {
@@ -1670,6 +1670,10 @@
         "x-ms-request-id": [
           "8de5aa50-fd48-4145-9a6d-e00618a4c9dd"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11995"
         ],
@@ -1735,6 +1739,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11994"
         ],
@@ -1791,6 +1799,10 @@
         ],
         "x-ms-request-id": [
           "f887ce37-0f67-4061-b951-8c54408f10c9"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -1863,6 +1875,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11992"
         ],
@@ -1919,6 +1935,10 @@
         ],
         "x-ms-request-id": [
           "760567fa-3bd3-47a8-8e12-59606dbe8a8a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -1991,6 +2011,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11991"
         ],
@@ -2058,13 +2082,17 @@
           "Enabled"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/DeleteVM3Min;239,Microsoft.Compute/DeleteVM30Min;1191"
+          "Microsoft.Compute/DeleteVM3Min;239,Microsoft.Compute/DeleteVM30Min;1193"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
           "3730ae12-f863-4507-8b8a-627a29788574"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
