@@ -15,7 +15,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure IoT Models Repository client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.IoT.ModelsRepository
+dotnet add package Azure.IoT.ModelsRepository --prerelease
 ```
 
 View the package details at nuget.org.
