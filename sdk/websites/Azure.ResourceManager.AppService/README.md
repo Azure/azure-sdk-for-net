@@ -13,8 +13,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure AppService management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.AppService -Version 1.0.0-beta.1
+```dotnetcli
+dotnet add package Azure.ResourceManager.AppService --prerelease
 ```
 
 ### Prerequisites
