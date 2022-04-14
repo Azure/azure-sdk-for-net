@@ -658,6 +658,11 @@ namespace Compute.Tests
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade == expectedEnableAutomaticOSUpgradeValue);
             }
 
+            if (vmScaleSet.UpgradePolicy?.AutomaticOSUpgradePolicy?.UseRollingUpgradePolicy ?? false)
+            {
+                Assert.NotNull(vmScaleSet.UpgradePolicy.RollingUpgradePolicy);
+            }
+
             if (vmScaleSet.AutomaticRepairsPolicy != null)
             {
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;

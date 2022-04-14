@@ -68,6 +68,14 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Overprovision = false;
                             vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy()
+                            {
+                                //MaxBatchInstancePercent = 49,
+                                //MaxUnhealthyInstancePercent = 81,
+                                MaxUnhealthyUpgradedInstancePercent = 88,
+                                //PauseTimeBetweenBatches = "PT0S",
+                                //PrioritizeUnhealthyInstances = true,
+                            };
                         },
                         createWithManagedDisks: true,
                         createWithPublicIpAddress: false,
@@ -338,6 +346,26 @@ namespace Compute.Tests
                     {
                         DisableAutomaticRollback = true,
                         EnableAutomaticOSUpgrade = false
+                    };
+                    UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+                    getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+
+                    // Validate RollingUpgradePolicy is used when useRollingUpgradePolicy is set to true
+                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                    {
+                        DisableAutomaticRollback = true,
+                        EnableAutomaticOSUpgrade = false,
+                        UseRollingUpgradePolicy = true,
+                    };
+                    inputVMScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy()
+                    {
+                        MaxBatchInstancePercent = 49,
+                        MaxUnhealthyInstancePercent = 81,
+                        MaxUnhealthyUpgradedInstancePercent = 88,
+                        PauseTimeBetweenBatches = "PT0S",
+                        PrioritizeUnhealthyInstances = true,
                     };
                     UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
