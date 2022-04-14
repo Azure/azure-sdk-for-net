@@ -12,7 +12,8 @@
     <PackageReleaseNotes>
       <![CDATA[
         Added support for Continuous 7 days
-        Added support for Partition Merge for Sql and Mongo provisioned collections.
+        Added support for Partition Merge for Sql and Mongo provisioned containers.
+        Added support to pass Client Encryption Policy during container creation.       
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
