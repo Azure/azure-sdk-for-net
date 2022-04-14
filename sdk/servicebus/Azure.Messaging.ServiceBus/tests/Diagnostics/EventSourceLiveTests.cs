@@ -257,6 +257,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 string lockToken = null;
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    // intentionally not disposing to ensure that the exception will be thrown even after the callback returns
+                    args.CancellationToken.Register(args.CancellationToken.ThrowIfCancellationRequested);
                     lockToken = args.Message.LockToken;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
@@ -274,6 +276,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 _listener.SingleEventById(
+                    ServiceBusEventSource.StartProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
                     ServiceBusEventSource.ReceiveMessageCompleteEvent,
                     e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
                 _listener.SingleEventById(
@@ -282,6 +287,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorStoppingCancellationWarningEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.StopProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
             }
         }
 

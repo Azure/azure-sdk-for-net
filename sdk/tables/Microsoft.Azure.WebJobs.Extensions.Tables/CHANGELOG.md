@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0 (2022-04-05)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
 
 ### Breaking Changes
-
-- The `AddAzureTables` extension method has been renamed to `AddTables`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-04-11)
+
+### Breaking Changes
+
+- The `AddAzureTables` extension method has been renamed to `AddTables`.
 
 ## 1.0.0-beta.2 (2022-03-10)
 

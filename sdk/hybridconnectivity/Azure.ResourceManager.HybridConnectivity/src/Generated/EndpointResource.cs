@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.HybridConnectivity
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string endpointName)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string endpointName)
         {
-            var resourceId = $"{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";
+            var resourceId = $"{scope}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAccessResource>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAccessResource> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<TargetResourceEndpointAccess> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();
