@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(SecurityPolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 

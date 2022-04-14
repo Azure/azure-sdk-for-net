@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
-tag: package-track2-preview
+tag: package-resources-2022-04
 
 output-folder: Generated/
 clear-output-folder: true
@@ -239,7 +239,7 @@ directive:
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
       $.DeploymentExtended.properties.location["x-ms-format"] = "azure-location";
-      $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.Deployment['x-ms-client-name'] = 'ArmDeploymentContent';
       $.Deployment.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
@@ -249,7 +249,7 @@ directive:
       $.DeploymentOperationProperties.properties.provisioningOperation['x-ms-enum'].name = 'ProvisioningOperationKind';
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
-      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIfContent';
       $.DeploymentWhatIf.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
@@ -257,6 +257,9 @@ directive:
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
       $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
+      $.Dependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.BasicDependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.TargetResource.properties.resourceType['x-ms-format'] = 'resource-type';
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
@@ -324,13 +327,17 @@ directive:
     where: $.definitions.DeploymentProperties.properties.onErrorDeployment
     transform: >
       $["x-ms-client-name"] = "ErrorDeployment"
+  - from: deploymentScripts.json
+    where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
+    transform: >
+      $.additionalProperties = undefined
 ```
 
-### Tag: package-track2-preview
+### Tag: package-resources-2022-04
 
-These settings apply only when `--tag=package-track2-preview` is specified on the command line.
+These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
 
-```yaml $(tag) == 'package-track2-preview'
+```yaml $(tag) == 'package-resources-2022-04'
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json

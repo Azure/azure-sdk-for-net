@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
             ApiKey orignalKey = keys.FirstOrDefault();
 
-            RegenerateKeyOptions regenerateKeyOptions = new RegenerateKeyOptions() { Id = orignalKey.Id };
+            RegenerateKeyContent regenerateKeyOptions = new RegenerateKeyContent() { Id = orignalKey.Id };
             ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            PatchableConfigurationStoreData PatchableconfigurationStoreData = new PatchableConfigurationStoreData() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
+            ConfigurationStorePatch PatchableconfigurationStoreData = new ConfigurationStorePatch() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
             ConfigurationStoreResource configurationStore = (await ConfigStore.UpdateAsync(WaitUntil.Completed, PatchableconfigurationStoreData)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);

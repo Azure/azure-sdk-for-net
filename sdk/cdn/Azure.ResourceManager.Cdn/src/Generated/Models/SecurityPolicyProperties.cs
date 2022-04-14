@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> object which contains security policy parameters. </summary>
         internal SecurityPolicyPropertiesParameters Parameters { get; }
         /// <summary> The type of the Security policy to create. </summary>
-        internal SecurityPolicyType ParametersSecurityPolicyType
+        internal SecurityPolicyType ParametersPolicyType
         {
-            get => Parameters.SecurityPolicyType;
-            set => Parameters.SecurityPolicyType = value;
+            get => Parameters.PolicyType;
+            set => Parameters.PolicyType = value;
         }
     }
 }

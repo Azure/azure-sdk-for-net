@@ -78,15 +78,23 @@ namespace Azure.AI.Language.Conversations
         /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
         /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="utterance"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="utterance"/> or <paramref name="project"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(utterance, nameof(utterance));
 
-            options = options ?? new();
-            options.Utterance = utterance;
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            {
+                Verbose = options?.Verbose,
+            };
+
+            TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
+
+            options ??= new AnalyzeConversationOptions(textConversationItem);
+            CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);
@@ -95,7 +103,7 @@ namespace Azure.AI.Language.Conversations
 
             try
             {
-                return await _analysisRestClient.AnalyzeConversationAsync(project.ProjectName, project.DeploymentName, options, cancellationToken).ConfigureAwait(false);
+                return await _analysisRestClient.AnalyzeConversationAsync(customConversationalTask, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -109,15 +117,23 @@ namespace Azure.AI.Language.Conversations
         /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
         /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="utterance"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="utterance"/> or <paramref name="project"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationTaskResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(utterance, nameof(utterance));
 
-            options = options ?? new();
-            options.Utterance = utterance;
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            {
+                Verbose = options?.Verbose,
+            };
+
+            TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
+
+            options ??= new AnalyzeConversationOptions(textConversationItem);
+            CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);
@@ -126,7 +142,7 @@ namespace Azure.AI.Language.Conversations
 
             try
             {
-                return _analysisRestClient.AnalyzeConversation(project.ProjectName, project.DeploymentName, options, cancellationToken);
+                return _analysisRestClient.AnalyzeConversation(customConversationalTask, cancellationToken);
             }
             catch (Exception ex)
             {

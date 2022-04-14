@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
 
             // Update
             addressProperties.ContactDetails.ContactName = "Updated contact name";
-            PatchableOrderItemResourceData orderItemUpdateParameter = new()
+            OrderItemResourcePatch orderItemUpdateParameter = new()
             {
                 ForwardAddress = addressProperties
             };

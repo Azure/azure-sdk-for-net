@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, PatchableLogProfileData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, LogProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Monitor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -279,17 +279,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, PatchableLogProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, logProfileName, data);
+            using var message = CreateUpdateRequest(subscriptionId, logProfileName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -308,17 +308,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="logProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogProfileData> Update(string subscriptionId, string logProfileName, PatchableLogProfileData data, CancellationToken cancellationToken = default)
+        public Response<LogProfileData> Update(string subscriptionId, string logProfileName, LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, logProfileName, data);
+            using var message = CreateUpdateRequest(subscriptionId, logProfileName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

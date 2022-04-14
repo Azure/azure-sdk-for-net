@@ -41,7 +41,7 @@ namespace Azure.Identity
         private CloudShellManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
-            if (!string.IsNullOrEmpty(options.ClientId) || null == options.ResourceIdentifier)
+            if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
             {
                 AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Cloud Shell");
             }

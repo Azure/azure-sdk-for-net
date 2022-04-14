@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VaultKeyVersionResource>> GetVaultKeyVersionAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
             return await GetVaultKeyVersions().GetAsync(keyVersion, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VaultKeyVersionResource> GetVaultKeyVersion(string keyVersion, CancellationToken cancellationToken = default)
         {
             return GetVaultKeyVersions().Get(keyVersion, cancellationToken);

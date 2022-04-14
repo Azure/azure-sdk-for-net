@@ -459,9 +459,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [TestCase(null)]
-        [TestCase("mock-client-id")]
-        public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync(string clientId)
+        [TestCaseSource(nameof(ResourceAndClientIds))]
+        public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync(string clientId, bool includeResourceIdentifier)
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -474,7 +473,13 @@ namespace Azure.Identity.Tests
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            ManagedIdentityCredential client = InstrumentClient(new ManagedIdentityCredential(clientId, options));
+            // ManagedIdentityCredential client = InstrumentClient(new ManagedIdentityCredential(clientId, options));
+            ManagedIdentityCredential client = (clientId, includeResourceIdentifier) switch
+            {
+                (Item1: null, Item2: true) => InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), options)),
+                (Item1: not null, Item2: false) => InstrumentClient(new ManagedIdentityCredential(clientId, options)),
+                _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, options))
+            };
 
             AccessToken actualToken = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -491,7 +496,7 @@ namespace Azure.Identity.Tests
             string body = Encoding.UTF8.GetString(content);
 
             Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            if (clientId != null)
+            if (clientId != null || includeResourceIdentifier)
             {
                 Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "Cloud Shell")));
             }
