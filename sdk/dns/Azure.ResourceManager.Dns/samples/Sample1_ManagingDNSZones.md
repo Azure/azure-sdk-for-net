@@ -90,4 +90,4 @@ await dnsZone.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Take a look at the [Managing Record Set Ptrs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingDNSRecords.md) samples.
+Take a look at the [Managing Record Set Ptrs](https://github.com/dvbb/azure-sdk-for-net/blob/dvbb-mgmt-track2-dns-2/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingRecordSetPtrs.md) samples.
