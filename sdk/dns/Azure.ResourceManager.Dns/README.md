@@ -6,7 +6,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Compute management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Dns management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.dns --prerelease
@@ -101,7 +101,7 @@ await dnsZone.DeleteAsync(WaitUntil.Completed);
 ### More sample code
 
 - [Managing DNS Zones](https://github.com/dvbb/azure-sdk-for-net/blob/dvbb-mgmt-track2-dns-2/sdk/dns/Azure.ResourceManager.Dns/samples/Sample1_ManagingDNSZones.md)
-- [Managing DNS Records](https://github.com/dvbb/azure-sdk-for-net/blob/dvbb-mgmt-track2-dns-2/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingRecordSetPtrs.md)
+- [Managing Record Set Ptrs](https://github.com/dvbb/azure-sdk-for-net/blob/dvbb-mgmt-track2-dns-2/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingRecordSetPtrs.md)
 
 ### Additional Documentation
 
