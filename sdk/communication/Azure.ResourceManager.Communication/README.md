@@ -17,8 +17,8 @@ Use the management library for Azure Communication Services to:
 
 Install the Azure Communication management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.Communication --version 1.1.0-beta.2
+```dotnetcli
+dotnet add package Azure.ResourceManager.Communication
 ``` 
 
 ### Prerequisites

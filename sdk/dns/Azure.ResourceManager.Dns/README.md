@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure dns management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.dns -Version 1.0.0-preview.1 
+```dotnetcli
+dotnet add package Azure.ResourceManager.dns --prerelease
 ```
 
 ### Prerequisites

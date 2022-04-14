@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Insights management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.Insights -Version 1.0.0-preview.1 
+```dotnetcli
+dotnet add package Azure.ResourceManager.Insights --prerelease
 ```
 
 ### Prerequisites
