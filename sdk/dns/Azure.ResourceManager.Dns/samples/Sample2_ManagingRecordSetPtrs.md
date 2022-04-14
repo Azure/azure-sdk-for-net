@@ -1,10 +1,10 @@
-# Example: Managing DNS zones
+# Example: Managing DNS records
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
 
-```C# Snippet:Manage_DnsZones_Namespaces
+```C# Snippet:Manage_RecordSetPtrs_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -33,61 +33,73 @@ ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync
 ResourceGroupResource resourceGroup = lro.Value;
 ```
 
-Now that we have the resource group created, we can manage the DNS Zones inside this resource group.
+***Create a Record set ptr***
 
-***Create a DNS Zone***
-
-```C# Snippet:Managing_DnsZones_CreateADnsZones
+```C# Snippet:Managing_RecordSetPtrs_CreateARecordSetPtr
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the DnsZone collection from the resource group
-DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
-// Use the same location as the resource group
+// create a DnsZone
 string dnsZoneName = "sample.com";
+DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
 DnsZoneData data = new DnsZoneData("Global")
 {
 };
 ArmOperation<DnsZoneResource> lro = await dnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneName, data);
 DnsZoneResource dnsZone = lro.Value;
+// create a ptr record set
+RecordSetPtrCollection  recordSetPtrCollection = dnsZone.GetRecordSetPtrs();
+string name = "ptr";
+ArmOperation<RecordSetPtrResource> recordSetPtrResource = await recordSetPtrCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, new PtrRecordSetData() { });
+RecordSetPtrResource recordSetPtr = recordSetPtrResource.Value;
 ```
 
-***List DNS Zones***
+***List all Record set ptrs***
 
-```C# Snippet:Managing_DnsZones_ListAllDnsZones
+```C# Snippet:Managing_RecordSetPtrs_ListAllRecordSetPtrs
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the DnsZone collection from the resource group
+// create a DnsZone
+string dnsZoneName = "sample.com";
 DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
-// With ListAsync(), we can get a list of the DnsZones
-AsyncPageable<DnsZoneResource>  response = dnsZoneCollection.GetAllAsync();
-await foreach (DnsZoneResource dnsZone in response)
+DnsZoneData data = new DnsZoneData("Global")
 {
-    Console.WriteLine(dnsZone.Data.Name);
+};
+ArmOperation<DnsZoneResource> lro = await dnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneName, data);
+DnsZoneResource dnsZone = lro.Value;
+// With ListAsync(), we can get a list of the RecordSetPtrs
+RecordSetPtrCollection recordSetPtrCollection = dnsZone.GetRecordSetPtrs();
+AsyncPageable<RecordSetPtrResource> response = recordSetPtrCollection.GetAllAsync();
+await foreach (RecordSetPtrResource recordSetPtr in response)
+{
+    Console.WriteLine(recordSetPtr.Data.Name);
 }
 ```
 
-***Delete DNS Zone***
+***Delete Record set ptr***
 
-```C# Snippet:Managing_DnsZones_DeleteDnsZone
+```C# Snippet:Managing_RecordSetPtrs_DeleteRecordSetPtr
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the DnsZone collection from the resource group
-DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
+// create a DnsZone
 string dnsZoneName = "sample.com";
-DnsZoneResource dnsZone =await dnsZoneCollection.GetAsync(dnsZoneName);
-await dnsZone.DeleteAsync(WaitUntil.Completed);
+DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
+DnsZoneData data = new DnsZoneData("Global")
+{
+};
+ArmOperation<DnsZoneResource> lro = await dnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneName, data);
+DnsZoneResource dnsZone = lro.Value;
+// Now we get the DnsZone collection from the resource group
+RecordSetPtrCollection recordSetPtrCollection = dnsZone.GetRecordSetPtrs();
+string recordSetPtrName = "ptr";
+RecordSetPtrResource recordSetPtr = await recordSetPtrCollection.GetAsync(recordSetPtrName);
+await recordSetPtr.DeleteAsync(WaitUntil.Completed);
 ```
-
-
-## Next steps
-
-Take a look at the [Managing Record Set Ptrs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingDNSRecords.md) samples.

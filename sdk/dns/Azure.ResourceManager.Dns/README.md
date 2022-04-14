@@ -36,19 +36,57 @@ Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/
 
 ## Examples
 
-### Create an availability set
+### Create a Dns zone
 
-Before creating an availability set, we need to have a resource group.
+```C# Snippet:Managing_DnsZones_CreateADnsZones
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+// first we need to get the resource group
+string rgName = "myRgName";
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+// Now we get the DnsZone collection from the resource group
+DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
+// Use the same location as the resource group
+string dnsZoneName = "sample.com";
+DnsZoneData data = new DnsZoneData("Global")
+{
+};
+ArmOperation<DnsZoneResource> lro = await dnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneName, data);
+DnsZoneResource dnsZone = lro.Value;
+```
 
-### Get all availability set in a resource group
+### Get all Dns zones in a resource group
 
-### Update an availability set
+```C# Snippet:Managing_DnsZones_ListAllDnsZones
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+// first we need to get the resource group
+string rgName = "myRgName";
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+// Now we get the DnsZone collection from the resource group
+DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
+// With ListAsync(), we can get a list of the DnsZones
+AsyncPageable<DnsZoneResource>  response = dnsZoneCollection.GetAllAsync();
+await foreach (DnsZoneResource dnsZone in response)
+{
+    Console.WriteLine(dnsZone.Data.Name);
+}
+```
 
-### Delete an availability set
+### Delete a Dns zone
 
-### Check if availability set exists
-
-### Add a tag to an availability set
+```C# Snippet:Managing_DnsZones_DeleteDnsZone
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+// first we need to get the resource group
+string rgName = "myRgName";
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+// Now we get the DnsZone collection from the resource group
+DnsZoneCollection dnsZoneCollection = resourceGroup.GetDnsZones();
+string dnsZoneName = "sample.com";
+DnsZoneResource dnsZone =await dnsZoneCollection.GetAsync(dnsZoneName);
+await dnsZone.DeleteAsync(WaitUntil.Completed);
+```
 
 ## Troubleshooting
 
@@ -62,8 +100,8 @@ Before creating an availability set, we need to have a resource group.
 
 ### More sample code
 
-- [Managing Disks](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample1_ManagingDisks.md)
-- [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md)
+- [Managing DNS Zones](https://github.com/dvbb/azure-sdk-for-net/blob/dvbb-mgmt-track2-dns-2/sdk/dns/Azure.ResourceManager.Dns/samples/Sample1_ManagingDNSZones.md)
+- [Managing DNS Records](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dns/Azure.ResourceManager.Dns/samples/Sample2_ManagingDNSRecords.md)
 
 ### Additional Documentation
 
@@ -71,8 +109,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-For details on contributing to this repository, see the [contributing
-guide][cg].
+For details on contributing to this repository, see the [contributing guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
