@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    public partial class EndpointAccessResource
+    public partial class TargetResourceEndpointAccess
     {
-        internal static EndpointAccessResource DeserializeEndpointAccessResource(JsonElement element)
+        internal static TargetResourceEndpointAccess DeserializeTargetResourceEndpointAccess(JsonElement element)
         {
             Optional<string> namespaceName = default;
             Optional<string> namespaceNameSuffix = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     continue;
                 }
             }
-            return new EndpointAccessResource(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn));
+            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn));
         }
     }
 }
