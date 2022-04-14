@@ -49,7 +49,7 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
-        public async Task DoesNotSendUnAuthorizedRequestWhenEnableTenantDiscoveryIsFalse([Values(true, false)] bool enableTenantDiscovery)
+        public async Task DoesNotSendUnauthorizedRequestWhenEnableTenantDiscoveryIsFalse([Values(true, false)] bool enableTenantDiscovery)
         {
             var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes, false);
 
@@ -63,7 +63,7 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
-        public async Task SendsUnUnAuthorizedRequestWhenEnableTenantDiscoveryIsTrue([Values(true, false)] bool enableTenantDiscovery)
+        public async Task SendsUnauthorizedRequestWhenEnableTenantDiscoveryIsTrue([Values(true, false)] bool enableTenantDiscovery)
         {
             var policy = new TableBearerTokenChallengeAuthorizationPolicy(_cred, _scopes, enableTenantDiscovery);
             bool firstRequest = true;
