@@ -10,6 +10,7 @@ tag: package-artifacts-composite-v3
 require:
     - https://github.com/Azure/azure-rest-api-specs/blob/8c1b6936238a1734036c22e3ae98b31c6b9f04cb/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
+generation1-convenience-client: true
 public-clients: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
