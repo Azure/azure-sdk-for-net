@@ -117,11 +117,11 @@ try {
             if ($readmeContent -Match "dotnet add")
             {
                 $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"
+                $hasGa = $false
+                $hasRelease = $false
                 if (Test-Path $changelogPath)
                 {
                     $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
-                    $hasGa = $false
-                    $hasRelease = $false
                     foreach ($key in $changeLogEntries.Keys)
                     {
                         $entry = $changeLogEntries[$key]
