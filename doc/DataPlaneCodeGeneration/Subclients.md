@@ -2,7 +2,7 @@
 
 ## Subclients
 
-autorest requires each operation in swagger file to define a unique string parameter `operationId` (this is different from [official OpenAPI specification](https://swagger.io/docs/specification/paths-and-operations/#operationId)). If parameter value contains underscore, then the part after underscore will be treated as operation name, and the part before underscore will be treated as the name of the operation group which this operation belongs to. Otherwise, operation will be attributed to the group without a name::
+Autorest requires each operation in swagger file to define a unique string parameter `operationId` (this is different from [official OpenAPI specification](https://swagger.io/docs/specification/paths-and-operations/#operationId)). If parameter value contains underscore, then the part after underscore will be treated as operation name, and the part before underscore will be treated as the name of the operation group which this operation belongs to. Otherwise, operation will be attributed to the group without a name::
 
 ```js
 "paths": {
@@ -88,15 +88,16 @@ namespace Azure.Analytics.Purview.Account
 
 **Add customize configuration:**
 
-Add `single-top-level-clinet: true` in the autorest configuration.
+Add `single-top-level-client: true` in the autorest configuration.
 
 ``` md
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ``` yaml
-namespace: Azure.Service.SubClients
-input-file: $(this-folder)/SubClients.json
+title: PurviewAccount
+namespace: Azure.Analytics.Purview.Account
+input-file: $(this-folder)/account.json
 data-plane: true
 security: AzureKey
 security-header-name: Fake-Subscription-Key
@@ -301,7 +302,7 @@ namespace Azure.Analytics.Purview.Account
     }
 }
 
-//Subclient Collections: Client2 Generated\Collections.cs
+//Subclient: Collections Generated\Collections.cs
 namespace Azure.Analytics.Purview.Account
 {
 -   public partial class CollectionsClient
@@ -314,7 +315,7 @@ namespace Azure.Analytics.Purview.Account
     }
 }
 
-//Subclient ResourceSetRules: Client2 Generated\ResourceSetRules.cs
+//Subclient: ResourceSetRules Generated\ResourceSetRules.cs
 namespace Azure.Analytics.Purview.Account
 {
 -   public partial class ResourceSetRulesClient
