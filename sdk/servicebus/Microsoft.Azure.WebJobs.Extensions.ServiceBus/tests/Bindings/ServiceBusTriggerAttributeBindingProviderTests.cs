@@ -20,8 +20,11 @@ using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.Host.Scale;
+using System;
+using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
@@ -29,6 +32,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
     {
         private readonly ServiceBusTriggerAttributeBindingProvider _provider;
         private readonly string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly TestLoggerProvider _loggerProvider;
 
         public ServiceBusTriggerAttributeBindingProviderTests()
         {
@@ -47,6 +52,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
             var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(options));
             _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory, concurrencyManager);
+
+            _loggerFactory = new LoggerFactory();
+            _loggerProvider = new TestLoggerProvider();
+            _loggerFactory.AddProvider(_loggerProvider);
         }
 
         [Test]
@@ -106,6 +115,56 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Assert.NotNull(listenerOptions);
             Assert.True(listenerOptions.AutoCompleteMessages);
             Assert.False(autoCompleteMessagesFlagSentToListener);
+        }
+
+        [Test]
+        public void LogExceptionReceivedEvent_NonTransientEvent_LoggedAsError()
+        {
+            _loggerProvider.ClearAllLogMessages();
+            var ex = new ServiceBusException(isTransient: false, message: "message");
+            Assert.False(ex.IsTransient);
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Abandon, "TestEndpoint", "TestEntity", CancellationToken.None);
+            ServiceBusTriggerAttributeBindingProvider.LogExceptionReceivedEvent(e, "TestFunction", _loggerFactory);
+
+            var expectedMessage = $"Message processing error (Action=Abandon, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var logMessage = _loggerProvider.GetAllLogMessages().Single();
+            Assert.AreEqual(LogLevel.Error, logMessage.Level);
+            Assert.AreSame(ex, logMessage.Exception);
+            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.True(logMessage.Category.Contains("TestFunction"));
+        }
+
+        [Test]
+        public void LogExceptionReceivedEvent_TransientEvent_LoggedAsInformation()
+        {
+            _loggerProvider.ClearAllLogMessages();
+            var ex = new ServiceBusException(message: "message", isTransient: true);
+            Assert.True(ex.IsTransient);
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Receive, "TestEndpoint", "TestEntity", CancellationToken.None);
+            ServiceBusTriggerAttributeBindingProvider.LogExceptionReceivedEvent(e, "TestFunction", _loggerFactory);
+
+            var expectedMessage = $"Message processing error (Action=Receive, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var logMessage = _loggerProvider.GetAllLogMessages().Single();
+            Assert.AreEqual(LogLevel.Information, logMessage.Level);
+            Assert.AreSame(ex, logMessage.Exception);
+            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.True(logMessage.Category.Contains("TestFunction"));
+        }
+
+        [Test]
+        public void LogExceptionReceivedEvent_NonMessagingException_LoggedAsError()
+        {
+            _loggerProvider.ClearAllLogMessages();
+            var ex = new MissingMethodException("What method??");
+            ProcessErrorEventArgs e = new ProcessErrorEventArgs(ex, ServiceBusErrorSource.Complete, "TestEndpoint", "TestEntity", CancellationToken.None);
+            ServiceBusTriggerAttributeBindingProvider.LogExceptionReceivedEvent(e, "TestFunction", _loggerFactory);
+
+            var expectedMessage = $"Message processing error (Action=Complete, EntityPath=TestEntity, Endpoint=TestEndpoint)";
+            var logMessage = _loggerProvider.GetAllLogMessages().Single();
+            Assert.AreEqual(LogLevel.Error, logMessage.Level);
+            Assert.AreSame(ex, logMessage.Exception);
+            Assert.AreEqual(expectedMessage, logMessage.FormattedMessage);
+            Assert.True(logMessage.Category.Contains("TestFunction"));
         }
 
         internal static void TestJob_AccountOverride(

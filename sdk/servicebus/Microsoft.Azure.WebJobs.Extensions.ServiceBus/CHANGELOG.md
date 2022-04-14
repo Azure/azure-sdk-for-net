@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Added logging function name on ServiceBus exception.
 
 ## 5.3.0 (2022-03-09)
 

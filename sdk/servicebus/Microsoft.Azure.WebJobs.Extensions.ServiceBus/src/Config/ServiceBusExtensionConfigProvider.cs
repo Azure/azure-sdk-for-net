@@ -74,14 +74,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 throw new ArgumentNullException(nameof(context));
             }
 
-            // Set the default exception handler for background exceptions
-            // if not already set.
-            Options.ProcessErrorAsync ??= (e) =>
-            {
-                LogExceptionReceivedEvent(e, _loggerFactory);
-                return Task.CompletedTask;
-            };
-
             context
                 .AddConverter(new MessageToStringConverter())
                 .AddConverter(new MessageToByteArrayConverter())
@@ -96,41 +88,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             // register our binding provider
             ServiceBusAttributeBindingProvider bindingProvider = new ServiceBusAttributeBindingProvider(_nameResolver, _messagingProvider, _clientFactory);
             context.AddBindingRule<ServiceBusAttribute>().Bind(bindingProvider);
-        }
-
-        internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, ILoggerFactory loggerFactory)
-        {
-            try
-            {
-                var errorSource = e.ErrorSource;
-                var logger = loggerFactory?.CreateLogger<ServiceBusListener>();
-                //TODO new SDK does not expose client ID in event args or on clients
-                string message = $"Message processing error (Action={errorSource}, EntityPath={e.EntityPath}, Endpoint={e.FullyQualifiedNamespace})";
-
-                var logLevel = GetLogLevel(e.Exception);
-                logger?.Log(logLevel, 0, message, e.Exception, (s, ex) => message);
-            }
-            catch (Exception)
-            {
-                // best effort logging
-            }
-        }
-
-        private static LogLevel GetLogLevel(Exception ex)
-        {
-            var sbex = ex as ServiceBusException;
-            if (!(ex is OperationCanceledException) && (sbex == null || !sbex.IsTransient))
-            {
-                // any non-transient exceptions or unknown exception types
-                // we want to log as errors
-                return LogLevel.Error;
-            }
-            else
-            {
-                // transient messaging errors we log as info so we have a record
-                // of them, but we don't treat them as actual errors
-                return LogLevel.Information;
-            }
         }
     }
 }

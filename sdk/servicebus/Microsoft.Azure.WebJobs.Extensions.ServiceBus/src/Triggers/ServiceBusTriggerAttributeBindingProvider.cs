@@ -15,6 +15,7 @@ using Microsoft.Extensions.Azure;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Azure.WebJobs.Logging;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -83,6 +84,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
             (factoryContext, singleDispatch) =>
             {
+                // Set the default exception handler for background exceptions
+                // if not already set.
+                _options.ProcessErrorAsync ??= (e) =>
+                {
+                    LogExceptionReceivedEvent(e, factoryContext.Descriptor.ShortName, _loggerFactory);
+                    return Task.CompletedTask;
+                };
                 var autoCompleteMessagesOptionEvaluatedValue = GetAutoCompleteMessagesOptionToUse(attribute, factoryContext.Descriptor.ShortName);
                 IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, autoCompleteMessagesOptionEvaluatedValue, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory, _concurrencyManager);
 
@@ -111,6 +119,41 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             }
 
             return _options.AutoCompleteMessages;
+        }
+
+        internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, string functionName, ILoggerFactory loggerFactory)
+        {
+            try
+            {
+                var errorSource = e.ErrorSource;
+                var logger = loggerFactory?.CreateLogger(LogCategories.CreateFunctionCategory(functionName));
+                //TODO new SDK does not expose client ID in event args or on clients
+                string message = $"Message processing error (Action={errorSource}, EntityPath={e.EntityPath}, Endpoint={e.FullyQualifiedNamespace})";
+
+                var logLevel = GetLogLevel(e.Exception);
+                logger?.Log(logLevel, 0, message, e.Exception, (s, ex) => message);
+            }
+            catch (Exception)
+            {
+                // best effort logging
+            }
+        }
+
+        private static LogLevel GetLogLevel(Exception ex)
+        {
+            var sbex = ex as ServiceBusException;
+            if (!(ex is OperationCanceledException) && (sbex == null || !sbex.IsTransient))
+            {
+                // any non-transient exceptions or unknown exception types
+                // we want to log as errors
+                return LogLevel.Error;
+            }
+            else
+            {
+                // transient messaging errors we log as info so we have a record
+                // of them, but we don't treat them as actual errors
+                return LogLevel.Information;
+            }
         }
     }
 }
