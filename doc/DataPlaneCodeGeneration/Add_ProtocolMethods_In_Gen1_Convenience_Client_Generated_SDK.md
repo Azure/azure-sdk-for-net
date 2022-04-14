@@ -1,4 +1,4 @@
-# Add Protocol Methods In (Gen 1) Convenience Client Generated SDK
+# Add Protocol Methods In Generated SDK of (Gen 1) Convenience Client
 
 In this tutorial, we will show how to add protocol methods to Data Plane Generation 1 Convenience Clients built on internal generated RestClients.  This is accomplished by adding generated protocol methods to the inner RestClient, and then manually adding them to the outer Convenience Client API.
 
