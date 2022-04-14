@@ -1743,6 +1743,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11994"
         ],
@@ -1799,6 +1803,10 @@
         ],
         "x-ms-request-id": [
           "f887ce37-0f67-4061-b951-8c54408f10c9"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -1879,6 +1887,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11992"
         ],
@@ -1935,6 +1947,10 @@
         ],
         "x-ms-request-id": [
           "760567fa-3bd3-47a8-8e12-59606dbe8a8a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -2006,6 +2022,10 @@
         ],
         "x-ms-request-id": [
           "bceeb7be-ea9b-4763-9f86-ee14be779096"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -2089,6 +2109,10 @@
         ],
         "x-ms-request-id": [
           "3730ae12-f863-4507-8b8a-627a29788574"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
