@@ -20,8 +20,7 @@ namespace Azure.AI.TextAnalytics
     public class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
-        internal readonly AnalyzeTextRestClient _serviceRestClient;
-        internal readonly MicrosoftCognitiveLanguageServiceRestClient _cognitiveRestClient;
+        internal readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
 
@@ -67,7 +66,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            _serviceRestClient = new AnalyzeTextRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
@@ -106,7 +105,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            _serviceRestClient = new AnalyzeTextRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         #region Detect Language
@@ -150,7 +149,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(analyzeLanguageDetection, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var languageDetection = (LanguageDetectionTaskResult)result.Value;
                 Response response = result.GetRawResponse();
@@ -209,7 +208,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(analyzeLanguageDetection, cancellationToken: cancellationToken);
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, cancellationToken: cancellationToken);
 
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
                 Debug.Assert(languageDetection != null);
@@ -369,7 +368,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
                 analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
                 var response = result.GetRawResponse();
 
@@ -396,7 +395,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
                 analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
                 var response = result.GetRawResponse();
 
@@ -455,7 +454,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
                     analyzeRecognizeEntities,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -518,7 +517,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
                     analyzeRecognizeEntities,
                     cancellationToken: cancellationToken);
 
@@ -696,7 +695,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
                 analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
                     analyzeRecognizeEntities, options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -727,7 +726,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
                 analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
                     analyzeRecognizeEntities, options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
@@ -797,7 +796,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(analyzePiiEntites, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntites, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var piiEntities = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
@@ -867,7 +866,7 @@ namespace Azure.AI.TextAnalytics
                     input.Documents.Add(doc);
                 }
                 var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(analyzePiiEntites, cancellationToken: cancellationToken);
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntites, cancellationToken: cancellationToken);
 
                 var piiEntities = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
@@ -1052,7 +1051,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
                 analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
                     analyzeRecognizeEntities, options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -1082,7 +1081,7 @@ namespace Azure.AI.TextAnalytics
                 analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
                 analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
 
-                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
                     analyzeRecognizeEntities, options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
