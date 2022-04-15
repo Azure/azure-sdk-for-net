@@ -37,10 +37,17 @@ rename-rules:
   URI: Uri
 
 directive:
+  - rename-model:
+      from: EndpointAccessResource
+      to: TargetResourceEndpointAccess
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
     transform: >
       $["x-ms-client-name"] = "EndpointType";
       $["x-ms-enum"]["name"] = "EndpointType"
+  - from: swagger-document
+    where: $.parameters.ResourceUriParameter
+    transform: >
+      $["x-ms-client-name"] = "scope"
 
 ```

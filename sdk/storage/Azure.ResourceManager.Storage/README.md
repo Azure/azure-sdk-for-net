@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.7
+```dotnetcli
+dotnet add package Azure.ResourceManager.Storage --prerelease
 ```
 
 ### Prerequisites

@@ -13,8 +13,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Network management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.Network -Version 1.0.0-beta.6
+```dotnetcli
+dotnet add package Azure.ResourceManager.Network --prerelease
 ```
 
 ### Prerequisites

@@ -49,11 +49,17 @@ namespace Azure.Messaging.EventHubs.Perf
         {
             await base.GlobalSetupAsync().ConfigureAwait(false);
 
-            s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
+            s_scope = await EventHubScope.CreateAsync(Options.PartitionCount).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
             s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
         }
 
+        /// <summary>
+        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
+        ///   This setup will take place once for each instance, running after the global setup has
+        ///   completed.
+        /// </summary>
+        ///
         public override async Task SetupAsync()
         {
             await base.SetupAsync();

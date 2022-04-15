@@ -841,11 +841,11 @@ namespace Azure.Messaging.EventHubs.Producer
             var attempts = 0;
             var diagnosticIdentifiers = new List<string>();
 
-            InstrumentMessages(events);
-
             foreach (var eventData in events)
             {
-                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out var identifier))
+                var (_, identifier) = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+
+                if (identifier != null)
                 {
                     diagnosticIdentifiers.Add(identifier);
                 }
@@ -1090,7 +1090,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 var resetStateOnError = false;
                 var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
-                var eventSet = eventBatch.AsReadOnlyCollection<EventData>() ;
 
                 try
                 {
@@ -1111,22 +1110,13 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     // Sequence the events for publishing.
 
-                    var lastSequence = partitionState.LastPublishedSequenceNumber.Value;
-                    var firstSequence = NextSequence(lastSequence);
-
-                    foreach (var eventData in eventSet)
-                    {
-                        lastSequence = NextSequence(lastSequence);
-                        eventData.PendingPublishSequenceNumber = lastSequence;
-                        eventData.PendingProducerGroupId = partitionState.ProducerGroupId;
-                        eventData.PendingProducerOwnerLevel = partitionState.OwnerLevel;
-                    }
+                    var lastSequence = eventBatch.ApplyBatchSequencing(partitionState.LastPublishedSequenceNumber.Value, partitionState.ProducerGroupId, partitionState.OwnerLevel);
 
                     // Publish the events.
 
                     resetStateOnError = true;
 
-                    EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, firstSequence, lastSequence);
+                    EventHubsEventSource.Log.IdempotentSequencePublish(EventHubName, options.PartitionId, eventBatch.StartingPublishedSequenceNumber.Value, lastSequence);
                     await SendInternalAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
                     // Update state and commit the sequencing.  This needs only to happen at the batch level, as the contained
@@ -1134,23 +1124,19 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     EventHubsEventSource.Log.IdempotentSequenceUpdate(EventHubName, options.PartitionId, partitionState.LastPublishedSequenceNumber.Value, lastSequence);
                     partitionState.LastPublishedSequenceNumber = lastSequence;
-                    eventBatch.StartingPublishedSequenceNumber = firstSequence;
                 }
                 catch
                 {
-                    // Clear the pending sequence numbers in the face of an exception.
+                    // Clear the batch sequencing in the face of an exception.
 
-                    foreach (var eventData in eventSet)
-                    {
-                        eventData.ClearPublishingState();
-                    }
+                    eventBatch.ResetBatchSequencing();
 
                     if (resetStateOnError)
                     {
                         // Reset the partition state and options to ensure that future attempts
                         // are safe and do not risk data loss by reusing the same producer group identifier.
 
-                            if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
+                        if (!Options.PartitionOptions.TryGetValue(options.PartitionId, out var partitionOptions))
                         {
                             partitionOptions = new PartitionPublishingOptions();
                             Options.PartitionOptions[options.PartitionId] = partitionOptions;
@@ -1288,20 +1274,6 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Performs the actions needed to instrument a set of events.
-        /// </summary>
-        ///
-        /// <param name="events">The events to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<EventData> events)
-        {
-            foreach (EventData eventData in events)
-            {
-                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
-            }
-        }
-
-        /// <summary>
         ///   Checks if the <see cref="TransportProducer" /> returned by the <see cref="TransportProducerPool" /> is still open.
         /// </summary>
         ///
@@ -1356,8 +1328,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private static void AssertIdempotentBatchNotPublished(EventDataBatch batch)
         {
-            if ((batch.StartingPublishedSequenceNumber.HasValue)
-                || (batch.AsReadOnlyCollection<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
+            if (batch.StartingPublishedSequenceNumber.HasValue)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.IdempotentAlreadyPublished));
             }

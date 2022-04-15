@@ -17,7 +17,7 @@ process change events that occur in your Blob Storage account at a low cost.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Storage.Blobs.ChangeFeed
+dotnet add package Azure.Storage.Blobs.ChangeFeed --prerelease
 ```
 
 ### Prerequisites
