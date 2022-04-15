@@ -128,7 +128,7 @@ namespace Compute.Tests
                     }
                     catch (Exception e)
                     {
-                        Assert.Contains("either has not been enabled for deployment or the vault id provided", e.Message)
+                        Assert.Contains("either has not been enabled for deployment or the vault id provided", e.Message);
                     }
                 }
                 finally
