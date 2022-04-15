@@ -37,17 +37,15 @@ foreach ($testResourceProvider in $testResourceProviders) {
     Write-Host "$testResourceProvider starts"
     if (Test-Path -Path $projectFolder) {
         Write-Host "The project folder of $testResourceProvider exists"
-        Set-Location $configurationFolder
-        dotnet build /t:GenerateCode | Out-Host
     }
     else {
         $needRemoveFolder = $true
         mkdir -Path $projectFolder
         Set-Location $projectFolder
         dotnet new azuremgmt --provider $testResourceProvider --force
-        Set-Location $configurationFolder
-        autorest autorest.md | Out-Host
     }
+    Set-Location $configurationFolder
+    dotnet build /t:GenerateCode | Out-Host
     if (!$?){
         $genFailResourceProviders += $testResourceProvider
     }
