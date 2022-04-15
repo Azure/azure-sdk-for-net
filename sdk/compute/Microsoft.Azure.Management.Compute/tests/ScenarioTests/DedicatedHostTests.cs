@@ -157,7 +157,7 @@ namespace Compute.Tests
                     ValidateDedicatedHostGroupInstanceView(returnedDHGWithInstanceView, createdDH);
 
                     // Restart the DedicatedHost
-                    //m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
+                    m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
 
                     // Delete DedicatedHost and DedicatedHostGroup
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
