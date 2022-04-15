@@ -188,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 }
                 #endregion
 
+                #region Snippet:ReceiveBatchOfMessages
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -199,6 +200,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // get the message body as a string
                     string body = receivedMessage.Body.ToString();
                 }
+                #endregion
             }
         }
 

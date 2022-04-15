@@ -242,25 +242,17 @@ await sender.SendMessagesAsync(messages);
 
 In order to receive a batch of messages from queue, topic or subscription:
 
-```C# Snippet:ServiceBusSendAndReceiveBatch
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-int maxMessagesToGetInOneBatch = 100;
-
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// create a receiver that we can use to receive the message
+```C# Snippet:ReceiveBatchOfMessages
+// create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
-// receive a batch of messages
-IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessageAsync(maxMessagesToGetInOneBatch);
+// the received message is a different type as it contains some service set properties
+IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
-// go through each of the messages and get the message body as string
 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 {
+    // get the message body as a string
     string body = receivedMessage.Body.ToString();
-    Console.WriteLine(body);
 }
 ```
 
