@@ -18,6 +18,7 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3893616381e816729ef9cdd768e87fb2845e189d/specification/communication/data-plane/CallingServer/readme.md
 payload-flattening-threshold: 10
 clear-output-folder: true
+generation1-convenience-client: true
 ```
 
 ### Fixing RecordingChannel 
