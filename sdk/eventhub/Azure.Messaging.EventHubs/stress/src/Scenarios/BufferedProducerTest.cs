@@ -42,12 +42,8 @@ namespace Azure.Messaging.EventHubs.Stress
                     {
                         metrics.Client.TrackTrace("Run is ending");
                     }
-
-                    metrics.Client.TrackTrace("continuing.. ");
-
-                    // report metrics
                 }
-                // final report metrics
+                // If we want period status updates - metrics would need to be tracked in this class so that they are accessible
             }
             catch (Exception ex) when
                 (ex is OutOfMemoryException
@@ -58,33 +54,24 @@ namespace Azure.Messaging.EventHubs.Stress
             }
             catch (Exception ex)
             {
-                metrics.Client.TrackTrace(ex.Message);
+                metrics.Client.TrackException(ex);
             }
         }
 
         private async Task TestRun(string connectionString, string eventHubName, CancellationToken cancellationToken)
         {
-            using var process = Process.GetCurrentProcess();
-
             var publishingTasks = default(IEnumerable<Task>);
             var runDuration = Stopwatch.StartNew();
 
             try
             {
-                // Begin publishing events in the background.
-
                 publishingTasks = Enumerable
                     .Range(0, 2)
                     .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(cancellationToken)))
                     .ToList();
 
-                // Update metrics.
-
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    // Metrics.UpdateEnvironmentStatistics(process);
-                    // Interlocked.Exchange(ref Metrics.RunDurationMilliseconds, runDuration.Elapsed.TotalMilliseconds);
-
                     await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -99,32 +86,30 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Interlocked.Increment(ref Metrics.TotalExceptions);
-                // Interlocked.Increment(ref Metrics.GeneralExceptions);
-                // ErrorsObserved.Add(ex);
+                metrics.Client.GetMetric(metrics.TotalExceptions).TrackValue(1);
+                metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
+                metrics.Client.TrackException(ex);
             }
 
             // The run is ending.  Clean up the outstanding background operations and
             // complete the necessary metrics tracking.
 
-            // try
-            // {
-            //     publishCancellationSource.Cancel();
-            //     await Task.WhenAll(publishingTasks).ConfigureAwait(false);
-            // }
-            // catch (Exception ex)
-            // {
-            //     Interlocked.Increment(ref Metrics.TotalExceptions);
-            //     Interlocked.Increment(ref Metrics.GeneralExceptions);
-            //     ErrorsObserved.Add(ex);
-            // }
-            // finally
-            // {
-            //     runDuration.Stop();
-            //     IsRunning = false;
-            // }
+            try
+            {
+                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                metrics.Client.GetMetric(metrics.TotalExceptions).TrackValue(1);
+                metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
+                metrics.Client.TrackException(ex);
+            }
+            finally
+            {
+                runDuration.Stop();
+            }
         }
     }
 }

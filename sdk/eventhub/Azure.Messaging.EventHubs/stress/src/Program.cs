@@ -28,11 +28,11 @@ namespace Azure.Messaging.EventHubs.Stress
             var azResourceNamesBPRT = new AzureResourceNames();
 
             testsToRun.TryGetValue("BasicEventProcessorTest", out var runBasicEventProcessorTest);
-            testsToRun.TryGetValue("EventProducerTest", out var runEventProcessorTest);
-            testsToRun.TryGetValue("ProcessorEmptyReadTest", out var runProcessorEmptyReadTest);
 
-            testsToRun.TryGetValue("BasicBufferedProducerTest", out var runBasicBufferedProducerTest);
-            var azResourceNamesBBPT = new AzureResourceNames();
+            testsToRun.TryGetValue("EventProducerTest", out var runEventProducerTest);
+            var azResourceNamesEPT = new AzureResourceNames();
+
+            testsToRun.TryGetValue("ProcessorEmptyReadTest", out var runProcessorEmptyReadTest);
 
             testsToRun.TryGetValue("BufferedProducerTest", out var runBufferedProducerTest);
             var azResourceNamesBPT = new AzureResourceNames();
@@ -61,8 +61,10 @@ namespace Azure.Messaging.EventHubs.Stress
 
                 environment.TryGetValue("EVENTHUB_NAMESPACE_CONNECTION_STRING", out azResourceStrings.EventHubsConnectionString);
                 environment.TryGetValue("STORAGE_CONNECTION_STRING", out azResourceStrings.StorageConnectionString);
+                environment.TryGetValue("APPINSIGHTS_INSTRUMENTATIONKEY", out instrumentationKey);
 
                 environment.TryGetValue("EVENTHUB_NAME_BPRT", out azResourceNamesBPRT.EventHub);
+                environment.TryGetValue("EVENTHUB_NAME_BPT", out azResourceNamesBPT.EventHub);
             }
 
             // Run BasicPublishReadTest scenario
@@ -96,19 +98,16 @@ namespace Azure.Messaging.EventHubs.Stress
             }
 
             // TODO: Run EventProducerTest scenario
-            if (runEventProcessorTest)
+            if (runEventProducerTest)
             {
-                // var azResourceNamesEPT = new AzureResourceNames();
                 // if (localRun)
                 // {
                 //     PromptForNames(azResourceNamesEPT, false);
                 // }
-                // else
-                // {
-                //     azResourceNamesEPT.EventHub = Environment.GetEnvironmentVariable("EVENTHUB_NAME_EPT");
-                // }
 
-                // await ComplexEventProducerTest.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesEPT.EventHub);
+                // int durationInHours = 72;
+                // var testRun = new EventProducerTest();
+                //await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesEPT.EventHub, instrumentationKey, durationInHours);
             }
 
             // TODO: Run ProcessorEmptyReadTest scenario
@@ -128,18 +127,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 // await ProcessorEmptyReadTestRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesPERT.EventHub, azResourceStrings.StorageConnectionString, azResourceNamesPERT.BlobContainer);
             }
 
-            if (runBasicBufferedProducerTest)
-            {
-                if (localRun)
-                {
-                    PromptForNames(azResourceNamesBBPT, false);
-                }
-
-                int durationInHours = 72;
-                var testRun = new BasicBufferedProducerTest();
-                await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesBBPT.EventHub, instrumentationKey, durationInHours);
-            }
-
             if (runBufferedProducerTest)
             {
                 if (localRun)
@@ -147,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Stress
                     PromptForNames(azResourceNamesBPT, false);
                 }
 
-                int durationInHours = 72;
+                int durationInHours = 1;
                 var testRun = new BufferedProducerTest();
                 await testRun.Run(azResourceStrings.EventHubsConnectionString, azResourceNamesBPT.EventHub, instrumentationKey, durationInHours);
             }
