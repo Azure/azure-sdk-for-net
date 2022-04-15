@@ -37,10 +37,7 @@ namespace Azure.Messaging.EventHubs.Stress
                     .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
-                while (!enqueueingCancellationSource.Token.IsCancellationRequested)
-                {
-                    await Task.Delay(TimeSpan.FromMinutes(1), enqueueingCancellationSource.Token).ConfigureAwait(false);
-                }
+                await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
             }
             catch (TaskCanceledException)
             {
@@ -53,17 +50,6 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 metrics.Client.TrackException(ex);
                 Environment.FailFast(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                metrics.Client.GetMetric(metrics.TotalExceptions).TrackValue(1);
-                metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
-                metrics.Client.TrackException(ex);
-            }
-
-            try
-            {
-                await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
