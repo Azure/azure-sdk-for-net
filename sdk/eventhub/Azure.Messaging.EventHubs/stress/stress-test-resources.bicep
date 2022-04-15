@@ -37,6 +37,7 @@ var storageAccountId = storageAccount.id
 
 var ehBasicProcessor = 'basiceventprocessortest'
 var ehBasicPublish = 'basicpublishreadtest'
+var ehBufferedProducer = 'bufferedproducertest'
 var ehEmptyProcessor = 'processoremptyreadtest'
 var ehEventProducer = 'eventproducertest'
 var ehTransportProducer = 'transportproducerpooltest'
@@ -64,6 +65,15 @@ resource eventHubBasicProcessor 'Microsoft.EventHub/namespaces/eventhubs@2021-11
 resource eventHubBasicPublish 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
   name: ehBasicPublish
+  properties: {
+    messageRetentionInDays: 7
+    partitionCount: 1
+  }
+}
+
+resource eventHubBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
+  parent: eventHubsNamespace
+  name: ehBufferedProducer
   properties: {
     messageRetentionInDays: 7
     partitionCount: 1
@@ -209,6 +219,9 @@ output BLOB_CONTAINER_BEPT string = basic_processor_blob.name
 
 // Outputs for the BasicPublishReadTest scenario
 output EVENTHUB_NAME_BPRT string = eventHubBasicPublish.name
+
+// Outputs for the BufferedProducerTest scenario
+output EVENTHUB_NAME_BPT string = eventHubBufferedProducer.name
 
 // Outputs for the EventProducerTest
 output EVENTHUB_NAME_EPT string = eventHubEventProducer.name

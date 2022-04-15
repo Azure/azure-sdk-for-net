@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1318.3566",
-      "templateHash": "9384248727093035271"
+      "templateHash": "14704571442855163895"
     }
   },
   "parameters": {
@@ -55,6 +55,7 @@
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]",
     "ehBasicProcessor": "basiceventprocessortest",
     "ehBasicPublish": "basicpublishreadtest",
+    "ehBufferedProducer": "bufferedproducertest",
     "ehEmptyProcessor": "processoremptyreadtest",
     "ehEventProducer": "eventproducertest",
     "ehTransportProducer": "transportproducerpooltest"
@@ -86,6 +87,18 @@
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
       "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBasicPublish'))]",
+      "properties": {
+        "messageRetentionInDays": 7,
+        "partitionCount": 1
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2021-11-01",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBufferedProducer'))]",
       "properties": {
         "messageRetentionInDays": 7,
         "partitionCount": 1
@@ -276,6 +289,10 @@
     "EVENTHUB_NAME_BPRT": {
       "type": "string",
       "value": "[variables('ehBasicPublish')]"
+    },
+    "EVENTHUB_NAME_BPT": {
+      "type": "string",
+      "value": "[variables('ehBufferedProducer')]"
     },
     "EVENTHUB_NAME_EPT": {
       "type": "string",

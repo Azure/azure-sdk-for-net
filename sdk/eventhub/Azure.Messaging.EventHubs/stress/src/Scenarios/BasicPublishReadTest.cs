@@ -36,9 +36,6 @@ namespace Azure.Messaging.EventHubs.Stress
 
         public async Task Run(string connectionString, string eventHubName, string appInsightsKey, int durationInHours)
         {
-            // Want to remove these?
-            //Console.WriteLine($"Setting up.");
-
             metrics = new Metrics(appInsightsKey);
 
             var duration = TimeSpan.FromHours(durationInHours);
@@ -75,8 +72,6 @@ namespace Azure.Messaging.EventHubs.Stress
 
             await Task.Delay(5000);
             sendTask = BackgroundSend(producerClient, timeoutToken);
-
-            //Console.WriteLine($"Starting a { duration.ToString(@"dd\.hh\:mm\:ss") } run.\n");
 
             StartDate = DateTimeOffset.UtcNow;
             Stopwatch reportStatus = Stopwatch.StartNew();
@@ -124,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Stress
 
             if (reportStatus.Elapsed > TimeSpan.FromSeconds(30))
             {
-                ReportStatus(true);
+                ReportStatus();
                 reportStatus = Stopwatch.StartNew();
             }
 
@@ -139,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Stress
             ReportLostEvent(eventData);
         }
 
-        ReportStatus(true);
+        ReportStatus();
         }
 
         private async Task BackgroundSend(EventHubProducerClient producer, CancellationToken cancellationToken)
@@ -342,7 +337,7 @@ namespace Azure.Messaging.EventHubs.Stress
             metrics.Client.TrackTrace(output);
         }
 
-        private void ReportStatus(bool log = false)
+        private void ReportStatus()
         {
             var elapsedTime = DateTimeOffset.UtcNow.Subtract(StartDate);
 
@@ -357,12 +352,7 @@ namespace Azure.Messaging.EventHubs.Stress
                 $"Producer failure: { producerFailureCount }" + Environment.NewLine +
                 $"Consumer failure: { consumerFailureCount }" + Environment.NewLine;
 
-            //Console.WriteLine(output);
-
-            if (log)
-            {
-                metrics.Client.TrackTrace(output);
-            }
+            metrics.Client.TrackTrace(output);
         }
     }
 }

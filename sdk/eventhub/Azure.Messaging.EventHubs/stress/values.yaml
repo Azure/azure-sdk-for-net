@@ -1,2 +1,3 @@
 scenarios:
 - "BasicPublishReadTest"
+- "BufferedProducerTest"
