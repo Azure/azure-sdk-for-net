@@ -1,4 +1,4 @@
-# Get secret
+# Get secret asynchronously
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#getting-started) for details.
 

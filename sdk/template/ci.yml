@@ -34,4 +34,4 @@ extends:
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
-      safeName: AzureIoTTemplate
+      safeName: AzureTemplate

@@ -11,4 +11,4 @@ description: Samples for the Azure.ServiceTemplate.Template client library.
 
 # Azure.ServiceTemplate.Template Samples
 
-/* please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. */
+<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. -->
