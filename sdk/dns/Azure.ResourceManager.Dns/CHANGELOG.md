@@ -27,12 +27,7 @@ using Microsoft.Azure.Management.Dns.Models;
 ``` c#
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 DnsManagementClient dnsManagementClient = new DnsManagementClient(credentials);
-var iothub =await dnsManagementClient.Zones.CreateOrUpdateAsync
-                (
-                    resourceGroupName,
-                    dnsZoneName,
-                    parameters
-                );
+var dnsZone = await dnsManagementClient.Zones.CreateOrUpdateAsync(resourceGroupName, dnsZoneName, zone);
 ```
 
 After upgrade:
