@@ -162,7 +162,9 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) {
+function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
+  $packageInfo = GetPackageInfoJson $packageInfoJsonLocation
+
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageInfo.Group) {
@@ -214,15 +216,17 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
+# For daily update and release, validate DocsMS publishing using the language-specific validation function
+if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+  Write-Host "Validating the packages..."
+
+  $packageInfos = @($PackageInfoJsonLocations | GetPackageInfoJson)
+
+  &$ValidateDocsMsPackagesFn -PackageInfos $packageInfos -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
+}
+
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfoLocation"
   # Convert package metadata json file to metadata json property.
-  $packageInfo = GetPackageInfoJson $packageInfoLocation
-  # Add validation step for daily update and release
-  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
-    Write-Host "Validating the package..."
-    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
-  }
-  Write-Host "Updating the package json ..."
-  UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
+  UpdateDocsMsMetadataForPackage $packageInfoLocation
 }
