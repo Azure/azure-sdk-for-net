@@ -671,12 +671,11 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 fixture.Init(context);
 
-                DateTime testStartTime = DateTime.UtcNow;
-                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql), ApiType.Sql, 1, testStartTime);
-                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32), ApiType.MongoDB, 1, testStartTime);
-                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36), ApiType.MongoDB, 1, testStartTime);
-                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Gremlin), "Gremlin, Sql", 1, testStartTime);
-                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Table), "Table, Sql", 1, testStartTime);
+                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql), ApiType.Sql, 1);
+                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32), ApiType.MongoDB, 1);
+                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36), ApiType.MongoDB, 1);
+                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Gremlin), "Gremlin, Sql", 1);
+                await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Table), "Table, Sql", 1);
             }
         }
 
@@ -1472,8 +1471,7 @@ namespace CosmosDB.Tests.ScenarioTests
         private async Task RestorableDatabaseAccountFeedTestHelperAsync(
             string sourceDatabaseAccountName,
             string sourceApiType,
-            int expectedRestorableLocationCount,
-            DateTime testStartTime)
+            int expectedRestorableLocationCount)
         {
             var client = this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts;
 
@@ -1484,7 +1482,7 @@ namespace CosmosDB.Tests.ScenarioTests
             RestorableDatabaseAccountGetResult restorableDatabaseAccount = restorableAccountsFromGlobalFeed.
                 Single(account => account.Name.Equals(sourceDatabaseAccount.InstanceId, StringComparison.OrdinalIgnoreCase));
 
-            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount, testStartTime);
+            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
             List<RestorableDatabaseAccountGetResult> restorableAccountsFromRegionalFeed =
                 (await client.ListByLocationAsync(this.fixture.Location)).ToList();
@@ -1492,29 +1490,29 @@ namespace CosmosDB.Tests.ScenarioTests
             restorableDatabaseAccount = restorableAccountsFromRegionalFeed.
                 Single(account => account.Name.Equals(sourceDatabaseAccount.InstanceId, StringComparison.OrdinalIgnoreCase));
 
-            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount, testStartTime);
+            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
             restorableDatabaseAccount =
                 await client.GetByLocationAsync(this.fixture.Location, sourceDatabaseAccount.InstanceId);
 
-            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount, testStartTime);
+            ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
         }
 
         private static void ValidateRestorableDatabaseAccount(
             RestorableDatabaseAccountGetResult restorableDatabaseAccount,
             DatabaseAccountGetResults sourceDatabaseAccount,
             string expectedApiType,
-            int expectedRestorableLocations,
-            DateTime testStartTime)
+            int expectedRestorableLocations)
         {
             Assert.Equal(expectedApiType, restorableDatabaseAccount.ApiType);
             Assert.Equal(expectedRestorableLocations, restorableDatabaseAccount.RestorableLocations.Count);
             Assert.Equal("Microsoft.DocumentDB/locations/restorableDatabaseAccounts", restorableDatabaseAccount.Type);
             Assert.Equal(sourceDatabaseAccount.Location, restorableDatabaseAccount.Location);
             Assert.Equal(sourceDatabaseAccount.Name, restorableDatabaseAccount.AccountName);
+            Assert.True(restorableDatabaseAccount.CreationTime.HasValue);
             Assert.True(restorableDatabaseAccount.OldestRestorableTime.HasValue);
             Assert.True(
-                restorableDatabaseAccount.OldestRestorableTime.Value >= testStartTime && 
+                restorableDatabaseAccount.OldestRestorableTime.Value >= restorableDatabaseAccount.CreationTime.Value && 
                 restorableDatabaseAccount.OldestRestorableTime.Value <= DateTime.UtcNow);
         }
     }
