@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public class DocumentAnalysisClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_09_30_preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_01_30_preview;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentAnalysisClientOptions"/> class which allows
@@ -23,11 +23,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             Version = version switch
             {
-                ServiceVersion.V2021_09_30_preview => version,
+                ServiceVersion.V2022_01_30_preview => version,
                 _ => throw new NotSupportedException($"The service version {version} is not supported.")
             };
 
             AddLoggedHeadersAndQueryParameters();
+
+            //Default Audience to Azure Public Cloud
+            Audience ??= DocumentAnalysisAudience.AzurePublicCloud;
         }
 
         /// <summary>
@@ -36,14 +39,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public enum ServiceVersion
         {
             /// <summary>
-            /// The version 2021-09-30-preview of the service.
+            /// The version 2022-01-30-preview of the service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
-            V2021_09_30_preview = 1,
+            V2022_01_30_preview = 1,
 #pragma warning restore AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="DocumentAnalysisAudience.AzurePublicCloud" /> will be assumed.</value>
+        public DocumentAnalysisAudience? Audience { get; set; }
 
         /// <summary>
         /// The service version.
@@ -54,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             return version switch
             {
-                ServiceVersion.V2021_09_30_preview => "2021_09_30_preview",
+                ServiceVersion.V2022_01_30_preview => "2022_01_30_preview",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
@@ -73,7 +82,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics.LoggedQueryParameters.Add("locale");
             Diagnostics.LoggedQueryParameters.Add("pages");
-            Diagnostics.LoggedQueryParameters.Add("api-version");
         }
     }
 }

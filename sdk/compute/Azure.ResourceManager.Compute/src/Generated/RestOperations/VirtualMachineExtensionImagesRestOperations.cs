@@ -13,42 +13,37 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineExtensionImagesRestOperations
     {
-        private string subscriptionId;
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionImagesRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public VirtualMachineExtensionImagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public VirtualMachineExtensionImagesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-07-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string location, string publisherName, string type, string version)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string location, string publisherName, string type, string version)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
@@ -59,104 +54,90 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(type, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets a virtual machine extension image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/>, or <paramref name="version"/> is null. </exception>
-        public async Task<Response<VirtualMachineExtensionImage>> GetAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineExtensionImageData>> GetAsync(string subscriptionId, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var message = CreateGetRequest(location, publisherName, type, version);
+            using var message = CreateGetRequest(subscriptionId, location, publisherName, type, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualMachineExtensionImage value = default;
+                        VirtualMachineExtensionImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
+                        value = VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualMachineExtensionImageData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a virtual machine extension image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/>, or <paramref name="version"/> is null. </exception>
-        public Response<VirtualMachineExtensionImage> Get(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineExtensionImageData> Get(string subscriptionId, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var message = CreateGetRequest(location, publisherName, type, version);
+            using var message = CreateGetRequest(subscriptionId, location, publisherName, type, version);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualMachineExtensionImage value = default;
+                        VirtualMachineExtensionImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
+                        value = VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualMachineExtensionImageData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetTypesRequest(string location, string publisherName)
+        internal HttpMessage CreateListTypesRequest(string subscriptionId, string location, string publisherName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
@@ -164,94 +145,88 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmextension/types", false);
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets a list of virtual machine extension image types. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetTypesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImageData>>> ListTypesAsync(string subscriptionId, string location, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var message = CreateGetTypesRequest(location, publisherName);
+            using var message = CreateListTypesRequest(subscriptionId, location, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineExtensionImage> value = default;
+                        IReadOnlyList<VirtualMachineExtensionImageData> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        List<VirtualMachineExtensionImageData> array = new List<VirtualMachineExtensionImageData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
+                            array.Add(VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a list of virtual machine extension image types. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineExtensionImage>> GetTypes(string location, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<IReadOnlyList<VirtualMachineExtensionImageData>> ListTypes(string subscriptionId, string location, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var message = CreateGetTypesRequest(location, publisherName);
+            using var message = CreateListTypesRequest(subscriptionId, location, publisherName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineExtensionImage> value = default;
+                        IReadOnlyList<VirtualMachineExtensionImageData> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        List<VirtualMachineExtensionImageData> array = new List<VirtualMachineExtensionImageData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
+                            array.Add(VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetVersionsRequest(string location, string publisherName, string type, string filter, int? top, string orderby)
+        internal HttpMessage CreateListVersionsRequest(string subscriptionId, string location, string publisherName, string type, string filter, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
@@ -273,14 +248,15 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", "2021-03-01", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
@@ -288,44 +264,38 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="type"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImageData>>> ListVersionsAsync(string subscriptionId, string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
 
-            using var message = CreateGetVersionsRequest(location, publisherName, type, filter, top, orderby);
+            using var message = CreateListVersionsRequest(subscriptionId, location, publisherName, type, filter, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineExtensionImage> value = default;
+                        IReadOnlyList<VirtualMachineExtensionImageData> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        List<VirtualMachineExtensionImageData> array = new List<VirtualMachineExtensionImageData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
+                            array.Add(VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
@@ -333,40 +303,33 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="type"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineExtensionImage>> GetVersions(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<IReadOnlyList<VirtualMachineExtensionImageData>> ListVersions(string subscriptionId, string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
 
-            using var message = CreateGetVersionsRequest(location, publisherName, type, filter, top, orderby);
+            using var message = CreateListVersionsRequest(subscriptionId, location, publisherName, type, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineExtensionImage> value = default;
+                        IReadOnlyList<VirtualMachineExtensionImageData> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        List<VirtualMachineExtensionImageData> array = new List<VirtualMachineExtensionImageData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
+                            array.Add(VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

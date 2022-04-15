@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LongTermRetentionPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LongTermRetentionPolicyName(string value)
         {

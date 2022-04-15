@@ -1,3 +1,6 @@
+# cSpell:ignore LASTEXITCODE
+# cSpell:ignore errrrrorrrrr
+# cSpell:ignore sepleing
 <#
 .SYNOPSIS
 Uses cspell (from NPM) to check spelling of recently changed files
@@ -20,16 +23,9 @@ and then uses the mutated config file to call cspell. In the case of success
 the temporary file is deleted. In the case of failure the temporary file, whose
 location was logged to the console, remains on disk.
 
-.PARAMETER TargetBranch
-Git ref to compare changes. This is usually the "base" (GitHub) or "target" 
-(DevOps) branch for which a pull request would be opened.
-
-.PARAMETER SourceBranch
-Git ref to use instead of changes in current repo state. Use `HEAD` here to 
-check spelling of files that have been committed and exclude any new files or
-modified files that are not committed. This is most useful in CI scenarios where
-builds may have modified the state of the repo. Leaving this parameter blank  
-includes files for whom changes have not been committed. 
+.PARAMETER SpellCheckRoot
+Root folder from which to generate relative paths for spell checking. Mostly
+used in testing.
 
 .PARAMETER CspellConfigPath
 Optional location to use for cspell.json path. Default value is 
@@ -42,7 +38,7 @@ Exit with error code 1 if spelling errors are detected.
 Run test functions against the script logic
 
 .EXAMPLE
-./eng/common/scripts/check-spelling-in-changed-files.ps1 -TargetBranch 'target_branch_name'
+./eng/common/scripts/check-spelling-in-changed-files.ps1 
 
 This will run spell check with changes in the current branch with respect to 
 `target_branch_name`
@@ -52,13 +48,10 @@ This will run spell check with changes in the current branch with respect to
 [CmdletBinding()]
 Param (
     [Parameter()]
-    [string] $TargetBranch,
+    [string] $CspellConfigPath = (Resolve-Path "$PSScriptRoot/../../../.vscode/cspell.json"),
 
     [Parameter()]
-    [string] $SourceBranch,
-
-    [Parameter()]
-    [string] $CspellConfigPath = "./.vscode/cspell.json",
+    [string] $SpellCheckRoot = (Resolve-Path "$PSScriptRoot/../../../"),
 
     [Parameter()]
     [switch] $ExitWithError,
@@ -91,7 +84,8 @@ function Test-Exit0WhenAllFilesExcluded() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./" `
         -ExitWithError
 
     # Assert
@@ -108,7 +102,8 @@ function Test-Exit1WhenIncludedFileHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./" `
         -ExitWithError
 
     # Assert
@@ -125,7 +120,8 @@ function Test-Exit0WhenIncludedFileHasNoSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./" `
         -ExitWithError
 
     # Assert
@@ -146,7 +142,8 @@ function Test-Exit1WhenChangedFileAlreadyHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./" `
         -ExitWithError
 
     # Assert
@@ -167,7 +164,8 @@ function Test-Exit0WhenUnalteredFileHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./" `
         -ExitWithError
 
     # Assert
@@ -184,7 +182,8 @@ function Test-Exit0WhenSpellingErrorsAndNoExitWithError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1
+        -CspellConfigPath "./.vscode/cspell.json" `
+        -SpellCheckRoot "./"
 
     # Assert
     if ($LASTEXITCODE -ne 0) {
@@ -259,22 +258,20 @@ if ((Get-Command git | Measure-Object).Count -eq 0) {
     exit 1
 }
 
-if ((Get-Command npx | Measure-Object).Count -eq 0) {
-    LogError "Could not locate npx. Install NodeJS (includes npx and npx) https://nodejs.org/en/download/"
-    exit 1
-}
-
 if (!(Test-Path $CspellConfigPath)) {
     LogError "Could not locate config file $CspellConfigPath"
     exit 1
 }
 
 # Lists names of files that were in some way changed between the
-# current $SourceBranch and $TargetBranch. Excludes files that were deleted to
+# current branch and default target branch. Excludes files that were deleted to
 # prevent errors in Resolve-Path
-Write-Host "git diff --diff-filter=d --name-only $TargetBranch $SourceBranch"
-$changedFiles = git diff --diff-filter=d --name-only $TargetBranch $SourceBranch `
-    | Resolve-Path
+$changedFilesList = Get-ChangedFiles
+
+$changedFiles = @()
+foreach ($file in $changedFilesList) {
+  $changedFiles += Resolve-Path $file
+}
 
 $changedFilesCount = ($changedFiles | Measure-Object).Count
 Write-Host "Git Detected $changedFilesCount changed file(s). Files checked by cspell may exclude files according to cspell.json"
@@ -289,41 +286,10 @@ foreach ($file in $changedFiles) {
     $changedFilePaths += $file.Path
 }
 
-# The "files" list must always contain a file which exists, is not empty, and is
-# not excluded in ignorePaths. In this case it will be a file with the contents
-# "1" (no spelling errors will be detected)
-$notExcludedFile = (New-TemporaryFile).ToString()
-"1" >> $notExcludedFile
-$changedFilePaths += $notExcludedFile
-
-$cspellConfigContent = Get-Content $CspellConfigPath -Raw
-$cspellConfig = ConvertFrom-Json $cspellConfigContent
-
-# If the config has no "files" property this adds it. If the config has a
-# "files" property this sets the value, overwriting the existing value. In this
-# case, spell checking is only intended to check files from $changedFiles so
-# preexisting entries in "files" will be overwritten.
-Add-Member `
-    -MemberType NoteProperty `
-    -InputObject $cspellConfig `
-    -Name "files" `
-    -Value $changedFilePaths `
-    -Force
-
-# Set the temporary config file with the mutated configuration. The temporary
-# location is used to configure the command and the original file remains
-# unchanged.
-Write-Host "Setting config in: $CspellConfigPath"
-Set-Content `
-    -Path $CspellConfigPath `
-    -Value (ConvertTo-Json $cspellConfig -Depth 100)
-
-# Use the mutated configuration file when calling cspell
-Write-Host "npx cspell lint --config $CspellConfigPath --no-must-find-files "
-$spellingErrors = npx cspell lint --config $CspellConfigPath --no-must-find-files
-
-Write-Host "cspell run complete, restoring original configuration."
-Set-Content -Path $CspellConfigPath -Value $cspellConfigContent -NoNewLine
+$spellingErrors = &"$PSScriptRoot/../spelling/Invoke-Cspell.ps1" `
+  -CspellConfigPath $CspellConfigPath `
+  -SpellCheckRoot $SpellCheckRoot `
+  -ScanGlobs $changedFilePaths
 
 if ($spellingErrors) {
     $errorLoggingFunction = Get-Item 'Function:LogWarning'
@@ -340,8 +306,7 @@ if ($spellingErrors) {
         exit 1
     }
 } else {
-    Write-Host "No spelling errors detected. Removing temporary file."
-    Remove-Item -Path $notExcludedFile -Force | Out-Null
+  Write-Host "No spelling errors detected"
 }
 
 exit 0

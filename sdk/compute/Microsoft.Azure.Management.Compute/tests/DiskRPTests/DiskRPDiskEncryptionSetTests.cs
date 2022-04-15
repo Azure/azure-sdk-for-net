@@ -27,6 +27,12 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey()
+        {
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey", DiskEncryptionSetType.ConfidentialVmEncryptedWithCustomerKey, location: supportedZoneLocation);
+        }
+
+        [Fact]
         public void DiskEncryptionSet_List()
         {
             DiskEncryptionSet_List_Execute("DiskEncryptionSet_List", location: supportedZoneLocation);

@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task GetMetricDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
-            const string dimensionName = "city";
+            const string dimensionName = "region";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetMetricDimensionValuesWithOptionalDimensionFilter()
         {
-            const string dimensionName = "city";
+            const string dimensionName = "region";
             const string filter = "ba";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
@@ -99,14 +99,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetMetricSeriesDefinitionsWithOptionalDimensionFilter()
         {
-            var cityFilter = new List<string>() { "Belo Horizonte", "Chennai", "Hong Kong" };
-            var categoryFilter = new List<string>() { "__SUM__", "Outdoors" };
+            var regionFilter = new List<string>() { "Cairo", "Seoul", "Beijing" };
+            var categoryFilter = new List<string>() { "__SUM__", "Handmade" };
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
-            options.DimensionCombinationsFilter.Add("city", cityFilter);
+            options.DimensionCombinationsFilter.Add("region", regionFilter);
             options.DimensionCombinationsFilter.Add("category", categoryFilter);
 
             var definitionCount = 0;
@@ -120,10 +120,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 DimensionKey seriesKey = definition.SeriesKey;
 
-                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("region", out string region));
                 Assert.That(seriesKey.TryGetValue("category", out string category));
 
-                Assert.That(cityFilter.Contains(city));
+                Assert.That(regionFilter.Contains(region));
                 Assert.That(categoryFilter.Contains(category));
 
                 if (++definitionCount >= MaximumSamplesCount)
@@ -142,10 +142,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var dimensions = new Dictionary<string, string>() { { "region", "Delhi" }, { "category", "Handmade" } };
             var seriesKey1 = new DimensionKey(dimensions);
 
-            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            dimensions = new Dictionary<string, string>() { { "region", "Kolkata" }, { "category", "__SUM__" } };
             var seriesKey2 = new DimensionKey(dimensions);
 
             var returnedKey1 = false;
@@ -175,14 +175,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 var seriesKey = seriesData.SeriesKey;
 
-                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("region", out string region));
                 Assert.That(seriesKey.TryGetValue("category", out string category));
 
-                if (city == "Delhi" && category == "Handmade")
+                if (region == "Delhi" && category == "Handmade")
                 {
                     returnedKey1 = true;
                 }
-                else if (city == "Kolkata" && category == "__SUM__")
+                else if (region == "Kolkata" && category == "__SUM__")
                 {
                     returnedKey2 = true;
                 }

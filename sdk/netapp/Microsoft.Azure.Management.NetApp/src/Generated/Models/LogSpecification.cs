@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the LogSpecification class.
         /// </summary>
+        /// <param name="name">Name of log specification.</param>
+        /// <param name="displayName">Display name of log
+        /// specification.</param>
         public LogSpecification(string name = default(string), string displayName = default(string))
         {
             Name = name;
@@ -42,11 +45,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets name of log specification.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets display name of log specification.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/SdkRg1365?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlZ3JvdXBzL1Nka1JnMTM2NT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/SdkRg4387?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlZ3JvdXBzL1Nka1JnNDM4Nz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dfeb5a56-d99f-4ed2-ac43-b7175ee8f79b"
+          "42ed55e9-6882-4a52-8a0a-e76bcc03f073"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -36,13 +36,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "12eed0bb-46f8-49a2-a099-61d3d022e04f"
+          "13f8b26e-f262-48a9-85f0-6cacb8a62e08"
         ],
         "x-ms-correlation-request-id": [
-          "12eed0bb-46f8-49a2-a099-61d3d022e04f"
+          "13f8b26e-f262-48a9-85f0-6cacb8a62e08"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20201110T135328Z:12eed0bb-46f8-49a2-a099-61d3d022e04f"
+          "SOUTHEASTASIA:20211112T121756Z:13f8b26e-f262-48a9-85f0-6cacb8a62e08"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:53:28 GMT"
+          "Fri, 12 Nov 2021 12:17:55 GMT"
         ],
         "Content-Length": [
           "171"
@@ -63,32 +63,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365\",\r\n  \"name\": \"SdkRg1365\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387\",\r\n  \"name\": \"SdkRg4387\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2020-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"details\": {\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"westus\",\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"details\": {\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"westus\",\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9f80088e-40c8-4d53-9e8d-6952aa9518d2"
+          "f9077435-f499-4e6e-8e43-d858d5a93a6c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1066"
+          "1067"
         ]
       },
       "ResponseHeaders": {
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/4a4ffa6f-ce8b-4e42-9777-b1c597945eb0?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/8f2790c1-b843-4d10-adc4-5d7741247b5b?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -111,25 +111,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "97b26377-baa6-4d1b-9179-bc8b9ee69ed3"
+          "d138d1d7-be08-4cfc-9248-2f70767158c2"
         ],
         "x-ms-client-request-id": [
-          "9f80088e-40c8-4d53-9e8d-6952aa9518d2"
+          "f9077435-f499-4e6e-8e43-d858d5a93a6c"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "97b26377-baa6-4d1b-9179-bc8b9ee69ed3"
+          "d138d1d7-be08-4cfc-9248-2f70767158c2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135331Z:97b26377-baa6-4d1b-9179-bc8b9ee69ed3"
+          "SOUTHEASTASIA:20211112T121759Z:d138d1d7-be08-4cfc-9248-2f70767158c2"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:53:31 GMT"
+          "Fri, 12 Nov 2021 12:17:59 GMT"
         ],
         "Expires": [
           "-1"
@@ -142,16 +142,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/4a4ffa6f-ce8b-4e42-9777-b1c597945eb0?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvNGE0ZmZhNmYtY2U4Yi00ZTQyLTk3NzctYjFjNTk3OTQ1ZWIwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/8f2790c1-b843-4d10-adc4-5d7741247b5b?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvOGYyNzkwYzEtYjg0My00ZDEwLWFkYzQtNWQ3NzQxMjQ3YjViP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -162,7 +162,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -174,25 +174,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0fd1449e-cb20-4314-9a34-bba38546f2a2"
+          "83fb7105-c800-4be4-8c17-a3efaead62c4"
         ],
         "x-ms-client-request-id": [
-          "8a880cdc-b326-4606-991d-7e985e5810c4"
+          "82b81b0c-6bf5-407f-9dc6-e2d5855fe0a8"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
-          "0fd1449e-cb20-4314-9a34-bba38546f2a2"
+          "83fb7105-c800-4be4-8c17-a3efaead62c4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135342Z:0fd1449e-cb20-4314-9a34-bba38546f2a2"
+          "SOUTHEASTASIA:20211112T121810Z:83fb7105-c800-4be4-8c17-a3efaead62c4"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:53:42 GMT"
+          "Fri, 12 Nov 2021 12:18:09 GMT"
         ],
         "Expires": [
           "-1"
@@ -205,16 +205,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
+          "11989"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -234,25 +234,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "c1db8252-76b8-4298-8d0c-089ba6e3bfe1"
+          "7ab28423-6ca9-4f3a-8447-6ea7cbc37696"
         ],
         "x-ms-client-request-id": [
-          "82664dd6-87f0-47b2-9a3c-d59804438976"
+          "bae4ca98-8bcb-4960-afb4-3b77f20e75a4"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "c1db8252-76b8-4298-8d0c-089ba6e3bfe1"
+          "7ab28423-6ca9-4f3a-8447-6ea7cbc37696"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135352Z:c1db8252-76b8-4298-8d0c-089ba6e3bfe1"
+          "SOUTHEASTASIA:20211112T121820Z:7ab28423-6ca9-4f3a-8447-6ea7cbc37696"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:53:52 GMT"
+          "Fri, 12 Nov 2021 12:18:20 GMT"
         ],
         "Content-Length": [
-          "765"
+          "2947"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,20 +261,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2020-11-10T19:23:31.3832871+05:30\",\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  },\r\n  \"name\": \"SdkJob6501\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2021-11-12T17:47:59.3604106+05:30\",\r\n    \"details\": {\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"dataExportDetails\": [],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-12T17:47:58.6617739+05:30\",\r\n    \"lastModifiedBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-12T17:47:58.6617739+05:30\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  },\r\n  \"name\": \"SdkJob716\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -285,7 +285,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11975"
+          "11987"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -294,25 +294,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "24104611-0586-4a86-b126-75de67ae1d18"
+          "316cb40b-809e-4a62-8a7b-7caafefb7216"
         ],
         "x-ms-client-request-id": [
-          "39c29e07-b104-4fad-a227-b52222024662"
+          "b650534b-ee1a-4ab9-88c5-c178804270a6"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "24104611-0586-4a86-b126-75de67ae1d18"
+          "316cb40b-809e-4a62-8a7b-7caafefb7216"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135416Z:24104611-0586-4a86-b126-75de67ae1d18"
+          "SOUTHEASTASIA:20211112T121844Z:316cb40b-809e-4a62-8a7b-7caafefb7216"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:16 GMT"
+          "Fri, 12 Nov 2021 12:18:43 GMT"
         ],
         "Content-Length": [
-          "892"
+          "3074"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -321,20 +321,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2020-11-10T19:23:31.3832871+05:30\",\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"a8cd9b65-7492-463d-a07b-26fbe7bce4a1\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"name\": \"SdkJob6501\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2021-11-12T17:47:59.3604106+05:30\",\r\n    \"details\": {\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"dataExportDetails\": [],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-12T17:47:58.6617739+05:30\",\r\n    \"lastModifiedBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-12T17:48:22.9368291+05:30\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"1eb66829-ea0b-4eb4-a9d0-3fd8feda2966\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"name\": \"SdkJob716\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -345,7 +345,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11972"
+          "11984"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -354,25 +354,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "a7da47f7-97f7-449e-8e73-27921a0bbdab"
+          "900c9977-984e-4c1f-bbf8-aabe789307cb"
         ],
         "x-ms-client-request-id": [
-          "caba0959-c0bb-49e8-bfa8-f3ebe9bead17"
+          "dcc91a9a-60f1-4213-ab70-71976cf27d15"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "a7da47f7-97f7-449e-8e73-27921a0bbdab"
+          "900c9977-984e-4c1f-bbf8-aabe789307cb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135438Z:a7da47f7-97f7-449e-8e73-27921a0bbdab"
+          "SOUTHEASTASIA:20211112T121907Z:900c9977-984e-4c1f-bbf8-aabe789307cb"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:38 GMT"
+          "Fri, 12 Nov 2021 12:19:07 GMT"
         ],
         "Content-Length": [
-          "1238"
+          "3946"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -381,26 +381,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2020-11-10T19:23:31.3832871+05:30\",\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned,UserAssigned\",\r\n    \"principalId\": \"a8cd9b65-7492-463d-a07b-26fbe7bce4a1\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\": {\r\n        \"principalId\": \"5cba71a4-1088-4540-bacf-a7af4426c982\",\r\n        \"clientId\": \"9c1eb7d3-ed10-4ef6-8b70-9bc4ddeeeda3\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"SdkJob6501\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2021-11-12T17:47:59.3604106+05:30\",\r\n    \"details\": {\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"dataExportDetails\": [],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"CustomerManaged\",\r\n        \"identityProperties\": {\r\n          \"type\": \"UserAssigned\",\r\n          \"userAssigned\": {\r\n            \"resourceId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\"\r\n          }\r\n        },\r\n        \"kekUrl\": \"https://sdkkeyvault.vault.azure.net/keys/SSDKEY/\",\r\n        \"kekVaultResourceID\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.KeyVault/vaults/SDKKeyVault\"\r\n      }\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-12T17:47:58.6617739+05:30\",\r\n    \"lastModifiedBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-12T17:48:46.3818375+05:30\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned,UserAssigned\",\r\n    \"principalId\": \"1eb66829-ea0b-4eb4-a9d0-3fd8feda2966\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\": {\r\n        \"principalId\": \"5cba71a4-1088-4540-bacf-a7af4426c982\",\r\n        \"clientId\": \"9c1eb7d3-ed10-4ef6-8b70-9bc4ddeeeda3\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"SdkJob716\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2020-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "212b52f6-c38e-4930-b23a-2a7ccb564d20"
+          "2c9a84a1-e1e8-46b4-be49-3a8d837a2c62"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -417,7 +417,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/3c981dd9-204b-48ed-ac2d-6c3b314faaa8?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/b78fe791-3fa9-450e-9951-ef0fe48ce45c?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -429,25 +429,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "4b5c1fc2-8229-49da-b8bd-0655390dc771"
+          "c1d5a76e-1c2b-45e3-9314-67a03b975131"
         ],
         "x-ms-client-request-id": [
-          "212b52f6-c38e-4930-b23a-2a7ccb564d20"
+          "2c9a84a1-e1e8-46b4-be49-3a8d837a2c62"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "4b5c1fc2-8229-49da-b8bd-0655390dc771"
+          "c1d5a76e-1c2b-45e3-9314-67a03b975131"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135355Z:4b5c1fc2-8229-49da-b8bd-0655390dc771"
+          "SOUTHEASTASIA:20211112T121823Z:c1d5a76e-1c2b-45e3-9314-67a03b975131"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:53:55 GMT"
+          "Fri, 12 Nov 2021 12:18:23 GMT"
         ],
         "Expires": [
           "-1"
@@ -460,22 +460,22 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2020-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"details\": {\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"CustomerManaged\",\r\n        \"identityProperties\": {\r\n          \"type\": \"UserAssigned\",\r\n          \"userAssigned\": {\r\n            \"resourceId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\"\r\n          }\r\n        },\r\n        \"kekUrl\": \"https://sdkkeyvault.vault.azure.net/keys/SSDKEY/\",\r\n        \"kekVaultResourceID\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.KeyVault/vaults/SDKKeyVault\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned,UserAssigned\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\": {}\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "62515056-6bc5-4b26-840c-0280c8663e5a"
+          "f0179dc7-afd2-41a3-a24e-2ebf344a8c40"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -492,7 +492,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/48bde836-ea6b-4e53-92ed-b23358681155?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/108df57d-33d1-4bf9-8985-bd566f120b1c?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -504,25 +504,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "19d673c4-3cbd-4662-92b5-47ca492f5a2a"
+          "716ef93f-e156-4cf0-afdd-856085e26d1e"
         ],
         "x-ms-client-request-id": [
-          "62515056-6bc5-4b26-840c-0280c8663e5a"
+          "f0179dc7-afd2-41a3-a24e-2ebf344a8c40"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "19d673c4-3cbd-4662-92b5-47ca492f5a2a"
+          "716ef93f-e156-4cf0-afdd-856085e26d1e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135418Z:19d673c4-3cbd-4662-92b5-47ca492f5a2a"
+          "SOUTHEASTASIA:20211112T121846Z:716ef93f-e156-4cf0-afdd-856085e26d1e"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:17 GMT"
+          "Fri, 12 Nov 2021 12:18:46 GMT"
         ],
         "Expires": [
           "-1"
@@ -535,16 +535,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/3c981dd9-204b-48ed-ac2d-6c3b314faaa8?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvM2M5ODFkZDktMjA0Yi00OGVkLWFjMmQtNmMzYjMxNGZhYWE4P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/b78fe791-3fa9-450e-9951-ef0fe48ce45c?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvYjc4ZmU3OTEtM2ZhOS00NTBlLTk5NTEtZWYwZmU0OGNlNDVjP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -555,7 +555,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -567,25 +567,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "33ddcb82-9763-4273-94a6-af54adf77430"
+          "ad91588f-a6e7-4563-8e6a-f21056b5d7ac"
         ],
         "x-ms-client-request-id": [
-          "5d5d5799-8923-42c4-aeee-e23b63e1ad9f"
+          "f5d81beb-8dc2-47db-8eaf-e04e61a3d573"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
+          "11988"
         ],
         "x-ms-correlation-request-id": [
-          "33ddcb82-9763-4273-94a6-af54adf77430"
+          "ad91588f-a6e7-4563-8e6a-f21056b5d7ac"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135405Z:33ddcb82-9763-4273-94a6-af54adf77430"
+          "SOUTHEASTASIA:20211112T121833Z:ad91588f-a6e7-4563-8e6a-f21056b5d7ac"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:05 GMT"
+          "Fri, 12 Nov 2021 12:18:33 GMT"
         ],
         "Expires": [
           "-1"
@@ -598,22 +598,22 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2020-11-01&$expand=details",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEmJGV4cGFuZD1kZXRhaWxz",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview&$expand=details",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3JiRleHBhbmQ9ZGV0YWlscw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e54880fd-0336-4e2c-ac78-2da1641f529d"
+          "5c5a64a2-4ab6-43f8-9299-13b46f735def"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -624,7 +624,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11974"
+          "11986"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -633,25 +633,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "c26367e0-c76d-4faa-82a5-e1d6fb8b6d0d"
+          "ef86a9cb-c4c5-4b42-95da-422d216bded5"
         ],
         "x-ms-client-request-id": [
-          "e54880fd-0336-4e2c-ac78-2da1641f529d"
+          "5c5a64a2-4ab6-43f8-9299-13b46f735def"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "c26367e0-c76d-4faa-82a5-e1d6fb8b6d0d"
+          "ef86a9cb-c4c5-4b42-95da-422d216bded5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135416Z:c26367e0-c76d-4faa-82a5-e1d6fb8b6d0d"
+          "SOUTHEASTASIA:20211112T121844Z:ef86a9cb-c4c5-4b42-95da-422d216bded5"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:16 GMT"
+          "Fri, 12 Nov 2021 12:18:44 GMT"
         ],
         "Content-Length": [
-          "4475"
+          "4561"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -660,26 +660,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2020-11-10T19:23:31.3832871+05:30\",\r\n    \"details\": {\r\n      \"copyProgress\": [],\r\n      \"jobStages\": [\r\n        {\r\n          \"stageName\": \"DeviceOrdered\",\r\n          \"displayName\": \"Ordered\",\r\n          \"stageStatus\": \"Succeeded\",\r\n          \"stageTime\": \"2020-11-10T19:23:34.0236443+05:30\"\r\n        },\r\n        {\r\n          \"stageName\": \"DevicePrepared\",\r\n          \"displayName\": \"Processed\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Dispatched\",\r\n          \"displayName\": \"Dispatched\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Delivered\",\r\n          \"displayName\": \"Delivered\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"PickedUp\",\r\n          \"displayName\": \"Picked up\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"AtAzureDC\",\r\n          \"displayName\": \"Received\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"DataCopy\",\r\n          \"displayName\": \"Data copy in progress\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Completed\",\r\n          \"displayName\": \"Completed\",\r\n          \"stageStatus\": \"None\"\r\n        }\r\n      ],\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deliveryPackage\": {\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\",\r\n        \"trackingUrl\": \"\"\r\n      },\r\n      \"returnPackage\": {\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\",\r\n        \"trackingUrl\": \"\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"copyLogDetails\": [],\r\n      \"reverseShipmentLabelSasKey\": \"https://wusbeta.blob.core.windows.net/customer-reverse-shipment-instructions/CustomerShipmentInstructions_MicrosoftManaged.PDF?sv=2018-03-28&sr=b&sig=mhCU5%2FheMrB%2FKn8mhDs%2BefVN2ovps6%2BPuz2Z9GsqJpE%3D&st=2020-11-10T13%3A44%3A16Z&se=2020-11-11T13%3A54%3A16Z&sp=r\",\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"a8cd9b65-7492-463d-a07b-26fbe7bce4a1\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"name\": \"SdkJob6501\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2021-11-12T17:47:59.3604106+05:30\",\r\n    \"details\": {\r\n      \"copyProgress\": [],\r\n      \"jobStages\": [\r\n        {\r\n          \"stageName\": \"DeviceOrdered\",\r\n          \"displayName\": \"Ordered\",\r\n          \"stageStatus\": \"Succeeded\",\r\n          \"stageTime\": \"2021-11-12T17:48:01.9376054+05:30\"\r\n        },\r\n        {\r\n          \"stageName\": \"DevicePrepared\",\r\n          \"displayName\": \"Processed\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Dispatched\",\r\n          \"displayName\": \"Dispatched\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Delivered\",\r\n          \"displayName\": \"Delivered\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"PickedUp\",\r\n          \"displayName\": \"Picked up\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"AtAzureDC\",\r\n          \"displayName\": \"Received\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"DataCopy\",\r\n          \"displayName\": \"Data copy in progress\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Completed\",\r\n          \"displayName\": \"Completed\",\r\n          \"stageStatus\": \"None\"\r\n        }\r\n      ],\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deliveryPackage\": {\r\n        \"trackingUrl\": \"\",\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\"\r\n      },\r\n      \"returnPackage\": {\r\n        \"trackingUrl\": \"\",\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"dataExportDetails\": [],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"copyLogDetails\": [],\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"MicrosoftManaged\"\r\n      },\r\n      \"actions\": []\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-12T17:47:58.6617739+05:30\",\r\n    \"lastModifiedBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-12T17:48:22.9368291+05:30\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"1eb66829-ea0b-4eb4-a9d0-3fd8feda2966\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"name\": \"SdkJob716\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2020-11-01&$expand=details",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMTM2NS9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I2NTAxP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDEmJGV4cGFuZD1kZXRhaWxz",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview&$expand=details",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNDM4Ny9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvam9icy9TZGtKb2I3MTY/YXBpLXZlcnNpb249MjAyMS0wOC0wMS1wcmV2aWV3JiRleHBhbmQ9ZGV0YWlscw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "70c53dff-6f39-4759-81bd-ad0c2ab4636e"
+          "073abd2a-1f6c-487f-9268-43643f70bc01"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -690,7 +690,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11971"
+          "11983"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -699,25 +699,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "8d768a4a-3726-4b76-89ea-db7a32e79a9b"
+          "2a4b2a8f-179b-4144-90ee-aee62dfe00d3"
         ],
         "x-ms-client-request-id": [
-          "70c53dff-6f39-4759-81bd-ad0c2ab4636e"
+          "073abd2a-1f6c-487f-9268-43643f70bc01"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "8d768a4a-3726-4b76-89ea-db7a32e79a9b"
+          "2a4b2a8f-179b-4144-90ee-aee62dfe00d3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135439Z:8d768a4a-3726-4b76-89ea-db7a32e79a9b"
+          "SOUTHEASTASIA:20211112T121908Z:2a4b2a8f-179b-4144-90ee-aee62dfe00d3"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:38 GMT"
+          "Fri, 12 Nov 2021 12:19:07 GMT"
         ],
         "Content-Length": [
-          "5341"
+          "5433"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -726,20 +726,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2020-11-10T19:23:31.3832871+05:30\",\r\n    \"details\": {\r\n      \"copyProgress\": [],\r\n      \"jobStages\": [\r\n        {\r\n          \"stageName\": \"DeviceOrdered\",\r\n          \"displayName\": \"Ordered\",\r\n          \"stageStatus\": \"Succeeded\",\r\n          \"stageTime\": \"2020-11-10T19:23:34.0236443+05:30\"\r\n        },\r\n        {\r\n          \"stageName\": \"DevicePrepared\",\r\n          \"displayName\": \"Processed\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Dispatched\",\r\n          \"displayName\": \"Dispatched\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Delivered\",\r\n          \"displayName\": \"Delivered\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"PickedUp\",\r\n          \"displayName\": \"Picked up\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"AtAzureDC\",\r\n          \"displayName\": \"Received\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"DataCopy\",\r\n          \"displayName\": \"Data copy in progress\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Completed\",\r\n          \"displayName\": \"Completed\",\r\n          \"stageStatus\": \"None\"\r\n        }\r\n      ],\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deliveryPackage\": {\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\",\r\n        \"trackingUrl\": \"\"\r\n      },\r\n      \"returnPackage\": {\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\",\r\n        \"trackingUrl\": \"\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"copyLogDetails\": [],\r\n      \"reverseShipmentLabelSasKey\": \"https://wusbeta.blob.core.windows.net/customer-reverse-shipment-instructions/CustomerShipmentInstructions_MicrosoftManaged.PDF?sv=2018-03-28&sr=b&sig=%2BNlffAyWfcrb3xG5DzujtdlgzS5wJkwayTXSV3pcQaI%3D&st=2020-11-10T13%3A44%3A39Z&se=2020-11-11T13%3A54%3A39Z&sp=r\",\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"CustomerManaged\",\r\n        \"identityProperties\": {\r\n          \"type\": \"UserAssigned\",\r\n          \"userAssigned\": {\r\n            \"resourceId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\"\r\n          }\r\n        },\r\n        \"kekUrl\": \"https://sdkkeyvault.vault.azure.net/keys/SSDKEY/\",\r\n        \"kekVaultResourceID\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.KeyVault/vaults/SDKKeyVault\"\r\n      }\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned,UserAssigned\",\r\n    \"principalId\": \"a8cd9b65-7492-463d-a07b-26fbe7bce4a1\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\": {\r\n        \"principalId\": \"5cba71a4-1088-4540-bacf-a7af4426c982\",\r\n        \"clientId\": \"9c1eb7d3-ed10-4ef6-8b70-9bc4ddeeeda3\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"SdkJob6501\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"transferType\": \"ImportToAzure\",\r\n    \"isCancellable\": true,\r\n    \"isDeletable\": false,\r\n    \"isShippingAddressEditable\": true,\r\n    \"isPrepareToShipEnabled\": true,\r\n    \"status\": \"DeviceOrdered\",\r\n    \"startTime\": \"2021-11-12T17:47:59.3604106+05:30\",\r\n    \"details\": {\r\n      \"copyProgress\": [],\r\n      \"jobStages\": [\r\n        {\r\n          \"stageName\": \"DeviceOrdered\",\r\n          \"displayName\": \"Ordered\",\r\n          \"stageStatus\": \"Succeeded\",\r\n          \"stageTime\": \"2021-11-12T17:48:01.9376054+05:30\"\r\n        },\r\n        {\r\n          \"stageName\": \"DevicePrepared\",\r\n          \"displayName\": \"Processed\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Dispatched\",\r\n          \"displayName\": \"Dispatched\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Delivered\",\r\n          \"displayName\": \"Delivered\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"PickedUp\",\r\n          \"displayName\": \"Picked up\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"AtAzureDC\",\r\n          \"displayName\": \"Received\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"DataCopy\",\r\n          \"displayName\": \"Data copy in progress\",\r\n          \"stageStatus\": \"None\"\r\n        },\r\n        {\r\n          \"stageName\": \"Completed\",\r\n          \"displayName\": \"Completed\",\r\n          \"stageStatus\": \"None\"\r\n        }\r\n      ],\r\n      \"contactDetails\": {\r\n        \"contactName\": \"Public SDK Test\",\r\n        \"phone\": \"1234567890\",\r\n        \"phoneExtension\": \"1234\",\r\n        \"emailList\": [\r\n          \"testing@microsoft.com\"\r\n        ],\r\n        \"notificationPreference\": [\r\n          {\r\n            \"stageName\": \"DevicePrepared\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Dispatched\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"Delivered\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"PickedUp\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"AtAzureDC\",\r\n            \"sendNotification\": true\r\n          },\r\n          {\r\n            \"stageName\": \"DataCopy\",\r\n            \"sendNotification\": true\r\n          }\r\n        ]\r\n      },\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"164 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deliveryPackage\": {\r\n        \"trackingUrl\": \"\",\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\"\r\n      },\r\n      \"returnPackage\": {\r\n        \"trackingUrl\": \"\",\r\n        \"carrierName\": \"\",\r\n        \"trackingId\": \"\"\r\n      },\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2\",\r\n            \"dataAccountType\": \"StorageAccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"dataExportDetails\": [],\r\n      \"jobDetailsType\": \"DataBox\",\r\n      \"preferences\": {\r\n        \"encryptionPreferences\": {\r\n          \"doubleEncryption\": \"Disabled\"\r\n        }\r\n      },\r\n      \"copyLogDetails\": [],\r\n      \"keyEncryptionKey\": {\r\n        \"kekType\": \"CustomerManaged\",\r\n        \"identityProperties\": {\r\n          \"type\": \"UserAssigned\",\r\n          \"userAssigned\": {\r\n            \"resourceId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\"\r\n          }\r\n        },\r\n        \"kekUrl\": \"https://sdkkeyvault.vault.azure.net/keys/SSDKEY/\",\r\n        \"kekVaultResourceID\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.KeyVault/vaults/SDKKeyVault\"\r\n      },\r\n      \"actions\": []\r\n    },\r\n    \"deliveryType\": \"NonScheduled\",\r\n    \"deliveryInfo\": {\r\n      \"scheduledDateTime\": \"0001-01-01T05:30:00+05:30\"\r\n    },\r\n    \"isCancellableWithoutFee\": true\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-12T17:47:58.6617739+05:30\",\r\n    \"lastModifiedBy\": \"5ff6737b-7c50-45d1-b2cb-63a6cd723138\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-12T17:48:46.3818375+05:30\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"DataBox\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned,UserAssigned\",\r\n    \"principalId\": \"1eb66829-ea0b-4eb4-a9d0-3fd8feda2966\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity\": {\r\n        \"principalId\": \"5cba71a4-1088-4540-bacf-a7af4426c982\",\r\n        \"clientId\": \"9c1eb7d3-ed10-4ef6-8b70-9bc4ddeeeda3\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"SdkJob716\",\r\n  \"id\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716\",\r\n  \"type\": \"Microsoft.DataBox/jobs\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/48bde836-ea6b-4e53-92ed-b23358681155?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvNDhiZGU4MzYtZWE2Yi00ZTUzLTkyZWQtYjIzMzU4NjgxMTU1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/operationResults/108df57d-33d1-4bf9-8985-bd566f120b1c?api-version=2021-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvblJlc3VsdHMvMTA4ZGY1N2QtMzNkMS00YmY5LTg5ODUtYmQ1NjZmMTIwYjFjP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/5.0.1221.52207",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -750,7 +750,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://centraluseuap.management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg1365/providers/Microsoft.DataBox/jobs/SdkJob6501?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg4387/providers/Microsoft.DataBox/jobs/SdkJob716?api-version=2021-08-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -762,25 +762,25 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "83c7f785-0a63-41d5-a983-c810f4c18b60"
+          "c812594c-f0e3-48c0-a52f-309fc8674e2b"
         ],
         "x-ms-client-request-id": [
-          "5fd35624-b8e1-4ee8-889a-da81310cd960"
+          "8a198d49-b13f-4e54-8d81-d188ec055946"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11973"
+          "11985"
         ],
         "x-ms-correlation-request-id": [
-          "83c7f785-0a63-41d5-a983-c810f4c18b60"
+          "c812594c-f0e3-48c0-a52f-309fc8674e2b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20201110T135428Z:83c7f785-0a63-41d5-a983-c810f4c18b60"
+          "SOUTHEASTASIA:20211112T121857Z:c812594c-f0e3-48c0-a52f-309fc8674e2b"
         ],
         "Date": [
-          "Tue, 10 Nov 2020 13:54:28 GMT"
+          "Fri, 12 Nov 2021 12:18:56 GMT"
         ],
         "Expires": [
           "-1"
@@ -795,8 +795,8 @@
   ],
   "Names": {
     "UpdateSystemAssignedToUserAssigned": [
-      "SdkRg1365",
-      "SdkJob6501"
+      "SdkRg4387",
+      "SdkJob716"
     ]
   },
   "Variables": {

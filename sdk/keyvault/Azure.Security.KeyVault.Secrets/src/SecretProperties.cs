@@ -25,7 +25,6 @@ namespace Azure.Security.KeyVault.Secrets
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
-        private ObjectId _identifier;
         private SecretAttributes _attributes;
         private Dictionary<string, string> _tags;
         private string _keyId;
@@ -44,7 +43,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            _identifier.Name = name;
+            Name = name;
         }
 
         /// <summary>
@@ -56,28 +55,28 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            _identifier.ParseId("secrets", id);
+            ParseId(id);
         }
 
         /// <summary>
         /// Gets the secret identifier.
         /// </summary>
-        public Uri Id { get => _identifier.Id; internal set => _identifier.Id = value; }
+        public Uri Id { get; internal set; }
 
         /// <summary>
         /// Gets the Key Vault base <see cref="Uri"/>.
         /// </summary>
-        public Uri VaultUri { get => _identifier.VaultUri; internal set => _identifier.VaultUri = value; }
+        public Uri VaultUri { get; internal set; }
 
         /// <summary>
         /// Gets the name of the secret.
         /// </summary>
-        public string Name { get => _identifier.Name; internal set => _identifier.Name = value; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// Gets the version of the secret.
         /// </summary>
-        public string Version { get => _identifier.Version; internal set => _identifier.Version = value; }
+        public string Version { get; internal set; }
 
         /// <summary>
         /// Gets or sets the content type of the secret value such as "text/plain" for a password.
@@ -142,6 +141,20 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
+        /// <summary>
+        /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
+        /// </summary>
+        /// <param name="id">The key vault object identifier.</param>
+        internal void ParseId(Uri id)
+        {
+            KeyVaultIdentifier identifier = KeyVaultIdentifier.ParseWithCollection(id, "secrets");
+
+            Id = id;
+            VaultUri = identifier.VaultUri;
+            Name = identifier.Name;
+            Version = identifier.Version;
+        }
+
         internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -155,7 +168,9 @@ namespace Azure.Security.KeyVault.Secrets
             switch (prop.Name)
             {
                 case IdPropertyName:
-                    _identifier.ParseId("secrets", prop.Value.GetString());
+                    string id = prop.Value.GetString();
+                    Id = new Uri(id);
+                    ParseId(Id);
                     break;
 
                 case ContentTypePropertyName:

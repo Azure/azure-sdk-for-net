@@ -1,6 +1,6 @@
 # Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
 
-This guide is intended to assist in the migration to the `Azure.Messaging.EventHubs` family of packages from the legacy `Microsoft.Azure.EventHubs` family of packages.  It will focus on side-by-side comparisons for similar operations between the to versions, covering the [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) packages and their legacy equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
+This guide is intended to assist in the migration to the `Azure.Messaging.EventHubs` family of packages from the legacy `Microsoft.Azure.EventHubs` family of packages.  It will focus on side-by-side comparisons for similar operations between the two versions, covering the [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) packages and their legacy equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
 
 Familiarity with the `Microsoft.Azure.EventHubs` family of packages is assumed.  For those new to the Event Hubs client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/README.md), [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples), and the [Event Processor samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) rather than this guide.
 
@@ -210,12 +210,11 @@ var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
-    using var eventBatch = await producer.CreateBatchAsync();
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -286,12 +285,11 @@ try
         PartitionKey = "Any Value Will Do..."
     };
 
-    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {
@@ -309,7 +307,7 @@ finally
 
 #### Publishing events to a specific partition
 
-In the `Microsoft.Azure.EventHubs` library, to publish events and allow the Event Hubs service to automatically assign the partition, a `PartitionSender` is created using the `EventHubClient` and then used as the publisher for a batch created with its default configuration.
+In the `Microsoft.Azure.EventHubs` library, to publish events to a specific partition, a `PartitionSender` is created using the `EventHubClient` and then used as the publisher for a batch created with its default configuration.
 
 ```C# Snippet:EventHubs_Migrate_T1_PublishToSpecificPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -364,12 +362,11 @@ try
         PartitionId = firstPartition
     };
 
-    using var eventBatch = await producer.CreateBatchAsync(batchOptions);
+    using EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
         if (!eventBatch.TryAdd(eventData))
         {

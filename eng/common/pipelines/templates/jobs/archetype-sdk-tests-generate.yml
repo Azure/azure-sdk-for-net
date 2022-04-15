@@ -36,10 +36,14 @@ parameters:
 - name: GenerateJobName
   type: string
   default: 'generate_job_matrix'
+- name: PreGenerationSteps
+  type: stepList
+  default: []
 
 jobs:
 - job: ${{ parameters.GenerateJobName }}
   variables:
+    skipComponentGovernanceDetection: true
     displayNameFilter: $[ coalesce(variables.jobMatrixFilter, '.*') ]
   pool:
     name: ${{ parameters.Pool }}
@@ -56,7 +60,9 @@ jobs:
             Paths: ${{ parameters.SparseCheckoutPaths }}
           ${{ if and(eq(length(parameters.SparseCheckoutPaths), 0), ne(parameters.AdditionalParameters.ServiceDirectory, '')) }}:
             Paths:
-              - ${{ parameters.AdditionalParameters.ServiceDirectory }}
+              - "sdk/${{ parameters.AdditionalParameters.ServiceDirectory }}"
+
+    - ${{ parameters.PreGenerationSteps }}
 
     - ${{ each config in parameters.MatrixConfigs }}:
       - ${{ if eq(config.GenerateVMJobs, 'true') }}:

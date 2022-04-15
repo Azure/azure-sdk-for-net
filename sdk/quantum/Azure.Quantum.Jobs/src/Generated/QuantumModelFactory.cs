@@ -31,13 +31,41 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="beginExecutionTime"> The time when the job began execution. </param>
         /// <param name="endExecutionTime"> The time when the job finished execution. </param>
         /// <param name="cancellationTime"> The time when a job was successfully cancelled. </param>
+        /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
+        /// <param name="tags"> List of user-supplied tags associated with the job. </param>
         /// <returns> A new <see cref="Models.JobDetails"/> instance for mocking. </returns>
-        public static JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, JobStatus? status = null, DateTimeOffset? creationTime = null, DateTimeOffset? beginExecutionTime = null, DateTimeOffset? endExecutionTime = null, DateTimeOffset? cancellationTime = null, ErrorData errorData = null)
+        public static JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, JobStatus? status = null, DateTimeOffset? creationTime = null, DateTimeOffset? beginExecutionTime = null, DateTimeOffset? endExecutionTime = null, DateTimeOffset? cancellationTime = null, CostEstimate costEstimate = null, ErrorData errorData = null, IEnumerable<string> tags = null)
         {
             metadata ??= new Dictionary<string, string>();
+            tags ??= new List<string>();
 
-            return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, errorData);
+            return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, costEstimate, errorData, tags?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CostEstimate. </summary>
+        /// <param name="currencyCode"> The currency code. </param>
+        /// <param name="events"> List of usage events. </param>
+        /// <param name="estimatedTotal"> The estimated total. </param>
+        /// <returns> A new <see cref="Models.CostEstimate"/> instance for mocking. </returns>
+        public static CostEstimate CostEstimate(string currencyCode = null, IEnumerable<UsageEvent> events = null, float? estimatedTotal = null)
+        {
+            events ??= new List<UsageEvent>();
+
+            return new CostEstimate(currencyCode, events?.ToList(), estimatedTotal);
+        }
+
+        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <param name="dimensionId"> The dimension id. </param>
+        /// <param name="dimensionName"> The dimension name. </param>
+        /// <param name="measureUnit"> The unit of measure. </param>
+        /// <param name="amountBilled"> The amount billed. </param>
+        /// <param name="amountConsumed"> The amount consumed. </param>
+        /// <param name="unitPrice"> The unit price. </param>
+        /// <returns> A new <see cref="Models.UsageEvent"/> instance for mocking. </returns>
+        public static UsageEvent UsageEvent(string dimensionId = null, string dimensionName = null, string measureUnit = null, float? amountBilled = null, float? amountConsumed = null, float? unitPrice = null)
+        {
+            return new UsageEvent(dimensionId, dimensionName, measureUnit, amountBilled, amountConsumed, unitPrice);
         }
 
         /// <summary> Initializes a new instance of ErrorData. </summary>
@@ -52,7 +80,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of ProviderStatus. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
-        /// <param name="targets"> Job target. </param>
+        /// <param name="targets"></param>
         /// <returns> A new <see cref="Models.ProviderStatus"/> instance for mocking. </returns>
         public static ProviderStatus ProviderStatus(string id = null, ProviderAvailability? currentAvailability = null, IEnumerable<TargetStatus> targets = null)
         {
@@ -78,6 +106,17 @@ namespace Azure.Quantum.Jobs.Models
         public static SasUriResponse SasUriResponse(string sasUri = null)
         {
             return new SasUriResponse(sasUri);
+        }
+
+        /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <returns> A new <see cref="Models.QuantumJobQuotaList"/> instance for mocking. </returns>
+        public static QuantumJobQuotaList QuantumJobQuotaList(IEnumerable<QuantumJobQuota> value = null, string nextLink = null)
+        {
+            value ??= new List<QuantumJobQuota>();
+
+            return new QuantumJobQuotaList(value?.ToList(), nextLink);
         }
 
         /// <summary> Initializes a new instance of QuantumJobQuota. </summary>

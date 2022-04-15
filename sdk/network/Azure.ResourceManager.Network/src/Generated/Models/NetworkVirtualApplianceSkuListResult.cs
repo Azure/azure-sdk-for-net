@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>
         internal NetworkVirtualApplianceSkuListResult()
         {
-            Value = new ChangeTrackingList<NetworkVirtualApplianceSku>();
+            Value = new ChangeTrackingList<NetworkVirtualApplianceSkuData>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>
         /// <param name="value"> List of Network Virtual Appliance Skus that are available. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSku> value, string nextLink)
+        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSkuData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Network Virtual Appliance Skus that are available. </summary>
-        public IReadOnlyList<NetworkVirtualApplianceSku> Value { get; }
+        public IReadOnlyList<NetworkVirtualApplianceSkuData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
         {
             Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
             Optional<int> maxDatabaseCount = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedPerDatabaseMaxSizes = default;
             Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
             Optional<bool> zoneRedundant = default;
+            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
             Optional<CapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"))
@@ -138,6 +139,21 @@ namespace Azure.ResourceManager.Sql.Models
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("supportedMaintenanceConfigurations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                    }
+                    supportedMaintenanceConfigurations = array;
+                    continue;
+                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -154,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
         }
     }
 }

@@ -102,8 +102,8 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00");
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00");
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null);
             scope.Start();
 
             (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
@@ -131,9 +131,11 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity1.IdFormat);
             Assert.AreEqual("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", linkedActivity1.ParentId);
+            Assert.AreEqual("foo=bar", linkedActivity1.TraceStateString);
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity2.IdFormat);
             Assert.AreEqual("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", linkedActivity2.ParentId);
+            Assert.Null(linkedActivity2.TraceStateString);
 
             Assert.AreEqual(0, testListener.Events.Count);
         }
@@ -152,7 +154,7 @@ namespace Azure.Core.Tests
                 {"key2", "value2"}
             };
 
-            scope.AddLink("id", expectedTags);
+            scope.AddLink("id", null, expectedTags);
             scope.Start();
 
             (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();

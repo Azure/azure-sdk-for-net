@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// SparkConfiguration name
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

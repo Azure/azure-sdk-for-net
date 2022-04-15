@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {

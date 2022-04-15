@@ -19,16 +19,17 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The SeasonalFields service client. </summary>
     public partial class SeasonalFieldsClient
     {
-        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of SeasonalFieldsClient for mocking. </summary>
         protected SeasonalFieldsClient()
@@ -42,20 +43,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public SeasonalFieldsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -63,8 +57,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -108,16 +103,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Response> GetSeasonalFieldAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Get");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetSeasonalField");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetSeasonalFieldRequest(farmerId, seasonalFieldId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -129,8 +125,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified seasonal field resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -174,16 +171,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Response GetSeasonalField(string farmerId, string seasonalFieldId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Get");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetSeasonalField");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(farmerId, seasonalFieldId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetSeasonalFieldRequest(farmerId, seasonalFieldId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -196,8 +194,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -266,16 +265,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -288,8 +288,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -358,16 +359,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, seasonalFieldId, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -379,8 +381,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -399,16 +402,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -420,8 +424,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified seasonal-field resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonal field. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -440,16 +445,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteRequest(farmerId, seasonalFieldId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -460,8 +466,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get cascade delete job for specified seasonal field. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -498,16 +505,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -518,8 +525,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get cascade delete job for specified seasonal field. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -556,16 +564,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -605,8 +613,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -656,24 +665,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -711,8 +715,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -762,24 +767,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetSeasonalFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFieldsByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -816,7 +816,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -866,19 +866,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonalFieldsClient.GetSeasonalFields");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFields");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -915,7 +913,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -965,19 +963,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonalFieldsClient.GetSeasonalFields");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "SeasonalFieldsClient.GetSeasonalFields");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -985,11 +981,13 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified seasonal field. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
-        /// <param name="context"> The request context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1026,16 +1024,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1045,11 +1045,13 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified seasonal field. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="seasonalFieldId"> ID of the seasonalField to be deleted. </param>
-        /// <param name="context"> The request context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="seasonalFieldId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1086,16 +1088,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string seasonalFieldId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(seasonalFieldId, nameof(seasonalFieldId));
+
+            using var scope = ClientDiagnostics.CreateScope("SeasonalFieldsClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, seasonalFieldId, context);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SeasonalFieldsClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1104,9 +1108,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1236,13 +1240,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1370,13 +1373,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string farmerId, string seasonalFieldId)
+        internal HttpMessage CreateGetSeasonalFieldRequest(string farmerId, string seasonalFieldId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1388,13 +1390,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string seasonalFieldId, RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string seasonalFieldId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1408,13 +1409,12 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string farmerId, string seasonalFieldId)
+        internal HttpMessage CreateDeleteRequest(string farmerId, string seasonalFieldId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1426,13 +1426,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId)
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1442,13 +1441,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string seasonalFieldId)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string seasonalFieldId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1460,13 +1458,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1474,13 +1471,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsNextPageRequest(string nextLink, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonalFieldsNextPageRequest(string nextLink, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1488,62 +1484,16 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

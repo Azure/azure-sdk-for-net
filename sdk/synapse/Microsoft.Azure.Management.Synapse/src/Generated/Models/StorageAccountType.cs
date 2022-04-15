@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.Synapse.Models
     {
         public const string GRS = "GRS";
         public const string LRS = "LRS";
-        public const string ZRS = "ZRS";
     }
 }

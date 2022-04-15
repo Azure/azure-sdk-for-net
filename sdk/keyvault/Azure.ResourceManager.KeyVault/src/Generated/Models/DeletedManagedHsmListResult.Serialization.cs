@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedManagedHsmListResult DeserializeDeletedManagedHsmListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedManagedHsm>> value = default;
+            Optional<IReadOnlyList<DeletedManagedHsmData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeletedManagedHsm> array = new List<DeletedManagedHsm>();
+                    List<DeletedManagedHsmData> array = new List<DeletedManagedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedManagedHsm.DeserializeDeletedManagedHsm(item));
+                        array.Add(DeletedManagedHsmData.DeserializeDeletedManagedHsmData(item));
                     }
                     value = array;
                     continue;

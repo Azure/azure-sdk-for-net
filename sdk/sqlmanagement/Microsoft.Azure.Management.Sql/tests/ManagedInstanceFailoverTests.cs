@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Threading;
 using Xunit;
@@ -24,7 +25,10 @@ namespace Sql.Tests
                 var resourceGroupName = rg.Name;
 
                 // Wait for first full backup to finish
-                Thread.Sleep(TimeSpan.FromMinutes(6));
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep(TimeSpan.FromMinutes(6));
+                }
                 sqlClient.ManagedInstances.Failover(resourceGroupName, managedInstance.Name, ReplicaType.Primary);
             }
         }
@@ -42,7 +46,10 @@ namespace Sql.Tests
                 var resourceGroupName = rg.Name;
 
                 // Wait for first full backup to finish
-                Thread.Sleep(TimeSpan.FromMinutes(6));
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep(TimeSpan.FromMinutes(6));
+                }
                 try
                 {
                     sqlClient.ManagedInstances.Failover(resourceGroupName, managedInstance.Name, ReplicaType.ReadableSecondary);

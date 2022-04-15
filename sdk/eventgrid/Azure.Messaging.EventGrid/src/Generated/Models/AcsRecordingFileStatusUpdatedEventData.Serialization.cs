@@ -20,6 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
             Optional<DateTimeOffset> recordingStartTime = default;
             Optional<long> recordingDurationMs = default;
+            Optional<AcsRecordingContentType> recordingContentType = default;
+            Optional<AcsRecordingChannelType> recordingChannelType = default;
+            Optional<AcsRecordingFormatType> recordingFormatType = default;
             Optional<string> sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,13 +56,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     recordingDurationMs = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("recordingContentType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recordingContentType = new AcsRecordingContentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingChannelType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recordingChannelType = new AcsRecordingChannelType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingFormatType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recordingFormatType = new AcsRecordingFormatType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("sessionEndReason"))
                 {
                     sessionEndReason = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), sessionEndReason.Value);
+            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>

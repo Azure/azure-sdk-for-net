@@ -35,13 +35,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusScaleMonitor> _scaleMonitor;
         private readonly ConcurrencyUpdateManager _concurrencyUpdateManager;
 
-        private volatile bool _disposed;
-        private volatile bool _started;
+        // internal for testing
+        internal volatile bool Disposed;
+        internal volatile bool Started;
+
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
         private readonly string _functionId;
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
+        private Lazy<string> _details;
 
         public ServiceBusListener(
             string functionId,
@@ -107,13 +110,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
+
+            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
+                $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            if (_started)
+            if (Started)
             {
                 throw new InvalidOperationException("The listener has already been started.");
             }
@@ -137,50 +143,58 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
             }
-            _started = true;
+            Started = true;
+
+            _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
+            _logger.LogDebug($"Attempting to stop ServiceBus listener ({_details.Value})");
+
             _concurrencyUpdateManager?.Stop();
 
             await _stopAsyncSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
-                try
+                if (!Started)
                 {
-                    if (!_started)
-                    {
-                        throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
-                    }
+                    throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
+                }
 
-                    _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Cancel();
 
-                    // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
-                    if (_singleDispatch)
+                // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
+                if (_singleDispatch)
+                {
+                    if (_isSessionsEnabled)
                     {
-                        if (_isSessionsEnabled)
-                        {
-                            await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
-                        }
+                        await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        await _batchLoop.ConfigureAwait(false);
-                        await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
-
-                    _started = false;
                 }
-                finally
+                else
                 {
-                    _stopAsyncSemaphore.Release();
+                    await _batchLoop.ConfigureAwait(false);
+                    await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                 }
+
+                Started = false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"ServiceBus listener exception during stopping ({_details.Value})");
+                throw;
+            }
+            finally
+            {
+                _stopAsyncSemaphore.Release();
+                _logger.LogDebug($"ServiceBus listener stopped ({_details.Value})");
             }
         }
 
@@ -193,10 +207,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "_cancellationTokenSource")]
         public void Dispose()
         {
-            if (_disposed)
+            if (Disposed)
             {
                 return;
             }
+
+            _logger.LogDebug($"Attempting to dispose ServiceBus listener ({_details.Value})");
 
             // Running callers might still be using the cancellation token.
             // Mark it canceled but don't dispose of the source while the callers are running.
@@ -230,11 +246,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
-            _disposed = true;
+            Disposed = true;
+
+            _logger.LogDebug($"ServiceBus listener disposed({_details.Value})");
         }
 
         internal async Task ProcessMessageAsync(ProcessMessageEventArgs args)
         {
+            EnsureIsRunning();
+
             _concurrencyUpdateManager?.MessageProcessed();
 
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
@@ -255,6 +275,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         internal async Task ProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
+            EnsureIsRunning();
+
             _concurrencyUpdateManager?.MessageProcessed();
 
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
@@ -269,7 +291,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
+
+                if (actions.ShouldReleaseSession)
+                {
+                    args.ReleaseSession();
+                }
+
                 await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+            }
+        }
+
+        private void EnsureIsRunning()
+        {
+            if (!Started || Disposed)
+            {
+                var message =
+                    $"Message received for a listener that is not in a running state. The message will not be delivered to the function, and instead will be abandoned. " +
+                    $"(Listener started = {Started}, Listener disposed = {Disposed}, {_details.Value})";
+                _logger.LogWarning(message);
+                throw new InvalidOperationException(message);
             }
         }
 
@@ -295,7 +335,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        _logger.LogInformation("Message processing has been stopped or cancelled");
+                        _logger.LogInformation($"Message processing has been stopped or cancelled ({_details.Value})");
                         return;
                     }
 
@@ -326,10 +366,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     if (messages.Count > 0)
                     {
+                        var actions = _isSessionsEnabled
+                            ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
+                            : new ServiceBusMessageActions(receiver);
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
                         ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
                             messagesArray,
-                            _isSessionsEnabled ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver) : new ServiceBusMessageActions(receiver),
+                            actions,
                             _client.Value);
 
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
@@ -343,7 +386,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }
@@ -360,7 +403,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 foreach (ServiceBusReceivedMessage message in messagesArray)
                                 {
                                     // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.Contains(message))
+                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
                                     {
                                         continue;
                                     }
@@ -370,6 +413,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 }
 
                                 await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                            }
+                        }
+
+                        if (_isSessionsEnabled)
+                        {
+                            if (((ServiceBusSessionMessageActions)actions).ShouldReleaseSession)
+                            {
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                         }
                     }
@@ -391,12 +443,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     when(cancellationToken.IsCancellationRequested)
                 {
                     // Ignore as we are stopping the host
-                    _logger.LogInformation("Message processing has been stopped or cancelled");
+                    _logger.LogInformation($"Message processing has been stopped or cancelled ({_details.Value})");
                 }
                 catch (Exception ex)
                 {
                     // Log another exception
-                    _logger.LogError(ex, $"An unhandled exception occurred in the message batch receive loop");
+                    _logger.LogError(ex, $"An unhandled exception occurred in the message batch receive loop ({_details.Value})");
 
                     if (_isSessionsEnabled && receiver != null)
                     {
@@ -418,7 +470,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private void ThrowIfDisposed()
         {
-            if (_disposed)
+            if (Disposed)
             {
                 throw new ObjectDisposedException(null);
             }

@@ -15,81 +15,138 @@ namespace Azure.AI.Language.Conversations.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
-        private static string EnglishText = "We'll have 2 plates of seared salmon nigiri.";
-        private static string SpanishText = "Tendremos 2 platos de nigiri de salmón braseado.";
-        private static List<string> ExpectedOutput = new List<string>()
-        {
-            "2 plates",
-            "seared salmon nigiri"
-        };
 
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               EnglishText);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            // assert - main object
+            Assert.IsNotNull(response);
 
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
-            Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
+            // cast
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            Assert.IsNotNull(customConversationalTaskResult);
+
+            // assert - prediction type
+            Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Results.Prediction.ProjectKind);
+
+            // assert - top intent
+            Assert.AreEqual("Read", customConversationalTaskResult.Results.Prediction.TopIntent);
+
+            // cast prediction
+            var conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            Assert.IsNotNull(conversationPrediction);
+
+            // assert - not empty
+            Assert.IsNotEmpty(conversationPrediction.Intents);
+            Assert.IsNotEmpty(conversationPrediction.Entities);
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversationWithLanguage()
+        public async Task AnalyzeConversation_Orchestration_Conversation()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               SpanishText)
-            {
-                Language = "es"
-            };
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.OrchestrationProject);
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            // assert - main object
+            Assert.IsNotNull(response);
 
-            Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
-            Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
+            // cast
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            Assert.IsNotNull(customConversationalTaskResult);
+
+            // assert - prediction type
+            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+
+            // assert - top intent
+            Assert.AreEqual("EmailIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
+
+            // cast prediction
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            Assert.IsNotNull(orchestratorPrediction);
+
+            // assert - not empty
+            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+
+            // cast top intent
+            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as ConversationTargetIntentResult;
+            Assert.IsNotNull(topIntent);
+
+            // assert - inent target kind
+            Assert.AreEqual(TargetKind.Conversation, topIntent.TargetKind);
+
+            // assert entities and intents
+            Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
+            Assert.IsNotEmpty(topIntent.Result.Prediction.Intents);
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversationsWithConversationPrediction()
+        public async Task AnalyzeConversation_Orchestration_Luis()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               EnglishText);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Reserve a table for 2 at the Italian restaurant", TestEnvironment.OrchestrationProject);
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            // assert - main object
+            Assert.IsNotNull(response);
 
-            ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
+            // cast
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            Assert.IsNotNull(customConversationalTaskResult);
 
-            Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
+            // assert - prediction type
+            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
 
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Order"));
+            // assert - top intent
+            Assert.AreEqual("RestaurantIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
 
-            IList<string> entitiesText = conversationPrediction.Entities.Select(entity => entity.Text).ToList();
-            Assert.That(entitiesText, Has.Count.EqualTo(2));
-            Assert.That(entitiesText, Is.EquivalentTo(ExpectedOutput));
+            // cast prediction
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            Assert.IsNotNull(orchestratorPrediction);
+
+            // assert - not empty
+            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+
+            // cast top intent
+            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as LuisTargetIntentResult;
+            Assert.IsNotNull(topIntent);
+
+            // assert - inent target kind
+            Assert.AreEqual(TargetKind.Luis, topIntent.TargetKind);
         }
 
         [RecordedTest]
-        public void AnalyzeConversationsInvalidArgument()
+        public async Task AnalyzeConversation_Orchestration_QuestionAnswering()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-              TestEnvironment.ProjectName,
-              TestEnvironment.DeploymentName,
-              "");
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("How are you?", TestEnvironment.OrchestrationProject);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await Client.AnalyzeConversationAsync(options);
-            });
+            // assert - main object
+            Assert.IsNotNull(response);
 
-            Assert.That(ex.Status, Is.EqualTo(400));
-            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
+            // cast
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            Assert.IsNotNull(customConversationalTaskResult);
+
+            // assert - prediction type
+            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+
+            // assert - top intent
+            Assert.AreEqual("ChitChat-QnA", customConversationalTaskResult.Results.Prediction.TopIntent);
+
+            // cast prediction
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            Assert.IsNotNull(orchestratorPrediction);
+
+            // assert - not empty
+            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+
+            // cast top intent
+            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
+            Assert.IsNotNull(topIntent);
+
+            // assert - inent target kind
+            Assert.AreEqual(TargetKind.QuestionAnswering, topIntent.TargetKind);
+
+            // assert - top intent answers
+            Assert.IsNotEmpty(topIntent.Result.Answers);
         }
     }
 }

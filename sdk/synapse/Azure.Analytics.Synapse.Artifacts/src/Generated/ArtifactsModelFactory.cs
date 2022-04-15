@@ -14,6 +14,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
+        /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
+        /// <param name="status"> Enumerates possible request statuses. </param>
+        /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
+        public static MetastoreRegistrationResponse MetastoreRegistrationResponse(RequestStatus? status = null)
+        {
+            return new MetastoreRegistrationResponse(status);
+        }
+
+        /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
+        /// <param name="status"> Enumerates possible Status of the resource. </param>
+        /// <returns> A new <see cref="Models.MetastoreRequestSuccessResponse"/> instance for mocking. </returns>
+        public static MetastoreRequestSuccessResponse MetastoreRequestSuccessResponse(ResourceStatus? status = null)
+        {
+            return new MetastoreRequestSuccessResponse(status);
+        }
+
+        /// <summary> Initializes a new instance of MetastoreUpdationResponse. </summary>
+        /// <param name="status"> Enumerates possible request statuses. </param>
+        /// <returns> A new <see cref="Models.MetastoreUpdationResponse"/> instance for mocking. </returns>
+        public static MetastoreUpdationResponse MetastoreUpdationResponse(RequestStatus? status = null)
+        {
+            return new MetastoreUpdationResponse(status);
+        }
+
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

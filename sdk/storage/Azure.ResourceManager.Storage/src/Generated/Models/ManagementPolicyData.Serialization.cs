@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -34,13 +34,14 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<ManagementPolicySchema> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -51,6 +52,11 @@ namespace Azure.ResourceManager.Storage
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new ManagementPolicyData(id, name, type, Optional.ToNullable(lastModifiedTime), policy.Value);
+            return new ManagementPolicyData(id, name, type, systemData, Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }

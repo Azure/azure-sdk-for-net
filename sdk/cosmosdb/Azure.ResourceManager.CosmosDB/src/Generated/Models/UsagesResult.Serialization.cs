@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static UsagesResult DeserializeUsagesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Usage>> value = default;
+            Optional<IReadOnlyList<BaseUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Usage> array = new List<Usage>();
+                    List<BaseUsage> array = new List<BaseUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Usage.DeserializeUsage(item));
+                        array.Add(BaseUsage.DeserializeBaseUsage(item));
                     }
                     value = array;
                     continue;

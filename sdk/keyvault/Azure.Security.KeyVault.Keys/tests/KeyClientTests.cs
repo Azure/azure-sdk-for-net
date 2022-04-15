@@ -49,7 +49,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(null, keyOperations));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyPropertiesAsync(key, null));
         }
 
         [Test]
@@ -217,10 +216,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
-            Assert.AreEqual("target", ex.ParamName);
+            Assert.AreEqual("targetAttestationToken", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null));
+            Assert.AreEqual("options", ex.ParamName);
         }
 
         [Test]
@@ -228,19 +230,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void GetCryptographyClientValidation()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetCryptographyClient(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => Client.GetCryptographyClient(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
         }
 
         [Test]
         public async Task GetCryptographyClientUsesSamePipeline()
         {
+            const string keyContent = @"{""attributes"":{""created"":1626299777,""enabled"":true,""exportable"":false,""updated"":1626299777},""key"":{""key_ops"":[""wrapKey"",""unwrapKey""],""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""kty"":""oct-HSM""}}";
+
             // Make sure the created CryptographyClient uses the same mock transport as the KeyVault that created it.
             MockTransport transport = new(new[]
             {
-                new MockResponse(200).WithContent(@"{""attributes"":{""created"":1626299777,""enabled"":true,""exportable"":false,""updated"":1626299777},""key"":{""key_ops"":[""wrapKey"",""unwrapKey""],""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""kty"":""oct-HSM""}}"),
+                new MockResponse(200).WithContent(keyContent), // Key returned after call to create the key.
+                new MockResponse(200).WithContent(keyContent), // Key returned in attempt to cache the key.
                 new MockResponse(200).WithContent(@"{""alg"":""A128KW"",""kid"":""https://test.managedhsm.azure.net/keys/test/abcd1234"",""value"":""dGVzdA""}"),
             });
 
@@ -263,10 +268,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void GetKeyRotationPolicyValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetKeyRotationPolicyAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetKeyRotationPolicyAsync(string.Empty));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
         }
 
         [Test]
@@ -283,10 +288,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void UpdateKeyRotationPolicyValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync(null, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateKeyRotationPolicyAsync(string.Empty, null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("keyName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync("test", null));
             Assert.AreEqual("policy", ex.ParamName);

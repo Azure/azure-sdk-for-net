@@ -6,32 +6,46 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-tag: package-2021-04
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7384176da46425e7899708f263e0598b851358c2/specification/storage/resource-manager/readme.md
+tag: package-2021-08
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/409af02e5ca217c7e7ec2acf50f4976c053496f8/specification/storage/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-    lenient-model-deduplication: true
-    seal-single-value-enum-by-default: true
-operation-group-to-resource-type:
-    Skus: Microsoft.Storage/skus
-    DeletedAccounts: Microsoft.Storage/deletedAccounts
-    Usages: Microsoft.Storage/locations/usages
-    PrivateLinkResources: Microsoft.Storage/storageAccounts/privateLinkResources
-    StorageAccountName: Microsoft.Storage/storageAccountsss
-operation-group-to-resource:
-    StorageAccounts: StorageAccount
-    DeletedAccounts: NonResource
-    Table: Table
-    StorageAccountName: NonResource
-operation-group-to-parent:
-    BlobContainers: Microsoft.Storage/storageAccounts/blobServices
-    FileShares: Microsoft.Storage/storageAccounts/fileServices
-    Queue: Microsoft.Storage/storageAccounts/queueServices
-    Table: Microsoft.Storage/storageAccounts/tableServices
-    StorageAccountName: subscriptions
-operation-group-to-singleton-resource:
-  ManagementPolicies: managementPolicies/default
+modelerfour: # we need to remove these two configurations
+  lenient-model-deduplication: true
+  seal-single-value-enum-by-default: true
+
+list-exception:
+- /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+
+override-operation-name:
+  StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
+
+request-path-to-singleton-resource:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  SAS: Sas
+  
 directive:
   - rename-model:
       from: BlobServiceProperties
@@ -54,74 +68,7 @@ directive:
   - from: swagger-document
     where: $.definitions.ListQueueResource.properties.value.items["$ref"]
     transform: return "#/definitions/StorageQueue"
-# change default to service name and add to parameter
   - from: swagger-document
-    where: $.paths
-    transform: >
-      for (var key in $) {
-          var newKey=key.replace('fileServices/default','fileServices/{FileServicesName}');
-          if (newKey !== key){
-              $[newKey] = $[key];
-              for (var key1 in $[newKey]){
-                $[newKey][key1]['parameters'].push(
-                  {
-                    "$ref": "#/parameters/FileServicesName"
-                  }
-                );
-              }
-              delete $[key];
-              continue;
-            }
-            newKey=key.replace('blobServices/default','blobServices/{BlobServicesName}');
-          if (newKey !== key){
-              $[newKey] = $[key];
-              for (var key1 in $[newKey]){
-                $[newKey][key1]['parameters'].push(
-                  {
-                    "$ref": "#/parameters/BlobServicesName"
-                  }
-                );
-              }
-              delete $[key];
-              continue;
-            }
-          newKey=key.replace('queueServices/default','queueServices/{queueServiceName}');
-           if (newKey !== key){
-              $[newKey] = $[key];
-              for (var key1 in $[newKey]){
-                $[newKey][key1]['parameters'].push(
-                  {
-                    "$ref": "#/parameters/QueueServiceName"
-                  }
-                );
-              }
-              delete $[key];
-              continue;
-            }
-          newKey=key.replace('tableServices/default','tableServices/{tableServiceName}');
-          if (newKey !== key){
-              $[newKey] = $[key]
-              for (var key1 in $[newKey]){
-                $[newKey][key1]['parameters'].push(
-                  {
-                    "$ref": "#/parameters/TableServiceName"
-                  }
-                );
-              }
-              delete $[key];
-            }
-      }
-# delete enum property
-  - from: swagger-document
-    where: $.parameters
-    transform: >
-      for (var key in $) {
-          if (key === 'BlobServicesName'||key === 'FileServicesName'||key === 'QueueServiceName'||key === 'TableServiceName'){
-              delete $[key]['enum']
-          }
-      }
-# change checkname availability operation id
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability'].post.operationId
-    transform: return 'StorageAccountName_CheckAvailability'
+    where: $.definitions.Multichannel.properties.enabled
+    transform: $['x-ms-client-name'] = 'IsMultiChannelEnabled'
 ```

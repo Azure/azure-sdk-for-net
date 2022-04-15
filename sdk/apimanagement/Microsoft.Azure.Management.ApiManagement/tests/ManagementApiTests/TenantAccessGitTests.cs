@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.ApiManagement;
 using Xunit;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -60,7 +61,9 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(secretsResponse2);
                 Assert.Equal(secretsResponse.SecondaryKey, secretsResponse2.SecondaryKey);
-                Assert.NotEqual(secretsResponse.PrimaryKey, secretsResponse2.PrimaryKey);
+
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    Assert.NotEqual(secretsResponse.PrimaryKey, secretsResponse2.PrimaryKey);
 
                 testBase.client.TenantAccessGit.RegenerateSecondaryKey(
                     testBase.rgName,

@@ -26,6 +26,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
     - [Cross-Entity transactions](#cross-entity-transactions)
   - [Plugins](#plugins)
   - [Additional samples](#additional-samples)
+  - [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Migration benefits
 
@@ -35,7 +36,11 @@ There were several areas of consistent feedback expressed across the Azure clien
 
 To improve the development experience across Azure services, including Service Bus, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. The new `Azure.Messaging.ServiceBus` library follows these guidelines.
 
-While we believe that there is significant benefit to adopting the new Service Bus library `Azure.Messaging.ServiceBus`, it is important to be aware that the previous two versions `WindowsAzure.ServiceBus` and `Microsoft.Azure.ServiceBus` have not been officially deprecated. They will continue to be supported with security and bug fixes as well as receiving some minor refinements. However, in the near future they will not be under active development and new features are unlikely to be added to them.
+While we believe that there is significant benefit to adopting the new Service Bus library `Azure.Messaging.ServiceBus`, it is important to be aware of the status of the older versions:
+
+- `WindowsAzure.ServiceBus` has not been officially deprecated and will continue to be supported with security and bug fixes as well as receiving some minor refinements. However, in the near future it will not be under active development and new features are unlikely to be added.
+
+- `Microsoft.Azure.ServiceBus` has been officially deprecated. While this package will continue to receive critical bug fixes, we strongly encourage you to upgrade.
 
 ### Cross Service SDK improvements
 
@@ -418,6 +423,7 @@ Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions`
 The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusCrossEntityTransaction
+string connectionString = "<connection_string>";
 var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 await using var client = new ServiceBusClient(connectionString, options);
 
@@ -446,4 +452,24 @@ To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can exte
 
 More examples can be found at:
 
--   [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples)
+- [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples)
+
+## Frequently asked questions
+
+**Why doesn't `Azure.Messaging.ServiceBus` support batch settlement of messages?**
+
+Batch settlement of messages is not implemented in the `Azure.Messaging.ServiceBus` client library because there is no support for batch operations in Service Bus itself; previous Service Bus packages provided a client-side only implementation similar to:
+
+```C# Snippet:MigrationGuideBatchMessageSettlement
+var tasks = new List<Task>();
+
+foreach (ServiceBusReceivedMessage message in messages)
+{
+    tasks.Add(receiver.CompleteMessageAsync(message));
+}
+
+await Task.WhenAll(tasks);
+```
+
+For `Azure.Messaging.ServiceBus`, we felt that the client-side approach would introduce complexity and confusion around error scenarios due to the potential for partial success.  It also may hide a performance bottleneck, which we would like to avoid.  Since this pattern is fairly straight-forward to implement, we felt it was better applied in the application than hidden within the Azure SDK.
+

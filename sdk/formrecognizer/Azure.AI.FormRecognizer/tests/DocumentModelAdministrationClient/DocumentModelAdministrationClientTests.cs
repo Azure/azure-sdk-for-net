@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeEndpoint = new Uri("http://notreal.azure.com/");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            options ??= new DocumentAnalysisClientOptions();
+            options ??= new DocumentAnalysisClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}};
             var client = new DocumentModelAdministrationClient(fakeEndpoint, fakeCredential, options);
 
             return client;
@@ -102,10 +102,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartBuildModelAsync(new Uri(string.Empty)));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartBuildModelAsync((Uri)null));
-            Assert.Throws<UriFormatException>(() => client.StartBuildModel(new Uri(string.Empty)));
-            Assert.Throws<ArgumentNullException>(() => client.StartBuildModel((Uri)null));
+            Assert.ThrowsAsync<UriFormatException>(() => client.StartBuildModelAsync(new Uri(string.Empty), DocumentBuildMode.Template));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartBuildModelAsync((Uri)null, DocumentBuildMode.Template));
+            Assert.Throws<UriFormatException>(() => client.StartBuildModel(new Uri(string.Empty), DocumentBuildMode.Template));
+            Assert.Throws<ArgumentNullException>(() => client.StartBuildModel((Uri)null, DocumentBuildMode.Template));
         }
 
         [Test]
@@ -133,8 +133,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync(null, copyAuth));
-            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync(string.Empty, copyAuth));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelToAsync(null, copyAuth));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelToAsync(string.Empty, copyAuth));
         }
 
         [Test]

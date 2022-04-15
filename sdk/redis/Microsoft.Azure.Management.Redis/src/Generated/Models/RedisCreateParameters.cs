@@ -65,12 +65,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="subnetId">The full resource ID of a subnet in a
         /// virtual network to deploy the Redis cache in. Example format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
-        /// <param name="staticIP">Static IP address. Required when deploying a
-        /// Redis cache inside an existing Azure Virtual Network.</param>
+        /// <param name="staticIP">Static IP address. Optionally, may be
+        /// specified when deploying a Redis cache inside an existing Azure
+        /// Virtual Network; auto assigned by default.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisCreateParameters(Sku sku, string location, IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">The identity of the resource.</param>
+        public RedisCreateParameters(Sku sku, string location, RedisCommonPropertiesRedisConfiguration redisConfiguration = default(RedisCommonPropertiesRedisConfiguration), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
         {
             RedisConfiguration = redisConfiguration;
             RedisVersion = redisVersion;
@@ -87,6 +89,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             Zones = zones;
             Location = location;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -101,7 +104,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.redisConfiguration")]
-        public IDictionary<string, string> RedisConfiguration { get; set; }
+        public RedisCommonPropertiesRedisConfiguration RedisConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets redis version. Only major version will be used in
@@ -175,8 +178,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string SubnetId { get; set; }
 
         /// <summary>
-        /// Gets or sets static IP address. Required when deploying a Redis
-        /// cache inside an existing Azure Virtual Network.
+        /// Gets or sets static IP address. Optionally, may be specified when
+        /// deploying a Redis cache inside an existing Azure Virtual Network;
+        /// auto assigned by default.
         /// </summary>
         [JsonProperty(PropertyName = "properties.staticIP")]
         public string StaticIP { get; set; }
@@ -199,6 +203,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -233,6 +243,10 @@ namespace Microsoft.Azure.Management.Redis.Models
                 {
                     throw new ValidationException(ValidationRules.Pattern, "StaticIP", "^\\d+\\.\\d+\\.\\d+\\.\\d+$");
                 }
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

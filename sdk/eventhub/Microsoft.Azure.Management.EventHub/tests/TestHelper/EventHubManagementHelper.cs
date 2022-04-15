@@ -28,6 +28,7 @@ namespace EventHub.Tests.TestHelper
         internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup-";
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
         internal const string KeyVaultePrefix = "sdk-KeyVault-";
+        internal const string SchemaPrefix = "sdk-Schema-";
 
         internal const string ResourceGroupCluster = "v-ajnavtest";
         internal const string TestClusterName = "PMTestCluster1";

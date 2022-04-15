@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// A Stream Analytics Cluster object
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class Cluster : TrackedResource
     {
         /// <summary>
@@ -45,14 +48,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// changed between requests. You can also use it in the If-Match or
         /// If-None-Match headers for write operations for optimistic
         /// concurrency.</param>
-        /// <param name="properties">The properties associated with a Stream
-        /// Analytics cluster.</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ClusterSku sku = default(ClusterSku), string etag = default(string), ClusterProperties properties = default(ClusterProperties))
+        /// <param name="createdDate">The date this cluster was
+        /// created.</param>
+        /// <param name="clusterId">Unique identifier for the cluster.</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Succeeded', 'Failed', 'Canceled', 'InProgress'</param>
+        /// <param name="capacityAllocated">Represents the number of streaming
+        /// units currently being used on the cluster.</param>
+        /// <param name="capacityAssigned">Represents the sum of the SUs of all
+        /// streaming jobs associated with the cluster. If all of the jobs were
+        /// running, this would be the capacity allocated.</param>
+        public Cluster(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ClusterSku sku = default(ClusterSku), string etag = default(string), System.DateTime? createdDate = default(System.DateTime?), string clusterId = default(string), string provisioningState = default(string), int? capacityAllocated = default(int?), int? capacityAssigned = default(int?))
             : base(id, name, type, tags, location)
         {
             Sku = sku;
             Etag = etag;
-            Properties = properties;
+            CreatedDate = createdDate;
+            ClusterId = clusterId;
+            ProvisioningState = provisioningState;
+            CapacityAllocated = capacityAllocated;
+            CapacityAssigned = capacityAssigned;
             CustomInit();
         }
 
@@ -77,16 +92,43 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets the properties associated with a Stream Analytics
-        /// cluster.
+        /// Gets the date this cluster was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ClusterProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public System.DateTime? CreatedDate { get; private set; }
+
+        /// <summary>
+        /// Gets unique identifier for the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterId")]
+        public string ClusterId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Succeeded', 'Failed',
+        /// 'Canceled', 'InProgress'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets represents the number of streaming units currently being used
+        /// on the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityAllocated")]
+        public int? CapacityAllocated { get; private set; }
+
+        /// <summary>
+        /// Gets represents the sum of the SUs of all streaming jobs associated
+        /// with the cluster. If all of the jobs were running, this would be
+        /// the capacity allocated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityAssigned")]
+        public int? CapacityAssigned { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

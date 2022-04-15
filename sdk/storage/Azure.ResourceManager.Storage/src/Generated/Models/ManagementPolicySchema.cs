@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
-    public partial class ManagementPolicySchema
+    internal partial class ManagementPolicySchema
     {
         /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>

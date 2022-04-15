@@ -48,15 +48,13 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("ADO 6161")]
         public async Task BGPCommunityApiTest()
         {
-            //_ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);
-            Assert.True(communities.First().BgpCommunities.First().IsAuthorizedToUse);
+            Assert.That(communities.Any(c => c.BgpCommunities.Any(b => b.IsAuthorizedToUse.HasValue ? b.IsAuthorizedToUse.Value : false)));
         }
 
         [Test]
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
+            ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
+            ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));

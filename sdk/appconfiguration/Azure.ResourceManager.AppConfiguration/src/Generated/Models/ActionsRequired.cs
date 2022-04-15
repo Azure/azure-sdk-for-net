@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ActionsRequired"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionsRequired"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ActionsRequired(string value)
         {

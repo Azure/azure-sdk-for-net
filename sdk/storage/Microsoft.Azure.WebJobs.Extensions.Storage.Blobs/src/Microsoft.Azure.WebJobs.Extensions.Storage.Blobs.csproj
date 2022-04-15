@@ -23,5 +23,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\HttpRequestProcessor.cs" Link="EventGrid\HttpRequestProcessor.cs" />
+    <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\BindingType.cs" Link="EventGrid\BindingType.cs" />
   </ItemGroup>
 </Project>

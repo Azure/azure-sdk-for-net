@@ -23,11 +23,11 @@ namespace Azure.Containers.ContainerRegistry
         /// Create an instance of the options for configuring request sent to the Container Registry service.
         /// </summary>
         /// <param name="version"></param>
-        public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V1_0)
+        public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V2021_07_01)
         {
             Version = version switch
             {
-                ServiceVersion.V1_0 => "1.0",
+                ServiceVersion.V2021_07_01 => "2021-07-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
             AddHeadersAndQueryParameters();
@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
             /// <summary>
             /// </summary>
 #pragma warning disable CA1707 // Remove the underscores from member name
-            V1_0 = 1
+            V2021_07_01 = 1
 #pragma warning restore
         }
     }

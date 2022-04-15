@@ -27,10 +27,30 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier. </summary>
-        public DateAfterCreation TierToCool { get; set; }
+        internal DateAfterCreation TierToCool { get; set; }
+        /// <summary> Value indicating the age in days after creation. </summary>
+        public float TierToCoolDaysAfterCreationGreaterThan
+        {
+            get => TierToCool is null ? default : TierToCool.DaysAfterCreationGreaterThan;
+            set => TierToCool = new DateAfterCreation(value);
+        }
+
         /// <summary> The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier. </summary>
-        public DateAfterCreation TierToArchive { get; set; }
+        internal DateAfterCreation TierToArchive { get; set; }
+        /// <summary> Value indicating the age in days after creation. </summary>
+        public float TierToArchiveDaysAfterCreationGreaterThan
+        {
+            get => TierToArchive is null ? default : TierToArchive.DaysAfterCreationGreaterThan;
+            set => TierToArchive = new DateAfterCreation(value);
+        }
+
         /// <summary> The function to delete the blob snapshot. </summary>
-        public DateAfterCreation Delete { get; set; }
+        internal DateAfterCreation Delete { get; set; }
+        /// <summary> Value indicating the age in days after creation. </summary>
+        public float DeleteDaysAfterCreationGreaterThan
+        {
+            get => Delete is null ? default : Delete.DaysAfterCreationGreaterThan;
+            set => Delete = new DateAfterCreation(value);
+        }
     }
 }

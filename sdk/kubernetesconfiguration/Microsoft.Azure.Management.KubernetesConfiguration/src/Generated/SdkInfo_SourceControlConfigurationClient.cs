@@ -19,19 +19,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("KubernetesConfiguration", "Extensions", "2020-07-01-preview"),
-                new Tuple<string, string, string>("KubernetesConfiguration", "Operations", "2020-07-01-preview"),
-                new Tuple<string, string, string>("KubernetesConfiguration", "SourceControlConfigurations", "2020-07-01-preview"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "Extensions", "2022-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "FluxConfigOperationStatus", "2022-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "FluxConfigurations", "2022-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "OperationStatus", "2022-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "Operations", "2022-03-01"),
+                new Tuple<string, string, string>("KubernetesConfiguration", "SourceControlConfigurations", "2022-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-07-01-preview --csharp-sdks-folder=C:\\Users\\joinnis\\github\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/kubernetesconfiguration/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\joinnis.REDMOND\\github\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "51ac4e53451186f256943689801b472a0bac3c13";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "c277c1bc2a40d5b5d2b1792e611291e708246d0e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,52 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.6 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -86,8 +132,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
 VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
@@ -102,8 +148,8 @@ vnet.Subnets.Add(new SubnetData
     AddressPrefix = "10.0.0.0/24",
 });
 
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync("_vent", vnet);
-VirtualNetwork virtualNetwork = vnetOperation.Value;
+ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+VirtualNetworkResource virtualNetwork = vnetOperation.Value;
 ```
 
 #### Object Model Changes
@@ -129,11 +175,11 @@ var policy = new IpsecPolicy()
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-IpsecPolicy policy = new IpsecPolicy(
+IPsecPolicy policy = new IPsecPolicy(
    300,
    1024,
-   IpsecEncryption.AES128,
-   IpsecIntegrity.SHA256,
+   IPsecEncryption.AES128,
+   IPsecIntegrity.SHA256,
    IkeEncryption.AES192,
    IkeIntegrity.SHA1,
    DhGroup.DHGroup2,

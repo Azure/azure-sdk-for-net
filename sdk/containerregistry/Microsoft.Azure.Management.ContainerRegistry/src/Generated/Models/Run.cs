@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="runId">The unique identifier for the run.</param>
         /// <param name="status">The current status of the run. Possible values
         /// include: 'Queued', 'Started', 'Running', 'Succeeded', 'Failed',
@@ -74,13 +76,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// backend systems after the run is scheduled.</param>
         /// <param name="updateTriggerToken">The update trigger token passed
         /// for the Run.</param>
+        /// <param name="logArtifact">The image description for the log
+        /// artifact.</param>
         /// <param name="provisioningState">The provisioning state of a run.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed', 'Canceled'</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled or not.</param>
-        public Run(string id = default(string), string name = default(string), string type = default(string), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), string agentPoolName = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), TimerTriggerDescriptor timerTrigger = default(TimerTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string runErrorMessage = default(string), string updateTriggerToken = default(string), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?))
-            : base(id, name, type)
+        public Run(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), string agentPoolName = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), TimerTriggerDescriptor timerTrigger = default(TimerTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string runErrorMessage = default(string), string updateTriggerToken = default(string), ImageDescriptor logArtifact = default(ImageDescriptor), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?))
+            : base(id, name, type, systemData)
         {
             RunId = runId;
             Status = status;
@@ -101,6 +105,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             CustomRegistries = customRegistries;
             RunErrorMessage = runErrorMessage;
             UpdateTriggerToken = updateTriggerToken;
+            LogArtifact = logArtifact;
             ProvisioningState = provisioningState;
             IsArchiveEnabled = isArchiveEnabled;
             CustomInit();
@@ -234,6 +239,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.updateTriggerToken")]
         public string UpdateTriggerToken { get; set; }
+
+        /// <summary>
+        /// Gets the image description for the log artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logArtifact")]
+        public ImageDescriptor LogArtifact { get; private set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of a run. Possible values

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
         internal MongoDBDatabaseListResult()
         {
-            Value = new ChangeTrackingList<MongoDBDatabaseGetResults>();
+            Value = new ChangeTrackingList<MongoDBDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
         /// <param name="value"> List of MongoDB databases and their properties. </param>
-        internal MongoDBDatabaseListResult(IReadOnlyList<MongoDBDatabaseGetResults> value)
+        internal MongoDBDatabaseListResult(IReadOnlyList<MongoDBDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary> List of MongoDB databases and their properties. </summary>
-        public IReadOnlyList<MongoDBDatabaseGetResults> Value { get; }
+        public IReadOnlyList<MongoDBDatabaseData> Value { get; }
     }
 }

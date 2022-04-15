@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisGetList3120/providers/Microsoft.Cache/redis/RedisGetList1852/listKeys?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDMxMjAvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3QxODUyL2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestUri": "/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGetList5682/providers/Microsoft.Cache/redis/RedisGetList3705/listKeys?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGVlMmExNDUtNGQ0MC00NGY0LWI3NjQtNjdiNDAyNzRmMWFjL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDU2ODIvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3QzNzA1L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "86105c82-139e-458e-b540-ef8d953231b7"
+          "dd04a56c-0aae-4de8-af0a-0ca7bd1dd780"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Jul 2021 14:49:34 GMT"
+          "Fri, 26 Nov 2021 11:37:19 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "4a5c9565-6908-40d5-9f60-0aeed51aa01d"
+          "9d88c906-0975-4505-b8c6-4584a904fdec"
         ],
         "x-rp-server-mvid": [
-          "91694a99-5a72-41df-9431-8f5234edfb7e"
+          "813ce424-a354-4dd1-8e97-500396621e81"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,13 +45,13 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "4d821d85-d135-4eda-8555-1e816ae1ab64"
+          "a505a2ab-74fb-4385-ba3c-f5cc8d9091e9"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210719T144935Z:4d821d85-d135-4eda-8555-1e816ae1ab64"
+          "CENTRALUSEUAP:20211126T113720Z:a505a2ab-74fb-4385-ba3c-f5cc8d9091e9"
         ],
         "Content-Length": [
           "123"
@@ -63,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"*****\",\r\n  \"secondaryKey\": \"*****\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"*****\",\r\n  \"secondaryKey\": \"******\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "1ab2d901-67b8-442a-99dc-1fee16302453"
+    "SubscriptionId": "0ee2a145-4d40-44f4-b764-67b40274f1ac"
   }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -25,17 +27,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ModelId = modelId;
             CreatedOn = createdOn;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
-        internal DocumentModelInfo(string modelId, string description, DateTimeOffset createdOn)
+        /// <param name="apiVersion"> API version used to create this model. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        internal DocumentModelInfo(string modelId, string description, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             ModelId = modelId;
             Description = description;
             CreatedOn = createdOn;
+            ApiVersion = apiVersion;
+            Tags = tags;
         }
 
         /// <summary> Unique model name. </summary>

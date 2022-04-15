@@ -28,11 +28,16 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the AlertRuleTemplate class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        public AlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public AlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             CustomInit();
         }

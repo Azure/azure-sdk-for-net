@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public FormatWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "FormatWriteSettings";
         }
 
         /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatWriteSettings(string type, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "FormatWriteSettings";
+            Type = type;
             AdditionalProperties = additionalProperties;
         }
 

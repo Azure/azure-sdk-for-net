@@ -3,13 +3,12 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Web PubSub. The attribute supports to invoke
-    /// multiple kinds of operations to service. For details, <see cref="WebPubSubOperation"/>.
+    /// multiple kinds of operations to service. For details, <see cref="WebPubSubAction"/>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [Binding]

@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityType");
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
+            {
+                writer.WritePropertyName("secureVMDiskEncryptionSetId");
+                writer.WriteStringValue(SecureVmDiskEncryptionSetId);
+            }
             writer.WriteEndObject();
         }
 
         internal static DiskSecurityProfile DeserializeDiskSecurityProfile(JsonElement element)
         {
             Optional<DiskSecurityTypes> securityType = default;
+            Optional<string> secureVMDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityType"))
@@ -38,8 +44,13 @@ namespace Azure.ResourceManager.Compute.Models
                     securityType = new DiskSecurityTypes(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("secureVMDiskEncryptionSetId"))
+                {
+                    secureVMDiskEncryptionSetId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DiskSecurityProfile(Optional.ToNullable(securityType));
+            return new DiskSecurityProfile(Optional.ToNullable(securityType), secureVMDiskEncryptionSetId.Value);
         }
     }
 }

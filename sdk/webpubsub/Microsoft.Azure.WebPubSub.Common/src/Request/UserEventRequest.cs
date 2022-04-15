@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -9,44 +10,48 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// User message event request.
     /// </summary>
+    [DataContract]
     public sealed class UserEventRequest : WebPubSubEventRequest
     {
         /// <summary>
         /// Message content.
         /// </summary>
-        [JsonPropertyName("message"), JsonConverter(typeof(BinaryDataJsonConverter))]
-        public BinaryData Message { get; }
+        [DataMember(Name = "data")]
+        [JsonPropertyName("data"), JsonConverter(typeof(BinaryDataJsonConverter))]
+        public BinaryData Data { get; }
 
         /// <summary>
         /// Message data type.
         /// </summary>
+        [DataMember(Name = "dataType")]
         [JsonPropertyName("dataType"), JsonConverter(typeof(JsonStringEnumConverter))]
-        public MessageDataType DataType { get; }
+        public WebPubSubDataType DataType { get; }
 
         /// <summary>
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
-        /// <param name="message">String message to return caller.</param>
-        /// <param name="dataType">Message <see cref="MessageDataType"/>, default as Text.</param>
+        /// <param name="data">String message to return caller.</param>
+        /// <param name="dataType">Message <see cref="WebPubSubDataType"/>, default as Text.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(string message, MessageDataType dataType = MessageDataType.Text)
+        public UserEventResponse CreateResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
         {
-            return new UserEventResponse(message, dataType);
+            return new UserEventResponse(data, dataType);
         }
 
         /// <summary>
         /// Create <see cref="UserEventResponse"/>.
         /// </summary>
-        /// <param name="message">BinaryData message to return caller.</param>
-        /// <param name="dataType">Message <see cref="MessageDataType"/>.</param>
+        /// <param name="data">BinaryData message to return caller.</param>
+        /// <param name="dataType">Message <see cref="WebPubSubDataType"/>.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(BinaryData message, MessageDataType dataType)
+        public UserEventResponse CreateResponse(BinaryData data, WebPubSubDataType dataType)
         {
-            return new UserEventResponse(message, dataType);
+            return new UserEventResponse(data, dataType);
         }
 
         /// <summary>
         /// Create <see cref="EventErrorResponse"/>.
+        /// Methods works for Function Extensions. And AspNetCore SDK Hub methods can directly throw exception for error cases.
         /// </summary>
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
@@ -56,10 +61,16 @@ namespace Microsoft.Azure.WebPubSub.Common
             return new EventErrorResponse(code, message);
         }
 
-        internal UserEventRequest(WebPubSubConnectionContext connectionContext, BinaryData message, MessageDataType dataType)
-            : base(connectionContext)
+        /// <summary>
+        /// The user event request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="data"></param>
+        /// <param name="dataType"></param>
+        public UserEventRequest(WebPubSubConnectionContext context, BinaryData data, WebPubSubDataType dataType)
+            : base(context)
         {
-            Message = message;
+            Data = data;
             DataType = dataType;
         }
 

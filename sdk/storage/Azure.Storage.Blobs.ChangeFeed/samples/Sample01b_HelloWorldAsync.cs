@@ -119,7 +119,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
-            #region Snippet:SampleSnippetsChangeFeed_PollForEventsWithCursor
             // Create the start time.  The change feed client will round start time down to
             // the nearest hour if you provide DateTimeOffsets
             // with minutes and seconds.
@@ -153,7 +152,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
                 // Resume from last continuation token and fetch latest set of events.
                 pages = changeFeedClient.GetChangesAsync(continuationToken).AsPages();
             }
-            #endregion
         }
     }
 }

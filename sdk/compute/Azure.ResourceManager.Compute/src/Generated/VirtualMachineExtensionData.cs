@@ -5,27 +5,28 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineExtension data model. </summary>
-    public partial class VirtualMachineExtensionData : TrackedResource
+    public partial class VirtualMachineExtensionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineExtensionData(Location location) : base(location)
+        public VirtualMachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
-        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView) : base(id, name, type, tags, location)
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures) : base(id, name, resourceType, systemData, tags, location)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Compute
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            SuppressFailures = suppressFailures;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
@@ -65,12 +68,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
         public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary> Json formatted public settings for the extension. </summary>
-        public object Settings { get; set; }
+        public BinaryData Settings { get; set; }
         /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
-        public object ProtectedSettings { get; set; }
+        public BinaryData ProtectedSettings { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The virtual machine extension instance view. </summary>
         public VirtualMachineExtensionInstanceView InstanceView { get; set; }
+        /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
+        public bool? SuppressFailures { get; set; }
     }
 }

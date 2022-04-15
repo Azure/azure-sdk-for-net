@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         internal ErrorAdditionalInfo()
@@ -16,17 +18,17 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        /// <param name="type"> The additional info type. </param>
+        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        internal ErrorAdditionalInfo(string type, object info)
+        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
         {
-            Type = type;
+            ErrorAdditionalInfoType = errorAdditionalInfoType;
             Info = info;
         }
 
         /// <summary> The additional info type. </summary>
-        public string Type { get; }
+        public string ErrorAdditionalInfoType { get; }
         /// <summary> The additional info. </summary>
-        public object Info { get; }
+        public BinaryData Info { get; }
     }
 }

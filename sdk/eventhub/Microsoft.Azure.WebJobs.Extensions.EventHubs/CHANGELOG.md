@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 5.0.1 (2022-03-09)
+
+### Features Added
+
+- Add listener details
+
+### Bugs Fixed
+
+- Cancel function execution after partition ownership is lost.
+- Stop the processor when disposing the listener to avoid having functions execute after the host has already been disposed.
+
 ## 5.0.0 (2021-10-21)
 
 ### Features Added

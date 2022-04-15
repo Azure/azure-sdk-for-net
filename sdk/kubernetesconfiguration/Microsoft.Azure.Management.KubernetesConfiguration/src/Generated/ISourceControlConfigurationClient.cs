@@ -41,15 +41,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
-        /// 00000000-0000-0000-0000-000000000000)
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version to be used with the HTTP request.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -71,6 +70,26 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
 
 
         /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        IExtensionsOperations Extensions { get; }
+
+        /// <summary>
+        /// Gets the IOperationStatusOperations.
+        /// </summary>
+        IOperationStatusOperations OperationStatus { get; }
+
+        /// <summary>
+        /// Gets the IFluxConfigurationsOperations.
+        /// </summary>
+        IFluxConfigurationsOperations FluxConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IFluxConfigOperationStatusOperations.
+        /// </summary>
+        IFluxConfigOperationStatusOperations FluxConfigOperationStatus { get; }
+
+        /// <summary>
         /// Gets the ISourceControlConfigurationsOperations.
         /// </summary>
         ISourceControlConfigurationsOperations SourceControlConfigurations { get; }
@@ -79,11 +98,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IExtensionsOperations.
-        /// </summary>
-        IExtensionsOperations Extensions { get; }
 
     }
 }

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='request'>
         /// Replace all IP firewall rules request
@@ -558,7 +558,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -719,7 +719,7 @@ namespace Microsoft.Azure.Management.Synapse
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -806,7 +806,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -1022,7 +1022,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='request'>
         /// Replace all IP firewall rules request

@@ -19,16 +19,17 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewCollection service client. </summary>
     public partial class PurviewCollection
     {
-        private static readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _collectionName;
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PurviewCollection for mocking. </summary>
         protected PurviewCollection()
@@ -36,7 +37,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Get a collection. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -77,16 +78,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCollectionAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetCollectionRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -96,7 +95,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Get a collection. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -137,16 +136,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCollection(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetCollectionRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -157,7 +154,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Creates or updates a collection entity. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -219,16 +216,16 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateCollectionAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -239,7 +236,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Creates or updates a collection entity. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -301,16 +298,16 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateCollection(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -320,7 +317,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Deletes a Collection entity. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -341,16 +338,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteCollectionAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteCollectionRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteCollectionRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -360,7 +355,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Deletes a Collection entity. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -381,16 +376,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteCollection(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteCollectionRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteCollectionRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -400,7 +393,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -427,16 +420,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCollectionPathAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionPathRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetCollectionPathRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -446,7 +437,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -473,16 +464,14 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCollectionPath(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionPathRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetCollectionPathRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -493,7 +482,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Lists the child collections names in the collection. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -526,19 +515,17 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetChildCollectionNamesRequest(skipToken)
-                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetChildCollectionNamesRequest(skipToken, context)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -547,7 +534,7 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Lists the child collections names in the collection. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -580,28 +567,26 @@ namespace Azure.Analytics.Purview.Administration
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetChildCollectionNames(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetChildCollectionNamesRequest(skipToken)
-                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetChildCollectionNamesRequest(skipToken, context)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateGetCollectionRequest()
+        internal HttpMessage CreateGetCollectionRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -611,13 +596,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateCollectionRequest(RequestContent content)
+        internal HttpMessage CreateCreateOrUpdateCollectionRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -629,13 +613,12 @@ namespace Azure.Analytics.Purview.Administration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateDeleteCollectionRequest()
+        internal HttpMessage CreateDeleteCollectionRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -645,13 +628,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -666,13 +648,12 @@ namespace Azure.Analytics.Purview.Administration
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionPathRequest()
+        internal HttpMessage CreateGetCollectionPathRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -683,13 +664,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -697,35 +677,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

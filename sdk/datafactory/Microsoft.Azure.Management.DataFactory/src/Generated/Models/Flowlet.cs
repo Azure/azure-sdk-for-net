@@ -39,24 +39,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the data flow.</param>
         /// <param name="folder">The folder that this data flow is in. If not
         /// specified, Data flow will appear at the root level.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="sources">List of sources in Flowlet.</param>
         /// <param name="sinks">List of sinks in Flowlet.</param>
         /// <param name="transformations">List of transformations in
         /// Flowlet.</param>
         /// <param name="script">Flowlet script.</param>
         /// <param name="scriptLines">Flowlet script lines.</param>
-        public Flowlet(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), IList<string> scriptLines = default(IList<string>), object additionalProperties1 = default(object))
+        public Flowlet(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), IList<string> scriptLines = default(IList<string>))
             : base(description, annotations, folder)
         {
-            AdditionalProperties = additionalProperties;
             Sources = sources;
             Sinks = sinks;
             Transformations = transformations;
             Script = script;
             ScriptLines = scriptLines;
-            AdditionalProperties1 = additionalProperties1;
             CustomInit();
         }
 
@@ -64,13 +60,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets list of sources in Flowlet.
@@ -101,11 +90,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.scriptLines")]
         public IList<string> ScriptLines { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.additionalProperties")]
-        public object AdditionalProperties1 { get; set; }
 
     }
 }

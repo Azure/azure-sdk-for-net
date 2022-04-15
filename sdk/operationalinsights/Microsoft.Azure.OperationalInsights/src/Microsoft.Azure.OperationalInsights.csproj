@@ -2,8 +2,9 @@
   <PropertyGroup>
     <Description>Provides Microsoft Azure Operational Insights data operations</Description>
     <AssemblyTitle>Microsoft Azure Operational Insights Data Library</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>
 	  <PackageReleaseNotes>This is a public release of the Operational Insights Data SDK.</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

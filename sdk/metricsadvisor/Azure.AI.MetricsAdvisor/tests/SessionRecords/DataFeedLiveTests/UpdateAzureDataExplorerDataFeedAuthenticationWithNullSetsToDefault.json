@@ -98,7 +98,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "ServicePrincipal",
         "credentialId": "bc5e5a6a-f2c8-4866-a646-085e04b5206e"
       },
@@ -151,7 +151,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataExplorer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -204,7 +204,7 @@
         "dataFeedName": "dataFeedHKBsAFXs",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -247,7 +247,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataExplorer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

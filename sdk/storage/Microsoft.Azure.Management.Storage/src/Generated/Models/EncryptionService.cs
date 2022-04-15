@@ -30,12 +30,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the EncryptionService class.
         /// </summary>
         /// <param name="enabled">A boolean indicating whether or not the
-        /// service encrypts the data as it is stored.</param>
+        /// service encrypts the data as it is stored. Encryption at rest is
+        /// enabled by default today and cannot be disabled.</param>
         /// <param name="lastEnabledTime">Gets a rough estimate of the
-        /// date/time when the encryption was last enabled by the user. Only
-        /// returned when encryption is enabled. There might be some
-        /// unencrypted blobs which were written after this time, as it is just
-        /// a rough estimate.</param>
+        /// date/time when the encryption was last enabled by the user. Data is
+        /// encrypted at rest by default today and cannot be disabled.</param>
         /// <param name="keyType">Encryption key type to be used for the
         /// encryption service. 'Account' key type implies that an
         /// account-scoped encryption key will be used. 'Service' key type
@@ -56,16 +55,16 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets a boolean indicating whether or not the service
-        /// encrypts the data as it is stored.
+        /// encrypts the data as it is stored. Encryption at rest is enabled by
+        /// default today and cannot be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets a rough estimate of the date/time when the encryption was last
-        /// enabled by the user. Only returned when encryption is enabled.
-        /// There might be some unencrypted blobs which were written after this
-        /// time, as it is just a rough estimate.
+        /// enabled by the user. Data is encrypted at rest by default today and
+        /// cannot be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "lastEnabledTime")]
         public System.DateTime? LastEnabledTime { get; private set; }

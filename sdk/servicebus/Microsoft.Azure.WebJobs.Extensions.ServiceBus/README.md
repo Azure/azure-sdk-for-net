@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 ```
 
 ### Prerequisites
@@ -20,7 +20,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 
 ### Authenticate the Client
@@ -198,6 +198,51 @@ public static async Task Run(
             await messageActions.CompleteMessageAsync(message);
         }
     }
+}
+```
+
+### Session triggers
+
+To receive messages from a session enabled queue or topic, you can set the `IsSessionsEnabled`
+property on the `ServiceBusTrigger` attribute. When working with sessions, you can bind to the `SessionMessageActions` to get access to the message settlement methods in addition to session-specific functionality.
+
+```C# Snippet:ServiceBusBindingToSessionMessageActions
+[FunctionName("BindingToSessionMessageActions")]
+public static async Task Run(
+    [ServiceBusTrigger("<queue_name>", Connection = "<connection_name>", IsSessionsEnabled = true)]
+    ServiceBusReceivedMessage[] messages,
+    ServiceBusSessionMessageActions sessionActions)
+{
+    foreach (ServiceBusReceivedMessage message in messages)
+    {
+        if (message.MessageId == "1")
+        {
+            await sessionActions.DeadLetterMessageAsync(message);
+        }
+        else
+        {
+            await sessionActions.CompleteMessageAsync(message);
+        }
+    }
+
+    // We can also perform session-specific operations using the actions, such as setting state that is specific to this session.
+    await sessionActions.SetSessionStateAsync(new BinaryData("<session state>"));
+}
+```
+
+### Binding to ServiceBusClient
+
+There may be times when you want to bind to the same `ServiceBusClient` that the trigger is using. This can be useful if you need to dynamically create a sender based on the message that is received.
+
+```C# Snippet:ServiceBusBindingToClient
+[FunctionName("BindingToClient")]
+public static async Task Run(
+    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")]
+    ServiceBusReceivedMessage message,
+    ServiceBusClient client)
+{
+    ServiceBusSender sender = client.CreateSender(message.To);
+    await sender.SendMessageAsync(new ServiceBusMessage(message));
 }
 ```
 

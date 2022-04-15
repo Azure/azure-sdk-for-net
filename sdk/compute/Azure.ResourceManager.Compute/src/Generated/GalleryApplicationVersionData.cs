@@ -6,32 +6,32 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the GalleryApplicationVersion data model. </summary>
-    public partial class GalleryApplicationVersionData : TrackedResource
+    public partial class GalleryApplicationVersionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
         /// <param name="location"> The location. </param>
-        public GalleryApplicationVersionData(Location location) : base(location)
+        public GalleryApplicationVersionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionPropertiesProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, type, tags, location)
+        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionPropertiesProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;

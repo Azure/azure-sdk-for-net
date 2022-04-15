@@ -54,10 +54,7 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(properties.ModelExportFrequency, result.ModelExportFrequency);
             Assert.AreEqual(properties.RewardAggregation, result.RewardAggregation);
             Assert.AreEqual(properties.RewardWaitTime, result.RewardWaitTime);
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
-            {
-                await Task.Delay(60000);
-            }
+            await Delay(60000);
         }
 
         private async Task UpdateAndGetPolicy(PersonalizerAdministrationClient client)
@@ -69,7 +66,7 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerPolicy updatedPolicy = await client.UpdatePersonalizerPolicyAsync(newPolicy);
             Assert.NotNull(updatedPolicy);
             Assert.AreEqual(newPolicy.Arguments, updatedPolicy.Arguments);
-            await Task.Delay(30000);
+            await Delay(30000);
             PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();
             // Only checking the first 190 chars because the epsilon has a float rounding addition when applied
             Assert.AreEqual(newPolicy.Arguments, policy.Arguments.Substring(0,190));

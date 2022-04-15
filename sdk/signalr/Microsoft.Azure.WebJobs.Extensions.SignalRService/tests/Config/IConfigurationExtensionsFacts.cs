@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
+using Azure.Core.Serialization;
 using Azure.Identity;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Tests.Common;
@@ -55,10 +57,14 @@ namespace SignalRServiceExtension.Tests.Config
             config["eastus:serviceUri"] = uri;
             config["eastus:credential"] = "managedidentity";
             config["eastus:type"] = "secondary";
+            config["eastus:serverEndpoint"] = "https://serverEndpoint.com";
+            config["eastus:clientEndpoint"] = "https://clientEndpoint.com";
 
             Assert.True(config.GetSection("eastus").TryGetNamedEndpointFromIdentity(factory, out var endpoint));
             Assert.Equal("eastus", endpoint.Name);
             Assert.Equal(uri, endpoint.Endpoint);
+            Assert.Equal(new Uri("https://serverEndpoint.com"), endpoint.ServerEndpoint);
+            Assert.Equal(new Uri("https://clientEndpoint.com"), endpoint.ClientEndpoint);
             Assert.IsType<ManagedIdentityCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
             Assert.Equal(EndpointType.Secondary, endpoint.EndpointType);
         }
@@ -101,6 +107,60 @@ namespace SignalRServiceExtension.Tests.Config
                 Assert.Equal("westus", e.Name);
                 Assert.Equal(EndpointType.Secondary, e.EndpointType);
             });
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("dotnet")]
+        public void NullHubProtocolSetting_DoNothing(string workerRuntime)
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["FUNCTIONS_WORKER_RUNTIME"] = workerRuntime;
+            Assert.False(configuration.TryGetJsonObjectSerializer(out var serializer));
+        }
+
+        [Theory]
+        [InlineData("dotnet-isolated")]
+        [InlineData("node")]
+        public void NullHubProtocolWithIsolatedWorker(string workerRuntime)
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["FUNCTIONS_WORKER_RUNTIME"] = workerRuntime;
+            Assert.True(configuration.TryGetJsonObjectSerializer(out var serializer));
+            Assert.IsType<NewtonsoftJsonObjectSerializer>(serializer); ;
+        }
+
+        [Fact]
+        public void SetSystemTextJson()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["Azure:SignalR:HubProtocol"] = HubProtocol.SystemTextJson.ToString();
+            Assert.True(configuration.TryGetJsonObjectSerializer(out var serializer));
+            Assert.IsType<JsonObjectSerializer>(serializer);
+        }
+
+        [Fact]
+        public void SetNewtonsoft()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["Azure:SignalR:HubProtocol"] = HubProtocol.NewtonsoftJson.ToString();
+            Assert.True(configuration.TryGetJsonObjectSerializer(out var serializer));
+            Assert.IsType<NewtonsoftJsonObjectSerializer>(serializer);
+        }
+
+        [Fact]
+        public void SetNewtonsoftCamelCase()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["Azure:SignalR:HubProtocol:NewtonsoftJson:CamelCase"] = "true";
+            configuration["Azure:SignalR:HubProtocol"] = HubProtocol.NewtonsoftJson.ToString();
+            Assert.True(configuration.TryGetJsonObjectSerializer(out var serializer));
+            Assert.IsType<NewtonsoftJsonObjectSerializer>(serializer);
+            var obj = new
+            {
+                Key = "value"
+            };
+            Assert.Equal("{\"key\":\"value\"}", serializer.Serialize(obj).ToString());
         }
     }
 }

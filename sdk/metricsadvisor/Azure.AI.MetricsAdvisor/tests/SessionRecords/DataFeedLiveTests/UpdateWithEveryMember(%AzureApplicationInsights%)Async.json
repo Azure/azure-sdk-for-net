@@ -29,7 +29,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z"
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -80,7 +80,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureApplicationInsights",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -136,7 +136,7 @@
         "dataFeedName": "dataFeedD7i9pDil",
         "dataFeedDescription": "This data feed was updated to test the .NET client.",
         "timestampColumn": "updatedTimestampColumn",
-        "dataStartFrom": "2020-09-21T00:00:00Z",
+        "dataStartFrom": "2020-09-21T00:00:00.0000000Z",
         "startOffsetInSeconds": 2400,
         "maxConcurrency": 6,
         "minRetryIntervalInSeconds": 90,
@@ -182,7 +182,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-09-21T00:00:00Z",
+        "dataStartFrom": "2020-09-21T00:00:00.0000000Z",
         "dataSourceType": "AzureApplicationInsights",
         "timestampColumn": "updatedTimestampColumn",
         "startOffsetInSeconds": 2400,

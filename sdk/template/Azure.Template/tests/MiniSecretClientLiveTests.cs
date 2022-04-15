@@ -8,9 +8,15 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests
 {
+    // When necessary, use the [ClientTestFixture] to test multiple versions.
+    // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#support-multi-service-version-testing.
     public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
     {
-        public MiniSecretClientLiveTests(bool isAsync) : base(isAsync)
+        public MiniSecretClientLiveTests(bool isAsync)
+            // Delete null and the opening comment to re-record, or change to debug live tests.
+            // You can also change eng/nunit.runsettings to set the TestMode parameter.
+            // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#test-settings.
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

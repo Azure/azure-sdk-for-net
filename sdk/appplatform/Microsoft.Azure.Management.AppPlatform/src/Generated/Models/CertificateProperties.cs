@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,12 +31,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the CertificateProperties class.
         /// </summary>
-        /// <param name="vaultUri">The vault uri of user key vault.</param>
-        /// <param name="keyVaultCertName">The certificate name of key
-        /// vault.</param>
         /// <param name="thumbprint">The thumbprint of certificate.</param>
-        /// <param name="certVersion">The certificate version of key
-        /// vault.</param>
         /// <param name="issuer">The issuer of certificate.</param>
         /// <param name="issuedDate">The issue date of certificate.</param>
         /// <param name="expirationDate">The expiration date of
@@ -46,12 +40,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// certificate.</param>
         /// <param name="subjectName">The subject name of certificate.</param>
         /// <param name="dnsNames">The domain list of certificate.</param>
-        public CertificateProperties(string vaultUri, string keyVaultCertName, string thumbprint = default(string), string certVersion = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>))
+        public CertificateProperties(string thumbprint = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>))
         {
             Thumbprint = thumbprint;
-            VaultUri = vaultUri;
-            KeyVaultCertName = keyVaultCertName;
-            CertVersion = certVersion;
             Issuer = issuer;
             IssuedDate = issuedDate;
             ExpirationDate = expirationDate;
@@ -71,24 +62,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the vault uri of user key vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultUri")]
-        public string VaultUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the certificate name of key vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "keyVaultCertName")]
-        public string KeyVaultCertName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the certificate version of key vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "certVersion")]
-        public string CertVersion { get; set; }
 
         /// <summary>
         /// Gets the issuer of certificate.
@@ -126,22 +99,5 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         [JsonProperty(PropertyName = "dnsNames")]
         public IList<string> DnsNames { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (VaultUri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VaultUri");
-            }
-            if (KeyVaultCertName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultCertName");
-            }
-        }
     }
 }

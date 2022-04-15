@@ -424,9 +424,7 @@ namespace Azure.Identity.Tests
 
         private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)
         {
-            TokenCacheNotificationArgs mockArgs = (TokenCacheNotificationArgs)FormatterServices.GetUninitializedObject(typeof(TokenCacheNotificationArgs));
-            var ctor = typeof(TokenCacheNotificationArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
-            mockArgs = (TokenCacheNotificationArgs)ctor[0].Invoke(new object[] { mockSerializer.Object, "foo", null, hasStateChanged, true, true, null });
+            var mockArgs = new TokenCacheNotificationArgs(mockSerializer.Object, "foo", null, hasStateChanged, true, "key", true, null, default );
             return mockArgs;
         }
 

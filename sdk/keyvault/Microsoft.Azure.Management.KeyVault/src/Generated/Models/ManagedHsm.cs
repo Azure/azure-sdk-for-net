@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="sku">SKU details</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="properties">Properties of the managed HSM</param>
-        public ManagedHsm(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ManagedHsmSku sku = default(ManagedHsmSku), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedHsmProperties properties = default(ManagedHsmProperties))
-            : base(id, name, type, location, sku, tags)
+        public ManagedHsm(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ManagedHsmSku sku = default(ManagedHsmSku), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), ManagedHsmProperties properties = default(ManagedHsmProperties))
+            : base(id, name, type, location, sku, tags, systemData)
         {
             Properties = properties;
             CustomInit();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,109 +16,67 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NatGateway and their operations over a ResourceGroup. </summary>
-    public partial class NatGatewayCollection : ArmCollection, IEnumerable<NatGateway>, IAsyncEnumerable<NatGateway>
+    /// <summary>
+    /// A class representing a collection of <see cref="NatGatewayResource" /> and their operations.
+    /// Each <see cref="NatGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="NatGatewayCollection" /> instance call the GetNatGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class NatGatewayCollection : ArmCollection, IEnumerable<NatGatewayResource>, IAsyncEnumerable<NatGatewayResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NatGatewaysRestOperations _restClient;
+        private readonly ClientDiagnostics _natGatewayClientDiagnostics;
+        private readonly NatGatewaysRestOperations _natGatewayRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NatGatewayCollection"/> class for mocking. </summary>
         protected NatGatewayCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of NatGatewayCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal NatGatewayCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="NatGatewayCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal NatGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NatGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _natGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NatGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NatGatewayResource.ResourceType, out string natGatewayApiVersion);
+            _natGatewayRestClient = new NatGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, natGatewayApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<NatGateway> IEnumerable<NatGateway>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<NatGateway> IAsyncEnumerable<NatGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        // Collection level operations.
-
-        /// <summary> Creates or updates a nat gateway. </summary>
+        /// <summary>
+        /// Creates or updates a nat gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NatGatewayCreateOrUpdateOperation CreateOrUpdate(string natGatewayName, NatGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NatGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string natGatewayName, NatGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, natGatewayName, parameters, cancellationToken);
-                var operation = new NatGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, natGatewayName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a nat gateway. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NatGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(string natGatewayName, NatGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, natGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NatGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, natGatewayName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _natGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -128,215 +87,116 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary>
+        /// Creates or updates a nat gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<NatGateway> Get(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Get");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NatGateway(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<NatGateway>> GetAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Get");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NatGateway(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<NatGateway> GetIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<NatGateway>> GetIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = GetIfExists(natGatewayName, expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (natGatewayName == null)
-                {
-                    throw new ArgumentNullException(nameof(natGatewayName));
-                }
-
-                var response = await GetIfExistsAsync(natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all nat gateways in a resource group. </summary>
+        /// <param name="data"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NatGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NatGateway> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NatGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string natGatewayName, NatGatewayData data, CancellationToken cancellationToken = default)
         {
-            Page<NatGateway> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _natGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data, cancellationToken);
+                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
-            Page<NatGateway> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all nat gateways in a resource group. </summary>
+        /// <summary>
+        /// Gets the specified nat gateway in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_Get
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NatGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NatGateway> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        public virtual async Task<Response<NatGatewayResource>> GetAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NatGateway>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
+                var response = await _natGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NatGatewayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified nat gateway in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_Get
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        public virtual Response<NatGatewayResource> Get(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _natGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NatGatewayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all nat gateways in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways
+        /// Operation Id: NatGateways_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NatGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<NatGatewayResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _natGatewayRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,14 +204,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<NatGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NatGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
+                using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NatGateway(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _natGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,21 +222,68 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="NatGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets all nat gateways in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways
+        /// Operation Id: NatGateways_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NatGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAllAsGenericResources");
+            Page<NatGatewayResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _natGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<NatGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _natGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NatGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_Get
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(NatGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _natGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,21 +292,26 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Filters the list of <see cref="NatGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
+        /// Operation Id: NatGateways_Get
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        public virtual Response<bool> Exists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(NatGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _natGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,7 +320,19 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        // Builders.
-        // public ArmBuilder<ResourceIdentifier, NatGateway, NatGatewayData> Construct() { }
+        IEnumerator<NatGatewayResource> IEnumerable<NatGatewayResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<NatGatewayResource> IAsyncEnumerable<NatGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
     }
 }

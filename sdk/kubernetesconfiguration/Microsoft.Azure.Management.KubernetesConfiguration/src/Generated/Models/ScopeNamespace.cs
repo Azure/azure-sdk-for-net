@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies that the scope of the extensionInstance is Namespace
+    /// Specifies that the scope of the extension is Namespace
     /// </summary>
     public partial class ScopeNamespace
     {
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the ScopeNamespace class.
         /// </summary>
-        /// <param name="targetNamespace">Namespace where the extensionInstance
-        /// will be created for an Namespace scoped extensionInstance.  If this
-        /// namespace does not exist, it will be created</param>
+        /// <param name="targetNamespace">Namespace where the extension will be
+        /// created for an Namespace scoped extension.  If this namespace does
+        /// not exist, it will be created</param>
         public ScopeNamespace(string targetNamespace = default(string))
         {
             TargetNamespace = targetNamespace;
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets namespace where the extensionInstance will be created
-        /// for an Namespace scoped extensionInstance.  If this namespace does
-        /// not exist, it will be created
+        /// Gets or sets namespace where the extension will be created for an
+        /// Namespace scoped extension.  If this namespace does not exist, it
+        /// will be created
         /// </summary>
         [JsonProperty(PropertyName = "targetNamespace")]
         public string TargetNamespace { get; set; }

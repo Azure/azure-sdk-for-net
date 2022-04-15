@@ -20,7 +20,6 @@ namespace Azure.Identity.Tests
         public void ClearDiscoveryCache()
         {
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
-            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         [Test]

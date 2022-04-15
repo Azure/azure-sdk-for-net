@@ -1,44 +1,52 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
-- Updating API version to 2020-06-01.
-- Adding new parameter called 'PublicNetworkAccess' for ConfigurationStoreUpdateParameters.
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+### Features Added
 
-## 1.0.0-preview.1
+### Breaking Changes
 
-This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Bugs Fixed
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+### Other Changes
+
+## 1.0.0-beta.4 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.3 (2022-03-31)
+
+### Breaking Changes
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
+
+### Other Changes
+- Refresh reference
+
+## 1.0.0-beta.2 (2022-01-06)
+
+### Other Changes
+
+    - Refresh reference
+
+## 1.0.0-beta.1 (2021-12-01)
 
 ### General New Features
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
     - HTTP pipeline with custom policies
+    - Better error-handling
     - Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
-
-### Samples
-
-The package name is `Azure.ResourceManager.AppConfiguration`
-
-Example: Create an configuration store
-
-```csharp
-using Azure.Identity;
-using Azure.ResourceManager.AppConfiguration;
-using Azure.ResourceManager.AppConfiguration.Models;
-
-var appConfigurationManagementClient = new AppConfigurationManagementClient(subscriptionId, new DefaultAzureCredential());
-var configurationOperations = appConfigurationManagementClient.ConfigurationStores;
-
-var configurationCreateResult = await configurationOperations.StartCreateAsync(
-    resourceGroup,
-    storeName,
-    new ConfigurationStore("westus", new Sku("Standard")));
-await configurationCreateResult.WaitForCompletionAsync();
-```

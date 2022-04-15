@@ -27,10 +27,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
             {
-                Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                    "invalid-project",
-                    "production",
-                    "We'll have 2 plates of seared salmon nigiri.");
+                ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
+                Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                    "Send an email to Carol about the tomorrow's demo",
+                    conversationsProject);
             }
             catch (RequestFailedException ex)
             {

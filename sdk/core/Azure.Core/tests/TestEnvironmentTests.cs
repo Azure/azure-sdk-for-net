@@ -118,11 +118,12 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedVariableSanitized()
+        public async Task RecordedVariableSanitized()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
-            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            var proxy = TestProxy.Start();
+            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true));
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
@@ -131,9 +132,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual("1", env.DefaultSecret);
             Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
 
-            testRecording.Dispose();
+            await testRecording.DisposeAsync();
 
-            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
 
             Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
             Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
@@ -142,18 +143,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RecordedOptionalVariableNotSanitizedIfMissing()
+        public async Task RecordedOptionalVariableNotSanitizedIfMissing()
         {
             var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
-            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            var proxy = TestProxy.Start();
+            var testRecording = await TestRecording.CreateAsync(RecordedTestMode.Record, tempFile, proxy, new RecordedTestBaseTests(true));
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
 
             Assert.IsNull(env.MissingOptionalSecret);
 
-            testRecording.Dispose();
-            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            await testRecording.DisposeAsync();
+            testRecording = await TestRecording.CreateAsync(RecordedTestMode.Playback, tempFile, proxy, new RecordedTestBaseTests(true));
 
             Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
         }

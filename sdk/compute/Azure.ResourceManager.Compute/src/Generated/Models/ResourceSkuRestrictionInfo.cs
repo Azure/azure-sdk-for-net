@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ResourceSkuRestrictionInfo. </summary>
+    /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class ResourceSkuRestrictionInfo
     {
         /// <summary> Initializes a new instance of ResourceSkuRestrictionInfo. </summary>

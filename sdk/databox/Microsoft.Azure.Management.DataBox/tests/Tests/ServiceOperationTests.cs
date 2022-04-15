@@ -279,7 +279,7 @@ namespace DataBox.Tests.Tests
                 }
             };
 
-            var regionconfigurationResponse = this.Client.Service.RegionConfiguration(TestConstants.DefaultResourceLocation, transportAvailabilityRequest: regionConfigurationRequest.TransportAvailabilityRequest);
+            var regionconfigurationResponse = this.Client.Service.RegionConfiguration(TestConstants.DefaultResourceLocation, regionConfigurationRequest);
             Assert.True(regionconfigurationResponse != null, "Call for RegionConfiguration request is successful");
             //Assert.True(regionconfigurationResponse.ScheduleAvailabilityResponse.AvailableDates != null);
             Assert.True(regionconfigurationResponse.TransportAvailabilityResponse.TransportAvailabilityDetails != null);
@@ -298,7 +298,7 @@ namespace DataBox.Tests.Tests
                 }
             };
 
-            var regionconfigurationResponse = this.Client.Service.RegionConfigurationByResourceGroup(resourceGroupName, TestConstants.DefaultResourceLocation, transportAvailabilityRequest: regionConfigurationRequest.TransportAvailabilityRequest);
+            var regionconfigurationResponse = this.Client.Service.RegionConfigurationByResourceGroup(resourceGroupName, TestConstants.DefaultResourceLocation, regionConfigurationRequest);
             Assert.True(regionconfigurationResponse != null, "Call for RegionConfiguration at resource group request is successful");
             Assert.True(regionconfigurationResponse.TransportAvailabilityResponse.TransportAvailabilityDetails != null);
         }

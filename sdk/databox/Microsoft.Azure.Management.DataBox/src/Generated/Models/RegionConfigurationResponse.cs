@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// for given sku in a region.</param>
         /// <param name="transportAvailabilityResponse">Transport options
         /// available for given sku in a region.</param>
-        public RegionConfigurationResponse(ScheduleAvailabilityResponse scheduleAvailabilityResponse = default(ScheduleAvailabilityResponse), TransportAvailabilityResponse transportAvailabilityResponse = default(TransportAvailabilityResponse))
+        /// <param name="datacenterAddressResponse">Datacenter address for
+        /// given sku in a region.</param>
+        public RegionConfigurationResponse(ScheduleAvailabilityResponse scheduleAvailabilityResponse = default(ScheduleAvailabilityResponse), TransportAvailabilityResponse transportAvailabilityResponse = default(TransportAvailabilityResponse), DatacenterAddressResponse datacenterAddressResponse = default(DatacenterAddressResponse))
         {
             ScheduleAvailabilityResponse = scheduleAvailabilityResponse;
             TransportAvailabilityResponse = transportAvailabilityResponse;
+            DatacenterAddressResponse = datacenterAddressResponse;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "transportAvailabilityResponse")]
         public TransportAvailabilityResponse TransportAvailabilityResponse { get; private set; }
+
+        /// <summary>
+        /// Gets datacenter address for given sku in a region.
+        /// </summary>
+        [JsonProperty(PropertyName = "datacenterAddressResponse")]
+        public DatacenterAddressResponse DatacenterAddressResponse { get; private set; }
 
     }
 }

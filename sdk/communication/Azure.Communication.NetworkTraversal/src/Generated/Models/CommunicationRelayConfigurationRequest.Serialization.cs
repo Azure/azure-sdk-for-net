@@ -20,6 +20,16 @@ namespace Azure.Communication.NetworkTraversal
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(RouteType))
+            {
+                writer.WritePropertyName("routeType");
+                writer.WriteStringValue(RouteType.Value.ToString());
+            }
+            if (Optional.IsDefined(Ttl))
+            {
+                writer.WritePropertyName("ttl");
+                writer.WriteNumberValue(Ttl.Value);
+            }
             writer.WriteEndObject();
         }
     }

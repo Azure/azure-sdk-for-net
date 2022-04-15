@@ -1,5 +1,7 @@
 parameters:
   rootFolder: '$(Build.SourcesDirectory)'
+  runProxy: true
+  targetVersion: ''
 
 steps:
   - pwsh: |
@@ -7,41 +9,56 @@ steps:
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
-      Write-Host "##vso[task.setvariable variable=OriginalPath]$env:PATH"
-    displayName: 'Store Path Value'
+      $version = $(Get-Content "$(Build.SourcesDirectory)/eng/common/testproxy/target_version.txt" -Raw).Trim()
+      $overrideVersion = "${{ parameters.targetVersion }}"
 
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
-      Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
-    displayName: 'Configure Kestrel Environment Variables'
+      if($overrideVersion) {
+        Write-Host "Overriding default target proxy version of '$version' with override $overrideVersion."
+        $version = $overrideVersion
+      }
 
-  - task: UseDotNet@2
-    displayName: "Use .NET Core SDK"
-    inputs:
-      packageType: sdk
-      version: 5.0.205
-
-  - pwsh: |
       dotnet tool install azure.sdk.tools.testproxy `
         --tool-path $(Build.BinariesDirectory)/test-proxy `
         --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json `
-        --version 1.0.0-dev.20210811.2
+        --version $version
     displayName: "Install test-proxy"
 
   - pwsh: |
-      Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
-        -ArgumentList "--storage-location '${{ parameters.rootFolder }}'" `
-        -NoNewWindow -PassThru
-    displayName: 'Run the testproxy - windows'
-    condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
+      Write-Host "##vso[task.prependpath]$(Build.BinariesDirectory)/test-proxy"
+    displayName: "Prepend path with test-proxy tool install location"
 
-  # nohup does NOT continue beyond the current session if you use it within powershell
-  - bash: |
-      sudo nohup $(Build.BinariesDirectory)/test-proxy/test-proxy &
-    displayName: "Run the testproxy - linux/mac"
-    condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
-    workingDirectory: "${{ parameters.rootFolder }}"
+  - ${{ if eq(parameters.runProxy, 'true') }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+        Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+      displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
 
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=PATH]$(OriginalPath)"
-    displayName: 'Restore .NET version by resetting path'
+    - pwsh: |
+        Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
+          -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
+          -NoNewWindow -PassThru -RedirectStandardOutput $(Build.SourcesDirectory)/test-proxy.log
+      displayName: 'Run the testproxy - windows'
+      condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
+
+    # nohup does NOT continue beyond the current session if you use it within powershell
+    - bash: |
+        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > $(Build.SourcesDirectory)/test-proxy.log &
+      displayName: "Run the testproxy - linux/mac"
+      condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
+      workingDirectory: "${{ parameters.rootFolder }}"
+
+    - pwsh: |
+        for ($i = 0; $i -lt 10; $i++) {
+            try {
+                Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                exit 0
+            } catch {
+                Write-Warning "Failed to successfully connect to test proxy. Retrying..."
+                Start-Sleep 6
+            }
+        }
+        Write-Error "Could not connect to test proxy."
+        exit 1
+      displayName: Test Proxy IsAlive
+

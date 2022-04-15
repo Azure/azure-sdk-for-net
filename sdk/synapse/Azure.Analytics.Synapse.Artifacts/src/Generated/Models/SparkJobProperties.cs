@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorMemory"> Amount of memory to use per executor process. </param>
         /// <param name="executorCores"> Number of cores to use for each executor. </param>
         /// <param name="numExecutors"> Number of executors to launch for this job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/>, <paramref name="driverMemory"/>, or <paramref name="executorMemory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/>, <paramref name="driverMemory"/> or <paramref name="executorMemory"/> is null. </exception>
         public SparkJobProperties(string file, string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors)
         {
             if (file == null)

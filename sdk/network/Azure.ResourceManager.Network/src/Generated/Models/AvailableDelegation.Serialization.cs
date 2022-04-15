@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"))
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -58,8 +59,13 @@ namespace Azure.ResourceManager.Network.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new AvailableDelegation(id, name, type, serviceName.Value, Optional.ToList(actions));
+            return new AvailableDelegation(id, name, type, systemData, serviceName.Value, Optional.ToList(actions));
         }
     }
 }

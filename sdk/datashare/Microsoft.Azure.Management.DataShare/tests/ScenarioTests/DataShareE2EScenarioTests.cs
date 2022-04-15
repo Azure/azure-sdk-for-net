@@ -6,6 +6,7 @@ namespace DataShare.Tests.ScenarioTests
     using Microsoft.Azure.Management.DataShare;
     using Microsoft.Azure.Management.DataShare.Models;
     using Xunit;
+    using System.Web;
 
     public class DataShareE2EScenarioTests : ScenarioTestBase<DataShareE2EScenarioTests>
     {
@@ -22,6 +23,7 @@ namespace DataShare.Tests.ScenarioTests
         private const string subscriptionId = "SUBSCRIPTION_ID";
         public static string tenant = "AADTENANT";
         public static string servicePrincipal = "ServicePrincipal";
+        public static string locationOfDatabase = "eastus2euap";
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
@@ -68,6 +70,11 @@ namespace DataShare.Tests.ScenarioTests
                     DataShareE2EScenarioTests.shareName,
                     DataShareE2EScenarioTests.invitationName,
                     InvitationScenarioTests.GetExpectedInvitation());
+
+                EmailRegistration emailRegistration =
+                    await EmailRegistrationScenarioTests.RegisterEmailAsync(client, locationOfDatabase);
+
+                await EmailRegistrationScenarioTests.ActivateEmailAsync(client, locationOfDatabase, emailRegistration);
 
                 await ShareSubscriptionScenarioTests.CreateAsync(
                     client,

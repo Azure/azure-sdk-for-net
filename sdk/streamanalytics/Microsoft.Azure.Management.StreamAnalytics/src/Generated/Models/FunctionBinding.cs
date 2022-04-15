@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The physical binding of the function. For example, in the Azure Machine
     /// Learning web service’s case, this describes the endpoint.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FunctionBinding")]
     public partial class FunctionBinding
     {
         /// <summary>

@@ -109,6 +109,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (Compression != null)
+            {
+                Compression.Validate();
+            }
         }
     }
 }

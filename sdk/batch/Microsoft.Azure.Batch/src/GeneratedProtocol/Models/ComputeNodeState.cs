@@ -91,8 +91,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [EnumMember(Value = "offline")]
         Offline,
         /// <summary>
-        /// The low-priority Compute Node has been preempted. Tasks which were
-        /// running on the Compute Node when it was preempted will be
+        /// The Spot/Low-priority Compute Node has been preempted. Tasks which
+        /// were running on the Compute Node when it was preempted will be
         /// rescheduled when another Compute Node becomes available.
         /// </summary>
         [EnumMember(Value = "preempted")]

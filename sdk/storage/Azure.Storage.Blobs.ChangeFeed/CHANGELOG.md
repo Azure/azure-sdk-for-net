@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.18 (Unreleased)
+## 12.0.0-preview.24 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.23 (2022-04-13)
+- Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.PreviousInfo.WasBlobSoftDeleted was not being deserialized correctly.
+
+## 12.0.0-preview.22 (2022-04-12)
+- Added support for service version 2021-06-08.
+
+## 12.0.0-preview.21 (2022-03-30)
+- Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.AsyncOperationInfo.IsAsync was not being deserialized correctly.
+
+## 12.0.0-preview.20 (2022-03-10)
+- Added support for event schema V3, V4, and V5.
+
+## 12.0.0-preview.19 (2022-02-07)
+- Added support for service version 2021-04-10.
+
+## 12.0.0-preview.18 (2021-11-30)
+- Added support for service version 2021-02-12.
 
 ## 12.0.0-preview.17 (2021-11-03)
 - Added support for service version 2020-12-06.

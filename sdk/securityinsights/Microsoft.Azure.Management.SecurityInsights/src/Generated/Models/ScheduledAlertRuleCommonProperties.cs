@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Schedule alert rule template property bag.
+    /// Scheduled alert rule template property bag.
     /// </summary>
     public partial class ScheduledAlertRuleCommonProperties
     {
@@ -45,7 +47,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'LessThan', 'Equal', 'NotEqual'</param>
         /// <param name="triggerThreshold">The threshold triggers this alert
         /// rule.</param>
-        public ScheduledAlertRuleCommonProperties(string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?))
+        /// <param name="eventGroupingSettings">The event grouping
+        /// settings.</param>
+        /// <param name="customDetails">Dictionary of string key-value pairs of
+        /// columns to be attached to the alert</param>
+        /// <param name="entityMappings">Array of the entity mappings of the
+        /// alert rule</param>
+        /// <param name="alertDetailsOverride">The alert details override
+        /// settings</param>
+        public ScheduledAlertRuleCommonProperties(string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
         {
             Query = query;
             QueryFrequency = queryFrequency;
@@ -53,6 +63,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             Severity = severity;
             TriggerOperator = triggerOperator;
             TriggerThreshold = triggerThreshold;
+            EventGroupingSettings = eventGroupingSettings;
+            CustomDetails = customDetails;
+            EntityMappings = entityMappings;
+            AlertDetailsOverride = alertDetailsOverride;
             CustomInit();
         }
 
@@ -101,6 +115,31 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "triggerThreshold")]
         public int? TriggerThreshold { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event grouping settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "eventGroupingSettings")]
+        public EventGroupingSettings EventGroupingSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary of string key-value pairs of columns to be
+        /// attached to the alert
+        /// </summary>
+        [JsonProperty(PropertyName = "customDetails")]
+        public IDictionary<string, string> CustomDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of the entity mappings of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "entityMappings")]
+        public IList<EntityMapping> EntityMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alert details override settings
+        /// </summary>
+        [JsonProperty(PropertyName = "alertDetailsOverride")]
+        public AlertDetailsOverride AlertDetailsOverride { get; set; }
 
     }
 }

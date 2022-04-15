@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of JobStepAction. </summary>
-        /// <param name="type"> Type of action being executed by the job step. </param>
+        /// <param name="actionType"> Type of action being executed by the job step. </param>
         /// <param name="source"> The source of the action to execute. </param>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
-        internal JobStepAction(JobStepActionType? type, JobStepActionSource? source, string value)
+        internal JobStepAction(JobStepActionType? actionType, JobStepActionSource? source, string value)
         {
-            Type = type;
+            ActionType = actionType;
             Source = source;
             Value = value;
         }
 
         /// <summary> Type of action being executed by the job step. </summary>
-        public JobStepActionType? Type { get; set; }
+        public JobStepActionType? ActionType { get; set; }
         /// <summary> The source of the action to execute. </summary>
         public JobStepActionSource? Source { get; set; }
         /// <summary> The action value, for example the text of the T-SQL script to execute. </summary>

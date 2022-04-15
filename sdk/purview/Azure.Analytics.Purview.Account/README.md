@@ -13,7 +13,7 @@ Azure Purview Account is a fully managed cloud service.
 Install the Azure Purview Account client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Account
+dotnet add package Azure.Analysis.Purview.Account --prerelease
 ```
 
 ### Prerequisites
@@ -30,7 +30,7 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewAccountClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
+var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 ## Key concepts

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Azure.Monitor.Query
+namespace Azure.Core
 {
     internal abstract class TypeBinder<TExchange>
     {
@@ -165,7 +165,11 @@ namespace Azure.Monitor.Query
             private static ParameterExpression InputParameter = Expression.Parameter(typeof(object), "input");
             private static ParameterExpression ValueParameter = Expression.Parameter(typeof(TProperty), "value");
 
-            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite, propertyInfo.PropertyType)
+            public BoundMemberInfo(PropertyInfo propertyInfo) : this(
+                propertyInfo,
+                propertyInfo.CanRead && propertyInfo.GetMethod?.IsPublic == true,
+                propertyInfo.CanWrite && propertyInfo.SetMethod?.IsPublic == true,
+                propertyInfo.PropertyType)
             {
             }
 

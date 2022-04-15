@@ -10,18 +10,12 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The properties that are associated with a function.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FunctionProperties")]
-    [Rest.Serialization.JsonTransformation]
     public partial class FunctionProperties
     {
         /// <summary>
@@ -40,12 +34,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// changed between requests. You can also use it in the If-Match or
         /// If-None-Match headers for write operations for optimistic
         /// concurrency.</param>
-        public FunctionProperties(string etag = default(string), IList<FunctionInput> inputs = default(IList<FunctionInput>), FunctionOutput output = default(FunctionOutput), FunctionBinding binding = default(FunctionBinding))
+        public FunctionProperties(string etag = default(string))
         {
             Etag = etag;
-            Inputs = inputs;
-            Output = output;
-            Binding = binding;
             CustomInit();
         }
 
@@ -63,21 +54,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.inputs")]
-        public IList<FunctionInput> Inputs { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.output")]
-        public FunctionOutput Output { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.binding")]
-        public FunctionBinding Binding { get; set; }
 
     }
 }

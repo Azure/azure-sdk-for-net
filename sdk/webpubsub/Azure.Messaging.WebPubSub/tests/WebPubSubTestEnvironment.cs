@@ -7,8 +7,6 @@ namespace Azure.Rest.WebPubSub.Tests
 {
     public class WebPubSubTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("WEBPUBSUB_ENDPOINT");
-        public string Key => GetRecordedVariable("WEBPUBSUB_KEY", options => options.IsSecret());
-        public string ConnectionString => $"Endpoint={Endpoint};AccessKey={Key};Version=1.0;";
+        public string ConnectionString => GetRecordedVariable("WEBPUBSUB_CONNECTIONSTRING", options => options.HasSecretConnectionStringParameter("secret", SanitizedValue.Base64));
     }
 }

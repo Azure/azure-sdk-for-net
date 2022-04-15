@@ -18,6 +18,7 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureKeyCredential
@@ -126,16 +127,20 @@ namespace Azure
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public virtual Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class Operation<T> : Azure.Operation where T : notnull
     {
         protected Operation() { }
         public abstract bool HasValue { get; }
         public abstract T Value { get; }
-        public abstract System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
+        public virtual Azure.Response<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -190,10 +195,14 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
+        public void AddClassifier(int statusCode, bool isError) { }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
+        public RequestFailedException(Azure.Response response) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
@@ -211,6 +220,7 @@ namespace Azure
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         protected internal abstract bool ContainsHeader(string name);
@@ -246,6 +256,11 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool IsRunningSynchronously { get { throw null; } }
     }
+    public enum WaitUntil
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace Azure.Core
 {
@@ -260,9 +275,83 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureLocation(string location) { throw null; }
+        public AzureLocation(string name, string displayName) { throw null; }
+        public static Azure.Core.AzureLocation AustraliaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaCentral2 { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaSoutheast { get { throw null; } }
+        public static Azure.Core.AzureLocation BrazilSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation BrazilSoutheast { get { throw null; } }
+        public static Azure.Core.AzureLocation CanadaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation CanadaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation CentralIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
+        public string? DisplayName { get { throw null; } }
+        public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
+        public static Azure.Core.AzureLocation EastUS { get { throw null; } }
+        public static Azure.Core.AzureLocation EastUS2 { get { throw null; } }
+        public static Azure.Core.AzureLocation FranceCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation FranceSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
+        public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
+        public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation KoreaSouth { get { throw null; } }
+        public string Name { get { throw null; } }
+        public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
+        public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
+        public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
+        public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation UKWest { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDEast { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovArizona { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovIowa { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovTexas { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovVirginia { get { throw null; } }
+        public static Azure.Core.AzureLocation WestCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation WestEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation WestIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation WestUS { get { throw null; } }
+        public static Azure.Core.AzureLocation WestUS2 { get { throw null; } }
+        public bool Equals(Azure.Core.AzureLocation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
+        public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (string location) { throw null; }
+        public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -300,7 +389,7 @@ namespace Azure.Core
     }
     public partial class DiagnosticsOptions
     {
-        internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
@@ -465,6 +554,62 @@ namespace Azure.Core
         public override string ToString() { throw null; }
         public System.Uri ToUri() { throw null; }
     }
+    public sealed partial class ResourceIdentifier : System.IComparable<Azure.Core.ResourceIdentifier>, System.IEquatable<Azure.Core.ResourceIdentifier>
+    {
+        public static readonly Azure.Core.ResourceIdentifier Root;
+        public ResourceIdentifier(string resourceId) { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceIdentifier? Parent { get { throw null; } }
+        public string? Provider { get { throw null; } }
+        public string? ResourceGroupName { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public string? SubscriptionId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName) { throw null; }
+        public int CompareTo(Azure.Core.ResourceIdentifier? other) { throw null; }
+        public bool Equals(Azure.Core.ResourceIdentifier? other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator >(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator >=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceIdentifier id) { throw null; }
+        public static bool operator !=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator <(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceType(string resourceType) { throw null; }
+        public string Namespace { get { throw null; } }
+        public string Type { get { throw null; } }
+        public bool Equals(Azure.Core.ResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string GetLastType() { throw null; }
+        public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
+        public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
+        public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class ResponseClassificationHandler
+    {
+        protected ResponseClassificationHandler() { }
+        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
+    }
     public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
@@ -503,7 +648,20 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
+    {
+        public StatusCodeClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+    }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
+    public partial class TelemetryDetails
+    {
+        public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public void Apply(Azure.Core.HttpMessage message) { }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -738,13 +896,19 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
+    public sealed partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline, System.IDisposable
+    {
+        internal DisposableHttpPipeline() : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
+        public void Dispose() { }
+    }
+    public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport, System.IDisposable
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
+        public void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
@@ -755,6 +919,8 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -764,7 +930,8 @@ namespace Azure.Core.Pipeline
     public static partial class HttpPipelineBuilder
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {
@@ -788,6 +955,18 @@ namespace Azure.Core.Pipeline
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
+    }
+    public partial class HttpPipelineTransportOptions
+    {
+        public HttpPipelineTransportOptions() { }
+        public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public partial class ServerCertificateCustomValidationArgs
+    {
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? certificateAuthorityChain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
+        public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
     }
 }
 namespace Azure.Core.Serialization
@@ -842,5 +1021,14 @@ namespace Azure.Messaging
     {
         Binary = 0,
         Json = 1,
+    }
+    public partial class MessageContent
+    {
+        public MessageContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }

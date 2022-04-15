@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Attestation", "src\Microsoft.Azure.Management.Attestation.csproj", "{7CF438B8-83D1-4E00-B272-0EF405DD311A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{94FF4C2D-84BB-4571-8001-8350107B7584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{2E977146-7B47-4D45-AED1-371056DD660F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,30 @@ Global
 		{7CF438B8-83D1-4E00-B272-0EF405DD311A}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{7CF438B8-83D1-4E00-B272-0EF405DD311A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF438B8-83D1-4E00-B272-0EF405DD311A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Net45-Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Net45-Release|Any CPU.Build.0 = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Portable-Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Portable-Release|Any CPU.Build.0 = Debug|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FF4C2D-84BB-4571-8001-8350107B7584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Net45-Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Net45-Release|Any CPU.Build.0 = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Portable-Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Portable-Release|Any CPU.Build.0 = Debug|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E977146-7B47-4D45-AED1-371056DD660F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

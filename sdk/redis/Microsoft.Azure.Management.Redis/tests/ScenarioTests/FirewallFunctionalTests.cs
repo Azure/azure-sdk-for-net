@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
+using System.Threading;
 using AzureRedisCache.Tests.ScenarioTests;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
@@ -79,7 +80,9 @@ namespace AzureRedisCache.Tests
 
                 // Delete
                 _client.FirewallRules.Delete(resourceGroupName, redisCacheName, "RuleTwo");
+
                 
+                if(Utility.IsLiveTest()) Thread.Sleep(6000);
                 rules = _client.FirewallRules.List(resourceGroupName, redisCacheName);
                 Assert.Single(rules);
                 Assert.Equal("10.0.0.0", rules.First().StartIP);

@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1,
         CertificateClientOptions.ServiceVersion.V7_2,
-        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
+        CertificateClientOptions.ServiceVersion.V7_3)]
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -65,9 +65,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     InstrumentClientOptions(options)));
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
@@ -75,11 +75,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

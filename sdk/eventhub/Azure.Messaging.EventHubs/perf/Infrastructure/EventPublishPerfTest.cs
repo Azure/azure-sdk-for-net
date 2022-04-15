@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf
 {
@@ -51,11 +50,17 @@ namespace Azure.Messaging.EventHubs.Perf
         {
             await base.GlobalSetupAsync().ConfigureAwait(false);
 
-            s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
+            s_scope = await EventHubScope.CreateAsync(Options.PartitionCount).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
             s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
         }
 
+        /// <summary>
+        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
+        ///   This setup will take place once for each instance, running after the global setup has
+        ///   completed.
+        /// </summary>
+        ///
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
@@ -63,6 +68,7 @@ namespace Azure.Messaging.EventHubs.Perf
             _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
 
             // Publish an empty event to force the connection and link to be established.
+
             await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, _sendOptions).ConfigureAwait(false);
         }
 
@@ -100,12 +106,13 @@ namespace Azure.Messaging.EventHubs.Perf
 
                 return Options.BatchSize;
             }
-            catch (EventHubsException e) when (cancellationToken.IsCancellationRequested && e.IsTransient)
+            catch (EventHubsException ex) when (cancellationToken.IsCancellationRequested && ex.IsTransient)
             {
-                // If SendAsync() is cancelled during a retry loop, the most recent exception is thrown.
+                // If SendAsync() is canceled during a retry loop, the most recent exception is thrown.
                 // If the exception is transient, it should be wrapped in an OperationCancelledException
-                // which is ignored by the perf framework.
-                throw new OperationCanceledException("EventHubsException thrown during cancellation", e);
+                // which is ignored by the performance framework.
+
+                throw new OperationCanceledException("EventHubsException thrown during cancellation", ex);
             }
         }
 

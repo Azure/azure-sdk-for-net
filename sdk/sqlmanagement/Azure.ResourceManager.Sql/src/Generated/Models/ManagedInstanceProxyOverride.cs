@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstanceProxyOverride"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceProxyOverride"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceProxyOverride(string value)
         {

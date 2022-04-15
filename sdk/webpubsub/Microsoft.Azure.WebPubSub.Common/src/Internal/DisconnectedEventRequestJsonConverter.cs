@@ -13,7 +13,8 @@ namespace Microsoft.Azure.WebPubSub.Common
         {
             var element = JsonDocument.ParseValue(ref reader).RootElement;
 
-            return new DisconnectedEventRequest(element.ReadString(DisconnectedEventRequest.ReasonProperty));
+            // tricky part to temp set null to context
+            return new DisconnectedEventRequest(null, element.ReadString(DisconnectedEventRequest.ReasonProperty));
         }
 
         public override void Write(Utf8JsonWriter writer, DisconnectedEventRequest value, JsonSerializerOptions options)

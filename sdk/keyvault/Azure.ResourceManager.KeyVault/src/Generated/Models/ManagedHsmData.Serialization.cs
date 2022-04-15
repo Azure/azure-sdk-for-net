@@ -8,9 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -46,12 +45,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Optional<ManagedHsmProperties> properties = default;
             Optional<ManagedHsmSku> sku = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -74,16 +73,6 @@ namespace Azure.ResourceManager.KeyVault
                     sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -101,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -114,8 +103,13 @@ namespace Azure.ResourceManager.KeyVault
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new ManagedHsmData(id, name, type, tags, location, sku.Value, systemData.Value, properties.Value);
+            return new ManagedHsmData(id, name, type, systemData, tags, location, sku.Value, properties.Value);
         }
     }
 }

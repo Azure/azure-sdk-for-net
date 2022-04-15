@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
         internal GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages)
         {
             Source = source;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
         }
 
         /// <summary> The gallery artifact version source. </summary>
         public GalleryArtifactVersionSource Source { get; set; }
         /// <summary> This is the OS disk image. </summary>
-        public GalleryOSDiskImage OsDiskImage { get; set; }
+        public GalleryOSDiskImage OSDiskImage { get; set; }
         /// <summary> A list of data disk images. </summary>
         public IList<GalleryDataDiskImage> DataDiskImages { get; }
     }

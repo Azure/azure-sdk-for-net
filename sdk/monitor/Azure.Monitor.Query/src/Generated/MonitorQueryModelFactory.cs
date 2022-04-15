@@ -29,18 +29,5 @@ namespace Azure.Monitor.Query.Models
         {
             return new MetricAvailability(granularity, retention);
         }
-
-        /// <summary> Initializes a new instance of MetricValue. </summary>
-        /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
-        /// <param name="average"> the average value in the time range. </param>
-        /// <param name="minimum"> the least value in the time range. </param>
-        /// <param name="maximum"> the greatest value in the time range. </param>
-        /// <param name="total"> the sum of all of the values in the time range. </param>
-        /// <param name="count"> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
-        /// <returns> A new <see cref="Models.MetricValue"/> instance for mocking. </returns>
-        public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
-        {
-            return new MetricValue(timeStamp, average, minimum, maximum, total, count);
-        }
     }
 }

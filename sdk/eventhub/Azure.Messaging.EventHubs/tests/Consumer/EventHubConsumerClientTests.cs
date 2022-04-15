@@ -708,7 +708,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadEventsFromPartitionAsyncRespectsThePrefetchCount()
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new Mock<EventHubConnection>();
+            var mockConnection = new Mock<EventHubConnection>("fakeNs", "fakeHub", Mock.Of<TokenCredential>(), default(EventHubConnectionOptions));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection.Object);
             var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25), PrefetchCount = 677 };
 
@@ -1374,6 +1374,49 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadEventsFromPartitionAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadEventsFromPartitionAsyncSetsThePartitionContext()
+        {
+            var events = new List<EventData>
+            {
+                new EventData(Encoding.UTF8.GetBytes("One")),
+                new EventData(Encoding.UTF8.GetBytes("Two")),
+                new EventData(Encoding.UTF8.GetBytes("Three")),
+                new EventData(Encoding.UTF8.GetBytes("Four")),
+                new EventData(Encoding.UTF8.GetBytes("Five"))
+            };
+
+            var expectedPartition = "0";
+            var transportConsumer = new PublishingTransportConsumerMock(events);
+            var mockConnection = new MockConnection(() => transportConsumer);
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var actualCount = 0;
+
+            using var cancellation = new CancellationTokenSource();
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(expectedPartition, EventPosition.FromOffset(12), cancellation.Token))
+            {
+                Assert.That(partitionEvent.Partition.PartitionId, Is.EqualTo(expectedPartition), $"The event in position: { actualCount } was not associated with the expected partition.");
+                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
+                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
+                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+
+                if (++actualCount >= events.Count)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+            Assert.That(actualCount, Is.EqualTo(events.Count), "The number events read did not match the number expected.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadEventsAsync" />
         ///   method.
         /// </summary>
@@ -1455,7 +1498,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadEventsAsyncWithOptionsRespectsThePrefetchCount()
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var mockConnection = new Mock<EventHubConnection>();
+            var mockConnection = new Mock<EventHubConnection>("fakeNs", "fakeHub", Mock.Of<TokenCredential>(), default(EventHubConnectionOptions));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection.Object);
             var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25), PrefetchCount = 543 };
 
@@ -2080,6 +2123,46 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ReadEventsAsynSetsThePartitionContext()
+        {
+            var events = Enumerable
+                .Range(0, 500)
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .ToList();
+
+            var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
+            var consumer = new EventHubConsumerClient("fakeGroup", mockConnection);
+            var receivedEvents = new Dictionary<string, int>();
+            var partitions = await mockConnection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>());
+            var expectedCount = events.Count * partitions.Length;
+            var actualCount = 0;
+
+            using var cancellation = new CancellationTokenSource();
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(cancellation.Token))
+            {
+                Assert.That(partitions, Contains.Item(partitionEvent.Partition.PartitionId), $"The event in position: { actualCount } was read from an unexpected partition: { partitionEvent.Partition.PartitionId }");
+                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
+                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
+                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+
+                if (++actualCount >= expectedCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+            Assert.That(actualCount, Is.EqualTo(expectedCount), "The number events read across all partitions did not match the number expected.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumerClient.ReadEventsAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(typeof(ChannelClosedException))]
         [TestCase(typeof(ArithmeticException))]
         [TestCase(typeof(IndexOutOfRangeException))]
@@ -2316,7 +2399,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockChannel = new MockChannel<PartitionEvent>(mockChannelWriter.Object, null);
             var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 10, Delay = TimeSpan.FromMilliseconds(1) } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-            var partitionContext = new PartitionContext("0", mockTransportConsumer);
+            var partitionContext = new PartitionContext("fqns", "hub", "consumerGroup", "0", mockTransportConsumer);
             var capturedException = default(Exception);
             var publishedEvents = new List<EventData>();
             var writeCount = 0;
@@ -2391,7 +2474,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockChannel = new MockChannel<PartitionEvent>(mockChannelWriter.Object, null);
             var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 10, Delay = TimeSpan.FromMilliseconds(1) } };
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-            var partitionContext = new PartitionContext("0", mockTransportConsumer);
+            var partitionContext = new PartitionContext("fqns", "hub", "consumerGroup", "0", mockTransportConsumer);
             var capturedException = default(Exception);
             var publishedEvents = new List<EventData>();
             var writeCount = 0;
@@ -2676,6 +2759,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
+                                                                    TimeSpan timeout,
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Returns an attached database configuration.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Creates or updates an attached database configuration.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Deletes the attached database configuration with the given name.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Creates or updates an attached database configuration.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Deletes the attached database configuration with the given name.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.

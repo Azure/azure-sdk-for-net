@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : IMessageWithContentType
+    public class EventData : MessageContent
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -48,12 +48,6 @@ namespace Azure.Messaging.EventHubs
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
         }
 
-        BinaryData IMessageWithContentType.Data
-        {
-            get => EventBody;
-            set => EventBody = value;
-        }
-
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
         ///   intended to allow consumers to make informed decisions for inspecting and
@@ -77,7 +71,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public string ContentType
+        public new string ContentType
         {
             get
             {
@@ -103,6 +97,39 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///    This member is intended to allow the string-based <see cref="ContentType" /> in this class to be
+        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="MessageContent" />
+        ///    base class.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ContentType? ContentTypeCore
+        {
+            get => new ContentType(ContentType);
+            set => ContentType = value.ToString();
+        }
+
+        /// <summary>
+        ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
+        ///   in order to inherit from <see cref="MessageContent"/>.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
+
+        /// <summary>
+        ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
+        ///   the <see cref="MessageContent"/> abstraction.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
+        /// <summary>
         ///   An application-defined value that uniquely identifies the event.  The identifier is
         ///   a free-form value and can reflect a GUID or an identifier derived from the application
         ///   context.
@@ -120,7 +147,6 @@ namespace Azure.Messaging.EventHubs
         ///   how Event Hubs identifies the event.
         /// </remarks>
         ///
-
         public string MessageId
         {
             get
@@ -160,7 +186,6 @@ namespace Azure.Messaging.EventHubs
         ///   telemetry, distributed tracing, or logging.
         /// </remarks>
         ///
-
         public string CorrelationId
         {
             get

@@ -21,12 +21,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public override void WriteJson(JsonWriter writer, WebPubSubContext value, JsonSerializer serializer)
         {
             serializer.Converters.Add(new HttpResponseMessageJsonConverter());
-            // Request is using System.Json, use string as bridge to convert.
-            var request = ConvertString(value.Request);
             var jobj = new JObject();
             if (value.Request != null)
             {
-                jobj.Add(new JProperty(WebPubSubContext.RequestPropertyName, JObject.Parse(request)));
+                jobj.Add(new JProperty(WebPubSubContext.RequestPropertyName, JObject.FromObject(value.Request, serializer)));
             }
             if (value.Response != null)
             {
@@ -37,16 +35,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             jobj.Add(WebPubSubContext.IsPreflightPropertyName, value.IsPreflight);
             jobj.WriteTo(writer);
         }
-
-        private static string ConvertString(WebPubSubEventRequest request) =>
-            request switch
-            {
-                ConnectedEventRequest connected => SystemJson.JsonSerializer.Serialize<ConnectedEventRequest>(connected),
-                ConnectEventRequest connect => SystemJson.JsonSerializer.Serialize<ConnectEventRequest>(connect),
-                UserEventRequest userEvent => SystemJson.JsonSerializer.Serialize<UserEventRequest>(userEvent),
-                DisconnectedEventRequest disconnected => SystemJson.JsonSerializer.Serialize<DisconnectedEventRequest>(disconnected),
-                PreflightRequest validation => SystemJson.JsonSerializer.Serialize<PreflightRequest>(validation),
-                _ => null
-            };
     }
 }

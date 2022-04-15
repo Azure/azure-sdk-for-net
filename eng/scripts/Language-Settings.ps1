@@ -53,7 +53,7 @@ function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
   catch
   {
     $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.StatusDescription
+    $statusDescription = $_.Exception.Response.ReasonPhrase
 
     # if this is 404ing, then this pkg has never been published before
     if ($statusCode -eq 404) {
@@ -71,7 +71,6 @@ function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
   $workFolder = "$workingDirectory$($pkg.Basename)"
-  $origFolder = Get-Location
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
   $readmeContent = ""
@@ -254,7 +253,10 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     return $existingVersion.versions
   }
   catch {
-    LogError "Failed to retrieve package versions. `n$_"
+    if ($_.Exception.Response.StatusCode -ne 404) 
+    {
+      LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+    }
     return $null
   }
 }

@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 #nullable enable
 
@@ -16,7 +17,7 @@ namespace Azure
     /// <typeparam name="T">The final result of the long-running operation.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Operation<T>: Operation where T : notnull
+    public abstract class Operation<T> : Operation where T : notnull
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
@@ -41,7 +42,11 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
+        public virtual Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletion(this, null, cancellationToken);
+        }
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -56,20 +61,53 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public abstract ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken);
+        public virtual Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletion(this, pollingInterval, cancellationToken);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionAsync(this, null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="pollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
-        {
-            return (await WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse();
-        }
+            => (await WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
-        {
-            return (await WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)).GetRawResponse();
-        }
+            => (await WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)).GetRawResponse();
     }
 }

@@ -29,6 +29,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("dataFlow");
                 writer.WriteObjectValue(DataFlow);
             }
+            if (Optional.IsCollectionDefined(DataFlows))
+            {
+                writer.WritePropertyName("dataFlows");
+                writer.WriteStartArray();
+                foreach (var item in DataFlows)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets");
@@ -71,6 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<string> sessionId = default;
             Optional<DataFlowDebugResource> dataFlow = default;
+            Optional<IList<DataFlowDebugResource>> dataFlows = default;
             Optional<IList<DatasetDebugResource>> datasets = default;
             Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
             Optional<DataFlowStagingInfo> staging = default;
@@ -92,6 +103,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     dataFlow = DataFlowDebugResource.DeserializeDataFlowDebugResource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataFlows"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DataFlowDebugResource> array = new List<DataFlowDebugResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFlowDebugResource.DeserializeDataFlowDebugResource(item));
+                    }
+                    dataFlows = array;
                     continue;
                 }
                 if (property.NameEquals("datasets"))
@@ -147,7 +173,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
         }
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>

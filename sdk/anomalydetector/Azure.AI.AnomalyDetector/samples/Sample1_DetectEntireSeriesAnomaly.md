@@ -53,24 +53,33 @@ Call the client's `DetectEntireSeriesAsync` method with the `DetectRequest` obje
 //detect
 Console.WriteLine("Detecting anomalies in the entire time series.");
 
-EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
-
-if (result.IsAnomaly.Contains(true))
+try
 {
-    Console.WriteLine("An anomaly was detected at index:");
+    EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+
+    bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)
     {
         if (result.IsAnomaly[i])
         {
-            Console.Write(i);
-            Console.Write(" ");
+            Console.WriteLine("An anomaly was detected at index: {0}.", i);
+            hasAnomaly = true;
         }
     }
-    Console.WriteLine();
+    if (!hasAnomaly)
+    {
+        Console.WriteLine("No anomalies detected in the series.");
+    }
 }
-else
+catch (RequestFailedException ex)
 {
-    Console.WriteLine(" No anomalies detected in the series.");
+    Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+    throw;
+}
+catch (Exception ex)
+{
+    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    throw;
 }
 ```
 To see the full example source files, see:

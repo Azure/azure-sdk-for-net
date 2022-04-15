@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies that the scope of the extensionInstance is Cluster
+    /// Specifies that the scope of the extension is Cluster
     /// </summary>
     public partial class ScopeCluster
     {
@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Initializes a new instance of the ScopeCluster class.
         /// </summary>
         /// <param name="releaseNamespace">Namespace where the extension
-        /// Release must be placed, for a Cluster scoped extensionInstance.  If
-        /// this namespace does not exist, it will be created</param>
+        /// Release must be placed, for a Cluster scoped extension.  If this
+        /// namespace does not exist, it will be created</param>
         public ScopeCluster(string releaseNamespace = default(string))
         {
             ReleaseNamespace = releaseNamespace;
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 
         /// <summary>
         /// Gets or sets namespace where the extension Release must be placed,
-        /// for a Cluster scoped extensionInstance.  If this namespace does not
-        /// exist, it will be created
+        /// for a Cluster scoped extension.  If this namespace does not exist,
+        /// it will be created
         /// </summary>
         [JsonProperty(PropertyName = "releaseNamespace")]
         public string ReleaseNamespace { get; set; }

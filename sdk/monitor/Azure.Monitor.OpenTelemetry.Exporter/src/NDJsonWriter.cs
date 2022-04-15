@@ -9,7 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class NDJsonWriter: IDisposable
     {
-        private static readonly byte[] Separator = { (byte)'\n'};
+        private static readonly byte[] s_separator = { (byte)'\n'};
 
         public NDJsonWriter()
         {
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             JsonWriter.Flush();
             JsonWriter.Reset();
-            Stream.Write(Separator, 0, 1);
+            Stream.Write(s_separator, 0, 1);
         }
 
         public Memory<byte> ToBytes()

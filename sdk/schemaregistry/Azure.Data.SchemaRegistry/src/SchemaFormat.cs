@@ -16,9 +16,10 @@ namespace Azure.Data.SchemaRegistry
         public SchemaFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
+            ContentType = $"application/json; serialization={_value}";
         }
 
-        private const string AvroValue = "avro";
+        private const string AvroValue = "Avro";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
@@ -40,5 +41,7 @@ namespace Azure.Data.SchemaRegistry
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        internal string ContentType { get; }
     }
 }

@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Geo = "Geo";
         public const string Local = "Local";
         public const string Zone = "Zone";
+        public const string GeoZone = "GeoZone";
     }
 }

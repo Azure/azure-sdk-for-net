@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "22",
+        "Content-Length": "32",
         "Content-Type": "application/json",
         "traceparent": "00-433b9488f6d1554eb6f1c5935fe35a16-0998a5025665f94f-00",
         "User-Agent": [
@@ -17,7 +17,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "West US"
+        "location": "West US",
+        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -18961,7 +18962,7 @@
             "id": "databaseName6508",
             "_rid": "ehxzAA==",
             "_self": "dbs/ehxzAA==/",
-            "_etag": "\u002201000a32-0000-0700-0000-5f6aca870000\u0022",
+            "_etag": "\"01000a32-0000-0700-0000-5f6aca870000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1600834183
@@ -19010,7 +19011,7 @@
             "id": "databaseName6508",
             "_rid": "ehxzAA==",
             "_self": "dbs/ehxzAA==/",
-            "_etag": "\u002201000a32-0000-0700-0000-5f6aca870000\u0022",
+            "_etag": "\"01000a32-0000-0700-0000-5f6aca870000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1600834183
@@ -19349,7 +19350,7 @@
             "id": "databaseName953",
             "_rid": "vbtNAA==",
             "_self": "dbs/vbtNAA==/",
-            "_etag": "\u002201000c32-0000-0700-0000-5f6aca8e0000\u0022",
+            "_etag": "\"01000c32-0000-0700-0000-5f6aca8e0000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1600834190
@@ -19788,7 +19789,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -19846,7 +19847,7 @@
             "_rid": "ehxzALd1izw=",
             "_ts": 1600834198,
             "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/",
-            "_etag": "\u002201001032-0000-0700-0000-5f6aca960000\u0022",
+            "_etag": "\"01001032-0000-0700-0000-5f6aca960000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -19884,7 +19885,7 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5934",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}"
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}"
           },
           "options": {}
         }
@@ -20119,10 +20120,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5934",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
             "_rid": "ehxzALd1izwBAAAAAAAAgA==",
             "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/sprocs/ehxzALd1izwBAAAAAAAAgA==/",
-            "_etag": "\u002203005aa5-0000-0700-0000-5f6aca9d0000\u0022",
+            "_etag": "\"03005aa5-0000-0700-0000-5f6aca9d0000\"",
             "_ts": 1600834205
           }
         }
@@ -20148,7 +20149,7 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName2633",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}"
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}"
           },
           "options": {}
         }
@@ -20383,10 +20384,10 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName2633",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
             "_rid": "ehxzALd1izwBAAAAAAAAYA==",
             "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/udfs/ehxzALd1izwBAAAAAAAAYA==/",
-            "_etag": "\u002203005ba5-0000-0700-0000-5f6acaa30000\u0022",
+            "_etag": "\"03005ba5-0000-0700-0000-5f6acaa30000\"",
             "_ts": 1600834211
           }
         }
@@ -20412,7 +20413,7 @@
         "properties": {
           "resource": {
             "id": "triggerName1807",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
             "triggerType": "Pre",
             "triggerOperation": "All"
           },
@@ -20649,12 +20650,12 @@
         "properties": {
           "resource": {
             "id": "triggerName1807",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
             "triggerType": "Pre",
             "triggerOperation": "All",
             "_rid": "ehxzALd1izwBAAAAAAAAcA==",
             "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/triggers/ehxzALd1izwBAAAAAAAAcA==/",
-            "_etag": "\u002203005ca5-0000-0700-0000-5f6acaa80000\u0022",
+            "_etag": "\"03005ca5-0000-0700-0000-5f6acaa80000\"",
             "_ts": 1600834216
           }
         }
@@ -20700,10 +20701,10 @@
             "properties": {
               "resource": {
                 "id": "storedProcedureName5934",
-                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
                 "_rid": "ehxzALd1izwBAAAAAAAAgA==",
                 "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/sprocs/ehxzALd1izwBAAAAAAAAgA==/",
-                "_etag": "\u002203005aa5-0000-0700-0000-5f6aca9d0000\u0022",
+                "_etag": "\"03005aa5-0000-0700-0000-5f6aca9d0000\"",
                 "_ts": 1600834205
               }
             }
@@ -20788,10 +20789,10 @@
             "properties": {
               "resource": {
                 "id": "userDefinedFunctionName2633",
-                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
                 "_rid": "ehxzALd1izwBAAAAAAAAYA==",
                 "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/udfs/ehxzALd1izwBAAAAAAAAYA==/",
-                "_etag": "\u002203005ba5-0000-0700-0000-5f6acaa30000\u0022",
+                "_etag": "\"03005ba5-0000-0700-0000-5f6acaa30000\"",
                 "_ts": 1600834211
               }
             }
@@ -20876,12 +20877,12 @@
             "properties": {
               "resource": {
                 "id": "triggerName1807",
-                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Hello, World\u0027);}",
+                "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Hello, World');}",
                 "triggerType": "Pre",
                 "triggerOperation": "All",
                 "_rid": "ehxzALd1izwBAAAAAAAAcA==",
                 "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/triggers/ehxzALd1izwBAAAAAAAAcA==/",
-                "_etag": "\u002203005ca5-0000-0700-0000-5f6acaa80000\u0022",
+                "_etag": "\"03005ca5-0000-0700-0000-5f6acaa80000\"",
                 "_ts": 1600834216
               }
             }
@@ -20979,7 +20980,7 @@
                       "path": "/pathToNotIndex/*"
                     },
                     {
-                      "path": "/\u0022_etag\u0022/?"
+                      "path": "/\"_etag\"/?"
                     }
                   ],
                   "spatialIndexes": [
@@ -21037,7 +21038,7 @@
                 "_rid": "ehxzALd1izw=",
                 "_ts": 1600834198,
                 "_self": "dbs/ehxzAA==/colls/ehxzALd1izw=/",
-                "_etag": "\u002201001032-0000-0700-0000-5f6aca960000\u0022",
+                "_etag": "\"01001032-0000-0700-0000-5f6aca960000\"",
                 "_docs": "docs/",
                 "_sprocs": "sprocs/",
                 "_triggers": "triggers/",
@@ -21128,7 +21129,7 @@
                 "id": "databaseName953",
                 "_rid": "vbtNAA==",
                 "_self": "dbs/vbtNAA==/",
-                "_etag": "\u002201000c32-0000-0700-0000-5f6aca8e0000\u0022",
+                "_etag": "\"01000c32-0000-0700-0000-5f6aca8e0000\"",
                 "_colls": "colls/",
                 "_users": "users/",
                 "_ts": 1600834190
@@ -21144,7 +21145,7 @@
                 "id": "databaseName6508",
                 "_rid": "ehxzAA==",
                 "_self": "dbs/ehxzAA==/",
-                "_etag": "\u002201000a32-0000-0700-0000-5f6aca870000\u0022",
+                "_etag": "\"01000a32-0000-0700-0000-5f6aca870000\"",
                 "_colls": "colls/",
                 "_users": "users/",
                 "_ts": 1600834183

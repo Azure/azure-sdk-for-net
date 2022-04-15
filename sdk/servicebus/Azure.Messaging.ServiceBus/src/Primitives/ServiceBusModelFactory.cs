@@ -20,6 +20,36 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new ServiceBusReceivedMessage instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
+            BinaryData body,
+            string messageId,
+            string partitionKey,
+            string viaPartitionKey,
+            string sessionId,
+            string replyToSessionId,
+            TimeSpan timeToLive,
+            string correlationId,
+            string subject,
+            string to,
+            string contentType,
+            string replyTo,
+            DateTimeOffset scheduledEnqueueTime,
+            IDictionary<string, object> properties,
+            Guid lockTokenGuid,
+            int deliveryCount,
+            DateTimeOffset lockedUntil,
+            long sequenceNumber,
+            string deadLetterSource,
+            long enqueuedSequenceNumber,
+            DateTimeOffset enqueuedTime) =>
+            ServiceBusReceivedMessage(body, messageId, partitionKey, viaPartitionKey, sessionId, replyToSessionId,
+            timeToLive, correlationId, subject, to, contentType, replyTo, scheduledEnqueueTime, properties,
+            lockTokenGuid, deliveryCount, lockedUntil, sequenceNumber, deadLetterSource, enqueuedSequenceNumber, enqueuedTime, ServiceBusMessageState.Active);
+
+        /// <summary>
+        /// Creates a new ServiceBusReceivedMessage instance for mocking.
+        /// </summary>
         public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
             BinaryData body = default,
             string messageId = default,
@@ -41,7 +71,8 @@ namespace Azure.Messaging.ServiceBus
             long sequenceNumber = -1,
             string deadLetterSource = default,
             long enqueuedSequenceNumber = default,
-            DateTimeOffset enqueuedTime = default)
+            DateTimeOffset enqueuedTime = default,
+            ServiceBusMessageState serviceBusMessageState = default)
         {
             var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
 
@@ -98,6 +129,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {
@@ -390,6 +422,24 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new <see cref="ServiceBusTransportMetrics"/> instance for mocking.
+        /// </summary>
+        /// <param name="lastHeartbeat">The last time that a heartbeat was received from the service.</param>
+        /// <param name="lastConnectionOpen">The last time that a connection was opened.</param>
+        /// <param name="lastConnectionClose">The last time that a connection was closed.</param>
+        /// <returns></returns>
+        public static ServiceBusTransportMetrics ServiceBusTransportMetrics(
+            DateTimeOffset? lastHeartbeat = default,
+            DateTimeOffset? lastConnectionOpen = default,
+            DateTimeOffset? lastConnectionClose = default)
+            => new()
+            {
+                LastHeartBeat = lastHeartbeat,
+                LastConnectionOpen = lastConnectionOpen,
+                LastConnectionClose = lastConnectionClose
+            };
+
+        /// <summary>
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.
         /// </summary>
         ///
@@ -472,7 +522,11 @@ namespace Azure.Messaging.ServiceBus
             ///
             /// <returns>The set of events as an enumerable of the requested type.</returns>
             ///
-            public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)_backingStore;
+            public override IReadOnlyCollection<T> AsReadOnly<T>() => _backingStore switch
+            {
+                IReadOnlyCollection<T> readOnlyCollection => readOnlyCollection,
+                _ => new List<T>((IEnumerable<T>) _backingStore)
+            };
 
             /// <summary>
             ///   Performs the task needed to clean up resources used by the <see cref="TransportMessageBatch" />.

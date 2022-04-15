@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -17,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("osType");
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("osState");
-            writer.WriteStringValue(OsState.ToSerialString());
+            writer.WriteStringValue(OSState.ToSerialString());
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot");
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri");
-                writer.WriteStringValue(BlobUri);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             OperatingSystemStateTypes osState = default;
             Optional<WritableSubResource> snapshot = default;
             Optional<WritableSubResource> managedDisk = default;
-            Optional<string> blobUri = default;
+            Optional<Uri> blobUri = default;
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountTypes> storageAccountType = default;
@@ -103,7 +104,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("blobUri"))
                 {
-                    blobUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        blobUri = null;
+                        continue;
+                    }
+                    blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("caching"))

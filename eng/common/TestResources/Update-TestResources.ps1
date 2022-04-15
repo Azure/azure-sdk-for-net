@@ -26,9 +26,11 @@ param (
     [string] $SubscriptionId,
 
     [Parameter()]
-    [ValidateRange(1, [int]::MaxValue)]
+    [ValidateRange(1, 7*24)]
     [int] $DeleteAfterHours = 48
 )
+
+. $PSScriptRoot/SubConfig-Helpers.ps1
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
@@ -71,11 +73,8 @@ $exitActions = @({
 if (!$ResourceGroupName) {
     # Make sure $BaseName is set.
     if (!$BaseName) {
-        $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $UserName
-        $UserName = $UserName -replace '\W'
-
-        $BaseName = "$UserName$ServiceDirectory"
+        $UserName = GetUserName
+        $BaseName = GetBaseName $UserName $ServiceDirectory
         Log "BaseName was not set. Using default base name '$BaseName'"
     }
 

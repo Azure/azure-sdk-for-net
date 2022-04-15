@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -9,16 +10,16 @@ namespace Azure.AI.Language.Conversations.Tests
     /// Base class for live client tests using different service versions.
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
-    [ClientTestFixture(ConversationAnalysisClientOptions.ServiceVersion.V2021_11_01_Preview)]
+    [ClientTestFixture(ConversationAnalysisClientOptions.ServiceVersion.V2022_03_01_Preview)]
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
         protected ConversationAnalysisTestBase(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
-            Matcher = new RecordMatcher(compareBodies: false);
+            CompareBodies = false;
 
-            Sanitizer = new ConversationAnalysisRecordedTestSanitizer();
+            SanitizedHeaders.Add(ConversationAnalysisClient.AuthorizationHeader);
             ServiceVersion = serviceVersion;
         }
 
@@ -35,9 +36,9 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
         /// </summary>
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,

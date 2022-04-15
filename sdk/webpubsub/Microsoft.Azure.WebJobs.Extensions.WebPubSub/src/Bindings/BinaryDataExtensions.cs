@@ -8,31 +8,31 @@ namespace System
 {
     internal static class BinaryDataExtensions
     {
-        public static object Convert(this BinaryData message, Type targetType)
+        public static object Convert(this BinaryData data, Type targetType)
         {
             if (targetType == typeof(JObject))
             {
-                return JObject.FromObject(message.ToArray());
+                return JObject.FromObject(data.ToArray());
             }
 
             if (targetType == typeof(Stream))
             {
-                return message.ToStream();
+                return data.ToStream();
             }
 
             if (targetType == typeof(byte[]))
             {
-                return message.ToArray();
+                return data.ToArray();
             }
 
             if (targetType == typeof(string))
             {
-                return message.ToString();
+                return data.ToString();
             }
 
             if (targetType == typeof(BinaryData))
             {
-                return message;
+                return data;
             }
 
             return null;

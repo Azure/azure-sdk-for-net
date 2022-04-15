@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Object to define the number of days after creation. </summary>
-    public partial class DateAfterCreation
+    internal partial class DateAfterCreation
     {
         /// <summary> Initializes a new instance of DateAfterCreation. </summary>
         /// <param name="daysAfterCreationGreaterThan"> Value indicating the age in days after creation. </param>

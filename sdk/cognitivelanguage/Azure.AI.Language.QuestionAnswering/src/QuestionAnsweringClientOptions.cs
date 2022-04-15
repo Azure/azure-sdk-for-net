@@ -4,11 +4,13 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType(nameof(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions))]
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>
     /// Client options for <see cref="QuestionAnsweringClient"/>.
     /// </summary>
+    [CodeGenType("QuestionAnsweringProjectsClientOptions")]
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;

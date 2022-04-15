@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePropertiesProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstancePropertiesProvisioningState(string value)
         {

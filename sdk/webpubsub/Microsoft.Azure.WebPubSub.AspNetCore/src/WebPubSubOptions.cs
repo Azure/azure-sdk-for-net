@@ -9,8 +9,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     public class WebPubSubOptions
     {
         /// <summary>
-        /// Validation options for Abuse Protection and Signature checks.
+        /// A service endpoint represents the Web PubSub service.
         /// </summary>
-        public WebPubSubValidationOptions ValidationOptions { get; set; } = new WebPubSubValidationOptions();
+        public ServiceEndpoint ServiceEndpoint { get; set; }
     }
 }

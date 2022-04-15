@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<SecurityInsightsClient>, IOperations
+    internal partial class Operations : IServiceOperations<SecurityInsights>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(SecurityInsightsClient client)
+        internal Operations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Lists all operations available Azure Security Insights Resource Provider.
@@ -65,11 +65,28 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

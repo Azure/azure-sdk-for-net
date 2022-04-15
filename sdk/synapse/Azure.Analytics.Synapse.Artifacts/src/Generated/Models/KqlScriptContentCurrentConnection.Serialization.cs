@@ -20,6 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(PoolName))
+            {
+                writer.WritePropertyName("poolName");
+                writer.WriteStringValue(PoolName);
+            }
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName");
+                writer.WriteStringValue(DatabaseName);
+            }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
@@ -31,6 +41,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static KqlScriptContentCurrentConnection DeserializeKqlScriptContentCurrentConnection(JsonElement element)
         {
             Optional<string> name = default;
+            Optional<string> poolName = default;
+            Optional<string> databaseName = default;
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,13 +51,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("poolName"))
+                {
+                    poolName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("databaseName"))
+                {
+                    databaseName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
             }
-            return new KqlScriptContentCurrentConnection(name.Value, type.Value);
+            return new KqlScriptContentCurrentConnection(name.Value, poolName.Value, databaseName.Value, type.Value);
         }
     }
 }

@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// Describes an Azure SQL database reference input data source.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Microsoft.Sql/Server/Database")]
+    [Rest.Serialization.JsonTransformation]
     public partial class AzureSqlReferenceInputDataSource : ReferenceInputDataSource
     {
         /// <summary>
@@ -32,9 +35,45 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the AzureSqlReferenceInputDataSource
         /// class.
         /// </summary>
-        public AzureSqlReferenceInputDataSource(AzureSqlReferenceInputDataSourceProperties properties = default(AzureSqlReferenceInputDataSourceProperties))
+        /// <param name="server">This element is associated with the datasource
+        /// element. This is the name of the server that contains the database
+        /// that will be written to.</param>
+        /// <param name="database">This element is associated with the
+        /// datasource element. This is the name of the database that output
+        /// will be written to.</param>
+        /// <param name="user">This element is associated with the datasource
+        /// element. This is the user name that will be used to connect to the
+        /// SQL Database instance.</param>
+        /// <param name="password">This element is associated with the
+        /// datasource element. This is the password that will be used to
+        /// connect to the SQL Database instance.</param>
+        /// <param name="table">This element is associated with the datasource
+        /// element. The name of the table in the Azure SQL database..</param>
+        /// <param name="refreshType">Indicates the type of data refresh
+        /// option. Possible values include: 'Static',
+        /// 'RefreshPeriodicallyWithFull',
+        /// 'RefreshPeriodicallyWithDelta'</param>
+        /// <param name="refreshRate">This element is associated with the
+        /// datasource element. This indicates how frequently the data will be
+        /// fetched from the database. It is of DateTime format.</param>
+        /// <param name="fullSnapshotQuery">This element is associated with the
+        /// datasource element. This query is used to fetch data from the sql
+        /// database.</param>
+        /// <param name="deltaSnapshotQuery">This element is associated with
+        /// the datasource element. This query is used to fetch incremental
+        /// changes from the SQL database. To use this option, we recommend
+        /// using temporal tables in Azure SQL Database.</param>
+        public AzureSqlReferenceInputDataSource(string server = default(string), string database = default(string), string user = default(string), string password = default(string), string table = default(string), string refreshType = default(string), string refreshRate = default(string), string fullSnapshotQuery = default(string), string deltaSnapshotQuery = default(string))
         {
-            Properties = properties;
+            Server = server;
+            Database = database;
+            User = user;
+            Password = password;
+            Table = table;
+            RefreshType = refreshType;
+            RefreshRate = refreshRate;
+            FullSnapshotQuery = fullSnapshotQuery;
+            DeltaSnapshotQuery = deltaSnapshotQuery;
             CustomInit();
         }
 
@@ -44,9 +83,75 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This is the name of the server that contains the database
+        /// that will be written to.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public AzureSqlReferenceInputDataSourceProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.server")]
+        public string Server { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This is the name of the database that output will be
+        /// written to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.database")]
+        public string Database { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This is the user name that will be used to connect to the
+        /// SQL Database instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.user")]
+        public string User { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This is the password that will be used to connect to the
+        /// SQL Database instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.password")]
+        public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. The name of the table in the Azure SQL database..
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.table")]
+        public string Table { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the type of data refresh option. Possible
+        /// values include: 'Static', 'RefreshPeriodicallyWithFull',
+        /// 'RefreshPeriodicallyWithDelta'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.refreshType")]
+        public string RefreshType { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This indicates how frequently the data will be fetched
+        /// from the database. It is of DateTime format.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.refreshRate")]
+        public string RefreshRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This query is used to fetch data from the sql database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fullSnapshotQuery")]
+        public string FullSnapshotQuery { get; set; }
+
+        /// <summary>
+        /// Gets or sets this element is associated with the datasource
+        /// element. This query is used to fetch incremental changes from the
+        /// SQL database. To use this option, we recommend using temporal
+        /// tables in Azure SQL Database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deltaSnapshotQuery")]
+        public string DeltaSnapshotQuery { get; set; }
 
     }
 }

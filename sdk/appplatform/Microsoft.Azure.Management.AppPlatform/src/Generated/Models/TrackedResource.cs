@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="location">The GEO location of the resource.</param>
         /// <param name="tags">Tags of the service which is a list of key value
         /// pairs that describe the resource.</param>
-        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type)
+        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type, systemData)
         {
             Location = location;
             Tags = tags;

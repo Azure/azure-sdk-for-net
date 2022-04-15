@@ -1,6 +1,6 @@
 # Release History
 
-## 15.2.0-beta.1 (Unreleased)
+## 15.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,23 @@
 
 ### Other Changes
 
-## 15.2.0 (2021-08-10)
+## 15.3.0 (2022-01-07)
+
+### Features Added
+
+- Added property `UploadHeaders` to `OutputFileBlobContainerDestination`.
+  - Allows users to set custom HTTP headers on resource file uploads.
+  - Array of type `HttpHeader` (also being added).
+- Added boolean property `AllowTaskPreemption` to `JobSpecification`, `CloudJob`, `JobAddParameter`, `JobPatchParameter`, `JobUpdateParameter`
+  - Mark Tasks as preemptible for higher priority Tasks (requires Comms-Enabled or Single Tenant Pool).
+- Replaced comment (title, description, etc.) references of "low-priority" with "Spot/Low-Priority", to reflect new service behavior.
+  - No API change required.
+  - Low-Priority Compute Nodes (VMs) will continue to be used for User Subscription pools (and only User Subscription pools), as before.
+  - Spot Compute Nodes (VMs) will now be used for Batch Managed (and only Batch Managed pools) pools.
+
+### Bugs Fixed
+
+- Fixed OutputFileBlobContainerDestination constructor null reference exception.
 
 ## Features Added
 

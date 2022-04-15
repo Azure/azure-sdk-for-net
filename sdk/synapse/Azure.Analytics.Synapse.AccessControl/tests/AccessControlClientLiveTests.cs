@@ -52,8 +52,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public static async ValueTask<Response> CreateResource(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
             {
-                Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(new());
-                var listContent = listReponse.Content;
+                Response listResponse = await definitionsClient.GetRoleDefinitionsAsync(new());
+                var listContent = listResponse.Content;
                 using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
                 var count = roleDefinitionsJson.RootElement.GetArrayLength();

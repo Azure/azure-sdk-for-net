@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Shipping details.
+    /// package shipping details
     /// </summary>
     public partial class PackageShippingDetails
     {
@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the PackageShippingDetails class.
         /// </summary>
-        /// <param name="carrierName">Name of the carrier.</param>
-        /// <param name="trackingId">Tracking Id of shipment.</param>
         /// <param name="trackingUrl">Url where shipment can be
         /// tracked.</param>
-        public PackageShippingDetails(string carrierName = default(string), string trackingId = default(string), string trackingUrl = default(string))
+        /// <param name="carrierName">Name of the carrier.</param>
+        /// <param name="trackingId">Tracking Id of shipment.</param>
+        public PackageShippingDetails(string trackingUrl = default(string), string carrierName = default(string), string trackingId = default(string))
         {
+            TrackingUrl = trackingUrl;
             CarrierName = carrierName;
             TrackingId = trackingId;
-            TrackingUrl = trackingUrl;
             CustomInit();
         }
 
@@ -45,6 +45,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets url where shipment can be tracked.
+        /// </summary>
+        [JsonProperty(PropertyName = "trackingUrl")]
+        public string TrackingUrl { get; private set; }
 
         /// <summary>
         /// Gets name of the carrier.
@@ -57,12 +63,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "trackingId")]
         public string TrackingId { get; private set; }
-
-        /// <summary>
-        /// Gets url where shipment can be tracked.
-        /// </summary>
-        [JsonProperty(PropertyName = "trackingUrl")]
-        public string TrackingUrl { get; private set; }
 
     }
 }

@@ -119,31 +119,31 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOctKeyAsync(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateRsaKey(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateRsaKeyAsync(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string name, string version = null) { throw null; }
+        public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKey(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey>> GetDeletedKeyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> GetKey(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> GetKeyAsync(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy> GetKeyRotationPolicy(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy>> GetKeyRotationPolicyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy> GetKeyRotationPolicy(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy>> GetKeyRotationPolicyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeyVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeyVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.RandomBytes> GetRandomBytes(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.RandomBytes>> GetRandomBytesAsync(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<byte[]> GetRandomBytes(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<byte[]>> GetRandomBytesAsync(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> ImportKey(Azure.Security.KeyVault.Keys.ImportKeyOptions importKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> ImportKey(string name, Azure.Security.KeyVault.Keys.JsonWebKey keyMaterial, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> ImportKeyAsync(Azure.Security.KeyVault.Keys.ImportKeyOptions importKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> ImportKeyAsync(string name, Azure.Security.KeyVault.Keys.JsonWebKey keyMaterial, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PurgeDeletedKey(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PurgeDeletedKeyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult> ReleaseKey(string name, string target, Azure.Security.KeyVault.Keys.ReleaseKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult> ReleaseKey(string name, string version, string target, Azure.Security.KeyVault.Keys.ReleaseKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult>> ReleaseKeyAsync(string name, string target, Azure.Security.KeyVault.Keys.ReleaseKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string target, Azure.Security.KeyVault.Keys.ReleaseKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult> ReleaseKey(Azure.Security.KeyVault.Keys.ReleaseKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult> ReleaseKey(string name, string targetAttestationToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult>> ReleaseKeyAsync(Azure.Security.KeyVault.Keys.ReleaseKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> RestoreKeyBackup(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> RestoreKeyBackupAsync(byte[] backup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> RotateKey(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -154,19 +154,19 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.RecoverDeletedKeyOperation> StartRecoverDeletedKeyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> UpdateKeyProperties(Azure.Security.KeyVault.Keys.KeyProperties properties, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOperations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> UpdateKeyPropertiesAsync(Azure.Security.KeyVault.Keys.KeyProperties properties, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOperations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy> UpdateKeyRotationPolicy(string name, Azure.Security.KeyVault.Keys.KeyRotationPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string name, Azure.Security.KeyVault.Keys.KeyRotationPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy> UpdateKeyRotationPolicy(string keyName, Azure.Security.KeyVault.Keys.KeyRotationPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string keyName, Azure.Security.KeyVault.Keys.KeyRotationPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyClientOptions : Azure.Core.ClientOptions
     {
-        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_3_Preview) { }
+        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_3) { }
         public Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
             V7_1 = 1,
             V7_2 = 2,
-            V7_3_Preview = 3,
+            V7_3 = 3,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -217,7 +217,6 @@ namespace Azure.Security.KeyVault.Keys
         public static Azure.Security.KeyVault.Keys.KeyProperties KeyProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
         public static Azure.Security.KeyVault.Keys.KeyRotationPolicy KeyRotationPolicy(System.Uri id = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Security.KeyVault.Keys.KeyVaultKey KeyVaultKey(Azure.Security.KeyVault.Keys.KeyProperties properties, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
-        public static Azure.Security.KeyVault.Keys.RandomBytes RandomBytes(byte[] value) { throw null; }
         public static Azure.Security.KeyVault.Keys.ReleaseKeyResult ReleaseKeyResult(string value) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -265,22 +264,23 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class KeyReleasePolicy
     {
-        public KeyReleasePolicy(byte[] data) { }
+        public KeyReleasePolicy(System.BinaryData encodedPolicy) { }
         public string ContentType { get { throw null; } set { } }
-        public byte[] Data { get { throw null; } }
+        public System.BinaryData EncodedPolicy { get { throw null; } }
+        public bool? Immutable { get { throw null; } set { } }
     }
     public partial class KeyRotationLifetimeAction
     {
-        public KeyRotationLifetimeAction() { }
-        public Azure.Security.KeyVault.Keys.KeyRotationPolicyAction Action { get { throw null; } set { } }
-        public System.TimeSpan? TimeAfterCreate { get { throw null; } set { } }
-        public System.TimeSpan? TimeBeforeExpiry { get { throw null; } set { } }
+        public KeyRotationLifetimeAction(Azure.Security.KeyVault.Keys.KeyRotationPolicyAction action) { }
+        public Azure.Security.KeyVault.Keys.KeyRotationPolicyAction Action { get { throw null; } }
+        public string TimeAfterCreate { get { throw null; } set { } }
+        public string TimeBeforeExpiry { get { throw null; } set { } }
     }
     public partial class KeyRotationPolicy
     {
         public KeyRotationPolicy() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.TimeSpan? ExpiresIn { get { throw null; } set { } }
+        public string ExpiresIn { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Keys.KeyRotationLifetimeAction> LifetimeActions { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
@@ -354,11 +354,6 @@ namespace Azure.Security.KeyVault.Keys
         public override string ToString() { throw null; }
         public static bool TryCreate(System.Uri id, out Azure.Security.KeyVault.Keys.KeyVaultKeyIdentifier identifier) { throw null; }
     }
-    public partial class RandomBytes
-    {
-        internal RandomBytes() { }
-        public byte[] Value { get { throw null; } }
-    }
     public partial class RecoverDeletedKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.KeyVaultKey>
     {
         protected RecoverDeletedKeyOperation() { }
@@ -374,9 +369,12 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class ReleaseKeyOptions
     {
-        public ReleaseKeyOptions() { }
+        public ReleaseKeyOptions(string name, string targetAttestationToken) { }
         public Azure.Security.KeyVault.Keys.KeyExportEncryptionAlgorithm? Algorithm { get { throw null; } set { } }
+        public string Name { get { throw null; } }
         public string Nonce { get { throw null; } set { } }
+        public string TargetAttestationToken { get { throw null; } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class ReleaseKeyResult
     {
@@ -425,14 +423,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     }
     public partial class CryptographyClientOptions : Azure.Core.ClientOptions
     {
-        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_3_Preview) { }
+        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_3) { }
         public Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
             V7_1 = 1,
             V7_2 = 2,
-            V7_3_Preview = 3,
+            V7_3 = 3,
         }
     }
     public partial class DecryptParameters

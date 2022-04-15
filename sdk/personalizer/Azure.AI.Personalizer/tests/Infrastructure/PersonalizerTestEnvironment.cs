@@ -19,10 +19,10 @@ namespace Azure.AI.Personalizer.Tests
         /// <summary>The name of the environment variable from which the Personalizer resource's API key will be extracted for the live tests.</summary>
         internal const string SingleSlotApiKeyEnvironmentVariableName = "PERSONALIZER_API_KEY_SINGLE_SLOT";
 
-        public string SingleSlotApiKey => GetRecordedVariable(SingleSlotApiKeyEnvironmentVariableName);
+        public string SingleSlotApiKey => GetRecordedVariable(SingleSlotApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string SingleSlotEndpoint => GetRecordedVariable(SingleSlotEndpointEnvironmentVariableName);
 
-        public string MultiSlotApiKey => GetRecordedVariable(MultiSlotApiKeyEnvironmentVariableName);
+        public string MultiSlotApiKey => GetRecordedVariable(MultiSlotApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string MultiSlotEndpoint => GetRecordedVariable(MultiSlotEndpointEnvironmentVariableName);
     }
 }

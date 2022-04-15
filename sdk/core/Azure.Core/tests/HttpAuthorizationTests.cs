@@ -9,7 +9,7 @@ namespace Azure.Core.Tests
     public class HttpAuthorizationTests
     {
         [Test]
-        public void NullorWhiteSpaceParameters()
+        public void NullOrWhiteSpaceParameters()
         {
             Assert.Throws<ArgumentNullException>(() => new HttpAuthorization(null, "parameter"));
             Assert.Throws<ArgumentNullException>(() => new HttpAuthorization("scheme", null));

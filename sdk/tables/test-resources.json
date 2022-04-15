@@ -10,6 +10,20 @@
             "metadata": {
                 "description": "The principal to assign the role to. This is application object id."
             }
+        },
+        "cosmosEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "cosmos.azure.com",
+          "metadata": {
+              "description": "The url suffix to use when accessing the cosmos data plane."
+          }
+        },
+        "storageEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "core.windows.net",
+          "metadata": {
+              "description": "The url suffix to use when accessing the storage data plane."
+          }
         }
     },
     "variables": {
@@ -107,6 +121,14 @@
         }
     ],
     "outputs": {
+        "COSMOS_TABLES_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('cosmosEndpointSuffix')]"
+        },
+        "STORAGE_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('storageEndpointSuffix')]"
+        },
         "TABLES_STORAGE_ACCOUNT_NAME": {
             "type": "string",
             "value": "[variables('primaryAccountName')]"

@@ -359,9 +359,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Download the DataLake file's directly to a file.
                 // For larger files, ReadTo() will download the file in multiple sequential requests.
-                #region Snippet:SampleSnippetDataLakeFileClient_ReadTo
                 file.ReadTo(downloadPath);
-                #endregion Snippet:SampleSnippetDataLakeFileClient_ReadTo
 
                 // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));

@@ -19,23 +19,25 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        private string url;
-        private string version;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _url;
+        private readonly string _version;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of TableRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public TableRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
-            this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
         internal HttpMessage CreateQueryRequest(string nextTableName, QueryOptions queryOptions)
@@ -44,7 +46,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/Tables", false);
             if (queryOptions?.Format != null)
             {
@@ -67,7 +69,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("NextTableName", nextTableName, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
@@ -92,7 +94,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -115,7 +117,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -125,14 +127,14 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/Tables", false);
             if (queryOptions?.Format != null)
             {
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (responsePreference != null)
             {
@@ -174,7 +176,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -206,7 +208,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -216,12 +218,12 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/Tables('", false);
             uri.AppendPath(table, true);
             uri.AppendPath("')", false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -245,7 +247,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -268,7 +270,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -278,7 +280,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             uri.AppendPath("()", false);
@@ -311,7 +313,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("NextRowKey", nextRowKey, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
@@ -345,7 +347,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -377,7 +379,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -387,7 +389,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             uri.AppendPath("(PartitionKey='", false);
@@ -412,7 +414,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$filter", queryOptions.Filter, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
@@ -425,7 +427,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -459,7 +461,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -470,7 +472,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -504,7 +506,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -514,7 +516,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             uri.AppendPath("(PartitionKey='", false);
@@ -531,7 +533,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (ifMatch != null)
             {
@@ -563,7 +565,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -587,7 +589,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -600,7 +602,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -624,7 +626,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -634,7 +636,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             uri.AppendPath("(PartitionKey='", false);
@@ -651,7 +653,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (ifMatch != null)
             {
@@ -683,7 +685,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -707,7 +709,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -720,7 +722,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -744,7 +746,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -754,7 +756,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             uri.AppendPath("(PartitionKey='", false);
@@ -771,7 +773,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
@@ -786,7 +788,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/> or <paramref name="ifMatch"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -814,7 +816,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -826,7 +828,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/> or <paramref name="ifMatch"/> is null. </exception>
         public ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -854,7 +856,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -864,7 +866,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             if (timeout != null)
@@ -876,7 +878,7 @@ namespace Azure.Data.Tables
                 uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (responsePreference != null)
             {
@@ -934,7 +936,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -973,7 +975,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -983,7 +985,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             if (timeout != null)
@@ -992,7 +994,7 @@ namespace Azure.Data.Tables
             }
             uri.AppendQuery("comp", "acl", true);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1030,7 +1032,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1067,7 +1069,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1077,7 +1079,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(table, true);
             if (timeout != null)
@@ -1086,7 +1088,7 @@ namespace Azure.Data.Tables
             }
             uri.AppendQuery("comp", "acl", true);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             if (tableAcl != null)
             {
@@ -1124,7 +1126,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1149,7 +1151,7 @@ namespace Azure.Data.Tables
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

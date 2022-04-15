@@ -48,6 +48,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The Capacity reservation instance
         /// view.</param>
+        /// <param name="timeCreated">Specifies the time at which the Capacity
+        /// Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2021-11-01.</param>
         /// <param name="sku">SKU of the resource for which capacity needs be
         /// reserved. The SKU name and capacity is required to be set.
         /// Currently VM Skus with the capability called
@@ -55,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// List Microsoft.Compute SKUs in a region
         /// (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for
         /// supported values.</param>
-        public CapacityReservationUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationId = default(string), IList<SubResourceReadOnly> virtualMachinesAssociated = default(IList<SubResourceReadOnly>), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), CapacityReservationInstanceView instanceView = default(CapacityReservationInstanceView), Sku sku = default(Sku))
+        public CapacityReservationUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationId = default(string), IList<SubResourceReadOnly> virtualMachinesAssociated = default(IList<SubResourceReadOnly>), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), CapacityReservationInstanceView instanceView = default(CapacityReservationInstanceView), System.DateTime? timeCreated = default(System.DateTime?), Sku sku = default(Sku))
             : base(tags)
         {
             ReservationId = reservationId;
@@ -63,6 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningTime = provisioningTime;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            TimeCreated = timeCreated;
             Sku = sku;
             CustomInit();
         }
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
         public CapacityReservationInstanceView InstanceView { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the time at which the Capacity Reservation resource
+        /// was created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2021-11-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timeCreated")]
+        public System.DateTime? TimeCreated { get; private set; }
 
         /// <summary>
         /// Gets or sets SKU of the resource for which capacity needs be

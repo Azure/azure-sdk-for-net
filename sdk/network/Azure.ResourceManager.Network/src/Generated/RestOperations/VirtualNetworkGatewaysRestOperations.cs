@@ -12,84 +12,71 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     internal partial class VirtualNetworkGatewaysRestOperations
     {
-        private string subscriptionId;
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VirtualNetworkGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public VirtualNetworkGatewaysRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-02-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates a virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
+        /// <param name="data"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,32 +84,26 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Creates or updates a virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
+        /// <param name="data"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -130,47 +111,44 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkGatewayData>> GetAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -184,27 +162,24 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((VirtualNetworkGatewayData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<VirtualNetworkGatewayData> Get(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkGatewayData> Get(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -218,47 +193,44 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((VirtualNetworkGatewayData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateDeleteRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,27 +239,24 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateDeleteRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -296,56 +265,50 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, TagsObject tagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(tagsObject);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -353,32 +316,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response UpdateTags(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateTags(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, tagsObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -386,41 +343,41 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets all virtual network gateways by resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkGatewayListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkGatewayListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -432,22 +389,22 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets all virtual network gateways by resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VirtualNetworkGatewayListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkGatewayListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetAllRequest(resourceGroupName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -459,17 +416,17 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetConnectionsRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateListConnectionsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -477,30 +434,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/connections", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> GetConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> ListConnectionsAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetConnectionsRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateListConnectionsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -512,27 +466,24 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<VirtualNetworkGatewayListConnectionsResult> GetConnections(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkGatewayListConnectionsResult> ListConnections(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetConnectionsRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateListConnectionsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -544,17 +495,17 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateResetRequest(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip)
+        internal HttpMessage CreateResetRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -566,31 +517,28 @@ namespace Azure.ResourceManager.Network
             {
                 uri.AppendQuery("gatewayVip", gatewayVip, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> ResetAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ResetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateResetRequest(resourceGroupName, virtualNetworkGatewayName, gatewayVip);
+            using var message = CreateResetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, gatewayVip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -598,28 +546,25 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response Reset(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Reset(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateResetRequest(resourceGroupName, virtualNetworkGatewayName, gatewayVip);
+            using var message = CreateResetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, gatewayVip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -627,17 +572,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateResetVpnClientSharedKeyRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateResetVpnClientSharedKeyRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -645,30 +590,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/resetvpnclientsharedkey", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> ResetVpnClientSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ResetVpnClientSharedKeyAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateResetVpnClientSharedKeyRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateResetVpnClientSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -676,27 +618,24 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response ResetVpnClientSharedKey(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ResetVpnClientSharedKey(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateResetVpnClientSharedKeyRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateResetVpnClientSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -704,17 +643,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGeneratevpnclientpackageRequest(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters)
+        internal HttpMessage CreateGeneratevpnclientpackageRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -722,39 +661,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/generatevpnclientpackage", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(vpnClientParameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="vpnClientParameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> GeneratevpnclientpackageAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnClientParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GeneratevpnclientpackageAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnClientParameters, nameof(vpnClientParameters));
 
-            using var message = CreateGeneratevpnclientpackageRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateGeneratevpnclientpackageRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -762,32 +695,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="vpnClientParameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Generatevpnclientpackage(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnClientParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Generatevpnclientpackage(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnClientParameters, nameof(vpnClientParameters));
 
-            using var message = CreateGeneratevpnclientpackageRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateGeneratevpnclientpackageRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -795,17 +722,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGenerateVpnProfileRequest(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters)
+        internal HttpMessage CreateGenerateVpnProfileRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -813,39 +740,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/generatevpnprofile", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(vpnClientParameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="vpnClientParameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> GenerateVpnProfileAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnClientParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GenerateVpnProfileAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnClientParameters, nameof(vpnClientParameters));
 
-            using var message = CreateGenerateVpnProfileRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateGenerateVpnProfileRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -853,32 +774,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="vpnClientParameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response GenerateVpnProfile(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnClientParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GenerateVpnProfile(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters vpnClientParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnClientParameters, nameof(vpnClientParameters));
 
-            using var message = CreateGenerateVpnProfileRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateGenerateVpnProfileRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -886,17 +801,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetVpnProfilePackageUrlRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetVpnProfilePackageUrlRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -904,30 +819,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/getvpnprofilepackageurl", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetVpnProfilePackageUrlAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetVpnProfilePackageUrlAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnProfilePackageUrlRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnProfilePackageUrlRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -935,27 +847,24 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetVpnProfilePackageUrl(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetVpnProfilePackageUrl(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnProfilePackageUrlRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnProfilePackageUrlRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -963,17 +872,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetBgpPeerStatusRequest(string resourceGroupName, string virtualNetworkGatewayName, string peer)
+        internal HttpMessage CreateGetBgpPeerStatusRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -985,31 +894,28 @@ namespace Azure.ResourceManager.Network
             {
                 uri.AppendQuery("peer", peer, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetBgpPeerStatusAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetBgpPeerStatusAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetBgpPeerStatusRequest(resourceGroupName, virtualNetworkGatewayName, peer);
+            using var message = CreateGetBgpPeerStatusRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, peer);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1017,28 +923,25 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetBgpPeerStatus(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetBgpPeerStatus(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetBgpPeerStatusRequest(resourceGroupName, virtualNetworkGatewayName, peer);
+            using var message = CreateGetBgpPeerStatusRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, peer);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1046,17 +949,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateSupportedVpnDevicesRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateSupportedVpnDevicesRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1064,30 +967,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/supportedvpndevices", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<string>> SupportedVpnDevicesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<string>> SupportedVpnDevicesAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateSupportedVpnDevicesRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateSupportedVpnDevicesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1099,27 +999,24 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<string> SupportedVpnDevices(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<string> SupportedVpnDevices(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateSupportedVpnDevicesRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateSupportedVpnDevicesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1131,17 +1028,17 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetLearnedRoutesRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetLearnedRoutesRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1149,30 +1046,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/getLearnedRoutes", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetLearnedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetLearnedRoutesAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetLearnedRoutesRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetLearnedRoutesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1180,27 +1074,24 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetLearnedRoutes(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetLearnedRoutes(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetLearnedRoutesRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetLearnedRoutesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1208,17 +1099,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAdvertisedRoutesRequest(string resourceGroupName, string virtualNetworkGatewayName, string peer)
+        internal HttpMessage CreateGetAdvertisedRoutesRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1227,35 +1118,29 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/getAdvertisedRoutes", false);
             uri.AppendQuery("peer", peer, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="peer"/> is null. </exception>
-        public async Task<Response> GetAdvertisedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="peer"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetAdvertisedRoutesAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (peer == null)
-            {
-                throw new ArgumentNullException(nameof(peer));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(peer, nameof(peer));
 
-            using var message = CreateGetAdvertisedRoutesRequest(resourceGroupName, virtualNetworkGatewayName, peer);
+            using var message = CreateGetAdvertisedRoutesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, peer);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1263,32 +1148,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="peer"/> is null. </exception>
-        public Response GetAdvertisedRoutes(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="peer"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetAdvertisedRoutes(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (peer == null)
-            {
-                throw new ArgumentNullException(nameof(peer));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(peer, nameof(peer));
 
-            using var message = CreateGetAdvertisedRoutesRequest(resourceGroupName, virtualNetworkGatewayName, peer);
+            using var message = CreateGetAdvertisedRoutesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, peer);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1296,17 +1175,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateSetVpnclientIpsecParametersRequest(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams)
+        internal HttpMessage CreateSetVpnclientIPsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIPsecParams)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1314,39 +1193,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/setvpnclientipsecparameters", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(vpnclientIpsecParams);
+            content.JsonWriter.WriteObjectValue(vpnclientIPsecParams);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public async Task<Response> SetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SetVpnclientIPsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (vpnclientIpsecParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
-            using var message = CreateSetVpnclientIpsecParametersRequest(resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
+            using var message = CreateSetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIPsecParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1354,32 +1227,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="vpnclientIpsecParams"/> is null. </exception>
-        public Response SetVpnclientIpsecParameters(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response SetVpnclientIPsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (vpnclientIpsecParams == null)
-            {
-                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
-            using var message = CreateSetVpnclientIpsecParametersRequest(resourceGroupName, virtualNetworkGatewayName, vpnclientIpsecParams);
+            using var message = CreateSetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnclientIPsecParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1387,17 +1254,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetVpnclientIpsecParametersRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetVpnclientIPsecParametersRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1405,74 +1272,68 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/getvpnclientipsecparameters", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetVpnclientIPsecParametersAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnclientIpsecParametersRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetVpnclientIpsecParameters(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetVpnclientIPsecParameters(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnclientIpsecParametersRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientIPsecParametersRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateVpnDeviceConfigurationScriptRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters)
+        internal HttpMessage CreateVpnDeviceConfigurationScriptRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1480,39 +1341,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/connections/", false);
             uri.AppendPath(virtualNetworkGatewayConnectionName, true);
             uri.AppendPath("/vpndeviceconfigurationscript", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection for which the configuration script is generated. </param>
-        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="content"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<string>> VpnDeviceConfigurationScriptAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<string>> VpnDeviceConfigurationScriptAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVpnDeviceConfigurationScriptRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
+            using var message = CreateVpnDeviceConfigurationScriptRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1524,32 +1379,26 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection for which the configuration script is generated. </param>
-        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="content"> Parameters supplied to the generate vpn device script operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<string> VpnDeviceConfigurationScript(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<string> VpnDeviceConfigurationScript(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVpnDeviceConfigurationScriptRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
+            using var message = CreateVpnDeviceConfigurationScriptRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1561,17 +1410,17 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateStartPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters)
+        internal HttpMessage CreateStartPacketCaptureRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1579,38 +1428,35 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/startPacketCapture", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (parameters != null)
+            if (vpnPacketCaptureStartParameters != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(parameters);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(vpnPacketCaptureStartParameters);
+                request.Content = content0;
             }
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="vpnPacketCaptureStartParameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StartPacketCaptureAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateStartPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnPacketCaptureStartParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1618,28 +1464,25 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="vpnPacketCaptureStartParameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response StartPacketCapture(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StartPacketCapture(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateStartPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnPacketCaptureStartParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1647,17 +1490,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateStopPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters)
+        internal HttpMessage CreateStopPacketCaptureRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1665,39 +1508,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/stopPacketCapture", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(vpnPacketCaptureStopParameters);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="vpnPacketCaptureStopParameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnPacketCaptureStopParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StopPacketCaptureAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnPacketCaptureStopParameters, nameof(vpnPacketCaptureStopParameters));
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateStopPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnPacketCaptureStopParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1705,32 +1542,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
-        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="vpnPacketCaptureStopParameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response StopPacketCapture(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="vpnPacketCaptureStopParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StopPacketCapture(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(vpnPacketCaptureStopParameters, nameof(vpnPacketCaptureStopParameters));
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayName, parameters);
+            using var message = CreateStopPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, vpnPacketCaptureStopParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1738,17 +1569,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetVpnclientConnectionHealthRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetVpnclientConnectionHealthRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1756,30 +1587,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/getVpnClientConnectionHealth", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response> GetVpnclientConnectionHealthAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetVpnclientConnectionHealthAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnclientConnectionHealthRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientConnectionHealthRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1787,27 +1615,24 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response GetVpnclientConnectionHealth(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetVpnclientConnectionHealth(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetVpnclientConnectionHealthRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetVpnclientConnectionHealthRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1815,17 +1640,17 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
+        internal HttpMessage CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -1833,39 +1658,33 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendPath("/disconnectVirtualNetworkGatewayVpnConnections", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="request"/> is null. </exception>
-        public async Task<Response> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(request, nameof(request));
 
-            using var message = CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(resourceGroupName, virtualNetworkGatewayName, request);
+            using var message = CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1873,32 +1692,26 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/>, or <paramref name="request"/> is null. </exception>
-        public Response DisconnectVirtualNetworkGatewayVpnConnections(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DisconnectVirtualNetworkGatewayVpnConnections(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(request, nameof(request));
 
-            using var message = CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(resourceGroupName, virtualNetworkGatewayName, request);
+            using var message = CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1906,41 +1719,38 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets all virtual network gateways by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkGatewayListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkGatewayListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1952,27 +1762,24 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets all virtual network gateways by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VirtualNetworkGatewayListResult> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkGatewayListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1984,46 +1791,40 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetConnectionsNextPageRequest(string nextLink, string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateListConnectionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> GetConnectionsNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkGatewayListConnectionsResult>> ListConnectionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetConnectionsNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateListConnectionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2035,32 +1836,26 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<VirtualNetworkGatewayListConnectionsResult> GetConnectionsNextPage(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkGatewayListConnectionsResult> ListConnectionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
-            using var message = CreateGetConnectionsNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateListConnectionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2072,7 +1867,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

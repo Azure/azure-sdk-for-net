@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -291,6 +292,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             CertificateClientOptions options = new CertificateClientOptions
             {
+                Retry =
+                {
+                    Delay = TimeSpan.FromMilliseconds(10),
+                    Mode = RetryMode.Fixed,
+                },
                 Transport = transport,
             };
 
@@ -302,10 +308,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     ));
         }
 
-        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation)
-        {
-            return await operation.WaitForCompletionAsync(TimeSpan.Zero, default);
-        }
+        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation) =>
+            await operation.WaitForCompletionAsync();
 
         public class MockCredential : TokenCredential
         {

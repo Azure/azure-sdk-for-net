@@ -34,13 +34,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="lastSkuUpdate">The last time Sku was updated.</param>
         /// <param name="minCapacity">Minimum CapacityReservation value in
         /// GB.</param>
-        /// <param name="maxCapacity">Maximum CapacityReservation value in
-        /// GB.</param>
-        public CapacityReservationProperties(string lastSkuUpdate = default(string), long? minCapacity = default(long?), long? maxCapacity = default(long?))
+        public CapacityReservationProperties(string lastSkuUpdate = default(string), long? minCapacity = default(long?))
         {
             LastSkuUpdate = lastSkuUpdate;
             MinCapacity = minCapacity;
-            MaxCapacity = maxCapacity;
             CustomInit();
         }
 
@@ -60,12 +57,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "minCapacity")]
         public long? MinCapacity { get; private set; }
-
-        /// <summary>
-        /// Gets maximum CapacityReservation value in GB.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxCapacity")]
-        public long? MaxCapacity { get; private set; }
 
     }
 }

@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets all incident comments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -62,13 +61,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IncidentComment>>> ListByIncidentWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IncidentComment>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, ODataQuery<IncidentComment> odataQuery = default(ODataQuery<IncidentComment>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets an incident comment.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -96,11 +94,10 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </exception>
         Task<AzureOperationResponse<IncidentComment>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates the incident comment.
+        /// Creates or updates the incident comment.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -113,6 +110,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </param>
         /// <param name='message'>
         /// The comment message
+        /// </param>
+        /// <param name='etag'>
+        /// Etag of the azure resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,7 +129,35 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IncidentComment>> CreateCommentWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IncidentComment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, string message, string etag = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete the incident comment.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace.
+        /// </param>
+        /// <param name='incidentId'>
+        /// Incident ID
+        /// </param>
+        /// <param name='incidentCommentId'>
+        /// Incident comment ID
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all incident comments.
         /// </summary>
@@ -151,6 +179,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IncidentComment>>> ListByIncidentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IncidentComment>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

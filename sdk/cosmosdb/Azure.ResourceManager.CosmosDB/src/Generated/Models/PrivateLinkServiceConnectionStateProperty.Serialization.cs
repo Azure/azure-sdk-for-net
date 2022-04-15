@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status);
             }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             writer.WriteEndObject();
         }
 
         internal static PrivateLinkServiceConnectionStateProperty DeserializePrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
             Optional<string> status = default;
+            Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,13 +40,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     status = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("actionsRequired"))
                 {
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionStateProperty(status.Value, actionsRequired.Value);
+            return new PrivateLinkServiceConnectionStateProperty(status.Value, description.Value, actionsRequired.Value);
         }
     }
 }

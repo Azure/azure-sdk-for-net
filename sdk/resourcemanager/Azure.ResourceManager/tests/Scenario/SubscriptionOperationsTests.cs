@@ -2,18 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    [Parallelizable]
     public class SubscriptionOperationsTests : ResourceManagerTestBase
     {
+        private string _tagKey;
+        private string TagKey => _tagKey ??= Recording.GenerateAssetName("TagKey-");
+        private string _tagValue;
+        private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
+
         public SubscriptionOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -24,16 +30,8 @@ namespace Azure.ResourceManager.Tests
         public void NoDataValidation()
         {
             ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c
-            var resource = Client.GetSubscription($"/subscriptions/{Guid.NewGuid()}");
+            var resource = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task GetSubscriptionOperation()
-        {
-            Subscription sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
         [TestCase(null)]
@@ -51,7 +49,7 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase("te%st")]        
+        [TestCase("te%st")]
         [TestCase("te$st")]
         [TestCase("te#st")]
         [RecordedTest]
@@ -60,7 +58,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (RequestFailedException e) when (e.Status == 400)
@@ -75,7 +73,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (ArgumentException)
@@ -128,7 +126,7 @@ namespace Azure.ResourceManager.Tests
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected 404 from service");
             }
-            catch(RequestFailedException e) when (e.Status == 404)
+            catch (RequestFailedException e) when (e.Status == 404)
             {
             }
         }
@@ -151,14 +149,14 @@ namespace Azure.ResourceManager.Tests
             var subscription = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscription($"/subscriptions/{new Guid()}").GetAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 
         private string GetLongString(int length)
         {
             StringBuilder builder = new StringBuilder();
-            for(int i=0; i<length; i++)
+            for (int i = 0; i < length; i++)
             {
                 builder.Append('a');
             }
@@ -168,18 +166,59 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ListFeatures()
         {
-            Feature testFeature = null;
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            FeatureResource testFeature = null;
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             await foreach (var feature in subscription.GetFeaturesAsync())
             {
                 testFeature = feature;
                 break;
             }
             Assert.IsNotNull(testFeature);
-            Assert.IsNotNull(testFeature.Data.Id);
-            Assert.IsNotNull(testFeature.Data.Name);
-            Assert.IsNotNull(testFeature.Data.Properties);
-            Assert.IsNotNull(testFeature.Data.Type);
+            // TODO: Update when we can return FeatureResource instead of FeatureData in subscription.GetFeaturesAsync.
+            //Assert.IsNotNull(testFeature.Data.Id);
+            //Assert.IsNotNull(testFeature.Data.Name);
+            //Assert.IsNotNull(testFeature.Data.Properties);
+            //Assert.IsNotNull(testFeature.Data.Type);
+        }
+
+        [RecordedTest]
+        public async Task ValidateResourceInRestApi()
+        {
+#if NET461
+            await Task.Delay(1); //no op due to header differences on 461
+#else
+            var namespacesToSkip = new HashSet<string>
+            {
+                "Microsoft.MarketplaceNotifications",
+                "Microsoft.Notebooks",
+                "Microsoft.App",
+                "Microsoft.ClassicSubscription",
+                "Microsoft.AVS",
+                "Microsoft.DataReplication",
+                "Microsoft.ImportExport",
+                "Microsoft.NetworkFunction",
+                "Microsoft.ProjectBabylon",
+                "Microsoft.Scheduler",
+                "Microsoft.ServicesHub",
+                "Microsoft.SoftwarePlan",
+                "Microsoft.TimeSeriesInsights",
+            };
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            await foreach (var provider in subscription.GetResourceProviders())
+            {
+                if (namespacesToSkip.Contains(provider.Data.Namespace))
+                    continue;
+                if (!provider.Data.ResourceTypes.Any(rt => rt.ResourceType == "operations"))
+                    continue;
+                Assert.DoesNotThrowAsync(async () =>
+                {
+                    await foreach (var restApi in subscription.GetArmRestApis(provider.Data.Namespace))
+                    {
+                        Assert.IsNotNull(restApi);
+                    }
+                }, $"Error getting rest apis for {provider.Data.Namespace}");
+            }
+#endif
         }
     }
 }

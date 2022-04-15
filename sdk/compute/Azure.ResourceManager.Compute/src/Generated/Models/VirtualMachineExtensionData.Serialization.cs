@@ -5,12 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -64,17 +64,30 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteObjectValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView");
                 writer.WriteObjectValue(InstanceView);
+            }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures");
+                writer.WriteBooleanValue(SuppressFailures.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -83,20 +96,22 @@ namespace Azure.ResourceManager.Compute
         internal static VirtualMachineExtensionData DeserializeVirtualMachineExtensionData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
-            Optional<object> settings = default;
-            Optional<object> protectedSettings = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineExtensionInstanceView> instanceView = default;
+            Optional<bool> suppressFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -116,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -127,6 +142,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -185,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settings = property0.Value.GetObject();
+                            settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettings"))
@@ -195,7 +215,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettings = property0.Value.GetObject();
+                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -213,11 +233,21 @@ namespace Azure.ResourceManager.Compute
                             instanceView = VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("suppressFailures"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            suppressFailures = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineExtensionData(id, name, type, tags, location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value);
+            return new VirtualMachineExtensionData(id, name, type, systemData, tags, location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures));
         }
     }
 }

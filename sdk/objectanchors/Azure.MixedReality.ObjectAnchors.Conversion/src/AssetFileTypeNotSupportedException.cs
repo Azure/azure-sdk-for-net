@@ -9,12 +9,12 @@ using Azure.Core;
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
+    /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation.
     /// </summary>
     public class AssetFileTypeNotSupportedException : Exception, ISerializable
     {
         /// <summary>
-        /// Creates an instance of the <see cref="AssetFileTypeNotSupportedException"/>
+        /// Creates an instance of the <see cref="AssetFileTypeNotSupportedException"/>.
         /// </summary>
         public AssetFileTypeNotSupportedException()
             : base($"The provided asset file type is unsupported by Azure Object Anchors for conversion.")
@@ -22,19 +22,19 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="AssetFileTypeNotSupportedException"/>
+        /// Creates an instance of the <see cref="AssetFileTypeNotSupportedException"/>.
         /// </summary>
-        /// <param name="message">The message corresponding to the exception</param>
+        /// <param name="message">The message corresponding to the exception.</param>
         public AssetFileTypeNotSupportedException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Creates an Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
+        /// Creates an Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation.
         /// </summary>
-        /// <param name="message">The message corresponding to the exception</param>
-        /// <param name="inner">The inner exception</param>
+        /// <param name="message">The message corresponding to the exception.</param>
+        /// <param name="inner">The inner exception.</param>
         public AssetFileTypeNotSupportedException(string message, Exception inner)
             : base(message, inner)
         {
@@ -59,10 +59,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
+        /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation.
         /// </summary>
-        /// <param name="info">The SerializationInfo</param>
-        /// <param name="context">The StreamingContext</param>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
         protected AssetFileTypeNotSupportedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -71,12 +71,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// The unsupported filetype provided for asset conversion
+        /// The unsupported filetype provided for asset conversion.
         /// </summary>
         public AssetFileType AttemptedFileType { get; }
 
         /// <summary>
-        /// The list of file types supported by Azure Object Anchors Conversion
+        /// The list of file types supported by Azure Object Anchors Conversion.
         /// </summary>
         public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get; }
     }

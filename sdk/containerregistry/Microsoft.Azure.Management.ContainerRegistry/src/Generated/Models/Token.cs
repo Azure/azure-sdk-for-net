@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="creationDate">The creation date of scope map.</param>
         /// <param name="provisioningState">Provisioning state of the resource.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
@@ -45,8 +47,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// authenticating the token.</param>
         /// <param name="status">The status of the token example enabled or
         /// disabled. Possible values include: 'enabled', 'disabled'</param>
-        public Token(string id = default(string), string name = default(string), string type = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), string scopeMapId = default(string), TokenCredentialsProperties credentials = default(TokenCredentialsProperties), string status = default(string))
-            : base(id, name, type)
+        public Token(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), string scopeMapId = default(string), TokenCredentialsProperties credentials = default(TokenCredentialsProperties), string status = default(string))
+            : base(id, name, type, systemData)
         {
             CreationDate = creationDate;
             ProvisioningState = provisioningState;

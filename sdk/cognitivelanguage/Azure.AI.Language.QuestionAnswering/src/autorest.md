@@ -8,14 +8,14 @@ title: Question Answering
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/2fe971edcf58b3351e6e5e67d269d4b4c7cc2c5f/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
   clear-output-folder: true
   model-namespace: false
+  generation1-convenience-client: true
 
-# TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/34a2c0723155d134311419fd997925ce96b85bec/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
-#   add-credentials: true
-#   low-level-client: true
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b791f57426508cb2793a8911650a416dcb11c6a6/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
+# namespace: Azure.AI.Language.QuestionAnswering.Projects
+  add-credentials: true
 
 modelerfour:
   lenient-model-deduplication: true
@@ -45,6 +45,15 @@ directive:
           "AzureKey": []
         }
     ];
+```
+### DocString edit
+
+``` yaml
+directive:
+  - from: swagger-document
+    where: $["paths"]["/query-knowledgebases/projects/{projectName}/feedback"]["post"]
+    transform: >
+        $["summary"] = "Add Active Learning feedback";
 ```
 
 ### C# customizations

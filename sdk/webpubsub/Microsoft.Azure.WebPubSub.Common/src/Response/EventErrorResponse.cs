@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -8,17 +10,34 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Response for errors.
     /// </summary>
+    [DataContract]
     public class EventErrorResponse : WebPubSubEventResponse
     {
+        [DataMember(Name = "code")]
+        internal override WebPubSubStatusCode StatusCode { get; set; }
+
         /// <summary>
         /// Error code. Required field to deserialize ErrorResponse.
         /// </summary>
+        [IgnoreDataMember]
+        [JsonIgnore]
         [JsonPropertyName("code"), JsonConverter(typeof(JsonStringEnumConverter))]
-        public WebPubSubErrorCode Code { get; set; }
+        public WebPubSubErrorCode Code
+        {
+            get
+            {
+                return FromStatusCode(StatusCode);
+            }
+            set
+            {
+                StatusCode = ToStatusCode(value);
+            }
+        }
 
         /// <summary>
         /// Error messages.
         /// </summary>
+        [DataMember(Name = "errorMessage")]
         [JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; set; }
 
@@ -38,5 +57,23 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         public EventErrorResponse()
         { }
+
+        private static WebPubSubErrorCode FromStatusCode(WebPubSubStatusCode statusCode) =>
+            statusCode switch
+            {
+                WebPubSubStatusCode.Unauthorized => WebPubSubErrorCode.Unauthorized,
+                WebPubSubStatusCode.UserError => WebPubSubErrorCode.UserError,
+                // Turn server error as default in EventErrorResponse.
+                _ => WebPubSubErrorCode.ServerError,
+            };
+
+        private static WebPubSubStatusCode ToStatusCode(WebPubSubErrorCode statusCode) =>
+            statusCode switch
+            {
+                WebPubSubErrorCode.Unauthorized => WebPubSubStatusCode.Unauthorized,
+                WebPubSubErrorCode.UserError => WebPubSubStatusCode.UserError,
+                // return server error as default in EventErrorResponse regarding status code.
+                _ => WebPubSubStatusCode.ServerError,
+            };
     }
 }

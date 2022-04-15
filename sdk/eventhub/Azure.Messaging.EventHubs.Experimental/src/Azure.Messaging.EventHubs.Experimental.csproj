@@ -12,14 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- TEMP: Use a project reference to Event Hubs to allow for use of the internals -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-    <!-- END TEMP -->
+    <!--
+        TEMP:
+            Version override is needed until the 5.7.x line reaches a stable release.
 
-    <!-- TEMP: Restore when project reference no longer needed
     <PackageReference Include="Azure.Messaging.EventHubs" />
     -->
-
+    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.7.0-beta.5" />
+    <!-- END TEMP -->
+    
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />

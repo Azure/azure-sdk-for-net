@@ -35,6 +35,12 @@ namespace AzureRedisCache.Tests
             return client;
         }
 
+        public static bool IsLiveTest()
+        {
+            var env = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            return (env?.ToUpper().Equals("RECORD") == true);
+        }
+
         private static Stream GenerateStreamFromString(string source)
         {
             MemoryStream stream = new MemoryStream();

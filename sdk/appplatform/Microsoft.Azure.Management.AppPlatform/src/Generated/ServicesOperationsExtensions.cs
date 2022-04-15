@@ -370,6 +370,84 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Stop a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            public static void Stop(this IServicesOperations operations, string resourceGroupName, string serviceName)
+            {
+                operations.StopAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            public static void Start(this IServicesOperations operations, string resourceGroupName, string serviceName)
+            {
+                operations.StartAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Checks that the resource name is valid and is not already in use.
             /// </summary>
             /// <param name='operations'>
@@ -606,6 +684,84 @@ namespace Microsoft.Azure.Management.AppPlatform
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Stop a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            public static void BeginStop(this IServicesOperations operations, string resourceGroupName, string serviceName)
+            {
+                operations.BeginStopAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStopAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            public static void BeginStart(this IServicesOperations operations, string resourceGroupName, string serviceName)
+            {
+                operations.BeginStartAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start a Service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

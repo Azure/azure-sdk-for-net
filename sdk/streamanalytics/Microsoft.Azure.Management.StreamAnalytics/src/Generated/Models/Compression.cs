@@ -30,6 +30,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the Compression class.
         /// </summary>
+        /// <param name="type">Indicates the type of compression that the input
+        /// uses. Required on PUT (CreateOrReplace) requests. Possible values
+        /// include: 'None', 'GZip', 'Deflate'</param>
         public Compression(string type)
         {
             Type = type;
@@ -42,6 +45,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets indicates the type of compression that the input uses.
+        /// Required on PUT (CreateOrReplace) requests. Possible values
+        /// include: 'None', 'GZip', 'Deflate'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

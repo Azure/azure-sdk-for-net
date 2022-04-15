@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,109 +16,67 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetworkTap and their operations over a ResourceGroup. </summary>
-    public partial class VirtualNetworkTapCollection : ArmCollection, IEnumerable<VirtualNetworkTap>, IAsyncEnumerable<VirtualNetworkTap>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkTapResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkTapResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualNetworkTapCollection" /> instance call the GetVirtualNetworkTaps method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class VirtualNetworkTapCollection : ArmCollection, IEnumerable<VirtualNetworkTapResource>, IAsyncEnumerable<VirtualNetworkTapResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualNetworkTapsRestOperations _restClient;
+        private readonly ClientDiagnostics _virtualNetworkTapClientDiagnostics;
+        private readonly VirtualNetworkTapsRestOperations _virtualNetworkTapRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkTapCollection"/> class for mocking. </summary>
         protected VirtualNetworkTapCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VirtualNetworkTapCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkTapCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VirtualNetworkTapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualNetworkTapsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTapResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualNetworkTapResource.ResourceType, out string virtualNetworkTapApiVersion);
+            _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkTapApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<VirtualNetworkTap> IEnumerable<VirtualNetworkTap>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<VirtualNetworkTap> IAsyncEnumerable<VirtualNetworkTap>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        // Collection level operations.
-
-        /// <summary> Creates or updates a Virtual Network Tap. </summary>
+        /// <summary>
+        /// Creates or updates a Virtual Network Tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkTapCreateOrUpdateOperation CreateOrUpdate(string tapName, VirtualNetworkTapData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualNetworkTapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tapName, VirtualNetworkTapData data, CancellationToken cancellationToken = default)
         {
-            if (tapName == null)
-            {
-                throw new ArgumentNullException(nameof(tapName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.CreateOrUpdate");
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, tapName, parameters, cancellationToken);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Virtual Network Tap. </summary>
-        /// <param name="tapName"> The name of the virtual network tap. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkTapCreateOrUpdateOperation> CreateOrUpdateAsync(string tapName, VirtualNetworkTapData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (tapName == null)
-            {
-                throw new ArgumentNullException(nameof(tapName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, tapName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _virtualNetworkTapRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualNetworkTapResource>(new VirtualNetworkTapOperationSource(Client), _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -128,209 +87,114 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<VirtualNetworkTap> Get(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.Get");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, tapName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkTap(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<VirtualNetworkTap>> GetAsync(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.Get");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, tapName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkTap(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<VirtualNetworkTap> GetIfExists(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, tapName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<VirtualNetworkTap>> GetIfExistsAsync(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, tapName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = GetIfExists(tapName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tapName"> The name of virtual network tap. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tapName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (tapName == null)
-                {
-                    throw new ArgumentNullException(nameof(tapName));
-                }
-
-                var response = await GetIfExistsAsync(tapName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Creates or updates a Virtual Network Tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tapName"> The name of the virtual network tap. </param>
+        /// <param name="data"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkTap> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualNetworkTapResource> CreateOrUpdate(WaitUntil waitUntil, string tapName, VirtualNetworkTapData data, CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkTap> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.CreateOrUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _virtualNetworkTapRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, tapName, data, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualNetworkTapResource>(new VirtualNetworkTapOperationSource(Client), _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
-            Page<VirtualNetworkTap> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Gets information about the specified virtual network tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
+        /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkTap> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkTapResource>> GetAsync(string tapName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkTap>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
+                var response = await _virtualNetworkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets information about the specified virtual network tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
+        /// <param name="tapName"> The name of virtual network tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        public virtual Response<VirtualNetworkTapResource> Get(string tapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkTapResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualNetworkTapResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualNetworkTapRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,14 +202,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<VirtualNetworkTap>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualNetworkTapResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
+                using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualNetworkTapRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -356,21 +220,67 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="VirtualNetworkTap" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkTapResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAllAsGenericResources");
+            Page<VirtualNetworkTapResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkTapRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualNetworkTapResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkTapRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTapResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
+        /// <param name="tapName"> The name of virtual network tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string tapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VirtualNetworkTap.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _virtualNetworkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,21 +289,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Filters the list of <see cref="VirtualNetworkTap" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
+        /// <param name="tapName"> The name of virtual network tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
+        public virtual Response<bool> Exists(string tapName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VirtualNetworkTap.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _virtualNetworkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -402,7 +316,19 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        // Builders.
-        // public ArmBuilder<ResourceIdentifier, VirtualNetworkTap, VirtualNetworkTapData> Construct() { }
+        IEnumerator<VirtualNetworkTapResource> IEnumerable<VirtualNetworkTapResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<VirtualNetworkTapResource> IAsyncEnumerable<VirtualNetworkTapResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
     }
 }

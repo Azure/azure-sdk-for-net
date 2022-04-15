@@ -16,6 +16,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -33,11 +34,56 @@ namespace Azure.Storage.Test.Shared
             ThreadPool.SetMinThreads(100, 100);
         }
 
+        private const string SignatureQueryName = "sig";
+        private const string CopySourceName = "x-ms-copy-source";
+        private const string RenameSource = "x-ms-rename-source";
+        private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
+        private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
+        private const string FileRenameSource = "x-ms-file-rename-source";
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
-            Sanitizer = new StorageRecordedTestSanitizer();
+            SanitizedQueryParameters.Add(SignatureQueryName);
+
+#if NETFRAMEWORK
+            // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
+            // Core, we need to normalize to the .NET Core escaping when matching and storing the recordings when running tests on NetFramework.
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\(", "%28"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)", "%29"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*", "%2A"));
+            // Encode any colons in the Uri except for the one in the scheme
+            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^//]", "%3A") {GroupForReplace = "group"});
+#endif
+
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
+
+            SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"client_secret=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
+
             Tenants = new TenantConfigurationBuilder(this);
+        }
+
+        public string SanitizeUri(string uri)
+        {
+            var builder = new UriBuilder(uri);
+            var query = new UriQueryParamsCollection(builder.Query);
+            if (query.ContainsKey(SignatureQueryName))
+            {
+                query[SignatureQueryName] = SanitizeValue;
+                builder.Query = query.ToString();
+            }
+            return builder.Uri.AbsoluteUri;
         }
 
         /// <summary>
@@ -141,47 +187,6 @@ namespace Azure.Storage.Test.Shared
             else
             {
                 Assert.Inconclusive("Copy may have completed too quickly to abort.");
-            }
-        }
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
-            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
-        {
-            if (mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(milliseconds);
-            }
-            else if (playbackDelayMilliseconds != null)
-            {
-                await Task.Delay(playbackDelayMilliseconds.Value);
             }
         }
 

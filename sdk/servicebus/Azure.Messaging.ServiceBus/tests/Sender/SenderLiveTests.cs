@@ -49,6 +49,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
+        public async Task SendWithNamedKeyCredential()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
+                var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, new ServiceBusClientOptions
+                {
+                    TransportType = ServiceBusTransportType.AmqpWebSockets
+                });
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+            }
+        }
+
+        [Test]
         public async Task SendConnectionTopic()
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
@@ -190,6 +206,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
 
                 await sender.CancelScheduledMessageAsync(seq);
                 msg = await receiver.PeekMessageAsync(seq);
@@ -211,6 +228,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: sequenceNums);
 
@@ -244,6 +262,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: new List<long>(sequenceNums));
 
@@ -277,6 +296,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                    Assert.AreEqual(ServiceBusMessageState.Scheduled, msg.State);
                 }
 
                 // use an enumerable

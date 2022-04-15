@@ -489,8 +489,6 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Credential>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetLocation>("type"));

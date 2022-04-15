@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VirtualNetworkRuleState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkRuleState(string value)
         {
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string InitializingValue = "Initializing";
         private const string InProgressValue = "InProgress";
         private const string ReadyValue = "Ready";
+        private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
         private const string UnknownValue = "Unknown";
 
@@ -34,6 +35,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static VirtualNetworkRuleState InProgress { get; } = new VirtualNetworkRuleState(InProgressValue);
         /// <summary> Ready. </summary>
         public static VirtualNetworkRuleState Ready { get; } = new VirtualNetworkRuleState(ReadyValue);
+        /// <summary> Failed. </summary>
+        public static VirtualNetworkRuleState Failed { get; } = new VirtualNetworkRuleState(FailedValue);
         /// <summary> Deleting. </summary>
         public static VirtualNetworkRuleState Deleting { get; } = new VirtualNetworkRuleState(DeletingValue);
         /// <summary> Unknown. </summary>

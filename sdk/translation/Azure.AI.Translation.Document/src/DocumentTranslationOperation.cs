@@ -123,11 +123,6 @@ namespace Azure.AI.Translation.Document
         private int? _retryAfterHeaderValue;
 
         /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<DocumentStatusResult> _firstPage;
-
-        /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public override bool HasValue => _hasValue;
@@ -222,40 +217,11 @@ namespace Azure.AI.Translation.Document
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true.
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
-        public async override ValueTask<Response<AsyncPageable<DocumentStatusResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        public async override ValueTask<Response<AsyncPageable<DocumentStatusResult>>> WaitForCompletionAsync(
+            TimeSpan pollingInterval,
+            CancellationToken cancellationToken = default)
         {
-            while (true)
-            {
-                await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (!HasCompleted)
-                {
-                    pollingInterval = _retryAfterHeaderValue.HasValue ? TimeSpan.FromSeconds(_retryAfterHeaderValue.Value) : pollingInterval;
-                    await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    _hasValue = true;
-                    async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-                    {
-                        // TODO: diagnostics scope?
-                        try
-                        {
-                            var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                        }
-                        catch (Exception)
-                        {
-                            throw;
-                        }
-                    }
-
-                    var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-                    return Response.FromValue(result, response);
-                }
-            }
+            return await this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,8 +265,7 @@ namespace Azure.AI.Translation.Document
                     }
                     else if (update.Value.Status == DocumentTranslationStatus.ValidationFailed)
                     {
-                        ResponseError error = update.Value.Error;
-                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.Code, CreateAdditionalInformation(error));
+                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, update.Value.Error, CreateAdditionalInformation(update.Value.Error));
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }

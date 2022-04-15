@@ -29,10 +29,10 @@ namespace Azure.Messaging.EventHubs
         private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
-        private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
+        private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(30);
 
         /// <summary>The desired amount of time to consider a partition owned by a specific event processor.</summary>
-        private TimeSpan _partitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30);
+        private TimeSpan _partitionOwnershipExpirationInterval = TimeSpan.FromMinutes(2);
 
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
@@ -69,9 +69,11 @@ namespace Azure.Messaging.EventHubs
         ///   other event processors.
         /// </summary>
         ///
+        /// <value>If not specified, the <see cref="LoadBalancingStrategy.Greedy" /> strategy will be used.</value>
+        ///
         /// <seealso cref="Processor.LoadBalancingStrategy" />
         ///
-        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Balanced;
+        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Greedy;
 
         /// <summary>
         ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
@@ -225,12 +227,12 @@ namespace Azure.Messaging.EventHubs
         ///   The desired amount of time to allow between load balancing verification attempts.
         /// </summary>
         ///
-        /// <value>If not specified, a load balancing interval of 10 seconds will be assumed.</value>
+        /// <value>If not specified, a load balancing interval of 30 seconds will be assumed.</value>
         ///
         /// <remarks>
         ///   Because load balancing holds less priority than processing events, this interval
         ///   should be considered the minimum time that will elapse between verification attempts; operations
-        ///   with higher priority may cause a minor delay longer than this interval for load balancing.
+        ///   with higher priority may cause a delay longer than this interval for load balancing.
         /// </remarks>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
@@ -252,7 +254,7 @@ namespace Azure.Messaging.EventHubs
         ///   requested by another event processor that wishes to assume responsibility for processing it.
         /// </summary>
         ///
-        /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        /// <value>If not specified, an ownership interval of 2 minutes will be assumed.</value>
         ///
         /// <remarks>
         ///   As a general guideline, it is advised that this value be greater than the configured

@@ -8,14 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Perf.slnf" />
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="SharedSource\" />
   </ItemGroup>
 
    <ItemGroup>
     <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Polly" />
   </ItemGroup>

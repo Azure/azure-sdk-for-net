@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.12 (Unreleased)
+## 1.0.0-preview.15 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.14 (2022-03-08)
+- Added ScriptActivity.
+- Added missing properties in SynapseNotebookActivity and SparkJobActivity.
+- Added TeamDeskLinkedService/QuickbaseLinkedService/SmartsheetLinkedService/ZendeskLinkedService.
+
+## 1.0.0-preview.13 (2022-01-11)
+- Added `MetastoreOperations`.
+
+## 1.0.0-preview.12 (2021-11-09)
+- Added data flow flowlet
+- `KqlScriptContentCurrentConnection` now has poolName and databaseName properties
 
 ## 1.0.0-preview.11 (2021-10-05)
 - Upgrade to [package-artifacts-composite-v1](https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md#tag-package-artifacts-composite-v1)

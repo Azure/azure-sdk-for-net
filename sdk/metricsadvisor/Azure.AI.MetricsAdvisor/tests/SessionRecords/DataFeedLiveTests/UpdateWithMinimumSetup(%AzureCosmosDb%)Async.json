@@ -29,7 +29,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z"
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -80,7 +80,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureCosmosDB",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -136,7 +136,7 @@
         "dataFeedName": "dataFeedt8yLM4f9",
         "dataFeedDescription": "This data feed was created to test the .NET client.",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -179,7 +179,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureCosmosDB",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

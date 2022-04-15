@@ -1260,7 +1260,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"BZO/rRELb5m/SAzDmKq8AYhmj/grVI6JHYXx2flaHxPsJ2yuVaG8fpyEtuK6MO4LD1RLns2AoDN3nwbFCp3sSA==\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"hghF8Kl0EdGdXLzog9KajrLsR2QcYW0ohLHlZCfSWqQBqY0OGvgVE2oFhqivwplF5fhT1sdn7FfMEUgExJwg6Q==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -1702,7 +1702,7 @@
       "RequestUri": "/subscriptions/97708d83-5999-4b97-835b-d059bed92299/resourceGroups/sqlcrudtest-8774/providers/Microsoft.Sql/servers/sqlcrudtest-1278/databases/sqlcrudtest-3243/export?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTc3MDhkODMtNTk5OS00Yjk3LTgzNWItZDA1OWJlZDkyMjk5L3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTg3NzQvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMjc4L2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0zMjQzL2V4cG9ydD9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageKeyType\": \"StorageAccessKey\",\r\n  \"storageKey\": \"BZO/rRELb5m/SAzDmKq8AYhmj/grVI6JHYXx2flaHxPsJ2yuVaG8fpyEtuK6MO4LD1RLns2AoDN3nwbFCp3sSA==\",\r\n  \"storageUri\": \"https://sqlcrudtest4949.blob.core.windows.net/container/sqlcrudtest-3243.bacpac\",\r\n  \"administratorLogin\": \"dummylogin\",\r\n  \"administratorLoginPassword\": \"Un53cuRE!\",\r\n  \"authenticationType\": \"SQL\"\r\n}",
+      "RequestBody": "{\r\n  \"storageKeyType\": \"StorageAccessKey\",\r\n  \"storageKey\": \"Sanitized\",\r\n  \"storageUri\": \"https://sqlcrudtest4949.blob.core.windows.net/container/sqlcrudtest-3243.bacpac\",\r\n  \"administratorLogin\": \"dummylogin\",\r\n  \"administratorLoginPassword\": \"Un53cuRE!\",\r\n  \"authenticationType\": \"SQL\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "88c73467-4715-4ca8-aead-3009aebee1f8"
@@ -2137,7 +2137,7 @@
       "RequestUri": "/subscriptions/97708d83-5999-4b97-835b-d059bed92299/resourceGroups/sqlcrudtest-8774/providers/Microsoft.Sql/servers/sqlcrudtest-1278/databases/sqlcrudtest-1884/import?api-version=2020-11-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTc3MDhkODMtNTk5OS00Yjk3LTgzNWItZDA1OWJlZDkyMjk5L3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTg3NzQvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC0xMjc4L2RhdGFiYXNlcy9zcWxjcnVkdGVzdC0xODg0L2ltcG9ydD9hcGktdmVyc2lvbj0yMDIwLTExLTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageKeyType\": \"StorageAccessKey\",\r\n  \"storageKey\": \"BZO/rRELb5m/SAzDmKq8AYhmj/grVI6JHYXx2flaHxPsJ2yuVaG8fpyEtuK6MO4LD1RLns2AoDN3nwbFCp3sSA==\",\r\n  \"storageUri\": \"https://sqlcrudtest4949.blob.core.windows.net/container/sqlcrudtest-3243.bacpac\",\r\n  \"administratorLogin\": \"dummylogin\",\r\n  \"administratorLoginPassword\": \"Un53cuRE!\",\r\n  \"authenticationType\": \"SQL\"\r\n}",
+      "RequestBody": "{\r\n  \"storageKeyType\": \"StorageAccessKey\",\r\n  \"storageKey\": \"Sanitized\",\r\n  \"storageUri\": \"https://sqlcrudtest4949.blob.core.windows.net/container/sqlcrudtest-3243.bacpac\",\r\n  \"administratorLogin\": \"dummylogin\",\r\n  \"administratorLoginPassword\": \"Un53cuRE!\",\r\n  \"authenticationType\": \"SQL\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "add92f40-5944-44dc-94f8-2651612511be"

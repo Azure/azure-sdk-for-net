@@ -6,77 +6,74 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of DeletedVault and their operations over a Subscription. </summary>
-    public partial class DeletedVaultCollection : ArmCollection, IEnumerable<DeletedVault>, IAsyncEnumerable<DeletedVault>
+    /// <summary>
+    /// A class representing a collection of <see cref="DeletedVaultResource" /> and their operations.
+    /// Each <see cref="DeletedVaultResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="DeletedVaultCollection" /> instance call the GetDeletedVaults method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
+    public partial class DeletedVaultCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeletedVaultsRestOperations _restClient;
+        private readonly ClientDiagnostics _deletedVaultVaultsClientDiagnostics;
+        private readonly VaultsRestOperations _deletedVaultVaultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class for mocking. </summary>
         protected DeletedVaultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeletedVaultCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DeletedVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _deletedVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedVaultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeletedVaultResource.ResourceType, out string deletedVaultVaultsApiVersion);
+            _deletedVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedVaultVaultsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<DeletedVault> IEnumerable<DeletedVault>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<DeletedVault> IAsyncEnumerable<DeletedVault>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
-
-        // Collection level operations.
-
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the deleted Azure key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<DeletedVault> Get(string vaultName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual async Task<Response<DeletedVaultResource>> GetAsync(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Get");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVaultCollection.Get");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = _restClient.Get(Id.Name, vaultName, cancellationToken: cancellationToken);
+                var response = await _deletedVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,24 +82,29 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the deleted Azure key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<DeletedVault>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual Response<DeletedVaultResource> Get(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Get");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVaultCollection.Get");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = await _restClient.GetAsync(Id.Name, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = _deletedVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,73 +113,26 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<DeletedVault> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVaultCollection.Exists");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = _restClient.Get(Id.Name, vaultName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<DeletedVault>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = await _restClient.GetAsync(Id.Name, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string vaultName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = GetIfExists(vaultName, cancellationToken: cancellationToken);
+                var response = await _deletedVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -187,21 +142,26 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// Operation Id: Vaults_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual Response<bool> Exists(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.CheckIfExists");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _deletedVaultVaultsClientDiagnostics.CreateScope("DeletedVaultCollection.Exists");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = await GetIfExistsAsync(vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = _deletedVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,130 +170,5 @@ namespace Azure.ResourceManager.KeyVault
                 throw;
             }
         }
-
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedVault> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<DeletedVault> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllBySubscription(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeletedVault> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedVault> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeletedVault>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedVault>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="DeletedVault" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="DeletedVault" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // Builders.
-        // public ArmBuilder<ResourceIdentifier, DeletedVault, DeletedVaultData> Construct() { }
     }
 }

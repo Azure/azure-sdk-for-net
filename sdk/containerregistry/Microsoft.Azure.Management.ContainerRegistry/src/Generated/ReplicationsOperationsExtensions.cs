@@ -23,6 +23,46 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     public static partial class ReplicationsOperationsExtensions
     {
             /// <summary>
+            /// Lists all the replications for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            public static IPage<Replication> List(this IReplicationsOperations operations, string resourceGroupName, string registryName)
+            {
+                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the replications for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<IPage<Replication>> ListAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the properties of the specified replication.
             /// </summary>
             /// <param name='operations'>
@@ -224,46 +264,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             public static async System.Threading.Tasks.Task<Replication> UpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all the replications for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            public static IPage<Replication> List(this IReplicationsOperations operations, string resourceGroupName, string registryName)
-            {
-                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the replications for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<IPage<Replication>> ListAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

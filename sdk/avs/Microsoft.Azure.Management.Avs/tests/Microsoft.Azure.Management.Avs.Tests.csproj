@@ -8,6 +8,7 @@
     <ExcludeFromBuild>true</ExcludeFromBuild>
     <ExcludeFromTest>true</ExcludeFromTest>
     <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net5.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />

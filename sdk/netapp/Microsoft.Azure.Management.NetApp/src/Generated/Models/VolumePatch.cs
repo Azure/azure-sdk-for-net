@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
         /// <param name="throughputMibps">Maximum throughput in Mibps that can
-        /// be achieved by this volume</param>
+        /// be achieved by this volume and this will be accepted as input only
+        /// for manual qosType volume</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isDefaultQuotaEnabled">Specifies if default quota is
         /// enabled for the volume.</param>
@@ -54,7 +55,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="defaultGroupQuotaInKiBs">Default group quota for
         /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
         /// of 4 KiBs applies.</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?))
+        /// <param name="unixPermissions">UNIX permissions for NFS volume
+        /// accepted in octal 4 digit format. First digit selects the set user
+        /// ID(4), set group ID (2) and sticky (1) attributes. Second digit
+        /// selects permission for the owner of the file: read (4), write (2)
+        /// and execute (1). Third selects permissions for other users in the
+        /// same group. the fourth for other users not in the group. 0755 -
+        /// gives read/write/execute permissions to owner and read/execute to
+        /// group and other users.</param>
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = default(string))
         {
             Location = location;
             Id = id;
@@ -69,6 +78,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
+            UnixPermissions = unixPermissions;
             CustomInit();
         }
 
@@ -139,7 +149,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets maximum throughput in Mibps that can be achieved by
-        /// this volume
+        /// this volume and this will be accepted as input only for manual
+        /// qosType volume
         /// </summary>
         [JsonProperty(PropertyName = "properties.throughputMibps")]
         public double? ThroughputMibps { get; set; }
@@ -175,6 +186,18 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary>
+        /// Gets or sets UNIX permissions for NFS volume accepted in octal 4
+        /// digit format. First digit selects the set user ID(4), set group ID
+        /// (2) and sticky (1) attributes. Second digit selects permission for
+        /// the owner of the file: read (4), write (2) and execute (1). Third
+        /// selects permissions for other users in the same group. the fourth
+        /// for other users not in the group. 0755 - gives read/write/execute
+        /// permissions to owner and read/execute to group and other users.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unixPermissions")]
+        public string UnixPermissions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -193,15 +216,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
                 }
             }
-            if (ThroughputMibps != null)
+            if (UnixPermissions != null)
             {
-                if (ThroughputMibps > 4500)
+                if (UnixPermissions.Length > 4)
                 {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+                    throw new ValidationException(ValidationRules.MaxLength, "UnixPermissions", 4);
                 }
-                if (ThroughputMibps < 1)
+                if (UnixPermissions.Length < 4)
                 {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
                 }
             }
         }

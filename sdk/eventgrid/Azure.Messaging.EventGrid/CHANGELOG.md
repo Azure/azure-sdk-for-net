@@ -1,6 +1,6 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.10.0 (2022-04-05)
+
+### Features Added
+
+- Added Healthcare events
+
+## 4.9.0 (2022-03-08)
+
+### Features Added
+
+- Added new enum values for `MediaJobErrorCategory` and `MediaJobErrorCode`.
+
+## 4.8.2 (2022-02-08)
+
+### Bugs Fixed
+- Fixed deserialization bugs in `StorageDirectoryDeletedEventData` and `EventHubCaptureFileCreatedEventData` system events.
+
+## 4.8.1 (2022-01-12)
+
+### Bugs Fixed
+- Fix package icon
+
+## 4.8.0 (2022-01-11)
+
+### Features Added
+- Added new properties to Communication events
+- Added strongly typed models for Resource events
 
 ## 4.7.0 (2021-10-05)
 

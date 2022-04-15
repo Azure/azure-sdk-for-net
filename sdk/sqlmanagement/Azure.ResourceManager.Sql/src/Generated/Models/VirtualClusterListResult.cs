@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
         internal VirtualClusterListResult()
         {
-            Value = new ChangeTrackingList<VirtualCluster>();
+            Value = new ChangeTrackingList<VirtualClusterData>();
         }
 
         /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal VirtualClusterListResult(IReadOnlyList<VirtualCluster> value, string nextLink)
+        internal VirtualClusterListResult(IReadOnlyList<VirtualClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<VirtualCluster> Value { get; }
+        public IReadOnlyList<VirtualClusterData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

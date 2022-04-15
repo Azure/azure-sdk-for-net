@@ -18,23 +18,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Create an instance of the connection information.
         /// </summary>
-        /// <param name="url"></param>
-        public WebPubSubConnection(Uri url)
+        /// <param name="uri"></param>
+        public WebPubSubConnection(Uri uri)
         {
-            Url = url.AbsoluteUri;
-            BaseUrl = $"{url.Scheme}://{url.Authority}{url.AbsolutePath}";
-            AccessToken = HttpUtility.ParseQueryString(url.Query)["access_token"];
+            Uri = uri;
+
+            BaseUri = new Uri($"{uri.Scheme}://{uri.Authority}{uri.AbsolutePath}");
+            AccessToken = HttpUtility.ParseQueryString(uri.Query)["access_token"];
         }
 
         /// <summary>
-        /// Base url of the websocket connection.
+        /// Base Uri of the websocket connection.
         /// </summary>
-        public string BaseUrl { get;}
+        [JsonProperty("baseUrl")]
+        public Uri BaseUri { get;}
 
         /// <summary>
-        /// Url with accessToken of the websocket connection.
+        /// Uri with accessToken of the websocket connection.
         /// </summary>
-        public string Url { get;}
+        [JsonProperty("url")]
+        public Uri Uri { get;}
 
         /// <summary>
         /// Access token of the websocket connection.

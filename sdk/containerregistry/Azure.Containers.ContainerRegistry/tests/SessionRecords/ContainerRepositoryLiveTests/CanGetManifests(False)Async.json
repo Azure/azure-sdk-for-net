@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_manifests",
+      "RequestUri": "https://mohitcontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_manifests?api-version=2021-07-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "7012855a0b09683af492c40248d23172",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220329.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e5b75bc6840add2a22d2583442931069",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,18 +19,18 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "221",
+        "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 20:31:33 GMT",
+        "Date": "Wed, 30 Mar 2022 01:23:21 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://mohitcontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022mohitcontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "5aeafc75-80b2-4d77-9b03-c7e51872d06a"
+        "X-Ms-Correlation-Request-Id": "6e9da404-3686-4351-9c51-808d29922da3"
       },
       "ResponseBody": {
         "errors": [
@@ -49,67 +49,67 @@
       }
     },
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/exchange",
+      "RequestUri": "https://mohitcontainerregistry.azurecr.io/oauth2/exchange?api-version=2021-07-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "89",
+        "Content-Length": "88",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "e01ad869815ef6d11ee655342d251ffc",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220329.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3b20f708ef87bfb73a174134fb31ed3e",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "grant_type=access_token\u0026service=annelocontainerregistry.azurecr.io\u0026access_token=Sanitized",
+      "RequestBody": "grant_type=access_token\u0026service=mohitcontainerregistry.azurecr.io\u0026access_token=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 20:31:33 GMT",
+        "Date": "Wed, 30 Mar 2022 01:23:21 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "f8c2aec9-c041-4d19-8df0-5275c0c18c43",
-        "x-ms-ratelimit-remaining-calls-per-second": "165.8"
+        "X-Ms-Correlation-Request-Id": "a51bcce2-73ff-4b1d-ade6-281293ac7870",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.15"
       },
       "ResponseBody": {
-        "refresh_token": "Sanitized.eyJleHAiOjI1NzQzNjE4NzZ9.Sanitized"
+        "refresh_token": "Sanitized.eyJleHAiOjI1OTQ2ODM0MTZ9.Sanitized"
       }
     },
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
+      "RequestUri": "https://mohitcontainerregistry.azurecr.io/oauth2/token?api-version=2021-07-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "148",
+        "Content-Length": "147",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b1af75ac0b0cbd2dc7203b861092d82f",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220329.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ee376908ef2eac40c1c89a316d7f56cd",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=annelocontainerregistry.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=mohitcontainerregistry.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 20:31:33 GMT",
+        "Date": "Wed, 30 Mar 2022 01:23:21 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "ebd62627-019b-4abf-aeae-7c2d84fd44f4",
-        "x-ms-ratelimit-remaining-calls-per-second": "165.783333"
+        "X-Ms-Correlation-Request-Id": "fd948e41-4a11-4f68-b029-71d9c26cc5bd",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.133333"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiIxNDM0ZWE0NS0wMTcwLTQyYjgtYTIzOC0wZmQ1MThlNTVjMjYiLCJzdWIiOiI2YTIzODRjYi05Mzc2LTQwMjMtYjlmYi1hNDRjZmQ2YmFiNjUiLCJuYmYiOjE2MjgyODA5OTMsImV4cCI6MTYyODI4NTQ5MywiaWF0IjoxNjI4MjgwOTkzLCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJhbm5lbG9jb250YWluZXJyZWdpc3RyeS5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImM0ZjljYjU3N2Q2NzRkM2ZhZTk0MTI3MjI2NzY3N2E5IiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJsaWJyYXJ5L2hlbGxvLXdvcmxkIiwiYWN0aW9ucyI6WyJtZXRhZGF0YV9yZWFkIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYXBwaWQiOiIwYTg4ZmZmZC0xMGZiLTQ5ODYtYmRkZi1lZmUwNDZlNTk0MGYifQ.VlwKtTG3ZmPHgBj6z_ZGLHrkAYJFvwvXZ1A1bavOhatg-T9Nl5Ri6VmKRH1bBZD78qedwQjO6sxN6m58qT1ORZMYLYu7inh4lGPzAD4FfeblRmlYnVJXUbdSLspDYDB0_Xa9-vtGkSybyurLKhqxxBAbidgw7Kung_VmPCqegx47YEn0inkpRgGNWXicDjkxNgU0VpdL0MK4ajffAJ_3nbNxxdCoviFCmITf8hgEejeeAwf9EURnDFDfBWUYTiFiyVPKd4oL7msYy4Hxt9598Mj-t79Sf2np1EBUZaIMIO2VVdb8ipJb22_DaqGBgJdCub3FSsT45Qnj2Sj80L7E_w"
+        "access_token": "Sanitized"
       }
     },
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_manifests",
+      "RequestUri": "https://mohitcontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_manifests?api-version=2021-07-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210806.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "7012855a0b09683af492c40248d23172",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220329.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e5b75bc6840add2a22d2583442931069",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -123,7 +123,7 @@
         ],
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 20:31:34 GMT",
+        "Date": "Wed, 30 Mar 2022 01:23:22 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -132,129 +132,17 @@
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "466069a4-e2a5-46ca-9a23-585075816106"
+        "X-Ms-Correlation-Request-Id": "32e6ede5-dc2b-4a4e-9bb3-d1ba0cad17a1"
       },
       "ResponseBody": {
-        "registry": "annelocontainerregistry.azurecr.io",
+        "registry": "mohitcontainerregistry.azurecr.io",
         "imageName": "library/hello-world",
         "manifests": [
           {
-            "digest": "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:07.9029876Z",
-            "lastUpdateTime": "2021-08-06T20:31:07.9029876Z",
-            "architecture": "amd64",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:3e7d74d1c66c8f7dd5384f49bf0f8ab3e18e81e8d2a79218ed777c534b446552",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:08.1606568Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.1606568Z",
-            "architecture": "ppc64le",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:58d91e6625a0ea837222f24da4ca00be9da3db45cee5b172135eaf271610f9eb",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:08.1151713Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.1151713Z",
-            "architecture": "arm",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:6d9fcdca25452c9a255f02c7d67eb28e8afbba2671f1e8f60b3b3585b7bdf172",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:12.3490065Z",
-            "lastUpdateTime": "2021-08-06T20:31:12.3490065Z",
-            "architecture": "s390x",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:88b2e00179bd6c4064612403c8d42a13de7ca809d61fee966ce9e129860a8a90",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:08.9008489Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.9008489Z",
-            "architecture": "mips64le",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0",
-            "imageSize": 1125,
-            "createdTime": "2021-08-06T20:31:08.366744Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.366744Z",
-            "architecture": "amd64",
-            "os": "windows",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:94b700b6ae5759e539e06fa6d483f5f0174067945f180cc1362cfda71c5fd722",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:08.0085993Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.0085993Z",
-            "architecture": "arm",
-            "os": "linux",
-            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
-            }
-          },
-          {
-            "digest": "sha256:a10c347f4cc2924af832d319635d6d027ca8820ff683b6bcc728d825a37a7f69",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:14.9675222Z",
-            "lastUpdateTime": "2021-08-06T20:31:14.9675222Z",
+            "digest": "sha256:432f982638b3aefab73cc58ab28f5c16e96fdb504e8c134fc58dff4bae8bf338",
+            "imageSize": 5218,
+            "createdTime": "2022-03-30T01:23:08.5310943Z",
+            "lastUpdateTime": "2022-03-30T01:23:08.5310943Z",
             "architecture": "arm64",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -262,15 +150,44 @@
               "deleteEnabled": true,
               "writeEnabled": true,
               "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
+              "listEnabled": true
             }
           },
           {
-            "digest": "sha256:b89e28f1d57f44064e96c4525e514f6f0498a433b83413538f79f82566d72114",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:07.9556481Z",
-            "lastUpdateTime": "2021-08-06T20:31:07.9556481Z",
+            "digest": "sha256:7b8b7289d0536a08eabdf71c20246e23f7116641db7e1d278592236ea4dcb30c",
+            "imageSize": 5691,
+            "createdTime": "2022-03-30T01:23:07.3308144Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.3308144Z",
+            "architecture": "arm",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:83ada69f673f74b81a3e2ed03edd56fcf190be8b1721f9afc4d25309908d7213",
+            "imageSize": 5850,
+            "createdTime": "2022-03-30T01:23:08.0567926Z",
+            "lastUpdateTime": "2022-03-30T01:23:08.0567926Z",
+            "architecture": "amd64",
+            "os": "windows",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:98c9722322be649df94780d3fbe594fce7996234b259f27eac9428b84050c849",
+            "imageSize": 4996,
+            "createdTime": "2022-03-30T01:23:07.5841553Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.5841553Z",
             "architecture": "riscv64",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -278,15 +195,14 @@
               "deleteEnabled": true,
               "writeEnabled": true,
               "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
+              "listEnabled": true
             }
           },
           {
-            "digest": "sha256:cb55d8f7347376e1ba38ca740904b43c9a52f66c7d2ae1ef1a0de1bc9f40df98",
-            "imageSize": 525,
-            "createdTime": "2021-08-06T20:31:08.3009153Z",
-            "lastUpdateTime": "2021-08-06T20:31:08.3009153Z",
+            "digest": "sha256:995efde2e81b21d1ea7066aa77a59298a62a9e9fbb4b77f36c189774ec9b1089",
+            "imageSize": 4729,
+            "createdTime": "2022-03-30T01:23:07.9126497Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.9126497Z",
             "architecture": "386",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -294,15 +210,44 @@
               "deleteEnabled": true,
               "writeEnabled": true,
               "readEnabled": true,
-              "listEnabled": true,
-              "quarantineState": "Passed"
+              "listEnabled": true
             }
           },
           {
-            "digest": "sha256:df5f5184104426b65967e016ff2ac0bfcd44ad7899ca3bbcf8e44e4461491a9e",
-            "imageSize": 5850,
-            "createdTime": "2021-08-06T20:31:07.5952345Z",
-            "lastUpdateTime": "2021-08-06T20:31:07.5952345Z",
+            "digest": "sha256:acd65ed93903ec23468247a22d7ea0390f2e5e09b0ea3a93965a24b25b905c1b",
+            "imageSize": 5794,
+            "createdTime": "2022-03-30T01:23:08.0168367Z",
+            "lastUpdateTime": "2022-03-30T01:23:08.0168367Z",
+            "architecture": "amd64",
+            "os": "windows",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:b836bb24a270b9cc935962d8228517fde0f16990e88893d935efcb1b14c0017a",
+            "imageSize": 5925,
+            "createdTime": "2022-03-30T01:23:08.2016812Z",
+            "lastUpdateTime": "2022-03-30T01:23:08.2016812Z",
+            "architecture": "ppc64le",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:bfea6278a0a267fad2634554f4f0c6f31981eea41c553fdf5a83e95a41d40c38",
+            "imageSize": 61598,
+            "createdTime": "2022-03-30T01:23:06.3941665Z",
+            "lastUpdateTime": "2022-03-30T01:23:06.3941665Z",
             "mediaType": "application/vnd.docker.distribution.manifest.list.v2\u002Bjson",
             "tags": [
               "latest",
@@ -317,13 +262,73 @@
               "readEnabled": true,
               "listEnabled": true
             }
+          },
+          {
+            "digest": "sha256:c7b6944911848ce39b44ed660d95fb54d69bbd531de724c7ce6fc9f743c0b861",
+            "imageSize": 5270,
+            "createdTime": "2022-03-30T01:23:07.6504953Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.6504953Z",
+            "architecture": "s390x",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:eb11b1a194ff8e236a01eff392c4e1296a53b0fb4780d8b0382f7996a15d5392",
+            "imageSize": 6090,
+            "createdTime": "2022-03-30T01:23:08.3759148Z",
+            "lastUpdateTime": "2022-03-30T01:23:08.3759148Z",
+            "architecture": "mips64le",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:f130bd2d67e6e9280ac6d0a6c83857bfaf70234e8ef4236876eccfbd30973b1c",
+            "imageSize": 5000,
+            "createdTime": "2022-03-30T01:23:07.5078536Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.5078536Z",
+            "architecture": "arm",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4",
+            "imageSize": 4473,
+            "createdTime": "2022-03-30T01:23:07.2423054Z",
+            "lastUpdateTime": "2022-03-30T01:23:07.2423054Z",
+            "architecture": "amd64",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
           }
         ]
       }
     }
   ],
   "Variables": {
-    "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
-    "RandomSeed": "591238776"
+    "CONTAINERREGISTRY_ENDPOINT": "https://mohitcontainerregistry.azurecr.io",
+    "RandomSeed": "608438020"
   }
 }

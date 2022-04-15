@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="loggerType">Logger type. Possible values include:
         /// 'azureEventHub', 'applicationInsights', 'azureMonitor'</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Logger description.</param>
         /// <param name="credentials">The name and SendRule connection string
         /// of the event hub for azureEventHub logger.

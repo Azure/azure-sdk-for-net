@@ -10,7 +10,7 @@ Azure Communication Network Traversal enables high bandwidth, low latency connec
 Install the Azure Communication Network Traversal client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.NetworkTraversal --version 1.0.0-beta.2
+dotnet add package Azure.Communication.NetworkTraversal
 ```
 
 ### Prerequisites
@@ -68,9 +68,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Getting a Relay Configuration for a user
 
 ```C# Snippet:GetRelayConfigurationAsync
-Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
 {
@@ -80,15 +80,16 @@ foreach (CommunicationIceServer iceServer in iceServers)
     }
     Console.WriteLine($"ICE Server Username: {iceServer.Username}");
     Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+    Console.WriteLine($"ICE Server RouteType: {iceServer.RouteType}");
 }
 ```
 
-## Getting a Relay Configuration for a user without identity async
+## Getting a Relay Configuration for a user with a specified routeType
 
-```C# Snippet:GetRelayConfigurationAsyncWithoutIdentity
-Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
+```C# Snippet:GetRelayConfigurationAsyncWithNearestRouteType
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user,RouteType.Nearest);
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
 {
@@ -98,6 +99,7 @@ foreach (CommunicationIceServer iceServer in iceServers)
     }
     Console.WriteLine($"ICE Server Username: {iceServer.Username}");
     Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+    Console.WriteLine($"ICE Server Route Type: {iceServer.RouteType}");
 }
 ```
 

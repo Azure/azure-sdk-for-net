@@ -30,7 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
         /// <param name="useBinaryTransfer"> Specify whether to use binary transfer mode for FTP stores. </param>
-        internal FtpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object fileListPath, bool? useBinaryTransfer) : base(type, maxConcurrentConnections, additionalProperties)
+        /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        internal FtpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object deleteFilesAfterCompletion, object fileListPath, bool? useBinaryTransfer, object disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -40,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             FileListPath = fileListPath;
             UseBinaryTransfer = useBinaryTransfer;
+            DisableChunking = disableChunking;
             Type = type ?? "FtpReadSettings";
         }
 
@@ -59,5 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object FileListPath { get; set; }
         /// <summary> Specify whether to use binary transfer mode for FTP stores. </summary>
         public bool? UseBinaryTransfer { get; set; }
+        /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public object DisableChunking { get; set; }
     }
 }

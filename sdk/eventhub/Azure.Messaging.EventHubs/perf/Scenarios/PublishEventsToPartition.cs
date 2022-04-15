@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
@@ -39,8 +37,9 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         protected async override Task<SendEventOptions> CreateSendOptions(EventHubProducerClient producer)
         {
             // Query the available partitions and select the partition for use in the batch options.
+
             var partitions = await producer.GetPartitionIdsAsync().ConfigureAwait(false);
-            var partitionsToPublish = Options.Partitions == -1 ? partitions.Length : Options.Partitions;
+            var partitionsToPublish = Options.ShouldUseAllPartitions ? partitions.Length : Options.Partitions;
             var partition = partitions[ParallelIndex % partitionsToPublish];
 
             return new SendEventOptions

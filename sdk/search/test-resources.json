@@ -41,6 +41,20 @@
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
+        "searchEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "search.windows.net",
+          "metadata": {
+              "description": "The url suffix to use when accessing the search data plane."
+          }
+        },
+        "storageEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "core.windows.net",
+          "metadata": {
+              "description": "The url suffix to use when accessing the storage data plane."
+          }
+        },
         "searchSku": {
             "type": "string",
             "defaultValue": "basic",
@@ -158,6 +172,14 @@
         }
     ],
     "outputs": {
+        "STORAGE_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('storageEndpointSuffix')]"
+        },
+        "SEARCH_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('searchEndpointSuffix')]"
+        },
         "SEARCH_SERVICE_NAME": {
             "type": "string",
             "value": "[variables('searchServiceName')]"

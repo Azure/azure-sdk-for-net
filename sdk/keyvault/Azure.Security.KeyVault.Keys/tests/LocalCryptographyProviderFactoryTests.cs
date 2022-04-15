@@ -47,6 +47,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNull(provider);
         }
 
+        [Test]
+        public void NoOctKeyMaterial()
+        {
+            JsonWebKey jwk = new(new[] { KeyOperation.WrapKey, KeyOperation.UnwrapKey })
+            {
+                KeyType = KeyType.OctHsm,
+            };
+
+            ICryptographyProvider provider = LocalCryptographyProviderFactory.Create(jwk, null);
+            Assert.IsNull(provider);
+        }
+
         private static IEnumerable<object[]> GetCreateData()
         {
             Aes aes = Aes.Create();

@@ -32,10 +32,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="primaryZone">The primary zone.</param>
         /// <param name="recoveryZone">The recovery zone.</param>
-        public RecoveryPlanA2AInput(string primaryZone = default(string), string recoveryZone = default(string))
+        /// <param name="primaryExtendedLocation">The primary extended
+        /// location.</param>
+        /// <param name="recoveryExtendedLocation">The recovery extended
+        /// location.</param>
+        public RecoveryPlanA2AInput(string primaryZone = default(string), string recoveryZone = default(string), ExtendedLocation primaryExtendedLocation = default(ExtendedLocation), ExtendedLocation recoveryExtendedLocation = default(ExtendedLocation))
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;
+            PrimaryExtendedLocation = primaryExtendedLocation;
+            RecoveryExtendedLocation = recoveryExtendedLocation;
             CustomInit();
         }
 
@@ -56,5 +62,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "recoveryZone")]
         public string RecoveryZone { get; set; }
 
+        /// <summary>
+        /// Gets or sets the primary extended location.
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryExtendedLocation")]
+        public ExtendedLocation PrimaryExtendedLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery extended location.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryExtendedLocation")]
+        public ExtendedLocation RecoveryExtendedLocation { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PrimaryExtendedLocation != null)
+            {
+                PrimaryExtendedLocation.Validate();
+            }
+            if (RecoveryExtendedLocation != null)
+            {
+                RecoveryExtendedLocation.Validate();
+            }
+        }
     }
 }

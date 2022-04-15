@@ -54,6 +54,9 @@ namespace Azure.Identity.Tests
             throw new MockException();
         }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
+
         [SetUp]
         public void Setup()
         {

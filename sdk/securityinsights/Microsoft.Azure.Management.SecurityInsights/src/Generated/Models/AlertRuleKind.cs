@@ -19,5 +19,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string Scheduled = "Scheduled";
         public const string MicrosoftSecurityIncidentCreation = "MicrosoftSecurityIncidentCreation";
         public const string Fusion = "Fusion";
+        public const string MLBehaviorAnalytics = "MLBehaviorAnalytics";
+        public const string ThreatIntelligence = "ThreatIntelligence";
+        public const string NRT = "NRT";
     }
 }

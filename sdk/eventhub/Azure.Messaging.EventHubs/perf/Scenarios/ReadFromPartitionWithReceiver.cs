@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
@@ -97,7 +96,6 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
             // If iteration stopped due to cancellation, ensure that the expected exception is thrown.
 
             cancellationToken.ThrowIfCancellationRequested();
-
             return Options.BatchSize;
         }
     }

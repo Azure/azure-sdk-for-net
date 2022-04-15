@@ -4,7 +4,7 @@
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Management
+namespace Azure.Messaging.ServiceBus.Tests.Administration
 {
     public class RulePropertiesTests
     {

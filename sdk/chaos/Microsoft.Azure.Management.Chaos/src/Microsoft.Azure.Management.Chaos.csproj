@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+  <PackageId>Microsoft.Azure.Management.Chaos</PackageId>
+    <Description>Provides developers with libraries for the Chaos under Azure Resource manager to manage Chaos Experiments, Targets, Capabilities and child resources and their available management capabilities. Create, Delete, Update Chaos Experiments, Targets, Capabilities and child resources. Note: This client library is for Chaos under Azure Resource Manager.</Description>
+    <Version>0.9.15-preview</Version>
+    <AssemblyName>Microsoft.Azure.Management.Chaos</AssemblyName>
+    <PackageTags>management;chaos;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+      This corresponds to the 2021-09-15-preview API vresion which 
+        Introduce the Experiments, Targets and Capabilities:
+          - Added PUT, DELETE, GET and POST start, POST cancel experiment operations.
+          - Added PUT, DELETE, GET target resource operations.
+          - Added PUT, DELETE, GET capability resource operations.
+          - Added GET capability type resources operations.
+          - Added GET target type resource operations.
+          - Added GET operation resource type operations.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
+</Project>

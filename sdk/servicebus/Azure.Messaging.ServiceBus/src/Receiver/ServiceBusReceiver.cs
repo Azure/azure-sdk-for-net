@@ -37,8 +37,13 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath { get; }
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received.
         /// </summary>
+        /// <value>
+        /// The option to auto complete messages is specified when creating the receiver
+        /// using <see cref="ServiceBusReceiverOptions.ReceiveMode"/> and has a default mode of
+        /// <see cref="ServiceBusReceiveMode.PeekLock"/>.
+        /// </value>
         public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
@@ -49,8 +54,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
-        /// from a local cache rather than waiting on a service request.
+        /// from a local cache rather than waiting on a service request
         /// </summary>
+        /// <value>
+        /// The option to auto complete messages is specified when creating the receiver
+        /// using <see cref="ServiceBusReceiverOptions.PrefetchCount"/> and has a default value of 0.
+        /// </value>
         public virtual int PrefetchCount { get; }
 
         /// <summary>

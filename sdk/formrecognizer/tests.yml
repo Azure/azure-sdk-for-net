@@ -9,4 +9,8 @@ extends:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'canadacentral'
-    SupportedClouds: 'Public'
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'centraluseuap'
+    Clouds: 'Public'
+    SupportedClouds: 'Public, Canary'

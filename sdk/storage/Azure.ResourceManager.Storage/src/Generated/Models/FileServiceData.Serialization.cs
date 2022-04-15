@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -40,10 +40,11 @@ namespace Azure.ResourceManager.Storage
 
         internal static FileServiceData DeserializeFileServiceData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<StorageSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<CorsRules> cors = default;
             Optional<DeleteRetentionPolicy> shareDeleteRetentionPolicy = default;
             Optional<ProtocolSettings> protocolSettings = default;
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -72,6 +73,11 @@ namespace Azure.ResourceManager.Storage
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new FileServiceData(id, name, type, sku.Value, cors.Value, shareDeleteRetentionPolicy.Value, protocolSettings.Value);
+            return new FileServiceData(id, name, type, systemData, sku.Value, cors.Value, shareDeleteRetentionPolicy.Value, protocolSettings.Value);
         }
     }
 }

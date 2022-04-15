@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("metadata");
             writer.WriteObjectValue(Metadata);
             writer.WritePropertyName("nbformat");
-            writer.WriteNumberValue(Nbformat);
+            writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor");
-            writer.WriteNumberValue(NbformatMinor);
+            writer.WriteNumberValue(NotebookFormatMinor);
             writer.WritePropertyName("cells");
             writer.WriteStartArray();
             foreach (var item in Cells)

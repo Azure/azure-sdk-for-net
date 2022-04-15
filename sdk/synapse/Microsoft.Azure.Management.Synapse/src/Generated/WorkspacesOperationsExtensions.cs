@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static Workspace Get(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspacePatchInfo'>
             /// Workspace patch request properties
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspacePatchInfo'>
             /// Workspace patch request properties
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspaceInfo'>
             /// Workspace create or update request properties
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspaceInfo'>
             /// Workspace create or update request properties
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static object Delete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspacePatchInfo'>
             /// Workspace patch request properties
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspacePatchInfo'>
             /// Workspace patch request properties
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspaceInfo'>
             /// Workspace create or update request properties
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='workspaceInfo'>
             /// Workspace create or update request properties
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static object BeginDelete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

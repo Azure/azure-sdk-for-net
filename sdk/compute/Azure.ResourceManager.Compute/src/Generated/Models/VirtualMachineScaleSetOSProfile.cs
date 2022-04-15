@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="customData"> Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; For using cloud-init for your VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init). </param>
         /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
-        /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machines in the scale set. </param>
+        /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machines in the scale set. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
         internal VirtualMachineScaleSetOSProfile(string computerNamePrefix, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets)
         {
             ComputerNamePrefix = computerNamePrefix;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         public WindowsConfiguration WindowsConfiguration { get; set; }
         /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
         public LinuxConfiguration LinuxConfiguration { get; set; }
-        /// <summary> Specifies set of certificates that should be installed onto the virtual machines in the scale set. </summary>
+        /// <summary> Specifies set of certificates that should be installed onto the virtual machines in the scale set. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </summary>
         public IList<VaultSecretGroup> Secrets { get; }
     }
 }

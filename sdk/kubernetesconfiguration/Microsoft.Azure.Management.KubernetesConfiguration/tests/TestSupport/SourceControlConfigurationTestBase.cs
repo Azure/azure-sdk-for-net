@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace KubernetesConfiguration.Tests.TestSupport
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 {
     using System;
-    using KubernetesConfiguration.Tests.Helpers;
-    using Microsoft.Azure.Management.KubernetesConfiguration;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Azure.Management.KubernetesConfiguration;
     using Microsoft.Azure.Management.KubernetesConfiguration.Models;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type
@@ -21,7 +20,7 @@ namespace KubernetesConfiguration.Tests.TestSupport
 
         public SourceControlConfiguration SourceControlConfiguration { get; set; }
 
-        public const string ApiVersion = "2019-11-01-preview";
+        public const string ApiVersion = "2022-03-01";
         public const string ConfigurationType = "SourceControlConfiguration";
         public const string OperatorTypeFlux = "Flux";
 

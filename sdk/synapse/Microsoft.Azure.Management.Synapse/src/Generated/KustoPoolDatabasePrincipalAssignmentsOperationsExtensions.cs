@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The operations group for this extension method.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='kustoPoolName'>
             /// The name of the Kusto pool.

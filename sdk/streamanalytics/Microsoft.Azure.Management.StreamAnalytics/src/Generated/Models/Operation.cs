@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         /// <param name="name">The name of the operation being performed on
         /// this particular object.</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">Contains the localized display information
         /// for this particular operation / action.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             CustomInit();
         }
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets contains the localized display information for this particular

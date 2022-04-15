@@ -1,5 +1,21 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2022-01-25)
+
+### Breaking Changes
+
+- Remove unnecessary dependency on Apache Avro.
+
 ## 1.0.0 (2021-11-09)
 
 ### Features Added

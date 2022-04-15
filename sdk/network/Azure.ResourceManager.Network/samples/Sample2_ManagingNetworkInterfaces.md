@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_Networks_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -18,7 +19,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -27,8 +28,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the network interfaces inside this resource group.
@@ -47,15 +48,15 @@ PublicIPAddressData publicIPInput = new PublicIPAddressData()
         DomainNameLabel = "myDomain"
     }
 };
-PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+PublicIPAddressResource publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(WaitUntil.Completed, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
 NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
     Location = resourceGroup.Data.Location,
-    IpConfigurations = {
-        new NetworkInterfaceIPConfiguration()
+    IPConfigurations = {
+        new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
@@ -71,7 +72,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+NetworkInterfaceResource networkInterface = await networkInterfaceCollection.CreateOrUpdate(WaitUntil.Completed, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
 ```
 
 ***List all network interfaces***
@@ -79,8 +80,8 @@ NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpd
 ```C# Snippet:Managing_Networks_ListAllNetworkInterfaces
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-AsyncPageable<NetworkInterface> response = networkInterfaceCollection.GetAllAsync();
-await foreach (NetworkInterface virtualNetwork in response)
+AsyncPageable<NetworkInterfaceResource> response = networkInterfaceCollection.GetAllAsync();
+await foreach (NetworkInterfaceResource virtualNetwork in response)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
 }
@@ -91,25 +92,8 @@ await foreach (NetworkInterface virtualNetwork in response)
 ```C# Snippet:Managing_Networks_GetANetworkInterface
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
+NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
 Console.WriteLine(virtualNetwork.Data.Name);
-```
-
-***Try to get a network interface if it exists***
-
-```C# Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-
-NetworkInterface virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
-if (virtualNetwork != null)
-{
-    Console.WriteLine(virtualNetwork.Data.Name);
-}
-
-if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
-{
-    Console.WriteLine("Network interface 'bar' exists.");
-}
 ```
 
 ***Delete a network interface***
@@ -117,6 +101,6 @@ if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
 ```C# Snippet:Managing_Networks_DeleteANetworkInterface
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync();
+NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
+await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 ```

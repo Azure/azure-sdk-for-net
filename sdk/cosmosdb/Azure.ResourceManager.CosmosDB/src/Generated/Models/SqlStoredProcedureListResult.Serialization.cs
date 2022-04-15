@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static SqlStoredProcedureListResult DeserializeSqlStoredProcedureListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlStoredProcedureGetResults>> value = default;
+            Optional<IReadOnlyList<SqlStoredProcedureData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlStoredProcedureGetResults> array = new List<SqlStoredProcedureGetResults>();
+                    List<SqlStoredProcedureData> array = new List<SqlStoredProcedureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlStoredProcedureGetResults.DeserializeSqlStoredProcedureGetResults(item));
+                        array.Add(SqlStoredProcedureData.DeserializeSqlStoredProcedureData(item));
                     }
                     value = array;
                     continue;

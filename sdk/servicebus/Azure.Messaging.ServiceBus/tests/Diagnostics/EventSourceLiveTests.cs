@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -257,6 +257,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 string lockToken = null;
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    // intentionally not disposing to ensure that the exception will be thrown even after the callback returns
+                    args.CancellationToken.Register(args.CancellationToken.ThrowIfCancellationRequested);
                     lockToken = args.Message.LockToken;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
@@ -274,6 +276,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 _listener.SingleEventById(
+                    ServiceBusEventSource.StartProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
                     ServiceBusEventSource.ReceiveMessageCompleteEvent,
                     e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
                 _listener.SingleEventById(
@@ -282,6 +287,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorStoppingCancellationWarningEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.StopProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
             }
         }
 
@@ -436,6 +447,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
                 Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
             }
+        }
+
+        [Test]
+        public void LogsMessageEvents()
+        {
+            var message = new ServiceBusMessage()
+            {
+                SessionId = "sessionId1",
+                PartitionKey = "sessionId1",
+                MessageId = "messageId"
+            };
+            message.SessionId = "sessionId2";
+
+            _listener.SingleEventById(
+                ServiceBusEventSource.PartitionKeyValueOverwritten,
+                e => e.Payload.Contains("sessionId1") && e.Payload.Contains("sessionId2") && e.Payload.Contains("messageId"));
         }
     }
 }

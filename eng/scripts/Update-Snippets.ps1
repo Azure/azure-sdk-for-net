@@ -25,7 +25,7 @@ if (-not (Test-Path Env:TF_BUILD))
 
     dotnet tool install --global `
     --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" `
-    --version "1.0.0-dev.20210730.3" `
+    --version "1.0.0-dev.20211119.1" `
     "Azure.Sdk.Tools.SnippetGenerator"
 }
 else

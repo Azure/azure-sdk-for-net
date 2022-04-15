@@ -12,45 +12,38 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     internal partial class VirtualApplianceSitesRestOperations
     {
-        private string subscriptionId;
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of VirtualApplianceSitesRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VirtualApplianceSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public VirtualApplianceSitesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-02-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string networkVirtualApplianceName, string siteName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -59,35 +52,29 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkVirtualApplianceName, true);
             uri.AppendPath("/virtualApplianceSites/", false);
             uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Deletes the specified site from a Virtual Appliance. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="siteName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var message = CreateDeleteRequest(resourceGroupName, networkVirtualApplianceName, siteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,32 +83,26 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Deletes the specified site from a Virtual Appliance. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="siteName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var message = CreateDeleteRequest(resourceGroupName, networkVirtualApplianceName, siteName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -130,17 +111,17 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string networkVirtualApplianceName, string siteName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -149,35 +130,29 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkVirtualApplianceName, true);
             uri.AppendPath("/virtualApplianceSites/", false);
             uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Gets the specified Virtual Appliance Site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="siteName"/> is null. </exception>
-        public async Task<Response<VirtualApplianceSiteData>> GetAsync(string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualApplianceSiteData>> GetAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var message = CreateGetRequest(resourceGroupName, networkVirtualApplianceName, siteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,32 +166,26 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((VirtualApplianceSiteData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets the specified Virtual Appliance Site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="siteName"/> is null. </exception>
-        public Response<VirtualApplianceSiteData> Get(string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualApplianceSiteData> Get(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var message = CreateGetRequest(resourceGroupName, networkVirtualApplianceName, siteName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -230,17 +199,17 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((VirtualApplianceSiteData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -249,44 +218,35 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkVirtualApplianceName, true);
             uri.AppendPath("/virtualApplianceSites/", false);
             uri.AppendPath(siteName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, <paramref name="siteName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, networkVirtualApplianceName, siteName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -294,37 +254,28 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Site. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, <paramref name="siteName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, networkVirtualApplianceName, siteName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -332,17 +283,17 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string networkVirtualApplianceName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -350,30 +301,27 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
             uri.AppendPath(networkVirtualApplianceName, true);
             uri.AppendPath("/virtualApplianceSites", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Lists all Network Virtual Appliance Sites in a Network Virtual Appliance resource. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public async Task<Response<NetworkVirtualApplianceSiteListResult>> GetAllAsync(string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkVirtualApplianceSiteListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkVirtualApplianceName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -385,27 +333,24 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Lists all Network Virtual Appliance Sites in a Network Virtual Appliance resource. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public Response<NetworkVirtualApplianceSiteListResult> GetAll(string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkVirtualApplianceSiteListResult> List(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var message = CreateGetAllRequest(resourceGroupName, networkVirtualApplianceName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -417,46 +362,40 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string networkVirtualApplianceName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Lists all Network Virtual Appliance Sites in a Network Virtual Appliance resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public async Task<Response<NetworkVirtualApplianceSiteListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkVirtualApplianceSiteListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkVirtualApplianceName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkVirtualApplianceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -468,32 +407,26 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Lists all Network Virtual Appliance Sites in a Network Virtual Appliance resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public Response<NetworkVirtualApplianceSiteListResult> GetAllNextPage(string nextLink, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkVirtualApplianceSiteListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkVirtualApplianceName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkVirtualApplianceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -505,7 +438,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

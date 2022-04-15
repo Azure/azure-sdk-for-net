@@ -53,7 +53,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -83,7 +84,8 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -113,7 +115,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -144,7 +147,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions, "en", options);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -170,7 +174,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -201,7 +206,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchDocuments, batchActions, options);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -213,6 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task MultiCategoryClassifyWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
@@ -235,7 +242,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();

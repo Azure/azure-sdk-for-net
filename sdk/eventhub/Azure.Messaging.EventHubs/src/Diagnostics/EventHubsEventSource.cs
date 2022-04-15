@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
@@ -17,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     /// <remarks>
     ///   When defining Start/Stop tasks, it is highly recommended that the
-    ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
+    ///   the StopEvent.Id be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
@@ -112,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
+                EventPublishCompleteCore(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
             }
         }
 
@@ -1598,7 +1599,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(80, identifier ?? string.Empty, eventHubName ?? string.Empty, requestedPartitionIdOrKey ?? string.Empty, operationId ?? string.Empty, assignedPartitionId ?? string.Empty, totalBufferedEventCount);
+                BufferedProducerEventEnqueuedCore(80, identifier ?? string.Empty, eventHubName ?? string.Empty, requestedPartitionIdOrKey ?? string.Empty, operationId ?? string.Empty, assignedPartitionId ?? string.Empty, totalBufferedEventCount);
             }
         }
 
@@ -1716,7 +1717,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(86, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitStartCore(86, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
             }
         }
 
@@ -1740,7 +1741,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(87, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitCompleteCore(87, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
             }
         }
 
@@ -1834,7 +1835,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(91, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+                WriteEvent(91, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, eventCount, durationSeconds);
             }
         }
 
@@ -2080,7 +2081,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(102, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
+                EventProcessorLoadBalancingCycleCompleteCore(102, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, durationSeconds, delaySeconds);
             }
         }
 
@@ -2233,7 +2234,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(109, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
+                BufferedProducerPublishingAwaitAllStartCore(109, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty);
             }
         }
 
@@ -2257,7 +2258,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(110, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+                BufferedProducerPublishingAwaitAllCompleteCore(110, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
             }
         }
 
@@ -2448,6 +2449,668 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(119, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an exception while canceling the main task
+        ///   while attempting to stop processing during a call to <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or
+        ///   <see cref="EventProcessor{TPartition}.StopProcessing" />.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(120, Level = EventLevel.Warning, Message = "Error observed during token cancellation while attempting to stop the processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  This is most often caused by a CancellationToken.Register callback throwing.  Error Message: '{3}'")]
+        public virtual void ProcessorStoppingCancellationWarning(string identifier,
+                                                                 string eventHubName,
+                                                                 string consumerGroup,
+                                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(120, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an exception while canceling the main task
+        ///   while attempting to stop processing during a call to <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or
+        ///   <see cref="EventProcessor{TPartition}.StopProcessing" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition of the processor.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(121, Level = EventLevel.Warning, Message = "Error observed during token cancellation while attempting to stop the partition '{0}' processing task for the processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  This is most often caused by a CancellationToken.Register callback throwing.  Error Message: '{4}'")]
+        public virtual void PartitionProcessorStoppingCancellationWarning(string partitionId,
+                                                                          string identifier,
+                                                                          string eventHubName,
+                                                                          string consumerGroup,
+                                                                          string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(121, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the publishing of events has completed, writing into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="retryCount">The number of retries that were used for service communication.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventPublishCompleteCore(int eventId,
+                                                     string eventHubName,
+                                                     string partitionIdOrKey,
+                                                     string operationId,
+                                                     int retryCount)
+        {
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* partitionIdOrKeyPtr = partitionIdOrKey)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[1].Size = (partitionIdOrKey.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)partitionIdOrKeyPtr;
+
+                eventPayload[2].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref retryCount);
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has completed a load balancing
+        ///   cycle, writing into a stack allocated <see cref="EventSource.EventData"/> struct to avoid the parameter
+        ///   array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="totalPartitionCount">The total number of partitions at the end of the cycle.</param>
+        /// <param name="ownedPartitionCount">The number of partitions owned at the end of the cycle.</param>
+        /// <param name="durationSeconds">The total duration that load balancing took to complete, in seconds.</param>
+        /// <param name="delaySeconds">The delay, in seconds, that will be observed before the next load balancing cycle starts.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorLoadBalancingCycleCompleteCore(int eventId,
+                                                                         string identifier,
+                                                                         string eventHubName,
+                                                                         int totalPartitionCount,
+                                                                         int ownedPartitionCount,
+                                                                         double durationSeconds,
+                                                                         double delaySeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalPartitionCount);
+
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref ownedPartitionCount);
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref delaySeconds);
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   is waiting for all active publishing to complete, writing into a stack allocated <see cref="EventSource.EventData"/>
+        ///   struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="totalActiveTasks">The total number active publishing tasks.</param>
+        /// <param name="operationId">An artificial identifier for the await operation.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitAllStartCore(int eventId,
+                                                                        string identifier,
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   has completed waiting for a task to complete, writing into a stack allocated <see cref="EventSource.EventData"/>
+        ///   struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="totalActiveTasks">The total number active publishing tasks.</param>
+        /// <param name="operationId">An artificial identifier for the await operation.</param>
+        /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitCompleteCore(int eventId,
+                                                                        string identifier,
+                                                                        string eventHubName,
+                                                                        int totalActiveTasks,
+                                                                        string operationId,
+                                                                        double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   has reached maximum concurrency and is waiting for a task to complete, writing into a stack
+        ///   allocated <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation
+        ///   on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="totalActiveTasks">The total number active publishing tasks.</param>
+        /// <param name="operationId">An artificial identifier for the await operation.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitStartCore(int eventId,
+                                                                     string identifier,
+                                                                     string eventHubName,
+                                                                     int totalActiveTasks,
+                                                                     string operationId)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   is done waiting for all active publishing to complete, writing into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the
+        ///   WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="totalActiveTasks">The total number active publishing tasks.</param>
+        /// <param name="operationId">An artificial identifier for the await operation.</param>
+        /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(int eventId,
+                                                                           string identifier,
+                                                                           string eventHubName,
+                                                                           int totalActiveTasks,
+                                                                           string operationId,
+                                                                           double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalActiveTasks);
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an event has been assigned a partition as part of enqueuing it to be published has
+        ///   completed, writing into a stack allocated <see cref="EventSource.EventData"/> struct to avoid the
+        ///   parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="requestedPartitionIdOrKey">The identifier of a partition or the partition hash key requested when enqueuing the event; identifier or key.</param>
+        /// <param name="assignedPartitionId">The identifier of the partition to which the event was assigned.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="totalBufferedEventCount">The total number of buffered events at the time the enqueue was observed.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerEventEnqueuedCore(int eventId,
+                                                              string identifier,
+                                                              string eventHubName,
+                                                              string requestedPartitionIdOrKey,
+                                                              string assignedPartitionId,
+                                                              string operationId,
+                                                              int totalBufferedEventCount)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* requestedPartitionIdOrKeyPtr = requestedPartitionIdOrKey)
+            fixed (char* assignedPartitionIdPtr = assignedPartitionId)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[2].Size = (requestedPartitionIdOrKey.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)requestedPartitionIdOrKeyPtr;
+
+                eventPayload[3].Size = (assignedPartitionId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)assignedPartitionIdPtr;
+
+                eventPayload[4].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalBufferedEventCount);
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
+                                                         string arg1,
+                                                         string arg2,
+                                                         TValue1 arg3,
+                                                         TValue2 arg4)
+            where TValue1 : struct
+            where TValue2 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg3);
+
+                eventPayload[3].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg4);
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and three value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  TValue1 arg3,
+                                                                  TValue2 arg4,
+                                                                  TValue3 arg5)
+            where TValue1 : struct
+            where TValue2 : struct
+            where TValue3 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg3);
+
+                eventPayload[3].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg4);
+
+                eventPayload[4].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg5);
+
+                WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with four string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         string arg4,
+                                                         TValue1 arg5,
+                                                         TValue2 arg6)
+            where TValue1 : struct
+            where TValue2 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg5);
+
+                eventPayload[5].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with six string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                WriteEventCore(eventId, 6, eventPayload);
             }
         }
     }

@@ -28,6 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> valueCountryRegion = default;
             Optional<IReadOnlyList<DocumentField>> valueArray = default;
             Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
+            Optional<CurrencyValue> valueCurrency = default;
             Optional<string> content = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             Optional<IReadOnlyList<DocumentSpan>> spans = default;
@@ -144,6 +145,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     valueObject = dictionary;
                     continue;
                 }
+                if (property.NameEquals("valueCurrency"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("content"))
                 {
                     content = property.Value.GetString();
@@ -190,7 +201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence));
+            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueCurrency), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence));
         }
     }
 }

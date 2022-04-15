@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SqlTriggerListResult. </summary>
         internal SqlTriggerListResult()
         {
-            Value = new ChangeTrackingList<SqlTriggerGetResults>();
+            Value = new ChangeTrackingList<SqlTriggerData>();
         }
 
         /// <summary> Initializes a new instance of SqlTriggerListResult. </summary>
         /// <param name="value"> List of triggers and their properties. </param>
-        internal SqlTriggerListResult(IReadOnlyList<SqlTriggerGetResults> value)
+        internal SqlTriggerListResult(IReadOnlyList<SqlTriggerData> value)
         {
             Value = value;
         }
 
         /// <summary> List of triggers and their properties. </summary>
-        public IReadOnlyList<SqlTriggerGetResults> Value { get; }
+        public IReadOnlyList<SqlTriggerData> Value { get; }
     }
 }

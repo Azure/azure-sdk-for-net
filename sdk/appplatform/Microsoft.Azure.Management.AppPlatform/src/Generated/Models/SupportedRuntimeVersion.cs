@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         /// <param name="value">The raw value which could be passed to
         /// deployment CRUD operations. Possible values include: 'Java_8',
-        /// 'Java_11', 'NetCore_31'</param>
+        /// 'Java_11', 'Java_17', 'NetCore_31'</param>
         /// <param name="platform">The platform of this runtime version
         /// (possible values: "Java" or ".NET"). Possible values include:
         /// 'Java', '.NET Core'</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Gets or sets the raw value which could be passed to deployment CRUD
         /// operations. Possible values include: 'Java_8', 'Java_11',
-        /// 'NetCore_31'
+        /// 'Java_17', 'NetCore_31'
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

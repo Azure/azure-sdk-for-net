@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The RoleInstanceProperties. </summary>
@@ -25,7 +28,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the network profile for the role instance. </summary>
-        public RoleInstanceNetworkProfile NetworkProfile { get; }
+        internal RoleInstanceNetworkProfile NetworkProfile { get; }
+        /// <summary> Specifies the list of resource Ids for the network interfaces associated with the role instance. </summary>
+        public IReadOnlyList<WritableSubResource> NetworkInterfaces
+        {
+            get => NetworkProfile.NetworkInterfaces;
+        }
+
         /// <summary> The instance view of the role instance. </summary>
         public RoleInstanceView InstanceView { get; }
     }

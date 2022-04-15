@@ -101,8 +101,8 @@ var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), cred
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Metrics Advisor by assigning the `"Cognitive Services Metrics Advisor User"` role to your service principal. You may want to assign the `"Cognitive Services Metrics Advisor Administrator"` role instead if administrator privileges are required.
@@ -228,7 +228,7 @@ dataFeed.Schema = new DataFeedSchema();
 dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
 dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
 dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
-dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
+dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("region"));
 
 dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-01-01T00:00:00Z"));
 

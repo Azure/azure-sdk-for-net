@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIpsecPolicies))
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in VpnClientIpsecPolicies)
+                foreach (var item in VpnClientIPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
             Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
             Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Optional<IList<IpsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<IList<IPsecPolicy>> vpnClientIpsecPolicies = default;
             Optional<string> radiusServerAddress = default;
             Optional<string> radiusServerSecret = default;
             Optional<IList<RadiusServer>> radiusServers = default;
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                     }
                     vpnClientIpsecPolicies = array;
                     continue;

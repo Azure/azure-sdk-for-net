@@ -93,6 +93,16 @@ namespace Azure.Core.Tests
             var options = new TestClientOptions();
 
             Assert.IsInstanceOf<HttpWebRequestTransport>(options.Transport);
+            Assert.IsFalse(options.IsCustomTransportSet);
+        }
+
+        [Test]
+        public void IsCustomTransportSetIsTrueAfterCallingTransportSetter()
+        {
+            var options = new TestClientOptions();
+            options.Transport = new MockTransport();
+
+            Assert.IsTrue(options.IsCustomTransportSet);
         }
 
         [Test]
@@ -109,6 +119,7 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.IsFalse(options.IsCustomTransportSet);
             }
             finally
             {
@@ -130,6 +141,7 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
+                Assert.IsFalse(options.IsCustomTransportSet);
             }
             finally
             {
@@ -139,7 +151,7 @@ namespace Azure.Core.Tests
 
 #endif
 
-        [TestCaseSource(nameof(ClientOptions))]
+        [TestCaseSource(nameof(ClientOptionsTestValues))]
         public void GlobalConfigurationIsApplied(Func<ClientOptions, object> set, Func<ClientOptions, object> get)
         {
             var initial = get(Core.ClientOptions.Default);
@@ -150,7 +162,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, get(testOptions));
         }
 
-        public static IEnumerable<object[]> ClientOptions()
+        public static IEnumerable<object[]> ClientOptionsTestValues()
         {
             object[] M(Func<ClientOptions, object> set, Func<ClientOptions, object> get) => new[] { set, get };
 
@@ -160,21 +172,21 @@ namespace Azure.Core.Tests
                 var policy = new PipelineSamples.StopwatchPolicy();
                 o.AddPolicy(policy, HttpPipelinePosition.PerCall);
                 return policy;
-            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.PerCall).Policy);
+            }, o => o.Policies?.LastOrDefault(p => p.Position == HttpPipelinePosition.PerCall).Policy);
 
             yield return M(o =>
             {
                 var policy = new PipelineSamples.StopwatchPolicy();
                 o.AddPolicy(policy, HttpPipelinePosition.PerRetry);
                 return policy;
-            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.PerRetry).Policy);
+            }, o => o.Policies?.LastOrDefault(p => p.Position == HttpPipelinePosition.PerRetry).Policy);
 
             yield return M(o =>
             {
                 var policy = new PipelineSamples.StopwatchPolicy();
                 o.AddPolicy(policy, HttpPipelinePosition.BeforeTransport);
                 return policy;
-            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.BeforeTransport).Policy);
+            }, o => o.Policies?.LastOrDefault(p => p.Position == HttpPipelinePosition.BeforeTransport).Policy);
 
             yield return M(o => o.Retry.Delay = TimeSpan.FromDays(5), o => o.Retry.Delay);
             yield return M(o => o.Retry.Mode = RetryMode.Fixed, o => o.Retry.Mode);
@@ -202,8 +214,42 @@ namespace Azure.Core.Tests
             }, o => o.Diagnostics.LoggedQueryParameters.LastOrDefault());
         }
 
+        [Test]
+        public void AcceptsCustomDiagnosticsOptions([Values(true, false)] bool useCustomOptions)
+        {
+            var target = new TestClienOptionsWithDiagnostics(useCustomOptions);
+
+            if (useCustomOptions)
+            {
+                Assert.NotNull(target.Diagnostics);
+                Assert.That(target.Diagnostics, Is.TypeOf(typeof(TestDiagnosticsOptions)));
+                Assert.AreNotEqual(target.Diagnostics, ClientOptions.Default.Diagnostics);
+            }
+            else
+            {
+                Assert.IsNull(target.Diagnostics);
+            }
+        }
+
         private class TestClientOptions : ClientOptions
         {
+        }
+
+        private class TestDiagnosticsOptions : DiagnosticsOptions
+        {
+            public int MeExtraProperty { get; set; }
+        }
+
+        private class TestClienOptionsWithDiagnostics : ClientOptions
+        {
+            public TestClienOptionsWithDiagnostics(bool setCustomDiagnosticsOptions)
+                : base(setCustomDiagnosticsOptions ? new TestDiagnosticsOptions() : null)
+            { }
+
+            /// <summary>
+            /// Gets the credential diagnostic options.
+            /// </summary>
+            public new TestDiagnosticsOptions Diagnostics => base.Diagnostics as TestDiagnosticsOptions;
         }
     }
 }

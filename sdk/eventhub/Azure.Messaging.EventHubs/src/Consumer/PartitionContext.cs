@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 
@@ -14,6 +15,24 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///
     public class PartitionContext
     {
+        /// <summary>
+        ///   The fully qualified Event Hubs namespace that this context is associated with.
+        /// </summary>
+        ///
+        public string FullyQualifiedNamespace { get; }
+
+        /// <summary>
+        ///   The name of the Event Hub that this context is associated with.
+        /// </summary>
+        ///
+        public string EventHubName { get; }
+
+        /// <summary>
+        ///   The name of the consumer group that this context is associated with.
+        /// </summary>
+        ///
+        public string ConsumerGroup { get; }
+
         /// <summary>
         ///   The identifier of the Event Hub partition this context is associated with.
         /// </summary>
@@ -62,6 +81,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+        /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="consumer">The <see cref="TransportConsumer" /> for this context to use as the source for information.</param>
         ///
@@ -71,8 +93,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer instance.
         /// </remarks>
         ///
-        internal PartitionContext(string partitionId,
-                                  TransportConsumer consumer) : this(partitionId)
+        internal PartitionContext(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  string consumerGroup,
+                                  string partitionId,
+                                  TransportConsumer consumer) : this(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId)
         {
             Argument.AssertNotNull(consumer, nameof(consumer));
             SourceConsumer = new WeakReference<TransportConsumer>(consumer);
@@ -82,9 +107,40 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+        /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         ///
-        protected internal PartitionContext(string partitionId)
+        protected internal PartitionContext(string fullyQualifiedNamespace,
+                                            string eventHubName,
+                                            string consumerGroup,
+                                            string partitionId)
+        {
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
+        ///
+        /// <remarks>
+        ///   This overload should no longer be used; it does not set the members of
+        ///   the context not specified.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected PartitionContext(string partitionId)
         {
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             PartitionId = partitionId;

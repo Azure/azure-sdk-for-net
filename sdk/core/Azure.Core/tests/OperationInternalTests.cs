@@ -3,61 +3,166 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestClients;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class OperationInternalTests
     {
+        private static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
+
+        private readonly bool isOfT;
         private static readonly string DiagnosticNamespace = "Azure.Core.Tests";
 
-        private static ClientDiagnostics ClientDiagnostics = new ClientDiagnostics(new TestClientOption());
+        private static ClientDiagnostics ClientDiagnostics = new(new TestClientOptions());
+        private static RequestFailedException originalException = new("");
+        private static StackOverflowException customException = new();
+        private static int expectedValue = 50;
+        private static MockResponse mockResponse = new(200);
+        private Func<MockResponse> mockResponseFactory = () => mockResponse;
+
+        public OperationInternalTests(bool isOfT) { this.isOfT = isOfT; }
+
+        private OperationInternalBase CreateOperationAsInternalBase(
+            bool isOfT,
+            UpdateResult result,
+            Func<MockResponse> responseFactory = null,
+            string operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>> scopeAttributes = null,
+            int? callsToComplete = null,
+            DelayStrategy fallbackStrategy = null,
+            Exception customExceptionOnUpdate = null,
+            RequestFailedException originalExceptionOnUpdate = null)
+        {
+            if (isOfT)
+            {
+                return new MockOperationOfInt(
+                    result,
+                    responseFactory ?? (() => null),
+                    operationTypeName,
+                    callsToComplete: callsToComplete,
+                    scopeAttributes: scopeAttributes,
+                    fallbackStrategy: fallbackStrategy,
+                    customExceptionOnUpdate: customExceptionOnUpdate,
+                    originalExceptionOnUpdate: originalExceptionOnUpdate).MockOperationInternal;
+            }
+            else
+            {
+                return new MockOperation(
+                    result,
+                    responseFactory ?? (() => null),
+                    operationTypeName,
+                    callsToComplete: callsToComplete,
+                    scopeAttributes: scopeAttributes,
+                    fallbackStrategy: fallbackStrategy,
+                    customExceptionOnUpdate: customExceptionOnUpdate,
+                    originalExceptionOnUpdate: originalExceptionOnUpdate).MockOperationInternal;
+            }
+        }
 
         [Test]
         public void DefaultPropertyInitialization()
         {
-            TestOperation testOperation = new TestOperation();
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Success);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            Assert.False(operationInternal.HasValue);
-            Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.False(oit.HasValue);
+                Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
+            }
         }
 
         [Test]
         public void RawResponseInitialization()
         {
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation(mockResponse);
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory);
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            Assert.False(operationInternal.HasValue);
-            Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.False(oit.HasValue);
+                Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
+            }
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusWhenOperationIsPending(bool async)
+        public void SetStateSucceeds()
         {
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
             {
-                OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
+                oi.SetState(OperationState.Success(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Success(mockResponse, 1));
+            }
 
+            Assert.IsTrue(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsTrue(oit2.HasValue);
+                Assert.AreEqual(1, oit2.Value);
+            }
+        }
+
+        [Test]
+        public void SetStateIsPending()
+        {
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
+            {
+                oi.SetState(OperationState.Pending(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Pending(mockResponse));
+            }
+
+            Assert.IsFalse(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsFalse(oit2.HasValue);
+            }
+        }
+
+        [Test]
+        public void SetStateFails()
+        {
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
+            if (operationInternal is OperationInternal oi)
+            {
+                oi.SetState(OperationState.Failure(mockResponse));
+            }
+            else if (operationInternal is OperationInternal<int> oit)
+            {
+                oit.SetState(OperationState<int>.Failure(mockResponse));
+            }
+
+            Assert.IsTrue(operationInternal.HasCompleted);
+            if (operationInternal is OperationInternal<int> oit2)
+            {
+                Assert.IsFalse(oit2.HasValue);
+                Assert.Throws<RequestFailedException>(() => _ = oit2.Value);
+            }
+        }
+
+        [Test]
+        public async Task UpdateStatusWhenOperationIsPending([Values(true, false)] bool async)
+        {
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory);
             Response operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
@@ -66,22 +171,17 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            Assert.False(operationInternal.HasValue);
-            Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.False(oit.HasValue);
+                Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
+            }
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusWhenOperationSucceeds(bool async)
+        public async Task UpdateStatusWhenOperationSucceeds([Values(true, false)] bool async)
         {
-            int expectedValue = 50;
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => OperationState<int>.Success(mockResponse, expectedValue)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Success, mockResponseFactory);
 
             Response operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -91,8 +191,11 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            Assert.True(operationInternal.HasValue);
-            Assert.AreEqual(expectedValue, operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.True(oit.HasValue);
+                Assert.AreEqual(expectedValue, oit.Value);
+            }
         }
 
         [Test]
@@ -100,15 +203,11 @@ namespace Azure.Core.Tests
             [Values(true, false)] bool async,
             [Values(true, false)] bool useDefaultException)
         {
-            RequestFailedException originalException = new RequestFailedException("");
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
+            var operationInternal = useDefaultException switch
             {
-                OnUpdateState = _ => useDefaultException
-                    ? OperationState<int>.Failure(mockResponse)
-                    : OperationState<int>.Failure(mockResponse, originalException)
+                true => CreateOperationAsInternalBase(isOfT, UpdateResult.Failure, mockResponseFactory),
+                false => CreateOperationAsInternalBase(isOfT, UpdateResult.FailureCustomException, mockResponseFactory, originalExceptionOnUpdate: originalException)
             };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             RequestFailedException thrownException = async
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
@@ -121,34 +220,31 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            Assert.False(operationInternal.HasValue);
-
-            RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
-            Assert.AreEqual(thrownException, valueException);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.False(oit.HasValue);
+                RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = oit.Value);
+                Assert.AreEqual(thrownException, valueException);
+            }
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void UpdateStatusWhenOperationThrows(bool async)
+        public void UpdateStatusWhenOperationThrows([Values(true, false)] bool async)
         {
-            StackOverflowException originalException = new StackOverflowException();
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => throw originalException
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Throw, customExceptionOnUpdate: customException);
             StackOverflowException thrownException = async
                 ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<StackOverflowException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
-            Assert.AreEqual(originalException, thrownException);
+            Assert.AreEqual(customException, thrownException);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
-            Assert.False(operationInternal.HasValue);
-            Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.False(oit.HasValue);
+                Assert.Throws<InvalidOperationException>(() => _ = oit.Value);
+            }
         }
 
         [Test]
@@ -157,21 +253,17 @@ namespace Azure.Core.Tests
             [Values(true, false)] bool useDefaultTypeName)
         {
             const string customTypeName = "CustomTypeName";
-            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
-            string expectedTypeName = useDefaultTypeName ? nameof(TestOperation) : customTypeName;
-            KeyValuePair<string, string>[] expectedAttributes = new KeyValuePair<string, string>[]
-            {
-                new KeyValuePair<string, string>("key1", "value1"),
-                new KeyValuePair<string, string>("key2", "value2")
-            };
-
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName, scopeAttributes: expectedAttributes)
-            {
-                OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
+            var operationTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
+            string expectedTypeName = useDefaultTypeName ? operationTypeName : customTypeName;
+            KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
+            var operationInternal = CreateOperationAsInternalBase(
+                    isOfT,
+                    UpdateResult.Pending,
+                    mockResponseFactory,
+                    useDefaultTypeName ? null : customTypeName,
+                    expectedAttributes);
 
             _ = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -181,20 +273,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusSetsFailedScopeWhenOperationFails(bool async)
+        public async Task UpdateStatusSetsFailedScopeWhenOperationFails([Values(true, false)] bool async)
         {
-            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
-            RequestFailedException originalException = new RequestFailedException("");
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => OperationState<int>.Failure(mockResponse, originalException)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.FailureCustomException, mockResponseFactory, originalExceptionOnUpdate: originalException);
             try
             {
                 _ = async
@@ -203,317 +286,199 @@ namespace Azure.Core.Tests
             }
             catch { }
 
-            testListener.AssertScopeException($"{nameof(TestOperation)}.UpdateStatus", (Exception scopeException) =>
-            {
-                Assert.AreEqual(originalException, scopeException);
-            });
-        }
-
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusSetsFailedScopeWhenOperationThrows(bool async)
-        {
-            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
-
-            StackOverflowException originalException = new StackOverflowException();
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => throw originalException
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            try
-            {
-                _ = async
-                    ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
-                    : operationInternal.UpdateStatus(CancellationToken.None);
-            }
-            catch { }
-
-            testListener.AssertScopeException($"{nameof(TestOperation)}.UpdateStatus", (Exception scopeException) =>
-                Assert.AreEqual(originalException, scopeException));
-        }
-
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusPassesTheCancellationTokenToUpdateState(bool async)
-        {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
-            CancellationToken originalToken = tokenSource.Token;
-            CancellationToken passedToken = default;
-
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = cancellationToken =>
+            var expectedTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
+            testListener.AssertScopeException(
+                $"{expectedTypeName}.UpdateStatus",
+                scopeException =>
                 {
-                    passedToken = cancellationToken;
-                    return OperationState<int>.Pending(mockResponse);
-                }
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
+                    Assert.AreEqual(originalException, scopeException);
+                });
+        }
 
+        [Test]
+        public async Task UpdateStatusSetsFailedScopeWhenOperationThrows([Values(true, false)] bool async)
+        {
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Throw, mockResponseFactory, customExceptionOnUpdate: customException);
+            try
+            {
+                _ = async
+                    ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
+                    : operationInternal.UpdateStatus(CancellationToken.None);
+            }
+            catch { }
+
+            var expectedTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
+            testListener.AssertScopeException(
+                $"{expectedTypeName}.UpdateStatus",
+                scopeException =>
+                    Assert.AreEqual(customException, scopeException));
+        }
+
+        [Test]
+        public async Task UpdateStatusPassesTheCancellationTokenToUpdateState([Values(true, false)] bool async)
+        {
+            using CancellationTokenSource tokenSource = new();
+            CancellationToken originalToken = tokenSource.Token;
+
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory);
             _ = async
                 ? await operationInternal.UpdateStatusAsync(originalToken)
                 : operationInternal.UpdateStatus(originalToken);
 
+            CancellationToken passedToken = ((IMockOperationInternal)operationInternal).LastTokenReceivedByUpdateStatus;
             Assert.AreEqual(originalToken, passedToken);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task WaitForCompletionCallsUntilOperationCompletes(bool useDefaultPollingInterval)
+        public async Task WaitForCompletionCallsUntilOperationCompletes([Values(true, false)] bool useDefaultPollingInterval)
         {
-            int callsCount = 0;
             int expectedCalls = 5;
             int expectedValue = 50;
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => ++callsCount >= expectedCalls
-                    ? OperationState<int>.Success(mockResponse, expectedValue)
-                    : OperationState<int>.Pending(mockResponse)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: expectedCalls, fallbackStrategy: new ZeroPollingStrategy());
 
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            var operationResponse = useDefaultPollingInterval
+                ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
+                : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, CancellationToken.None);
 
-            Response<int> operationResponse = useDefaultPollingInterval
-                ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
-                : await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, CancellationToken.None);
-
-            Assert.AreEqual(mockResponse, operationResponse.GetRawResponse());
+            Assert.AreEqual(mockResponse, operationResponse);
+            int callsCount = ((IMockOperationInternal)operationInternal).UpdateStatusCallCount;
             Assert.AreEqual(expectedCalls, callsCount);
-
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
-            Assert.True(operationInternal.HasValue);
-            Assert.AreEqual(expectedValue, operationInternal.Value);
+            if (operationInternal is OperationInternal<int> oit)
+            {
+                Assert.True(oit.HasValue);
+                Assert.AreEqual(expectedValue, oit.Value);
+            }
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task WaitForCompletionUsesRightPollingInterval(bool useDefaultPollingInterval)
+        public async Task WaitForCompletionUsesZeroPollingInterval(
+            [Values(true, false)] bool hasSuggest,
+            [Values(1, 2, 3)] int count)
         {
-            TimeSpan expectedDelay = TimeSpan.FromMilliseconds(100);
-            TimeSpan passedDelay = default;
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: count, fallbackStrategy: new ZeroPollingStrategy());
 
-            int callsCount = 0;
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
+            if (hasSuggest)
             {
-                OnUpdateState = _ => ++callsCount >= 2
-                    ? OperationState<int>.Success(mockResponse, 50)
-                    : OperationState<int>.Pending(mockResponse)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.OnWait = delay => passedDelay = delay;
-
-            if (useDefaultPollingInterval)
-            {
-                operationInternal.DefaultPollingInterval = expectedDelay;
-                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), CancellationToken.None);
             }
             else
             {
-                await operationInternal.WaitForCompletionAsync(expectedDelay, CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
 
-            Assert.AreEqual(expectedDelay, passedDelay);
+            Assert.IsTrue(((IMockOperationInternal)operationInternal).DelaysPassedToWait.All(d => d == TimeSpan.Zero));
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task WaitForCompletionUsesRetryAfterHeader(bool useDefaultPollingInterval)
+        public async Task WaitForCompletionPassesTheCancellationTokenToUpdateState(
+            [Values(true, false)] bool useDefaultPollingInterval)
         {
-            TimeSpan originalDelay = TimeSpan.FromSeconds(2);
-            TimeSpan shortDelay = originalDelay.Subtract(TimeSpan.FromSeconds(1));
-            TimeSpan longDelay = originalDelay.Add(TimeSpan.FromSeconds(1));
-            List<TimeSpan> passedDelays = new List<TimeSpan>();
-
-            MockResponse shortDelayMockResponse = new MockResponse(200);
-            shortDelayMockResponse.AddHeader(new HttpHeader("Retry-After", shortDelay.Seconds.ToString()));
-
-            MockResponse longDelayMockResponse = new MockResponse(200);
-            longDelayMockResponse.AddHeader(new HttpHeader("Retry-After", longDelay.Seconds.ToString()));
-
-            int callsCount = 0;
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => ++callsCount switch
-                {
-                    1 => OperationState<int>.Pending(shortDelayMockResponse),
-                    2 => OperationState<int>.Pending(longDelayMockResponse),
-                    _ => OperationState<int>.Success(new MockResponse(200), 50)
-                }
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.OnWait = delay => passedDelays.Add(delay);
-
-            if (useDefaultPollingInterval)
-            {
-                operationInternal.DefaultPollingInterval = originalDelay;
-                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
-            }
-            else
-            {
-                await operationInternal.WaitForCompletionAsync(originalDelay, CancellationToken.None);
-            }
-
-            // Algorithm must choose the longest delay between the two.
-            Assert.AreEqual(2, passedDelays.Count);
-            Assert.AreEqual(Max(originalDelay, shortDelay), passedDelays[0]);
-            Assert.AreEqual(Max(originalDelay, longDelay), passedDelays[1]);
-        }
-
-        [Test]
-        public async Task WaitForCompletionUsesRetryAfterMsHeader(
-            [Values(true, false)] bool useDefaultPollingInterval,
-            [Values("retry-after-ms", "x-ms-retry-after-ms")] string headerName)
-        {
-            TimeSpan originalDelay = TimeSpan.FromMilliseconds(500);
-            TimeSpan shortDelay = originalDelay.Subtract(TimeSpan.FromMilliseconds(250));
-            TimeSpan longDelay = originalDelay.Add(TimeSpan.FromMilliseconds(250));
-            List<TimeSpan> passedDelays = new List<TimeSpan>();
-
-            MockResponse shortDelayMockResponse = new MockResponse(200);
-            shortDelayMockResponse.AddHeader(new HttpHeader(headerName, shortDelay.Milliseconds.ToString()));
-
-            MockResponse longDelayMockResponse = new MockResponse(200);
-            longDelayMockResponse.AddHeader(new HttpHeader(headerName, longDelay.Milliseconds.ToString()));
-
-            int callsCount = 0;
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => ++callsCount switch
-                {
-                    1 => OperationState<int>.Pending(shortDelayMockResponse),
-                    2 => OperationState<int>.Pending(longDelayMockResponse),
-                    _ => OperationState<int>.Success(new MockResponse(200), 50)
-                }
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.OnWait = delay => passedDelays.Add(delay);
-
-            if (useDefaultPollingInterval)
-            {
-                operationInternal.DefaultPollingInterval = originalDelay;
-                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
-            }
-            else
-            {
-                await operationInternal.WaitForCompletionAsync(originalDelay, CancellationToken.None);
-            }
-
-            // Algorithm must choose the longest delay between the two.
-            Assert.AreEqual(2, passedDelays.Count);
-            Assert.AreEqual(Max(originalDelay, shortDelay), passedDelays[0]);
-            Assert.AreEqual(Max(originalDelay, longDelay), passedDelays[1]);
-        }
-
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task WaitForCompletionPassesTheCancellationTokenToUpdateState(bool useDefaultPollingInterval)
-        {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            using CancellationTokenSource tokenSource = new();
             CancellationToken originalToken = tokenSource.Token;
-            CancellationToken passedToken = default;
 
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = cancellationToken =>
-                {
-                    passedToken = cancellationToken;
-                    return OperationState<int>.Success(mockResponse, default);
-                }
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Success, mockResponseFactory, fallbackStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
-                ? await operationInternal.WaitForCompletionAsync(originalToken)
-                : await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, originalToken);
+                ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
+                : await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, originalToken);
 
-            Assert.AreEqual(originalToken, passedToken);
+            Assert.AreEqual(originalToken, ((IMockOperationInternal)operationInternal).LastTokenReceivedByUpdateStatus);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void WaitForCompletionPassesTheCancellationTokenToTaskDelay(bool useDefaultPollingInterval)
+        public void WaitForCompletionPassesTheCancellationTokenToTaskDelay([Values(true, false)] bool useDefaultPollingInterval)
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            using CancellationTokenSource tokenSource = new();
             CancellationToken cancellationToken = tokenSource.Token;
 
             tokenSource.Cancel();
 
-            MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation()
-            {
-                OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
-            };
-            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory, fallbackStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
-                ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionAsync(cancellationToken))
-                : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, cancellationToken));
+                ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(cancellationToken))
+                : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(TimeSpan.Zero, cancellationToken));
         }
 
-        private TimeSpan Max(TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
-
-        private class TestOperation : IOperation<int>
+        [Test]
+        public async Task FallbackCanBeOverridenWaitResponseAsync(
+            [Values(1, 3)] int retries)
         {
-            public TestOperation(Response rawResponse = null, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
-            {
-                MockOperationInternal = operationTypeName is null && scopeAttributes is null
-                    ? new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse)
-                    : new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse, operationTypeName, scopeAttributes);
-            }
+            var fallbackStrategy = new MockDelayStrategy();
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
-            public MockOperationInternal<int> MockOperationInternal { get; }
+            _ = await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
 
-            public Func<CancellationToken, OperationState<int>> OnUpdateState { get; set; }
-
-            ValueTask<OperationState<int>> IOperation<int>.UpdateStateAsync(bool async, CancellationToken cancellationToken) =>
-                new ValueTask<OperationState<int>>(OnUpdateState(cancellationToken));
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
         }
 
-        private class MockOperationInternal<TResult> : OperationInternal<TResult>
+        [Test]
+        public void FallbackCanBeOverridenWaitResponse(
+            [Values(1, 3)] int retries)
         {
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse)
-                : base(clientDiagnostics, operation, rawResponse)
-            {
-            }
+            var fallbackStrategy = new MockDelayStrategy();
+            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>> scopeAttributes)
-                : base(clientDiagnostics, operation, rawResponse, operationTypeName, scopeAttributes)
-            {
-            }
+            _ = operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            public Action<TimeSpan> OnWait { get; set; }
-
-            protected override async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken)
-            {
-                OnWait?.Invoke(delay);
-                await base.WaitAsync(TimeSpan.Zero, cancellationToken);
-            }
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
         }
 
-        private class TestClientOption : ClientOptions
+        [Test]
+        public async Task FallbackCanBeOverridenWaitResponseAsyncAsOperation(
+            [Values(1, 3)] int retries)
         {
+            var fallbackStrategy = new MockDelayStrategy();
+            var operation = new MockOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+
+            _ = await operation.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
+        }
+
+        [Test]
+        public void FallbackCanBeOverridenWaitResponseAsOperation(
+            [Values(1, 3)] int retries)
+        {
+            var fallbackStrategy = new MockDelayStrategy();
+            var opeartion = new MockOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+
+            _ = opeartion.WaitForCompletionResponse(CancellationToken.None);
+
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
+        }
+
+        [Test]
+        public async Task FallbackCanBeOverridenWaitAsync(
+            [Values(1, 3)] int retries)
+        {
+            if (!isOfT)
+                return; //invalid for non T
+
+            var fallbackStrategy = new MockDelayStrategy();
+            var operation = new MockOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+
+            _ = await operation.WaitForCompletionAsync(CancellationToken.None);
+
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
+        }
+
+        [Test]
+        public void FallbackCanBeOverridenWait(
+            [Values(1, 3)] int retries)
+        {
+            if (!isOfT)
+                return; //invalid for non T
+
+            var fallbackStrategy = new MockDelayStrategy();
+            var operation = new MockOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+
+            _ = operation.WaitForCompletion(CancellationToken.None);
+
+            Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
         }
     }
 }

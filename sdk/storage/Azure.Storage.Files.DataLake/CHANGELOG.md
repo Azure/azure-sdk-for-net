@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.0-beta.2 (Unreleased)
+## 12.10.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.10.0-beta.1 (2022-04-12)
+- Added support for service version 2021-06-08.
+- Added support for Customer Provided Key server-side encryption of files.
+- Added ability to retrieve path CreatedOn and ExpiresOn times with DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
+- Added support for DataLakeFileSystemClient.GetPathClient().
+
+## 12.9.0 (2022-03-10)
+- Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+
+## 12.9.0-beta.3 (2022-02-07)
+- Added support for service version 2021-04-10.
+
+## 12.9.0-beta.2 (2021-11-30)
+- Added supprot for service version 2021-02-12.
+- Added support for listing system file systems with DataLakeServiceClient.GetFileSystems() and .GetFileSystemsAsync().
 
 ## 12.9.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.

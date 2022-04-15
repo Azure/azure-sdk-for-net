@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionStatus(string value)
         {

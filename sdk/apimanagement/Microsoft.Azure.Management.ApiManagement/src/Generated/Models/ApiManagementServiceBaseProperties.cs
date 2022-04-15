@@ -68,6 +68,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// addresses of the API Management service in Primary region which is
         /// deployed in an Internal Virtual Network. Available only for Basic,
         /// Standard, Premium and Isolated SKU.</param>
+        /// <param name="publicIpAddressId">Public Standard SKU IP V4 based IP
+        /// address to be associated with Virtual Network deployed service in
+        /// the region. Supported only for Developer and Premium SKU being
+        /// deployed in Virtual Network.</param>
+        /// <param name="publicNetworkAccess">Whether or not public endpoint
+        /// access is allowed for this API Management service.  Value is
+        /// optional but if passed in, must be 'Enabled' or 'Disabled'. If
+        /// 'Disabled', private endpoints are the exclusive access method.
+        /// Default value is 'Enabled'. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration of the API Management service.</param>
         /// <param name="additionalLocations">Additional datacenter locations
@@ -134,7 +144,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="restore">Undelete Api Management Service if it was
         /// previously soft-deleted. If this flag is specified and set to True
         /// all other properties will be ignored.</param>
-        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?))
+        /// <param name="privateEndpointConnections">List of Private Endpoint
+        /// Connections of this service.</param>
+        /// <param name="platformVersion">Compute Platform Version running the
+        /// service in this location. Possible values include: 'undetermined',
+        /// 'stv1', 'stv2', 'mtv1'</param>
+        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), string publicNetworkAccess = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?), IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default(IList<RemotePrivateEndpointConnectionWrapper>), string platformVersion = default(string))
         {
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;
@@ -149,6 +164,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
+            PublicIpAddressId = publicIpAddressId;
+            PublicNetworkAccess = publicNetworkAccess;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             AdditionalLocations = additionalLocations;
             CustomProperties = customProperties;
@@ -158,6 +175,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             VirtualNetworkType = virtualNetworkType;
             ApiVersionConstraint = apiVersionConstraint;
             Restore = restore;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PlatformVersion = platformVersion;
             CustomInit();
         }
 
@@ -256,6 +275,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateIPAddresses")]
         public IList<string> PrivateIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets public Standard SKU IP V4 based IP address to be
+        /// associated with Virtual Network deployed service in the region.
+        /// Supported only for Developer and Premium SKU being deployed in
+        /// Virtual Network.
+        /// </summary>
+        [JsonProperty(PropertyName = "publicIpAddressId")]
+        public string PublicIpAddressId { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public endpoint access is allowed for
+        /// this API Management service.  Value is optional but if passed in,
+        /// must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints
+        /// are the exclusive access method. Default value is 'Enabled'.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets virtual network configuration of the API Management
@@ -368,6 +406,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? Restore { get; set; }
 
         /// <summary>
+        /// Gets or sets list of Private Endpoint Connections of this service.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets compute Platform Version running the service in this location.
+        /// Possible values include: 'undetermined', 'stv1', 'stv2', 'mtv1'
+        /// </summary>
+        [JsonProperty(PropertyName = "platformVersion")]
+        public string PlatformVersion { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -413,6 +464,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element3 in PrivateEndpointConnections)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

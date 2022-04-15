@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionListResult. </summary>
         internal SqlUserDefinedFunctionListResult()
         {
-            Value = new ChangeTrackingList<SqlUserDefinedFunctionGetResults>();
+            Value = new ChangeTrackingList<SqlUserDefinedFunctionData>();
         }
 
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionListResult. </summary>
         /// <param name="value"> List of userDefinedFunctions and their properties. </param>
-        internal SqlUserDefinedFunctionListResult(IReadOnlyList<SqlUserDefinedFunctionGetResults> value)
+        internal SqlUserDefinedFunctionListResult(IReadOnlyList<SqlUserDefinedFunctionData> value)
         {
             Value = value;
         }
 
         /// <summary> List of userDefinedFunctions and their properties. </summary>
-        public IReadOnlyList<SqlUserDefinedFunctionGetResults> Value { get; }
+        public IReadOnlyList<SqlUserDefinedFunctionData> Value { get; }
     }
 }

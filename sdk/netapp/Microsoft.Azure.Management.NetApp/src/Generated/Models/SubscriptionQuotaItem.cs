@@ -38,15 +38,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="subscriptionQuotaItemName">Quota Item name</param>
         /// <param name="current">The current quota value.</param>
         /// <param name="defaultProperty">The default quota value.</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public SubscriptionQuotaItem(string id = default(string), string name = default(string), string type = default(string), string subscriptionQuotaItemName = default(string), int? current = default(int?), int? defaultProperty = default(int?), SystemData systemData = default(SystemData))
+        public SubscriptionQuotaItem(string id = default(string), string name = default(string), string type = default(string), int? current = default(int?), int? defaultProperty = default(int?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            SubscriptionQuotaItemName = subscriptionQuotaItemName;
             Current = current;
             DefaultProperty = defaultProperty;
             SystemData = systemData;
@@ -57,12 +55,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets quota Item name
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string SubscriptionQuotaItemName { get; private set; }
 
         /// <summary>
         /// Gets the current quota value.

@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetStorageFormat()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "DatasetStorageFormat";
         }
 
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetStorageFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "DatasetStorageFormat";
+            Type = type;
             Serializer = serializer;
             Deserializer = deserializer;
             AdditionalProperties = additionalProperties;

@@ -172,6 +172,17 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "AllowTaskPreemption",
+        "SummaryComment": "Whether Tasks in this job can be preempted by other high priority jobs.",
+        "RemarksComment": "If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
   ]
 }

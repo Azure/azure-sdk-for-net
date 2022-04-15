@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// be disabled unless this property is set to true for the
         /// resource.</param>
         /// <param name="securityType">Specifies the SecurityType of the
-        /// virtual machine. It is set as TrustedLaunch to enable UefiSettings.
-        /// &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled
-        /// unless this property is set as TrustedLaunch. Possible values
-        /// include: 'TrustedLaunch'</param>
+        /// virtual machine. It has to be set to any specified value to enable
+        /// UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not
+        /// be enabled unless this property is set. Possible values include:
+        /// 'TrustedLaunch', 'ConfidentialVM'</param>
         public SecurityProfile(UefiSettings uefiSettings = default(UefiSettings), bool? encryptionAtHost = default(bool?), string securityType = default(string))
         {
             UefiSettings = uefiSettings;
@@ -80,10 +80,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the SecurityType of the virtual machine. It
-        /// is set as TrustedLaunch to enable UefiSettings.
+        /// has to be set to any specified value to enable UefiSettings.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: UefiSettings will not
-        /// be enabled unless this property is set as TrustedLaunch. Possible
-        /// values include: 'TrustedLaunch'
+        /// be enabled unless this property is set. Possible values include:
+        /// 'TrustedLaunch', 'ConfidentialVM'
         /// </summary>
         [JsonProperty(PropertyName = "securityType")]
         public string SecurityType { get; set; }

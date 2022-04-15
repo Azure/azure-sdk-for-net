@@ -11,18 +11,18 @@ namespace Azure.AI.Language.Conversations
     public partial class LuisTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal LuisTargetIntentResult(double confidenceScore) : base(confidenceScore)
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        internal LuisTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetKind = TargetKind.Luis;
+            TargetKind = Conversations.TargetKind.Luis;
         }
 
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="internalResult"> The actual response from a LUIS Generally Available application. </param>
-        internal LuisTargetIntentResult(TargetKind targetKind, string apiVersion, double confidenceScore, object internalResult) : base(targetKind, apiVersion, confidenceScore)
+        internal LuisTargetIntentResult(TargetKind targetKind, string apiVersion, double confidence, object internalResult) : base(targetKind, apiVersion, confidence)
         {
             InternalResult = internalResult;
             TargetKind = targetKind;

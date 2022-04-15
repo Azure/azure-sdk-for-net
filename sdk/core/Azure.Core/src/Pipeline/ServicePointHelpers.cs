@@ -38,15 +38,23 @@ namespace Azure.Core.Pipeline
 
         public static void SetLimits(ServicePoint requestServicePoint)
         {
-            // Only change when the default runtime limit is used
-            if (requestServicePoint.ConnectionLimit == RuntimeDefaultConnectionLimit)
+            try
             {
-                requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
-            }
+                // Only change these configuration values when the default value is used
+                if (requestServicePoint.ConnectionLimit == RuntimeDefaultConnectionLimit)
+                {
+                    requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
+                }
 
-            if (requestServicePoint.ConnectionLeaseTimeout == DefaultConnectionLeaseTimeout)
+                if (requestServicePoint.ConnectionLeaseTimeout == DefaultConnectionLeaseTimeout)
+                {
+                    requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
+                }
+            }
+            catch (NotImplementedException)
             {
-                requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
+                // Some platforms (like Unity) might throw NotImplementedException
+                // when accessing handler options
             }
         }
 #endif

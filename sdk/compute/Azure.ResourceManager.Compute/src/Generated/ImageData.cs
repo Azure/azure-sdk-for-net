@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,18 +14,19 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Image data model. </summary>
-    public partial class ImageData : TrackedResource
+    public partial class ImageData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ImageData. </summary>
         /// <param name="location"> The location. </param>
-        public ImageData(Location location) : base(location)
+        public ImageData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of ImageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        internal ImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ExtendedLocation extendedLocation, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(id, name, type, tags, location)
+        internal ImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ExtendedLocation extendedLocation, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SourceVirtualMachine = sourceVirtualMachine;
@@ -43,9 +44,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The extended location of the Image. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The source virtual machine from which Image is created. </summary>
-        public WritableSubResource SourceVirtualMachine { get; set; }
+        internal WritableSubResource SourceVirtualMachine { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVirtualMachineId
+        {
+            get => SourceVirtualMachine is null ? default : SourceVirtualMachine.Id;
+            set
+            {
+                if (SourceVirtualMachine is null)
+                    SourceVirtualMachine = new WritableSubResource();
+                SourceVirtualMachine.Id = value;
+            }
+        }
+
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ImageStorageProfile StorageProfile { get; set; }
         /// <summary> The provisioning state. </summary>

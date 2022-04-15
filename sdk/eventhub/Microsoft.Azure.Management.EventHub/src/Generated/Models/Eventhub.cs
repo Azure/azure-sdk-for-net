@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Single item in List or Get Event Hub operation
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Eventhub : Resource
+    public partial class Eventhub : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Eventhub class.
@@ -34,9 +34,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the Eventhub class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="partitionIds">Current number of shards on the Event
         /// Hub.</param>
         /// <param name="createdAt">Exact time the Event Hub was
@@ -55,8 +60,8 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// description</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public Eventhub(string id = default(string), string name = default(string), string type = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?), CaptureDescription captureDescription = default(CaptureDescription), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public Eventhub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?), CaptureDescription captureDescription = default(CaptureDescription), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             PartitionIds = partitionIds;
             CreatedAt = createdAt;

@@ -68,7 +68,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="credential">The credential reference containing
         /// authentication information.</param>
-        public AzureBlobFSLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object accountKey = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference))
+        /// <param name="servicePrincipalCredentialType">The service principal
+        /// credential type to use in Server-To-Server authentication.
+        /// 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for
+        /// certificate. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="servicePrincipalCredential">The credential of the
+        /// service principal object in Azure Active Directory. If
+        /// servicePrincipalCredentialType is 'ServicePrincipalKey',
+        /// servicePrincipalCredential can be SecureString or
+        /// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is
+        /// 'ServicePrincipalCert', servicePrincipalCredential can only be
+        /// AzureKeyVaultSecretReference.</param>
+        public AzureBlobFSLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object accountKey = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference), object servicePrincipalCredentialType = default(object), SecretBase servicePrincipalCredential = default(SecretBase))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Url = url;
@@ -79,6 +91,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AzureCloudType = azureCloudType;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
             CustomInit();
         }
 
@@ -148,6 +162,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.credential")]
         public CredentialReference Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service principal credential type to use in
+        /// Server-To-Server authentication. 'ServicePrincipalKey' for
+        /// key/secret, 'ServicePrincipalCert' for certificate. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredentialType")]
+        public object ServicePrincipalCredentialType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the credential of the service principal object in
+        /// Azure Active Directory. If servicePrincipalCredentialType is
+        /// 'ServicePrincipalKey', servicePrincipalCredential can be
+        /// SecureString or AzureKeyVaultSecretReference. If
+        /// servicePrincipalCredentialType is 'ServicePrincipalCert',
+        /// servicePrincipalCredential can only be
+        /// AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredential")]
+        public SecretBase ServicePrincipalCredential { get; set; }
 
         /// <summary>
         /// Validate the object.

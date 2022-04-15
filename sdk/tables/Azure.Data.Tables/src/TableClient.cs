@@ -259,7 +259,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies,
-                new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
+                new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 new ResponseClassifier());
 
             _version = options.VersionString;
@@ -295,7 +295,11 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
             {
-                null => policy,
+                // We were not passed an explicit SasCredential nor does one exist in the query string, default to policy
+                null when string.IsNullOrWhiteSpace(_endpoint.Query) => policy,
+                // The endpoint has a query string, so assume it is a SAS token
+                null => new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(_endpoint.Query)),
+                // We were passed an explicit SasCredential, use that
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
             _pipeline = HttpPipelineBuilder.Build(
@@ -318,17 +322,26 @@ namespace Azure.Data.Tables
             ClientDiagnostics diagnostics,
             bool isPremiumEndpoint,
             Uri endpoint,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            TableSharedKeyCredential credential)
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
-            _tableOperations = tableOperations;
-            _tableOperations.endpoint = _endpoint.AbsoluteUri;
+            if (endpoint.AbsoluteUri != _endpoint.AbsoluteUri)
+            {
+                // GetEndpointWithoutTableName produced a different Uri, so construct a new TableRestClient with it.
+                _tableOperations = new TableRestClient(diagnostics, pipeline, _endpoint.AbsoluteUri, version);
+            }
+            else
+            {
+                _tableOperations = tableOperations;
+            }
             _version = version;
             Name = table;
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _pipeline = pipeline;
+            _tableSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -347,7 +360,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new(Name, permissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, permissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>
@@ -364,7 +382,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new(Name, rawPermissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, rawPermissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>
@@ -550,7 +573,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="Response"/> containing headers such as ETag.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -584,7 +607,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -708,7 +731,7 @@ namespace Azure.Data.Tables
         public virtual async Task<Response> UpsertEntityAsync<T>(
             T entity,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -756,7 +779,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -816,7 +839,7 @@ namespace Azure.Data.Tables
             T entity,
             ETag ifMatch,
             TableUpdateMode mode = TableUpdateMode.Merge,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
@@ -882,7 +905,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : ITableEntity
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
@@ -1423,6 +1446,13 @@ namespace Azure.Data.Tables
                 throw new ArgumentException($"The {nameof(builder.TableName)} must match the table name used to initialize this instance of the client");
             }
             TableUriBuilder sasUri = new(_endpoint);
+            if (string.IsNullOrEmpty(sasUri.Tablename))
+            {
+                // The table name is not included in the URI, so add it while preserving the trailing slash, if it exists.
+                var sasUrlbuilder = new UriBuilder(_endpoint);
+                sasUrlbuilder.Path += sasUrlbuilder.Path.EndsWith("/", StringComparison.Ordinal) ? $"{Name}/" : $"/{Name}";
+                sasUri = new(sasUrlbuilder.Uri);
+            }
             sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }

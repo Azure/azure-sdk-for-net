@@ -14,12 +14,13 @@
       "tier": "Basic",
       "size": "SizeForSku",
       "family": "FamilyForSku",
+      "model": "ModelForSku",
       "capacity": 15464547
     },
-    "location": "eastus",
     "tags": {
       "key1": "value1",
       "key2": "value2"
-    }
+    },
+    "location": "eastus"
   }
 }

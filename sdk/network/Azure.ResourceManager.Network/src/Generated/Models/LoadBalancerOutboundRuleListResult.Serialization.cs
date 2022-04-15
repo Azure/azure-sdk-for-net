@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerOutboundRuleListResult DeserializeLoadBalancerOutboundRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OutboundRule>> value = default;
+            Optional<IReadOnlyList<OutboundRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutboundRule> array = new List<OutboundRule>();
+                    List<OutboundRuleData> array = new List<OutboundRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundRule.DeserializeOutboundRule(item));
+                        array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
                     }
                     value = array;
                     continue;

@@ -27,18 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
 
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            Matcher = new RecordMatcher(compareBodies: false);
-        }
-
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
-        {
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                ChallengeBasedAuthenticationPolicy.ClearCache();
-            }
+            CompareBodies = false;
         }
 
         [Test]
@@ -180,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, verifyDataResult.KeyId);
 
             Assert.True(verifyResult.IsValid);
-            Assert.True(verifyResult.IsValid);
+            Assert.True(verifyDataResult.IsValid);
         }
 
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
@@ -380,6 +369,25 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
 
             Assert.AreEqual(plaintext, decryptResult.Plaintext);
+        }
+
+        [Test]
+        public async Task EncryptWithKeyNameReturnsFullKeyId()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
+            RegisterForCleanup(key.Name);
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+            Uri keyId = new UriBuilder(Client.VaultUri)
+            {
+                Path = KeyClient.KeysPath + key.Name,
+            }.Uri;
+
+            CryptographyClient client = GetCryptoClient(keyId, forceRemote: true);
+            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+
+            Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

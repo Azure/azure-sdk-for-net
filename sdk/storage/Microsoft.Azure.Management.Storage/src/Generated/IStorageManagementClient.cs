@@ -120,6 +120,11 @@ namespace Microsoft.Azure.Management.Storage
         IObjectReplicationPoliciesOperations ObjectReplicationPolicies { get; }
 
         /// <summary>
+        /// Gets the ILocalUsersOperations.
+        /// </summary>
+        ILocalUsersOperations LocalUsers { get; }
+
+        /// <summary>
         /// Gets the IEncryptionScopesOperations.
         /// </summary>
         IEncryptionScopesOperations EncryptionScopes { get; }

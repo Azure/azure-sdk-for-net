@@ -33,10 +33,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "previous";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Face/readme.md --csharp --version=previous --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/cognitiveservices/data-plane/Face/readme.md --csharp --version=previous --reflect-api-versions --csharp-sdks-folder=D:\\Workspace\\AzureRest\\myclone\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "0d832037c324f08da297bb292b5ad91c47f5fa23";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "cf6beaa3c62ba2c00c01c6cd2067a14e1888fb55";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

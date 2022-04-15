@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,61 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
+
+## 1.0.0-beta.6 (2022-01-29)
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added Resource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Couple of renamings.
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResources` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -46,11 +101,14 @@ The package name has been changed from `Microsoft.Azure.Management.KeyVault` to 
 Example: Create a Key Vault Instance:
 
 Before upgrade:
+
 ```C#
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Rest;
+```
 
+```C#
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var keyVaultManagementClient = new KeyVaultManagementClient(tokenCredentials);
 var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
@@ -62,22 +120,28 @@ var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
 ```
 
 After upgrade:
-```C# Snippet:Changelog_NewCode
+
+```C# Snippet:Changelog_Namespaces
+using System;
+using Azure;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using System;
+```
+
+```C# Snippet:Changelog_NewCode
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
-Vault vault = lro.Value;
+ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+VaultResource vault = lro.Value;
 ```
 
 #### Object Model Changes
@@ -85,13 +149,15 @@ Vault vault = lro.Value;
 Example: Create a Permissions Model
 
 Before upgrade:
+
 ```C#
 VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```
 
 After upgrade:
+
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```

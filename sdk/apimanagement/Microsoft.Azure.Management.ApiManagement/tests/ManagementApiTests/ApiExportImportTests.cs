@@ -90,6 +90,165 @@ namespace ApiManagement.Tests.ManagementApiTests
 
         [Fact]
         [Trait("owner", "jikang")]
+        public void OpenApi2ImportsInfoTest()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new ApiManagementTestBase(context);
+                testBase.TryCreateApiManagementService();
+
+                const string swaggerPath = "./Resources/SwaggerInfoTos.json";
+                const string path = "swaggerApi";
+                string swaggerApi = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    string swaggerApiContent;
+                    using (StreamReader reader = File.OpenText(swaggerPath))
+                    {
+                        swaggerApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        Format = ContentFormat.SwaggerJson,
+                        Value = swaggerApiContent
+                    };
+
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            swaggerApi,
+                            apiCreateOrUpdate);
+
+                    Assert.NotNull(swaggerApiResponse);
+
+                    // get the api to check it was created
+                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, swaggerApi);
+
+                    Assert.NotNull(getResponse);
+                    Assert.Equal(swaggerApi, getResponse.Name);
+                    Assert.Equal(path, getResponse.Path);
+                    Assert.Equal("https://contoso.com/tos", getResponse.TermsOfServiceUrl);
+
+                    Assert.Equal("Bob", getResponse.Contact?.Name);
+                    Assert.Equal("https://contoso.com/bob", getResponse.Contact?.Url);
+                    Assert.Equal("bob@contoso.com", getResponse.Contact?.Email);
+
+                    Assert.Equal("Contoso license", getResponse.License?.Name);
+                    Assert.Equal("https://contoso.com/license", getResponse.License?.Url);
+                    ApiExportResult swaggerExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, swaggerApi, ExportFormat.Swagger);
+
+                    Assert.NotNull(swaggerExport);
+                    Assert.NotNull(swaggerExport.Value.Link);
+                    Assert.Equal("swagger-link-json", swaggerExport.ExportResultFormat);
+                }
+                finally
+                {
+                    // remove the API
+                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, swaggerApi, "*");
+
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.Tag.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
+                }
+            }
+        }
+
+
+        [Fact]
+        [Trait("owner", "jikang")]
+        public void OpenApi3ImportsInfoTest()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new ApiManagementTestBase(context);
+                testBase.TryCreateApiManagementService();
+
+                const string swaggerPath = "./Resources/SwaggerInfoTos.json";
+                const string path = "swaggerApi";
+                string swaggerApi = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    string swaggerApiContent;
+                    using (StreamReader reader = File.OpenText(swaggerPath))
+                    {
+                        swaggerApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        Format = ContentFormat.Openapijson,
+                        Value = swaggerApiContent
+                    };
+
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            swaggerApi,
+                            apiCreateOrUpdate);
+
+                    Assert.NotNull(swaggerApiResponse);
+
+                    // get the api to check it was created
+                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, swaggerApi);
+
+                    Assert.NotNull(getResponse);
+                    Assert.Equal(swaggerApi, getResponse.Name);
+                    Assert.Equal(path, getResponse.Path);
+                    Assert.Equal("https://contoso.com/tos", getResponse.TermsOfServiceUrl);
+
+                    Assert.Equal("Bob", getResponse.Contact?.Name);
+                    Assert.Equal("https://contoso.com/bob", getResponse.Contact?.Url);
+                    Assert.Equal("bob@contoso.com", getResponse.Contact?.Email);
+
+                    Assert.Equal("Contoso license", getResponse.License?.Name);
+                    Assert.Equal("https://contoso.com/license", getResponse.License?.Url);
+                    ApiExportResult swaggerExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, swaggerApi, ExportFormat.Swagger);
+
+                    Assert.NotNull(swaggerExport);
+                    Assert.NotNull(swaggerExport.Value.Link);
+                    Assert.Equal("swagger-link-json", swaggerExport.ExportResultFormat);
+                }
+                finally
+                {
+                    // remove the API
+                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, swaggerApi, "*");
+
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.Tag.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("owner", "jikang")]
         public void WadlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

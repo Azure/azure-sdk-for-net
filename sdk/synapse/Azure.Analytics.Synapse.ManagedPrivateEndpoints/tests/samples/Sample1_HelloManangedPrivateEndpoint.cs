@@ -19,9 +19,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
         public void TestManagedPrivateEndpoint()
         {
             #region Snippet:CreateManagedPrivateClient
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
             ManagedPrivateEndpointsClient client = new ManagedPrivateEndpointsClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential(includeInteractiveCredentials: true));
             #endregion
 

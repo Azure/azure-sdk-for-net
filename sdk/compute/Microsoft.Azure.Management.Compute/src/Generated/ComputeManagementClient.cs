@@ -277,6 +277,21 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
 
         /// <summary>
+        /// Gets the ICommunityGalleriesOperations.
+        /// </summary>
+        public virtual ICommunityGalleriesOperations CommunityGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommunityGalleryImagesOperations.
+        /// </summary>
+        public virtual ICommunityGalleryImagesOperations CommunityGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommunityGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ICommunityGalleryImageVersionsOperations CommunityGalleryImageVersions { get; private set; }
+
+        /// <summary>
         /// Gets the ICloudServiceRoleInstancesOperations.
         /// </summary>
         public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
@@ -583,6 +598,9 @@ namespace Microsoft.Azure.Management.Compute
             SharedGalleries = new SharedGalleriesOperations(this);
             SharedGalleryImages = new SharedGalleryImagesOperations(this);
             SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
+            CommunityGalleries = new CommunityGalleriesOperations(this);
+            CommunityGalleryImages = new CommunityGalleryImagesOperations(this);
+            CommunityGalleryImageVersions = new CommunityGalleryImageVersionsOperations(this);
             CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
             CloudServiceRoles = new CloudServiceRolesOperations(this);
             CloudServices = new CloudServicesOperations(this);

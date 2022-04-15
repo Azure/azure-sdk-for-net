@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -46,12 +46,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/bastionrg-7251?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/bastionrg-7251?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "22",
+        "Content-Length": "32",
         "Content-Type": "application/json",
         "traceparent": "00-070db94ccb361945b728e4b89d8c78e8-42b02fc1f28c5346-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.4 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
@@ -59,6 +59,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus2"
       },
       "StatusCode": 201,
@@ -134,22 +135,22 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022vnet-6121\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00229690d3d3-f324-47ea-9790-7759d8dd9260\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022e7cef00d-7052-40c5-b34c-b35c7a557481\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"name\": \"vnet-6121\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121\",\r\n",
+        "  \"etag\": \"W/\\\"9690d3d3-f324-47ea-9790-7759d8dd9260\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
+        "  \"location\": \"westus2\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"resourceGuid\": \"e7cef00d-7052-40c5-b34c-b35c7a557481\",\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false\r\n",
+        "    \"subnets\": [],\r\n",
+        "    \"virtualNetworkPeerings\": [],\r\n",
+        "    \"enableDdosProtection\": false\r\n",
         "  }\r\n",
         "}"
       ]
@@ -188,7 +189,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -226,7 +227,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -263,7 +264,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -283,7 +284,7 @@
         "Content-Length": "612",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 16 Oct 2021 17:18:20 GMT",
-        "ETag": "W/\u002236a90b20-75d6-4f3c-a621-78d631fd6091\u0022",
+        "ETag": "W/\"36a90b20-75d6-4f3c-a621-78d631fd6091\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -301,22 +302,22 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022vnet-6121\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002236a90b20-75d6-4f3c-a621-78d631fd6091\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022e7cef00d-7052-40c5-b34c-b35c7a557481\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"name\": \"vnet-6121\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121\",\r\n",
+        "  \"etag\": \"W/\\\"36a90b20-75d6-4f3c-a621-78d631fd6091\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
+        "  \"location\": \"westus2\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"e7cef00d-7052-40c5-b34c-b35c7a557481\",\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false\r\n",
+        "    \"subnets\": [],\r\n",
+        "    \"virtualNetworkPeerings\": [],\r\n",
+        "    \"enableDdosProtection\": false\r\n",
         "  }\r\n",
         "}"
       ]
@@ -363,17 +364,17 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022AzureBastionSubnet\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121/subnets/AzureBastionSubnet\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00225e86b6cd-bdc6-4a18-8e69-b8dc6eedf25b\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022\r\n",
+        "  \"name\": \"AzureBastionSubnet\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121/subnets/AzureBastionSubnet\",\r\n",
+        "  \"etag\": \"W/\\\"5e86b6cd-bdc6-4a18-8e69-b8dc6eedf25b\\\"\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"addressPrefix\": \"10.0.0.0/24\",\r\n",
+        "    \"delegations\": [],\r\n",
+        "    \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
+        "    \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
         "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
         "}"
       ]
     },
@@ -410,7 +411,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -430,7 +431,7 @@
         "Content-Length": "551",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 16 Oct 2021 17:18:21 GMT",
-        "ETag": "W/\u00225ea1f06a-7d03-4b46-85e1-6113d3d652ff\u0022",
+        "ETag": "W/\"5ea1f06a-7d03-4b46-85e1-6113d3d652ff\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -448,17 +449,17 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022AzureBastionSubnet\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121/subnets/AzureBastionSubnet\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00225ea1f06a-7d03-4b46-85e1-6113d3d652ff\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022\r\n",
+        "  \"name\": \"AzureBastionSubnet\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/virtualNetworks/vnet-6121/subnets/AzureBastionSubnet\",\r\n",
+        "  \"etag\": \"W/\\\"5ea1f06a-7d03-4b46-85e1-6113d3d652ff\\\"\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"addressPrefix\": \"10.0.0.0/24\",\r\n",
+        "    \"delegations\": [],\r\n",
+        "    \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
+        "    \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
         "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
         "}"
       ]
     },
@@ -509,22 +510,22 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022ip-2376\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/publicIPAddresses/ip-2376\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002295ae205b-c0ed-4383-b3e8-e17b86ef571b\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002202eccd3a-bf61-4e36-9bb5-9e38d5780362\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Static\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
+        "  \"name\": \"ip-2376\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/publicIPAddresses/ip-2376\",\r\n",
+        "  \"etag\": \"W/\\\"95ae205b-c0ed-4383-b3e8-e17b86ef571b\\\"\",\r\n",
+        "  \"location\": \"westus2\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"resourceGuid\": \"02eccd3a-bf61-4e36-9bb5-9e38d5780362\",\r\n",
+        "    \"publicIPAddressVersion\": \"IPv4\",\r\n",
+        "    \"publicIPAllocationMethod\": \"Static\",\r\n",
+        "    \"idleTimeoutInMinutes\": 4,\r\n",
+        "    \"ipTags\": []\r\n",
         "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Regional\u0022\r\n",
+        "  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n",
+        "  \"sku\": {\r\n",
+        "    \"name\": \"Standard\",\r\n",
+        "    \"tier\": \"Regional\"\r\n",
         "  }\r\n",
         "}"
       ]
@@ -562,7 +563,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -582,7 +583,7 @@
         "Content-Length": "665",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 16 Oct 2021 17:18:24 GMT",
-        "ETag": "W/\u00220e08f4df-5b42-4e73-ab53-765d6de33086\u0022",
+        "ETag": "W/\"0e08f4df-5b42-4e73-ab53-765d6de33086\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -600,23 +601,23 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022ip-2376\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/publicIPAddresses/ip-2376\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00220e08f4df-5b42-4e73-ab53-765d6de33086\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002202eccd3a-bf61-4e36-9bb5-9e38d5780362\u0022,\r\n",
-        "    \u0022ipAddress\u0022: \u002220.83.251.247\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Static\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
+        "  \"name\": \"ip-2376\",\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/bastionrg-7251/providers/Microsoft.Network/publicIPAddresses/ip-2376\",\r\n",
+        "  \"etag\": \"W/\\\"0e08f4df-5b42-4e73-ab53-765d6de33086\\\"\",\r\n",
+        "  \"location\": \"westus2\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"02eccd3a-bf61-4e36-9bb5-9e38d5780362\",\r\n",
+        "    \"ipAddress\": \"20.83.251.247\",\r\n",
+        "    \"publicIPAddressVersion\": \"IPv4\",\r\n",
+        "    \"publicIPAllocationMethod\": \"Static\",\r\n",
+        "    \"idleTimeoutInMinutes\": 4,\r\n",
+        "    \"ipTags\": []\r\n",
         "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Regional\u0022\r\n",
+        "  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n",
+        "  \"sku\": {\r\n",
+        "    \"name\": \"Standard\",\r\n",
+        "    \"tier\": \"Regional\"\r\n",
         "  }\r\n",
         "}"
       ]

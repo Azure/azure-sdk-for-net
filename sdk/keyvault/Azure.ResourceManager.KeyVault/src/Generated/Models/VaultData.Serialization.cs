@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
             VaultProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -46,16 +46,6 @@ namespace Azure.ResourceManager.KeyVault
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     properties = VaultProperties.DeserializeVaultProperties(property.Value);
@@ -63,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -76,8 +66,13 @@ namespace Azure.ResourceManager.KeyVault
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new VaultData(id, name, type, location.Value, Optional.ToDictionary(tags), systemData.Value, properties);
+            return new VaultData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), properties);
         }
     }
 }

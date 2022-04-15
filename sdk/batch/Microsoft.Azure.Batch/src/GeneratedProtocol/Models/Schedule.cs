@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The schedule according to which Jobs will be created
+    /// The schedule according to which Jobs will be created. All times are
+    /// fixed respective to UTC and are not impacted by daylight saving time.
     /// </summary>
     public partial class Schedule
     {

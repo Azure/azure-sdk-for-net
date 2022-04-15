@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the gallery unique name. </summary>
-    public partial class GalleryIdentifier
+    internal partial class GalleryIdentifier
     {
         /// <summary> Initializes a new instance of GalleryIdentifier. </summary>
         public GalleryIdentifier()

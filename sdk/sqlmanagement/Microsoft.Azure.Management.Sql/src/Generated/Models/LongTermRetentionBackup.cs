@@ -47,11 +47,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="backupExpirationTime">The time the long term retention
         /// backup will expire.</param>
         /// <param name="backupStorageRedundancy">The storage redundancy type
-        /// of the backup. Possible values include: 'Geo', 'Local',
-        /// 'Zone'</param>
+        /// of the backup. Possible values include: 'Geo', 'Local', 'Zone',
+        /// 'GeoZone'</param>
         /// <param name="requestedBackupStorageRedundancy">The storage
         /// redundancy type of the backup. Possible values include: 'Geo',
-        /// 'Local', 'Zone'</param>
+        /// 'Local', 'Zone', 'GeoZone'</param>
         public LongTermRetentionBackup(string id = default(string), string name = default(string), string type = default(string), string serverName = default(string), System.DateTime? serverCreateTime = default(System.DateTime?), string databaseName = default(string), System.DateTime? databaseDeletionTime = default(System.DateTime?), System.DateTime? backupTime = default(System.DateTime?), System.DateTime? backupExpirationTime = default(System.DateTime?), string backupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string))
             : base(id, name, type)
         {
@@ -109,14 +109,14 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the storage redundancy type of the backup. Possible values
-        /// include: 'Geo', 'Local', 'Zone'
+        /// include: 'Geo', 'Local', 'Zone', 'GeoZone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupStorageRedundancy")]
         public string BackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Gets or sets the storage redundancy type of the backup. Possible
-        /// values include: 'Geo', 'Local', 'Zone'
+        /// values include: 'Geo', 'Local', 'Zone', 'GeoZone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
         public string RequestedBackupStorageRedundancy { get; set; }

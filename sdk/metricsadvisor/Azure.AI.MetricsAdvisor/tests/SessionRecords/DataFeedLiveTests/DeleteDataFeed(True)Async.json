@@ -29,7 +29,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z"
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -82,7 +82,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "SqlServer",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -106,7 +106,7 @@
         "viewers": [],
         "creator": "94dc466b-52e4-4678-892d-70a0c45c5f42",
         "status": "Active",
-        "createdTime": "2021-02-05T18:35:00Z",
+        "createdTime": "2021-02-05T18:35:00.0000000Z",
         "isAdmin": true,
         "actionLinkTemplate": "",
         "dataSourceParameter": {

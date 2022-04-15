@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -39,11 +41,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="identityReference">The reference to the user assigned
         /// identity to use to access Azure Blob Storage specified by
         /// containerUrl</param>
-        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
+        /// <param name="uploadHeaders">A list of name-value pairs for headers
+        /// to be used in uploading output files</param>
+        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference), IList<HttpHeader> uploadHeaders = default(IList<HttpHeader>))
         {
             Path = path;
             ContainerUrl = containerUrl;
             IdentityReference = identityReference;
+            UploadHeaders = uploadHeaders;
             CustomInit();
         }
 
@@ -90,6 +95,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "identityReference")]
         public ComputeNodeIdentityReference IdentityReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of name-value pairs for headers to be used in
+        /// uploading output files
+        /// </summary>
+        /// <remarks>
+        /// These headers will be specified when uploading files to Azure
+        /// Storage. For more information, see [Request Headers (All Blob
+        /// Types)](https://docs.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types).
+        /// </remarks>
+        [JsonProperty(PropertyName = "uploadHeaders")]
+        public IList<HttpHeader> UploadHeaders { get; set; }
 
     }
 }

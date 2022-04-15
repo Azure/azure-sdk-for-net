@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
     <NoWarn>$(NoWarn);SA1649</NoWarn>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />

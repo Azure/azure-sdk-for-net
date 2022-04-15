@@ -66,10 +66,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 
-            var csp = new RNGCryptoServiceProvider();
-            var bytes = new byte[4];
-            csp.GetBytes(bytes);
-            var random = new Random(BitConverter.ToInt32(bytes, 0));
+            var random = new Random();
             var buffer = new byte[size];
             random.NextBytes(buffer);
             var text = new byte[size];

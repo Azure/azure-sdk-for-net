@@ -11,9 +11,7 @@ namespace Azure.Core
 {
     internal static class OperationHelpers
     {
-        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
-
-        public static T GetValue<T>(ref T? value) where T: class
+        public static T GetValue<T>(ref T? value) where T : class
         {
             if (value is null)
             {
@@ -23,7 +21,7 @@ namespace Azure.Core
             return value;
         }
 
-        public static T GetValue<T>(ref T? value) where T: struct
+        public static T GetValue<T>(ref T? value) where T : struct
         {
             if (value == null)
             {
@@ -33,25 +31,56 @@ namespace Azure.Core
             return value.Value;
         }
 
-        public static ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken)
+        public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken)
             where TResult : notnull
         {
-            return operation.WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionAsync(operation, null, cancellationToken).ConfigureAwait(false);
         }
 
         public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
             where TResult : notnull
         {
-            while (true)
-            {
-                await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (operation.HasCompleted)
-                {
-                    return Response.FromValue(operation.Value, operation.GetRawResponse());
-                }
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionAsync(operation, pollingInterval, cancellationToken).ConfigureAwait(false);
+        }
 
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
-            }
+        public static Response<TResult> DefaultWaitForCompletion<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken)
+            where TResult : notnull
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletion(operation, null, cancellationToken);
+        }
+
+        public static Response<TResult> DefaultWaitForCompletion<TResult>(this Operation<TResult> operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+            where TResult : notnull
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletion(operation, pollingInterval, cancellationToken);
+        }
+
+        public static async ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionResponseAsync(operation, null, cancellationToken).ConfigureAwait(false);
+        }
+
+        public static async ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionResponseAsync(operation, pollingInterval, cancellationToken).ConfigureAwait(false);
+        }
+
+        public static Response DefaultWaitForCompletionResponse(this Operation operation, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletionResponse(operation, null, cancellationToken);
+        }
+
+        public static Response DefaultWaitForCompletionResponse(this Operation operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletionResponse(operation, pollingInterval, cancellationToken);
         }
     }
 }

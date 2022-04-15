@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="id"> The ID of the function. </param>
         /// <param name="name"> The name of the function, to be used in queries. </param>
         /// <param name="body"> The KQL body of the function. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/>, or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
         internal MetadataFunction(string id, string name, string body)
         {
             if (id == null)

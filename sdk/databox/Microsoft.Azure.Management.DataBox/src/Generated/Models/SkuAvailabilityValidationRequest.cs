@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// class.
         /// </summary>
         /// <param name="deviceType">Device type to be used for the job.
-        /// Possible values include: 'DataBox', 'DataBoxDisk',
-        /// 'DataBoxHeavy'</param>
+        /// Possible values include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         /// <param name="transferType">Type of the transfer. Possible values
         /// include: 'ImportToAzure', 'ExportFromAzure'</param>
         /// <param name="country">ISO country code. Country for hardware
@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets device type to be used for the job. Possible values
-        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
+        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "deviceType")]
         public SkuName DeviceType { get; set; }

@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
@@ -148,11 +148,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockConnection
-                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .Throws(expectedException);
+                .SetupSequence(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .Throws(expectedException)
+                .ReturnsAsync(new[] { "0", "1" });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -200,10 +201,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new[] { "0", "1" };
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -268,10 +270,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var wrappedExcepton = new NotImplementedException("BOOM!");
             var expectedException = new EventHubsException(false, "eh", "LB FAIL", EventHubsException.FailureReason.GeneralError, wrappedExcepton);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Balanced, LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10), PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30) };
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -349,10 +352,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new[] { "0", partitionId };
             var expectedException = new EventHubsException(false, "eh", "LB FAIL", EventHubsException.FailureReason.GeneralError);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Balanced, LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10), PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30) };
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -422,11 +426,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new[] { "0", "13" };
             var wrappedExcepton = new NotImplementedException("BOOM!");
             var expectedException = new EventHubsException(false, "eh", "LB FAIL", EventHubsException.FailureReason.GeneralError, wrappedExcepton);
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -441,6 +446,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             // Delay the return from the error handler by slightly longer than cancellation is triggered in
             // order to validate that the handler call does not block or delay other processor operations.
@@ -496,7 +508,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondPartition = "15";
             var partitionIds = new[] { "0", secondPartition, firstPartiton };
             var ownedPartitions = new List<string> { firstPartiton };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -539,6 +551,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
@@ -586,7 +605,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondPartition = "15";
             var partitionIds = new[] { "0", secondPartition, firstPartiton };
             var ownedPartitions = new List<string>();
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(15) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(15), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -646,6 +665,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<TransportConsumer>());
 
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
 
@@ -704,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
             var ownedPartitions = new List<string>();
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -747,6 +773,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<CancellationTokenSource>(), It.IsAny<EventPosition?>()))
                 .CallBase();
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             mockProcessor
                .Protected()
@@ -813,7 +846,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondPartition = "15";
             var partitionIds = new[] { "0", secondPartition, firstPartiton };
             var ownedPartitions = new List<string> { firstPartiton };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -862,6 +895,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
 
@@ -905,12 +945,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", "14", partitionId };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
@@ -1013,8 +1053,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Protected()
-                .Setup<Task<IEnumerable<EventProcessorCheckpoint>>>("ListCheckpointsAsync", ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new[] { new EventProcessorCheckpoint { PartitionId = partitionId, StartingPosition = expectedStartingPosition } });
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new EventProcessorCheckpoint { PartitionId = partitionId, StartingPosition = expectedStartingPosition }));
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
@@ -1045,7 +1087,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "77" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
@@ -1072,6 +1114,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() => completionSource.TrySetResult(true));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             mockProcessor
                 .Protected()
@@ -1119,7 +1168,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -1154,6 +1203,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
@@ -1204,12 +1260,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLogger
                 .Setup(log => log.EventProcessorPartitionProcessingStartError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -1301,12 +1357,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                  .SetupGet(lb => lb.OwnedPartitionIds)
@@ -1391,7 +1447,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -1426,6 +1482,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() => startCompletionSource.TrySetResult(true));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should have started.");
@@ -1477,7 +1540,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(5), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
@@ -1510,6 +1573,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<TransportConsumer>())
                 .Callback(() => startCompletionSource.TrySetResult(true));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
@@ -1554,13 +1624,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250),  PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(750) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250),  PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(750), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
@@ -1632,7 +1702,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
             var ownedPartitions = new List<string> { partitionId };
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250),  PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(750) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250),  PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(750), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -1670,6 +1740,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             mockProcessor
                 .Protected()
@@ -1718,13 +1795,13 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionIds = Enumerable.Range(0, 2001).Select(item => item.ToString()).ToArray();
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250), LoadBalancingStrategy = LoadBalancingStrategy.Balanced };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
@@ -1803,7 +1880,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer.Object.LoadBalanceInterval = options.LoadBalancingUpdateInterval;
 
@@ -1896,7 +1973,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
@@ -1988,7 +2065,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<TransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer.Object.LoadBalanceInterval = options.LoadBalancingUpdateInterval;
 

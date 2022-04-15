@@ -18,10 +18,9 @@ namespace Microsoft.Azure.Batch
             string containerUrl,
             ComputeNodeIdentityReference identityReference,
             string path = default(string))
+            : this(containerUrl, path)
         {
-            this.ContainerUrl = containerUrl;
-            this.IdentityReference = identityReference;
-            this.Path = path;
+            IdentityReference = identityReference;
         }
     }
 }

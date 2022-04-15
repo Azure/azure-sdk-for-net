@@ -197,7 +197,7 @@ namespace Azure.Core.Tests
 
             activity.Stop();
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
 #else
             Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
@@ -273,7 +273,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0, testListener.Events.Count);
         }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
         [SetUp]
         [TearDown]
         public void ResetFeatureSwitch()

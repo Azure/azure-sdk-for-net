@@ -9,7 +9,6 @@ To submit statements to Spark running on Azure Synapse, you need to instantiate 
 ```C# Snippet:CreateSparkSessionClientAsync
 // Replace the strings below with the spark and endpoint information
 string sparkPoolName = "<my-spark-pool-name>";
-
 string endpoint = "<my-endpoint-url>";
 
 SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());

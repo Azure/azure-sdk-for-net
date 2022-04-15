@@ -28,46 +28,46 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
 #if SNIPPET
-            Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+            Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 #else
             Uri officeSuppliesUri = new Uri(trainingFileUrl);
 #endif
             var officeSupplieOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office supplies" };
 
-            BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: officeSupplieOptions);
+            BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
             Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
             DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
 
 #if SNIPPET
-            Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+            Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 #else
             Uri officeEquipmentUri = new Uri(trainingFileUrl);
 #endif
             var equipmentOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office Equipment" };
 
-            BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+            BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
             DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
 
 #if SNIPPET
-            Uri furnitureUri = <purchaseOrderFurnitureUri>;
+            Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 #else
             Uri furnitureUri = new Uri(trainingFileUrl);
 #endif
             var furnitureOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Furniture" };
 
-            BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+            BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
             DocumentModel furnitureModel = furnitureOperationResponse.Value;
 
 #if SNIPPET
-            Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+            Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 #else
             Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 #endif
             var cleaningOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Cleaning Supplies" };
 
-            BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, buildModelOptions: equipmentOptions);
+            BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
             DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 

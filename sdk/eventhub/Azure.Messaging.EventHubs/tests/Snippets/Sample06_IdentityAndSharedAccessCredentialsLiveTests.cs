@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Producer;
@@ -49,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -101,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -150,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -185,19 +184,18 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Sample06_ConnectionStringParse
 
 #if SNIPPET
+            var credential = new DefaultAzureCredential();
+
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
 
             EventHubsConnectionStringProperties properties =
                 EventHubsConnectionStringProperties.Parse(connectionString);
-
-            TokenCredential credential = new DefaultAzureCredential();
-            /*@@*/
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
             var producer = new EventHubProducerClient(
                 properties.FullyQualifiedNamespace,
@@ -206,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {

@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
         /// <param name="operation"> Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, or <paramref name="operation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/> or <paramref name="operation"/> is null. </exception>
         public CognitiveServicesVisionProcessor(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, SpatialAnalysisOperationBase operation) : base(name, inputs)
         {
             if (name == null)

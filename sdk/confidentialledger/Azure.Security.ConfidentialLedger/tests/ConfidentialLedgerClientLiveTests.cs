@@ -21,6 +21,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
+        private string transactionId;
+        private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -38,6 +40,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 return true;
             };
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                Options.OperationPollingInterval = TimeSpan.Zero;
+            }
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
@@ -48,6 +54,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     InstrumentClientOptions(Options)));
+
+            if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
+            {
+                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true)
+                    .GetAwaiter()
+                    .GetResult();
+                transactionId = operation.Id;
+            }
         }
 
         public async Task GetUser(string objId)
@@ -146,20 +160,21 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task PostLedgerEntry()
         {
-            var result = await Client.PostLedgerEntryAsync(
-                RequestContent.Create(
-                    new { contents = Recording.GenerateAssetName("test") }));
+            var operation = await Client.PostLedgerEntryAsync(
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
+                waitForCompletion: true);
+            var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("subLedgerId"));
+            Assert.NotNull(operation.Id);
+            Assert.That(stringResult, Does.Contain("Committed"));
+            Assert.That(stringResult, Does.Contain(operation.Id));
         }
 
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
-            await PostLedgerEntry();
-
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -255,20 +270,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var doc = JsonDocument.Parse(stringResult);
             if (doc.RootElement.TryGetProperty("transactionId", out var tid))
             {
-                        return tid.GetString();
+                return tid.GetString();
             }
             throw new Exception($"Could not parse transationId from response:\n{stringResult}");
-        }
-
-        private Dictionary<string, string> GetNextLinkDetails(Response response)
-        {
-            var stringResult = new StreamReader(response.ContentStream).ReadToEnd();
-            var doc = JsonDocument.Parse(stringResult);
-            if (doc.RootElement.TryGetProperty("@nextLink", out var prop))
-            {
-                return GetQueryStringKvps(prop.GetString());
-            }
-            return default;
         }
     }
 }

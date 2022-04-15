@@ -20,23 +20,39 @@
     "variables": {},
     "resources": [],
     "outputs": {
-        "CONVERSATIONS_KEY": {
+        // TODO: Uncomment and define when test resources are deployed dynamically.
+        // Developers should define the following environment variables to run tests locally.
+        // Live test CIs will use environment variables defined via tests.yml.
+        
+        "AZURE_CONVERSATIONS_KEY": {
             "type": "string",
             "value": ""
         },
-        "CONVERSATIONS_PROJECT": {
+        "AZURE_CONVERSATIONS_PROJECT_NAME": {
+            "type": "string",
+            "value": "antischOne"
+        },
+        "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "production"
+        },
+        "AZURE_CONVERSATIONS_ENDPOINT": {
             "type": "string",
             "value": ""
         },
-        "CONVERSATIONS_URI": {
+        "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": {
             "type": "string",
-            "value": ""
+            "value": "antischTwo"
         },
-        "QUESTIONANSWERING_ENDPOINT": {
+        "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "production"
+        },
+        "AZURE_QUESTIONANSWERING_ENDPOINT": {
             "type": "string",
             "value": "https://wuppe.api.cognitive.microsoft.com"
         },
-        "QUESTIONANSWERING_KEY": {
+        "AZURE_QUESTIONANSWERING_KEY": {
             "type": "string",
             "value": ""
         },

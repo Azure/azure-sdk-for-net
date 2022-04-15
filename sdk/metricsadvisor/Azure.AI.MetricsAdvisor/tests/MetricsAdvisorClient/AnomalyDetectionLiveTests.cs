@@ -62,10 +62,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Filter = new AnomalyFilter(AnomalySeverity.Medium, AnomalySeverity.Medium)
             };
 
-            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var dimensions = new Dictionary<string, string>() { { "region", "Delhi" }, { "category", "Handmade" } };
             var groupKey1 = new DimensionKey(dimensions);
 
-            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" } };
+            dimensions = new Dictionary<string, string>() { { "region", "Kolkata" } };
             var groupKey2 = new DimensionKey(dimensions);
 
             options.Filter.DimensionKeys.Add(groupKey1);
@@ -88,10 +88,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(anomaly.SeriesKey);
 
-                anomaly.SeriesKey.TryGetValue("city", out string city);
+                anomaly.SeriesKey.TryGetValue("region", out string region);
                 anomaly.SeriesKey.TryGetValue("category", out string category);
 
-                Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
+                Assert.That((region == "Delhi" && category == "Handmade") || region == "Kolkata");
 
                 if (++anomalyCount >= MaximumSamplesCount)
                 {
@@ -144,10 +144,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetIncidentsForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
 
-            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var dimensions = new Dictionary<string, string>() { { "region", "Delhi" }, { "category", "Handmade" } };
             var groupKey1 = new DimensionKey(dimensions);
 
-            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" } };
+            dimensions = new Dictionary<string, string>() { { "region", "Kolkata" } };
             var groupKey2 = new DimensionKey(dimensions);
 
             options.DimensionKeys.Add(groupKey1);
@@ -170,10 +170,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(incident.RootSeriesKey);
 
-                incident.RootSeriesKey.TryGetValue("city", out string city);
+                incident.RootSeriesKey.TryGetValue("region", out string region);
                 incident.RootSeriesKey.TryGetValue("category", out string category);
 
-                Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
+                Assert.That((region == "Delhi" && category == "Handmade") || region == "Kolkata");
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {
@@ -217,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // We already know the the incident we want to get, so apply filters to make the
             // service call cheaper.
 
-            var dimensions = new Dictionary<string, string>() { { "city", "__SUM__" }, { "category", "Grocery & Gourmet Food" } };
+            var dimensions = new Dictionary<string, string>() { { "region", "__SUM__" }, { "category", "Grocery & Gourmet Food" } };
             var groupKey = new DimensionKey(dimensions);
 
             options.DimensionKeys.Add(groupKey);
@@ -251,7 +251,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetIncidentRootCausesForIncidentFromAlert()
         {
-            const string incidentId = "5a0692283edccf37ce825b3a8d475f4e-17571a77000";
+            const string incidentId = "30612c95b4c216ef418956c5c6162691-17bbd8dec00";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -293,7 +293,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task GetAnomalyDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
-            const string dimensionName = "city";
+            const string dimensionName = "region";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -317,7 +317,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetAnomalyDimensionValuesWithOptionalDimensionFilter()
         {
-            const string dimensionName = "city";
+            const string dimensionName = "region";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -349,10 +349,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var dimensions = new Dictionary<string, string>() { { "region", "Delhi" }, { "category", "Handmade" } };
             var seriesKey1 = new DimensionKey(dimensions);
 
-            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            dimensions = new Dictionary<string, string>() { { "region", "Kolkata" }, { "category", "__SUM__" } };
             var seriesKey2 = new DimensionKey(dimensions);
 
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
@@ -387,10 +387,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.SeriesKey);
             }
 
-            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.ToList());
-            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.ToList());
+            // Making sure count is exactly 2 because the logic below relies on that.
+            Assert.That(seriesKeys.Count, Is.EqualTo(2));
+            Assert.That(returnedKeys.Count, Is.EqualTo(2));
 
-            Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
+            if (AreSame(seriesKeys[0], returnedKeys[0]))
+            {
+                Assert.That(seriesKeys[1], Is.EquivalentTo(returnedKeys[1]));
+            }
+            else
+            {
+                Assert.That(seriesKeys[0], Is.EquivalentTo(returnedKeys[1]));
+                Assert.That(seriesKeys[1], Is.EquivalentTo(returnedKeys[0]));
+            }
         }
 
         private void ValidateIncidentRootCause(IncidentRootCause rootCause)
@@ -405,6 +414,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             ValidateSeriesKey(rootCause.SeriesKey);
+        }
+
+        private bool AreSame(DimensionKey left, DimensionKey right)
+        {
+            if (left.Dimension.Count != right.Dimension.Count)
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<string, string> kvp in left)
+            {
+                if (!right.TryGetValue(kvp.Key, out string value) || value != kvp.Value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

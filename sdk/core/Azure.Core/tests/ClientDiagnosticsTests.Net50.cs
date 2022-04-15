@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0
+#if NET5_0_OR_GREATER
     public partial class ClientDiagnosticsTests
     {
         [SetUp]
@@ -67,8 +67,8 @@ namespace Azure.Core.Tests
                 scope.AddAttribute("Attribute2", 2, i => i.ToString());
                 scope.AddAttribute("Attribute3", 3);
 
-                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00");
-                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", new Dictionary<string, string>()
+                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
+                scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
                 {
                     {"linkAttribute", "linkAttributeValue"}
                 });
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests
 
                 var links = activity.Links.ToArray();
                 Assert.AreEqual(2, links.Length);
-                Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", null), links[0].Context);
+                Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar"), links[0].Context);
                 Assert.AreEqual(ActivityContext.Parse("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null), links[1].Context);
 
                 Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
-            scope.AddLink("LALALA");
+            scope.AddLink("test", "ignored");
 
             scope.Start();
             scope.Dispose();

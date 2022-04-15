@@ -131,5 +131,15 @@ namespace Microsoft.Azure.Management.NetApp
         /// </summary>
         IVaultsOperations Vaults { get; }
 
+        /// <summary>
+        /// Gets the IVolumeGroupsOperations.
+        /// </summary>
+        IVolumeGroupsOperations VolumeGroups { get; }
+
+        /// <summary>
+        /// Gets the ISubvolumesOperations.
+        /// </summary>
+        ISubvolumesOperations Subvolumes { get; }
+
     }
 }

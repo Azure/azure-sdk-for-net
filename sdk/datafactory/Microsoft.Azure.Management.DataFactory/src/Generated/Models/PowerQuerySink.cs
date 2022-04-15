@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">Transformation name.</param>
         /// <param name="description">Transformation description.</param>
-        /// <param name="flowlet">Flowlet Reference</param>
         /// <param name="dataset">Dataset reference.</param>
         /// <param name="linkedService">Linked service reference.</param>
+        /// <param name="flowlet">Flowlet Reference</param>
         /// <param name="schemaLinkedService">Schema linked service
         /// reference.</param>
         /// <param name="script">sink script.</param>
-        public PowerQuerySink(string name, string description = default(string), DataFlowReference flowlet = default(DataFlowReference), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), string script = default(string))
-            : base(name, description, flowlet, dataset, linkedService, schemaLinkedService)
+        public PowerQuerySink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), string script = default(string))
+            : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
         {
             Script = script;
             CustomInit();

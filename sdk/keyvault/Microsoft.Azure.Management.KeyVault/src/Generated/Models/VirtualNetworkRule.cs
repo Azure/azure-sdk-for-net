@@ -33,9 +33,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         /// <param name="id">Full resource id of a vnet subnet, such as
         /// '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.</param>
-        public VirtualNetworkRule(string id)
+        /// <param name="ignoreMissingVnetServiceEndpoint">Property to specify
+        /// whether NRP will ignore the check if parent subnet has
+        /// serviceEndpoints configured.</param>
+        public VirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint = default(bool?))
         {
             Id = id;
+            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
             CustomInit();
         }
 
@@ -50,6 +54,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets property to specify whether NRP will ignore the check
+        /// if parent subnet has serviceEndpoints configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "ignoreMissingVnetServiceEndpoint")]
+        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
 
         /// <summary>
         /// Validate the object.

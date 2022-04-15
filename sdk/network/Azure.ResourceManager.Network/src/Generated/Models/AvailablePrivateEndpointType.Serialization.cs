@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"))
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -47,8 +48,13 @@ namespace Azure.ResourceManager.Network.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new AvailablePrivateEndpointType(id, name, type, resourceName.Value, displayName.Value);
+            return new AvailablePrivateEndpointType(id, name, type, systemData, resourceName.Value, displayName.Value);
         }
     }
 }

@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("routeFilter");
                 JsonSerializer.Serialize(writer, RouteFilter);
             }
-            if (Optional.IsDefined(Ipv6PeeringConfig))
+            if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig");
-                writer.WriteObjectValue(Ipv6PeeringConfig);
+                writer.WriteObjectValue(IPv6PeeringConfig);
             }
             if (Optional.IsDefined(ExpressRouteConnection))
             {
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Network
             Optional<string> gatewayManagerEtag = default;
             Optional<string> lastModifiedBy = default;
             Optional<WritableSubResource> routeFilter = default;
-            Optional<Ipv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
+            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             Optional<Resources.Models.SubResource> expressRouteConnection = default;
             Optional<IList<ExpressRouteCircuitConnectionData>> connections = default;
-            Optional<IReadOnlyList<PeerExpressRouteCircuitConnection>> peeredConnections = default;
+            Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> peeredConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(property0.Value);
+                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnection"))
@@ -348,10 +348,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PeerExpressRouteCircuitConnection> array = new List<PeerExpressRouteCircuitConnection>();
+                            List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(item));
+                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item));
                             }
                             peeredConnections = array;
                             continue;

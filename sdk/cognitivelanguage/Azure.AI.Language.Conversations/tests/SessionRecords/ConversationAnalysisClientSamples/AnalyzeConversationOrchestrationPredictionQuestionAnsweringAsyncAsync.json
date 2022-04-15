@@ -1,208 +1,121 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischTwo\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "46",
+        "Content-Length": "219",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7d0d1157fe02be458062e0047a17e635-4d39f7d0f326f44b-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "66add9ffb8d99a96c3d4e216dc2c7e4f",
+        "traceparent": "00-bec7ae85cad863498c98b2971403737c-87c8db895718bc49-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "83d1b21a8865158da7e237d16e3f415c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "Where are the calories per recipe?"
+        "analysisInput": {
+          "conversationItem": {
+            "text": "How are you?",
+            "participantId": "1",
+            "id": "1",
+            "modality": "text"
+          }
+        },
+        "parameters": {
+          "projectName": "OrchestrationProject",
+          "deploymentName": "ShabanTest"
+        },
+        "kind": "CustomConversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "25e479d0-65ac-45da-8df6-f94adb16dec7",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 28 Oct 2021 16:05:48 GMT",
-        "pragma": "no-cache",
-        "request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
+        "Date": "Tue, 05 Apr 2022 12:34:00 GMT",
+        "Pragma": "no-cache",
+        "request-id": "25e479d0-65ac-45da-8df6-f94adb16dec7",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "1412"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "220"
       },
       "ResponseBody": {
-        "query": "Where are the calories per recipe?",
-        "prediction": {
-          "topIntent": "SushiMaking",
-          "projectKind": "workflow",
-          "intents": {
-            "SushiMaking": {
-              "confidenceScore": 0.76692706,
-              "targetKind": "question_answering",
-              "result": {
-                "answers": [
-                  {
-                    "questions": [
-                      "do you eat cake?",
-                      "do you ever eat beef?",
-                      "do you ever eat pizza?",
-                      "have you ever eaten tofu?",
-                      "you don\u0027t eat?",
-                      "have you ever wanted to eat?",
-                      "Don\u0027t you ever get hungry?",
-                      "how many calories do you need?",
-                      "What kind of food do you like?",
-                      "What do you eat for dinner?",
-                      "What do you eat?",
-                      "What kind of food do you eat?",
-                      "What is your favorite snack?",
-                      "What is your favorite meal?",
-                      "what foods do you eat?",
-                      "What do you want to eat?",
-                      "What did you eat for lunch?",
-                      "What do you like to dine on?",
-                      "What kind of foods do you like?",
-                      "What do you eat for lunch?",
-                      "What do you eat for breakfast?",
-                      "What did you have for lunch?",
-                      "What did you have for dinner?",
-                      "do you eat vegetables",
-                      "What do you like to eat?",
-                      "will you ever eat?",
-                      "Are you ever hungry?",
-                      "Do you eat pasta?",
-                      "do you eat pizza?",
-                      "you don\u0027t need to eat?",
-                      "you don\u0027t need food?",
-                      "What kind of food do you like to eat?",
-                      "will you ever need to eat?",
-                      "when do you eat?",
-                      "What\u0027s your favorite cuisine?",
-                      "what kinds of foods do you like?",
-                      "What kinds of food do you like to eat?",
-                      "What kinds of food do you eat?",
-                      "What did you eat for dinner?",
-                      "you don\u0027t eat food?",
-                      "Do you eat?",
-                      "do you need calories to survive?",
-                      "Do you have a favorite snack?",
-                      "Do you have a favorite meal?",
-                      "Do you get hungry?",
-                      "do you ever need to eat?",
-                      "What did you have for breakfast?",
-                      "do you ever eat food?",
-                      "do you need food?",
-                      "do you eat food?",
-                      "do you consume food?",
-                      "Are you hungry?",
-                      "Are you going to have lunch?",
-                      "Are you going to have dinner?",
-                      "Are you going to have breakfast?",
-                      "Do you ever get hungry?",
-                      "have you ever wanted a snack?",
-                      "What did you eat for breakfast?",
-                      "so you don\u0027t eat?",
-                      "how many calories do you need to eat?",
-                      "how many calories do you need each day?",
-                      "how many calories do you eat?",
-                      "do you need calories?",
-                      "have you ever wanted food?",
-                      "do you need food to survive?",
-                      "have you ever wanted a meal?",
-                      "have you ever been hungry?",
-                      "Don\u0027t you get hungry?",
-                      "do you not need to eat?",
-                      "do you eat cookies?",
-                      "do you ever eat bacon?",
-                      "so you don\u0027t need to eat?",
-                      "do you ever eat toast?",
-                      "have you ever eaten toast?",
-                      "do you eat toast?",
-                      "do you ever eat bread?",
-                      "have you ever eaten pancakes?",
-                      "do you eat bread?",
-                      "so you\u0027ve really never been hungry?",
-                      "have you ever eaten bacon?",
-                      "do you eat bacon?",
-                      "do you ever eat eggs?",
-                      "have you ever eaten eggs?",
-                      "do you eat eggs?",
-                      "Do you eat fruit?",
-                      "have you ever eaten bread?",
-                      "true or false: you don\u0027t get hungry",
-                      "do you eat tofu?",
-                      "do you ever eat pork?",
-                      "have you ever eaten pork?",
-                      "do you eat pork?",
-                      "so you never eat?",
-                      "do you eat beef?",
-                      "so you\u0027ve really never eaten?",
-                      "true or false: you don\u0027t eat",
-                      "tell me whether or not you eat",
-                      "is it true that you don\u0027t eat?",
-                      "so you\u0027ve never really eaten food?",
-                      "so you\u0027ve never really eaten anything?",
-                      "do you eat pancakes?",
-                      "have you ever eaten beef?",
-                      "do you ever eat fruit?",
-                      "have you ever eaten cookies?",
-                      "have you ever eaten vegetables?",
-                      "have you ever eaten fruit?",
-                      "do you ever eat cake?",
-                      "do you ever eat pie?",
-                      "do you ever eat pancakes?",
-                      "do you ever eat vegetables?",
-                      "do you eat ice cream?",
-                      "have you ever eaten pasta?",
-                      "do you ever eat pasta?",
-                      "have you ever eaten pizza?",
-                      "do you eat pie?",
-                      "do you ever eat cookies?",
-                      "do you eat steak?",
-                      "do you ever eat fries?",
-                      "have you ever eaten fries?",
-                      "do you eat fries?",
-                      "do you ever eat burgers?",
-                      "have you ever eaten burgers?",
-                      "do you eat burgers?",
-                      "have you ever eaten pie?",
-                      "have you ever eaten steak?",
-                      "have you ever eaten cake?",
-                      "do you ever eat chicken?",
-                      "have you ever eaten chicken?",
-                      "do you eat chicken?",
-                      "do you ever eat ice cream?",
-                      "have you ever eaten ice cream?",
-                      "do you ever eat tofu?",
-                      "do you ever eat steak?"
-                    ],
-                    "answer": "I only do food for thought.",
-                    "confidenceScore": 0.4153,
-                    "id": 12,
-                    "source": "qna_chitchat_Friendly.tsv",
-                    "metadata": {
-                      "editorial": "chitchat"
-                    },
-                    "dialog": {
-                      "isContextOnly": false,
-                      "prompts": []
+        "kind": "CustomConversationResult",
+        "results": {
+          "query": "How are you?",
+          "prediction": {
+            "topIntent": "ChitChat-QnA",
+            "projectKind": "workflow",
+            "intents": {
+              "ChitChat-QnA": {
+                "confidenceScore": 0.99826396,
+                "targetKind": "question_answering",
+                "result": {
+                  "answers": [
+                    {
+                      "questions": [
+                        "How\u0027d you sleep last night?",
+                        "Are you doing good?",
+                        "Are you feeling well?",
+                        "How are you doing?",
+                        "How is the day treating you?",
+                        "Are you feeling OK?",
+                        "How are you?",
+                        "How\u0027s it hangin?",
+                        "How\u0027s tricks?",
+                        "Are you doing OK?",
+                        "Hey, how are you?",
+                        "How are you feeling?",
+                        "How are ya?",
+                        "How are things?",
+                        "How are you going?",
+                        "How art thou?",
+                        "Greetings, Bot. How are you doing?",
+                        "Are you feeling good?",
+                        "Are you doing well?",
+                        "How are things going?",
+                        "How\u0027s it going?",
+                        "Say, how are you doing?",
+                        "How\u0027s the day treating you?",
+                        "How\u0027s life?",
+                        "How\u0027s life treating you?",
+                        "How are you today?",
+                        "Yo, how are you?",
+                        "How you doing?",
+                        "How you doing bot?",
+                        "How ya doing?",
+                        "How is the day treating ya?",
+                        "How\u0027s it hanging?"
+                      ],
+                      "answer": "I\u0027m doing great, thanks for asking!",
+                      "confidenceScore": 1.0,
+                      "id": 72,
+                      "source": "qna_chitchat_friendly.tsv",
+                      "metadata": {
+                        "editorial": "chitchat"
+                      },
+                      "dialog": {
+                        "isContextOnly": false,
+                        "prompts": []
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
+              },
+              "EmailIntent": {
+                "confidenceScore": 0.7892474,
+                "targetKind": "conversation"
+              },
+              "RestaurantIntent": {
+                "confidenceScore": 0.53074795,
+                "targetKind": "luis"
+              },
+              "None": {
+                "confidenceScore": 0.16826314,
+                "targetKind": "non_linked"
               }
-            },
-            "SushiOrder": {
-              "confidenceScore": 0.6770833,
-              "targetKind": "conversation"
-            },
-            "None": {
-              "confidenceScore": 0,
-              "targetKind": "non_linked"
             }
           }
         }
@@ -210,8 +123,10 @@
     }
   ],
   "Variables": {
-    "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1730280126"
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
+    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
+    "RandomSeed": "566617429"
   }
 }

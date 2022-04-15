@@ -5042,7 +5042,8 @@ namespace DataFactory.Tests.JsonSamples
               ""recursive"": true,
               ""wildcardFolderPath"": ""A*"",
               ""wildcardFileName"":  ""*.csv"",
-              ""useBinaryTransfer"":  true
+              ""useBinaryTransfer"":  true,
+              ""disableChunking"":  true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -7586,6 +7587,38 @@ namespace DataFactory.Tests.JsonSamples
             }
         ]
     }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteScriptActivityPipeline = @"
+{
+  ""name"": ""##PipelineName##"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyScriptActivity"",
+        ""type"": ""Script"",
+        ""linkedServiceName"": {
+          ""referenceName"": ""myLinkedService"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+          ""scripts"": [
+            {
+              ""text"": ""@pipeline().parameters.query"",
+              ""type"": ""Query""
+            }
+          ]
+        }
+      }
+    ],
+    ""parameters"": {
+      ""query"": {
+          ""type"": ""String""
+        }
+      }
+   }
 }
 ";
     }

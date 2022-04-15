@@ -15,6 +15,7 @@ using System.Text;
 using Xunit;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 using ResourceIdentityType = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType;
+using System.Xml;
 
 
 namespace ContainerRegistry.Tests
@@ -493,7 +494,7 @@ namespace ContainerRegistry.Tests
                         trigger: new TriggerProperties(
                             sourceTriggers: null,
                             baseImageTrigger: new BaseImageTrigger(
-                                baseImageTriggerType: BaseImageTriggerType.Runtime, 
+                                baseImageTriggerType: BaseImageTriggerType.Runtime,
                                 name: "defaultBaseimageTriggerName",
                                 status: TriggerStatus.Enabled))
                         ));
@@ -684,22 +685,28 @@ steps:
                     TestUtilities.GenerateName("acrtaskrun"),
                     new TaskRun(
                         location: registry.Location,
-                        identity: new IdentityProperties {
+                        identity: new IdentityProperties
+                        {
                             Type = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType.UserAssigned,
-                            UserAssignedIdentities = new Dictionary<string, UserIdentityProperties> {
-                                ["/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"] 
+                            UserAssignedIdentities = new Dictionary<string, UserIdentityProperties>
+                            {
+                                ["/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"]
                                     = new UserIdentityProperties()
                             }
                         },
                         runRequest: new EncodedTaskRunRequest(
                         encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
                         platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
-                        credentials: new Credentials {
-                            SourceRegistry = new SourceRegistryCredentials {
+                        credentials: new Credentials
+                        {
+                            SourceRegistry = new SourceRegistryCredentials
+                            {
                                 LoginMode = SourceRegistryLoginMode.Default
                             },
-                            CustomRegistries = new Dictionary<string, CustomRegistryCredentials> {
-                                ["acrsdktestregistry.azurecr.io"] = new CustomRegistryCredentials {
+                            CustomRegistries = new Dictionary<string, CustomRegistryCredentials>
+                            {
+                                ["acrsdktestregistry.azurecr.io"] = new CustomRegistryCredentials
+                                {
                                     Identity = "84962bda-7c5e-403e-8515-5100e4ede735" // client id of acrsdktestidentity 
                                 }
                             }
@@ -721,6 +728,304 @@ steps:
 
                 // Delete the container registry
                 registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryPrivateLinkResourcesTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                // Validate list private link resources operation for premium registry
+                var privateLinkResources = registryClient.Registries.ListPrivateLinkResources(resourceGroup.Name, registry.Name);
+                Assert.NotEmpty(privateLinkResources);
+
+                // Validate get private link resource operation
+                foreach (var privateLinkResource in privateLinkResources)
+                {
+                    var resource = registryClient.Registries.GetPrivateLinkResource(resourceGroup.Name, registry.Name, privateLinkResource.Name);
+                    Assert.NotNull(resource);
+                }
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistrySystemDataTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                // Validate registry system data properties
+                var cachedSystemData = registry.SystemData;
+                ValidateSystemData(cachedSystemData);
+
+                // Apply SKU update
+                var parameters = new RegistryUpdateParameters()
+                {
+                    Sku = new Sku()
+                    {
+                        Name = SkuName.Standard
+                    }
+                };
+
+                registry = registryClient.Registries.Update(resourceGroup.Name, registry.Name, parameters);
+
+                // Validate updated registry system data properties
+                ValidateSystemData(registry.SystemData);
+
+                // Validate system data create properties
+                Assert.Equal(cachedSystemData.CreatedAt, registry.SystemData.CreatedAt);
+                Assert.Equal(cachedSystemData.CreatedBy, registry.SystemData.CreatedBy);
+                Assert.Equal(cachedSystemData.CreatedByType, registry.SystemData.CreatedByType);
+
+                // Validate system data update properties
+                Assert.NotEqual(cachedSystemData.LastModifiedAt, registry.SystemData.LastModifiedAt);
+                Assert.Equal(cachedSystemData.LastModifiedBy, registry.SystemData.LastModifiedBy);
+                Assert.Equal(cachedSystemData.LastModifiedByType, registry.SystemData.LastModifiedByType);
+
+                void ValidateSystemData(SystemData systemData)
+                {
+                    Assert.NotNull(systemData);
+                    Assert.NotNull(systemData.CreatedAt);
+                    Assert.NotNull(systemData.CreatedBy);
+                    Assert.NotNull(systemData.CreatedByType);
+                    Assert.NotNull(systemData.LastModifiedAt);
+                    Assert.NotNull(systemData.LastModifiedBy);
+                    Assert.NotNull(systemData.LastModifiedByType);
+                }
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryScopeMapTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                // Create scope map
+                var scopeMap = ContainerRegistryTestUtilities.CreatedContainerRegistryScopeMap(registryClient, resourceGroup.Name, registry.Name);
+                Assert.NotNull(scopeMap);
+                Assert.NotEmpty(scopeMap.Id);
+                Assert.Equal(ContainerRegistryTestUtilities.DefaultScopeMapActions.Length, scopeMap.Actions.Count);
+                Assert.Null(scopeMap.Description);
+                Assert.Equal(ProvisioningState.Succeeded, scopeMap.ProvisioningState);
+                Assert.Equal("UserDefined", scopeMap.ScopeMapType);
+
+                // List scope maps
+                var scopeMaps = registryClient.ScopeMaps.List(resourceGroup.Name, registry.Name);
+                var systemDefinedScopeMaps = scopeMaps.Where(scopeMap => scopeMap.ScopeMapType.Equals("SystemDefined"));
+                var userDefinedScopeMaps = scopeMaps.Where(scopeMap => scopeMap.ScopeMapType.Equals("UserDefined"));
+                scopeMap = userDefinedScopeMaps.First(s => StringComparer.OrdinalIgnoreCase.Equals(s.Name, scopeMap.Name));
+                Assert.Equal(4, scopeMaps.Count());
+                Assert.Equal(3, systemDefinedScopeMaps.Count());
+                Assert.Single(userDefinedScopeMaps);
+                Assert.NotNull(scopeMap);
+
+                // Get scope map
+                scopeMap = registryClient.ScopeMaps.Get(resourceGroup.Name, registry.Name, scopeMap.Name);
+                Assert.NotNull(scopeMap);
+
+                // Update scope map
+                scopeMap = registryClient.ScopeMaps.Update(resourceGroup.Name, registry.Name, scopeMap.Name, "Description", new string[] {
+                    "repositories/hello-world/content/read"
+                });
+                Assert.Single(scopeMap.Actions);
+                Assert.NotEmpty(scopeMap.Description);
+
+                // Delete scope map
+                registryClient.ScopeMaps.Delete(resourceGroup.Name, registry.Name, scopeMap.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryTokenTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                // Create token
+                var scopeMapId = $"{registry.Id}/scopeMaps/{ContainerRegistryTestUtilities.DefaultScopeMapRepositoriesAdmin}";
+                var token = ContainerRegistryTestUtilities.CreatedContainerRegistryToken(registryClient, resourceGroup.Name, registry.Name, scopeMapId);
+                Assert.NotNull(token);
+                Assert.NotEmpty(token.Id);
+                Assert.NotEmpty(token.ScopeMapId);
+                Assert.Equal("enabled", token.Status);
+                Assert.Equal(ProvisioningState.Succeeded, token.ProvisioningState);
+
+                // List tokens
+                var tokens = registryClient.Tokens.List(resourceGroup.Name, registry.Name);
+                token = tokens.First(t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, token.Name));
+                Assert.Single(tokens);
+                Assert.NotNull(token);
+
+                // Get token
+                token = registryClient.Tokens.Get(resourceGroup.Name, registry.Name, token.Name);
+                Assert.NotNull(token);
+
+                // Update token
+                token = registryClient.Tokens.Update(resourceGroup.Name, registry.Name, token.Name, new TokenUpdateParameters(
+                    status: "Disabled"
+                ));
+                Assert.Equal("Disabled", token.Status);
+
+                // Generate password
+                var credentials = registryClient.Registries.GenerateCredentials(resourceGroup.Name, registry.Name, new GenerateCredentialsParameters(
+                    name: "password1",
+                    tokenId: token.Id)
+                );
+                Assert.NotNull(credentials);
+                Assert.NotEmpty(credentials.Passwords);
+                Assert.NotEmpty(credentials.Username);
+
+                // Delete token
+                registryClient.Tokens.Delete(resourceGroup.Name, registry.Name, token.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryConnectedRegistryTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var location = "eastus";
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, location);
+
+                // Enable data endpoint in container registry
+                registry = registryClient.Registries.Update(resourceGroup.Name, registry.Name, new RegistryUpdateParameters
+                {
+                    DataEndpointEnabled = true
+                });
+
+                var repository = TestUtilities.GenerateName("hello-world");
+                var scopeMapName = TestUtilities.GenerateName("acrscopemap");
+                var tokenName = TestUtilities.GenerateName("acrtoken");
+                var connectedRegistryName = TestUtilities.GenerateName("acrconnectedregistry");
+
+                // Create scopemap/token
+                var scopeMap = registryClient.ScopeMaps.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    scopeMapName,
+                    new string[] {
+                        $"repositories/{repository}/content/read",
+                        $"repositories/{repository}/content/write",
+                        $"repositories/{repository}/content/delete",
+                        $"repositories/{repository}/metadata/read",
+                        $"repositories/{repository}/metadata/write",
+                        $"gateway/{connectedRegistryName}/config/read",
+                        $"gateway/{connectedRegistryName}/config/write",
+                        $"gateway/{connectedRegistryName}/message/read",
+                        $"gateway/{connectedRegistryName}/message/write"
+                    }
+                );
+                var token = registryClient.Tokens.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    tokenName,
+                    new Token(scopeMapId: scopeMap.Id)
+                );
+
+                // Create connected registry
+                var connectedRegistry = ContainerRegistryTestUtilities.CreatedContainerRegistryConnectedRegistry(registryClient, resourceGroup.Name, registry.Name, connectedRegistryName, token.Id);
+                Assert.NotNull(connectedRegistry);
+                Assert.NotEmpty(connectedRegistry.Id);
+                Assert.Equal("Inactive", connectedRegistry.Activation.Status);
+                Assert.Equal("Offline", connectedRegistry.ConnectionState);
+                Assert.Equal("Disabled", connectedRegistry.Logging.AuditLogStatus);
+                Assert.Equal("Information", connectedRegistry.Logging.LogLevel);
+                Assert.Equal("ReadWrite", connectedRegistry.Mode);
+                Assert.Equal(ProvisioningState.Succeeded, connectedRegistry.ProvisioningState);
+                Assert.Equal(token.Id, connectedRegistry.Parent.SyncProperties.TokenId);
+                Assert.Equal("0 9 * * *", connectedRegistry.Parent.SyncProperties.Schedule);
+                Assert.Equal(XmlConvert.ToTimeSpan("PT48H"), connectedRegistry.Parent.SyncProperties.MessageTtl);
+                Assert.Equal(XmlConvert.ToTimeSpan("PT4H"), connectedRegistry.Parent.SyncProperties.SyncWindow);
+
+                // List connected registries
+                var connectedRegistries = registryClient.ConnectedRegistries.List(resourceGroup.Name, registry.Name);
+                connectedRegistry = connectedRegistries.First(cr => StringComparer.OrdinalIgnoreCase.Equals(cr.Name, connectedRegistry.Name));
+                Assert.Single(connectedRegistries);
+                Assert.NotNull(connectedRegistry);
+
+                // Get connected registry
+                connectedRegistry = registryClient.ConnectedRegistries.Get(resourceGroup.Name, registry.Name, connectedRegistry.Name);
+                Assert.NotNull(connectedRegistry);
+
+                // Update connected registry
+                connectedRegistry = registryClient.ConnectedRegistries.Update(resourceGroup.Name, registry.Name, connectedRegistry.Name, new ConnectedRegistryUpdateParameters(
+                    syncProperties: new SyncUpdateProperties(
+                        messageTtl: XmlConvert.ToTimeSpan("PT24H"),
+                        syncWindow: XmlConvert.ToTimeSpan("PT2H"))
+                    )
+                );
+                Assert.Equal(XmlConvert.ToTimeSpan("PT24H"), connectedRegistry.Parent.SyncProperties.MessageTtl);
+                Assert.Equal(XmlConvert.ToTimeSpan("PT2H"), connectedRegistry.Parent.SyncProperties.SyncWindow);
+
+                // Delete connected registry
+                registryClient.ConnectedRegistries.Delete(resourceGroup.Name, registry.Name, connectedRegistry.Name);
+
+                // Delete connected registry dependencies
+                registryClient.Tokens.Delete(resourceGroup.Name, registry.Name, token.Name);
+                registryClient.ScopeMaps.Delete(resourceGroup.Name, registry.Name, scopeMap.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+
             }
         }
     }

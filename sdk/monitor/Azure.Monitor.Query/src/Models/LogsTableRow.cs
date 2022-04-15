@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
     {
         private readonly Dictionary<string, int> _columnMap;
         private readonly IReadOnlyList<LogsTableColumn> _columns;
-        private readonly JsonElement _row;
+        internal JsonElement _row;
 
         internal LogsTableRow(Dictionary<string, int> columnMap, IReadOnlyList<LogsTableColumn> columns, JsonElement row)
         {

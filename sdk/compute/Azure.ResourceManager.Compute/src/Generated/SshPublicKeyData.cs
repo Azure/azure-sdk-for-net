@@ -6,29 +6,29 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the SshPublicKey data model. </summary>
-    public partial class SshPublicKeyData : TrackedResource
+    public partial class SshPublicKeyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
         /// <param name="location"> The location. </param>
-        public SshPublicKeyData(Location location) : base(location)
+        public SshPublicKeyData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="publicKey"> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </param>
-        internal SshPublicKeyData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string publicKey) : base(id, name, type, tags, location)
+        internal SshPublicKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string publicKey) : base(id, name, resourceType, systemData, tags, location)
         {
             PublicKey = publicKey;
         }

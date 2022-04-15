@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
+        private async Task<DedicatedHostGroupResource> CreateDedicatedHostGroupAsync(string groupName)
         {
             var collection = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
             return lro.Value;
         }
 
-        private async Task<DedicatedHost> CreateDedicatedHostAsync(string hostName)
+        private async Task<DedicatedHostResource> CreateDedicatedHostAsync(string hostName)
         {
             var hostGroupName = Recording.GenerateAssetName("testDHG-");
             var collection = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
-            var lro = await collection.CreateOrUpdateAsync(hostName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
             return lro.Value;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var hostName = Recording.GenerateAssetName("testHost-");
             var dedicatedHost = await CreateDedicatedHostAsync(hostName);
-            await dedicatedHost.DeleteAsync();
+            await dedicatedHost.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var hostName = Recording.GenerateAssetName("testHost-");
             var host1 = await CreateDedicatedHostAsync(hostName);
-            DedicatedHost host2 = await host1.GetAsync();
+            DedicatedHostResource host2 = await host1.GetAsync();
 
             ResourceDataHelper.AssertHost(host1.Data, host2.Data);
         }
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task Update()
         {
             var hostName = Recording.GenerateAssetName("testHost-");
-            DedicatedHost dedicatedHost = await CreateDedicatedHostAsync(hostName);
+            DedicatedHostResource dedicatedHost = await CreateDedicatedHostAsync(hostName);
             var updatedAutoReplaceOnFailure = false;
-            var update = new DedicatedHostUpdate()
+            var update = new DedicatedHostPatch()
             {
                 AutoReplaceOnFailure = updatedAutoReplaceOnFailure
             };
-            var lro = await dedicatedHost.UpdateAsync(update);
-            DedicatedHost updatedHost = lro.Value;
+            var lro = await dedicatedHost.UpdateAsync(WaitUntil.Completed, update);
+            DedicatedHostResource updatedHost = lro.Value;
 
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);
         }

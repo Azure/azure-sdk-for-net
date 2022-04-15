@@ -179,13 +179,6 @@ namespace Azure.Security.KeyVault.Keys
         };
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Keys.RandomBytes"/> for mocking purposes.
-        /// </summary>
-        /// <param name="value">Sets the <see cref="Keys.RandomBytes.Value"/> property.</param>
-        /// <returns>A new instance of <see cref="Keys.RandomBytes"/> for mocking purposes.</returns>
-        public static RandomBytes RandomBytes(byte[] value) => new RandomBytes { Value = value };
-
-        /// <summary>
         /// Initializes a new instance of <see cref="Keys.KeyRotationPolicy"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="Keys.KeyRotationPolicy.Id"/> property.</param>

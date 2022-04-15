@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority Compute Nodes in the Pool.</param>
+        /// Spot/Low-priority Compute Nodes in the Pool.</param>
         /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">The formula for the desired number
@@ -208,8 +208,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority Compute Nodes in
-        /// the Pool.
+        /// Gets or sets the desired number of Spot/Low-priority Compute Nodes
+        /// in the Pool.
         /// </summary>
         /// <remarks>
         /// This property must not be specified if enableAutoScale is set to

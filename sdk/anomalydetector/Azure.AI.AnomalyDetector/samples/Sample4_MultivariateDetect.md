@@ -30,13 +30,13 @@ You could add the data source, along with start time and end time to a `ModelInf
 Call `TrainMultivariateModel` with the created data feed and extract the model ID from the response header. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModelAsync` with the model ID . Wait until the model status is ready. 
 
 ```C# Snippet:TrainMultivariateModel
-private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+private async Task<Guid?> TrainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
 {
     try
     {
         Console.WriteLine("Training new model...");
 
-        int model_number = await getModelNumberAsync(client, false).ConfigureAwait(false);
+        int model_number = await GetModelNumberAsync(client, false).ConfigureAwait(false);
         Console.WriteLine(String.Format("{0} available models before training.", model_number));
 
         ModelInfo data_feed = new ModelInfo(datasource, start_time, end_time);
@@ -69,24 +69,24 @@ private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string dataso
             Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
         }
 
-        model_number = await getModelNumberAsync(client).ConfigureAwait(false);
+        model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
         Console.WriteLine(String.Format("{0} available models after training.", model_number));
         return trained_model_id;
     }
     catch (Exception e)
     {
         Console.WriteLine(String.Format("Train error. {0}", e.Message));
-        throw new Exception(e.Message);
+        throw;
     }
 }
 ```
 
 ## Detect anomalies
 
-To detect anomalies using your newly trained model, create a private async Task named `detectAsync`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectAnomalyAsync` and await the response. From the header of the response, you could extract the result ID. With the result ID, you could get the detection content and detection status by `GetDetectionResultAsync`. Return the detection content when the detection status is ready. 
+To detect anomalies using your newly trained model, create a private async Task named `DetectAsync`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectAnomalyAsync` and await the response. From the header of the response, you could extract the result ID. With the result ID, you could get the detection content and detection status by `GetDetectionResultAsync`. Return the detection content when the detection status is ready. 
 
 ```C# Snippet:DetectMultivariateAnomaly
-private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+private async Task<DetectionResult> DetectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
 {
     try
     {
@@ -118,7 +118,48 @@ private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, st
     catch (Exception e)
     {
         Console.WriteLine(String.Format("Detection error. {0}", e.Message));
-        throw new Exception(e.Message);
+        throw;
+    }
+}
+```
+
+## Detect last anomalies
+
+To detect anomalies using your newly trained model, create a private async Task named `DetectLastAsync`. You will create a new `LastDetectionRequest`, you could assign how many last points you want to detect in the request. Pass `LastDetectionRequest` as a parameter to `LastDetectAnomalyAsync` and await the response. Return the detection content when the detection status is ready. 
+
+```C# Snippet:DetectLastMultivariateAnomaly
+private async Task<LastDetectionResult> DetectLastAsync(AnomalyDetectorClient client, Guid model_id)
+{
+    Console.WriteLine("Start detect...");
+
+    List<VariableValues> variables = new List<VariableValues>();
+    variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
+    variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
+
+    LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 1);
+
+    try
+    {
+        Response<LastDetectionResult> response = await client.LastDetectAnomalyAsync(model_id, lastDetectionRequest).ConfigureAwait(false);
+        if (response.GetRawResponse().Status == 200)
+        {
+            foreach (AnomalyState state in response.Value.Results)
+            {
+                Console.WriteLine(String.Format("timestamp: {}, isAnomaly: {}, score: {}.", state.Timestamp, state.Value.IsAnomaly, state.Value.Score));
+            }
+        }
+
+        return response;
+    }
+    catch (RequestFailedException ex)
+    {
+        Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+        throw;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+        throw;
     }
 }
 ```
@@ -128,7 +169,7 @@ private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, st
 To export the model you trained previously, create a private async Task named `exportAysnc`. You will use `ExportModelAsync` and pass the model ID of the model you wish to export.
 
 ```C# Snippet:ExportMultivariateModel
-private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
+private async Task ExportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
 {
     try
     {
@@ -144,7 +185,7 @@ private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, stri
     catch (Exception e)
     {
         Console.WriteLine(String.Format("Export error. {0}", e.Message));
-        throw new Exception(e.Message);
+        throw;
     }
 }
 ```
@@ -154,13 +195,13 @@ private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, stri
 To delete a model that you have created previously use `DeleteMultivariateModelAsync` and pass the model ID of the model you wish to delete. You can check the number of models after deletion with `getModelNumberAsync`.
 
 ```C# Snippet:DeleteMultivariateModel
-private async Task deleteAsync(AnomalyDetectorClient client, Guid model_id)
+private async Task DeleteAsync(AnomalyDetectorClient client, Guid model_id)
 {
     await client.DeleteMultivariateModelAsync(model_id).ConfigureAwait(false);
-    int model_number = await getModelNumberAsync(client).ConfigureAwait(false);
+    int model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
     Console.WriteLine(String.Format("{0} available models after deletion.", model_number));
 }
-private async Task<int> getModelNumberAsync(AnomalyDetectorClient client, bool delete = false)
+private async Task<int> GetModelNumberAsync(AnomalyDetectorClient client, bool delete = false)
 {
     int count = 0;
     AsyncPageable<ModelSnapshot> model_list = client.ListMultivariateModelAsync(0, 10000);

@@ -32,6 +32,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeAzureCliCredential = true,
             });
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
@@ -69,6 +70,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCredential = true,
+                ExcludeAzureCliCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -106,6 +108,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeAzureCliCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -171,6 +174,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,109 +16,67 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of PrivateEndpoint and their operations over a ResourceGroup. </summary>
-    public partial class PrivateEndpointCollection : ArmCollection, IEnumerable<PrivateEndpoint>, IAsyncEnumerable<PrivateEndpoint>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateEndpointResource" /> and their operations.
+    /// Each <see cref="PrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="PrivateEndpointCollection" /> instance call the GetPrivateEndpoints method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class PrivateEndpointCollection : ArmCollection, IEnumerable<PrivateEndpointResource>, IAsyncEnumerable<PrivateEndpointResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateEndpointsRestOperations _restClient;
+        private readonly ClientDiagnostics _privateEndpointClientDiagnostics;
+        private readonly PrivateEndpointsRestOperations _privateEndpointRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointCollection"/> class for mocking. </summary>
         protected PrivateEndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PrivateEndpointCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal PrivateEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PrivateEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateEndpointResource.ResourceType, out string privateEndpointApiVersion);
+            _privateEndpointRestClient = new PrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        IEnumerator<PrivateEndpoint> IEnumerable<PrivateEndpoint>.GetEnumerator()
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            return GetAll().GetEnumerator();
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<PrivateEndpoint> IAsyncEnumerable<PrivateEndpoint>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        // Collection level operations.
-
-        /// <summary> Creates or updates an private endpoint in the specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates an private endpoint in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateEndpointCreateOrUpdateOperation CreateOrUpdate(string privateEndpointName, PrivateEndpointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<PrivateEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken);
-                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an private endpoint in the specified resource group. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string privateEndpointName, PrivateEndpointData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, privateEndpointName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _privateEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<PrivateEndpointResource>(new PrivateEndpointOperationSource(Client), _privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -128,215 +87,116 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary>
+        /// Creates or updates an private endpoint in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<PrivateEndpoint> Get(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpoint(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<PrivateEndpoint>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpoint(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<PrivateEndpoint> GetIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<PrivateEndpoint>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpoint>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpoint(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = GetIfExists(privateEndpointName, expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.CheckIfExists");
-            scope.Start();
-            try
-            {
-                if (privateEndpointName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointName));
-                }
-
-                var response = await GetIfExistsAsync(privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all private endpoints in a resource group. </summary>
+        /// <param name="data"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpoint> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<PrivateEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData data, CancellationToken cancellationToken = default)
         {
-            Page<PrivateEndpoint> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _privateEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, data, cancellationToken);
+                var operation = new NetworkArmOperation<PrivateEndpointResource>(new PrivateEndpointOperationSource(Client), _privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
-            Page<PrivateEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all private endpoints in a resource group. </summary>
+        /// <summary>
+        /// Gets the specified private endpoint by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpoint> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual async Task<Response<PrivateEndpointResource>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateEndpoint>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
+                var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual Response<PrivateEndpointResource> Get(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all private endpoints in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints
+        /// Operation Id: PrivateEndpoints_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<PrivateEndpointResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,14 +204,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<PrivateEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
+                using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,21 +222,68 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="PrivateEndpoint" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets all private endpoints in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints
+        /// Operation Id: PrivateEndpoints_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAllAsGenericResources");
+            Page<PrivateEndpointResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _privateEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PrivateEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _privateEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(PrivateEndpoint.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,21 +292,26 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Filters the list of <see cref="PrivateEndpoint" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual Response<bool> Exists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(PrivateEndpoint.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,7 +320,19 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        // Builders.
-        // public ArmBuilder<ResourceIdentifier, PrivateEndpoint, PrivateEndpointData> Construct() { }
+        IEnumerator<PrivateEndpointResource> IEnumerable<PrivateEndpointResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<PrivateEndpointResource> IAsyncEnumerable<PrivateEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
     }
 }

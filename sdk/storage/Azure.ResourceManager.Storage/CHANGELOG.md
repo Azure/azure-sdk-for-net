@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,64 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
+
+## 1.0.0-beta.6 (2022-01-30)
+
+### Features Added
+
+- Bump API version to `2021-08-01`
+
+### Breaking Changes
+
+- `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
+- Move optional body parameters right after required parameters
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+- Fixed `DateTimeOffset` being serialized to local timezone format
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -75,21 +133,20 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 
 After upgrade:
 ```C# Snippet:Create_Storage_Account
-using System.Collections.Generic;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-Sku sku = new Sku(SkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
+StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes
