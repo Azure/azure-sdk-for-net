@@ -370,12 +370,14 @@ try {
 
     $UserName = GetUserName
 
-    if ($CI) {
-        $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
-        Log "Generated base name '$BaseName' for CI build"
-    } elseif (!$BaseName) {
-        $BaseName = GetBaseName $UserName $ServiceDirectory
-        Log "BaseName was not set. Using default base name '$BaseName'"
+    if (!$BaseName) {
+        if ($CI) {
+            $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
+            Log "Generated base name '$BaseName' for CI build"
+        } else {
+            $BaseName = GetBaseName $UserName $ServiceDirectory
+            Log "BaseName was not set. Using default base name '$BaseName'"
+        }
     }
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
