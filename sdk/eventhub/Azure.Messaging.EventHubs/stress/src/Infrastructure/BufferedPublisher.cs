@@ -84,9 +84,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (Exception ex)
                 {
-                    // If this catch is hit, there's a problem with the producer itself; cancel the
-                    // background sending and wait before allowing the producer to restart.
-
                     metrics.Client.GetMetric(metrics.BufferedProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
                 }

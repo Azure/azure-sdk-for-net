@@ -28,51 +28,18 @@ namespace Azure.Messaging.EventHubs.Stress
             var runDuration = TimeSpan.FromHours(durationInHours);
             publishCancellationSource.CancelAfter(runDuration);
 
-            try
-            {
-                var testRun = TestRun(connectionString, eventHubName, publishCancellationSource.Token).ConfigureAwait(false);
-
-                while (!publishCancellationSource.IsCancellationRequested)
-                {
-                    try
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(45), publishCancellationSource.Token);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        metrics.Client.TrackTrace("Run is ending");
-                    }
-                }
-                // If we want period status updates - metrics would need to be tracked in this class so that they are accessible
-            }
-            catch (Exception ex) when
-                (ex is OutOfMemoryException
-                || ex is StackOverflowException
-                || ex is ThreadAbortException)
-            {
-                Environment.FailFast(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                metrics.Client.TrackException(ex);
-            }
-        }
-
-        private async Task TestRun(string connectionString, string eventHubName, CancellationToken cancellationToken)
-        {
             var publishingTasks = default(IEnumerable<Task>);
-            var runDuration = Stopwatch.StartNew();
 
             try
             {
                 publishingTasks = Enumerable
                     .Range(0, 2)
-                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(cancellationToken)))
+                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(publishCancellationSource.Token)))
                     .ToList();
 
-                while (!cancellationToken.IsCancellationRequested)
+                while (!publishCancellationSource.Token.IsCancellationRequested)
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(TimeSpan.FromMinutes(1), publishCancellationSource.Token).ConfigureAwait(false);
                 }
             }
             catch (TaskCanceledException)
@@ -84,7 +51,8 @@ namespace Azure.Messaging.EventHubs.Stress
                 || ex is StackOverflowException
                 || ex is ThreadAbortException)
             {
-                throw;
+                metrics.Client.TrackException(ex);
+                Environment.FailFast(ex.Message);
             }
             catch (Exception ex)
             {
@@ -92,9 +60,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
                 metrics.Client.TrackException(ex);
             }
-
-            // The run is ending.  Clean up the outstanding background operations and
-            // complete the necessary metrics tracking.
 
             try
             {
@@ -105,10 +70,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 metrics.Client.GetMetric(metrics.TotalExceptions).TrackValue(1);
                 metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
                 metrics.Client.TrackException(ex);
-            }
-            finally
-            {
-                runDuration.Stop();
             }
         }
     }
