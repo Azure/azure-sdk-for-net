@@ -23,23 +23,23 @@ namespace Azure.Messaging.EventHubs.Stress
         public async Task Run(string connectionString, string eventHubName, string appInsightsKey, int durationInHours)
         {
             metrics = new Metrics(appInsightsKey);
-            using var publishCancellationSource = new CancellationTokenSource();
+            using var enqueueingCancellationSource = new CancellationTokenSource();
 
             var runDuration = TimeSpan.FromHours(durationInHours);
-            publishCancellationSource.CancelAfter(runDuration);
+            enqueueingCancellationSource.CancelAfter(runDuration);
 
-            var publishingTasks = default(IEnumerable<Task>);
+            var enqueuingTasks = default(IEnumerable<Task>);
 
             try
             {
-                publishingTasks = Enumerable
+                enqueuingTasks = Enumerable
                     .Range(0, 2)
-                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(publishCancellationSource.Token)))
+                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
-                while (!publishCancellationSource.Token.IsCancellationRequested)
+                while (!enqueueingCancellationSource.Token.IsCancellationRequested)
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(1), publishCancellationSource.Token).ConfigureAwait(false);
+                    await Task.Delay(TimeSpan.FromMinutes(1), enqueueingCancellationSource.Token).ConfigureAwait(false);
                 }
             }
             catch (TaskCanceledException)
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Stress
 
             try
             {
-                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+                await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
