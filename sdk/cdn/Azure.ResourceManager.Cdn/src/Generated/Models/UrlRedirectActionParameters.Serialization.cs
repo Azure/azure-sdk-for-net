@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("redirectType");
             writer.WriteStringValue(RedirectType.ToString());
             if (Optional.IsDefined(DestinationProtocol))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlRedirectActionParameters DeserializeUrlRedirectActionParameters(JsonElement element)
         {
-            UrlRedirectActionParametersOdataType odataType = default;
+            UrlRedirectActionParametersTypeName typeName = default;
             RedirectType redirectType = default;
             Optional<DestinationProtocol> destinationProtocol = default;
             Optional<string> customPath = default;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> customFragment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new UrlRedirectActionParametersOdataType(property.Value.GetString());
+                    typeName = new UrlRedirectActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redirectType"))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UrlRedirectActionParameters(odataType, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value);
+            return new UrlRedirectActionParameters(typeName, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value);
         }
     }
 }

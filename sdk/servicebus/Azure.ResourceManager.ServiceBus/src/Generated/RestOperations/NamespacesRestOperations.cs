@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, PatchableServiceBusNamespaceData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -439,18 +439,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="patch"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceBusNamespaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusNamespaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, namespaceName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, namespaceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -473,18 +473,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="patch"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceBusNamespaceData> Update(string subscriptionId, string resourceGroupName, string namespaceName, PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
+        public Response<ServiceBusNamespaceData> Update(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, namespaceName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, namespaceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailability parameters)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailability checkNameAvailability)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(checkNameAvailability);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -775,16 +775,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Check the give namespace name availability. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailability"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, parameters);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, checkNameAvailability);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -802,16 +802,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Check the give namespace name availability. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailability"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, parameters);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, checkNameAvailability);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

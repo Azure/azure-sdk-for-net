@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBDatabases(database, database2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            MongoDBDatabaseCreateUpdateData updateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS, database.Data.Resource)
+            var updateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS, database.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(string name, AutoscaleSettings autoscale, MongoDBDatabaseCollection collection)
         {
-            MongoDBDatabaseCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.MongoDBDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

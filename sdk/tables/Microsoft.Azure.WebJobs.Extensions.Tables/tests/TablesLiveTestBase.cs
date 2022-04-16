@@ -133,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
                 }
 
-                builder.AddAzureTables();
+                builder.AddTables();
             }, programType);
 
             (configure ?? DefaultConfigure).Invoke(hostBuilder);

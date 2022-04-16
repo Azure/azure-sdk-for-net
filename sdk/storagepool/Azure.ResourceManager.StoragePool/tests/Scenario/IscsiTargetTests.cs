@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var diskPoolCollection = _resourceGroup.GetDiskPools();
 
             var sku = new StoragePoolSku("Standard_S1");
-            var diskPoolCreate = new DiskPoolCreate(sku, DefaultLocation, SubnetResourceId) { };
+            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, SubnetResourceId) { };
             diskPoolCreate.AvailabilityZones.Add("1");
 
             // create disk pool
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             // create iSCSI target
             var targetCollection = diskPool.GetIscsiTargets();
             var iscsiTargetName = Recording.GenerateAssetName("target-");
-            var iscsiTargetCreate = new IscsiTargetCreate(IscsiTargetAclMode.Dynamic);
+            var iscsiTargetCreate = new IscsiTargetCreateOrUpdateContent(IscsiTargetAclMode.Dynamic);
 
             var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(WaitUntil.Completed, iscsiTargetName, iscsiTargetCreate);
             var iscsiTarget = targetCreateResponse.Value;

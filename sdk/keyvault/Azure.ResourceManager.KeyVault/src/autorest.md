@@ -68,5 +68,5 @@ directive:
   - from: swagger-document
     where: "$.definitions.Resource"
     transform: >
-      $["x-ms-client-name"] = "KeyVaultResource";
+      $["x-ms-client-name"] = "KeyVaultResourceData";
 ```

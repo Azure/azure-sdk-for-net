@@ -1,28 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Compile Remove="Samples\Sample2_ManagingAfdRules.cs" />
-    <Compile Remove="Scenario\AfdCustomDomainCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdCustomDomainOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdEndpointCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdEndpointOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdOriginCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdOriginGroupCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdOriginGroupOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdOriginOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdProfileCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdProfileOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdRouteCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdRouteOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdRuleCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdRuleOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdRuleSetCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdRuleSetOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdSecretCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdSecretOperationsTests.cs" />
-    <Compile Remove="Scenario\AfdSecurityPolicyCollectionTests.cs" />
-    <Compile Remove="Scenario\AfdSecurityPolicyOperationsTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Cdn.csproj" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>

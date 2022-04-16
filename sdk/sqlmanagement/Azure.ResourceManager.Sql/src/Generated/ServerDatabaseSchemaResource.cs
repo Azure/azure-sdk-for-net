@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerDatabaseSchemaTableResource>> GetServerDatabaseSchemaTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
             return await GetServerDatabaseSchemaTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerDatabaseSchemaTableResource> GetServerDatabaseSchemaTable(string tableName, CancellationToken cancellationToken = default)
         {
             return GetServerDatabaseSchemaTables().Get(tableName, cancellationToken);

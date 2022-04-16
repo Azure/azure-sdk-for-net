@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    /// <summary> The ConversionErrorCode. </summary>
+    /// <summary> The asset conversion error code. </summary>
     public readonly partial struct ConversionErrorCode : IEquatable<ConversionErrorCode>
     {
         private readonly string _value;
@@ -37,33 +37,33 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         private const string TooManyRigPosesValue = "TOO_MANY_RIG_POSES";
         private const string AssetCannotBeConvertedValue = "ASSET_CANNOT_BE_CONVERTED";
 
-        /// <summary> UNKNOWN. </summary>
+        /// <summary> Unknown. </summary>
         public static ConversionErrorCode Unknown { get; } = new ConversionErrorCode(UnknownValue);
-        /// <summary> NO_ERROR. </summary>
+        /// <summary> No error. </summary>
         public static ConversionErrorCode NoError { get; } = new ConversionErrorCode(NoErrorValue);
-        /// <summary> SERVICE_ERROR. </summary>
+        /// <summary> An unknown service error occurred. </summary>
         public static ConversionErrorCode ServiceError { get; } = new ConversionErrorCode(ServiceErrorValue);
-        /// <summary> INVALID_ASSET_URI. </summary>
+        /// <summary> The asset at the URI provided when starting the conversion job could not be found. </summary>
         public static ConversionErrorCode InvalidAssetUri { get; } = new ConversionErrorCode(InvalidAssetUriValue);
-        /// <summary> INVALID_JOB_ID. </summary>
+        /// <summary> The provided ID for the asset conversion job to be created was set to the default all-zero GUID. </summary>
         public static ConversionErrorCode InvalidJobId { get; } = new ConversionErrorCode(InvalidJobIdValue);
-        /// <summary> INVALID_GRAVITY. </summary>
+        /// <summary> The gravity vector provided when creating the asset conversion job was a fully zeroed vector. </summary>
         public static ConversionErrorCode InvalidGravity { get; } = new ConversionErrorCode(InvalidGravityValue);
-        /// <summary> INVALID_SCALE. </summary>
+        /// <summary> The provided scale factor was not a positive non-zero value. </summary>
         public static ConversionErrorCode InvalidScale { get; } = new ConversionErrorCode(InvalidScaleValue);
-        /// <summary> ASSET_SIZE_TOO_LARGE. </summary>
+        /// <summary> The intermediate .PLY file generated from the asset or its serialized equivalent was too large. </summary>
         public static ConversionErrorCode AssetSizeTooLarge { get; } = new ConversionErrorCode(AssetSizeTooLargeValue);
-        /// <summary> ASSET_DIMENSIONS_OUT_OF_BOUNDS. </summary>
+        /// <summary> The dimensions of the asset exceeded the physical dimension limit. This can be a sign of an improperly set scale for the asset when creating a job. </summary>
         public static ConversionErrorCode AssetDimensionsOutOfBounds { get; } = new ConversionErrorCode(AssetDimensionsOutOfBoundsValue);
-        /// <summary> ZERO_FACES. </summary>
+        /// <summary> The intermediate .PLY file generated from the asset was determined to have no faces, making it invalid for conversion. </summary>
         public static ConversionErrorCode ZeroFaces { get; } = new ConversionErrorCode(ZeroFacesValue);
-        /// <summary> INVALID_FACE_VERTICES. </summary>
+        /// <summary> The intermediate .PLY file generated from the asset contained faces that referenced nonexistent vertices. </summary>
         public static ConversionErrorCode InvalidFaceVertices { get; } = new ConversionErrorCode(InvalidFaceVerticesValue);
-        /// <summary> ZERO_TRAJECTORIES_GENERATED. </summary>
+        /// <summary> The camera trajectories generated from the uploaded asset were empty. </summary>
         public static ConversionErrorCode ZeroTrajectoriesGenerated { get; } = new ConversionErrorCode(ZeroTrajectoriesGeneratedValue);
-        /// <summary> TOO_MANY_RIG_POSES. </summary>
+        /// <summary> The number of rig poses in the intermediate .PLY asset file exceeded service limits. </summary>
         public static ConversionErrorCode TooManyRigPoses { get; } = new ConversionErrorCode(TooManyRigPosesValue);
-        /// <summary> ASSET_CANNOT_BE_CONVERTED. </summary>
+        /// <summary> The provided asset was corrupted, malformed, or otherwise unable to be converted in its provided format. </summary>
         public static ConversionErrorCode AssetCannotBeConverted { get; } = new ConversionErrorCode(AssetCannotBeConvertedValue);
         /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are the same. </summary>
         public static bool operator ==(ConversionErrorCode left, ConversionErrorCode right) => left.Equals(right);

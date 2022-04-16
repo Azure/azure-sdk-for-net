@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentValidateResult DeserializeArmDeploymentValidateResult(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDeploymentValidateResult(error, properties.Value);
+            return new ArmDeploymentValidateResult(error.Value, properties.Value);
         }
     }
 }

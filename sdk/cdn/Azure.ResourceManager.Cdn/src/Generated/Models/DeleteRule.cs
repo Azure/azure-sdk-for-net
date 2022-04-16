@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
-    internal readonly partial struct DeleteRule : IEquatable<DeleteRule>
+    public readonly partial struct DeleteRule : IEquatable<DeleteRule>
     {
         private readonly string _value;
 

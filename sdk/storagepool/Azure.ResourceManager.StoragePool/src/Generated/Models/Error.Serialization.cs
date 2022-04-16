@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
-            return new Error(error);
+            return new Error(error.Value);
         }
     }
 }

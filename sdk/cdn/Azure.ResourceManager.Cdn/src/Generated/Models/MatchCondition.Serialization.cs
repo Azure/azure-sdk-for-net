@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static MatchCondition DeserializeMatchCondition(JsonElement element)
         {
-            MatchVariable matchVariable = default;
+            WafMatchVariable matchVariable = default;
             Optional<string> selector = default;
             MatchOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("matchVariable"))
                 {
-                    matchVariable = new MatchVariable(property.Value.GetString());
+                    matchVariable = new WafMatchVariable(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("selector"))

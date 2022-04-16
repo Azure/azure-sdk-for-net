@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ArmApplicationArtifactType.ToSerialString());
+            writer.WriteStringValue(ArtifactType.ToSerialString());
             writer.WriteEndObject();
         }
 
