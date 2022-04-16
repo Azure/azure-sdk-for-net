@@ -182,7 +182,7 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-### Send a batch of messages
+### Send and receive a batch of messages
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
@@ -227,6 +227,20 @@ while (messages.Count > 0)
 
     // if there are any remaining messages in the .NET queue, the while loop repeats
 }
+
+// create a receiver that we can use to receive the messages
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+// a batch of messages (maximum of 2 in this case) are received
+IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
+
+// go through each of the messages received
+foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
+{
+    // get the message body as a string
+    string body = receivedMessage.Body.ToString();
+}
 ```
 
 The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
@@ -238,24 +252,6 @@ messages.Add(new ServiceBusMessage("Second"));
 // send the messages
 await sender.SendMessagesAsync(messages);
 ```
-### Receive a batch of messages
-
-In order to receive a batch of messages from queue, topic or subscription:
-
-```C# Snippet:ReceiveBatchOfMessages
-// create a receiver that we can use to receive the messages
-ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-
-// the received message is a different type as it contains some service set properties
-IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
-
-foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
-{
-    // get the message body as a string
-    string body = receivedMessage.Body.ToString();
-}
-```
-
 ### Complete a message
 
 In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.

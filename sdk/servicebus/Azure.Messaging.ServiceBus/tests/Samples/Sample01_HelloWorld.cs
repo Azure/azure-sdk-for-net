@@ -186,15 +186,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                     // if there are any remaining messages in the .NET queue, the while loop repeats
                 }
-                #endregion
 
-                #region Snippet:ReceiveBatchOfMessages
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
+                // a batch of messages (maximum of 2 in this case) are received
                 IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
+                // go through each of the messages received
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string
