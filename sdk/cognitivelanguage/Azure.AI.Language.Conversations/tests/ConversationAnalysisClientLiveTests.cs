@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Results.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Read", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("Setup", customConversationalTaskResult.Results.Prediction.TopIntent);
 
             // cast prediction
             var conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
