@@ -241,7 +241,7 @@ namespace Azure.Messaging.ServiceBus
             if (_callbackCompleted)
             {
                 throw new InvalidOperationException(
-                    "Messages cannot be received using the 'ProcessMessageEventArgs' after the 'ProcessMessageAsync' event handler has returned.");
+                    "Messages cannot be received using the 'ProcessSessionMessageEventArgs' after the 'ProcessSessionMessageAsync' event handler has returned.");
             }
         }
     }
