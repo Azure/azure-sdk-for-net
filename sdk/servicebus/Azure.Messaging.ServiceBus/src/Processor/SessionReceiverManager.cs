@@ -258,7 +258,6 @@ namespace Azure.Messaging.ServiceBus
                     // end up in a bad state.
                     _receiver = null;
                     _receiveTimeout = false;
-                    _sessionCancellationSource?.Dispose();
                 }
             }
         }
@@ -418,7 +417,11 @@ namespace Azure.Messaging.ServiceBus
 
         internal void CancelSession()
         {
-            _sessionCancellationSource?.Cancel();
+            if (_sessionCancellationSource is { IsCancellationRequested: false })
+            {
+                _sessionCancellationSource.Cancel();
+                _sessionCancellationSource.Dispose();
+            }
         }
     }
 }
