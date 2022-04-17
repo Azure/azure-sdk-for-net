@@ -520,6 +520,7 @@ namespace Azure.Messaging.ServiceBus
         protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
             await _processMessageAsync(args).ConfigureAwait(false);
+            args.EndExecutionScope();
         }
 
         /// <summary>

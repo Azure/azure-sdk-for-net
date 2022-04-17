@@ -1034,6 +1034,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 DateTime[] lockedUntilUtcTimes = amqpResponseMessage.GetValue<DateTime[]>(ManagementConstants.Properties.Expirations);
                 lockedUntil = lockedUntilUtcTimes[0];
+                if (_requestResponseLockedMessages.Contains(lockToken))
+                {
+                    _requestResponseLockedMessages.AddOrUpdate(lockToken, lockedUntil);
+                }
             }
             else
             {

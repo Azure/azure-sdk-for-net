@@ -982,7 +982,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Messages identified by sequence number are returned.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
-        /// <seealso cref="DeferMessageAsync(Guid, IDictionary{string, object}, CancellationToken)"/>
         /// <exception cref="ServiceBusException">
         ///   The specified sequence number does not correspond to a message that has been deferred.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.

@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionCancellationSource;
         private volatile bool _receiveTimeout;
 
-        protected override ServiceBusReceiver Receiver => _receiver;
+        internal override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly ServiceBusSessionProcessor _sessionProcessor;
@@ -233,7 +233,19 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 // cancel the automatic session lock renewal
-                await CancelTask(_sessionLockRenewalCancellationSource, _sessionLockRenewalTask).ConfigureAwait(false);
+                try
+                {
+                    if (_sessionLockRenewalCancellationSource != null)
+                    {
+                        _sessionLockRenewalCancellationSource.Cancel();
+                        _sessionLockRenewalCancellationSource.Dispose();
+                        await _sessionLockRenewalTask.ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex) when (ex is TaskCanceledException)
+                {
+                    // Nothing to do here.  These exceptions are expected.
+                }
 
                 try
                 {
@@ -377,16 +389,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected override async Task OnMessageHandler(
+        protected override async Task<EventArgs> OnMessageHandler(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken)
         {
             var args = new ProcessSessionMessageEventArgs(
                 message,
-                _receiver,
                 this,
                 cancellationToken);
+
             await _sessionProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+            return args;
         }
 
         protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)

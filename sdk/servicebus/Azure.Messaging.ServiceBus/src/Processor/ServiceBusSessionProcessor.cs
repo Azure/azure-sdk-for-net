@@ -145,6 +145,7 @@ namespace Azure.Messaging.ServiceBus
         protected internal virtual async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
             await InnerProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+            args.EndExecutionScope();
         }
 
         /// <inheritdoc cref="ServiceBusProcessor.OnProcessErrorAsync(ProcessErrorEventArgs)"/>
