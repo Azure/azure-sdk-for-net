@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var completionSourceIndex = -1;
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 processor.SessionInitializingAsync += SessionInitHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
 
@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -377,7 +377,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using ServiceBusSessionProcessor processor = CreateNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -552,7 +552,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -699,7 +699,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     Assert.Greater(args.SessionLockedUntil, initialLockedUntil);
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -832,7 +832,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -984,7 +984,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
                 await processor.StartProcessingAsync();
 
@@ -1493,7 +1493,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 processor.SessionInitializingAsync += SessionOpenHandler;
                 await processor.StartProcessingAsync();
 
@@ -1627,7 +1627,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1684,7 +1684,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return Task.CompletedTask;
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1730,7 +1730,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await args.CompleteMessageAsync(args.Message);
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1774,7 +1774,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await Task.Delay(lockDuration.Add(lockDuration));
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1834,7 +1834,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 processor.SessionClosingAsync += SessionCloseHandler;
 
                 await processor.StartProcessingAsync();
@@ -2036,7 +2036,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -2118,7 +2118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
