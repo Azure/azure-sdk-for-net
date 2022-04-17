@@ -2092,13 +2092,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         receivedDeferredMessages = await args.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
                     }
 
+                    // lock renewal should happen for messages received in callback
+                    await Task.Delay(lockDuration.Add(lockDuration));
+
                     if (count == messageCount)
                     {
                         tcs.TrySetResult(true);
                     }
-
-                    // lock renewal should happen for messages received in callback
-                    await Task.Delay(lockDuration.Add(lockDuration));
 
                     if (manualComplete)
                     {
