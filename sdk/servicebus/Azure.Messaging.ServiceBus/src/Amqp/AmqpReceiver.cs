@@ -1077,7 +1077,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Create an AmqpRequest Message to renew  lock
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, timeout, null);
 
-            if (!_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+            if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
             {
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
