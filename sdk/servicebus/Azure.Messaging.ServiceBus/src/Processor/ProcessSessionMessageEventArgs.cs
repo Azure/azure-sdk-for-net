@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Receives a list of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode
+        /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity using <see cref="ServiceBusReceiveMode"/> mode
         /// configured in <see cref="ServiceBusSessionProcessorOptions.ReceiveMode"/>, which defaults to PeekLock mode.
         /// This method doesn't guarantee to return exact `maxMessages` messages, even if there are `maxMessages` messages available in the queue or topic.
         /// Messages received using this method are subject to the behavior defined in <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>.

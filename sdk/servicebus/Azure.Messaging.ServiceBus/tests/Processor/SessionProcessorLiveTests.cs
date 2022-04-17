@@ -2002,7 +2002,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentCallsPerSession = 5
+                    MaxConcurrentCallsPerSession = 5,
+                    MaxConcurrentSessions = 1
                 });
 
                 int receivedCount = 0;
@@ -2066,7 +2067,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentCallsPerSession = 5
+                    MaxConcurrentCallsPerSession = 5,
+                    MaxConcurrentSessions = 1
                 });
 
                 int receivedCount = 0;
