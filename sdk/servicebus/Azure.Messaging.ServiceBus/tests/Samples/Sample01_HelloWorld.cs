@@ -186,7 +186,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                     // if there are any remaining messages in the .NET queue, the while loop repeats
                 }
+                #endregion
 
+                #region Snippet:ServiceBusReceiveBatch
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 

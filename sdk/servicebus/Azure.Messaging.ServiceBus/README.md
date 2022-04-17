@@ -186,6 +186,7 @@ Console.WriteLine(body);
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
+#### Sending a batch of messages
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
 Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
@@ -227,7 +228,20 @@ while (messages.Count > 0)
 
     // if there are any remaining messages in the .NET queue, the while loop repeats
 }
+```
 
+The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
+
+```C# Snippet:ServiceBusSendAndReceiveBatch
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
+messages.Add(new ServiceBusMessage("First"));
+messages.Add(new ServiceBusMessage("Second"));
+// send the messages
+await sender.SendMessagesAsync(messages);
+```
+
+#### Receiving a batch of messages
+```C# Snippet:ServiceBusReceiveBatch
 // create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -243,15 +257,6 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 }
 ```
 
-The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
-
-```C# Snippet:ServiceBusSendAndReceiveBatch
-IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-messages.Add(new ServiceBusMessage("First"));
-messages.Add(new ServiceBusMessage("Second"));
-// send the messages
-await sender.SendMessagesAsync(messages);
-```
 ### Complete a message
 
 In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.
