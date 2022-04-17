@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal async Task HandleRenewLockException(Exception ex, CancellationToken cancellationToken)
+        protected async Task HandleRenewLockException(Exception ex, CancellationToken cancellationToken)
         {
             // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
             // this renew exception is not relevant anymore. Lets not bother user with this exception.
