@@ -500,12 +500,16 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
         ///     <item>
-        ///       The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///     <item>
-        ///       The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///   </list>
         /// </exception>
@@ -583,12 +587,16 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
         ///     <item>
-        ///       The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///     <item>
-        ///       The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///   </list>
         /// </exception>
@@ -674,12 +682,16 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
         ///     <item>
-        ///       The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///     <item>
-        ///       The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///   </list>
         /// </exception>
@@ -740,12 +752,16 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
         ///     <item>
-        ///       The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///     <item>
-        ///       The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///   </list>
         /// </exception>
@@ -865,12 +881,16 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
         ///     <item>
-        ///       The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///     <item>
-        ///       The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
-        ///       The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
         ///     </item>
         ///   </list>
         /// </exception>

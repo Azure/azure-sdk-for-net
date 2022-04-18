@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.AreEqual(
                     new List<string> { "0", "1", "2", "3", "4", "5", "5", "6", "7", "8", "9" },
                     receivedMessages);
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -323,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
@@ -1778,7 +1778,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -1921,7 +1921,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -1982,7 +1982,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 

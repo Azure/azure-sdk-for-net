@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
@@ -239,7 +239,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 Assert.IsTrue(processor.IsProcessing);
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
                 Assert.IsFalse(processor.IsProcessing);
                 Assert.AreEqual(numThreads, messageCt);
             }
@@ -309,7 +309,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
                 // greater or equal because the same message may be received multiple times
                 Assert.GreaterOrEqual(messageCt, numThreads);
             }
@@ -663,7 +663,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync(ShortLockDuration);
                 if (settleMethod == "" || settleMethod == "Abandon")
@@ -836,7 +836,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -875,7 +875,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -919,7 +919,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -980,7 +980,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.CloseAsync();
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -1047,7 +1047,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await processor.StartProcessingAsync();
                     await tcs.Task;
                     Assert.IsTrue(received);
-                    await processor.CloseAsync();
+                    await processor.StopProcessingAsync();
                 }
             }
         }
@@ -1177,7 +1177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // after receiving using ReceiveDeferredMessageAsync
                         if (!sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
                         {
-                            await args.CompleteMessageAsync(args.Message);
+                            await args.RenewMessageLockAsync(args.Message);
                         }
 
                         if (receivedDeferredMessages != null)
