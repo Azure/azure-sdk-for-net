@@ -71,16 +71,5 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/D1v38om83r/azure-rest-api-specs/blob/dev/bhbrahma/cplat-2022-03-01/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Github\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "D1v38om83r";
-      public static readonly String GithubBranchName = "dev/bhbrahma/cplat-2022-03-01";
-      public static readonly String GithubCommidId = "f830443fc02f57330ea9dc27a37e9f4bc6ca8010";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
