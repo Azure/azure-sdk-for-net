@@ -103,10 +103,7 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            if (_suppressNestedClientScopes && started != null)
-            {
-                started.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
-            }
+            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
         public void SetStartTime(DateTime dateTime)

@@ -395,11 +395,11 @@ namespace Azure.Core
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
         public bool IsLoggingContentEnabled { get { throw null; } set { } }
         public bool IsLoggingEnabled { get { throw null; } set { } }
-        public bool IsNestedSpanSuppressionEnabled { get { throw null; } set { } }
         public bool IsTelemetryEnabled { get { throw null; } set { } }
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
+        public bool SuppressNestedClientSpans { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>

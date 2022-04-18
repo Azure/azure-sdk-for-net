@@ -110,7 +110,7 @@ namespace Azure.Core.Tests
             DiagnosticsOptions testOptions = new DiagnosticsOptions();
             if (suppressNestedScopes.HasValue)
             {
-                testOptions.IsNestedSpanSuppressionEnabled = suppressNestedScopes.Value;
+                testOptions.SuppressNestedClientSpans = suppressNestedScopes.Value;
             }
 
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", testOptions);
@@ -237,7 +237,7 @@ namespace Azure.Core.Tests
 
         [TestCase(true, true, true)]
         [TestCase(true, false, false)]
-        [TestCase(false, true, false)]
+        [TestCase(false, true, true)]
         [TestCase(false, false, false)]
         [NonParallelizable]
         public void NestedActivitiesSuppressionConfiguration(bool suppressOuter, bool suppressNested, bool expectSuppression)
