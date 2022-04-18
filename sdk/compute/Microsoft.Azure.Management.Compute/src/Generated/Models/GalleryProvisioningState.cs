@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for GalleryProvisioningState.
     /// </summary>
-    public static class ProvisioningState
+    public static class GalleryProvisioningState
     {
         public const string Creating = "Creating";
         public const string Updating = "Updating";

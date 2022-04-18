@@ -175,11 +175,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ImagePurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Creating', 'Updating',
-        /// 'Failed', 'Succeeded', 'Deleting', 'Migrating'
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
+        /// 'Succeeded', 'Deleting', 'Migrating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of gallery image features.
