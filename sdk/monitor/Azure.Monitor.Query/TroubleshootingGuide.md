@@ -78,7 +78,7 @@ The error message in `innererror` may include the where the Kusto query has an e
 
 ### Troubleshooting empty log query results
 
-If your Kusto query returns empty no logs, please validate the following:
+If your Kusto query returns empty or has no logs, please validate the following:
 
 - You have the right workspace ID
 - You're setting the correct time interval for the query. Try expanding the time interval for your query to see if that returns any results.
