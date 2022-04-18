@@ -132,7 +132,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 EnsureClientsInitialized(context);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -157,7 +157,7 @@ namespace Compute.Tests
                     ValidateDedicatedHostGroupInstanceView(returnedDHGWithInstanceView, createdDH);
 
                     // Restart the DedicatedHost
-                    m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
+                    //m_CrpClient.DedicatedHosts.Restart(rgName, dhgName, dhName);
 
                     // Delete DedicatedHost and DedicatedHostGroup
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
