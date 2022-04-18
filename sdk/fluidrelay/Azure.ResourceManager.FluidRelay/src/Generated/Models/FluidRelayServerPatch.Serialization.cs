@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
         }

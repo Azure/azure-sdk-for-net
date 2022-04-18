@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }
