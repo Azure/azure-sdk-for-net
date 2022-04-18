@@ -48,15 +48,15 @@
         //     "type": "string",
         //     "value": "production"
         // },
-        // "QUESTIONANSWERING_ENDPOINT": {
+        // "AZURE_QUESTIONANSWERING_ENDPOINT": {
         //     "type": "string",
         //     "value": "https://wuppe.api.cognitive.microsoft.com"
         // },
-        // "QUESTIONANSWERING_KEY": {
+        // "AZURE_QUESTIONANSWERING_KEY": {
         //     "type": "string",
         //     "value": ""
         // },
-        // "QUESTIONANSWERING_PROJECT": {
+        // "AZURE_QUESTIONANSWERING_PROJECT": {
         //     "type": "string",
         //     "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
         // }
