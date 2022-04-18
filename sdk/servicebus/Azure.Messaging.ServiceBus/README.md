@@ -142,7 +142,8 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 * [Send and receive a message](#send-and-receive-a-message)
-* [Send and receive a batch of messages](#send-and-receive-a-batch-of-messages)
+* [Sending a batch of messages](#Sending-a-batch-of-messages)
+* [Receiving a batch of messages](#Receiving-a-batch-of-messages)
 * [Complete a message](#complete-a-message)
 * [Abandon a message](#abandon-a-message)
 * [Defer a message](#defer-a-message)
@@ -182,11 +183,10 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-### Send and receive a batch of messages
+### Sending a batch of messages
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
-#### Sending a batch of messages
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
 Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
@@ -240,7 +240,7 @@ messages.Add(new ServiceBusMessage("Second"));
 await sender.SendMessagesAsync(messages);
 ```
 
-#### Receiving a batch of messages
+### Receiving a batch of messages
 ```C# Snippet:ServiceBusReceiveBatch
 // create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
