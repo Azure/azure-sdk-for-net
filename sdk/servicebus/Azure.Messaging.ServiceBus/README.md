@@ -142,8 +142,8 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 * [Send and receive a message](#send-and-receive-a-message)
-* [Sending a batch of messages](#Sending-a-batch-of-messages)
-* [Receiving a batch of messages](#Receiving-a-batch-of-messages)
+* [Sending a batch of messages](#sending-a-batch-of-messages)
+* [Receiving a batch of messages](#receiving-a-batch-of-messages)
 * [Complete a message](#complete-a-message)
 * [Abandon a message](#abandon-a-message)
 * [Defer a message](#defer-a-message)
