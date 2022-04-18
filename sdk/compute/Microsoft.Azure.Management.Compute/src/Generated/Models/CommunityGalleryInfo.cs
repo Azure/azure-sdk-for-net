@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="publisherUri">Community gallery publisher uri</param>
         /// <param name="publisherContact">Community gallery publisher contact
         /// email</param>
-        /// <param name="eula">Community gallery publisher eula</param>
+        /// <param name="eula">End-user license agreement for community
+        /// gallery</param>
         /// <param name="publicNamePrefix">Community gallery public name
         /// prefix</param>
         /// <param name="communityGalleryEnabled">Contains info about whether
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string PublisherContact { get; set; }
 
         /// <summary>
-        /// Gets or sets community gallery publisher eula
+        /// Gets or sets end-user license agreement for community gallery
         /// </summary>
         [JsonProperty(PropertyName = "eula")]
         public string Eula { get; set; }
