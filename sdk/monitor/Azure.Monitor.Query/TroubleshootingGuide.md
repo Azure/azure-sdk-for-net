@@ -90,8 +90,7 @@ If your Kusto query returns empty no logs, please validate the following:
 - If your Kusto query also has a time interval, the query is evaluated for the intersection of the time interval in the
   query string and the time interval set in the `timespan` param provided the query API. The intersection of
   these time intervals may not have any logs. To avoid any confusion, it's recommended to remove any time interval in
-  the Kusto query string and use `timespan` explicitly. Please note that the `timespan` param can be a timedelta,
-  a timedelta and a start datetime, or a start datetime/end datetime.
+  the Kusto query string and use `timespan` explicitly.
 
 ### Troubleshooting server timeouts when executing logs query request
 
@@ -110,7 +109,7 @@ Inner error: {
 }
 ```
 
-The following code shows a sample on how to set the server timeout to 10 minutes. Note that by setting this server
+The following code shows a sample on how to set the server timeout. Note that by setting this server
 timeout, the Azure Monitor Query library will automatically also extend the client timeout to wait for 10 minutes for
 the server to respond. You don't need to configure your HTTP client to extend the response timeout as shown in the
 previous section.
@@ -125,24 +124,33 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
-    "{kusto-query-string}",
-    timespan="{timespan}",
-    server_timeout=600)
+        "AzureActivity | top 10 by TimeGenerated",
+        new QueryTimeRange(TimeSpan.FromDays(1)),
+        new LogsQueryOptions
+        {
+            IncludeStatistics = true,
+        });
+
+    BinaryData stats = response.Value.GetStatistics();
+    using var statsDoc = JsonDocument.Parse(stats);
+    var queryStats = statsDoc.RootElement.GetProperty("query");
+    Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());                
 ```
 
 ### Troubleshooting partially successful logs query requests
 
 By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query
 client library will throw an exception to indicate to the user that the query was not fully successful. The data and
-the error can be accessed using the `PartialFailure` and `Error` fields.
+the error can be accessed using the `LogsQueryResultStatus` enum and `Error` fields.
 
 ```csharp
 var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
-"{kusto-query-string}",
-timespan="{timespan}", new LogsQueryOptions()
-{
-    AllowPartialErrors = true
-});
+    "{kusto-query-string}",
+    "{query-time-range}", 
+    new LogsQueryOptions
+        {
+            AllowPartialErrors = true
+        });
 
 var partialFailure = LogsQueryResultStatus.PartialFailure;
 var status = results.Value.Status;
