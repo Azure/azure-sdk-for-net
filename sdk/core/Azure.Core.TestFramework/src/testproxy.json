@@ -576,16 +576,6 @@
         "modelAsString": false
       }
     },
-    "SkipRecordingType": {
-      "type": "string",
-      "enum": [
-        "RequestResponse"
-      ],
-      "x-ms-enum": {
-        "name": "SkipRecordingType",
-        "modelAsString": false
-      }
-    },
     "TransformType": {
       "type": "string",
       "enum": [

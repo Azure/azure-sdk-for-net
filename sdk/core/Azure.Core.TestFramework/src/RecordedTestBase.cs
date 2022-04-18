@@ -103,7 +103,6 @@ namespace Azure.Core.TestFramework
         /// potentially lengthy live tests.  This should never be checked in
         /// and will throw an exception from CI builds to help make that easier
         /// to spot.
-        /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
         /// </summary>
         public bool SaveDebugRecordingsOnFailure
         {
