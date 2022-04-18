@@ -9,8 +9,8 @@
 
 Install the Azure Identity client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 ### Prerequisites

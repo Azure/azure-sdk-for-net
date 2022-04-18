@@ -3,3 +3,6 @@
 ## 0.1.0-preview (2020-02-28)
 
 ### Features Added
+
+- Initial release
+
