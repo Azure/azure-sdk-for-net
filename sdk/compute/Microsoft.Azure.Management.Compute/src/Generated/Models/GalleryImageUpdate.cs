@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// uri.</param>
         /// <param name="releaseNoteUri">The release note uri.</param>
         /// <param name="hyperVGeneration">The hypervisor generation of the
-        /// Virtual Machine. Applicable to OS disks only. Possible values
+        /// Virtual Machine. Applicable to OS disks only. Possible valuesp
         /// include: 'V1', 'V2'</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// image definition. This property can be used for decommissioning
