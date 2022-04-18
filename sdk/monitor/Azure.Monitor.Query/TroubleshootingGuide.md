@@ -44,19 +44,15 @@ For more help with troubleshooting authentication errors, see the Azure Identity
 
 ### Troubleshooting insufficient access error for logs query
 
-If you get an HTTP error with status code 403 (Forbidden), it means that the provided credentials does not have
-sufficient permissions to query the workspace.
+If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials doesn't have sufficient permissions to query the workspace.
+
 ```text
 "{"error":{"message":"The provided credentials have insufficient access to perform the requested operation","code":"InsufficientAccessError","correlationId":""}}"
 ```
 
 1. Check that the application or user that is making the request has sufficient permissions:
     * You can refer to this document to [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions)
-2. If the user or application is granted sufficient privileges to query the workspace, make sure you are
-   authenticating as that user/application. If you are authenticating using the
-   [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity)
-   then check the logs to verify that the credential used is the one you expected. To enable logging, see [enable
-   client logging](#enable-client-logging) section above.
+2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 
 For more help on troubleshooting authentication errors please see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TroubleshootingGuide.md).
 
@@ -78,25 +74,19 @@ Inner error: {
 }
 ```
 
-The error message in `innererror` may include the where the Kusto query has an error. You may also refer to the [Kusto Query Language](https://docs.microsoft.com/azure/data-explorer/kusto/query) reference docs to learn more about querying logs using KQL.
+The error message in `innererror` may include the where the Kusto query has an error. You may also refer to the [Kusto Query Language](https://docs.microsoft.com/azure/data-explorer/kusto/query) (KQL) reference docs to learn more about querying logs using KQL.
 
 ### Troubleshooting empty log query results
 
 If your Kusto query returns empty no logs, please validate the following:
 
 - You have the right workspace ID
-- You are setting the correct time interval for the query. Try expanding the time interval for your query to see if that
-  returns any results.
-- If your Kusto query also has a time interval, the query is evaluated for the intersection of the time interval in the
-  query string and the time interval set in the `timespan` param provided the query API. The intersection of
-  these time intervals may not have any logs. To avoid any confusion, it's recommended to remove any time interval in
-  the Kusto query string and use `timespan` explicitly.
+- You're setting the correct time interval for the query. Try expanding the time interval for your query to see if that returns any results.
+- If your Kusto query also has a time interval, the query is evaluated for the intersection of the time interval in the query string and the time interval set in the `timespan` param provided the query API. The intersection of these time intervals may not have any logs. To avoid any confusion, it's recommended to remove any time interval in the Kusto query string and use `timespan` explicitly.
 
 ### Troubleshooting server timeouts when executing logs query request
 
-Some complex Kusto queries can take a long time to complete and such queries are aborted by the
-service if they run for more than 3 minutes. For such scenarios, the query APIs on `LogsQueryClient`, provide options to
-configure the timeout on the server. The server timeout can be extended up to 10 minutes.
+Some complex Kusto queries can take a long time to complete and such queries are aborted by the service if they run for more than 3 minutes. For such scenarios, the query APIs on `LogsQueryClient`, provide options to configure the timeout on the server. The server timeout can be extended up to 10 minutes.
 
 You may see an error as follows:
 
@@ -109,10 +99,7 @@ Inner error: {
 }
 ```
 
-The following code shows a sample on how to set the server timeout. Note that by setting this server
-timeout, the Azure Monitor Query library will automatically also extend the client timeout to wait for 10 minutes for
-the server to respond. You don't need to configure your HTTP client to extend the response timeout as shown in the
-previous section.
+The following code shows an example of setting the server timeout. By setting this server timeout, the Azure Monitor Query library will automatically extend the client timeout to wait for 10 minutes for the server to respond. You don't need to configure your HTTP client to extend the response timeout, as shown in the previous section.
 
 ```csharp
 using Azure;
@@ -124,12 +111,12 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
-        "AzureActivity | top 10 by TimeGenerated",
-        new QueryTimeRange(TimeSpan.FromDays(1)),
-        new LogsQueryOptions
-        {
-            IncludeStatistics = true,
-        });
+    "AzureActivity | top 10 by TimeGenerated",
+    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryOptions
+    {
+        IncludeStatistics = true,
+    });
 
     BinaryData stats = response.Value.GetStatistics();
     using var statsDoc = JsonDocument.Parse(stats);
@@ -139,8 +126,7 @@ Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 
 ### Troubleshooting partially successful logs query requests
 
-By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query
-client library will throw an exception to indicate to the user that the query was not fully successful. The data and
+By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query client library will throw an exception. The exception indicates to the user that the query wasn't fully successful. The data and
 the error can be accessed using the `LogsQueryResultStatus` enum and `Error` fields.
 
 ```csharp
@@ -148,9 +134,9 @@ var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
     "{kusto-query-string}",
     "{query-time-range}", 
     new LogsQueryOptions
-        {
-            AllowPartialErrors = true
-        });
+    {
+        AllowPartialErrors = true
+    });
 
 var partialFailure = LogsQueryResultStatus.PartialFailure;
 var status = results.Value.Status;
@@ -162,15 +148,15 @@ var errorMessage = results.Value.Error.Message;
 
 ### Troubleshooting insufficient access error for metrics query
 
-If you get an HTTP error with status code 403 (Forbidden), it means that the provided credentials does not have
-sufficient permissions to query the workspace.
+If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials lack sufficient permissions to query the workspace.
+
 ```text
 "{"error":{"message":"The provided credentials have insufficient access to perform the requested operation","code":"InsufficientAccessError","correlationId":""}}"
 ```
 
 1. Check that the application or user that is making the request has sufficient permissions:
     * You can refer to this document to [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions)
-2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section above.
+2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TroubleshootingGuide.md).
 
@@ -195,5 +181,4 @@ As documented in the error message, the supported granularity for metrics querie
 
 ## Additional Azure Core configurations
 
-When calling the methods, some properties including `retry_mode`, `timeout`, `connection_verify` can be configured by passing in as keyword arguments. See
-[handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) for list of all such properties.
+When calling the methods, some properties including `retry_mode`, `timeout`, `connection_verify` can be configured by passing in as keyword arguments. For a list of all such properties, see [handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception).
