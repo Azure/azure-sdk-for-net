@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -136,11 +135,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
         }
 
-        [TestCase(0, true)]  // Internal
-        [TestCase(1, false)] // Server
-        [TestCase(2, true)]  // Client
-        [TestCase(3, false)] // Producer
-        [TestCase(4, false)] // Consumer
+        [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
+        [TestCase(DiagnosticScope.ActivityKind.Server, false)]
+        [TestCase(DiagnosticScope.ActivityKind.Client, true)]
+        [TestCase(DiagnosticScope.ActivityKind.Producer, false)]
+        [TestCase(DiagnosticScope.ActivityKind.Consumer, false)]
         [NonParallelizable]
         public void NestedClientActivitiesSuppressed(int kind, bool expectSuppression)
         {
@@ -166,7 +165,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
         }
 
-        [Test] // Consumer
+        [Test]
         [NonParallelizable]
         public void NestedClientActivitiesSuppressedDefaultDiagnosticScopeFactory()
         {
@@ -184,11 +183,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
         }
 
-        [TestCase(0, true)]  // Internal
-        [TestCase(1, false)] // Server
-        [TestCase(2, true)]  // Client
-        [TestCase(3, false)] // Producer
-        [TestCase(4, false)] // Consumer
+        [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
+        [TestCase(DiagnosticScope.ActivityKind.Server, false)]
+        [TestCase(DiagnosticScope.ActivityKind.Client, true)]
+        [TestCase(DiagnosticScope.ActivityKind.Producer, false)]
+        [TestCase(DiagnosticScope.ActivityKind.Consumer, false)]
         [NonParallelizable]
         public void NestedClientActivitiesSuppressionActivitySource(int kind, bool expectSuppression)
         {

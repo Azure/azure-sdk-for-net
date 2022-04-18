@@ -17,6 +17,8 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
+        private const string AzureSdkScopeLabel = "az.sdk.scope";
+        private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
@@ -34,7 +36,7 @@ namespace Azure.Core.Pipeline
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
             IsEnabled = (source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource)) &&
-                (Activity.Current?.IsNestedScopeEnabled()).GetValueOrDefault(true);
+                !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -99,7 +101,7 @@ namespace Azure.Core.Pipeline
             Activity? started = _activityAdapter?.Start();
             if (!_enableNestedClientScopes && started != null)
             {
-                started.SuppressNestedClientScopes();
+                started.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
             }
         }
 
@@ -380,10 +382,9 @@ namespace Azure.Core.Pipeline
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
         private static Func<Activity, string, object?>? GetCustomPropertyMethod;
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
-        private static string AzureSdkScopeLabel = "az.sdk.scope";
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
 
-        public static bool IsNestedScopeEnabled(this Activity activity)
+        public static object? GetCustomProperty(this Activity activity, string propertyName)
         {
             if (GetCustomPropertyMethod == null)
             {
@@ -402,10 +403,10 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            return GetCustomPropertyMethod(activity, AzureSdkScopeLabel) == null;
+            return GetCustomPropertyMethod(activity, propertyName);
         }
 
-        public static void SuppressNestedClientScopes(this Activity activity)
+        public static void SetCustomProperty(this Activity activity, string propertyName, object propertyValue)
         {
             if (SetCustomPropertyMethod == null)
             {
@@ -425,7 +426,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            SetCustomPropertyMethod(activity, AzureSdkScopeLabel, bool.TrueString);
+            SetCustomPropertyMethod(activity, propertyName, propertyValue);
         }
 
         public static void SetW3CFormat(this Activity activity)

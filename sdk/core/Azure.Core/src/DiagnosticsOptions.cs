@@ -38,7 +38,7 @@ namespace Azure.Core
                 LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
                 IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
                 IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
-                IsNestingClientSpansEnabled  = diagnosticsOptions.IsNestingClientSpansEnabled ;
+                IsNestingClientSpansEnabled  = diagnosticsOptions.IsNestingClientSpansEnabled;
             }
             else
             {
