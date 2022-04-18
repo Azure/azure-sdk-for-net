@@ -1,35 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.net/teamsUser/:getToken?api-version=2022-06-01",
+      "RequestUri": "https://sanitized.communication.azure.com/teamsUser/:exchangeAccessToken?api-version=2022-06-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "62",
         "Content-Type": "application/json",
-        "traceparent": "00-2b35b646b433df5cf6c4b8c45586ae6f-010d935a7afa0045-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220210.1 (.NET 6.0.1; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "3291e847ea7724be67a1fa9d859501a8",
+        "traceparent": "00-0efc781d2ff3059d1c099dd11f2daba3-629f036dc65364e2-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220418.1 (.NET 6.0.4; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "388aef2f4d08cfa4f6bdc15e012508ac",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 10 Feb 2022 14:47:21 GMT",
+        "x-ms-date": "Mon, 18 Apr 2022 11:58:39 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "token": "Sanitized"
+        "token": "Sanitized",
+        "appId": "Sanitized",
+        "userId": "Sanitized"
       },
       "StatusCode": 401,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Thu, 10 Feb 2022 14:47:20 GMT",
-        "MS-CV": "qxVjuuIV3kO6CpZ05xiV7A.0",
+        "Date": "Mon, 18 Apr 2022 11:58:39 GMT",
+        "MS-CV": "Ikk6CSkV10mk4ZAmJw/zVg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0eSUFYgAAAAACZNHGoEwwTbvMzxnhtDq8UFJHMDFFREdFMDcxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0b1JdYgAAAAA7xawgNdfvSJN3yDTGhV\u002B0UFJHMDFFREdFMDcxMgBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "3291e847ea7724be67a1fa9d859501a8",
-        "X-Processing-Time": "141ms"
+        "x-ms-client-request-id": "388aef2f4d08cfa4f6bdc15e012508ac",
+        "X-Processing-Time": "94ms"
       },
       "ResponseBody": {
         "error": {
@@ -41,6 +43,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "51586585"
+    "RandomSeed": "1991228873"
   }
 }

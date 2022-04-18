@@ -6,6 +6,7 @@
 - Added support to build custom Teams endpoint using M365 Teams identities:
     - Added `GetTokenForTeamsUser(string teamsUserAadToken, string appId, string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))` method that provides the ability to exchange an AAD access token of a Teams user for a Communication Identity access token to `CommunicationIdentityClient`.
 - Removed `ServiceVersion.V2021_10_31_preview`
+- Added new API version `ServiceVersion.V2022_06_01` that is default API version
 
 ### Breaking Changes
 

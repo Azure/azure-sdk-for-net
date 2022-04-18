@@ -137,10 +137,10 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token = await generateTeamsToken();
+            var teamsUserParams = await createTeamsUserParams();
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsUserParams.Token, teamsUserParams.AppId, teamsUserParams.UserId);
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
@@ -152,9 +152,10 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(true, true, true, "token", TestName = "GetTokenForTeamsUserWithNullParamsShouldThrow")]
         public async Task GetTokenForTeamsUserWithNullParamsShouldThrow(bool isTokenNull, bool isAppIdNull, bool isUserIdNull, string paramName)
         {
-            var token = isTokenNull ? null : await generateTeamsToken();
-            var appId = isAppIdNull ? null : TestEnvironment.CommunicationAppId;
-            var userId = isUserIdNull ? null : TestEnvironment.CommunicationUserId;
+            var teamsUserParams = await createTeamsUserParams();
+            var token = isTokenNull ? null : teamsUserParams.Token;
+            var appId = isAppIdNull ? null : teamsUserParams.AppId;
+            var userId = isUserIdNull ? null : teamsUserParams.UserId;
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
@@ -176,7 +177,8 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
+                var teamsUserParams = await createTeamsUserParams();
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, teamsUserParams.AppId, teamsUserParams.UserId);
             }
             catch (RequestFailedException ex)
             {
@@ -194,7 +196,8 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(TestEnvironment.CommunicationExpiredTeamsToken, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
+                var teamsUserParams = await createTeamsUserParams();
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(TestEnvironment.CommunicationExpiredTeamsToken, teamsUserParams.AppId, teamsUserParams.UserId);
             }
             catch (RequestFailedException ex)
             {
@@ -216,11 +219,11 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token = await generateTeamsToken();
+            var teamsUserParams = await createTeamsUserParams();
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, appId, TestEnvironment.CommunicationUserId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsUserParams.Token, appId, teamsUserParams.UserId);
             }
             catch (RequestFailedException ex)
             {
@@ -240,11 +243,11 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token = await generateTeamsToken();
+            var teamsUserParams = await createTeamsUserParams();
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationUserId, TestEnvironment.CommunicationUserId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsUserParams.Token, teamsUserParams.UserId, teamsUserParams.UserId);
             }
             catch (RequestFailedException ex)
             {
@@ -266,11 +269,11 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token = await generateTeamsToken();
+            var teamsUserParams = await createTeamsUserParams();
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, userId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsUserParams.Token, teamsUserParams.AppId, userId);
             }
             catch (RequestFailedException ex)
             {
@@ -290,11 +293,11 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token = await generateTeamsToken();
+            var teamsUserParams = await createTeamsUserParams();
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationAppId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsUserParams.Token, teamsUserParams.AppId, teamsUserParams.AppId);
             }
             catch (RequestFailedException ex)
             {

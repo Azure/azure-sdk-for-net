@@ -6,43 +6,44 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "62",
+        "Content-Length": "53",
         "Content-Type": "application/json",
-        "traceparent": "00-5456a770a7d24b039ff2c34f54c85995-ff52bebf0047ca2f-00",
+        "traceparent": "00-8067e3b2ed4fbf08dd4318e255bb6323-b6314dd34044b1c8-00",
         "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220418.1 (.NET 6.0.4; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "bebaf290d045d50c94c1be26e4e83baa",
+        "x-ms-client-request-id": "2bf9476aaca9627a6063ac34e9cde238",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 18 Apr 2022 12:00:39 GMT",
+        "x-ms-date": "Mon, 18 Apr 2022 11:59:43 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "token": "Sanitized",
         "appId": "Sanitized",
-        "userId": "Sanitized"
+        "userId": ""
       },
-      "StatusCode": 401,
+      "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Apr 2022 12:00:38 GMT",
-        "MS-CV": "zxQx0rbwGUKxX10evrEvYg.0",
+        "Date": "Mon, 18 Apr 2022 11:59:44 GMT",
+        "MS-CV": "lMjzQQoXvEaHMXF8spixDA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "051JdYgAAAAD0PdhRmYYTSJO4/9vKJtLAUFJHMDFFREdFMDkxMgBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "0r1JdYgAAAACbb/OdTnu0QqAMbjgkzW8aUFJHMDFFREdFMDYxMwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "bebaf290d045d50c94c1be26e4e83baa",
-        "X-Processing-Time": "58ms"
+        "x-ms-client-request-id": "2bf9476aaca9627a6063ac34e9cde238",
+        "X-Processing-Time": "35ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidAccessToken",
-          "message": "Provided access token is not valid."
+          "code": "ValidationError",
+          "message": "UserId: The UserId field is required.",
+          "target": "UserId"
         }
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "833814500"
+    "RandomSeed": "124507822"
   }
 }

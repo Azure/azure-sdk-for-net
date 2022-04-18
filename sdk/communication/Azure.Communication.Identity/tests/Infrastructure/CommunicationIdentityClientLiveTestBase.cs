@@ -1,22 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
+using Azure.Communication.Identity.Tests.Infrastructure;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..token");
+            JsonPathSanitizers.Add("$..appId");
+            JsonPathSanitizers.Add("$..userId");
+            JsonPathSanitizers.Add("$..id");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
         }
 
         /// <summary>
@@ -51,14 +60,10 @@ namespace Azure.Communication.Identity.Tests
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected async Task<string> generateTeamsToken()
+        protected async Task<TeamsUserParams> createTeamsUserParams()
         {
-            string token;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                token = "Sanitized";
-            }
-            else
+            TeamsUserParams teamsUserParams = new TeamsUserParams("Sanitized", "Sanitized", "Sanitized");
+            if (Mode != RecordedTestMode.Playback)
             {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
@@ -74,9 +79,11 @@ namespace Azure.Communication.Identity.Tests
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                token = result.AccessToken;
+                teamsUserParams.Token = result.AccessToken;
+                teamsUserParams.AppId = TestEnvironment.CommunicationM365AppId;
+                teamsUserParams.UserId = result.Account.HomeAccountId.ObjectId;
             }
-            return token;
+            return teamsUserParams;
         }
     }
 }
