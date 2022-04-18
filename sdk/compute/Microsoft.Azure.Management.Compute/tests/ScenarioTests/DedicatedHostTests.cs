@@ -30,6 +30,7 @@ namespace Compute.Tests
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string rgName = baseRGName + "DH";
                 string dhgName = "DHG-1";
+                string dhgWithUltraSSDName = "DHG-UltraSSD-1";
                 string dhName = "DH-1";
 
                 try
@@ -64,7 +65,7 @@ namespace Compute.Tests
                     var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv3-Type1");
                     var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
                     ValidateDedicatedHost(createdDH, returnedDH);
-
+                    
                     //List DedicatedHosts
                     var listDHsResponse = m_CrpClient.DedicatedHosts.ListByHostGroup(rgName, dhgName);
                     Assert.Single(listDHsResponse);
@@ -74,6 +75,10 @@ namespace Compute.Tests
                     m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
                     m_CrpClient.DedicatedHostGroups.Delete(rgName, dhgName);
 
+                    // Create a dedicated host group with ultraSSDCapabilty set to true, then get the dedicated host group and validate that they match
+                    createdDHG = CreateDedicatedHostGroup(rgName, dhgWithUltraSSDName, ultraSSDCapability: true);
+                    returnedDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgWithUltraSSDName);
+                    ValidateDedicatedHostGroup(createdDHG, returnedDHG);
                 }
                 finally
                 {
@@ -192,6 +197,12 @@ namespace Compute.Tests
                 Assert.Equal(expectedDHG.Location, actualDHG.Location);
                 Assert.Equal(expectedDHG.Name, actualDHG.Name);
                 Assert.Equal(expectedDHG.SupportAutomaticPlacement, actualDHG.SupportAutomaticPlacement);
+
+                if(expectedDHG.AdditionalCapabilities != null)
+                {
+                    Assert.NotNull(actualDHG.AdditionalCapabilities);
+                    Assert.Equal(expectedDHG.AdditionalCapabilities.UltraSSDEnabled, actualDHG.AdditionalCapabilities.UltraSSDEnabled);
+                }
             }
         }
 
