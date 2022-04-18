@@ -12,6 +12,30 @@ skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
 
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  ACL: Acl
+  ACLs: Acls
+
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
   RecordSets_ListAllByDnsZone: GetAllRecordSets

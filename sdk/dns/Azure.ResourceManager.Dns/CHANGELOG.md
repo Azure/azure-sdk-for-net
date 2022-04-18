@@ -14,6 +14,15 @@ The package name has been changed from `Microsoft.Azure.Management.Dns` to `Azur
 
 - Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
 
+### General New Features
+
+* Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
+* Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
+* HTTP pipeline with custom policies
+* Better error-handling
+* Support uniform telemetry across all languages
+> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+
 ### Management Client Changes
 
 Before upgrade:
