@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
 
         private void ValidateCallbackInScope()
         {
-            if (_callbackCompleted)
+            if (Volatile.Read(ref _callbackCompleted))
             {
                 throw new InvalidOperationException(
                     "Messages cannot be received using the 'ProcessSessionMessageEventArgs' after the 'ProcessSessionMessageAsync' event handler has returned.");

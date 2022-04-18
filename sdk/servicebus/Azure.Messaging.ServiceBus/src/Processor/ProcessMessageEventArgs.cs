@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusReceiver _receiver;
         private readonly ReceiverManager _manager;
         private readonly CancellationTokenSource _lockRenewalCancellationSource;
-        private volatile bool _callbackCompleted;
+        private bool _callbackCompleted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus
 
         private void ValidateCallbackInScope()
         {
-            if (_callbackCompleted)
+            if (Volatile.Read(ref _callbackCompleted))
             {
                 throw new InvalidOperationException(
                     "Messages cannot be received using the 'ProcessMessageEventArgs' after the 'ProcessMessageAsync' event handler has returned.");
