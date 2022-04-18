@@ -526,12 +526,12 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class AaaaRecord
     {
         public AaaaRecord() { }
-        public string Ipv6Address { get { throw null; } set { } }
+        public string IPv6Address { get { throw null; } set { } }
     }
     public partial class ARecord
     {
         public ARecord() { }
-        public string Ipv4Address { get { throw null; } set { } }
+        public string IPv4Address { get { throw null; } set { } }
     }
     public partial class CaaRecord
     {
