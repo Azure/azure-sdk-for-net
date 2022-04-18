@@ -8,7 +8,7 @@ using Azure.Identity;
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace Azure.ServiceTemplate.Template.Perf
+namespace Azure.Template.Perf
 {
     public class TemplateClientTest : PerfTest<TemplateClientTest.TemplateClientOptions>
     {

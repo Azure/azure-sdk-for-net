@@ -7,9 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file: SwaggerFileLink
-namespace: Azure.ServiceTemplate.Template
-public-clients: true
-data-plane: true
+namespace: Azure.Template
 securityTypes
 securityScopePrefix: securityScopes
 securityHeaderNamePrefix: securityHeaderName

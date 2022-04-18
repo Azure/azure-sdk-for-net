@@ -5,8 +5,8 @@ languages:
 products:
 # Including relevant stubs from https://review.docs.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
-name: Azure.ServiceTemplate.Template samples for .NET
-description: Samples for the Azure.ServiceTemplate.Template client library.
+name: Azure.Template samples for .NET
+description: Samples for the Azure.Template client library.
 ---
 
 # Azure.ServiceTemplate.Template Samples

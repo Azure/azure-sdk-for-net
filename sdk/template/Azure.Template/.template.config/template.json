@@ -1,15 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "chunyu@microsoft.com",
   "classifications": [ "Azure", "ClassLibrary" ],
-  "identity": "Azure.Sample.Template",
+  "identity": "Azure.Template",
   "name": "Azure DataPlane SDK template: client project",
   "shortName": "dpg",
   "tags": {
     "language": "C#",
     "type": "project"
   },
-  "sourceName": "Azure.Sample.Template",
+  "sourceName": "Azure.Template",
   "preferNameDirectory": true,
   "guids": [
     "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
@@ -32,15 +31,20 @@
             "tests/**/*.cs",
             "perf/**/*.cs",
             "stress/**/*.cs",
-            "src/autorest.cs"
+            "src/**/*",
+            "tests/SessionRecords/**/*"
           ]
         }
       ]
     },
     {
-      "source": ".content",
+      "source": ".content/testResource",
       "target": "../",
       "condition": "(includeCI)"
+    },
+    {
+      "source": ".content/perf",
+      "target": "./perf"
     },
     {
       "source": ".content/stress",

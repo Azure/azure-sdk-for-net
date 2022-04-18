@@ -9,8 +9,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 input-file:
 - $(this-folder)/swagger/mini-secrets.json
 namespace: Azure.Template
-public-clients: true
-data-plane: true
 security: AADToken
 security-scopes: https://api.adu.microsoft.com/.default
  

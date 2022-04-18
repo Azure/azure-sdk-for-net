@@ -8,7 +8,7 @@ using Azure.Identity;
 using Azure.Test.Stress;
 using CommandLine;
 
-namespace Azure.ServiceTemplate.Template.Stress
+namespace Azure.Template.Stress
 {
     public class TemplateClientTest : StressTest<TemplateClientTest.TemplateClientOptions, TemplateClientTest.TemplateClientMetrics>
     {

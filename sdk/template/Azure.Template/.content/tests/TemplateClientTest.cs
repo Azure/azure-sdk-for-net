@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ServiceTemplate.Template.Tests
+namespace Azure.Template.Tests
 {
     public class TemplateClientTest: RecordedTestBase<TemplateClientTestEnvironment>
     {
