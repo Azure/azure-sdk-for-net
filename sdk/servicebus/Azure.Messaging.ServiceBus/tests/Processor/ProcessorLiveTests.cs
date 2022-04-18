@@ -1079,21 +1079,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     var count = Interlocked.Increment(ref receivedCount);
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
-                    }
 
                     if (count == 1)
                     {
                         var received = await args.ReceiveMessagesAsync(messageCount);
                         Assert.IsNotEmpty(received);
                         count = Interlocked.Add(ref receivedCount, received.Count);
-                    }
-
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
                     }
 
                     if (manualRenew)
@@ -1107,6 +1098,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (manualComplete)
                     {
                         await args.CompleteMessageAsync(args.Message);
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
                     }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
@@ -1167,11 +1163,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         receivedDeferredMessages = await args.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
                     }
 
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
-                    }
-
                     if (manualRenew && !sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
                     {
                         await args.RenewMessageLockAsync(args.Message);
@@ -1197,6 +1188,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             }
                         }
                     }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
@@ -1205,9 +1201,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
 
-                Assert.That(
-                    async() => await capturedArgs.ReceiveMessagesAsync(10),
-                    Throws.InstanceOf<InvalidOperationException>());
+                // verify args cannot be used to receive messages outside of callback scope
+                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.ReceiveMessagesAsync(10));
 
                 await processor.CloseAsync();
 
@@ -1215,6 +1210,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.IsNull(msg);
+
                 Assert.That(
                     async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))

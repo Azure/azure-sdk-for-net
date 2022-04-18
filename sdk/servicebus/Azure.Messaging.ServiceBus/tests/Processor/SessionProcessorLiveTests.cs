@@ -2012,10 +2012,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
                     var count = Interlocked.Increment(ref receivedCount);
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
-                    }
 
                     if (count == 1)
                     {
@@ -2024,16 +2020,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         count = Interlocked.Add(ref receivedCount, received.Count);
                     }
 
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
-                    }
                     // lock renewal should happen for messages received in callback
                     await Task.Delay(lockDuration.Add(lockDuration));
 
                     if (manualComplete)
                     {
                         await args.CompleteMessageAsync(args.Message);
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
                     }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
@@ -2043,10 +2040,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.CloseAsync();
 
-                // all messages should have been completed
-                Assert.That(
-                    async() => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
+                // verify all messages were completed
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName));
             }
         }
 
@@ -2097,11 +2092,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // lock renewal should happen for messages received in callback
                     await Task.Delay(lockDuration.Add(lockDuration));
 
-                    if (count == messageCount)
-                    {
-                        tcs.TrySetResult(true);
-                    }
-
                     if (manualComplete)
                     {
                         // do not attempt to complete the deferred message as we will only be able to complete it
@@ -2118,6 +2108,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             }
                         }
                     }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
@@ -2125,16 +2120,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
 
-                Assert.That(
-                    async() => await capturedArgs.ReceiveMessagesAsync(10),
-                    Throws.InstanceOf<InvalidOperationException>());
+                // verify args cannot be used to receive messages outside of callback scope
+                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.ReceiveMessagesAsync(10));
 
                 await processor.CloseAsync();
 
-                // all messages should have been completed
-                Assert.That(
-                    async() => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
+                // verify all messages were completed
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName));
             }
         }
 
