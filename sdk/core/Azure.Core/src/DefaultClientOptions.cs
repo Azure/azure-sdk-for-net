@@ -13,7 +13,6 @@ namespace Azure.Core
             Transport = HttpPipelineTransport.Create();
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             Diagnostics.IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
-            Diagnostics.IsNestingClientSpansEnabled  = true;
         }
 
         private static bool? EnvironmentVariableToBool(string? value)

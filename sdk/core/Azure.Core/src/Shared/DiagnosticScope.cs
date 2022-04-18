@@ -22,21 +22,25 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
-        private readonly bool _enableNestedClientScopes;
+        private readonly bool _suppressNestedClientScopes;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool enableNestedClientScopes) :
-            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, enableNestedClientScopes)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientScopes = true) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientScopes)
         {
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool enableNestedClientScopes)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientScopes = true)
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
-            _enableNestedClientScopes = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? enableNestedClientScopes : true;
+            _suppressNestedClientScopes = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientScopes : false;
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            IsEnabled = (source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource)) &&
-                !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
+            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+
+            if (_suppressNestedClientScopes)
+            {
+                IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
+            }
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -99,7 +103,7 @@ namespace Azure.Core.Pipeline
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
-            if (!_enableNestedClientScopes && started != null)
+            if (_suppressNestedClientScopes && started != null)
             {
                 started.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
             }

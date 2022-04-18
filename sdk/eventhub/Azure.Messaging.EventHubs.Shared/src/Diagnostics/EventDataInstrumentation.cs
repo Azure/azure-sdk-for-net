@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   The client diagnostics instance responsible for managing scope.
         /// </summary>
         ///
-        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true, true);
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true, false);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.

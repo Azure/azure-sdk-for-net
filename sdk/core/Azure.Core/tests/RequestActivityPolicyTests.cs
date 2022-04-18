@@ -334,6 +334,48 @@ namespace Azure.Core.Tests
                 Activity.DefaultIdFormat = previousFormat;
             }
         }
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityNeverSuppressed()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", DiagnosticScope.ActivityKind.Internal);
+            scope.Start();
+
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            try
+            {
+                Activity activity = null;
+                using var testListener = new TestActivitySourceListener("Azure.Core.Http");
+
+                MockTransport mockTransport = CreateMockTransport(_ =>
+                {
+                    activity = Activity.Current;
+                    MockResponse mockResponse = new MockResponse(201);
+                    return mockResponse;
+                });
+
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
+                {
+                    request.Method = RequestMethod.Get;
+                    request.Uri.Reset(new Uri("http://example.com"));
+                }, s_enabledPolicy);
+
+                await requestTask;
+
+                Assert.AreEqual(activity, testListener.Activities.Single());
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = previousFormat;
+            }
+        }
 #endif
     }
 }
