@@ -22,6 +22,7 @@ you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core)
 The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
 
 - Configuring service clients, e.g. configuring retries, logging (`ClientOptions`).
+- Customizing request (`RequestContext`).
 - Accessing HTTP response details (`Response`, `Response<T>`).
 - Calling long-running operations (`Operation<T>`).
 - Paging and asynchronous streams (```AsyncPageable<T>```).
@@ -82,9 +83,25 @@ SecretClient client = new SecretClient(new Uri("http://example.com"), new Defaul
 
 More on client configuration in [client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 
+### Customzing Request Using `RequestContext`
+
+Besides general configuration of _serice client_ through `ClientOptions`, you can customize each individual request sent by _service client_
+using `RequestContext`.
+
+_Service clients_ have methods that can be used to call Azure services. We refer to these client methods _service methods_. You can
+pass `RequestContext` to each _service method_ as a parameter.
+
+```C# Snippet:SetRequestContext
+Response response = await client.GetPetAsync("snoopy", new RequestContext()
+{
+    ErrorOptions = ErrorOptions.Default
+});
+```
+
+More on request customization in [RequestContext samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/RequestContext.md)
+
 ### Accessing HTTP Response Details Using ```Response<T>```
-_Service clients_ have methods that can be used to call Azure services. 
-We refer to these client methods _service methods_.
+
 _Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cases its non-generic sibling, a raw ```Response```).
 This type provides access to both the deserialized result of the service call, 
 and to the details of the HTTP response returned from the server.

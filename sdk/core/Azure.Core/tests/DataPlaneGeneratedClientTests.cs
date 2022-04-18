@@ -183,10 +183,12 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
+            #region Snippet:SetRequestContext
             Response response = await client.GetPetAsync("snoopy", new RequestContext()
             {
                 ErrorOptions = ErrorOptions.Default
             });
+            #endregion
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
             Assert.AreEqual(200, response.Status);
