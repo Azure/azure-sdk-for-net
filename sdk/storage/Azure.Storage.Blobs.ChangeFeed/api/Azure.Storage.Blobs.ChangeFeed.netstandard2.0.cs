@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     }
     public static partial class BlobChangeFeedExtensions
     {
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient GetChangeFeedClient(this Azure.Storage.Blobs.BlobServiceClient serviceClient) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient GetChangeFeedClient(this Azure.Storage.Blobs.BlobServiceClient serviceClient, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions options = null) { throw null; }
     }
     public static partial class BlobChangeFeedModelFactory
     {
