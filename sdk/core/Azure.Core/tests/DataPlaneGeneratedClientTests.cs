@@ -12,9 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class LowLevelClientTests : ClientTestBase
+    public class DataPlaneGeneratedClientTests : ClientTestBase
     {
-        public LowLevelClientTests(bool isAsync) : base(isAsync)
+        public DataPlaneGeneratedClientTests(bool isAsync) : base(isAsync)
         {
         }
 
