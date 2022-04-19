@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<PolicyExemptionResource> CreatePolicyExemption(ArmResource armResource, PolicyAssignmentResource policyAssignment, string policyExemptionName)
-        {
-            PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            ArmOperation<PolicyExemptionResource> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
-            return lro.Value;
-        }
+        //protected async Task<PolicyExemptionResource> CreatePolicyExemption(ArmResource armResource, PolicyAssignmentResource policyAssignment, string policyExemptionName)
+        //{
+        //    PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
+        //    ArmOperation<PolicyExemptionResource> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
+        //    return lro.Value;
+        //}
 
         protected async Task<SubscriptionPolicySetDefinitionResource> CreatePolicySetDefinitionAtSubscription(SubscriptionResource subscription, SubscriptionPolicyDefinitionResource policyDefinition, string policySetDefinitionName)
         {
@@ -227,16 +227,16 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<ResourceLinkResource> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
-        {
-            ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
-            ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
-            ResourceLinkData data = new ResourceLinkData()
-            {
-                Properties = properties
-            };
-            ArmOperation<ResourceLinkResource> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
-            return lro.Value;
-        }
+        //protected async Task<ResourceLinkResource> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
+        //{
+        //    ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
+        //    ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
+        //    ResourceLinkData data = new ResourceLinkData()
+        //    {
+        //        Properties = properties
+        //    };
+        //    ArmOperation<ResourceLinkResource> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
+        //    return lro.Value;
+        //}
     }
 }

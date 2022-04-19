@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // availabilitySet is an AvailabilitySetResource instance created above
-            PatchableAvailabilitySetData update = new PatchableAvailabilitySetData()
+            AvailabilitySetPatch update = new AvailabilitySetPatch()
             {
                 PlatformFaultDomainCount = 3
             };
@@ -133,34 +133,6 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 Console.WriteLine(availabilitySet.Data.Name);
             }
             #endregion Snippet:Managing_Availability_Set_GetAllAvailabilitySets
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExistsAvailabilitySet()
-        {
-            #region Snippet:Managing_Availability_Set_GetIfExistsForAvailabilitySet
-            // First, initialize the ArmClient and get the default subscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            // Now we get a ResourceGroupResource collection for that subscription
-            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-
-            string rgName = "myRgName";
-            ResourceGroupResource resourceGroup = await rgCollection.GetAsync(rgName);
-            AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
-            string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetIfExistsAsync(availabilitySetName);
-
-            if (availabilitySet == null)
-            {
-                Console.WriteLine($"Availability Set {availabilitySetName} does not exist.");
-                return;
-            }
-
-            // At this point, we are sure that availabilitySet is a not null Availability Set, so we can use this object to perform any operations we want.
-
-            #endregion Snippet:Managing_Availability_Set_GetIfExistsForAvailabilitySet
         }
 
         [Test]

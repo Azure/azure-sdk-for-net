@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The details of a management group. </summary>
     public partial class ManagementGroupInfo
@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Management.Models
 
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
         /// <param name="version"> The version number of the object. </param>
-        /// <param name="updatedTime"> The date and time when this object was last updated. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
         /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
         /// <param name="parent"> (Optional) The ID of the parent management group. </param>
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
         /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
+        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
         {
             Version = version;
-            UpdatedTime = updatedTime;
+            UpdatedOn = updatedOn;
             UpdatedBy = updatedBy;
             Parent = parent;
             Path = path;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The version number of the object. </summary>
         public int? Version { get; }
         /// <summary> The date and time when this object was last updated. </summary>
-        public DateTimeOffset? UpdatedTime { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The identity of the principal or process that updated the object. </summary>
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>

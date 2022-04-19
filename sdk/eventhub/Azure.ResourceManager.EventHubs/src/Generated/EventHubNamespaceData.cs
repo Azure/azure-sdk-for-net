@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
-        /// <param name="createdAt"> The time the Namespace was created. </param>
-        /// <param name="updatedAt"> The time the Namespace was updated. </param>
+        /// <param name="createdOn"> The time the Namespace was created. </param>
+        /// <param name="updatedOn"> The time the Namespace was updated. </param>
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
             ProvisioningState = provisioningState;
             Status = status;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             ServiceBusEndpoint = serviceBusEndpoint;
             ClusterArmId = clusterArmId;
             MetricId = metricId;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Status of the Namespace. </summary>
         public string Status { get; }
         /// <summary> The time the Namespace was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the Namespace was updated. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
         public string ServiceBusEndpoint { get; }
         /// <summary> Cluster ARM ID of the Namespace. </summary>

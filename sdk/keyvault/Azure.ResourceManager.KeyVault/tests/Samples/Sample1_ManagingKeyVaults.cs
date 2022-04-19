@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
+            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS, VaultProperties);
 
             var rawVault = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Started, vaultName, parameters).ConfigureAwait(false);
             VaultResource vault = await rawVault.WaitForCompletionAsync();
@@ -85,26 +85,6 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
             VaultResource vault = await vaultCollection.GetAsync("myVault");
             Console.WriteLine(vault.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_KeyVaults_GetAVaultIfExists
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
-
-            VaultResource vault = await vaultCollection.GetIfExistsAsync("foo");
-            if (vault != null)
-            {
-                Console.WriteLine(vault.Data.Name);
-            }
-
-            if (await vaultCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("KeyVault 'bar' exists.");
-            }
             #endregion
         }
 

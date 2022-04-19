@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            serviceBusNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
-            Assert.IsNull(serviceBusNamespace);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            PatchableServiceBusNamespaceData parameters = new PatchableServiceBusNamespaceData(DefaultLocation);
+            ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);

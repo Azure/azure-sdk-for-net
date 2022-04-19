@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -189,6 +190,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingReceiveCanceledEvent = 110;
         internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
+        internal const int PartitionKeyValueOverwritten = 112;
+
+        internal const int ProcessorStoppingCancellationWarningEvent = 113;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -334,7 +339,28 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(PeekMessageStartEvent, identifier, sequenceNumber, messageCount);
+                PeekMessageStartCore(PeekMessageStartEvent, identifier, sequenceNumber, messageCount);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void PeekMessageStartCore(int eventId, string identifier, long? sequenceNumber, int messageCount)
+        {
+            fixed (char* identifierPtr = identifier)
+            {
+                var eventPayload = stackalloc EventData[3];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = Unsafe.SizeOf<long?>();
+                eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref sequenceNumber);
+
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref messageCount);
+
+                WriteEventCore(eventId, 3, eventPayload);
             }
         }
 
@@ -746,6 +772,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [Event(ProcessorStoppingCancellationWarningEvent, Level = EventLevel.Warning, Message = "{0}: StopProcessingAsync Cancellation of the Processor cancellation token triggered an Exception: {1}.")]
+        public virtual void ProcessorStoppingCancellationWarning(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorStoppingCancellationWarningEvent, identifier, exception);
+            }
+        }
+
         [NonEvent]
         public virtual void ProcessorRenewMessageLockStart(string identifier, int messageCount, Guid lockToken)
         {
@@ -868,7 +903,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception, lockToken);
+                ProcessorMessageHandlerExceptionCore(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception, lockToken);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void ProcessorMessageHandlerExceptionCore(int eventId, string identifier, long sequenceNumber, string exception, string lockToken)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* exceptionPtr = exception)
+            fixed (char* lockTokenPtr = lockToken)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = Unsafe.SizeOf<long>();
+                eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref sequenceNumber);
+
+                eventPayload[2].Size = (exception.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)exceptionPtr;
+
+                eventPayload[3].Size = (lockToken.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)lockTokenPtr;
+
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 
@@ -1002,7 +1063,39 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(LinkStateLostEvent, identifier, receiveLinkName, receiveLinkState, isSessionReceiver, exception);
+                LinkStateLostCore(LinkStateLostEvent, identifier, receiveLinkName, receiveLinkState, isSessionReceiver, exception);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void LinkStateLostCore(int eventId, string identifier, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* receiveLinkNamePtr = receiveLinkName)
+            fixed (char* receiveLinkStatePtr = receiveLinkState)
+            fixed (char* exceptionPtr = exception)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (receiveLinkName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)receiveLinkNamePtr;
+
+                eventPayload[2].Size = (receiveLinkState.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)receiveLinkStatePtr;
+
+                // bool maps to "win:Boolean", a 4-byte boolean
+                var isSessionReceiverInt = isSessionReceiver ? 1 : 0;
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref isSessionReceiverInt);
+
+                eventPayload[4].Size = (exception.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)exceptionPtr;
+
+                WriteEventCore(eventId, 5, eventPayload);
             }
         }
 
@@ -1494,7 +1587,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         [Event(TransactionDeclaredEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDeclared for LocalTransactionId: {0} AmqpTransactionId: {1}.")]
         public void TransactionDeclared(string transactionId, string amqpTransactionId)
         {
-            WriteEvent(TransactionDeclaredEvent, transactionId, amqpTransactionId);
+            if (IsEnabled())
+            {
+                WriteEvent(TransactionDeclaredEvent, transactionId, amqpTransactionId);
+            }
         }
 
         [NonEvent]
@@ -1509,7 +1605,34 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         [Event(TransactionDischargedEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDischarged for LocalTransactionId: {0} AmqpTransactionId: {1} Rollback: {2}.")]
         public void TransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
         {
-            WriteEvent(TransactionDischargedEvent, transactionId, amqpTransactionId, rollback);
+            if (IsEnabled())
+            {
+                TransactionDischargedCore(TransactionDischargedEvent, transactionId, amqpTransactionId, rollback);
+            }
+        }
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void TransactionDischargedCore(int eventId, string transactionId, string amqpTransactionId, bool rollback)
+        {
+            fixed (char* transactionIdPtr = transactionId)
+            fixed (char* amqpTransactionIdPtr = amqpTransactionId)
+            {
+                var eventPayload = stackalloc EventData[3];
+
+                eventPayload[0].Size = (transactionId.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)transactionIdPtr;
+
+                eventPayload[1].Size = (amqpTransactionId.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)amqpTransactionIdPtr;
+
+                // bool maps to "win:Boolean", a 4-byte boolean
+                var rollbackInt = rollback ? 1 : 0;
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref rollbackInt);
+
+                WriteEventCore(eventId, 3, eventPayload);
+            }
         }
 
         [NonEvent]
@@ -1570,6 +1693,113 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
             }
         }
+
+        [Event(PartitionKeyValueOverwritten, Level = EventLevel.Warning, Message = "The PartitionKey property with value '{0}' was overwritten with value '{1}' due to setting the SessionId on message with MessageId '{2}'")]
+        public virtual void PartitionKeyOverwritten(string partitionKey, string sessionId, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PartitionKeyValueOverwritten,partitionKey, sessionId, messageId);
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// Writes an event with two string arguments and one int argument into a stack allocated
+        /// <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation and boxing
+        /// on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId, string arg1, int arg2, string arg3)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg3Ptr = arg3)
+            {
+                var eventPayload = stackalloc EventData[3];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = Unsafe.SizeOf<int>();
+                eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg2);
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                WriteEventCore(eventId, 3, eventPayload);
+            }
+        }
+
+        /// <summary>
+        /// Writes an event with two string arguments and one long argument into a stack allocated
+        /// <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation and boxing
+        /// on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId, string arg1, long arg2, string arg3)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg3Ptr = arg3)
+            {
+                var eventPayload = stackalloc EventData[3];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = Unsafe.SizeOf<long>();
+                eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg2);
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                WriteEventCore(eventId, 3, eventPayload);
+            }
+        }
+
+        /// <summary>
+        /// Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct to avoid
+        /// the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        /// <param name="eventId">The event identifier.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
     }
 }

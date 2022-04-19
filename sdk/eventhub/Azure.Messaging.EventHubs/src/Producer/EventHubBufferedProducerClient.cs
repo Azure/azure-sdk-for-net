@@ -64,11 +64,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The default interval to delay for events to be available when building a batch to publish.</summary>
         private static readonly TimeSpan DefaultPublishingDelayInterval = TimeSpan.FromMilliseconds(25);
 
-        /// <summary>
-        ///   The set of client options to use when options were not passed when the producer was instantiated.
-        /// </summary>
-        ///
-        private static EventHubBufferedProducerClientOptions DefaultOptions { get; } =
+        /// <summary>The set of client options to use when options were not passed when the producer was instantiated.</summary>
+        private static readonly EventHubBufferedProducerClientOptions DefaultOptions =
             new EventHubBufferedProducerClientOptions
             {
                 RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
@@ -297,8 +294,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   and <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition" /> both set to 1, the handler will be invoked
         ///   concurrently.
         ///
-        ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
-        ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
+        ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
+        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" /> from within this handler.  It is important
+        ///   to note that doing so will place them at the end of the buffer; the original order will not be maintained.
         ///
         ///   This handler will be awaited after failure to publish the batch; the publishing operation is not considered complete until the
         ///   handler call returns.  It is advised that no long-running operations be performed in the handler to avoid negatively impacting throughput.

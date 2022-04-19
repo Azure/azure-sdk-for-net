@@ -15,22 +15,12 @@ namespace Azure.AI.Language.Conversations
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("query");
-            writer.WriteStringValue(Utterance);
+            writer.WritePropertyName("conversationItem");
+            writer.WriteObjectValue(ConversationItem);
             if (Optional.IsDefined(DirectTarget))
             {
                 writer.WritePropertyName("directTarget");
                 writer.WriteStringValue(DirectTarget);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language");
-                writer.WriteStringValue(Language);
-            }
-            if (Optional.IsDefined(Verbose))
-            {
-                writer.WritePropertyName("verbose");
-                writer.WriteBooleanValue(Verbose.Value);
             }
             if (Optional.IsDefined(IsLoggingEnabled))
             {

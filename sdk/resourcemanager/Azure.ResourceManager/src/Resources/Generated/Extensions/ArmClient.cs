@@ -152,20 +152,6 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region PolicyExemptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="PolicyExemptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyExemptionResource.CreateResourceIdentifier" /> to create a <see cref="PolicyExemptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyExemptionResource" /> object. </returns>
-        public virtual PolicyExemptionResource GetPolicyExemptionResource(ResourceIdentifier id)
-        {
-            PolicyExemptionResource.ValidateResourceId(id);
-            return new PolicyExemptionResource(this, id);
-        }
-        #endregion
-
         #region DataPolicyManifestResource
         /// <summary>
         /// Gets an object representing a <see cref="DataPolicyManifestResource" /> along with the instance operations that can be performed on it but with no data.
@@ -191,20 +177,6 @@ namespace Azure.ResourceManager
         {
             ManagementLockResource.ValidateResourceId(id);
             return new ManagementLockResource(this, id);
-        }
-        #endregion
-
-        #region ResourceLinkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceLinkResource.CreateResourceIdentifier" /> to create a <see cref="ResourceLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLinkResource" /> object. </returns>
-        public virtual ResourceLinkResource GetResourceLinkResource(ResourceIdentifier id)
-        {
-            ResourceLinkResource.ValidateResourceId(id);
-            return new ResourceLinkResource(this, id);
         }
         #endregion
 

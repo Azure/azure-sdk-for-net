@@ -121,23 +121,6 @@ ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsy
 Console.WriteLine(managedInstance.Data.Name);
 ```
 
-***Try to get a managed instance if it exists***
-
-```C# Snippet:Managing_Sql_GetAManagedInstanceIfExists
-ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-ManagedInstanceResource managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-if (managedInstance != null)
-{
-    Console.WriteLine(managedInstance.Data.Name);
-}
-
-if (await managedInstanceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
-```
-
 ***Delete a managed instance***
 
 ```C# Snippet:Managing_Sql_DeleteAManagedInstance

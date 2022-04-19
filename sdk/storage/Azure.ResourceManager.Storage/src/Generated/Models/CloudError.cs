@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> An error response from the Storage service. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="error"> An error response from the Storage service. </param>
-        internal CloudError(CloudErrorBody error)
+        internal CloudError(ResponseError error)
         {
             Error = error;
         }
 
         /// <summary> An error response from the Storage service. </summary>
-        public CloudErrorBody Error { get; }
+        public ResponseError Error { get; }
     }
 }
