@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             if (_groupName == null)
             {
                 throw new InvalidOperationException(
-                    "A group name must be specified for in the SchemaRegistryAvroSerializer constructor if you will be attempting to serialize. " +
+                    "A group name must be specified in the 'SchemaRegistryAvroSerializer' constructor if you will be attempting to serialize. " +
                     "The group name can be omitted if only deserializing.");
             }
 
@@ -205,9 +205,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                     return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
                 }
             }
+            catch (SchemaParseException ex)
+            {
+                throw new FormatException(
+                    "An error occurred while attempting to parse the schema to use when serializing to Avro. " +
+                    $"Make sure that the schema represents valid Avro.",
+                    ex);
+            }
+
             catch (AvroException ex)
             {
-                throw new SchemaRegistryAvroException("An error occurred while attempting to serialize to Avro.", ex);
+                throw new InvalidOperationException(
+                    "An error occurred while attempting to serialize to Avro. Make sure that the data you are " +
+                    "attempting to serialize corresponds to the schema being used to serialize.",
+                    ex);
             }
         }
 
@@ -247,17 +258,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private static DatumWriter<object> GetWriterAndSchema(object value, SupportedType supportedType, out Schema schema)
         {
-            switch (supportedType)
+            if (supportedType == SupportedType.SpecificRecord)
             {
-                case SupportedType.SpecificRecord:
-                    schema = ((ISpecificRecord)value).Schema;
-                    return new SpecificDatumWriter<object>(schema);
-                case SupportedType.GenericRecord:
-                    schema = ((GenericRecord)value).Schema;
-                    return new GenericDatumWriter<object>(schema);
-                default:
-                    throw new ArgumentException($"Invalid supported type value: {supportedType}");
+                schema = ((ISpecificRecord)value).Schema;
+                return new SpecificDatumWriter<object>(schema);
             }
+
+            schema = ((GenericRecord)value).Schema;
+            return new GenericDatumWriter<object>(schema);
         }
 
         private static SupportedType GetSupportedTypeOrThrow(Type type)
@@ -272,7 +280,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 return SupportedType.GenericRecord;
             }
 
-            throw new ArgumentException($"Type {type.Name} is not supported for serialization operations.");
+            throw new ArgumentException($"Type '{type.Name}' is not supported for serialization operations. The type being serialized" +
+                                        $" must be convertible to 'ISpecificRecord' or 'GenericRecord'.");
         }
         #endregion
 
@@ -346,21 +355,17 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             Argument.AssertNotNull(contentType, nameof(contentType));
 
             string[] contentTypeArray = contentType.ToString().Split('+');
-            if (contentTypeArray.Length != 2)
+            if (contentTypeArray.Length != 2 || contentTypeArray[0] != AvroMimeType)
             {
-                throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
-            }
-
-            if (contentTypeArray[0] != AvroMimeType)
-            {
-                throw new InvalidOperationException("An avro serializer may only be used on content that is of 'avro/binary' type");
+                throw new FormatException("Content type was not in the expected format of 'avro/binary+schema-id'");
             }
 
             string schemaId = contentTypeArray[1];
 
             if (async)
             {
-                return await DeserializeInternalAsync(data, dataType, schemaId, true, cancellationToken).ConfigureAwait(false);            }
+                return await DeserializeInternalAsync(data, dataType, schemaId, true, cancellationToken).ConfigureAwait(false);
+            }
             else
             {
                 return DeserializeInternalAsync(data, dataType, schemaId, false, cancellationToken).EnsureCompleted();
@@ -392,10 +397,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new SchemaRegistryAvroException(
+                throw new FormatException(
                     $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
                     $"Make sure that the schema represents valid Avro.",
-                    schemaId,
                     ex);
             }
 
@@ -415,10 +419,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new SchemaRegistryAvroException(
+                throw new FormatException(
                     "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
                     "Make sure that the schema represents valid Avro.",
-                    schemaId,
                     ex);
             }
 
@@ -430,11 +433,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (AvroException ex)
             {
-                throw new SchemaRegistryAvroException(
+                throw new InvalidOperationException(
                     "An error occurred while attempting to deserialize " +
                     $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
                     $"to serialize the data. Please ensure that the schemas are compatible.",
-                    schemaId,
                     ex);
             }
         }
