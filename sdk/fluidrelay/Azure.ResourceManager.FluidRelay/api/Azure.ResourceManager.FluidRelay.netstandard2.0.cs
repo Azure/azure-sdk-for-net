@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         public FluidRelayServerPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public enum KeyName
