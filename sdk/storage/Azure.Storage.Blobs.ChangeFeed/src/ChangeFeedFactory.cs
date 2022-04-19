@@ -16,7 +16,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly BlobContainerClient _containerClient;
 
         public ChangeFeedFactory(
-            BlobServiceClient blobServiceClient)
+            BlobServiceClient blobServiceClient,
+            long? maxTransferSize)
         {
             _containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
             _segmentFactory = new SegmentFactory(
@@ -26,7 +27,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     new ChunkFactory(
                         _containerClient,
                         new LazyLoadingBlobStreamFactory(),
-                        new AvroReaderFactory())));
+                        new AvroReaderFactory(),
+                        maxTransferSize)));
         }
 
         public ChangeFeedFactory(
