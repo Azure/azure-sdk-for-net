@@ -4,7 +4,7 @@
 
 ## Customize Error Handling
 
-You can suppress exception when error is returned.
+You can suppress the exception a service method throws when an error response is returned.
 
 ```C# Snippet:ErrorOptionsNoThrow
 RequestContext context = new RequestContext { ErrorOptions = ErrorOptions.NoThrow };
