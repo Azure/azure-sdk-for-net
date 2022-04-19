@@ -24,7 +24,7 @@ using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    // [LiveOnly]
+    [LiveOnly]
     public class WebJobsServiceBusTestBase
     {
         // surrounding with % indicates that this is used as a pointer to an app setting rather than
