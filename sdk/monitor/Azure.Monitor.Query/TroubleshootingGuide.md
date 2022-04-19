@@ -36,15 +36,15 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 ### Authentication errors
 
-Azure Monitor Query supports Azure Active Directory authentication. Both `LogsQueryClient` and `MetricsQueryClient` have methods to set the credential. To provide a valid credential, you can use the `Azure.Identity` package. For more details on getting started, see the [Azure Monitor Query library's README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#authenticate-the-client). You can also refer to the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme) for details on the credential types supported in `Azure.Identity`.
+Azure Monitor Query supports Azure Active Directory authentication. Both `LogsQueryClient` and `MetricsQueryClient` have methods to set the credential. To provide a valid credential, you can use the `Azure.Identity` package. For more details on getting started, see the [Azure Monitor Query library's README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
-For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TroubleshootingGuide.md).
+For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
 ## Troubleshooting logs query
 
 ### Troubleshooting insufficient access error for logs query
 
-If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials doesn't have sufficient permissions to query the workspace.
+If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials lack sufficient permissions to query the workspace.
 
 ```text
 "{"error":{"message":"The provided credentials have insufficient access to perform the requested operation","code":"InsufficientAccessError","correlationId":""}}"
@@ -52,9 +52,9 @@ If you get an HTTP error with status code 403 (Forbidden), it means the provided
 
 1. Check that the application or user that is making the request has sufficient permissions:
     * You can refer to this document to [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions)
-2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
+2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 
-For more help on troubleshooting authentication errors please see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TroubleshootingGuide.md).
+For more help on troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
 ### Troubleshooting invalid Kusto query
 
@@ -78,11 +78,11 @@ The error message in `innererror` may include the where the Kusto query has an e
 
 ### Troubleshooting empty log query results
 
-If your Kusto query returns empty or has no logs, please validate the following:
+If your Kusto query returns empty or has no logs, validate the following:
 
 - You have the right workspace ID
 - You're setting the correct time interval for the query. Try expanding the time interval for your query to see if that returns any results.
-- If your Kusto query also has a time interval, the query is evaluated for the intersection of the time interval in the query string and the time interval set in the `timespan` param provided the query API. The intersection of these time intervals may not have any logs. To avoid any confusion, it's recommended to remove any time interval in the Kusto query string and use `timespan` explicitly.
+- If your Kusto query also has a time interval, the query is evaluated for the intersection of the time interval in the query string and the time interval set in the `timeRange` parameter provided the query API. The intersection of these time intervals may not have any logs. To avoid any confusion, it's recommended to remove any time interval in the Kusto query string and use `timeRange` explicitly.
 
 ### Troubleshooting server timeouts when executing logs query request
 
@@ -126,8 +126,7 @@ Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
 
 ### Troubleshooting partially successful logs query requests
 
-By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query client library will throw an exception. The exception indicates to the user that the query wasn't fully successful. The data and
-the error can be accessed using the `LogsQueryResultStatus` enum and `Error` fields.
+By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query client library will throw an exception. The exception indicates to the user that the query wasn't fully successful. The data and the error can be accessed using the `LogsQueryResultStatus` enum and `Error` fields.
 
 ```csharp
 var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
@@ -156,9 +155,9 @@ If you get an HTTP error with status code 403 (Forbidden), it means the provided
 
 1. Check that the application or user that is making the request has sufficient permissions:
     * You can refer to this document to [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions)
-2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
+2. If the user or application is granted sufficient privileges to query the workspace, make sure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 
-For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TroubleshootingGuide.md).
+For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
 ### Troubleshooting unsupported granularity for metrics query
 
