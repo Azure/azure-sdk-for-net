@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of EndpointPropertiesBase. </summary>
-        /// <param name="authMode"> Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
         public EndpointPropertiesBase(EndpointAuthMode authMode)
         {
             AuthMode = authMode;
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EndpointPropertiesBase. </summary>
-        /// <param name="authMode"> Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             SwaggerUri = swaggerUri;
         }
 
-        /// <summary> Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </summary>
+        /// <summary> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </summary>
         public EndpointAuthMode AuthMode { get; set; }
         /// <summary> Description of the inference endpoint. </summary>
         public string Description { get; set; }

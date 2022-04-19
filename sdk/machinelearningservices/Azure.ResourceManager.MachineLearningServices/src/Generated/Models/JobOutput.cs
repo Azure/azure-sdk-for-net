@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of JobOutput. </summary>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> Specifies the type of job. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         internal JobOutput(string description, JobOutputType jobOutputType)
         {
             Description = description;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Description for the output. </summary>
         public string Description { get; set; }
-        /// <summary> Specifies the type of job. </summary>
+        /// <summary> [Required] Specifies the type of job. </summary>
         internal JobOutputType JobOutputType { get; set; }
     }
 }

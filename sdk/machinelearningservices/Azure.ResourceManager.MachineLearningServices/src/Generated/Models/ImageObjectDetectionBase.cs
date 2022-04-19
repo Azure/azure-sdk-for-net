@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class ImageObjectDetectionBase : ImageVertical
     {
         /// <summary> Initializes a new instance of ImageObjectDetectionBase. </summary>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageObjectDetectionBase(ImageDataSettings dataSettings, ImageLimitSettings limitSettings) : base(dataSettings, limitSettings)
+        public ImageObjectDetectionBase(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings) : base(dataSettings, limitSettings)
         {
             if (dataSettings == null)
             {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ImageObjectDetectionBase. </summary>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        internal ImageObjectDetectionBase(ImageDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace) : base(dataSettings, limitSettings, sweepSettings)
+        internal ImageObjectDetectionBase(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace) : base(dataSettings, limitSettings, sweepSettings)
         {
             ModelSettings = modelSettings;
             SearchSpace = searchSpace;

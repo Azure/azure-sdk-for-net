@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AccountKeyDatastoreCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of AccountKeyDatastoreCredentials. </summary>
-        /// <param name="secrets"> Storage account secrets. </param>
+        /// <param name="secrets"> [Required] Storage account secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public AccountKeyDatastoreCredentials(AccountKeyDatastoreSecrets secrets)
         {
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AccountKeyDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> Credential type used to authentication with storage. </param>
-        /// <param name="secrets"> Storage account secrets. </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="secrets"> [Required] Storage account secrets. </param>
         internal AccountKeyDatastoreCredentials(CredentialsType credentialsType, AccountKeyDatastoreSecrets secrets) : base(credentialsType)
         {
             Secrets = secrets;
             CredentialsType = credentialsType;
         }
 
-        /// <summary> Storage account secrets. </summary>
+        /// <summary> [Required] Storage account secrets. </summary>
         public AccountKeyDatastoreSecrets Secrets { get; set; }
     }
 }

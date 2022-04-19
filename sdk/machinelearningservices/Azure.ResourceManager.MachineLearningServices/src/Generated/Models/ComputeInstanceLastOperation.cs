@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of ComputeInstanceLastOperation. </summary>
         /// <param name="operationName"> Name of the last operation. </param>
-        /// <param name="operationTime"> Time of the last operation. </param>
+        /// <param name="operationOn"> Time of the last operation. </param>
         /// <param name="operationStatus"> Operation status. </param>
         /// <param name="operationTrigger"> Trigger of operation. </param>
-        internal ComputeInstanceLastOperation(OperationName? operationName, DateTimeOffset? operationTime, OperationStatus? operationStatus, OperationTrigger? operationTrigger)
+        internal ComputeInstanceLastOperation(OperationName? operationName, DateTimeOffset? operationOn, OperationStatus? operationStatus, OperationTrigger? operationTrigger)
         {
             OperationName = operationName;
-            OperationTime = operationTime;
+            OperationOn = operationOn;
             OperationStatus = operationStatus;
             OperationTrigger = operationTrigger;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Name of the last operation. </summary>
         public OperationName? OperationName { get; }
         /// <summary> Time of the last operation. </summary>
-        public DateTimeOffset? OperationTime { get; }
+        public DateTimeOffset? OperationOn { get; }
         /// <summary> Operation status. </summary>
         public OperationStatus? OperationStatus { get; }
         /// <summary> Trigger of operation. </summary>

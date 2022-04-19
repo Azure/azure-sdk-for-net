@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class AssetJobInput
     {
         /// <summary> Initializes a new instance of AssetJobInput. </summary>
-        /// <param name="uri"> Input Asset URI. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AssetJobInput(Uri uri)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of AssetJobInput. </summary>
         /// <param name="mode"> Input Asset Delivery Mode. </param>
-        /// <param name="uri"> Input Asset URI. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         internal AssetJobInput(InputDeliveryMode? mode, Uri uri)
         {
             Mode = mode;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Input Asset Delivery Mode. </summary>
         public InputDeliveryMode? Mode { get; set; }
-        /// <summary> Input Asset URI. </summary>
+        /// <summary> [Required] Input Asset URI. </summary>
         public Uri Uri { get; set; }
     }
 }

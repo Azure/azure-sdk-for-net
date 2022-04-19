@@ -21,15 +21,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("mode");
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Optional.IsDefined(Uri))
+            {
+                if (Uri != null)
+                {
+                    writer.WritePropertyName("uri");
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("uri");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static AssetJobOutput DeserializeAssetJobOutput(JsonElement element)
         {
             Optional<OutputDeliveryMode> mode = default;
-            Uri uri = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"))
@@ -44,11 +54,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("uri"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new AssetJobOutput(Optional.ToNullable(mode), uri);
+            return new AssetJobOutput(Optional.ToNullable(mode), uri.Value);
         }
     }
 }

@@ -13,16 +13,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class AssetJobOutput
     {
         /// <summary> Initializes a new instance of AssetJobOutput. </summary>
-        /// <param name="uri"> Output Asset URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public AssetJobOutput(Uri uri)
+        public AssetJobOutput()
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of AssetJobOutput. </summary>

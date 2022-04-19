@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ImageInstanceSegmentation : AutoMLVertical
     {
         /// <summary> Initializes a new instance of ImageInstanceSegmentation. </summary>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageInstanceSegmentation(ImageDataSettings dataSettings, ImageLimitSettings limitSettings)
+        public ImageInstanceSegmentation(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings)
         {
             if (dataSettings == null)
             {
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of ImageInstanceSegmentation. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="taskType"> Task type for AutoMLJob. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
-        internal ImageInstanceSegmentation(LogVerbosity? logVerbosity, TaskType taskType, InstanceSegmentationPrimaryMetrics? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
+        internal ImageInstanceSegmentation(LogVerbosity? logVerbosity, TaskType taskType, InstanceSegmentationPrimaryMetrics? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ImageModelSettingsObjectDetection ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
         public IList<ImageModelDistributionSettingsObjectDetection> SearchSpace { get; set; }
-        /// <summary> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
-        public ImageDataSettings DataSettings { get; set; }
-        /// <summary> Limit settings for the AutoML job. </summary>
+        /// <summary> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
+        public ImageVerticalDataSettings DataSettings { get; set; }
+        /// <summary> [Required] Limit settings for the AutoML job. </summary>
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         public ImageSweepSettings SweepSettings { get; set; }

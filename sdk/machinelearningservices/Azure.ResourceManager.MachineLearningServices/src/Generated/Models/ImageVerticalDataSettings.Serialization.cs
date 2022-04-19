@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ImageDataSettings : IUtf8JsonSerializable
+    public partial class ImageVerticalDataSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,11 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ValidationData);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationData.ToString()).RootElement);
-#endif
+                    writer.WriteObjectValue(ValidationData);
                 }
                 else
                 {
@@ -51,9 +46,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageDataSettings DeserializeImageDataSettings(JsonElement element)
+        internal static ImageVerticalDataSettings DeserializeImageVerticalDataSettings(JsonElement element)
         {
-            Optional<BinaryData> validationData = default;
+            Optional<ImageVerticalValidationDataSettings> validationData = default;
             string targetColumnName = default;
             Optional<TestDataSettings> testData = default;
             TrainingDataSettings trainingData = default;
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = BinaryData.FromString(property.Value.GetRawText());
+                    validationData = ImageVerticalValidationDataSettings.DeserializeImageVerticalValidationDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"))
@@ -90,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ImageDataSettings(targetColumnName, testData.Value, trainingData, validationData.Value);
+            return new ImageVerticalDataSettings(targetColumnName, testData.Value, trainingData, validationData.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of SasDatastoreSecrets. </summary>
-        /// <param name="secretsType"> Credential type used to authentication with storage. </param>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="sasToken"> Storage container SAS token. </param>
         internal SasDatastoreSecrets(SecretsType secretsType, string sasToken) : base(secretsType)
         {

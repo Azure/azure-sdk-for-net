@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class KerberosCredentials
     {
         /// <summary> Initializes a new instance of KerberosCredentials. </summary>
-        /// <param name="kerberosKdcAddress"> IP Address or DNS HostName. </param>
-        /// <param name="kerberosPrincipal"> Kerberos Username. </param>
-        /// <param name="kerberosRealm"> Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
+        /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
+        /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
+        /// <param name="kerberosRealm"> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kerberosKdcAddress"/>, <paramref name="kerberosPrincipal"/> or <paramref name="kerberosRealm"/> is null. </exception>
         public KerberosCredentials(string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm)
         {
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             KerberosRealm = kerberosRealm;
         }
 
-        /// <summary> IP Address or DNS HostName. </summary>
+        /// <summary> [Required] IP Address or DNS HostName. </summary>
         public string KerberosKdcAddress { get; set; }
-        /// <summary> Kerberos Username. </summary>
+        /// <summary> [Required] Kerberos Username. </summary>
         public string KerberosPrincipal { get; set; }
-        /// <summary> Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </summary>
+        /// <summary> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </summary>
         public string KerberosRealm { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class CustomForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
-        /// <param name="value"> Forecast horizon value. </param>
+        /// <param name="value"> [Required] Forecast horizon value. </param>
         public CustomForecastHorizon(int value)
         {
             Value = value;
@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
-        /// <param name="mode"> Set forecast horizon value selection mode. </param>
-        /// <param name="value"> Forecast horizon value. </param>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
+        /// <param name="value"> [Required] Forecast horizon value. </param>
         internal CustomForecastHorizon(ForecastHorizonMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary> Forecast horizon value. </summary>
+        /// <summary> [Required] Forecast horizon value. </summary>
         public int Value { get; set; }
     }
 }

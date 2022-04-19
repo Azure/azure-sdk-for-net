@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of NoneDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> Credential type used to authentication with storage. </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal NoneDatastoreCredentials(CredentialsType credentialsType) : base(credentialsType)
         {
             CredentialsType = credentialsType;

@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("mirrorTraffic");
                 }
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Traffic))
             {
                 if (Traffic != null)
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> compute = default;
             Optional<IDictionary<string, int>> mirrorTraffic = default;
             Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
             Optional<IDictionary<string, int>> traffic = default;
             EndpointAuthMode authMode = default;
             Optional<string> description = default;
@@ -159,6 +165,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     provisioningState = new EndpointProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("traffic"))
@@ -244,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new OnlineEndpointDetails(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToDictionary(mirrorTraffic), Optional.ToNullable(provisioningState), Optional.ToDictionary(traffic));
+            return new OnlineEndpointDetails(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToDictionary(mirrorTraffic), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        endpointUri = null;
                         continue;
                     }
                     endpointUri = new Uri(property.Value.GetString());

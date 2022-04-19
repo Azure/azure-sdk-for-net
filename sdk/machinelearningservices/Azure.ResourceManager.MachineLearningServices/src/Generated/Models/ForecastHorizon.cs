@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ForecastHorizon. </summary>
-        /// <param name="mode"> Set forecast horizon value selection mode. </param>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal ForecastHorizon(ForecastHorizonMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Set forecast horizon value selection mode. </summary>
+        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
         internal ForecastHorizonMode Mode { get; set; }
     }
 }

@@ -12,38 +12,38 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> MLTable data definition. </summary>
-    public partial class MLTableDataVersion : DataVersionBaseDetails
+    public partial class MLTableData : DataVersionBaseDetails
     {
-        /// <summary> Initializes a new instance of MLTableDataVersion. </summary>
-        /// <param name="dataUri"> Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <summary> Initializes a new instance of MLTableData. </summary>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public MLTableDataVersion(Uri dataUri) : base(dataUri)
+        public MLTableData(Uri dataUri) : base(dataUri)
         {
             if (dataUri == null)
             {
                 throw new ArgumentNullException(nameof(dataUri));
             }
 
-            ReferencedUris = new ChangeTrackingList<string>();
+            ReferencedUris = new ChangeTrackingList<Uri>();
             DataType = DataType.MLTable;
         }
 
-        /// <summary> Initializes a new instance of MLTableDataVersion. </summary>
+        /// <summary> Initializes a new instance of MLTableData. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="dataType"> Specifies the type of data. </param>
-        /// <param name="dataUri"> Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
-        internal MLTableDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri, IList<string> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        internal MLTableData(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;
         }
 
         /// <summary> Uris referenced in the MLTable definition (required for lineage). </summary>
-        public IList<string> ReferencedUris { get; set; }
+        public IList<Uri> ReferencedUris { get; set; }
     }
 }

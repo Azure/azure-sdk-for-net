@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class CustomTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of CustomTargetLags. </summary>
-        /// <param name="values"> Set target lags values. </param>
+        /// <param name="values"> [Required] Set target lags values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public CustomTargetLags(IEnumerable<int> values)
         {
@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CustomTargetLags. </summary>
-        /// <param name="mode"> Set target lags mode - Auto/Custom. </param>
-        /// <param name="values"> Set target lags values. </param>
+        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
+        /// <param name="values"> [Required] Set target lags values. </param>
         internal CustomTargetLags(TargetLagsMode mode, IList<int> values) : base(mode)
         {
             Values = values;
             Mode = mode;
         }
 
-        /// <summary> Set target lags values. </summary>
+        /// <summary> [Required] Set target lags values. </summary>
         public IList<int> Values { get; }
     }
 }

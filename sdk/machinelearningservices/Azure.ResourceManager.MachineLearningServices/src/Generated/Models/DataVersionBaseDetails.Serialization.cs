@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MLTable": return MLTableDataVersion.DeserializeMLTableDataVersion(element);
+                    case "MLTable": return MLTableData.DeserializeMLTableData(element);
                     case "UriFile": return UriFileDataVersion.DeserializeUriFileDataVersion(element);
                     case "UriFolder": return UriFolderDataVersion.DeserializeUriFolderDataVersion(element);
                 }

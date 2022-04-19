@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
-        /// <param name="mode"> TargetRollingWindowSiz detection mode. </param>
+        /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
         internal TargetRollingWindowSize(TargetRollingWindowSizeMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> TargetRollingWindowSiz detection mode. </summary>
+        /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>
         internal TargetRollingWindowSizeMode Mode { get; set; }
     }
 }

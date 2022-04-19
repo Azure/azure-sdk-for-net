@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="momentum"> Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1]. </param>
         /// <param name="nesterov"> Enable nesterov when optimizer is &apos;sgd&apos;. </param>
         /// <param name="numberOfEpochs"> Number of training epochs. Must be a positive integer. </param>
-        /// <param name="numberOfWorkers"> Number of dataloader workers. Must be a non-negative integer. </param>
+        /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
         /// <param name="optimizer"> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </param>
         /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
         /// <param name="splitRatio">
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Note: training run may get into CUDA OOM if no sufficient GPU memory.
         /// Note: This settings is only supported for the &apos;yolov5&apos; algorithm.
         /// </param>
-        /// <param name="nmsIouThreshold"> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </param>
+        /// <param name="nmsIouThreshold"> IOU threshold used during inference in NMS post processing. Must be float in the range [0, 1]. </param>
         /// <param name="tileGridSize">
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
         /// None to enable small object detection logic A tuple of two integers passed as a string.
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Note: This settings is only supported for the &apos;yolov5&apos; algorithm.
         /// </summary>
         public string MultiScale { get; set; }
-        /// <summary> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </summary>
+        /// <summary> IOU threshold used during inference in NMS post processing. Must be float in the range [0, 1]. </summary>
         public string NmsIouThreshold { get; set; }
         /// <summary>
         /// The grid size to use for tiling each image. Note: TileGridSize must not be

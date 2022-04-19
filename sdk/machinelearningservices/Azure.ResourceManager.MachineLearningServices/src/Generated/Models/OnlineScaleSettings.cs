@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineScaleSettings. </summary>
-        /// <param name="scaleType"> Type of deployment scaling algorithm. </param>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         internal OnlineScaleSettings(ScaleType scaleType)
         {
             ScaleType = scaleType;
         }
 
-        /// <summary> Type of deployment scaling algorithm. </summary>
+        /// <summary> [Required] Type of deployment scaling algorithm. </summary>
         internal ScaleType ScaleType { get; set; }
     }
 }

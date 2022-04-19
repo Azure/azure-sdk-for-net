@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.

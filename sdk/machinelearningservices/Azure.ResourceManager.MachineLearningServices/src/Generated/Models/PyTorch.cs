@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of PyTorch. </summary>
-        /// <param name="distributionType"> Specifies the type of distribution framework. </param>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="processCountPerInstance"> Number of processes per node. </param>
         internal PyTorch(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
         {

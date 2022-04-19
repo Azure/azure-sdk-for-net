@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string ReadOnlyMountValue = "ReadOnlyMount";
         private const string ReadWriteMountValue = "ReadWriteMount";
         private const string DownloadValue = "Download";
+        private const string DirectValue = "Direct";
+        private const string EvalMountValue = "EvalMount";
+        private const string EvalDownloadValue = "EvalDownload";
 
         /// <summary> ReadOnlyMount. </summary>
         public static InputDeliveryMode ReadOnlyMount { get; } = new InputDeliveryMode(ReadOnlyMountValue);
@@ -32,6 +35,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static InputDeliveryMode ReadWriteMount { get; } = new InputDeliveryMode(ReadWriteMountValue);
         /// <summary> Download. </summary>
         public static InputDeliveryMode Download { get; } = new InputDeliveryMode(DownloadValue);
+        /// <summary> Direct. </summary>
+        public static InputDeliveryMode Direct { get; } = new InputDeliveryMode(DirectValue);
+        /// <summary> EvalMount. </summary>
+        public static InputDeliveryMode EvalMount { get; } = new InputDeliveryMode(EvalMountValue);
+        /// <summary> EvalDownload. </summary>
+        public static InputDeliveryMode EvalDownload { get; } = new InputDeliveryMode(EvalDownloadValue);
         /// <summary> Determines if two <see cref="InputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(InputDeliveryMode left, InputDeliveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InputDeliveryMode"/> values are not the same. </summary>

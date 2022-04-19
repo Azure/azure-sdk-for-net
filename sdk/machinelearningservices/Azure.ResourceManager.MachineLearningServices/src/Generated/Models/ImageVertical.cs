@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class ImageVertical
     {
         /// <summary> Initializes a new instance of ImageVertical. </summary>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageVertical(ImageDataSettings dataSettings, ImageLimitSettings limitSettings)
+        public ImageVertical(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings)
         {
             if (dataSettings == null)
             {
@@ -35,19 +35,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ImageVertical. </summary>
-        /// <param name="dataSettings"> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
-        /// <param name="limitSettings"> Limit settings for the AutoML job. </param>
+        /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
+        /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
-        internal ImageVertical(ImageDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings)
+        internal ImageVertical(ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings)
         {
             DataSettings = dataSettings;
             LimitSettings = limitSettings;
             SweepSettings = sweepSettings;
         }
 
-        /// <summary> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
-        public ImageDataSettings DataSettings { get; set; }
-        /// <summary> Limit settings for the AutoML job. </summary>
+        /// <summary> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
+        public ImageVerticalDataSettings DataSettings { get; set; }
+        /// <summary> [Required] Limit settings for the AutoML job. </summary>
         public ImageLimitSettings LimitSettings { get; set; }
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         public ImageSweepSettings SweepSettings { get; set; }

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DistributionConfiguration. </summary>
-        /// <param name="distributionType"> Specifies the type of distribution framework. </param>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         internal DistributionConfiguration(DistributionType distributionType)
         {
             DistributionType = distributionType;
         }
 
-        /// <summary> Specifies the type of distribution framework. </summary>
+        /// <summary> [Required] Specifies the type of distribution framework. </summary>
         internal DistributionType DistributionType { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalDatastoreSecrets. </summary>
-        /// <param name="secretsType"> Credential type used to authentication with storage. </param>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="clientSecret"> Service principal secret. </param>
         internal ServicePrincipalDatastoreSecrets(SecretsType secretsType, string clientSecret) : base(secretsType)
         {

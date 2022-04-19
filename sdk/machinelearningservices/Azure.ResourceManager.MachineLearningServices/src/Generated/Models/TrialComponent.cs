@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class TrialComponent
     {
         /// <summary> Initializes a new instance of TrialComponent. </summary>
-        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
-        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public TrialComponent(string command, string environmentId)
         {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of TrialComponent. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
-        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, ResourceConfiguration resources)
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> ARM resource ID of the code asset. </summary>
         public string CodeId { get; set; }
-        /// <summary> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
         public string Command { get; set; }
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         internal DistributionConfiguration Distribution { get; set; }
-        /// <summary> Specifies the type of distribution framework. </summary>
+        /// <summary> [Required] Specifies the type of distribution framework. </summary>
         internal DistributionType DistributionType
         {
             get => Distribution is null ? default : Distribution.DistributionType;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
         }
 
-        /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
+        /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }

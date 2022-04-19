@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class KerberosPasswordCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of KerberosPasswordCredentials. </summary>
-        /// <param name="secrets"> Kerberos password secrets. </param>
-        /// <param name="kerberosKdcAddress"> IP Address or DNS HostName. </param>
-        /// <param name="kerberosPrincipal"> Kerberos Username. </param>
-        /// <param name="kerberosRealm"> Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
+        /// <param name="secrets"> [Required] Kerberos password secrets. </param>
+        /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
+        /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
+        /// <param name="kerberosRealm"> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/>, <paramref name="kerberosKdcAddress"/>, <paramref name="kerberosPrincipal"/> or <paramref name="kerberosRealm"/> is null. </exception>
         public KerberosPasswordCredentials(KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm)
         {
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of KerberosPasswordCredentials. </summary>
-        /// <param name="credentialsType"> Credential type used to authentication with storage. </param>
-        /// <param name="secrets"> Kerberos password secrets. </param>
-        /// <param name="kerberosKdcAddress"> IP Address or DNS HostName. </param>
-        /// <param name="kerberosPrincipal"> Kerberos Username. </param>
-        /// <param name="kerberosRealm"> Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="secrets"> [Required] Kerberos password secrets. </param>
+        /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
+        /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
+        /// <param name="kerberosRealm"> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
         internal KerberosPasswordCredentials(CredentialsType credentialsType, KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) : base(credentialsType)
         {
             Secrets = secrets;
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             CredentialsType = credentialsType;
         }
 
-        /// <summary> Kerberos password secrets. </summary>
+        /// <summary> [Required] Kerberos password secrets. </summary>
         public KerberosPasswordSecrets Secrets { get; set; }
-        /// <summary> IP Address or DNS HostName. </summary>
+        /// <summary> [Required] IP Address or DNS HostName. </summary>
         public string KerberosKdcAddress { get; set; }
-        /// <summary> Kerberos Username. </summary>
+        /// <summary> [Required] Kerberos Username. </summary>
         public string KerberosPrincipal { get; set; }
-        /// <summary> Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </summary>
+        /// <summary> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </summary>
         public string KerberosRealm { get; set; }
     }
 }

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Quota update parameters. </summary>
-    internal partial class QuotaUpdateParameters
+    internal partial class QuotaUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaUpdateParameters. </summary>
-        public QuotaUpdateParameters()
+        /// <summary> Initializes a new instance of QuotaUpdateContent. </summary>
+        public QuotaUpdateContent()
         {
             Value = new ChangeTrackingList<QuotaBaseProperties>();
         }

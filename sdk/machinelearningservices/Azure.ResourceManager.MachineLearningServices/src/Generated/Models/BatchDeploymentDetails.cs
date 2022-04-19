@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public long? MiniBatchSize { get; set; }
         /// <summary> Reference to the model asset for the endpoint deployment. </summary>
         internal AssetReferenceBase Model { get; set; }
-        /// <summary> Specifies the type of asset reference. </summary>
+        /// <summary> [Required] Specifies the type of asset reference. </summary>
         internal ReferenceType ModelReferenceType
         {
             get => Model is null ? default : Model.ReferenceType;

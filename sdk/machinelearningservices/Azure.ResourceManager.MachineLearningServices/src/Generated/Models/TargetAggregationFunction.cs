@@ -23,9 +23,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         private const string NoneValue = "None";
+        private const string SumValue = "Sum";
+        private const string MaxValue = "Max";
+        private const string MinValue = "Min";
+        private const string MeanValue = "Mean";
 
         /// <summary> Represent no value set. </summary>
         public static TargetAggregationFunction None { get; } = new TargetAggregationFunction(NoneValue);
+        /// <summary> Sum. </summary>
+        public static TargetAggregationFunction Sum { get; } = new TargetAggregationFunction(SumValue);
+        /// <summary> Max. </summary>
+        public static TargetAggregationFunction Max { get; } = new TargetAggregationFunction(MaxValue);
+        /// <summary> Min. </summary>
+        public static TargetAggregationFunction Min { get; } = new TargetAggregationFunction(MinValue);
+        /// <summary> Mean. </summary>
+        public static TargetAggregationFunction Mean { get; } = new TargetAggregationFunction(MeanValue);
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are the same. </summary>
         public static bool operator ==(TargetAggregationFunction left, TargetAggregationFunction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are not the same. </summary>

@@ -13,22 +13,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class TritonModelJobOutput : JobOutput
     {
         /// <summary> Initializes a new instance of TritonModelJobOutput. </summary>
-        /// <param name="uri"> Output Asset URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public TritonModelJobOutput(Uri uri)
+        public TritonModelJobOutput()
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            Uri = uri;
             JobOutputType = JobOutputType.TritonModel;
         }
 
         /// <summary> Initializes a new instance of TritonModelJobOutput. </summary>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> Specifies the type of job. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
         internal TritonModelJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)

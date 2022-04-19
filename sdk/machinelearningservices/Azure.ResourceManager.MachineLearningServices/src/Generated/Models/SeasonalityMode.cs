@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string AutoValue = "Auto";
         private const string CustomValue = "Custom";
 
-        /// <summary> Seasonailty to be determined automatically. </summary>
+        /// <summary> Seasonality to be determined automatically. </summary>
         public static SeasonalityMode Auto { get; } = new SeasonalityMode(AutoValue);
         /// <summary> Use the custom seasonality value. </summary>
         public static SeasonalityMode Custom { get; } = new SeasonalityMode(CustomValue);

@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely
         /// </param>
         /// <param name="scheduleStatus"> Specifies the schedule&apos;s status. </param>
-        /// <param name="scheduleType"> Specifies the schedule type. </param>
-        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format. </param>
+        /// <param name="scheduleType"> [Required] Specifies the schedule type. </param>
+        /// <param name="startOn"> Specifies start time of schedule in ISO 8601 format. </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format.
         /// </param>
-        internal ScheduleBase(DateTimeOffset? endTime, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startTime, string timeZone)
+        internal ScheduleBase(DateTimeOffset? endOn, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startOn, string timeZone)
         {
-            EndTime = endTime;
+            EndOn = endOn;
             ScheduleStatus = scheduleStatus;
             ScheduleType = scheduleType;
-            StartTime = startTime;
+            StartOn = startOn;
             TimeZone = timeZone;
         }
 
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely
         /// </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> Specifies the schedule&apos;s status. </summary>
         public ScheduleStatus? ScheduleStatus { get; set; }
-        /// <summary> Specifies the schedule type. </summary>
+        /// <summary> [Required] Specifies the schedule type. </summary>
         internal ScheduleType ScheduleType { get; set; }
         /// <summary> Specifies start time of schedule in ISO 8601 format. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format.

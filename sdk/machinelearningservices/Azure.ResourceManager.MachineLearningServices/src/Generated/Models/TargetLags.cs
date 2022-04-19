@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of TargetLags. </summary>
-        /// <param name="mode"> Set target lags mode - Auto/Custom. </param>
+        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal TargetLags(TargetLagsMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Set target lags mode - Auto/Custom. </summary>
+        /// <summary> [Required] Set target lags mode - Auto/Custom. </summary>
         internal TargetLagsMode Mode { get; set; }
     }
 }

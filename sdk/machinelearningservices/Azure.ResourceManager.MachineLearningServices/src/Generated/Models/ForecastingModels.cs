@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </summary>
         public static ForecastingModels DecisionTree { get; } = new ForecastingModels(DecisionTreeValue);
         /// <summary>
-        /// K-nearest neighbors (KNN) algorithm uses ‘feature similarity’ to predict the values of new datapoints
+        /// K-nearest neighbors (KNN) algorithm uses &apos;feature similarity&apos; to predict the values of new datapoints
         /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
         /// </summary>
         public static ForecastingModels KNN { get; } = new ForecastingModels(KNNValue);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary>
         /// SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
         /// to find the model parameters that correspond to the best fit between predicted and actual outputs.
-        /// It’s an inexact but powerful technique.
+        /// It&apos;s an inexact but powerful technique.
         /// </summary>
         public static ForecastingModels SGD { get; } = new ForecastingModels(SGDValue);
         /// <summary>

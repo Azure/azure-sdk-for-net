@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Parameters to diagnose a workspace. </summary>
-    internal partial class DiagnoseWorkspaceParameters
+    internal partial class DiagnoseWorkspaceContent
     {
-        /// <summary> Initializes a new instance of DiagnoseWorkspaceParameters. </summary>
-        public DiagnoseWorkspaceParameters()
+        /// <summary> Initializes a new instance of DiagnoseWorkspaceContent. </summary>
+        public DiagnoseWorkspaceContent()
         {
         }
 

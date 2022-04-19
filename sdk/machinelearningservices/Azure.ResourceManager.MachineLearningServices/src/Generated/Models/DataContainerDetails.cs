@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class DataContainerDetails : AssetContainer
     {
         /// <summary> Initializes a new instance of DataContainerDetails. </summary>
-        /// <param name="dataType"> Specifies the type of data. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
         public DataContainerDetails(DataType dataType)
         {
             DataType = dataType;
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        /// <param name="dataType"> Specifies the type of data. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
         internal DataContainerDetails(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, DataType dataType) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
             DataType = dataType;
         }
 
-        /// <summary> Specifies the type of data. </summary>
+        /// <summary> [Required] Specifies the type of data. </summary>
         public DataType DataType { get; set; }
     }
 }

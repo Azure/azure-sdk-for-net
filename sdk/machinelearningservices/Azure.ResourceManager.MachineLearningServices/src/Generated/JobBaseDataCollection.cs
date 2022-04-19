@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
         /// Operation Id: Jobs_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
         /// Operation Id: Jobs_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
@@ -187,9 +187,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JobBaseDataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobBaseDataResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<JobBaseDataResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<JobBaseDataResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = await _jobBaseDataJobsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _jobBaseDataJobsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, scheduled, scheduleId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -212,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = await _jobBaseDataJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _jobBaseDataJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, scheduled, scheduleId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,9 +235,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JobBaseDataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobBaseDataResource> GetAll(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<JobBaseDataResource> GetAll(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Page<JobBaseDataResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -243,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = _jobBaseDataJobsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken);
+                    var response = _jobBaseDataJobsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, scheduled, scheduleId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -258,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = _jobBaseDataJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken);
+                    var response = _jobBaseDataJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, scheduled, scheduleId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -287,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _jobBaseDataJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -314,66 +318,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = GetIfExists(id, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
-        /// Operation Id: Jobs_Get
-        /// </summary>
-        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual async Task<Response<JobBaseDataResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _jobBaseDataJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<JobBaseDataResource>(null, response.GetRawResponse());
-                return Response.FromValue(new JobBaseDataResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
-        /// Operation Id: Jobs_Get
-        /// </summary>
-        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<JobBaseDataResource> GetIfExists(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _jobBaseDataJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<JobBaseDataResource>(null, response.GetRawResponse());
-                return Response.FromValue(new JobBaseDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of KerberosKeytabSecrets. </summary>
-        /// <param name="secretsType"> Credential type used to authentication with storage. </param>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="kerberosKeytab"> Kerberos keytab secret. </param>
         internal KerberosKeytabSecrets(SecretsType secretsType, string kerberosKeytab) : base(secretsType)
         {

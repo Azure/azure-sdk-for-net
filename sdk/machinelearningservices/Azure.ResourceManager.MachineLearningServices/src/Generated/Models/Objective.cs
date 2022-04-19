@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class Objective
     {
         /// <summary> Initializes a new instance of Objective. </summary>
-        /// <param name="goal"> Defines supported metric goals for hyperparameter tuning. </param>
-        /// <param name="primaryMetric"> Name of the metric to optimize. </param>
+        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
+        /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
         public Objective(Goal goal, string primaryMetric)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             PrimaryMetric = primaryMetric;
         }
 
-        /// <summary> Defines supported metric goals for hyperparameter tuning. </summary>
+        /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
         public Goal Goal { get; set; }
-        /// <summary> Name of the metric to optimize. </summary>
+        /// <summary> [Required] Name of the metric to optimize. </summary>
         public string PrimaryMetric { get; set; }
     }
 }

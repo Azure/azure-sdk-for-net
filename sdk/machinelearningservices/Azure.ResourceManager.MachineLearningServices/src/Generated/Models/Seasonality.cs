@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of Seasonality. </summary>
-        /// <param name="mode"> Seasonality mode. </param>
+        /// <param name="mode"> [Required] Seasonality mode. </param>
         internal Seasonality(SeasonalityMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Seasonality mode. </summary>
+        /// <summary> [Required] Seasonality mode. </summary>
         internal SeasonalityMode Mode { get; set; }
     }
 }

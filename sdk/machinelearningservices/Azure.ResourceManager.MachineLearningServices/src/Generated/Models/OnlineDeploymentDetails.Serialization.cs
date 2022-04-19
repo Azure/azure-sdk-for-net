@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("appInsightsEnabled");
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
+            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            {
+                writer.WritePropertyName("egressPublicNetworkAccess");
+                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
+            }
             writer.WritePropertyName("endpointComputeType");
             writer.WriteStringValue(EndpointComputeType.ToString());
             if (Optional.IsDefined(InstanceType))
@@ -198,6 +203,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
             }
             Optional<bool> appInsightsEnabled = default;
+            Optional<EgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
             EndpointComputeType endpointComputeType = default;
             Optional<string> instanceType = default;
             Optional<ProbeSettings> livenessProbe = default;
@@ -223,6 +229,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     appInsightsEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("egressPublicNetworkAccess"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    egressPublicNetworkAccess = new EgressPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endpointComputeType"))
@@ -395,7 +411,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new OnlineDeploymentDetails(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(privateNetworkConnection), Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new OnlineDeploymentDetails(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(privateNetworkConnection), Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
         }
     }
 }

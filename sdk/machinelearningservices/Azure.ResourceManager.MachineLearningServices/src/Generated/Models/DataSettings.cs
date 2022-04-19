@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of DataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
         public DataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings)
         {
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of DataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         internal DataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings)
         {
             TargetColumnName = targetColumnName;
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary>
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </summary>
         public string TargetColumnName { get; set; }
         /// <summary> Test data input. </summary>
         public TestDataSettings TestData { get; set; }
-        /// <summary> Training data input. </summary>
+        /// <summary> [Required] Training data input. </summary>
         internal TrainingDataSettings TrainingDataSettings { get; set; }
-        /// <summary> Training data MLTable. </summary>
+        /// <summary> [Required] Training data MLTable. </summary>
         public MLTableJobInput Data
         {
             get => TrainingDataSettings is null ? default : TrainingDataSettings.Data;

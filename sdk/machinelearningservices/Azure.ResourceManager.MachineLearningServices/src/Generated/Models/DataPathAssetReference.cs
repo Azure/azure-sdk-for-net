@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DataPathAssetReference. </summary>
-        /// <param name="referenceType"> Specifies the type of asset reference. </param>
+        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <param name="datastoreId"> ARM resource ID of the datastore where the asset is located. </param>
         /// <param name="path"> The path of the file/directory in the datastore. </param>
         internal DataPathAssetReference(ReferenceType referenceType, string datastoreId, string path) : base(referenceType)

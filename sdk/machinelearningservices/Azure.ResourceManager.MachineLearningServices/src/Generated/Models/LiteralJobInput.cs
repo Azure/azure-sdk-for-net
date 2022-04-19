@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class LiteralJobInput : JobInput
     {
         /// <summary> Initializes a new instance of LiteralJobInput. </summary>
-        /// <param name="value"> Literal value for the input. </param>
+        /// <param name="value"> [Required] Literal value for the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LiteralJobInput(string value)
         {
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of LiteralJobInput. </summary>
         /// <param name="description"> Description for the input. </param>
-        /// <param name="jobInputType"> Specifies the type of job. </param>
-        /// <param name="value"> Literal value for the input. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="value"> [Required] Literal value for the input. </param>
         internal LiteralJobInput(string description, JobInputType jobInputType, string value) : base(description, jobInputType)
         {
             Value = value;
             JobInputType = jobInputType;
         }
 
-        /// <summary> Literal value for the input. </summary>
+        /// <summary> [Required] Literal value for the input. </summary>
         public string Value { get; set; }
     }
 }

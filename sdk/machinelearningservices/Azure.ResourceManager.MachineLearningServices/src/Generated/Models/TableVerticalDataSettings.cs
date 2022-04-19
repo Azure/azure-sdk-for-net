@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of TableVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
         public TableVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of TableVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
         internal TableVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, TableVerticalValidationDataSettings validationData, string weightColumnName) : base(targetColumnName, testData, trainingDataSettings)

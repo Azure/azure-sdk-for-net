@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </summary>
         internal IdentityConfiguration Identity { get; set; }
-        /// <summary> Specifies the type of identity framework. </summary>
+        /// <summary> [Required] Specifies the type of identity framework. </summary>
         internal IdentityConfigurationType IdentityType
         {
             get => Identity is null ? default : Identity.IdentityType;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Is the asset archived?. </summary>
         public bool? IsArchived { get; set; }
-        /// <summary> Specifies the type of job. </summary>
+        /// <summary> [Required] Specifies the type of job. </summary>
         internal JobType JobType { get; set; }
         /// <summary>
         /// Schedule definition of job.

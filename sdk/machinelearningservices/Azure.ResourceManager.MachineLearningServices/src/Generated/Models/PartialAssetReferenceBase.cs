@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        /// <summary> Specifies the type of asset reference. </summary>
+        /// <summary> [Required] Specifies the type of asset reference. </summary>
         internal ReferenceType ReferenceType { get; set; }
     }
 }

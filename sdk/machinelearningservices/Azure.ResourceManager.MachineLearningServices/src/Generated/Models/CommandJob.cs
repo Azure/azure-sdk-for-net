@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class CommandJob : JobBaseDetails
     {
         /// <summary> Initializes a new instance of CommandJob. </summary>
-        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
-        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public CommandJob(string command, string environmentId)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
-        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="inputs"> Mapping of input data bindings used in the job. </param>
         /// <param name="limits"> Command Job limit. </param>
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> ARM resource ID of the code asset. </summary>
         public string CodeId { get; set; }
-        /// <summary> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
         public string Command { get; set; }
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         internal DistributionConfiguration Distribution { get; set; }
-        /// <summary> Specifies the type of distribution framework. </summary>
+        /// <summary> [Required] Specifies the type of distribution framework. </summary>
         internal DistributionType DistributionType
         {
             get => Distribution is null ? default : Distribution.DistributionType;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
         }
 
-        /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
+        /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }

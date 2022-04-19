@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public FeatureLags? FeatureLags { get; set; }
         /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
         internal ForecastHorizon ForecastHorizon { get; set; }
-        /// <summary> Set forecast horizon value selection mode. </summary>
+        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
         internal ForecastHorizonMode ForecastHorizonMode
         {
             get => ForecastHorizon is null ? default : ForecastHorizon.Mode;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
         /// </summary>
         internal Seasonality Seasonality { get; set; }
-        /// <summary> Seasonality mode. </summary>
+        /// <summary> [Required] Seasonality mode. </summary>
         internal SeasonalityMode SeasonalityMode
         {
             get => Seasonality is null ? default : Seasonality.Mode;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public TargetAggregationFunction? TargetAggregateFunction { get; set; }
         /// <summary> The number of past periods to lag from the target column. </summary>
         internal TargetLags TargetLags { get; set; }
-        /// <summary> Set target lags mode - Auto/Custom. </summary>
+        /// <summary> [Required] Set target lags mode - Auto/Custom. </summary>
         internal TargetLagsMode TargetLagsMode
         {
             get => TargetLags is null ? default : TargetLags.Mode;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> The number of past periods used to create a rolling window average of the target column. </summary>
         internal TargetRollingWindowSize TargetRollingWindowSize { get; set; }
-        /// <summary> TargetRollingWindowSiz detection mode. </summary>
+        /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>
         internal TargetRollingWindowSizeMode TargetRollingWindowSizeMode
         {
             get => TargetRollingWindowSize is null ? default : TargetRollingWindowSize.Mode;

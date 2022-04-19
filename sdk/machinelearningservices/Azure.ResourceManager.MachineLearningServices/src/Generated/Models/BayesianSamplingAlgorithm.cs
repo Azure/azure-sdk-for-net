@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of BayesianSamplingAlgorithm. </summary>
-        /// <param name="samplingAlgorithmType"> The algorithm used for generating hyperparameter values, along with configuration properties. </param>
+        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         internal BayesianSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType) : base(samplingAlgorithmType)
         {
             SamplingAlgorithmType = samplingAlgorithmType;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of Mpi. </summary>
-        /// <param name="distributionType"> Specifies the type of distribution framework. </param>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="processCountPerInstance"> Number of processes per MPI node. </param>
         internal Mpi(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
         {

@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 library-name: MachineLearningServices
-require: https://raw.githubusercontent.com/forteddyt/azure-rest-api-specs/3b1ac1f420a939a22e125869b16e6381001d291d/specification/machinelearningservices/resource-manager/readme.md
+require: https://raw.githubusercontent.com/forteddyt/azure-rest-api-specs/048b2943c472175892f744444af57a11d4093293/specification/machinelearningservices/resource-manager/readme.md
 tag: package-2022-02-01-preview
 modelerfour:
     lenient-model-deduplication: true
@@ -68,6 +68,10 @@ directive:
     where: $.definitions.ComputeInstance.allOf[?(@.type=="object")].properties.properties.properties.setupScripts
     transform: >
         $["x-nullable"] = true;
+  # - from: swagger-document
+  #   where: $.definitions.AmlComputeProperties.properties.subnet
+  #   transform: >
+  #       $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.DataSettings.properties.trainingData
     transform: >

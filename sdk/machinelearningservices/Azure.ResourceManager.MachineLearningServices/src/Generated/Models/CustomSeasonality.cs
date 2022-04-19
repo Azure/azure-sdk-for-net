@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class CustomSeasonality : Seasonality
     {
         /// <summary> Initializes a new instance of CustomSeasonality. </summary>
-        /// <param name="value"> Seasonality value. </param>
+        /// <param name="value"> [Required] Seasonality value. </param>
         public CustomSeasonality(int value)
         {
             Value = value;
@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CustomSeasonality. </summary>
-        /// <param name="mode"> Seasonality mode. </param>
-        /// <param name="value"> Seasonality value. </param>
+        /// <param name="mode"> [Required] Seasonality mode. </param>
+        /// <param name="value"> [Required] Seasonality value. </param>
         internal CustomSeasonality(SeasonalityMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary> Seasonality value. </summary>
+        /// <summary> [Required] Seasonality value. </summary>
         public int Value { get; set; }
     }
 }

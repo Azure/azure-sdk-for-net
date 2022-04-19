@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Strictly used in update requests. </summary>
-    public partial class PatchableBatchDeploymentDataData
+    public partial class OnlineEndpointDataPatch
     {
-        /// <summary> Initializes a new instance of PatchableBatchDeploymentDataData. </summary>
-        public PatchableBatchDeploymentDataData()
+        /// <summary> Initializes a new instance of OnlineEndpointDataPatch. </summary>
+        public OnlineEndpointDataPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
-        public PartialBatchDeployment Properties { get; set; }
+        public PartialOnlineEndpoint Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public PartialSku Sku { get; set; }
         /// <summary> Resource tags. </summary>

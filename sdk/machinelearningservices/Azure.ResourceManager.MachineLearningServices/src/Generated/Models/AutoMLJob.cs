@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AutoMLJob : JobBaseDetails
     {
         /// <summary> Initializes a new instance of AutoMLJob. </summary>
-        /// <param name="taskDetails"> This represents scenario which can be one of Tables/NLP/Image. </param>
+        /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskDetails"/> is null. </exception>
         public AutoMLJob(AutoMLVertical taskDetails)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        /// <param name="taskDetails"> This represents scenario which can be one of Tables/NLP/Image. </param>
+        /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
         internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobOutput> outputs, ResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             EnvironmentId = environmentId;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public ResourceConfiguration Resources { get; set; }
-        /// <summary> This represents scenario which can be one of Tables/NLP/Image. </summary>
+        /// <summary> [Required] This represents scenario which can be one of Tables/NLP/Image. </summary>
         public AutoMLVertical TaskDetails { get; set; }
     }
 }

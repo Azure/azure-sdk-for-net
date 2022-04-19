@@ -13,22 +13,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class MLFlowModelJobOutput : JobOutput
     {
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>
-        /// <param name="uri"> Output Asset URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public MLFlowModelJobOutput(Uri uri)
+        public MLFlowModelJobOutput()
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            Uri = uri;
             JobOutputType = JobOutputType.MLFlowModel;
         }
 
         /// <summary> Initializes a new instance of MLFlowModelJobOutput. </summary>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> Specifies the type of job. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
         internal MLFlowModelJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)

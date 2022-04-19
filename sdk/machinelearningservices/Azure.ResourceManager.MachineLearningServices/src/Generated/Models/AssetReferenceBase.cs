@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
-        /// <param name="referenceType"> Specifies the type of asset reference. </param>
+        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         internal AssetReferenceBase(ReferenceType referenceType)
         {
             ReferenceType = referenceType;
         }
 
-        /// <summary> Specifies the type of asset reference. </summary>
+        /// <summary> [Required] Specifies the type of asset reference. </summary>
         internal ReferenceType ReferenceType { get; set; }
     }
 }

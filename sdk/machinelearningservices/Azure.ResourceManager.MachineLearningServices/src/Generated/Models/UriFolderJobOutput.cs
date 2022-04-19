@@ -13,22 +13,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class UriFolderJobOutput : JobOutput
     {
         /// <summary> Initializes a new instance of UriFolderJobOutput. </summary>
-        /// <param name="uri"> Output Asset URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public UriFolderJobOutput(Uri uri)
+        public UriFolderJobOutput()
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            Uri = uri;
             JobOutputType = JobOutputType.UriFolder;
         }
 
         /// <summary> Initializes a new instance of UriFolderJobOutput. </summary>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="jobOutputType"> Specifies the type of job. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
         internal UriFolderJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)

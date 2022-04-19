@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression");
             writer.WriteStringValue(Expression);
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
-                if (EndTime != null)
+                if (EndOn != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndTime.Value, "O");
+                    writer.WriteStringValue(EndOn.Value, "O");
                 }
                 else
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("scheduleType");
             writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
-                if (StartTime != null)
+                if (StartOn != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartTime.Value, "O");
+                    writer.WriteStringValue(StartOn.Value, "O");
                 }
                 else
                 {

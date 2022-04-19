@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteNull("mirrorTraffic");
                 }
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Traffic))
             {
                 if (Traffic != null)

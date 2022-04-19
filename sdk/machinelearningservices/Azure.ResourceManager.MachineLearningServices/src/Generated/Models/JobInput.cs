@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of JobInput. </summary>
         /// <param name="description"> Description for the input. </param>
-        /// <param name="jobInputType"> Specifies the type of job. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         internal JobInput(string description, JobInputType jobInputType)
         {
             Description = description;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Description for the input. </summary>
         public string Description { get; set; }
-        /// <summary> Specifies the type of job. </summary>
+        /// <summary> [Required] Specifies the type of job. </summary>
         internal JobInputType JobInputType { get; set; }
     }
 }

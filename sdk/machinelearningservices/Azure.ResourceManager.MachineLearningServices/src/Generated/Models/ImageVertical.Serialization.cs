@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static ImageVertical DeserializeImageVertical(JsonElement element)
         {
-            ImageDataSettings dataSettings = default;
+            ImageVerticalDataSettings dataSettings = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSettings"))
                 {
-                    dataSettings = ImageDataSettings.DeserializeImageDataSettings(property.Value);
+                    dataSettings = ImageVerticalDataSettings.DeserializeImageVerticalDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"))

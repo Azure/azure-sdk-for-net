@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of Forecasting. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="taskType"> Task type for AutoMLJob. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="allowedModels"> Allowed models for forecasting task. </param>
         /// <param name="blockedModels"> Blocked models for forecasting task. </param>
         /// <param name="forecastingSettings"> Forecasting task specific inputs. </param>

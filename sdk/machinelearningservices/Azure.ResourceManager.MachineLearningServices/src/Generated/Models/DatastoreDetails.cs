@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class DatastoreDetails : ResourceBase
     {
         /// <summary> Initializes a new instance of DatastoreDetails. </summary>
-        /// <param name="credentials"> Account credentials. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public DatastoreDetails(DatastoreCredentials credentials)
         {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> Account credentials. </param>
-        /// <param name="datastoreType"> Storage type backing the datastore. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         internal DatastoreDetails(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault) : base(description, properties, tags)
         {
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             IsDefault = isDefault;
         }
 
-        /// <summary> Account credentials. </summary>
+        /// <summary> [Required] Account credentials. </summary>
         internal DatastoreCredentials Credentials { get; set; }
-        /// <summary> Credential type used to authentication with storage. </summary>
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
         internal CredentialsType CredentialsType
         {
             get => Credentials is null ? default : Credentials.CredentialsType;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
         }
 
-        /// <summary> Storage type backing the datastore. </summary>
+        /// <summary> [Required] Storage type backing the datastore. </summary>
         internal DatastoreType DatastoreType { get; set; }
         /// <summary> Readonly property to indicate if datastore is the workspace default datastore. </summary>
         public bool? IsDefault { get; }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class DataVersionBaseDetails : AssetBase
     {
         /// <summary> Initializes a new instance of DataVersionBaseDetails. </summary>
-        /// <param name="dataUri"> Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public DataVersionBaseDetails(Uri dataUri)
         {
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="dataType"> Specifies the type of data. </param>
-        /// <param name="dataUri"> Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         internal DataVersionBaseDetails(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             DataType = dataType;
             DataUri = dataUri;
         }
 
-        /// <summary> Specifies the type of data. </summary>
+        /// <summary> [Required] Specifies the type of data. </summary>
         internal DataType DataType { get; set; }
-        /// <summary> Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </summary>
+        /// <summary> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </summary>
         public Uri DataUri { get; set; }
     }
 }

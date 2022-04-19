@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ImageSweepSettings
     {
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
-        /// <param name="limits"> Limit settings for model sweeping and hyperparameter sweeping. </param>
-        /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
+        /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
+        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="limits"/> is null. </exception>
         public ImageSweepSettings(ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
         {
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
         /// <param name="earlyTermination"> Type of early termination policy. </param>
-        /// <param name="limits"> Limit settings for model sweeping and hyperparameter sweeping. </param>
-        /// <param name="samplingAlgorithm"> Type of the hyperparameter sampling algorithms. </param>
+        /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
+        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         internal ImageSweepSettings(EarlyTerminationPolicy earlyTermination, ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
         {
             EarlyTermination = earlyTermination;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Type of early termination policy. </summary>
         public EarlyTerminationPolicy EarlyTermination { get; set; }
-        /// <summary> Limit settings for model sweeping and hyperparameter sweeping. </summary>
+        /// <summary> [Required] Limit settings for model sweeping and hyperparameter sweeping. </summary>
         public ImageSweepLimitSettings Limits { get; set; }
-        /// <summary> Type of the hyperparameter sampling algorithms. </summary>
+        /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
         public SamplingAlgorithmType SamplingAlgorithm { get; set; }
     }
 }

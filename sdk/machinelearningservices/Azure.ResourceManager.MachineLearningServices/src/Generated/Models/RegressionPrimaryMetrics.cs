@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string R2ScoreValue = "R2Score";
         private const string NormalizedMeanAbsoluteErrorValue = "NormalizedMeanAbsoluteError";
 
-        /// <summary> The Spearman’s rank coefficient of correlation is a nonparametric measure of rank correlation. </summary>
+        /// <summary> The Spearman&apos;s rank coefficient of correlation is a nonparametric measure of rank correlation. </summary>
         public static RegressionPrimaryMetrics SpearmanCorrelation { get; } = new RegressionPrimaryMetrics(SpearmanCorrelationValue);
         /// <summary> The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates the comparison between models with different scales. </summary>
         public static RegressionPrimaryMetrics NormalizedRootMeanSquaredError { get; } = new RegressionPrimaryMetrics(NormalizedRootMeanSquaredErrorValue);

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class SweepJob : JobBaseDetails
     {
         /// <summary> Initializes a new instance of SweepJob. </summary>
-        /// <param name="objective"> Optimization objective. </param>
-        /// <param name="samplingAlgorithm"> The hyperparameter sampling algorithm. </param>
-        /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="trial"> Trial component definition. </param>
+        /// <param name="objective"> [Required] Optimization objective. </param>
+        /// <param name="samplingAlgorithm"> [Required] The hyperparameter sampling algorithm. </param>
+        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <param name="trial"> [Required] Trial component definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
         public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="earlyTermination"> Early termination policies enable canceling poor-performing runs before they complete. </param>
         /// <param name="inputs"> Mapping of input data bindings used in the job. </param>
         /// <param name="limits"> Sweep Job limit. </param>
-        /// <param name="objective"> Optimization objective. </param>
+        /// <param name="objective"> [Required] Optimization objective. </param>
         /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
-        /// <param name="samplingAlgorithm"> The hyperparameter sampling algorithm. </param>
-        /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="trial"> Trial component definition. </param>
+        /// <param name="samplingAlgorithm"> [Required] The hyperparameter sampling algorithm. </param>
+        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <param name="trial"> [Required] Trial component definition. </param>
         internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             EarlyTermination = earlyTermination;
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, JobInput> Inputs { get; set; }
         /// <summary> Sweep Job limit. </summary>
         public SweepJobLimits Limits { get; set; }
-        /// <summary> Optimization objective. </summary>
+        /// <summary> [Required] Optimization objective. </summary>
         public Objective Objective { get; set; }
         /// <summary> Mapping of output data bindings used in the job. </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
-        /// <summary> The hyperparameter sampling algorithm. </summary>
+        /// <summary> [Required] The hyperparameter sampling algorithm. </summary>
         internal SamplingAlgorithm SamplingAlgorithm { get; set; }
-        /// <summary> The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
+        /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
         internal SamplingAlgorithmType SamplingAlgorithmType
         {
             get => SamplingAlgorithm is null ? default : SamplingAlgorithm.SamplingAlgorithmType;
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
         }
 
-        /// <summary> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
+        /// <summary> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
         public BinaryData SearchSpace { get; set; }
-        /// <summary> Trial component definition. </summary>
+        /// <summary> [Required] Trial component definition. </summary>
         public TrialComponent Trial { get; set; }
     }
 }

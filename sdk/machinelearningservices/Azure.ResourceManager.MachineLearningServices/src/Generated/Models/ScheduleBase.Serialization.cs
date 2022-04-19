@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
-                if (EndTime != null)
+                if (EndOn != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndTime.Value, "O");
+                    writer.WriteStringValue(EndOn.Value, "O");
                 }
                 else
                 {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("scheduleType");
             writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
-                if (StartTime != null)
+                if (StartOn != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartTime.Value, "O");
+                    writer.WriteStringValue(StartOn.Value, "O");
                 }
                 else
                 {

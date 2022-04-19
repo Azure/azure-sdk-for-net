@@ -26,19 +26,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NoneValue = "None";
         private const string LogisticRegressionValue = "LogisticRegression";
         private const string LogisticRegressionCVValue = "LogisticRegressionCV";
+        private const string LightGBMClassifierValue = "LightGBMClassifier";
         private const string ElasticNetValue = "ElasticNet";
         private const string ElasticNetCVValue = "ElasticNetCV";
+        private const string LightGBMRegressorValue = "LightGBMRegressor";
+        private const string LinearRegressionValue = "LinearRegression";
 
+        /// <summary> None. </summary>
+        public static StackMetaLearnerType None { get; } = new StackMetaLearnerType(NoneValue);
         /// <summary> Default meta-learners are LogisticRegression for classification tasks. </summary>
         public static StackMetaLearnerType LogisticRegression { get; } = new StackMetaLearnerType(LogisticRegressionValue);
         /// <summary> Default meta-learners are LogisticRegression for classification task when CV is on. </summary>
         public static StackMetaLearnerType LogisticRegressionCV { get; } = new StackMetaLearnerType(LogisticRegressionCVValue);
+        /// <summary> LightGBMClassifier. </summary>
+        public static StackMetaLearnerType LightGBMClassifier { get; } = new StackMetaLearnerType(LightGBMClassifierValue);
         /// <summary> Default meta-learners are LogisticRegression for regression task. </summary>
         public static StackMetaLearnerType ElasticNet { get; } = new StackMetaLearnerType(ElasticNetValue);
         /// <summary> Default meta-learners are LogisticRegression for regression task when CV is on. </summary>
         public static StackMetaLearnerType ElasticNetCV { get; } = new StackMetaLearnerType(ElasticNetCVValue);
+        /// <summary> LightGBMRegressor. </summary>
+        public static StackMetaLearnerType LightGBMRegressor { get; } = new StackMetaLearnerType(LightGBMRegressorValue);
+        /// <summary> LinearRegression. </summary>
+        public static StackMetaLearnerType LinearRegression { get; } = new StackMetaLearnerType(LinearRegressionValue);
         /// <summary> Determines if two <see cref="StackMetaLearnerType"/> values are the same. </summary>
         public static bool operator ==(StackMetaLearnerType left, StackMetaLearnerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StackMetaLearnerType"/> values are not the same. </summary>

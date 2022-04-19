@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of NCrossValidations. </summary>
-        /// <param name="mode"> Mode for determining N-Cross validations. </param>
+        /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
         internal NCrossValidations(NCrossValidationsMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Mode for determining N-Cross validations. </summary>
+        /// <summary> [Required] Mode for determining N-Cross validations. </summary>
         internal NCrossValidationsMode Mode { get; set; }
     }
 }

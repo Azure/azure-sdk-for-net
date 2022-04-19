@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AzureDataLakeGen1Datastore : DatastoreDetails
     {
         /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
-        /// <param name="credentials"> Account credentials. </param>
-        /// <param name="storeName"> Azure Data Lake store name. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
         public AzureDataLakeGen1Datastore(DatastoreCredentials credentials, string storeName) : base(credentials)
         {
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> Account credentials. </param>
-        /// <param name="datastoreType"> Storage type backing the datastore. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
-        /// <param name="storeName"> Azure Data Lake store name. </param>
+        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         internal AzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
         public ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
-        /// <summary> Azure Data Lake store name. </summary>
+        /// <summary> [Required] Azure Data Lake store name. </summary>
         public string StoreName { get; set; }
     }
 }

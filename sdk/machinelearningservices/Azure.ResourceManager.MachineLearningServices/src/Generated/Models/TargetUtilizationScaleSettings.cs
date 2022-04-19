@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of TargetUtilizationScaleSettings. </summary>
-        /// <param name="scaleType"> Type of deployment scaling algorithm. </param>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         /// <param name="maxInstances"> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </param>
         /// <param name="minInstances"> The minimum number of instances to always be present. </param>
         /// <param name="pollingInterval"> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </param>

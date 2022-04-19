@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of NlpVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
         public NlpVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
         {
@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of NlpVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, BinaryData validationData) : base(targetColumnName, testData, trainingDataSettings)
+        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, NlpVerticalValidationDataSettings validationData) : base(targetColumnName, testData, trainingDataSettings)
         {
             ValidationData = validationData;
         }
 
         /// <summary> Validation data inputs. </summary>
-        public BinaryData ValidationData { get; set; }
+        public NlpVerticalValidationDataSettings ValidationData { get; set; }
     }
 }

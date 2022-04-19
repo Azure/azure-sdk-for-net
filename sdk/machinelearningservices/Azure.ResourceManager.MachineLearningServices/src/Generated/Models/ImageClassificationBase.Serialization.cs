@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<ImageModelSettingsClassification> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
-            ImageDataSettings dataSettings = default;
+            ImageVerticalDataSettings dataSettings = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("dataSettings"))
                 {
-                    dataSettings = ImageDataSettings.DeserializeImageDataSettings(property.Value);
+                    dataSettings = ImageVerticalDataSettings.DeserializeImageVerticalDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"))

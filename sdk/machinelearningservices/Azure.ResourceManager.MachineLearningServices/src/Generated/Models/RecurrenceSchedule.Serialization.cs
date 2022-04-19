@@ -20,14 +20,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("interval");
             writer.WriteNumberValue(Interval);
-            writer.WritePropertyName("pattern");
-            writer.WriteObjectValue(Pattern);
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(Pattern))
             {
-                if (EndTime != null)
+                if (Pattern != null)
+                {
+                    writer.WritePropertyName("pattern");
+                    writer.WriteObjectValue(Pattern);
+                }
+                else
+                {
+                    writer.WriteNull("pattern");
+                }
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                if (EndOn != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndTime.Value, "O");
+                    writer.WriteStringValue(EndOn.Value, "O");
                 }
                 else
                 {
@@ -41,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("scheduleType");
             writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
-                if (StartTime != null)
+                if (StartOn != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartTime.Value, "O");
+                    writer.WriteStringValue(StartOn.Value, "O");
                 }
                 else
                 {
@@ -72,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             RecurrenceFrequency frequency = default;
             int interval = default;
-            RecurrencePattern pattern = default;
+            Optional<RecurrencePattern> pattern = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<ScheduleStatus> scheduleStatus = default;
             ScheduleType scheduleType = default;
@@ -92,6 +102,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("pattern"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        pattern = null;
+                        continue;
+                    }
                     pattern = RecurrencePattern.DeserializeRecurrencePattern(property.Value);
                     continue;
                 }
@@ -141,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new RecurrenceSchedule(Optional.ToNullable(endTime), Optional.ToNullable(scheduleStatus), scheduleType, Optional.ToNullable(startTime), timeZone.Value, frequency, interval, pattern);
+            return new RecurrenceSchedule(Optional.ToNullable(endTime), Optional.ToNullable(scheduleStatus), scheduleType, Optional.ToNullable(startTime), timeZone.Value, frequency, interval, pattern.Value);
         }
     }
 }

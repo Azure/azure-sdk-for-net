@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of UserIdentity. </summary>
-        /// <param name="identityType"> Specifies the type of identity framework. </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal UserIdentity(IdentityConfigurationType identityType) : base(identityType)
         {
             IdentityType = identityType;

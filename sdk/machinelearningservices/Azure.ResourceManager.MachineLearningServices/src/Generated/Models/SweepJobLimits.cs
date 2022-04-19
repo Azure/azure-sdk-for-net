@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of SweepJobLimits. </summary>
-        /// <param name="jobLimitsType"> JobLimit type. </param>
+        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
         /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>
         /// <param name="maxTotalTrials"> Sweep Job max total trials. </param>

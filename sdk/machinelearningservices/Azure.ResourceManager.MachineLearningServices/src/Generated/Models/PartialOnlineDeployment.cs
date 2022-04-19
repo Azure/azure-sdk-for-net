@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        /// <summary> The compute type of the endpoint. </summary>
+        /// <summary> [Required] The compute type of the endpoint. </summary>
         internal EndpointComputeType EndpointComputeType { get; set; }
     }
 }

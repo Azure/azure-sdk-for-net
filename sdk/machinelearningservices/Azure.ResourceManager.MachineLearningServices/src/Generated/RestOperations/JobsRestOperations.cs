@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, ListViewType? listViewType)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, ListViewType? listViewType, bool? scheduled, string scheduleId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,6 +68,14 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
             }
+            if (scheduled != null)
+            {
+                uri.AppendQuery("scheduled", scheduled.Value, true);
+            }
+            if (scheduleId != null)
+            {
+                uri.AppendQuery("scheduleId", scheduleId, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -82,16 +90,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, scheduled, scheduleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -115,16 +125,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, scheduled, scheduleId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -338,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -372,7 +384,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -476,7 +488,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, ListViewType? listViewType)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, ListViewType? listViewType, bool? scheduled, string scheduleId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -499,17 +511,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, scheduled, scheduleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -534,17 +548,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, scheduled, scheduleId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

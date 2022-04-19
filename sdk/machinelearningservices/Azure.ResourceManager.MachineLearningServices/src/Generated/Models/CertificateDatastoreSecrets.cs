@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CertificateDatastoreSecrets. </summary>
-        /// <param name="secretsType"> Credential type used to authentication with storage. </param>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="certificate"> Service principal certificate. </param>
         internal CertificateDatastoreSecrets(SecretsType secretsType, string certificate) : base(secretsType)
         {

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of IdentityConfiguration. </summary>
-        /// <param name="identityType"> Specifies the type of identity framework. </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal IdentityConfiguration(IdentityConfigurationType identityType)
         {
             IdentityType = identityType;
         }
 
-        /// <summary> Specifies the type of identity framework. </summary>
+        /// <summary> [Required] Specifies the type of identity framework. </summary>
         internal IdentityConfigurationType IdentityType { get; set; }
     }
 }

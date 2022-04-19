@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            QuotaUpdateParameters quotaUpdateParameters = new QuotaUpdateParameters()
+            QuotaUpdateContent quotaUpdateContent = new QuotaUpdateContent()
             {
                 Location = quotaUpdateParametersLocation
             };
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 foreach (var value0 in value)
                 {
-                    quotaUpdateParameters.Value.Add(value0);
+                    quotaUpdateContent.Value.Add(value0);
                 }
             }
-            var model = quotaUpdateParameters;
+            var model = quotaUpdateContent;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;

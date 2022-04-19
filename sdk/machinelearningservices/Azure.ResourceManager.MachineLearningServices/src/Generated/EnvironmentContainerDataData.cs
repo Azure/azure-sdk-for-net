@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class EnvironmentContainerDataData : ResourceData
     {
         /// <summary> Initializes a new instance of EnvironmentContainerDataData. </summary>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public EnvironmentContainerDataData(EnvironmentContainerDetails properties)
         {
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         internal EnvironmentContainerDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EnvironmentContainerDetails properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Additional attributes of the entity. </summary>
+        /// <summary> [Required] Additional attributes of the entity. </summary>
         public EnvironmentContainerDetails Properties { get; set; }
     }
 }

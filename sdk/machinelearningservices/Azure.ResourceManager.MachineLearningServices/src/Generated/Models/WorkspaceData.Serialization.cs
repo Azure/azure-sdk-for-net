@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                 writer.WritePropertyName("storageAccount");
                 writer.WriteStringValue(StorageAccount);
             }
-            if (Optional.IsDefined(DiscoveryUrl))
+            if (Optional.IsDefined(DiscoveryUri))
             {
                 writer.WritePropertyName("discoveryUrl");
-                writer.WriteStringValue(DiscoveryUrl);
+                writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> applicationInsights = default;
             Optional<string> containerRegistry = default;
             Optional<string> storageAccount = default;
-            Optional<string> discoveryUrl = default;
+            Optional<Uri> discoveryUrl = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<EncryptionProperty> encryption = default;
             Optional<bool> hbiWorkspace = default;
@@ -287,7 +287,12 @@ namespace Azure.ResourceManager.MachineLearningServices
                         }
                         if (property0.NameEquals("discoveryUrl"))
                         {
-                            discoveryUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                discoveryUrl = null;
+                                continue;
+                            }
+                            discoveryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -434,7 +439,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                mlFlowTrackingUri = null;
                                 continue;
                             }
                             mlFlowTrackingUri = new Uri(property0.Value.GetString());

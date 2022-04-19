@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class OnlineEndpointDetails : EndpointPropertiesBase
     {
         /// <summary> Initializes a new instance of OnlineEndpointDetails. </summary>
-        /// <param name="authMode"> Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
         public OnlineEndpointDetails(EndpointAuthMode authMode) : base(authMode)
         {
             MirrorTraffic = new ChangeTrackingDictionary<string, int>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineEndpointDetails. </summary>
-        /// <param name="authMode"> Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
@@ -38,12 +38,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </param>
         /// <param name="mirrorTraffic"> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
+        /// <param name="publicNetworkAccess"> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
-        internal OnlineEndpointDetails(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, IDictionary<string, int> mirrorTraffic, EndpointProvisioningState? provisioningState, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal OnlineEndpointDetails(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, IDictionary<string, int> mirrorTraffic, EndpointProvisioningState? provisioningState, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Compute = compute;
             MirrorTraffic = mirrorTraffic;
             ProvisioningState = provisioningState;
+            PublicNetworkAccess = publicNetworkAccess;
             Traffic = traffic;
         }
 
@@ -56,6 +58,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, int> MirrorTraffic { get; set; }
         /// <summary> Provisioning state for the endpoint. </summary>
         public EndpointProvisioningState? ProvisioningState { get; }
+        /// <summary> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </summary>
+        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </summary>
         public IDictionary<string, int> Traffic { get; set; }
     }

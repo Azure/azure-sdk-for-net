@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class RecurrencePattern
     {
         /// <summary> Initializes a new instance of RecurrencePattern. </summary>
-        /// <param name="hours"> List of hours for recurrence schedule pattern. </param>
-        /// <param name="minutes"> List of minutes for recurrence schedule pattern. </param>
+        /// <param name="hours"> [Required] List of hours for recurrence schedule pattern. </param>
+        /// <param name="minutes"> [Required] List of minutes for recurrence schedule pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
         public RecurrencePattern(IEnumerable<int> hours, IEnumerable<int> minutes)
         {
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of RecurrencePattern. </summary>
-        /// <param name="hours"> List of hours for recurrence schedule pattern. </param>
-        /// <param name="minutes"> List of minutes for recurrence schedule pattern. </param>
+        /// <param name="hours"> [Required] List of hours for recurrence schedule pattern. </param>
+        /// <param name="minutes"> [Required] List of minutes for recurrence schedule pattern. </param>
         /// <param name="weekdays"> List of weekdays for recurrence schedule pattern. </param>
         internal RecurrencePattern(IList<int> hours, IList<int> minutes, IList<Weekday> weekdays)
         {
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Weekdays = weekdays;
         }
 
-        /// <summary> List of hours for recurrence schedule pattern. </summary>
+        /// <summary> [Required] List of hours for recurrence schedule pattern. </summary>
         public IList<int> Hours { get; }
-        /// <summary> List of minutes for recurrence schedule pattern. </summary>
+        /// <summary> [Required] List of minutes for recurrence schedule pattern. </summary>
         public IList<int> Minutes { get; }
         /// <summary> List of weekdays for recurrence schedule pattern. </summary>
         public IList<Weekday> Weekdays { get; set; }

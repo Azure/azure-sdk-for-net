@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DatastoreCredentials. </summary>
-        /// <param name="credentialsType"> Credential type used to authentication with storage. </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal DatastoreCredentials(CredentialsType credentialsType)
         {
             CredentialsType = credentialsType;
         }
 
-        /// <summary> Credential type used to authentication with storage. </summary>
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
         internal CredentialsType CredentialsType { get; set; }
     }
 }

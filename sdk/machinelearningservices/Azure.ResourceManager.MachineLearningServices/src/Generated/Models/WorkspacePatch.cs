@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The parameters for updating a machine learning workspace. </summary>
-    public partial class PatchableWorkspaceData
+    public partial class WorkspacePatch
     {
-        /// <summary> Initializes a new instance of PatchableWorkspaceData. </summary>
-        public PatchableWorkspaceData()
+        /// <summary> Initializes a new instance of WorkspacePatch. </summary>
+        public WorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

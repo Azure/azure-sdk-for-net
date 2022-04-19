@@ -24,12 +24,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
-        /// <param name="endpointComputeType"> The compute type of the endpoint. </param>
+        /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
+        /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
         /// <param name="instanceType"> Compute instance type. </param>
         /// <param name="livenessProbe"> Liveness probe monitors the health of the container regularly. </param>
         /// <param name="model"> The URI path to the model. </param>
         /// <param name="modelMountPath"> The path to mount the model in custom container. </param>
-        /// <param name="privateNetworkConnection"> If true, enable private network connection. </param>
+        /// <param name="privateNetworkConnection">
+        /// If true, enable private network connection.
+        /// DEPRECATED for future API versions. Use EgressPublicNetworkAccess.
+        /// </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
         /// <param name="readinessProbe"> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </param>
         /// <param name="requestSettings"> Request settings for the deployment. </param>
@@ -39,9 +43,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// </param>
-        internal OnlineDeploymentDetails(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, EndpointComputeType endpointComputeType, string instanceType, ProbeSettings livenessProbe, string model, string modelMountPath, bool? privateNetworkConnection, DeploymentProvisioningState? provisioningState, ProbeSettings readinessProbe, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        internal OnlineDeploymentDetails(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, EgressPublicNetworkAccessType? egressPublicNetworkAccess, EndpointComputeType endpointComputeType, string instanceType, ProbeSettings livenessProbe, string model, string modelMountPath, bool? privateNetworkConnection, DeploymentProvisioningState? provisioningState, ProbeSettings readinessProbe, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
             AppInsightsEnabled = appInsightsEnabled;
+            EgressPublicNetworkAccess = egressPublicNetworkAccess;
             EndpointComputeType = endpointComputeType;
             InstanceType = instanceType;
             LivenessProbe = livenessProbe;
@@ -56,7 +61,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> If true, enables Application Insights logging. </summary>
         public bool? AppInsightsEnabled { get; set; }
-        /// <summary> The compute type of the endpoint. </summary>
+        /// <summary> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </summary>
+        public EgressPublicNetworkAccessType? EgressPublicNetworkAccess { get; set; }
+        /// <summary> [Required] The compute type of the endpoint. </summary>
         internal EndpointComputeType EndpointComputeType { get; set; }
         /// <summary> Compute instance type. </summary>
         public string InstanceType { get; set; }
@@ -66,7 +73,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Model { get; set; }
         /// <summary> The path to mount the model in custom container. </summary>
         public string ModelMountPath { get; set; }
-        /// <summary> If true, enable private network connection. </summary>
+        /// <summary>
+        /// If true, enable private network connection.
+        /// DEPRECATED for future API versions. Use EgressPublicNetworkAccess.
+        /// </summary>
         public bool? PrivateNetworkConnection { get; set; }
         /// <summary> Provisioning state for the endpoint deployment. </summary>
         public DeploymentProvisioningState? ProvisioningState { get; }
@@ -81,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// </summary>
         internal OnlineScaleSettings ScaleSettings { get; set; }
-        /// <summary> Type of deployment scaling algorithm. </summary>
+        /// <summary> [Required] Type of deployment scaling algorithm. </summary>
         internal ScaleType ScaleType
         {
             get => ScaleSettings is null ? default : ScaleSettings.ScaleType;

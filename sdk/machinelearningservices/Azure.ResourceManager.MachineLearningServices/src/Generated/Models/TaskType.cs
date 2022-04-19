@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string ImageClassificationMultilabelValue = "ImageClassificationMultilabel";
         private const string ImageObjectDetectionValue = "ImageObjectDetection";
         private const string ImageInstanceSegmentationValue = "ImageInstanceSegmentation";
+        private const string TextClassificationValue = "TextClassification";
+        private const string TextClassificationMultilabelValue = "TextClassificationMultilabel";
         private const string TextNERValue = "TextNER";
 
         /// <summary>
@@ -63,7 +65,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// drawing a polygon around each object in the image.
         /// </summary>
         public static TaskType ImageInstanceSegmentation { get; } = new TaskType(ImageInstanceSegmentationValue);
-        /// <summary> Text Named Entity Recognition a.k.a. TextNER. </summary>
+        /// <summary>
+        /// Text classification (also known as text tagging or text categorization) is the process of sorting texts into categories.
+        /// Categories are mutually exclusive.
+        /// </summary>
+        public static TaskType TextClassification { get; } = new TaskType(TextClassificationValue);
+        /// <summary> Multilabel classification task assigns each sample to a group (zero or more) of target labels. </summary>
+        public static TaskType TextClassificationMultilabel { get; } = new TaskType(TextClassificationMultilabelValue);
+        /// <summary>
+        /// Text Named Entity Recognition a.k.a. TextNER.
+        /// Named Entity Recognition (NER) is the ability to take free-form text and identify the occurrences of entities such as people, locations, organizations, and more.
+        /// </summary>
         public static TaskType TextNER { get; } = new TaskType(TextNERValue);
         /// <summary> Determines if two <see cref="TaskType"/> values are the same. </summary>
         public static bool operator ==(TaskType left, TaskType right) => left.Equals(right);

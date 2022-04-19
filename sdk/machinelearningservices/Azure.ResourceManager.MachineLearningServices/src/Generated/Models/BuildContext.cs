@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of BuildContext. </summary>
         /// <param name="contextUri">
-        /// URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
+        /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contextUri"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of BuildContext. </summary>
         /// <param name="contextUri">
-        /// URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
+        /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
         /// </param>
         /// <param name="dockerfilePath">
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary>
-        /// URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
+        /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
         /// </summary>
         public Uri ContextUri { get; set; }

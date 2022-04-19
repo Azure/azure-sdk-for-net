@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,11 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FeaturizationSettings);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(FeaturizationSettings.ToString()).RootElement);
-#endif
+                    writer.WriteObjectValue(FeaturizationSettings);
                 }
                 else
                 {
@@ -62,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static NlpVertical DeserializeNlpVertical(JsonElement element)
         {
             Optional<NlpVerticalDataSettings> dataSettings = default;
-            Optional<BinaryData> featurizationSettings = default;
+            Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = BinaryData.FromString(property.Value.GetRawText());
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"))

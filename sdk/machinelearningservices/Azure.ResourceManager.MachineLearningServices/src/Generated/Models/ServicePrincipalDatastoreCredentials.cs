@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ServicePrincipalDatastoreCredentials : DatastoreCredentials
     {
         /// <summary> Initializes a new instance of ServicePrincipalDatastoreCredentials. </summary>
-        /// <param name="clientId"> Service principal client ID. </param>
-        /// <param name="secrets"> Service principal secrets. </param>
-        /// <param name="tenantId"> ID of the tenant to which the service principal belongs. </param>
+        /// <param name="clientId"> [Required] Service principal client ID. </param>
+        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public ServicePrincipalDatastoreCredentials(Guid clientId, ServicePrincipalDatastoreSecrets secrets, Guid tenantId)
         {
@@ -31,31 +31,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalDatastoreCredentials. </summary>
-        /// <param name="credentialsType"> Credential type used to authentication with storage. </param>
-        /// <param name="authorityUrl"> Authority URL used for authentication. </param>
-        /// <param name="clientId"> Service principal client ID. </param>
-        /// <param name="resourceUrl"> Resource the service principal has access to. </param>
-        /// <param name="secrets"> Service principal secrets. </param>
-        /// <param name="tenantId"> ID of the tenant to which the service principal belongs. </param>
-        internal ServicePrincipalDatastoreCredentials(CredentialsType credentialsType, string authorityUrl, Guid clientId, string resourceUrl, ServicePrincipalDatastoreSecrets secrets, Guid tenantId) : base(credentialsType)
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="authorityUri"> Authority URL used for authentication. </param>
+        /// <param name="clientId"> [Required] Service principal client ID. </param>
+        /// <param name="resourceUri"> Resource the service principal has access to. </param>
+        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        internal ServicePrincipalDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, ServicePrincipalDatastoreSecrets secrets, Guid tenantId) : base(credentialsType)
         {
-            AuthorityUrl = authorityUrl;
+            AuthorityUri = authorityUri;
             ClientId = clientId;
-            ResourceUrl = resourceUrl;
+            ResourceUri = resourceUri;
             Secrets = secrets;
             TenantId = tenantId;
             CredentialsType = credentialsType;
         }
 
         /// <summary> Authority URL used for authentication. </summary>
-        public string AuthorityUrl { get; set; }
-        /// <summary> Service principal client ID. </summary>
+        public Uri AuthorityUri { get; set; }
+        /// <summary> [Required] Service principal client ID. </summary>
         public Guid ClientId { get; set; }
         /// <summary> Resource the service principal has access to. </summary>
-        public string ResourceUrl { get; set; }
-        /// <summary> Service principal secrets. </summary>
+        public Uri ResourceUri { get; set; }
+        /// <summary> [Required] Service principal secrets. </summary>
         public ServicePrincipalDatastoreSecrets Secrets { get; set; }
-        /// <summary> ID of the tenant to which the service principal belongs. </summary>
+        /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
         public Guid TenantId { get; set; }
     }
 }

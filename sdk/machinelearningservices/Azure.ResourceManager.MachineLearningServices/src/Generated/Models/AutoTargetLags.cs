@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AutoTargetLags. </summary>
-        /// <param name="mode"> Set target lags mode - Auto/Custom. </param>
+        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal AutoTargetLags(TargetLagsMode mode) : base(mode)
         {
             Mode = mode;

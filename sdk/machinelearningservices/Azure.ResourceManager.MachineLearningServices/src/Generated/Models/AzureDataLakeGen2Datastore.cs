@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AzureDataLakeGen2Datastore : DatastoreDetails
     {
         /// <summary> Initializes a new instance of AzureDataLakeGen2Datastore. </summary>
-        /// <param name="credentials"> Account credentials. </param>
-        /// <param name="accountName"> Storage account name. </param>
-        /// <param name="filesystem"> The name of the Data Lake Gen2 filesystem. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="accountName"> [Required] Storage account name. </param>
+        /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="filesystem"/> is null. </exception>
         public AzureDataLakeGen2Datastore(DatastoreCredentials credentials, string accountName, string filesystem) : base(credentials)
         {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> Account credentials. </param>
-        /// <param name="datastoreType"> Storage type backing the datastore. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="accountName"> Storage account name. </param>
+        /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
-        /// <param name="filesystem"> The name of the Data Lake Gen2 filesystem. </param>
+        /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
         internal AzureDataLakeGen2Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string filesystem, string protocol, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             DatastoreType = datastoreType;
         }
 
-        /// <summary> Storage account name. </summary>
+        /// <summary> [Required] Storage account name. </summary>
         public string AccountName { get; set; }
         /// <summary> Azure cloud endpoint for the storage account. </summary>
         public string Endpoint { get; set; }
-        /// <summary> The name of the Data Lake Gen2 filesystem. </summary>
+        /// <summary> [Required] The name of the Data Lake Gen2 filesystem. </summary>
         public string Filesystem { get; set; }
         /// <summary> Protocol used to communicate with the storage account. </summary>
         public string Protocol { get; set; }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,11 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ValidationData);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationData.ToString()).RootElement);
-#endif
+                    writer.WriteObjectValue(ValidationData);
                 }
                 else
                 {
@@ -53,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static NlpVerticalDataSettings DeserializeNlpVerticalDataSettings(JsonElement element)
         {
-            Optional<BinaryData> validationData = default;
+            Optional<NlpVerticalValidationDataSettings> validationData = default;
             string targetColumnName = default;
             Optional<TestDataSettings> testData = default;
             TrainingDataSettings trainingData = default;
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = BinaryData.FromString(property.Value.GetRawText());
+                    validationData = NlpVerticalValidationDataSettings.DeserializeNlpVerticalValidationDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"))

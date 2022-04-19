@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="momentum"> Value of momentum when optimizer is &apos;sgd&apos;. Must be a float in the range [0, 1]. </param>
         /// <param name="nesterov"> Enable nesterov when optimizer is &apos;sgd&apos;. </param>
         /// <param name="numberOfEpochs"> Number of training epochs. Must be a positive integer. </param>
-        /// <param name="numberOfWorkers"> Number of dataloader workers. Must be a non-negative integer. </param>
+        /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
         /// <param name="optimizer"> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </param>
         /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
         /// <param name="splitRatio">
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Nesterov { get; set; }
         /// <summary> Number of training epochs. Must be a positive integer. </summary>
         public string NumberOfEpochs { get; set; }
-        /// <summary> Number of dataloader workers. Must be a non-negative integer. </summary>
+        /// <summary> Number of data loader workers. Must be a non-negative integer. </summary>
         public string NumberOfWorkers { get; set; }
         /// <summary> Type of optimizer. Must be either &apos;sgd&apos;, &apos;adam&apos;, or &apos;adamw&apos;. </summary>
         public string Optimizer { get; set; }

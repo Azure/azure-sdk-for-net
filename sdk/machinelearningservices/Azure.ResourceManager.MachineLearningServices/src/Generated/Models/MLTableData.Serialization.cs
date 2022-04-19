@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class MLTableDataVersion : IUtf8JsonSerializable
+    public partial class MLTableData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     writer.WriteStartArray();
                     foreach (var item in ReferencedUris)
                     {
-                        writer.WriteStringValue(item);
+                        writer.WriteStringValue(item.AbsoluteUri);
                     }
                     writer.WriteEndArray();
                 }
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static MLTableDataVersion DeserializeMLTableDataVersion(JsonElement element)
+        internal static MLTableData DeserializeMLTableData(JsonElement element)
         {
-            Optional<IList<string>> referencedUris = default;
+            Optional<IList<Uri>> referencedUris = default;
             DataType dataType = default;
             Uri dataUri = default;
             Optional<bool> isAnonymous = default;
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         referencedUris = null;
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     referencedUris = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new MLTableDataVersion(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, Optional.ToList(referencedUris));
+            return new MLTableData(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, Optional.ToList(referencedUris));
         }
     }
 }

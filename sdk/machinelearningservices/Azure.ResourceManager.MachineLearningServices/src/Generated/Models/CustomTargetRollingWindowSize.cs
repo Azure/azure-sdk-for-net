@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     internal partial class CustomTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of CustomTargetRollingWindowSize. </summary>
-        /// <param name="value"> TargetRollingWindowSize value. </param>
+        /// <param name="value"> [Required] TargetRollingWindowSize value. </param>
         public CustomTargetRollingWindowSize(int value)
         {
             Value = value;
@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CustomTargetRollingWindowSize. </summary>
-        /// <param name="mode"> TargetRollingWindowSiz detection mode. </param>
-        /// <param name="value"> TargetRollingWindowSize value. </param>
+        /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
+        /// <param name="value"> [Required] TargetRollingWindowSize value. </param>
         internal CustomTargetRollingWindowSize(TargetRollingWindowSizeMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary> TargetRollingWindowSize value. </summary>
+        /// <summary> [Required] TargetRollingWindowSize value. </summary>
         public int Value { get; set; }
     }
 }

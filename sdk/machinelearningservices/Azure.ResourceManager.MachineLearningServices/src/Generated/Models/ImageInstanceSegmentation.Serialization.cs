@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<InstanceSegmentationPrimaryMetrics> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;
-            ImageDataSettings dataSettings = default;
+            ImageVerticalDataSettings dataSettings = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
             Optional<LogVerbosity> logVerbosity = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("dataSettings"))
                 {
-                    dataSettings = ImageDataSettings.DeserializeImageDataSettings(property.Value);
+                    dataSettings = ImageVerticalDataSettings.DeserializeImageVerticalDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"))

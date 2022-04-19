@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AmlToken. </summary>
-        /// <param name="identityType"> Specifies the type of identity framework. </param>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal AmlToken(IdentityConfigurationType identityType) : base(identityType)
         {
             IdentityType = identityType;

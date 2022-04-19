@@ -13,39 +13,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class RecurrenceSchedule : ScheduleBase
     {
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
-        /// <param name="frequency"> Specifies frequency with with which to trigger schedule. </param>
-        /// <param name="interval"> Specifies schedule interval in conjunction with frequency. </param>
-        /// <param name="pattern"> Specifies the recurrence schedule pattern. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pattern"/> is null. </exception>
-        public RecurrenceSchedule(RecurrenceFrequency frequency, int interval, RecurrencePattern pattern)
+        /// <param name="frequency"> [Required] Specifies frequency with with which to trigger schedule. </param>
+        /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
+        public RecurrenceSchedule(RecurrenceFrequency frequency, int interval)
         {
-            if (pattern == null)
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
-
             Frequency = frequency;
             Interval = interval;
-            Pattern = pattern;
             ScheduleType = ScheduleType.Recurrence;
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely
         /// </param>
         /// <param name="scheduleStatus"> Specifies the schedule&apos;s status. </param>
-        /// <param name="scheduleType"> Specifies the schedule type. </param>
-        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format. </param>
+        /// <param name="scheduleType"> [Required] Specifies the schedule type. </param>
+        /// <param name="startOn"> Specifies start time of schedule in ISO 8601 format. </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format.
         /// </param>
-        /// <param name="frequency"> Specifies frequency with with which to trigger schedule. </param>
-        /// <param name="interval"> Specifies schedule interval in conjunction with frequency. </param>
+        /// <param name="frequency"> [Required] Specifies frequency with with which to trigger schedule. </param>
+        /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="pattern"> Specifies the recurrence schedule pattern. </param>
-        internal RecurrenceSchedule(DateTimeOffset? endTime, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startTime, string timeZone, RecurrenceFrequency frequency, int interval, RecurrencePattern pattern) : base(endTime, scheduleStatus, scheduleType, startTime, timeZone)
+        internal RecurrenceSchedule(DateTimeOffset? endOn, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startOn, string timeZone, RecurrenceFrequency frequency, int interval, RecurrencePattern pattern) : base(endOn, scheduleStatus, scheduleType, startOn, timeZone)
         {
             Frequency = frequency;
             Interval = interval;
@@ -53,9 +45,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             ScheduleType = scheduleType;
         }
 
-        /// <summary> Specifies frequency with with which to trigger schedule. </summary>
+        /// <summary> [Required] Specifies frequency with with which to trigger schedule. </summary>
         public RecurrenceFrequency Frequency { get; set; }
-        /// <summary> Specifies schedule interval in conjunction with frequency. </summary>
+        /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
         public int Interval { get; set; }
         /// <summary> Specifies the recurrence schedule pattern. </summary>
         public RecurrencePattern Pattern { get; set; }

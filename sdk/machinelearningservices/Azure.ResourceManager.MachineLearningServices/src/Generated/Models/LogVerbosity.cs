@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string ErrorValue = "Error";
         private const string CriticalValue = "Critical";
 
-        /// <summary> No logs emmitted. </summary>
+        /// <summary> No logs emitted. </summary>
         public static LogVerbosity NotSet { get; } = new LogVerbosity(NotSetValue);
         /// <summary> Debug and above log statements logged. </summary>
         public static LogVerbosity Debug { get; } = new LogVerbosity(DebugValue);

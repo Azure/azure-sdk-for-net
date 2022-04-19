@@ -10,16 +10,16 @@ using System;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
-    public partial class ImageDataSettings : DataSettings
+    public partial class ImageVerticalDataSettings : DataSettings
     {
-        /// <summary> Initializes a new instance of ImageDataSettings. </summary>
+        /// <summary> Initializes a new instance of ImageVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
-        public ImageDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
+        public ImageVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
         {
             if (targetColumnName == null)
             {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
         }
 
-        /// <summary> Initializes a new instance of ImageDataSettings. </summary>
+        /// <summary> Initializes a new instance of ImageVerticalDataSettings. </summary>
         /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
+        /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <param name="trainingDataSettings"> [Required] Training data input. </param>
         /// <param name="validationData"> Settings for the validation dataset. </param>
-        internal ImageDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, BinaryData validationData) : base(targetColumnName, testData, trainingDataSettings)
+        internal ImageVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, ImageVerticalValidationDataSettings validationData) : base(targetColumnName, testData, trainingDataSettings)
         {
             ValidationData = validationData;
         }
 
         /// <summary> Settings for the validation dataset. </summary>
-        public BinaryData ValidationData { get; set; }
+        public ImageVerticalValidationDataSettings ValidationData { get; set; }
     }
 }

@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class Route
     {
         /// <summary> Initializes a new instance of Route. </summary>
-        /// <param name="path"> The path for the route. </param>
-        /// <param name="port"> The port for the route. </param>
+        /// <param name="path"> [Required] The path for the route. </param>
+        /// <param name="port"> [Required] The port for the route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public Route(string path, int port)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Port = port;
         }
 
-        /// <summary> The path for the route. </summary>
+        /// <summary> [Required] The path for the route. </summary>
         public string Path { get; set; }
-        /// <summary> The port for the route. </summary>
+        /// <summary> [Required] The port for the route. </summary>
         public int Port { get; set; }
     }
 }

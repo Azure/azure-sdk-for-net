@@ -23,9 +23,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         private const string NoneValue = "None";
+        private const string SeasonValue = "Season";
+        private const string SeasonTrendValue = "SeasonTrend";
 
         /// <summary> No stl decomposition. </summary>
         public static UseStl None { get; } = new UseStl(NoneValue);
+        /// <summary> Season. </summary>
+        public static UseStl Season { get; } = new UseStl(SeasonValue);
+        /// <summary> SeasonTrend. </summary>
+        public static UseStl SeasonTrend { get; } = new UseStl(SeasonTrendValue);
         /// <summary> Determines if two <see cref="UseStl"/> values are the same. </summary>
         public static bool operator ==(UseStl left, UseStl right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UseStl"/> values are not the same. </summary>

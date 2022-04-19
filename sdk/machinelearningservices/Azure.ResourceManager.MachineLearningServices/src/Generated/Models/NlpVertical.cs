@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal NlpVertical(NlpVerticalDataSettings dataSettings, BinaryData featurizationSettings, NlpVerticalLimitSettings limitSettings)
+        internal NlpVertical(NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings)
         {
             DataSettings = dataSettings;
             FeaturizationSettings = featurizationSettings;
@@ -34,7 +32,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
-        public BinaryData FeaturizationSettings { get; set; }
+        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+        /// <summary> Dataset language, useful for the text data. </summary>
+        public string FeaturizationDatasetLanguage
+        {
+            get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
+            set
+            {
+                if (FeaturizationSettings is null)
+                    FeaturizationSettings = new NlpVerticalFeaturizationSettings();
+                FeaturizationSettings.DatasetLanguage = value;
+            }
+        }
+
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
     }

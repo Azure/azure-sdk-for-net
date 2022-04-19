@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,10 +21,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("databricksAccessToken");
                 writer.WriteStringValue(DatabricksAccessToken);
             }
-            if (Optional.IsDefined(WorkspaceUrl))
+            if (Optional.IsDefined(WorkspaceUri))
             {
                 writer.WritePropertyName("workspaceUrl");
-                writer.WriteStringValue(WorkspaceUrl);
+                writer.WriteStringValue(WorkspaceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static DatabricksProperties DeserializeDatabricksProperties(JsonElement element)
         {
             Optional<string> databricksAccessToken = default;
-            Optional<string> workspaceUrl = default;
+            Optional<Uri> workspaceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databricksAccessToken"))
@@ -41,7 +42,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("workspaceUrl"))
                 {
-                    workspaceUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        workspaceUrl = null;
+                        continue;
+                    }
+                    workspaceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

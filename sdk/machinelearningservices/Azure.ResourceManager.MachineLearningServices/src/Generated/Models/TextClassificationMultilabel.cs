@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
@@ -18,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
         public TextClassificationMultilabel()
         {
-            TaskType = new TaskType("TextClassificationMultilabel");
+            TaskType = TaskType.TextClassificationMultilabel;
         }
 
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="taskType"> Task type for AutoMLJob. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal TextClassificationMultilabel(LogVerbosity? logVerbosity, TaskType taskType, ClassificationMultilabelPrimaryMetrics? primaryMetric, NlpVerticalDataSettings dataSettings, BinaryData featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
+        internal TextClassificationMultilabel(LogVerbosity? logVerbosity, TaskType taskType, ClassificationMultilabelPrimaryMetrics? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             DataSettings = dataSettings;
@@ -48,7 +46,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
-        public BinaryData FeaturizationSettings { get; set; }
+        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+        /// <summary> Dataset language, useful for the text data. </summary>
+        public string FeaturizationDatasetLanguage
+        {
+            get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
+            set
+            {
+                if (FeaturizationSettings is null)
+                    FeaturizationSettings = new NlpVerticalFeaturizationSettings();
+                FeaturizationSettings.DatasetLanguage = value;
+            }
+        }
+
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
     }

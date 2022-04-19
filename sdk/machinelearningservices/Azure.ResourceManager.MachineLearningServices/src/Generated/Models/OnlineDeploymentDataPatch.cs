@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Strictly used in update requests. </summary>
-    public partial class PatchableBatchEndpointDataData
+    public partial class OnlineDeploymentDataPatch
     {
-        /// <summary> Initializes a new instance of PatchableBatchEndpointDataData. </summary>
-        public PatchableBatchEndpointDataData()
+        /// <summary> Initializes a new instance of OnlineDeploymentDataPatch. </summary>
+        public OnlineDeploymentDataPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -26,19 +26,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
-        internal PartialBatchEndpoint Properties { get; set; }
-        /// <summary>
-        /// Name of the deployment that will be default for the endpoint.
-        /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
-        /// </summary>
-        public string DefaultsDeploymentName
+        internal PartialOnlineDeployment Properties { get; set; }
+        /// <summary> [Required] The compute type of the endpoint. </summary>
+        internal EndpointComputeType PartialOnlineDeploymentEndpointComputeType
         {
-            get => Properties is null ? default : Properties.DefaultsDeploymentName;
+            get => Properties is null ? default : Properties.EndpointComputeType;
             set
             {
                 if (Properties is null)
-                    Properties = new PartialBatchEndpoint();
-                Properties.DefaultsDeploymentName = value;
+                    Properties = new PartialOnlineDeployment();
+                Properties.EndpointComputeType = value;
             }
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DefaultScaleSettings. </summary>
-        /// <param name="scaleType"> Type of deployment scaling algorithm. </param>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         internal DefaultScaleSettings(ScaleType scaleType) : base(scaleType)
         {
             ScaleType = scaleType;

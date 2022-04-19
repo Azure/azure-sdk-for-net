@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class MLTableJobInput : JobInput
     {
         /// <summary> Initializes a new instance of MLTableJobInput. </summary>
-        /// <param name="uri"> Input Asset URI. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MLTableJobInput(Uri uri)
         {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of MLTableJobInput. </summary>
         /// <param name="description"> Description for the input. </param>
-        /// <param name="jobInputType"> Specifies the type of job. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>
-        /// <param name="uri"> Input Asset URI. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
         internal MLTableJobInput(string description, JobInputType jobInputType, InputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
         {
             Mode = mode;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Input Asset Delivery Mode. </summary>
         public InputDeliveryMode? Mode { get; set; }
-        /// <summary> Input Asset URI. </summary>
+        /// <summary> [Required] Input Asset URI. </summary>
         public Uri Uri { get; set; }
     }
 }

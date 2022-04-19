@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of CronSchedule. </summary>
         /// <param name="expression">
-        /// Specifies cron expression of schedule.
+        /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
@@ -30,29 +30,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CronSchedule. </summary>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely
         /// </param>
         /// <param name="scheduleStatus"> Specifies the schedule&apos;s status. </param>
-        /// <param name="scheduleType"> Specifies the schedule type. </param>
-        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format. </param>
+        /// <param name="scheduleType"> [Required] Specifies the schedule type. </param>
+        /// <param name="startOn"> Specifies start time of schedule in ISO 8601 format. </param>
         /// <param name="timeZone">
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format.
         /// </param>
         /// <param name="expression">
-        /// Specifies cron expression of schedule.
+        /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronSchedule(DateTimeOffset? endTime, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startTime, string timeZone, string expression) : base(endTime, scheduleStatus, scheduleType, startTime, timeZone)
+        internal CronSchedule(DateTimeOffset? endOn, ScheduleStatus? scheduleStatus, ScheduleType scheduleType, DateTimeOffset? startOn, string timeZone, string expression) : base(endOn, scheduleStatus, scheduleType, startOn, timeZone)
         {
             Expression = expression;
             ScheduleType = scheduleType;
         }
 
         /// <summary>
-        /// Specifies cron expression of schedule.
+        /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </summary>
         public string Expression { get; set; }
