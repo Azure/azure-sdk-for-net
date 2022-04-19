@@ -66,7 +66,7 @@ namespace Azure.Data.Tables
             Diagnostics =
             {
                 LoggedHeaderNames = { "x-ms-request-id", "DataServiceVersion" },
-                LoggedQueryParameters = { "api-version", "format", "filter" }
+                LoggedQueryParameters = { "api-version", "$format", "$filter", "$top", "$select" }
             }
         };
     }
