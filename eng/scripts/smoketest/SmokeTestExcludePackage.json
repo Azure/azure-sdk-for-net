@@ -1,0 +1,5 @@
+{
+    "ExcludePackages": [
+        "Azure.AI.Personalizer"
+    ]
+}
