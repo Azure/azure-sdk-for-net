@@ -1,9 +1,5 @@
 # Release History
 
-## 5.0.0-beta.4 (Unreleased)
-### Bugs Fixed
-- Queue message is not removed from the queue after stopping QueueListener. (#28156)
-
 ## 5.0.0-beta.3 (2021-03-09)
 - This release contains bug fixes to improve quality.
 
