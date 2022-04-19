@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, WritableSubResource virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, WritableSubResource subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
+        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, WritableSubResource virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
         {
             OsType = osType;
             VmSize = vmSize;
@@ -88,17 +88,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Credentials for an administrator user account that will be created on each compute node. </summary>
         public UserAccountCredentials UserAccountCredentials { get; set; }
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+        internal ResourceId Subnet { get; set; }
+        /// <summary> The ID of the resource. </summary>
+        public string SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
+            set => Subnet = new ResourceId(value);
         }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>

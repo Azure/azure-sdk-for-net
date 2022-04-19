@@ -707,16 +707,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Workspaces_Diagnose
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="value"> Value of Parameters. </param>
+        /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DiagnoseResponseResult>> DiagnoseAsync(WaitUntil waitUntil, DiagnoseRequestProperties value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiagnoseResponseResult>> DiagnoseAsync(WaitUntil waitUntil, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceResource.Diagnose");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.DiagnoseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.Location);
+                var response = await _workspaceRestClient.DiagnoseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -734,16 +734,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Workspaces_Diagnose
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="value"> Value of Parameters. </param>
+        /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DiagnoseResponseResult> Diagnose(WaitUntil waitUntil, DiagnoseRequestProperties value = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiagnoseResponseResult> Diagnose(WaitUntil waitUntil, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceResource.Diagnose");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Diagnose(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.Location);
+                var response = _workspaceRestClient.Diagnose(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

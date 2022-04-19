@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
-        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
+        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -70,17 +69,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Virtual Machine Size. </summary>
         public string VmSize { get; set; }
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+        internal ResourceId Subnet { get; set; }
+        /// <summary> The ID of the resource. </summary>
+        public string SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
+            set => Subnet = new ResourceId(value);
         }
 
         /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>

@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, ContainerType? containerType, int? tail)
+        internal HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, DeploymentLogsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -520,14 +520,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new DeploymentLogsContent()
-            {
-                ContainerType = containerType,
-                Tail = tail
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -538,20 +533,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="endpointName"> Inference endpoint name. </param>
         /// <param name="deploymentName"> The name and identifier for the endpoint. </param>
-        /// <param name="containerType"> The type of container to retrieve logs from. </param>
-        /// <param name="tail"> The maximum number of lines to tail. </param>
+        /// <param name="content"> The request containing parameters for retrieving logs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentLogs>> GetLogsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, ContainerType? containerType = null, int? tail = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentLogs>> GetLogsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, DeploymentLogsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, deploymentName, containerType, tail);
+            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, deploymentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -573,20 +568,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="endpointName"> Inference endpoint name. </param>
         /// <param name="deploymentName"> The name and identifier for the endpoint. </param>
-        /// <param name="containerType"> The type of container to retrieve logs from. </param>
-        /// <param name="tail"> The maximum number of lines to tail. </param>
+        /// <param name="content"> The request containing parameters for retrieving logs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentLogs> GetLogs(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, ContainerType? containerType = null, int? tail = null, CancellationToken cancellationToken = default)
+        public Response<DeploymentLogs> GetLogs(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName, DeploymentLogsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, deploymentName, containerType, tail);
+            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, deploymentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

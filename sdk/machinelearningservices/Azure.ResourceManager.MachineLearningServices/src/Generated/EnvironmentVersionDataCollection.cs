@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="version"> Version of EnvironmentVersion. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Definition of EnvironmentVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<EnvironmentVersionDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, EnvironmentVersionDetails properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EnvironmentVersionDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, EnvironmentVersionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _environmentVersionDataEnvironmentVersionsClientDiagnostics.CreateScope("EnvironmentVersionDataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
                 var operation = new MachineLearningServicesArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="version"> Version of EnvironmentVersion. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Definition of EnvironmentVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<EnvironmentVersionDataResource> CreateOrUpdate(WaitUntil waitUntil, string version, EnvironmentVersionDetails properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EnvironmentVersionDataResource> CreateOrUpdate(WaitUntil waitUntil, string version, EnvironmentVersionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _environmentVersionDataEnvironmentVersionsClientDiagnostics.CreateScope("EnvironmentVersionDataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
+                var response = _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
                 var operation = new MachineLearningServicesArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

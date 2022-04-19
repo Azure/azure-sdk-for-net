@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The DeploymentLogsRequest. </summary>
-    internal partial class DeploymentLogsContent
+    public partial class DeploymentLogsContent
     {
         /// <summary> Initializes a new instance of DeploymentLogsContent. </summary>
         public DeploymentLogsContent()

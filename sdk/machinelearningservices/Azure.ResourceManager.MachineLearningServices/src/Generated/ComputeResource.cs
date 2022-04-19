@@ -196,16 +196,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Compute_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> Properties of ClusterUpdate. </param>
+        /// <param name="patch"> Additional parameters for cluster update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ComputeResource>> UpdateAsync(WaitUntil waitUntil, ScaleSettingsInformation properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ComputeResource>> UpdateAsync(WaitUntil waitUntil, ComputeResourcePatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using var scope = _computeResourceComputeClientDiagnostics.CreateScope("ComputeResource.Update");
             scope.Start();
             try
             {
-                var response = await _computeResourceComputeRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties).Request, response, OperationFinalStateVia.Location);
+                var response = await _computeResourceComputeRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,16 +226,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Compute_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> Properties of ClusterUpdate. </param>
+        /// <param name="patch"> Additional parameters for cluster update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ComputeResource> Update(WaitUntil waitUntil, ScaleSettingsInformation properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ComputeResource> Update(WaitUntil waitUntil, ComputeResourcePatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using var scope = _computeResourceComputeClientDiagnostics.CreateScope("ComputeResource.Update");
             scope.Start();
             try
             {
-                var response = _computeResourceComputeRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties).Request, response, OperationFinalStateVia.Location);
+                var response = _computeResourceComputeRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

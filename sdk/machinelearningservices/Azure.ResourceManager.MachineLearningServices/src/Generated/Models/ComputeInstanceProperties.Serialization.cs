@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                JsonSerializer.Serialize(writer, Subnet);
+                writer.WriteObjectValue(Subnet);
             }
             if (Optional.IsDefined(ApplicationSharingPolicy))
             {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static ComputeInstanceProperties DeserializeComputeInstanceProperties(JsonElement element)
         {
             Optional<string> vmSize = default;
-            Optional<WritableSubResource> subnet = default;
+            Optional<ResourceId> subnet = default;
             Optional<ApplicationSharingPolicy> applicationSharingPolicy = default;
             Optional<ComputeInstanceSshSettings> sshSettings = default;
             Optional<ComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    subnet = ResourceId.DeserializeResourceId(property.Value);
                     continue;
                 }
                 if (property.NameEquals("applicationSharingPolicy"))
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ComputeInstanceProperties(vmSize.Value, subnet, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
+            return new ComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
         }
     }
 }

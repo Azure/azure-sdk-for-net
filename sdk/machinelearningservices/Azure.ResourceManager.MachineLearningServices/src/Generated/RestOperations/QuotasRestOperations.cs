@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string location, IEnumerable<QuotaBaseProperties> value, string quotaUpdateParametersLocation)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string location, QuotaUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,21 +53,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            QuotaUpdateContent quotaUpdateContent = new QuotaUpdateContent()
-            {
-                Location = quotaUpdateParametersLocation
-            };
-            if (value != null)
-            {
-                foreach (var value0 in value)
-                {
-                    quotaUpdateContent.Value.Add(value0);
-                }
-            }
-            var model = quotaUpdateContent;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -76,26 +63,26 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Update quota for each VM family in workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateWorkspaceQuotasResult>> UpdateAsync(string subscriptionId, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UpdateWorkspaceQuotasResult>> UpdateAsync(string subscriptionId, string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, location, value, quotaUpdateParametersLocation);
+            using var message = CreateUpdateRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpdateWorkspaceQuotasResult value0 = default;
+                        UpdateWorkspaceQuotasResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -105,26 +92,26 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Update quota for each VM family in workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateWorkspaceQuotasResult> Update(string subscriptionId, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public Response<UpdateWorkspaceQuotasResult> Update(string subscriptionId, string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, location, value, quotaUpdateParametersLocation);
+            using var message = CreateUpdateRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpdateWorkspaceQuotasResult value0 = default;
+                        UpdateWorkspaceQuotasResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -167,10 +154,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceQuotas value0 = default;
+                        ListWorkspaceQuotas value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -194,10 +181,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceQuotas value0 = default;
+                        ListWorkspaceQuotas value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -237,10 +224,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceQuotas value0 = default;
+                        ListWorkspaceQuotas value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -266,10 +253,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceQuotas value0 = default;
+                        ListWorkspaceQuotas value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceQuotas.DeserializeListWorkspaceQuotas(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

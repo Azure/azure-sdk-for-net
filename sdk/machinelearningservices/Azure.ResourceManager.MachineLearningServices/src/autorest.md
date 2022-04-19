@@ -13,7 +13,7 @@ modelerfour:
 clear-output-folder: true
 namespace: Azure.ResourceManager.MachineLearningServices
 skip-csproj: true
-payload-flattening-threshold: 2
+no-property-type-replacement: ResourceId
 directive:
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties
@@ -68,10 +68,6 @@ directive:
     where: $.definitions.ComputeInstance.allOf[?(@.type=="object")].properties.properties.properties.setupScripts
     transform: >
         $["x-nullable"] = true;
-  # - from: swagger-document
-  #   where: $.definitions.AmlComputeProperties.properties.subnet
-  #   transform: >
-  #       $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.DataSettings.properties.trainingData
     transform: >

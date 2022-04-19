@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateDiagnoseRequest(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseRequestProperties value)
+        internal HttpMessage CreateDiagnoseRequest(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseWorkspaceContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -443,14 +443,13 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new DiagnoseWorkspaceContent()
+            if (content != null)
             {
-                Value = value
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -459,17 +458,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="value"> Value of Parameters. </param>
+        /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DiagnoseAsync(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseRequestProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DiagnoseAsync(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateDiagnoseRequest(subscriptionId, resourceGroupName, workspaceName, value);
+            using var message = CreateDiagnoseRequest(subscriptionId, resourceGroupName, workspaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -485,17 +484,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="value"> Value of Parameters. </param>
+        /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Diagnose(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseRequestProperties value = null, CancellationToken cancellationToken = default)
+        public Response Diagnose(string subscriptionId, string resourceGroupName, string workspaceName, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateDiagnoseRequest(subscriptionId, resourceGroupName, workspaceName, value);
+            using var message = CreateDiagnoseRequest(subscriptionId, resourceGroupName, workspaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -547,10 +546,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceKeysResult value0 = default;
+                        ListWorkspaceKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ListWorkspaceKeysResult.DeserializeListWorkspaceKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceKeysResult.DeserializeListWorkspaceKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -576,10 +575,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListWorkspaceKeysResult value0 = default;
+                        ListWorkspaceKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ListWorkspaceKeysResult.DeserializeListWorkspaceKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListWorkspaceKeysResult.DeserializeListWorkspaceKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -694,10 +693,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -720,10 +719,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -770,10 +769,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        NotebookAccessTokenResult value0 = default;
+                        NotebookAccessTokenResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -799,10 +798,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        NotebookAccessTokenResult value0 = default;
+                        NotebookAccessTokenResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = NotebookAccessTokenResult.DeserializeNotebookAccessTokenResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -920,10 +919,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListStorageAccountKeysResult value0 = default;
+                        ListStorageAccountKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -949,10 +948,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListStorageAccountKeysResult value0 = default;
+                        ListStorageAccountKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListStorageAccountKeysResult.DeserializeListStorageAccountKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -999,10 +998,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListNotebookKeysResult value0 = default;
+                        ListNotebookKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1028,10 +1027,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ListNotebookKeysResult value0 = default;
+                        ListNotebookKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ListNotebookKeysResult.DeserializeListNotebookKeysResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1078,10 +1077,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ExternalFqdnResponse value0 = default;
+                        ExternalFqdnResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1107,10 +1106,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ExternalFqdnResponse value0 = default;
+                        ExternalFqdnResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1151,10 +1150,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1181,10 +1180,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1223,10 +1222,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1251,10 +1250,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        WorkspaceListResult value0 = default;
+                        WorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
+                        value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

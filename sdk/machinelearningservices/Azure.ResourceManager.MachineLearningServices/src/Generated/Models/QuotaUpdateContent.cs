@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Quota update parameters. </summary>
-    internal partial class QuotaUpdateContent
+    public partial class QuotaUpdateContent
     {
         /// <summary> Initializes a new instance of QuotaUpdateContent. </summary>
         public QuotaUpdateContent()

@@ -335,17 +335,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: OnlineEndpoints_RegenerateKeys
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
-        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RegenerateKeysAsync(WaitUntil waitUntil, KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RegenerateKeysAsync(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = await _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response, OperationFinalStateVia.Location);
+                var response = await _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -363,17 +365,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: OnlineEndpoints_RegenerateKeys
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
-        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RegenerateKeys(WaitUntil waitUntil, KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RegenerateKeys(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response, OperationFinalStateVia.Location);
+                var response = _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

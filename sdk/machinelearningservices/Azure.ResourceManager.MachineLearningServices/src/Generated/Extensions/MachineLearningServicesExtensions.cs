@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -136,17 +135,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(this SubscriptionResource subscriptionResource, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(this SubscriptionResource subscriptionResource, string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).UpdateQuotasAsync(location, value, quotaUpdateParametersLocation, cancellationToken);
+            return GetExtensionClient(subscriptionResource).UpdateQuotasAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UpdateWorkspaceQuotas> UpdateQuotas(this SubscriptionResource subscriptionResource, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static Pageable<UpdateWorkspaceQuotas> UpdateQuotas(this SubscriptionResource subscriptionResource, string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).UpdateQuotas(location, value, quotaUpdateParametersLocation, cancellationToken);
+            return GetExtensionClient(subscriptionResource).UpdateQuotas(location, content, cancellationToken);
         }
 
         /// <summary>

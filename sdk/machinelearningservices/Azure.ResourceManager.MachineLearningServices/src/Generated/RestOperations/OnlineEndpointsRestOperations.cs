@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, KeyType keyType, string keyValue)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -597,13 +597,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new RegenerateEndpointKeysContent(keyType)
-            {
-                KeyValue = keyValue
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -613,19 +609,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
-        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, keyType, keyValue);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -642,19 +638,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
-        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public Response RegenerateKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, keyType, keyValue);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, workspaceName, endpointName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

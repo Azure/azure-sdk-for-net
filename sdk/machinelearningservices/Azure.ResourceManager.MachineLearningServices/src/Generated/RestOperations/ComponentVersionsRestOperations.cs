@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDetails properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDataData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -343,9 +343,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ComponentVersionDataData(properties);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -357,20 +356,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentVersionDataData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDetails properties, CancellationToken cancellationToken = default)
+        public async Task<Response<ComponentVersionDataData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, name, version, properties);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, name, version, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -393,20 +392,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentVersionDataData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDetails properties, CancellationToken cancellationToken = default)
+        public Response<ComponentVersionDataData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, ComponentVersionDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, name, version, properties);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, name, version, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

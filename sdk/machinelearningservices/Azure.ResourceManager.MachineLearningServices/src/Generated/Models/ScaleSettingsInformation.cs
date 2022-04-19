@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Desired scale settings for the amlCompute. </summary>
-    public partial class ScaleSettingsInformation
+    internal partial class ScaleSettingsInformation
     {
         /// <summary> Initializes a new instance of ScaleSettingsInformation. </summary>
         public ScaleSettingsInformation()

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -291,11 +290,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Quotas_Update
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             async Task<Page<UpdateWorkspaceQuotas>> FirstPageFunc(int? pageSizeHint)
             {
@@ -303,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = await QuotasRestClient.UpdateAsync(Id.SubscriptionId, location, value, quotaUpdateParametersLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await QuotasRestClient.UpdateAsync(Id.SubscriptionId, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,11 +319,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Quotas_Update
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="value"> The list for update quota. </param>
-        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpdateWorkspaceQuotas> UpdateQuotas(string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<UpdateWorkspaceQuotas> UpdateQuotas(string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Page<UpdateWorkspaceQuotas> FirstPageFunc(int? pageSizeHint)
             {
@@ -333,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Start();
                 try
                 {
-                    var response = QuotasRestClient.Update(Id.SubscriptionId, location, value, quotaUpdateParametersLocation, cancellationToken: cancellationToken);
+                    var response = QuotasRestClient.Update(Id.SubscriptionId, location, content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

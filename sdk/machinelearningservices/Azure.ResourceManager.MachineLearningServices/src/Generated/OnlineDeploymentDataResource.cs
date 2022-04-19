@@ -253,16 +253,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}/deployments/{deploymentName}/getLogs
         /// Operation Id: OnlineDeployments_GetLogs
         /// </summary>
-        /// <param name="containerType"> The type of container to retrieve logs from. </param>
-        /// <param name="tail"> The maximum number of lines to tail. </param>
+        /// <param name="content"> The request containing parameters for retrieving logs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentLogs>> GetLogsAsync(ContainerType? containerType = null, int? tail = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DeploymentLogs>> GetLogsAsync(DeploymentLogsContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataResource.GetLogs");
             scope.Start();
             try
             {
-                var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.GetLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerType, tail, cancellationToken).ConfigureAwait(false);
+                var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.GetLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -277,16 +279,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}/deployments/{deploymentName}/getLogs
         /// Operation Id: OnlineDeployments_GetLogs
         /// </summary>
-        /// <param name="containerType"> The type of container to retrieve logs from. </param>
-        /// <param name="tail"> The maximum number of lines to tail. </param>
+        /// <param name="content"> The request containing parameters for retrieving logs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentLogs> GetLogs(ContainerType? containerType = null, int? tail = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DeploymentLogs> GetLogs(DeploymentLogsContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataResource.GetLogs");
             scope.Start();
             try
             {
-                var response = _onlineDeploymentDataOnlineDeploymentsRestClient.GetLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerType, tail, cancellationToken);
+                var response = _onlineDeploymentDataOnlineDeploymentsRestClient.GetLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

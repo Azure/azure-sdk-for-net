@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ScaleSettingsInformation : IUtf8JsonSerializable
+    internal partial class ScaleSettingsInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

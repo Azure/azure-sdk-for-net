@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Job definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobBaseDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, JobBaseDetails properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<JobBaseDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, JobBaseDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _jobBaseDataJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _jobBaseDataJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
                 var operation = new MachineLearningServicesArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <param name="data"> Job definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<JobBaseDataResource> CreateOrUpdate(WaitUntil waitUntil, string id, JobBaseDetails properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<JobBaseDataResource> CreateOrUpdate(WaitUntil waitUntil, string id, JobBaseDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobBaseDataJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, properties, cancellationToken);
+                var response = _jobBaseDataJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken);
                 var operation = new MachineLearningServicesArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
