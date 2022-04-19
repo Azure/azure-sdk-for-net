@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
-    public class SchemaRegistryClientTestEnvironment : TestEnvironment
+    public class SchemaRegistryAvroSerializerTestEnvironment : TestEnvironment
     {
         public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT");
 
