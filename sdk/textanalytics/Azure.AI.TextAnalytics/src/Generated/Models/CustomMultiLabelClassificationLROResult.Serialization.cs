@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationLROResult : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationLROResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiClassificationLROResult DeserializeCustomMultiClassificationLROResult(JsonElement element)
+        internal static CustomMultiLabelClassificationLROResult DeserializeCustomMultiLabelClassificationLROResult(JsonElement element)
         {
-            CustomMultiClassificationResult results = default;
+            CustomMultiLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"))
                 {
-                    results = CustomMultiClassificationResult.DeserializeCustomMultiClassificationResult(property.Value);
+                    results = CustomMultiLabelClassificationResult.DeserializeCustomMultiLabelClassificationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new CustomMultiLabelClassificationLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of SingleClassificationDocumentResult. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="classification"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="classification"/> is null. </exception>
-        public SingleClassificationDocumentResult(string id, IEnumerable<DocumentWarning> warnings, ClassificationResult classification) : base(id, warnings)
+        /// <param name="class"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="class"/> is null. </exception>
+        public SingleClassificationDocumentResult(string id, IEnumerable<DocumentWarning> warnings, ClassificationResult @class) : base(id, warnings)
         {
             if (id == null)
             {
@@ -29,25 +29,25 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(warnings));
             }
-            if (classification == null)
+            if (@class == null)
             {
-                throw new ArgumentNullException(nameof(classification));
+                throw new ArgumentNullException(nameof(@class));
             }
 
-            Classification = classification;
+            Class = @class;
         }
 
         /// <summary> Initializes a new instance of SingleClassificationDocumentResult. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="classification"></param>
-        internal SingleClassificationDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, ClassificationResult classification) : base(id, warnings, statistics)
+        /// <param name="class"></param>
+        internal SingleClassificationDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, ClassificationResult @class) : base(id, warnings, statistics)
         {
-            Classification = classification;
+            Class = @class;
         }
 
-        /// <summary> Gets or sets the classification. </summary>
-        public ClassificationResult Classification { get; set; }
+        /// <summary> Gets or sets the class. </summary>
+        public ClassificationResult Class { get; set; }
     }
 }

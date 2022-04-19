@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,8 +14,16 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class PiiTaskResult : AnalyzeTextTaskResult
     {
         /// <summary> Initializes a new instance of PiiTaskResult. </summary>
-        internal PiiTaskResult()
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal PiiTaskResult(PiiEntitiesResult results)
         {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results;
             Kind = AnalyzeTextTaskResultsKind.PiiEntityRecognitionResults;
         }
 

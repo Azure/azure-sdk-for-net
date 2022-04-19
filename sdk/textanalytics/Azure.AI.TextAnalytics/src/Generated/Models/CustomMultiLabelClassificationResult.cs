@@ -12,16 +12,16 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomMultiClassificationResult. </summary>
-    internal partial class CustomMultiClassificationResult : CustomResult
+    /// <summary> The CustomMultiLabelClassificationResult. </summary>
+    internal partial class CustomMultiLabelClassificationResult : CustomResult
     {
-        /// <summary> Initializes a new instance of CustomMultiClassificationResult. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResult. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        public CustomMultiClassificationResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomMultiClassificationResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
+        public CustomMultiLabelClassificationResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomMultiLabelClassificationResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
         {
             if (errors == null)
             {
@@ -43,18 +43,18 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of CustomMultiClassificationResult. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResult. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        internal CustomMultiClassificationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomMultiClassificationResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
+        internal CustomMultiLabelClassificationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomMultiLabelClassificationResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<CustomMultiClassificationResultDocumentsItem> Documents { get; }
+        public IList<CustomMultiLabelClassificationResultDocumentsItem> Documents { get; }
     }
 }

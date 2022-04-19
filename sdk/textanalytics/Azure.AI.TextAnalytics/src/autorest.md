@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/2c66a689c610dbef623d6c4e4c4e913446d5ac68/specification/cognitiveservices/data-plane/Language/preview/2022-02-01-preview/textanalytics.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/ca0335b44b4eca2c5b5673ee2c58a87e524b669f/specification/cognitiveservices/data-plane/Language/preview/2022-03-01-preview/textanalytics.json
 generation1-convenience-client: true
 ```
 
