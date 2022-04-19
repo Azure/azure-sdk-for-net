@@ -23,7 +23,7 @@ function Get-SmokeTestPkgProperties
 
     $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2"
     $allPackages = Get-AllPkgProperties
-    $excludePackages = (Get-Content 'SmokeTestExcludePackage.json' | ConvertFrom-Json).ExcludePackages
+    $excludePackages = (Get-Content "$PSScriptRoot/SmokeTestExcludePackage.json" | ConvertFrom-Json).ExcludePackages
     $newPackages = $allPackages.Where({ $_.IsNewSdk -and !$excludePackages.Contains($_.Name) })
 
     $azureCorePkgInfo = $newPackages.Where({ $_.Name -eq "Azure.Core"})
