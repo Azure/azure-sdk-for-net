@@ -65,8 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="provisioningState">The current state of the gallery
         /// image definition.</param>
         /// <param name="features">A list of gallery image features.</param>
-        /// <param name="architecture">The architecture of the image.
-        /// Applicable to OS disks only. Possible values include: 'x64',
+        /// <param name="architecture">Possible values include: 'x64',
         /// 'Arm64'</param>
         public GalleryImage(string location, OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), string architecture = default(string))
             : base(location, id, name, type, tags)
@@ -192,8 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<GalleryImageFeature> Features { get; set; }
 
         /// <summary>
-        /// Gets or sets the architecture of the image. Applicable to OS disks
-        /// only. Possible values include: 'x64', 'Arm64'
+        /// Gets or sets possible values include: 'x64', 'Arm64'
         /// </summary>
         [JsonProperty(PropertyName = "properties.architecture")]
         public string Architecture { get; set; }
