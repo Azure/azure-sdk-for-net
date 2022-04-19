@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c56169460b174b4e9731361700103967-ea4e20ec623ab343-00",
+        "traceparent": "00-9ea0b2ae458484498b83141b6608ff0d-42f64a9da0e83047-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "44673218b7ef37c4fbecd9e91ac5b1cb",
+        "x-ms-client-request-id": "3cb042ba18345a5683630143a480efa8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Apr 2022 05:41:26 GMT",
+        "Date": "Tue, 19 Apr 2022 05:42:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a3502363-e0b2-4f27-bfc5-dfc8effcfb6d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "a3502363-e0b2-4f27-bfc5-dfc8effcfb6d",
-        "x-ms-routing-request-id": "KOREASOUTH:20220419T054126Z:a3502363-e0b2-4f27-bfc5-dfc8effcfb6d"
+        "x-ms-correlation-request-id": "ac332aef-b5a5-4d3c-9d08-b81a40be112c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "ac332aef-b5a5-4d3c-9d08-b81a40be112c",
+        "x-ms-routing-request-id": "KOREASOUTH:20220419T054204Z:ac332aef-b5a5-4d3c-9d08-b81a40be112c"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Dns-RG-1281?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Dns-RG-7474?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "32",
         "Content-Type": "application/json",
-        "traceparent": "00-5f8ff082528b27439333877442ec6d8c-5335a1a7afd96249-00",
+        "traceparent": "00-bb2455b1964b73449cb402a9b906c458-b60a662a4de8d249-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "d9eaeee4578ac0bc9b4b210d2a9c635d",
+        "x-ms-client-request-id": "355dfba7ebdfe178ebd265962345ec4b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -77,19 +77,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Apr 2022 05:41:29 GMT",
+        "Date": "Tue, 19 Apr 2022 05:42:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "556b7adb-6723-4c46-bdef-028e2ca9c150",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "556b7adb-6723-4c46-bdef-028e2ca9c150",
-        "x-ms-routing-request-id": "KOREASOUTH:20220419T054130Z:556b7adb-6723-4c46-bdef-028e2ca9c150"
+        "x-ms-correlation-request-id": "5b951741-88d2-4877-9e6a-a733c40fb54c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1179",
+        "x-ms-request-id": "5b951741-88d2-4877-9e6a-a733c40fb54c",
+        "x-ms-routing-request-id": "KOREASOUTH:20220419T054205Z:5b951741-88d2-4877-9e6a-a733c40fb54c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Dns-RG-1281",
-        "name": "Dns-RG-1281",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Dns-RG-7474",
+        "name": "Dns-RG-7474",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {},
@@ -100,7 +100,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1309658079",
+    "RandomSeed": "783644919",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
