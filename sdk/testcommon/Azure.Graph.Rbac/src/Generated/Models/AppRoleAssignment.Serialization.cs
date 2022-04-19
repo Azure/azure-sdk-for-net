@@ -12,15 +12,16 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class ADGroup
+    public partial class AppRoleAssignment
     {
-        internal static ADGroup DeserializeADGroup(JsonElement element)
+        internal static AppRoleAssignment DeserializeAppRoleAssignment(JsonElement element)
         {
-            Optional<string> displayName = default;
-            Optional<bool> mailEnabled = default;
-            Optional<string> mailNickname = default;
-            Optional<bool> securityEnabled = default;
-            Optional<string> mail = default;
+            Optional<string> id = default;
+            Optional<string> principalDisplayName = default;
+            Optional<string> principalId = default;
+            Optional<string> principalType = default;
+            Optional<string> resourceDisplayName = default;
+            Optional<string> resourceId = default;
             Optional<string> objectId = default;
             string objectType = default;
             Optional<DateTimeOffset?> deletionTimestamp = default;
@@ -28,39 +29,34 @@ namespace Azure.Graph.Rbac.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("id"))
                 {
-                    displayName = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mailEnabled"))
+                if (property.NameEquals("principalDisplayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    mailEnabled = property.Value.GetBoolean();
+                    principalDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mailNickname"))
+                if (property.NameEquals("principalId"))
                 {
-                    mailNickname = property.Value.GetString();
+                    principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityEnabled"))
+                if (property.NameEquals("principalType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    securityEnabled = property.Value.GetBoolean();
+                    principalType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mail"))
+                if (property.NameEquals("resourceDisplayName"))
                 {
-                    mail = property.Value.GetString();
+                    resourceDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceId"))
+                {
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectId"))
@@ -86,7 +82,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ADGroup(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, displayName.Value, Optional.ToNullable(mailEnabled), mailNickname.Value, Optional.ToNullable(securityEnabled), mail.Value);
+            return new AppRoleAssignment(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, id.Value, principalDisplayName.Value, principalId.Value, principalType.Value, resourceDisplayName.Value, resourceId.Value);
         }
     }
 }

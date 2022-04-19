@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal KeyVaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal KeyVaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
         }
 
         /// <summary> Azure location of the key vault resource. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }

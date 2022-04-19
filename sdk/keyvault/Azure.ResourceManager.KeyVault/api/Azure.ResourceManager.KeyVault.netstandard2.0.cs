@@ -50,17 +50,6 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.ArmOperation PurgeDeleted(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeDeletedAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class KeyData : Azure.ResourceManager.KeyVault.Models.KeyVaultResourceData
-    {
-        public KeyData() { }
-        public Azure.ResourceManager.KeyVault.Models.KeyAttributes Attributes { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
-        public int? KeySize { get { throw null; } set { } }
-        public System.Uri KeyUri { get { throw null; } }
-        public string KeyUriWithVersion { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
-    }
     public static partial class KeyVaultExtensions
     {
         public static Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -85,11 +74,8 @@ namespace Azure.ResourceManager.KeyVault
         public static Azure.AsyncPageable<Azure.ResourceManager.KeyVault.ManagedHsmResource> GetManagedHsmsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionResource GetMhsmPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.KeyVault.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.KeyVault.SecretResource GetSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.KeyVault.VaultResource> GetVault(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultResource>> GetVaultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.KeyVault.VaultKeyResource GetVaultKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.KeyVault.VaultKeyVersionResource GetVaultKeyVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.KeyVault.VaultResource GetVaultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.KeyVault.VaultCollection GetVaults(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.KeyVault.VaultResource> GetVaults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -110,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmData : Azure.ResourceManager.KeyVault.Models.ManagedHsmResource
+    public partial class ManagedHsmData : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
     {
         public ManagedHsmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties Properties { get { throw null; } set { } }
@@ -155,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MhsmPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.ManagedHsmResource
+    public partial class MhsmPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
     {
         public MhsmPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Etag { get { throw null; } set { } }
@@ -222,44 +208,6 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SecretCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.SecretResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.SecretResource>, System.Collections.IEnumerable
-    {
-        protected SecretCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.SecretResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.KeyVault.Models.SecretCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.SecretResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.KeyVault.Models.SecretCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> Get(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.SecretResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.SecretResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> GetAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.KeyVault.SecretResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.SecretResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.SecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.SecretResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SecretData : Azure.ResourceManager.KeyVault.Models.KeyVaultResourceData
-    {
-        public SecretData(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
-        public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
-    }
-    public partial class SecretResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SecretResource() { }
-        public virtual Azure.ResourceManager.KeyVault.SecretData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string secretName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> Update(Azure.ResourceManager.KeyVault.Models.SecretPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> UpdateAsync(Azure.ResourceManager.KeyVault.Models.SecretPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class VaultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.VaultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultResource>, System.Collections.IEnumerable
     {
         protected VaultCollection() { }
@@ -278,72 +226,9 @@ namespace Azure.ResourceManager.KeyVault
     public partial class VaultData : Azure.ResourceManager.Models.ResourceData
     {
         internal VaultData() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class VaultKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.VaultKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyResource>, System.Collections.IEnumerable
-    {
-        protected VaultKeyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.VaultKeyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.KeyVault.Models.VaultKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KeyVault.VaultKeyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.KeyVault.Models.VaultKeyCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> Get(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.VaultKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.VaultKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> GetAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.KeyVault.VaultKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.VaultKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.VaultKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class VaultKeyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected VaultKeyResource() { }
-        public virtual Azure.ResourceManager.KeyVault.KeyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string keyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> GetVaultKeyVersion(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> GetVaultKeyVersionAsync(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.VaultKeyVersionCollection GetVaultKeyVersions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VaultKeyVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>, System.Collections.IEnumerable
-    {
-        protected VaultKeyVersionCollection() { }
-        public virtual Azure.Response<bool> Exists(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> Get(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> GetAsync(string keyVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class VaultKeyVersionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected VaultKeyVersionResource() { }
-        public virtual Azure.ResourceManager.KeyVault.KeyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string keyName, string keyVersion) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VaultResource : Azure.ResourceManager.ArmResource
     {
@@ -363,12 +248,6 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.ResourceManager.KeyVault.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.PrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.PrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.SecretResource> GetSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.SecretResource>> GetSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.SecretCollection GetSecrets() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource> GetVaultKey(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultKeyResource>> GetVaultKeyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.KeyVault.VaultKeyCollection GetVaultKeys() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -384,10 +263,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class AccessPermissions
     {
         public AccessPermissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermission> Certificates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermission> Keys { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermission> Secrets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermission> Storage { get { throw null; } }
     }
     public partial class AccessPolicyEntry
     {
@@ -420,46 +299,37 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ActionsRequired left, Azure.ResourceManager.KeyVault.Models.ActionsRequired right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BaseAttributes
-    {
-        public BaseAttributes() { }
-        public System.DateTimeOffset? Created { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-        public System.DateTimeOffset? Expires { get { throw null; } set { } }
-        public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
-        public System.DateTimeOffset? Updated { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CertificatePermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.CertificatePermissions>
+    public readonly partial struct CertificatePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.CertificatePermission>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CertificatePermissions(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Create { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Deleteissuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Getissuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Import { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Listissuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Managecontacts { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Manageissuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Setissuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermissions Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.CertificatePermissions other) { throw null; }
+        public CertificatePermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Create { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Deleteissuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Getissuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Import { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Listissuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Managecontacts { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Manageissuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Setissuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.CertificatePermission other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.CertificatePermissions left, Azure.ResourceManager.KeyVault.Models.CertificatePermissions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.CertificatePermissions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.CertificatePermissions left, Azure.ResourceManager.KeyVault.Models.CertificatePermissions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.CertificatePermission left, Azure.ResourceManager.KeyVault.Models.CertificatePermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.CertificatePermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.CertificatePermission left, Azure.ResourceManager.KeyVault.Models.CertificatePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CheckNameAvailabilityResult
@@ -471,14 +341,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public enum CreateMode
     {
-        Recover = 0,
-        Default = 1,
+        Default = 0,
+        Recover = 1,
     }
     public partial class DeletedManagedHsmProperties
     {
         internal DeletedManagedHsmProperties() { }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MhsmId { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
@@ -488,159 +358,54 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal DeletedVaultProperties() { }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string VaultId { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeletionRecoveryLevel : System.IEquatable<Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeletionRecoveryLevel(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel Purgeable { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel Recoverable { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel RecoverableProtectedSubscription { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel RecoverablePurgeable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel left, Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel left, Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IPRule
     {
-        public IPRule(string value) { }
-        public string Value { get { throw null; } set { } }
+        public IPRule(string addressRange) { }
+        public string AddressRange { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonWebKeyCurveName : System.IEquatable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName>
+    public readonly partial struct KeyPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyPermission>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public JsonWebKeyCurveName(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName P256 { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName P256K { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName P384 { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName P521 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName other) { throw null; }
+        public KeyPermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Create { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Decrypt { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Encrypt { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Import { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Sign { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission UnwrapKey { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Update { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Verify { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyPermission WrapKey { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyPermission other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyPermission left, Azure.ResourceManager.KeyVault.Models.KeyPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyPermission left, Azure.ResourceManager.KeyVault.Models.KeyPermission right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonWebKeyOperation : System.IEquatable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonWebKeyOperation(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation Decrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation Encrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation Import { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation Sign { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation UnwrapKey { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation Verify { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation WrapKey { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonWebKeyType : System.IEquatable<Azure.ResourceManager.KeyVault.Models.JsonWebKeyType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonWebKeyType(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyType EC { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyType ECHSM { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyType RSA { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.JsonWebKeyType RSAHSM { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.JsonWebKeyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.JsonWebKeyType left, Azure.ResourceManager.KeyVault.Models.JsonWebKeyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class KeyAttributes
-    {
-        public KeyAttributes() { }
-        public long? Created { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-        public long? Expires { get { throw null; } set { } }
-        public bool? Exportable { get { throw null; } set { } }
-        public long? NotBefore { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.DeletionRecoveryLevel? RecoveryLevel { get { throw null; } }
-        public long? Updated { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyPermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyPermissions>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyPermissions(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Create { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Decrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Encrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Import { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Sign { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions UnwrapKey { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Update { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions Verify { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermissions WrapKey { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyPermissions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyPermissions left, Azure.ResourceManager.KeyVault.Models.KeyPermissions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyPermissions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyPermissions left, Azure.ResourceManager.KeyVault.Models.KeyPermissions right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class KeyProperties
-    {
-        public KeyProperties() { }
-        public Azure.ResourceManager.KeyVault.Models.KeyAttributes Attributes { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
-        public int? KeySize { get { throw null; } set { } }
-        public System.Uri KeyUri { get { throw null; } }
-        public string KeyUriWithVersion { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
     }
     public partial class KeyVaultResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public KeyVaultResourceData() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class KeyVaultSku
@@ -671,6 +436,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         Standard = 0,
         Premium = 1,
     }
+    public partial class KeyVaultTrackedResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public KeyVaultTrackedResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
+    }
     public partial class ManagedHsmProperties
     {
         public ManagedHsmProperties() { }
@@ -687,11 +457,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    public partial class ManagedHsmResource : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ManagedHsmResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
     }
     public partial class ManagedHsmSku
     {
@@ -723,8 +488,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class MhsmIPRule
     {
-        public MhsmIPRule(string value) { }
-        public string Value { get { throw null; } set { } }
+        public MhsmIPRule(string addressRange) { }
+        public string AddressRange { get { throw null; } set { } }
     }
     public partial class MhsmNetworkRuleSet
     {
@@ -741,7 +506,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class MhsmPrivateLinkResource : Azure.ResourceManager.KeyVault.Models.ManagedHsmResource
+    public partial class MhsmPrivateLinkResource : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
     {
         public MhsmPrivateLinkResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string GroupId { get { throw null; } }
@@ -911,99 +676,67 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.BaseAttributes
-    {
-        public SecretAttributes() { }
-    }
-    public partial class SecretCreateOrUpdateContent
-    {
-        public SecretCreateOrUpdateContent(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
-        public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class SecretPatch
-    {
-        public SecretPatch() { }
-        public Azure.ResourceManager.KeyVault.Models.SecretPatchProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class SecretPatchProperties
-    {
-        public SecretPatchProperties() { }
-        public Azure.ResourceManager.KeyVault.Models.SecretAttributes Attributes { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecretPermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SecretPermissions>
+    public readonly partial struct SecretPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SecretPermission>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SecretPermissions(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermissions Set { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.SecretPermissions other) { throw null; }
+        public SecretPermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Set { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.SecretPermission other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SecretPermissions left, Azure.ResourceManager.KeyVault.Models.SecretPermissions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.SecretPermissions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SecretPermissions left, Azure.ResourceManager.KeyVault.Models.SecretPermissions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SecretPermission left, Azure.ResourceManager.KeyVault.Models.SecretPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.SecretPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SecretPermission left, Azure.ResourceManager.KeyVault.Models.SecretPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretProperties
-    {
-        public SecretProperties() { }
-        public Azure.ResourceManager.KeyVault.Models.SecretAttributes Attributes { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
-        public System.Uri SecretUri { get { throw null; } }
-        public string SecretUriWithVersion { get { throw null; } }
-        public string Value { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StoragePermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.StoragePermissions>
+    public readonly partial struct StoragePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.StoragePermission>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public StoragePermissions(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Deletesas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Getsas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Listsas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Regeneratekey { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Set { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Setsas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermissions Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.StoragePermissions other) { throw null; }
+        public StoragePermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Deletesas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Getsas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Listsas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Regeneratekey { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Set { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Setsas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.StoragePermission other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.StoragePermissions left, Azure.ResourceManager.KeyVault.Models.StoragePermissions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.StoragePermissions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.StoragePermissions left, Azure.ResourceManager.KeyVault.Models.StoragePermissions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.StoragePermission left, Azure.ResourceManager.KeyVault.Models.StoragePermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.StoragePermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.StoragePermission left, Azure.ResourceManager.KeyVault.Models.StoragePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData
     {
         public VaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     public partial class VaultAccessPolicyProperties
     {
@@ -1018,15 +751,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class VaultCreateOrUpdateContent
     {
-        public VaultCreateOrUpdateContent(string location, Azure.ResourceManager.KeyVault.Models.VaultProperties properties) { }
-        public string Location { get { throw null; } }
+        public VaultCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.KeyVault.Models.VaultProperties properties) { }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class VaultKeyCreateOrUpdateContent
-    {
-        public VaultKeyCreateOrUpdateContent(Azure.ResourceManager.KeyVault.Models.KeyProperties properties) { }
-        public Azure.ResourceManager.KeyVault.Models.KeyProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VaultPatch

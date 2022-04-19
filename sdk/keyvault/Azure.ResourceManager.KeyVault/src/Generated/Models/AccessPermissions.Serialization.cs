@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static AccessPermissions DeserializeAccessPermissions(JsonElement element)
         {
-            Optional<IList<KeyPermissions>> keys = default;
-            Optional<IList<SecretPermissions>> secrets = default;
-            Optional<IList<CertificatePermissions>> certificates = default;
-            Optional<IList<StoragePermissions>> storage = default;
+            Optional<IList<KeyPermission>> keys = default;
+            Optional<IList<SecretPermission>> secrets = default;
+            Optional<IList<CertificatePermission>> certificates = default;
+            Optional<IList<StoragePermission>> storage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"))
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyPermissions> array = new List<KeyPermissions>();
+                    List<KeyPermission> array = new List<KeyPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KeyPermissions(item.GetString()));
+                        array.Add(new KeyPermission(item.GetString()));
                     }
                     keys = array;
                     continue;
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecretPermissions> array = new List<SecretPermissions>();
+                    List<SecretPermission> array = new List<SecretPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new SecretPermissions(item.GetString()));
+                        array.Add(new SecretPermission(item.GetString()));
                     }
                     secrets = array;
                     continue;
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CertificatePermissions> array = new List<CertificatePermissions>();
+                    List<CertificatePermission> array = new List<CertificatePermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new CertificatePermissions(item.GetString()));
+                        array.Add(new CertificatePermission(item.GetString()));
                     }
                     certificates = array;
                     continue;
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StoragePermissions> array = new List<StoragePermissions>();
+                    List<StoragePermission> array = new List<StoragePermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new StoragePermissions(item.GetString()));
+                        array.Add(new StoragePermission(item.GetString()));
                     }
                     storage = array;
                     continue;
