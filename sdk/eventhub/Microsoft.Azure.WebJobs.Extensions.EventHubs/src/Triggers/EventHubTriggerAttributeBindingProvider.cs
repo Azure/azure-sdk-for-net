@@ -73,8 +73,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 #pragma warning disable 618
             ITriggerBinding binding = BindingFactory.GetTriggerBinding(new EventHubTriggerBindingStrategy(), parameter, _converterManager, createListener);
 #pragma warning restore 618
-            EventHubTriggerBindingWrapper eventHubTriggerBindingWrapper = new EventHubTriggerBindingWrapper(binding);
-            return Task.FromResult(eventHubTriggerBindingWrapper as ITriggerBinding);
+            ITriggerBinding eventHubTriggerBindingWrapper = new EventHubTriggerBindingWrapper(binding);
+            return Task.FromResult(eventHubTriggerBindingWrapper);
         }
     } // end class
 }

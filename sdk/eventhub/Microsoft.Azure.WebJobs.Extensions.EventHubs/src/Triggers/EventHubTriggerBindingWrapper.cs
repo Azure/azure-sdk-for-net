@@ -26,14 +26,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public IReadOnlyDictionary<string, Type> BindingDataContract => _innerTriggerBinding.BindingDataContract;
 
-        public Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
+        public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
-            return _innerTriggerBinding.BindAsync(value, context);
+            return await _innerTriggerBinding.BindAsync(value, context).ConfigureAwait(false);
         }
 
-        public Task<IListener> CreateListenerAsync(ListenerFactoryContext context)
+        public async Task<IListener> CreateListenerAsync(ListenerFactoryContext context)
         {
-            return _innerTriggerBinding.CreateListenerAsync(context);
+            return await _innerTriggerBinding.CreateListenerAsync(context).ConfigureAwait(false);
         }
 
         public ParameterDescriptor ToParameterDescriptor()
