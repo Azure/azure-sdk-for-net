@@ -1365,16 +1365,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
+                int delay = 5000;
+                int maxRetries = 5;
+                int retries = 1;
                 for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
                 {
                     try
                     {
                         await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
                     }
-                    catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429 && retries <= maxRetries)
                     {
-                        await test.Delay(3000);
-                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                        await test.Delay(delay);
+                        delay *= 2;
+                        retries++;
+                        i--;
                     }
                 }
             }
