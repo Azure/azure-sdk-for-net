@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-#region Snippet:Azure_Template_Namespaces
+#region Snippet:Azure_Template
 using Azure.Template.Models;
 #endregion
 using NUnit.Framework;
