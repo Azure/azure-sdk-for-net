@@ -19,6 +19,17 @@ public virtual async Task<Response> PutRequiredOptionalAsync(string requiredPara
     }
     ...
 }
+
+internal HttpMessage CreatePutRequiredOptionalRequest(string requiredParam, string optionalParam, RequestContext context)
+{
+    ...
+    if (optionalParam != null)
+    {
+        uri.AppendQuery("optionalParam", optionalParam, true);
+    }
+    ...
+    return message;
+}
 ```
 
 Generated code in a V2 client with a new optional query parameter:
@@ -33,6 +44,21 @@ public virtual async Task<Response> PutRequiredOptionalAsync(string requiredPara
         return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     }
     ...
+}
+
+internal HttpMessage CreatePutRequiredOptionalRequest(string requiredParam, string optionalParam, string newParameter, RequestContext context)
+{
+    ...
+    if (optionalParam != null)
+    {
+        uri.AppendQuery("optionalParam", optionalParam, true);
+    }
+    if (newParameter != null)
+    {
+        uri.AppendQuery("new_parameter", newParameter, true);
+    }
+    ...
+    return message;
 }
 ```
 
@@ -50,11 +76,81 @@ public virtual async Task<Response> PutRequiredOptionalAsync(string requiredPara
     ...
 }
 ```
+In summary of what this evolution looks like now:
+```C#
+// Generated in V2
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam, string optionalParam = null, string newParameter = null, RequestContext context = null)
+{
+}
+
+// Generated in V2
+internal HttpMessage CreatePutRequiredOptionalRequest(string requiredParam, string optionalParam, string newParameter, RequestContext context)
+{
+}
+
+// Customization method in V2 to be compatible with V1 calls
+public virtual async Task<Response> PutRequiredOptionalAsync(string requiredParam, string optionalParam, RequestContext context)
+{
+}
+```
 
 **Notice:**
-Now the helper method has one more parameter, so we should call it with `newParameter` `null` as `CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);`.
+Now the customization method has one more parameter, so we should call it with `newParameter` `null` as `CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);`.
 
-Now calling `client.PutRequiredOptionalAsync("requiredParam", "optionalParam", ErrorOptions.NoThrow)` with V2 will invoke the manual method we added.
+Now calling `client.PutRequiredOptionalAsync("requiredParam", "optionalParam", ErrorOptions.NoThrow)` with V2 will invoke the customization method we added.
+
+## A method changes a required parameter to optional
+
+Generated code in a V1 client with two required parameters:
+
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string param1, string param2, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(param1, param2, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+
+**Required input is changed to an optional input when it is in the last position (i.e., `param2`).**
+
+This case is safe to generate as:
+
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string param1, string param2 = null, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(param1, param2, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+
+**Required input is changed to an optional input when it is not in the last position (e.g., `param1`).**
+
+In this case, below generated code is not safe to go. The result of this would be that any existing code calling the v1 method as `PutRequiredOptionalAsync(param1, param2);` would end up passing the wrong values to the method parameters, without any warnings from the compiler.
+``` C#
+public virtual async Task<Response> PutRequiredOptionalAsync(string param2, string param1 = null, RequestContext context = null)
+{
+    ...
+    try
+    {
+        using HttpMessage message = CreatePutRequiredOptionalRequest(param2, param1, context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    ...
+}
+```
+In this case, you might need to 
+1. Change the V2 method name to another name (e.g., `PutRequiredOptionalV1Async`).
+2. Put back the V1 method implementation.
 
 ## A new body type is added
 
@@ -124,56 +220,3 @@ public virtual async Task<Response> PostParametersAsync(RequestContent content, 
 **Notice:**
 1. We leverage the `CreatePostParametersRequest` method in V2 but always pass in the `ContentType.ApplicationJson` as the `contentType` parameter in the manual method to make the behavior align with V1.
 2. Whether to add the attribute `[EditorBrowsable(EditorBrowsableState.Never)]` depends on whether you want to discourage callers from using this. E.g., if service add a new ContentType value to improve performance, you should add this attribute so new users wouldn't discover it, while if service has default preference of old ContentType value, you should not add this attribute to make it easy for users to discover the default.
-
-## A method changes a required parameter to optional
-
-Generated code in a V1 client with two required parameters:
-
-``` C#
-public virtual async Task<Response> PutRequiredOptionalAsync(string param1, string param2, RequestContext context = null)
-{
-    ...
-    try
-    {
-        using HttpMessage message = CreatePutRequiredOptionalRequest(param1, param2, context);
-        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-    }
-    ...
-}
-```
-
-**Required input is changed to an optional input when it is in the last position (i.e., `param2`).**
-
-This case is safe to generate as:
-
-``` C#
-public virtual async Task<Response> PutRequiredOptionalAsync(string param1, string param2 = null, RequestContext context = null)
-{
-    ...
-    try
-    {
-        using HttpMessage message = CreatePutRequiredOptionalRequest(param1, param2, context);
-        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-    }
-    ...
-}
-```
-
-**Required input is changed to an optional input when it is not in the last position (e.g., `param1`).**
-
-In this case, below generated code is not safe to go. The result of this would be that any existing code calling the v1 method as `PutRequiredOptionalAsync(param1, param2);` would end up passing the wrong values to the method parameters, without any warnings from the compiler.
-``` C#
-public virtual async Task<Response> PutRequiredOptionalAsync(string param2, string param1 = null, RequestContext context = null)
-{
-    ...
-    try
-    {
-        using HttpMessage message = CreatePutRequiredOptionalRequest(param2, param1, context);
-        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-    }
-    ...
-}
-```
-In this case, you might need to 
-1. Change the V2 method name to another name (e.g., `PutRequiredOptionalAsync`).
-2. Put back the V1 method implementation.
