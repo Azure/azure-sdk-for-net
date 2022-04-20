@@ -225,6 +225,58 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
+        /// Creates a new rule set within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
+        /// Operation Id: AfdRuleSets_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<AfdRuleSetResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _afdRuleSetRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdRuleSetResource>(Response.FromValue(new AfdRuleSetResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new rule set within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
+        /// Operation Id: AfdRuleSets_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<AfdRuleSetResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _afdRuleSetRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<AfdRuleSetResource>(Response.FromValue(new AfdRuleSetResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Checks the quota and actual usage of endpoints under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/usages
         /// Operation Id: AfdRuleSets_ListResourceUsage

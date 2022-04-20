@@ -264,6 +264,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update express route circuit tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCircuitResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update express route circuit tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<ExpressRouteCircuitResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets all the stats from an express route circuit in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stats
         /// Operation Id: ExpressRouteCircuits_GetStats

@@ -188,6 +188,58 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Creates a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ServerDnsAliasResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _serverDnsAliasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerDnsAliasResource>(new ServerDnsAliasOperationSource(Client), _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ServerDnsAliasResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _serverDnsAliasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation<ServerDnsAliasResource>(new ServerDnsAliasOperationSource(Client), _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Acquires server DNS alias from another server.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}/acquire
         /// Operation Id: ServerDnsAliases_Acquire

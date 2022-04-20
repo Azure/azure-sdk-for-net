@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -182,6 +183,58 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to update certain properties of the virtual network resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Update
+        /// </summary>
+        /// <param name="patch"> Resource properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkResource>> UpdateAsync(ResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to update certain properties of the virtual network resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Update
+        /// </summary>
+        /// <param name="patch"> Resource properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<VirtualNetworkResource> Update(ResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new VirtualNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
