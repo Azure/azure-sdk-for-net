@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "FailoverGroups", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "IPv6FirewallRules", "2021-08-01-preview"),
+                new Tuple<string, string, string>("Sql", "IPv6FirewallRules", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "InstanceFailoverGroups", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "InstancePools", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobAgents", "2020-11-01-preview"),
@@ -107,7 +107,6 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RecommendedSensitivityLabels", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2020-11-01-preview"),
-                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ReplicationLinks", "2021-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedDatabases", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2021-05-01-preview"),
@@ -153,7 +152,7 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\vs\\gh_repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "e6960fdb7e58aa8bcca0b208a881452e2e6c55c8";
+      public static readonly String GithubCommidId = "b5d8eef5bf187dc99f1c18e8323b19e0c37a7124";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
