@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
         internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; }
         /// <summary> Resource ID. </summary>
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink.Id;
             set => WebApplicationFirewallPolicyLink.Id = value;

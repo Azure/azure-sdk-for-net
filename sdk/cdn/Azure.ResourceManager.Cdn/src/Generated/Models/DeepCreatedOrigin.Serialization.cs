@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int?> weight = default;
             Optional<bool> enabled = default;
             Optional<string> privateLinkAlias = default;
-            Optional<string> privateLinkResourceId = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
             Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
@@ -204,7 +204,12 @@ namespace Azure.ResourceManager.Cdn.Models
                         }
                         if (property0.NameEquals("privateLinkResourceId"))
                         {
-                            privateLinkResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkLocation"))

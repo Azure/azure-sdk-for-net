@@ -61,10 +61,13 @@ directive:
     where: $.definitions
     transform: >
       $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
+      $.DeepCreatedOriginProperties.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
+      $.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink.properties.id['x-ms-format'] = 'arm-id'
   - from: afdx.json
     where: $.definitions
     transform: >
       $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
+      $.Usage.properties.id['x-ms-format'] = 'arm-id';
   - from: cdn.json
     where: $.definitions.ProfileProperties.properties.frontDoorId
     transform: >
