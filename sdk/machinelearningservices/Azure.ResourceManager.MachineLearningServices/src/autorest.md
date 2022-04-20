@@ -76,4 +76,8 @@ directive:
     where: $.definitions.ComputeInstanceProperties.properties.setupScripts
     transform: >
         $["x-ms-client-name"] = "setupScriptsSettings";
+  - from: swagger-document
+    where: $.definitions.AmlComputeProperties.properties.errors
+    transform: >
+        $["x-nullable"] = true;
 ```
