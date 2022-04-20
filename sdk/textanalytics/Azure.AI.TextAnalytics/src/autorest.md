@@ -59,15 +59,3 @@ directive:
   transform: >
     $["required"] = ["status", "lastUpdateDateTime"]
 ```
-
-### Add x-ms-paths section if not exists
-
-```yaml
-directive:
-  - from: swagger-document
-    where: $
-    transform: >
-      if (!$["x-ms-paths"]) {
-        $["x-ms-paths"] = {}
-      }
-```
