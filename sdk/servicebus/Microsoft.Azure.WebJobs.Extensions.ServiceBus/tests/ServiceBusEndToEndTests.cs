@@ -837,6 +837,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string subject,
                 string label,
                 string correlationId,
+                string sessionId,
                 IDictionary<string, object> applicationProperties,
                 IDictionary<string, object> userProperties,
                 ServiceBusMessageActions messageActions,
@@ -858,6 +859,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
                 Assert.Less(enqueuedTimeUtc, DateTime.UtcNow);
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
+                Assert.IsNull(sessionId);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
@@ -1076,6 +1078,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string[] subjectArray,
                 string[] labelArray,
                 string[] correlationIdArray,
+                string[] sessionIdArray,
                 IDictionary<string, object>[] applicationPropertiesArray,
                 IDictionary<string, object>[] userPropertiesArray,
                 ServiceBusMessageActions messageActions)
@@ -1097,6 +1100,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
                     Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
+                    Assert.IsNull(sessionIdArray[i]);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
