@@ -37,7 +37,9 @@ public partial class MyServiceClient
 }
 ```
 
-We need to organize those clients into two categories: **service clients** and their **subclients**. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service. Please refer to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients) for more detail information.
+As above, one Azure service maybe be exposed to .NET developers as more than one clients that is not easy for .NET developers to discover and find out the right starting point to call Azure services with the Azure SDK. To resolve this, we can export only one service client in its main namespace as the main starting point for developers via [subclient feature](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients).
+
+We organize those clients into two categories: **service clients** and their **subclients**. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service. Please refer to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients) for more detail information.
 
 There are two ways to organize subclients and service client.
 
