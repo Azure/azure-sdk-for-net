@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        public ResourceIdentifier DefaultOriginGroupId
         {
             get => DefaultOriginGroup is null ? default : DefaultOriginGroup.Id;
             set

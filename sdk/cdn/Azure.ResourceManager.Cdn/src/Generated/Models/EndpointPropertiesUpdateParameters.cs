@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; }
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        public ResourceIdentifier DefaultOriginGroupId
         {
             get => DefaultOriginGroup.Id;
             set => DefaultOriginGroup.Id = value;

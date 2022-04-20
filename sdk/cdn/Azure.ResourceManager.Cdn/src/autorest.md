@@ -46,7 +46,6 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
   - AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
-  - ManagedServiceIdentity
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
@@ -58,6 +57,18 @@ override-operation-name:
   LogAnalytics_GetWafLogAnalyticsMetrics: GetWafLogAnalyticsMetrics
   LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
 directive:
+  - from: cdn.json
+    where: $.definitions
+    transform: >
+      $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
+  - from: afdx.json
+    where: $.definitions
+    transform: >
+      $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
+  - from: cdn.json
+    where: $.definitions.ProfileProperties.properties.frontDoorId
+    transform: >
+      $['format'] = "uuid"
   - from: cdnwebapplicationfirewall.json
     where: $.definitions.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules
     transform: $['x-ms-client-name'] = 'RateLimitSettings'
@@ -93,7 +104,8 @@ directive:
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Resource ID."
+                    "description": "Resource ID.",
+                    "x-ms-format": "arm-id"
                 }
             }
         }
@@ -106,7 +118,8 @@ directive:
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Resource ID."
+                    "description": "Resource ID.",
+                    "x-ms-format": "arm-id"
                 }
             }
         }
@@ -114,12 +127,14 @@ directive:
     where: $.definitions.AFDDomainUpdatePropertiesParameters.properties
     transform: >
         $.preValidatedCustomDomainResourceId = {
+            "x-ms-client-name": "preValidatedCustomDomainResource",
             "description": "Resource reference to the Azure resource where custom domain ownership was prevalidated",
             "type": "object",
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Resource ID."
+                    "description": "Resource ID.",
+                    "x-ms-format": "arm-id"
                 }
             }
         }
