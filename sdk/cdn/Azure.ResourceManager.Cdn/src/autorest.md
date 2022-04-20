@@ -61,7 +61,9 @@ directive:
     where: $.definitions
     transform: >
       $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
+      $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-nullable'] = true;
       $.DeepCreatedOriginProperties.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
+      $.DeepCreatedOriginProperties.properties.privateLinkResourceId['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.webApplicationFirewallPolicyLink.properties.id['x-ms-format'] = 'arm-id'
   - from: afdx.json
     where: $.definitions

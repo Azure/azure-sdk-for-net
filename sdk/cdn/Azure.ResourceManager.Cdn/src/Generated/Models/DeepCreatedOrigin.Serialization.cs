@@ -89,8 +89,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
+                if (PrivateLinkResourceId != null)
+                {
+                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WriteStringValue(PrivateLinkResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkResourceId");
+                }
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
@@ -206,7 +213,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                privateLinkResourceId = null;
                                 continue;
                             }
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
