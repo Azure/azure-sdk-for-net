@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the UserArtifactSettings class.
         /// </summary>
-        /// <param name="packageFileName">Optional. The file to rename the
-        /// downloaded package to on the VM. If not present, then the file will
-        /// be called &lt;app name&gt;. This is limited to 4096
-        /// characters.</param>
-        /// <param name="configFileName">Optional. The file to rename the
-        /// downloaded config to on the VM. If not present, then the file will
-        /// be called &lt;app name&gt;_config. This is limited to 4096
-        /// characters.</param>
+        /// <param name="packageFileName">Optional. The name to assign the
+        /// downloaded package file on the VM. This is limited to 4096
+        /// characters. If not specified, the package file will be named the
+        /// same as the Gallery Application name.</param>
+        /// <param name="configFileName">Optional. The name to assign the
+        /// downloaded config file on the VM. This is limited to 4096
+        /// characters. If not specified, the config file will be named the
+        /// Gallery Application name appended with "_config".</param>
         public UserArtifactSettings(string packageFileName = default(string), string configFileName = default(string))
         {
             PackageFileName = packageFileName;
@@ -51,17 +51,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets optional. The file to rename the downloaded package to
-        /// on the VM. If not present, then the file will be called &amp;lt;app
-        /// name&amp;gt;. This is limited to 4096 characters.
+        /// Gets or sets optional. The name to assign the downloaded package
+        /// file on the VM. This is limited to 4096 characters. If not
+        /// specified, the package file will be named the same as the Gallery
+        /// Application name.
         /// </summary>
         [JsonProperty(PropertyName = "packageFileName")]
         public string PackageFileName { get; set; }
 
         /// <summary>
-        /// Gets or sets optional. The file to rename the downloaded config to
-        /// on the VM. If not present, then the file will be called &amp;lt;app
-        /// name&amp;gt;_config. This is limited to 4096 characters.
+        /// Gets or sets optional. The name to assign the downloaded config
+        /// file on the VM. This is limited to 4096 characters. If not
+        /// specified, the config file will be named the Gallery Application
+        /// name appended with "_config".
         /// </summary>
         [JsonProperty(PropertyName = "configFileName")]
         public string ConfigFileName { get; set; }
