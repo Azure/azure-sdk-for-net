@@ -783,16 +783,6 @@ namespace Compute.Tests
                         Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
                         Remove = "del C:\\package "
                     },
-                    Settings = new UserArtifactSettings
-                    {
-                        PackageFileName = "test.zip",
-                        ConfigFileName = "config.cfg"
-                    },
-                    AdvancedSettings = new Dictionary<string, string>()
-                    {
-                        { "cacheLimit", "500" },
-                        { "user", "root"}
-                    },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
@@ -841,16 +831,6 @@ namespace Compute.Tests
             Assert.NotNull(applicationVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(applicationVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(applicationVersionOut.Id);
-            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.PackageFileName, applicationVersionOut.PublishingProfile.Settings.PackageFileName);
-            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.ConfigFileName, applicationVersionOut.PublishingProfile.Settings.ConfigFileName);
-            IDictionary<string, string> advancedSettingsIn = applicationVersionIn.PublishingProfile.AdvancedSettings;
-            IDictionary<string, string> advancedSettingsOut = applicationVersionOut.PublishingProfile.AdvancedSettings;
-            Assert.Equal(advancedSettingsIn.Count, advancedSettingsOut.Count);
-            foreach(KeyValuePair<string, string> kvp in advancedSettingsIn)
-            {
-                Assert.True(advancedSettingsOut.ContainsKey(kvp.Key));
-                Assert.Equal(kvp.Value, advancedSettingsOut[kvp.Key]);
-            }
         }
     }
 }
