@@ -105,7 +105,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("JSON");
             Assert.That(
                 async () => await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]
@@ -117,7 +118,30 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("JSON");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
+        }
+
+        [RecordedTest]
+        public void GetSchemaForNonexistentSchemaIdReturnsItemNotFoundErrorCode()
+        {
+            var client = CreateClient();
+            Assert.That(
+                async () => await client.GetSchemaAsync(Recording.Random.NewGuid().ToString()),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
+        }
+
+        [RecordedTest]
+        public void GetSchemaPropertiesForNonexistentSchemaReturnsItemNotFoundErrorCode()
+        {
+            var client = CreateClient();
+            var schemaName = GenerateSchemaName();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            Assert.That(
+                async () => await client.GetSchemaPropertiesAsync(schemaName, groupName, SchemaContent, SchemaFormat.Avro),
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
 
         private void AssertSchema(SchemaRegistrySchema schema, string schemaName)

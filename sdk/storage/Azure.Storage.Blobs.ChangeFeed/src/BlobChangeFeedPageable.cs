@@ -19,19 +19,25 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
+            long? maxTransferSize,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default)
         {
-            _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
+            _changeFeedFactory = new ChangeFeedFactory(
+                blobServiceClient,
+                maxTransferSize);
             _startTime = startTime;
             _endTime = endTime;
         }
 
         internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
+            long? maxTransferSize,
             string continuation)
         {
-            _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
+            _changeFeedFactory = new ChangeFeedFactory(
+                blobServiceClient,
+                maxTransferSize);
             _continuation = continuation;
         }
 
