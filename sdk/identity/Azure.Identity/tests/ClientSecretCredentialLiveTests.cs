@@ -12,7 +12,7 @@ namespace Azure.Identity.Tests
 {
     public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
-        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
+        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
             var secret = TestEnvironment.ServicePrincipalClientSecret;
 
             var cache = new MemoryTokenCache();
-            var options = InstrumentClientOptions(new ClientSecretCredentialOptions() { TokenCachePersistenceOptions = cache });
+            var options = InstrumentClientOptions(new ClientSecretCredentialOptions() { TokenCachePersistenceOptions = cache, RegionalAuthority = RegionalAuthority.USWest2 });
 
             var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
