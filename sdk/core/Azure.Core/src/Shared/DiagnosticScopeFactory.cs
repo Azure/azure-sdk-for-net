@@ -16,11 +16,13 @@ namespace Azure.Core.Pipeline
         private static Dictionary<string, DiagnosticListener>? _listeners;
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
+        private readonly bool _suppressNestedClientScopes;
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled)
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientScopes = true)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
+            _suppressNestedClientScopes = suppressNestedClientScopes;
             if (IsActivityEnabled)
             {
                 var listeners = LazyInitializer.EnsureInitialized(ref _listeners);
@@ -44,7 +46,7 @@ namespace Azure.Core.Pipeline
             {
                 return default;
             }
-            var scope = new DiagnosticScope(_source.Name, name, _source, kind);
+            var scope = new DiagnosticScope(_source.Name, name, _source, kind, _suppressNestedClientScopes);
 
             if (_resourceProviderNamespace != null)
             {

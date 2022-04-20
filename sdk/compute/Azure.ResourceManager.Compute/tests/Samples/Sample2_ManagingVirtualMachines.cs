@@ -41,15 +41,12 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     LinuxConfiguration = new LinuxConfiguration()
                     {
                         DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
-                        {
-                            PublicKeys = {
-                    new SshPublicKeyInfo()
-                    {
-                        Path = $"/home/adminUser/.ssh/authorized_keys",
-                        KeyData = "<value of the public ssh key>",
-                    }
-                }
+                        SshPublicKeys = {
+                            new SshPublicKeyInfo()
+                            {
+                                Path = $"/home/adminUser/.ssh/authorized_keys",
+                                KeyData = "<value of the public ssh key>",
+                            }
                         }
                     }
                 },

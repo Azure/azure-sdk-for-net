@@ -390,8 +390,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any());
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose));
+            }
+        }
+
+        [Test]
+        public async Task DoesNotLogStoppingAcceptSessionCanceledAsError()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient();
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
+
+                processor.ProcessMessageAsync += args => Task.CompletedTask;
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                await processor.StartProcessingAsync();
+
+                // wait less than the try timeout to ensure that the stopping happens during ongoing accept attempts
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                await processor.StopProcessingAsync();
+
+                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent).Any(e => e.Level == EventLevel.Verbose));
             }
         }
 

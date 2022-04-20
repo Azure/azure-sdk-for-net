@@ -6,7 +6,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/d29e6eb4894005c52e67cb4b5ac3faf031113e7d/specification/keyvault/resource-manager/readme.md
 tag: package-2021-10
 clear-output-folder: true
 skip-csproj: true
@@ -39,7 +38,51 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+prompted-enum-values: Default
 directive:
+  - from: swagger-document
+    where: $.paths
+    transform: delete $['/subscriptions/{subscriptionId}/resources']
+  - from: swagger-document
+    where: $.definitions.Sku.properties.family
+    transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $.definitions.ManagedHsmSku.properties.family
+    transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $.definitions.CheckNameAvailabilityResult.properties.reason
+    transform: >
+      $["x-ms-enum"] = {
+        "modelAsString": false,
+        "name": "NameAvailabilityReason"
+      }
+  - from: swagger-document
+    where: $.definitions.Permissions.properties
+    transform: >
+      $.keys.items["x-ms-enum"]["name"] = "KeyPermission";
+      $.secrets.items["x-ms-enum"]["name"] = "SecretPermission";
+      $.certificates.items["x-ms-enum"]["name"] = "CertificatePermission";
+      $.storage.items["x-ms-enum"]["name"] = "StoragePermission";
+  - from: swagger-document
+    where: "$.definitions.Resource"
+    transform: >
+      $["x-ms-client-name"] = "KeyVaultResourceData";
+  - from: managedHsm.json
+    where: "$.definitions"
+    transform: >
+      $.ManagedHsmResource["x-ms-client-name"] = "KeyVaultTrackedResourceData";
+      $.MHSMIPRule.properties.value["x-ms-client-name"] = "AddressRange";
+      $.ManagedHsmResource.properties.location["x-ms-format"] = "azure-location"; 
+      $.DeletedManagedHsmProperties.properties.location["x-ms-format"] = "azure-location"; 
+  - from: keyvault.json
+    where: "$.definitions"
+    transform: >
+      $.IPRule.properties.value["x-ms-client-name"] = "AddressRange";
+      $.DeletedVaultProperties.properties.location["x-ms-format"] = "azure-location";
+      $.VaultCreateOrUpdateParameters.properties.location["x-ms-format"] = "azure-location"; 
+      $.VaultAccessPolicyParameters.properties.location["x-ms-format"] = "azure-location"; 
+      $.Vault.properties.location["x-ms-format"] = "azure-location"; 
+      $.Resource.properties.location["x-ms-format"] = "azure-location"; 
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule
@@ -49,24 +92,17 @@ directive:
   - rename-model:
       from: Permissions
       to: AccessPermissions
-  - from: swagger-document
-    where: $.paths
-    transform: delete $['/subscriptions/{subscriptionId}/resources']
-  - from: swagger-document
-    where: $['definitions']['Sku']['properties']['family']
-    transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: $['definitions']['ManagedHsmSku']['properties']['family']
-    transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: "$.definitions.CheckNameAvailabilityResult.properties.reason"
-    transform: >
-      $["x-ms-enum"] = {
-        "modelAsString": false,
-        "name": "NameAvailabilityReason"
-      }
-  - from: swagger-document
-    where: "$.definitions.Resource"
-    transform: >
-      $["x-ms-client-name"] = "KeyVaultResourceData";
+
+```
+
+### Tag: package-2021-10
+
+These settings apply only when `--tag=package-2021-10` is specified on the command line.
+
+```yaml $(tag) == 'package-2021-10'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/keyvault.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/managedHsm.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/providers.json
 ```

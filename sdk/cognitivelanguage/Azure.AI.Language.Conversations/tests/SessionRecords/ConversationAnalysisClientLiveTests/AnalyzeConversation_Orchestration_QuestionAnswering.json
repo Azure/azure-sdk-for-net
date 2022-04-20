@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "219",
+        "Content-Length": "218",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-81b8be2a297ace40b1c50882446b7f5a-f7390c240fb8bb4e-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "8c99f1a1afef1aca0720a6d29b996a8d",
+        "traceparent": "00-3b53c50833673343b1ce6c3ee4c276f8-30375f668d20b941-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "ea1ac13713320719222b613ee359cbfc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,23 +23,23 @@
           }
         },
         "parameters": {
-          "projectName": "OrchestrationProject",
-          "deploymentName": "ShabanTest"
+          "projectName": "OrchScriptDeployed1",
+          "deploymentName": "production"
         },
         "kind": "CustomConversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "10471ccd-199a-4e26-bb24-d8f032c2f3ac",
+        "apim-request-id": "15e3db90-5ad7-4d50-870b-cf87dfc7c7bb",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Apr 2022 12:33:56 GMT",
+        "Date": "Sun, 17 Apr 2022 13:27:38 GMT",
         "Pragma": "no-cache",
-        "request-id": "10471ccd-199a-4e26-bb24-d8f032c2f3ac",
+        "request-id": "15e3db90-5ad7-4d50-870b-cf87dfc7c7bb",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "203"
+        "x-envoy-upstream-service-time": "652"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -50,7 +50,7 @@
             "projectKind": "workflow",
             "intents": {
               "ChitChat-QnA": {
-                "confidenceScore": 0.99826396,
+                "confidenceScore": 0.9983183,
                 "targetKind": "question_answering",
                 "result": {
                   "answers": [
@@ -104,16 +104,16 @@
                   ]
                 }
               },
-              "EmailIntent": {
-                "confidenceScore": 0.7892474,
-                "targetKind": "conversation"
-              },
               "RestaurantIntent": {
-                "confidenceScore": 0.53074795,
+                "confidenceScore": 0.5251951,
                 "targetKind": "luis"
               },
+              "EmailIntent": {
+                "confidenceScore": 0.20227265,
+                "targetKind": "conversation"
+              },
               "None": {
-                "confidenceScore": 0.16826314,
+                "confidenceScore": 0.16831747,
                 "targetKind": "non_linked"
               }
             }
@@ -123,10 +123,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "1579731002"
+    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
+    "RandomSeed": "2118181063"
   }
 }
