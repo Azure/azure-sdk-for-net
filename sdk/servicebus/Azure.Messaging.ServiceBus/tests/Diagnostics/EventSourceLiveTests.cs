@@ -315,7 +315,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 Task ExceptionHandler(ProcessErrorEventArgs args)
                 {
-                    throw new Exception();
+                    if (args.ErrorSource == ServiceBusErrorSource.ProcessMessageCallback)
+                    {
+                        throw new Exception();
+                    }
+
+                    return Task.CompletedTask;
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
