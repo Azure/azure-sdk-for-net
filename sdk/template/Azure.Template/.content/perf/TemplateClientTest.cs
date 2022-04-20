@@ -10,9 +10,27 @@ using CommandLine;
 
 namespace Azure.Template.Perf
 {
-    public class TemplateClientTest : PerfTest<TemplateClientTest.TemplateClientOptions>
+    public class TemplateClientTest : PerfTest<TemplateClientTest.TemplateClientPerfOptions>
     {
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
+        /* please refer to PerfSampleLink to write perf test. */
 
+        public TemplateClientTest(TemplateClientPerfOptions options) : base(options)
+        {
+        }
+        public class TemplateClientPerfOptions : PerfOptions
+        {
+        }
+
+        public override void Run(CancellationToken cancellationToken)
+        {
+        }
+
+        public override async Task RunAsync(CancellationToken cancellationToken)
+        {
+            await Task.Run(() =>
+            {
+                Console.WriteLine("exec some async operation");
+            });
+        }
     }
 }

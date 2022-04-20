@@ -18,7 +18,7 @@ namespace Azure.Template.Tests
         {
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
+        /* please refer to TestSampleLink to write tests. */
 
         [RecordedTest]
         public void TestOperation()

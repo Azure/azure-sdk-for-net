@@ -31,8 +31,11 @@
             "tests/**/*.cs",
             "perf/**/*.cs",
             "stress/**/*.cs",
-            "src/**/*",
-            "tests/SessionRecords/**/*"
+            "src/**/*.cs",
+            "src/**/*.md",
+            "src/swagger/**/*",
+            "tests/SessionRecords/**/*",
+            ".vs/**/*"
           ]
         }
       ]
@@ -111,6 +114,27 @@
       "isRequired": false,
       "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
       "defaultValue": "false"
+    },
+    "perfSampleLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs",
+      "replaces": "PerfSampleLink"
+    },
+    "stressSampleLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/stress/TemplateClientTest.cs",
+      "replaces": "StressSampleLink"
+    },
+    "testSampleLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs",
+      "replaces": "TestSampleLink"
     },
     "ServiceName": {
       "type": "derived",

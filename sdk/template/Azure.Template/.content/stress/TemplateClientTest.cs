@@ -10,13 +10,27 @@ using CommandLine;
 
 namespace Azure.Template.Stress
 {
-    public class TemplateClientTest : StressTest<TemplateClientTest.TemplateClientOptions, TemplateClientTest.TemplateClientMetrics>
+    public class TemplateClientTest : StressTest<TemplateClientTest.TemplateClientStressOptions, TemplateClientTest.TemplateClientStressMetrics>
     {
-        public TemplateClientTest(TemplateClientOptions options, TemplateClientMetrics metrics) : base(options, metrics)
+        public TemplateClientTest(TemplateClientStressOptions options, TemplateClientStressMetrics metrics) : base(options, metrics)
         {
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/stress/TemplateClientTest.cs to write stress tests. */
-        
+        /* please refer to StressSampleLink to write stress tests. */
+
+        public override async Task RunAsync(CancellationToken cancellationToken)
+        {
+            await Task.Run(() =>
+            {
+                Console.WriteLine("exec some async operation");
+            });
+        }
+        public class TemplateClientStressMetrics : StressMetrics
+        {
+        }
+
+        public class TemplateClientStressOptions : StressOptions
+        {
+        }
     }
 }

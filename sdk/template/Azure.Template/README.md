@@ -79,9 +79,9 @@ The `GetSecret` method retrieves a secret from the service.
 
 ```C# Snippet:Azure_Template_GetSecret
 string endpoint = "https://myvault.vault.azure.net";
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
-SecretBundle secret = client.GetSecret("TestSecret");
+SecretBundle secret = client.GetSecretValue("TestSecret");
 
 Console.WriteLine(secret.Value);
 ```Python
