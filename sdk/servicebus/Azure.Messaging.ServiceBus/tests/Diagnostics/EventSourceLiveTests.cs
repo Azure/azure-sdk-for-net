@@ -375,7 +375,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateNoRetryClient(5);
+                await using var client = CreateClient(tryTimeout: 5, maxRetries: 1);
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
                 processor.ProcessMessageAsync += args => Task.CompletedTask;
@@ -383,14 +383,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await processor.StartProcessingAsync();
 
-                // wait twice as long as the try timeout to ensure that the Accept session will timeout
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                // wait long enough to ensure that the Accept session will timeout accounting for retries
+                await Task.Delay(TimeSpan.FromSeconds(20));
 
                 await processor.StopProcessingAsync();
 
                 Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
                 Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose));
+                Assert.True(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionVerboseEvent).Any(e => e.Level == EventLevel.Verbose));
+                Assert.False(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionEvent).Any());
             }
         }
 
