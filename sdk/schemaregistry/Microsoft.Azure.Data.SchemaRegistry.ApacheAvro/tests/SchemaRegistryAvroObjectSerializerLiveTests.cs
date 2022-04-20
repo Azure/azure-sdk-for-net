@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
-                Throws.InstanceOf<InvalidOperationException>()
+                Throws.InstanceOf<Exception>()
                     .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
         }
 
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.That(
                 async () => await serializer.SerializeAsync<MessageContent, InvalidAvroModel>(invalid),
-                Throws.InstanceOf<FormatException>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
+                Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
         [RecordedTest]
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             Assert.That(
                 async () => await serializer.DeserializeAsync<InvalidAvroModel>(content),
-                Throws.InstanceOf<FormatException>()
+                Throws.InstanceOf<Exception>()
                     .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 

@@ -78,7 +78,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         #region Serialize
-
         /// <summary>
         /// Serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
@@ -87,6 +86,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TEnvelope">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
+        ///   It can also occur if the <typeparamref name="TEnvelope"/> type does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public TEnvelope Serialize<TEnvelope, TData>(
             TData data,
             CancellationToken cancellationToken = default) where TEnvelope : MessageContent, new()
@@ -100,6 +113,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TEnvelope">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
+        ///   It can also occur if the <typeparamref name="TEnvelope"/> type does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public async ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(
             TData data,
             CancellationToken cancellationToken = default) where TEnvelope : MessageContent, new()
@@ -116,6 +143,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// have a parameterless constructor.
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
+        ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public MessageContent Serialize(
             object data,
             Type dataType = default,
@@ -134,6 +175,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// have a parameterless constructor.
         /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
+        ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public async ValueTask<MessageContent> SerializeAsync(
             object data,
             Type dataType = default,
@@ -207,7 +262,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new FormatException(
+                throw new Exception(
                     "An error occurred while attempting to parse the schema to use when serializing to Avro. " +
                     $"Make sure that the schema represents valid Avro.",
                     ex);
@@ -215,7 +270,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             catch (AvroException ex)
             {
-                throw new InvalidOperationException(
+                throw new Exception(
                     "An error occurred while attempting to serialize to Avro. Make sure that the data you are " +
                     "attempting to serialize corresponds to the schema being used to serialize.",
                     ex);
@@ -293,8 +348,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
-        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to deserialize non-Avro data.</exception>
+        /// <exception cref="FormatException">
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   the Schema Registry schema ID.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <typeparamref name="TData"/> type is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public TData Deserialize<TData>(
             MessageContent content,
             CancellationToken cancellationToken = default)
@@ -307,8 +374,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
-        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to deserialize non-Avro data.</exception>
+        /// <exception cref="FormatException">
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   the Schema Registry schema ID.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <typeparamref name="TData"/> type is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public async ValueTask<TData> DeserializeAsync<TData>(
             MessageContent content,
             CancellationToken cancellationToken = default)
@@ -321,8 +400,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="dataType">The type to deserialize the message data into.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
-        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to deserialize non-Avro data.</exception>
+        /// <exception cref="FormatException">
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   the Schema Registry schema ID.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public object Deserialize(
             MessageContent content,
             Type dataType,
@@ -336,8 +427,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="dataType">The type to deserialize the message data into.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
-        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to deserialize non-Avro data.</exception>
+        /// <exception cref="FormatException">
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   the Schema Registry schema ID.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        /// </exception>
         public async ValueTask<object> DeserializeAsync(
             MessageContent content,
             Type dataType,
@@ -357,7 +460,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             string[] contentTypeArray = contentType.ToString().Split('+');
             if (contentTypeArray.Length != 2 || contentTypeArray[0] != AvroMimeType)
             {
-                throw new FormatException("Content type was not in the expected format of 'avro/binary+schema-id'");
+                throw new FormatException("Content type was not in the expected format of 'avro/binary+schema-id', where 'schema-id' " +
+                                          "is the Schema Registry schema ID.");
             }
 
             string schemaId = contentTypeArray[1];
@@ -397,7 +501,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new FormatException(
+                throw new Exception(
                     $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
                     $"Make sure that the schema represents valid Avro.",
                     ex);
@@ -419,7 +523,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new FormatException(
+                throw new Exception(
                     "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
                     "Make sure that the schema represents valid Avro.",
                     ex);
@@ -433,7 +537,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (AvroException ex)
             {
-                throw new InvalidOperationException(
+                throw new Exception(
                     "An error occurred while attempting to deserialize " +
                     $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
                     $"to serialize the data. Please ensure that the schemas are compatible.",
@@ -466,15 +570,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private static DatumReader<object> GetReader(Schema writerSchema, Schema readerSchema, SupportedType supportedType)
         {
-            switch (supportedType)
+            if (supportedType == SupportedType.SpecificRecord)
             {
-                case SupportedType.SpecificRecord:
-                    return new SpecificDatumReader<object>(writerSchema, readerSchema);
-                case SupportedType.GenericRecord:
-                    return new GenericDatumReader<object>(writerSchema, readerSchema);
-                default:
-                    throw new ArgumentException($"Invalid supported type value: {supportedType}");
+                return new SpecificDatumReader<object>(writerSchema, readerSchema);
             }
+
+            return new GenericDatumReader<object>(writerSchema, readerSchema);
         }
         #endregion
     }
