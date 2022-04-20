@@ -21,7 +21,7 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecretBundle>> GetSecretValueAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValueAsync");
+            using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
             scope.Start();
 
             try

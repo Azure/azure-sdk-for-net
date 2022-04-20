@@ -30,23 +30,13 @@ namespace Azure.Template.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetSecretAsync()
+        public async Task CanGetSecret()
         {
             var client = CreateClient();
 
             var secret = await client.GetSecretValueAsync("TestSecret");
 
             Assert.AreEqual("Very secret value", secret.Value.Value);
-        }
-
-        [RecordedTest]
-        public void CanGetSecret()
-        {
-            var client = CreateClient();
-
-            var secret = client.GetSecretValueAsync("TestSecret");
-
-            Assert.AreEqual("Very secret value", secret);
         }
     }
 }
