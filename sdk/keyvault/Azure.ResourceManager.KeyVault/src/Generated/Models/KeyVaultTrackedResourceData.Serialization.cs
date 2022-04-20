@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmResource : IUtf8JsonSerializable
+    public partial class KeyVaultTrackedResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmResource DeserializeManagedHsmResource(JsonElement element)
+        internal static KeyVaultTrackedResourceData DeserializeKeyVaultTrackedResourceData(JsonElement element)
         {
             Optional<ManagedHsmSku> sku = default;
             IDictionary<string, string> tags = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmResource(id, name, type, systemData, tags, location, sku.Value);
+            return new KeyVaultTrackedResourceData(id, name, type, systemData, tags, location, sku.Value);
         }
     }
 }

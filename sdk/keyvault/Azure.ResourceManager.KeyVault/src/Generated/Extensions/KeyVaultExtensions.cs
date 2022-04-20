@@ -341,44 +341,6 @@ namespace Azure.ResourceManager.KeyVault
             return resourceGroupResource.GetManagedHsms().Get(name, cancellationToken);
         }
 
-        #region VaultKeyResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VaultKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultKeyResource.CreateResourceIdentifier" /> to create a <see cref="VaultKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultKeyResource" /> object. </returns>
-        public static VaultKeyResource GetVaultKeyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VaultKeyResource.ValidateResourceId(id);
-                return new VaultKeyResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VaultKeyVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VaultKeyVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultKeyVersionResource.CreateResourceIdentifier" /> to create a <see cref="VaultKeyVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultKeyVersionResource" /> object. </returns>
-        public static VaultKeyVersionResource GetVaultKeyVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VaultKeyVersionResource.ValidateResourceId(id);
-                return new VaultKeyVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region VaultResource
         /// <summary>
         /// Gets an object representing a <see cref="VaultResource" /> along with the instance operations that can be performed on it but with no data.
@@ -488,25 +450,6 @@ namespace Azure.ResourceManager.KeyVault
             {
                 MhsmPrivateEndpointConnectionResource.ValidateResourceId(id);
                 return new MhsmPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SecretResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecretResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecretResource.CreateResourceIdentifier" /> to create a <see cref="SecretResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecretResource" /> object. </returns>
-        public static SecretResource GetSecretResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SecretResource.ValidateResourceId(id);
-                return new SecretResource(client, id);
             }
             );
         }

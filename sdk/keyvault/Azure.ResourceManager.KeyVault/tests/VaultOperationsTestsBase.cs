@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         public string ObjectId { get; set; }
         //Could not use TestEnvironment.Location since Location is got dynamically
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
         public AccessPolicyEntry AccessPolicy { get; internal set; }
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            Location = "westcentralus";
+            Location = Azure.Core.AzureLocation.CanadaCentral;
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedVaults();
@@ -83,10 +84,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             var permissions = new AccessPermissions
             {
-                Keys = { new KeyPermissions("all") },
-                Secrets = { new SecretPermissions("all") },
-                Certificates = { new CertificatePermissions("all") },
-                Storage = { new StoragePermissions("all") },
+                Keys = { new KeyPermission("all") },
+                Secrets = { new SecretPermission("all") },
+                Certificates = { new CertificatePermission("all") },
+                Storage = { new StoragePermission("all") },
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 

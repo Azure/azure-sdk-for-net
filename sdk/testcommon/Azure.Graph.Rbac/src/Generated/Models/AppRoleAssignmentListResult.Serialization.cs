@@ -8,16 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.Graph.Rbac.Models
 {
-    internal partial class KeyListResult
+    internal partial class AppRoleAssignmentListResult
     {
-        internal static KeyListResult DeserializeKeyListResult(JsonElement element)
+        internal static AppRoleAssignmentListResult DeserializeAppRoleAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyData>> value = default;
-            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AppRoleAssignment>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -27,21 +26,21 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyData> array = new List<KeyData>();
+                    List<AppRoleAssignment> array = new List<AppRoleAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyData.DeserializeKeyData(item));
+                        array.Add(AppRoleAssignment.DeserializeAppRoleAssignment(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("odata.nextLink"))
                 {
-                    nextLink = property.Value.GetString();
+                    odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new KeyListResult(Optional.ToList(value), nextLink.Value);
+            return new AppRoleAssignmentListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

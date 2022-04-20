@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.KeyVault.Models;
 using NUnit.Framework;
@@ -149,7 +150,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26841")]
         [PlaybackOnly("One location only support one MHSM")]
         [RecordedTest]
         public async Task ManagedHsmListKeys()
@@ -185,8 +185,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             foreach (var item in vaultList)
             {
                 await item.DeleteAsync(WaitUntil.Completed);
-                // Purge need to use loaction parameter. Update them later.
-                //await item.PurgeDeletedAsync();
             }
         }
 
@@ -233,7 +231,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string expectedResourceGroupName,
             string expectedSubId,
             Guid expectedTenantId,
-            string expectedLocation,
+            AzureLocation expectedLocation,
             ManagedHsmSkuFamily expectedSkuFamily,
             ManagedHsmSkuName expectedSkuName,
             CreateMode expectedCreateMode,
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string expectedHsmUri = $"https://{expectedVaultName}.managedhsm.azure.net/";
 
             Assert.AreEqual(expectedResourceId, managedHsmData.Id.ToString());
-            Assert.AreEqual(expectedLocation, managedHsmData.Location.ToString());
+            Assert.AreEqual(expectedLocation.ToString(), managedHsmData.Location.ToString());
             Assert.AreEqual(expectedTenantId, managedHsmData.Properties.TenantId);
             Assert.AreEqual(expectedVaultName, managedHsmData.Name);
             Assert.AreEqual(expectedSkuFamily, managedHsmData.Sku.Family);

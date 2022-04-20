@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 title: Rbac
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7fe24f57e1d0e3560535be0730db43feb3239a36/specification/graphrbac/data-plane/readme.md
-generation1-convenience-client: true
+require: https://github.com/Azure/azure-rest-api-specs/blob/572d71d6c4134db8dd00055d9cd3f76b2d414a7b/specification/graphrbac/data-plane/readme.md
 skip-semantics-validation: true
+
 ```
