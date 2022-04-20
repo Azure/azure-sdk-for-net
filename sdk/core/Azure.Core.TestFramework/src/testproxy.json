@@ -149,6 +149,12 @@
             "type": "string"
           },
           {
+            "name": "x-recording-skip",
+            "in": "header",
+            "description": "Set to request-response to skip recording this session.",
+            "type": "string"
+          },
+          {
             "name": "variables",
             "in": "body",
             "description": "Variables for the recording.",
@@ -237,7 +243,7 @@
     "/admin/addsanitizer?overload=HeaderRegexSanitizer": {
       "post": {
         "summary": "Add a sanitizer.",
-        "description": "Stop recording for a test.",
+        "description": "Add header sanitizer.",
         "operationId": "TestProxy_AddHeaderSanitizer",
         "consumes": [
           "application/json"

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "260",
+        "Content-Length": "259",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "a6135e7c039851a09b4f80cc6f81000d",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "359c042e250b45dedd0131701a9af744",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,23 +22,23 @@
           }
         },
         "parameters": {
-          "projectName": "OrchestrationProject",
-          "deploymentName": "ShabanTest"
+          "projectName": "OrchScriptDeployed1",
+          "deploymentName": "production"
         },
         "kind": "CustomConversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "afad13d0-b587-45e3-a39d-af4e31cf4c9d",
+        "apim-request-id": "2443c096-d636-4034-a0cb-34caeed752f6",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Apr 2022 12:33:57 GMT",
+        "Date": "Sun, 17 Apr 2022 13:27:41 GMT",
         "Pragma": "no-cache",
-        "request-id": "afad13d0-b587-45e3-a39d-af4e31cf4c9d",
+        "request-id": "2443c096-d636-4034-a0cb-34caeed752f6",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "120"
+        "x-envoy-upstream-service-time": "128"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -49,85 +49,66 @@
             "projectKind": "workflow",
             "intents": {
               "EmailIntent": {
-                "confidenceScore": 0.9318673,
+                "confidenceScore": 0.78807205,
                 "targetKind": "conversation",
                 "result": {
                   "query": "Send an email to Carol about the tomorrow\u0027s demo",
                   "prediction": {
                     "intents": [
                       {
-                        "category": "SendEmail",
-                        "confidenceScore": 0.99994856
+                        "category": "Setup",
+                        "confidenceScore": 0.6254007
                       },
                       {
-                        "category": "Forward",
-                        "confidenceScore": 3.8603193E-05
+                        "category": "Play",
+                        "confidenceScore": 0.20336723
                       },
                       {
-                        "category": "AddFlag",
-                        "confidenceScore": 3.830757E-06
+                        "category": "Send",
+                        "confidenceScore": 0.13618475
                       },
                       {
-                        "category": "SearchMessages",
-                        "confidenceScore": 2.8891448E-06
+                        "category": "Read",
+                        "confidenceScore": 0.01904324
                       },
                       {
-                        "category": "Confirm",
-                        "confidenceScore": 2.1230276E-06
+                        "category": "Call",
+                        "confidenceScore": 0.00859508
                       },
                       {
-                        "category": "Reply",
-                        "confidenceScore": 1.506443E-06
+                        "category": "Set",
+                        "confidenceScore": 0.0033787973
                       },
                       {
-                        "category": "AddMore",
-                        "confidenceScore": 9.303157E-07
+                        "category": "Find",
+                        "confidenceScore": 0.0028723886
                       },
                       {
-                        "category": "CheckMessages",
-                        "confidenceScore": 8.9035467E-07
-                      },
-                      {
-                        "category": "QueryLastText",
-                        "confidenceScore": 2.485766E-07
-                      },
-                      {
-                        "category": "Cancel",
-                        "confidenceScore": 1.8692687E-07
-                      },
-                      {
-                        "category": "ShowNext",
-                        "confidenceScore": 7.9404124E-08
-                      },
-                      {
-                        "category": "ReadAloud",
-                        "confidenceScore": 7.020071E-08
+                        "category": "Open",
+                        "confidenceScore": 0.0010411387
                       },
                       {
                         "category": "None",
-                        "confidenceScore": 5.6591706E-08
-                      },
-                      {
-                        "category": "Delete",
-                        "confidenceScore": 2.9716455E-08
-                      },
-                      {
-                        "category": "ShowPrevious",
-                        "confidenceScore": 1.6835317E-08
+                        "confidenceScore": 0.00011662581
                       }
                     ],
                     "entities": [
                       {
-                        "category": "ContactName",
+                        "category": "Contact",
                         "text": "Carol",
                         "offset": 17,
                         "length": 5,
                         "confidenceScore": 1,
                         "resolutions": [],
-                        "extraInformation": []
+                        "extraInformation": [
+                          {
+                            "extraInformationKind": "EntitySubtype",
+                            "value": "person.name"
+                          }
+                        ]
                       },
                       {
-                        "category": "Date",
+                        "category": "MeetingDate",
                         "text": "tomorrow",
                         "offset": 33,
                         "length": 8,
@@ -136,8 +117,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-04-06",
-                            "value": "2022-04-06"
+                            "timex": "2022-04-18",
+                            "value": "2022-04-18"
                           }
                         ],
                         "extraInformation": [
@@ -146,53 +127,23 @@
                             "value": "datetime.date"
                           }
                         ]
-                      },
-                      {
-                        "category": "StartTime",
-                        "text": "tomorrow",
-                        "offset": 33,
-                        "length": 8,
-                        "confidenceScore": 1,
-                        "resolutions": [
-                          {
-                            "resolutionKind": "DateTimeResolution",
-                            "dateTimeSubKind": "Date",
-                            "timex": "2022-04-06",
-                            "value": "2022-04-06"
-                          }
-                        ],
-                        "extraInformation": [
-                          {
-                            "extraInformationKind": "EntitySubtype",
-                            "value": "datetime.date"
-                          }
-                        ]
-                      },
-                      {
-                        "category": "EmailSubject",
-                        "text": "tomorrow\u0027s demo",
-                        "offset": 33,
-                        "length": 15,
-                        "confidenceScore": 1,
-                        "resolutions": [],
-                        "extraInformation": []
                       }
                     ],
-                    "topIntent": "SendEmail",
+                    "topIntent": "Setup",
                     "projectKind": "conversation"
                   }
                 }
               },
               "RestaurantIntent": {
-                "confidenceScore": 0.6352559,
+                "confidenceScore": 0.63531023,
                 "targetKind": "luis"
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.5937791,
+                "confidenceScore": 0.5959919,
                 "targetKind": "question_answering"
               },
               "None": {
-                "confidenceScore": 0.15089184,
+                "confidenceScore": 0.15094617,
                 "targetKind": "non_linked"
               }
             }
@@ -202,10 +153,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "200675113"
+    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
+    "RandomSeed": "819752152"
   }
 }

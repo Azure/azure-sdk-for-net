@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.24 (Unreleased)
+## 12.0.0-preview.25 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.24 (2022-04-19)
+- Added ability to specify chunk download size with BlobChangeFeedClientOptions.MaximumTransferSize.
 
 ## 12.0.0-preview.23 (2022-04-13)
 - Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.PreviousInfo.WasBlobSoftDeleted was not being deserialized correctly.

@@ -1357,7 +1357,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         #region Retries
 
-        [Event(RunOperationExceptionEvent, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        [Event(RunOperationExceptionEvent, Level = EventLevel.Informational, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
         public virtual void RunOperationExceptionEncountered(string exception)
         {
             if (IsEnabled())
