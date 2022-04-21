@@ -12,7 +12,7 @@ namespace Azure.Identity.Tests
 {
     public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
-        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
