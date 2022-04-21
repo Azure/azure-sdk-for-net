@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             cdnEndpointData.Origins.Add(deepCreatedOrigin);
             var lro = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, cdnEndpointName, cdnEndpointData);
             CdnEndpointResource cdnEndpoint = lro.Value;
-            PurgeOptions purgeParameters = new PurgeOptions(new List<string>
+            PurgeContent purgeParameters = new PurgeContent(new List<string>
             {
                 "/*"
             });
             Assert.DoesNotThrowAsync(async () => await cdnEndpoint.PurgeContentAsync(WaitUntil.Completed, purgeParameters));
-            LoadOptions loadParameters = new LoadOptions(new List<string>
+            LoadContent loadParameters = new LoadContent(new List<string>
             {
                 "/testfile/file1.txt"
             });

@@ -227,22 +227,74 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Update ExpressRoutePort tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
+        /// Operation Id: ExpressRoutePorts_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update ExpressRoutePort resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<ExpressRoutePortResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRoutePortRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update ExpressRoutePort tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
+        /// Operation Id: ExpressRoutePorts_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update ExpressRoutePort resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<ExpressRoutePortResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRoutePortRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Generate a letter of authorization for the requested ExpressRoutePort resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/generateLoa
         /// Operation Id: ExpressRoutePorts_GenerateLOA
         /// </summary>
-        /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
+        /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAAsync(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAAsync(GenerateExpressRoutePortsLOAContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLOA");
             scope.Start();
             try
             {
-                var response = await _expressRoutePortRestClient.GenerateLOAAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortRestClient.GenerateLOAAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -257,18 +309,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/generateLoa
         /// Operation Id: ExpressRoutePorts_GenerateLOA
         /// </summary>
-        /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
+        /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<GenerateExpressRoutePortsLOAResult> GenerateLOA(GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GenerateExpressRoutePortsLOAResult> GenerateLOA(GenerateExpressRoutePortsLOAContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLOA");
             scope.Start();
             try
             {
-                var response = _expressRoutePortRestClient.GenerateLOA(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var response = _expressRoutePortRestClient.GenerateLOA(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

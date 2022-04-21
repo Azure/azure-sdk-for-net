@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customHttpsParameters"> Certificate parameters for securing custom HTTPS. </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of the custom domain. </param>
-        internal CdnCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomDomainHttpsOptions customHttpsParameters, string validationData, string provisioningState) : base(id, name, resourceType, systemData)
+        internal CdnCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomDomainHttpsContent customHttpsParameters, string validationData, string provisioningState) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             ResourceState = resourceState;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
         public CustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get; }
         /// <summary> Certificate parameters for securing custom HTTPS. </summary>
-        public CustomDomainHttpsOptions CustomHttpsParameters { get; set; }
+        public CustomDomainHttpsContent CustomHttpsParameters { get; set; }
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
         public string ValidationData { get; set; }
         /// <summary> Provisioning status of the custom domain. </summary>

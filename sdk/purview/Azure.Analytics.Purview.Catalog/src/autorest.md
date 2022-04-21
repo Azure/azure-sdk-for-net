@@ -7,7 +7,6 @@ title: PurviewCatalog
 input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/2c66a689c610dbef623d6c4e4c4e913446d5ac68/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
 namespace: Azure.Analytics.Purview.Catalog
-data-plane: true
 security: AADToken
 security-scopes:  https://purview.azure.net/.default
 ```

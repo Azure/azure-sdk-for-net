@@ -257,6 +257,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 string lockToken = null;
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    // intentionally not disposing to ensure that the exception will be thrown even after the callback returns
+                    args.CancellationToken.Register(args.CancellationToken.ThrowIfCancellationRequested);
                     lockToken = args.Message.LockToken;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
@@ -274,6 +276,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 _listener.SingleEventById(
+                    ServiceBusEventSource.StartProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
                     ServiceBusEventSource.ReceiveMessageCompleteEvent,
                     e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
                 _listener.SingleEventById(
@@ -282,6 +287,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorStoppingCancellationWarningEvent,
+                    e => e.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.StopProcessingCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier));
             }
         }
 
@@ -379,8 +390,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any());
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose));
+            }
+        }
+
+        [Test]
+        public async Task DoesNotLogStoppingAcceptSessionCanceledAsError()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient();
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
+
+                processor.ProcessMessageAsync += args => Task.CompletedTask;
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                await processor.StartProcessingAsync();
+
+                // wait less than the try timeout to ensure that the stopping happens during ongoing accept attempts
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                await processor.StopProcessingAsync();
+
+                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent).Any(e => e.Level == EventLevel.Verbose));
             }
         }
 

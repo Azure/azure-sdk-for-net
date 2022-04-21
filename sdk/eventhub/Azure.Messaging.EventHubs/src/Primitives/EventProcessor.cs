@@ -1264,7 +1264,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // Canceling the main source here won't cause a problem and will help expedite stopping
                     // the processor later.
 
-                    _runningProcessorCancellationSource?.Cancel();
+                    try
+                    {
+                        _runningProcessorCancellationSource?.Cancel();
+                    }
+                    catch (Exception cancelEx)
+                    {
+                        Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, cancelEx.Message);
+                    }
                 }
             }
             catch (OperationCanceledException ex)
@@ -1358,9 +1365,19 @@ namespace Azure.Messaging.EventHubs.Primitives
                     return;
                 }
 
-                // Request cancellation of the running processor task.
+                // Request cancellation of the running processor task.  If developer code registered a cancellation
+                // callback in one of the event handlers, it is possible that cancellation will throw.  Capture this
+                // as a warning so that it does not interfere with shutting down the processor.
 
-                _runningProcessorCancellationSource?.Cancel();
+                try
+                {
+                    _runningProcessorCancellationSource?.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+
                 _runningProcessorCancellationSource?.Dispose();
                 _runningProcessorCancellationSource = null;
 
@@ -1813,9 +1830,21 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 partition = partitionProcessor.Partition;
 
+                // If developer code in a handler registered a callback for cancellation, it is possible that
+                // the attempt to cancel will throw.  Capture this as a warning and do not prevent the partition processing
+                // task from being cleaned up.
+
                 try
                 {
                     partitionProcessor.CancellationSource.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.PartitionProcessorStoppingCancellationWarning(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+
+                try
+                {
                     await partitionProcessor.ProcessingTask.ConfigureAwait(false);
                 }
                 catch (TaskCanceledException)
@@ -1832,7 +1861,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 partitionProcessor.Dispose();
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Notify the handler of the now-closed partition, awaiting completion to allow for a more deterministic model
                 // for developers where the initialize and stop handlers will fire in a deterministic order and not interleave.

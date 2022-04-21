@@ -29,18 +29,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupVaults()
-        {
-            var deletedVaults = Subscription.GetDeletedVaultsAsync().ToEnumerableAsync().Result;
-            Assert.NotNull(deletedVaults);
-
-            foreach (var v in deletedVaults)
-            {
-                await v.PurgeDeletedAsync(WaitUntil.Completed);
-            }
-        }
-
         [Test]
         public async Task KeyVaultManagementVaultCreateUpdateDelete()
         {
@@ -71,13 +59,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             //Update
             AccessPolicy.Permissions.Secrets.Clear();
-            AccessPolicy.Permissions.Secrets.Add(SecretPermissions.Get);
-            AccessPolicy.Permissions.Secrets.Add(SecretPermissions.Set);
-            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermissions>).Reset();
+            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Get);
+            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Set);
+            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermission>).Reset();
 
             AccessPolicy.Permissions.Storage.Clear();
-            AccessPolicy.Permissions.Storage.Add(StoragePermissions.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermissions.Regeneratekey);
+            AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
+            AccessPolicy.Permissions.Storage.Add(StoragePermission.Regeneratekey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
@@ -330,7 +318,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string expectedResourceGroupName,
             string expectedSubId,
             Guid expectedTenantId,
-            string expectedLocation,
+            AzureLocation expectedLocation,
             string expectedSkuFamily,
             KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
@@ -365,7 +353,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string expectedResourceGroupName,
             string expectedSubId,
             Guid expectedTenantId,
-            string expectedLocation,
+            AzureLocation expectedLocation,
             string expectedSkuFamily,
             KeyVaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
@@ -396,8 +384,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkAcls.DefaultAction);
             Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkAcls.Bypass);
             Assert.True(vaultData.Properties.NetworkAcls.IPRules != null && vaultData.Properties.NetworkAcls.IPRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IPRules[0].Value, vaultData.Properties.NetworkAcls.IPRules[0].Value);
-            Assert.AreEqual(networkRuleSet.IPRules[1].Value, vaultData.Properties.NetworkAcls.IPRules[1].Value);
+            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkAcls.IPRules[0].AddressRange);
+            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkAcls.IPRules[1].AddressRange);
         }
     }
 }

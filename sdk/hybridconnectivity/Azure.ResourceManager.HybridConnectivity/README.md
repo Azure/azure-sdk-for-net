@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Hybrid Connectivity management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.HybridConnectivity -Version 1.0.0-beta.1 
+```dotnetcli
+dotnet add package Azure.ResourceManager.HybridConnectivity --prerelease
 ```
 
 ### Prerequisites

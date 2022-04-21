@@ -499,14 +499,14 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
             public override int Count { get; }
+            public override int? StartingSequenceNumber => throw new NotImplementedException();
             public override TransportProducerFeatures ActiveFeatures { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
-
-            public override void Clear()
-            {
-            }
+            public override void Clear() => throw new NotImplementedException();
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => throw new NotImplementedException();
+            public override void ResetBatchSequencing() => throw new NotImplementedException();
         }
     }
 }

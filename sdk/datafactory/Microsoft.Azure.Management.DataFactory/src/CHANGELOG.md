@@ -1,5 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Expression mode for SqlServerStoredProcedureActivity
+- Added Policy property into ExecutePipelineActivity
+
 ## Version 5.4.0
 ###  Feature Additions
 - Added Web Activity disable cert validation

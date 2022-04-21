@@ -192,6 +192,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         internal const int PartitionKeyValueOverwritten = 112;
 
+        internal const int ProcessorStoppingCancellationWarningEvent = 113;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -767,6 +769,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(StopProcessingExceptionEvent, identifier, exception);
+            }
+        }
+
+        [Event(ProcessorStoppingCancellationWarningEvent, Level = EventLevel.Warning, Message = "{0}: StopProcessingAsync Cancellation of the Processor cancellation token triggered an Exception: {1}.")]
+        public virtual void ProcessorStoppingCancellationWarning(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorStoppingCancellationWarningEvent, identifier, exception);
             }
         }
 
@@ -1346,7 +1357,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         #region Retries
 
-        [Event(RunOperationExceptionEvent, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        [Event(RunOperationExceptionEvent, Level = EventLevel.Informational, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
         public virtual void RunOperationExceptionEncountered(string exception)
         {
             if (IsEnabled())
