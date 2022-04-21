@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
@@ -22,7 +23,7 @@ namespace Azure.AI.Language.Conversations
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             JobState status = default;
-            Optional<IReadOnlyList<Error>> errors = default;
+            Optional<IReadOnlyList<GeneratedError>> errors = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,10 +69,10 @@ namespace Azure.AI.Language.Conversations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<GeneratedError> array = new List<GeneratedError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Error.DeserializeError(item));
+                        array.Add(GeneratedError.DeserializeGeneratedError(item));
                     }
                     errors = array;
                     continue;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -16,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="id"> The ID of the input. </param>
         /// <param name="error"> Error encountered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
-        public InputError(string id, Error error)
+        public InputError(string id, GeneratedError error)
         {
             if (id == null)
             {
@@ -34,6 +35,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The ID of the input. </summary>
         public string Id { get; set; }
         /// <summary> Error encountered. </summary>
-        public Error Error { get; set; }
+        public GeneratedError Error { get; set; }
     }
 }

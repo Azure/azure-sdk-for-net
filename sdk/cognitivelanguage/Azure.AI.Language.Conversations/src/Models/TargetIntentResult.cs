@@ -14,6 +14,6 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary> This discriminator property specifies the type of the target project that returns the response. </summary>
         [CodeGenMember("TargetKind")]
-        public TargetKind TargetKind { get; set; }
+        public TargetProjectKind TargetKind { get; set; }
     }
 }

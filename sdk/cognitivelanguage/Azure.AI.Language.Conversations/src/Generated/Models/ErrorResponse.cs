@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -15,7 +16,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal ErrorResponse(Error error)
+        internal ErrorResponse(GeneratedError error)
         {
             if (error == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> The error object. </summary>
-        public Error Error { get; }
+        public GeneratedError Error { get; }
     }
 }

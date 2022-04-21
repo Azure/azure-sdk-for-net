@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -41,7 +42,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="nextLink"></param>
         /// <param name="tasks"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeConversationJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobState status, IReadOnlyList<Error> errors, string nextLink, ConversationTasksStateTasks tasks, ConversationRequestStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, errors, nextLink)
+        internal AnalyzeConversationJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobState status, IReadOnlyList<GeneratedError> errors, string nextLink, ConversationTasksStateTasks tasks, ConversationRequestStatistics statistics) : base(displayName, createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, errors, nextLink)
         {
             Tasks = tasks;
             Statistics = statistics;

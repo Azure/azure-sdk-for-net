@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Language.Conversations;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class Error : IUtf8JsonSerializable
+    public partial class GeneratedError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,12 +49,12 @@ namespace Azure.AI.Language.Conversations
             writer.WriteEndObject();
         }
 
-        internal static Error DeserializeError(JsonElement element)
+        internal static GeneratedError DeserializeGeneratedError(JsonElement element)
         {
             ErrorCode code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IList<Error>> details = default;
+            Optional<IList<GeneratedError>> details = default;
             Optional<InnerErrorModel> innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -81,10 +82,10 @@ namespace Azure.AI.Language.Conversations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<GeneratedError> array = new List<GeneratedError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item));
+                        array.Add(DeserializeGeneratedError(item));
                     }
                     details = array;
                     continue;
@@ -102,7 +103,7 @@ namespace Azure.AI.Language.Conversations
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
+            return new GeneratedError(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
         }
     }
 }

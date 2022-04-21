@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
@@ -14,12 +15,12 @@ namespace Azure.AI.Language.Conversations
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Error error = default;
+            GeneratedError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    error = Error.DeserializeError(property.Value);
+                    error = GeneratedError.DeserializeGeneratedError(property.Value);
                     continue;
                 }
             }
