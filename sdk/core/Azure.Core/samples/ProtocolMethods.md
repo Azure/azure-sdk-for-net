@@ -114,7 +114,7 @@ Protocol methods all return a `Response` object that contains information return
 The most important field on Response contains the REST content returned from the service:
 
 ```csharp
-Response response = client.GetDog(RequestContent.Create(new {
+Response response = client.GetDog(RequestContent.Create(new {// anonymous class is serialized by System.Text.Json using runtime reflection
         name = "Buddy"
 }));
 var content = response.Content;
