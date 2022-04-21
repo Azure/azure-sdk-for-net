@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -185,6 +186,66 @@ namespace Azure.ResourceManager.CosmosDB
                 var operation = new CosmosDBArmOperation(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateDeleteGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin graph
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinGraph
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<GremlinGraphResource>> UpdateAsync(WaitUntil waitUntil, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin graph
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinGraph
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<GremlinGraphResource> Update(WaitUntil waitUntil, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -268,6 +268,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates a virtual network tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a virtual network tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<VirtualNetworkResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new VirtualNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Checks whether a private IP address is available for use.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/CheckIPAddressAvailability
         /// Operation Id: VirtualNetworks_CheckIPAddressAvailability
