@@ -48,49 +48,6 @@ namespace Azure.Communication.Chat
         }
 
         #region Threadless Messaging Operations
-
-        /// <summary> Sends a Fire and Forget/Threadless/CPM text message asynchronously. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendThreadlessChatMessageResult>> SendTextMessageAsync(string from, string to, string content, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendTextMessage)}");
-            scope.Start();
-            try
-            {
-                return await _threadlessRestClient.SendChatMessageAsync(from, to, ThreadlessChatMessageType.Text, content, null, null, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Sends a Fire and Forget/Threadless/CPM text message. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendThreadlessChatMessageResult> SendTextMessage(string from, string to, string content, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendTextMessage)}");
-            scope.Start();
-            try
-            {
-                return _threadlessRestClient.SendChatMessage(from, to, ThreadlessChatMessageType.Text, content, null, null, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary> Sends a Fire and Forget/Threadless/CPM template message asynchronously. </summary>
         /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
