@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1318.3566",
-      "templateHash": "14704571442855163895"
+      "templateHash": "9849786101028970025"
     }
   },
   "parameters": {
@@ -23,13 +23,6 @@
         "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
       }
     },
-    "baseName": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().name]",
-      "metadata": {
-        "description": "The base resource name."
-      }
-    },
     "testApplicationOid": {
       "type": "string",
       "metadata": {
@@ -45,20 +38,15 @@
     }
   },
   "variables": {
-    "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-    "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec",
-    "storageDataOwnerRoleId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
-    "eventHubsNamespace_var": "[format('eh-{0}', parameters('baseName'))]",
-    "storageAccount_var": "[format('blb{0}', parameters('baseName'))]",
+    "eventHubsNamespace_var": "[format('eh-{0}', resourceGroup().name)]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace_var'), variables('defaultSASKeyName'))]",
-    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]",
-    "ehBasicProcessor": "basiceventprocessortest",
-    "ehBasicPublish": "basicpublishreadtest",
     "ehBufferedProducer": "bufferedproducertest",
-    "ehEmptyProcessor": "processoremptyreadtest",
+    "bufferproducerPartitions": 10,
     "ehEventProducer": "eventproducertest",
-    "ehTransportProducer": "transportproducerpooltest"
+    "eventProducerPartitions": 10,
+    "ehBurstBufferedProducer": "burstbufferedproducertest",
+    "ehConcurrentBufferedProducer": "concurrentbufferedproducertest"
   },
   "resources": [
     {
@@ -74,46 +62,10 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBasicProcessor'))]",
-      "properties": {
-        "messageRetentionInDays": 7,
-        "partitionCount": 1
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.EventHub/namespaces/eventhubs",
-      "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBasicPublish'))]",
-      "properties": {
-        "messageRetentionInDays": 7,
-        "partitionCount": 1
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.EventHub/namespaces/eventhubs",
-      "apiVersion": "2021-11-01",
       "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBufferedProducer'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": 1
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.EventHub/namespaces/eventhubs",
-      "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehEmptyProcessor'))]",
-      "properties": {
-        "messageRetentionInDays": 7,
-        "partitionCount": 1
+        "partitionCount": "[variables('bufferproducerPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -125,7 +77,7 @@
       "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehEventProducer'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": 1
+        "partitionCount": "[variables('eventProducerPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -134,118 +86,25 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehTransportProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBurstBufferedProducer'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": 1
+        "partitionCount": "[variables('bufferproducerPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
       ]
     },
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2019-04-01",
-      "name": "[variables('storageAccount_var')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard_LRS"
-      },
-      "kind": "BlobStorage",
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2021-11-01",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehConcurrentBufferedProducer'))]",
       "properties": {
-        "networkAcls": {
-          "bypass": "AzureServices",
-          "virtualNetworkRules": [],
-          "ipRules": [],
-          "defaultAction": "Allow"
-        },
-        "supportsHttpsTrafficOnly": true,
-        "encryption": {
-          "services": {
-            "file": {
-              "enabled": true
-            },
-            "blob": {
-              "enabled": true
-            }
-          },
-          "keySource": "Microsoft.Storage"
-        },
-        "accessTier": "Hot"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices",
-      "apiVersion": "2019-04-01",
-      "name": "[format('{0}/{1}', variables('storageAccount_var'), 'default')]",
-      "properties": {
-        "cors": {
-          "corsRules": []
-        },
-        "deleteRetentionPolicy": {
-          "enabled": false
-        }
+        "messageRetentionInDays": 7,
+        "partitionCount": "[variables('bufferproducerPartitions')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-      "apiVersion": "2021-06-01",
-      "name": "[format('{0}/default/{1}log', variables('storageAccount_var'), variables('ehBasicProcessor'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-      "apiVersion": "2021-06-01",
-      "name": "[format('{0}/default/{1}log', variables('storageAccount_var'), variables('ehEmptyProcessor'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
-        "principalId": "[parameters('testApplicationOid')]",
-        "scope": "[resourceGroup().id]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
-        "principalId": "[parameters('testApplicationOid')]",
-        "scope": "[resourceGroup().id]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('storageDataOwnerRoleId'))]",
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageDataOwnerRoleId'))]",
-        "principalId": "[parameters('testApplicationOid')]",
-        "scope": "[resourceGroup().id]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var'))]"
+        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
       ]
     }
   ],
@@ -270,45 +129,37 @@
       "type": "string",
       "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
     },
-    "STORAGE_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};EndpointSuffix={1};AccountKey={2}', variables('storageAccount_var'), environment().suffixes.storage, listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_var')), '2019-04-01').keys[0].value)]"
-    },
-    "EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2}', variables('storageAccount_var'), listKeys(variables('storageAccountId'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, parameters('storageEndpointSuffix'))]"
-    },
-    "EVENTHUB_NAME_BEPT": {
-      "type": "string",
-      "value": "[variables('ehBasicProcessor')]"
-    },
-    "BLOB_CONTAINER_BEPT": {
-      "type": "string",
-      "value": "[format('{0}/default/{1}log', variables('storageAccount_var'), variables('ehBasicProcessor'))]"
-    },
-    "EVENTHUB_NAME_BPRT": {
-      "type": "string",
-      "value": "[variables('ehBasicPublish')]"
-    },
-    "EVENTHUB_NAME_BPT": {
+    "EVENTHUB_NAME_EBPT": {
       "type": "string",
       "value": "[variables('ehBufferedProducer')]"
+    },
+    "EVENTHUB_PARTITIONS_EBPT": {
+      "type": "int",
+      "value": "[variables('bufferproducerPartitions')]"
     },
     "EVENTHUB_NAME_EPT": {
       "type": "string",
       "value": "[variables('ehEventProducer')]"
     },
-    "EVENTHUB_NAME_PERT": {
-      "type": "string",
-      "value": "[variables('ehEmptyProcessor')]"
+    "EVENTHUB_PARTITIONS_EPT": {
+      "type": "int",
+      "value": "[variables('eventProducerPartitions')]"
     },
-    "BLOB_CONTAINER_PERT": {
+    "EVENTHUB_NAME_BBPT": {
       "type": "string",
-      "value": "[format('{0}/default/{1}log', variables('storageAccount_var'), variables('ehEmptyProcessor'))]"
+      "value": "[variables('ehBurstBufferedProducer')]"
     },
-    "EVENTHUB_NAME_TPPT": {
+    "EVENTHUB_PARTITIONS_BBPT": {
+      "type": "int",
+      "value": "[variables('bufferproducerPartitions')]"
+    },
+    "EVENTHUB_NAME_CBPT": {
       "type": "string",
-      "value": "[variables('ehTransportProducer')]"
+      "value": "[variables('ehConcurrentBufferedProducer')]"
+    },
+    "EVENTHUB_PARTITIONS_CBPT": {
+      "type": "int",
+      "value": "[variables('bufferproducerPartitions')]"
     }
   }
 }

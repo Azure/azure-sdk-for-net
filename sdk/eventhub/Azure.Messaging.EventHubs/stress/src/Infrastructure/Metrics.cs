@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventHubs.Stress
     {
         public TelemetryClient Client;
 
+        public string CorruptedPropertiesEvent = "CorruptedPropertiesEvent";
+        public string CorruptedBodyEvent = "CorruptedBodyEvent";
+        public string LostEventDataEvent = "LostEventDataEvent";
+
         // Environment statistics
         public MetricIdentifier MemorySamples = new MetricIdentifier("MemorySamples");
         public MetricIdentifier GenerationZeroCollections = new MetricIdentifier("GenerationZeroCollections");
@@ -24,11 +28,11 @@ namespace Azure.Messaging.EventHubs.Stress
         // Publisher statistics
         public MetricIdentifier BatchesCount = new MetricIdentifier("BatchesCount");
         public MetricIdentifier SentEventsCount = new MetricIdentifier("SentEventsCount");
-        public MetricIdentifier SuccessfullyReceivedEventsCountPerTest = new MetricIdentifier("SuccessfullyReceivedEventsCount", "SuccessfullyReceivedEventsCount", "Test");
+        public MetricIdentifier SuccessfullyReceivedEventsCount = new MetricIdentifier("SuccessfullyReceivedEventsCount");
         public MetricIdentifier ProducerFailureCount = new MetricIdentifier("ProducerFailureCount");
         public MetricIdentifier ConsumerFailureCount = new MetricIdentifier("ConsumerFailureCount");
         public MetricIdentifier CorruptedBodyFailureCount = new MetricIdentifier("CorruptedBodyFailureCount");
-        public MetricIdentifier CorruptedPropertiesFailureCount = new MetricIdentifier("CorruptedPropertiesFailureCount");
+        public MetricIdentifier LostEventsCount = new MetricIdentifier("LostEventsCount");
 
         // Buffered Producer statistics
         public MetricIdentifier EventsEnqueuedPerTest = new MetricIdentifier("EventsEnqueuedPerTest");
@@ -53,18 +57,6 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier EventsFromWrongPartition = new MetricIdentifier("EventsFromWrongPartition");
         public MetricIdentifier UnknownEventsProcessed = new MetricIdentifier("UnknownEventsProcessed");
         public MetricIdentifier DuplicateEventsDiscarded = new MetricIdentifier("DuplicateEventsDiscarded");
-
-        // Exceptions
-        public MetricIdentifier SendExceptions = new MetricIdentifier("SendExceptions");
-        public MetricIdentifier CanceledSendExceptions = new MetricIdentifier("CanceledSendExceptions");
-        public MetricIdentifier ProcessingExceptions = new MetricIdentifier("ProcessingExceptions");
-        public MetricIdentifier TotalExceptions = new MetricIdentifier("TotalExceptions");
-        public MetricIdentifier GeneralExceptions = new MetricIdentifier("GeneralExceptions");
-        public MetricIdentifier TimeoutExceptions = new MetricIdentifier("TimeoutExceptions");
-        public MetricIdentifier CommunicationExceptions = new MetricIdentifier("CommunicationExceptions");
-        public MetricIdentifier ServiceBusyExceptions = new MetricIdentifier("ServiceBusyExceptions");
-        public MetricIdentifier ProcessorRestarted = new MetricIdentifier("ProcessorRestarted");
-        public MetricIdentifier ProducerRestarted = new MetricIdentifier("ProducerRestarted");
 
         public Metrics(string instrumentationKey)
         {

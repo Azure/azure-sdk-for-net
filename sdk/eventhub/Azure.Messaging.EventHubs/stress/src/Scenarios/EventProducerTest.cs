@@ -17,16 +17,69 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
-    public static class EventProducerTest
+    internal class EventProducerTest
     {
-        private static readonly TimeSpan DefaultProcessReportInterval = TimeSpan.FromSeconds(45);
-        private static readonly TimeSpan DefaultRunDuration = TimeSpan.FromHours(72);
-        private static readonly string DefaultErrorLogPath = Path.Combine(Environment.CurrentDirectory, $"processor-test-errors-{ DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") }.log");
+        private Metrics metrics;
+        private ProducerConfiguration testConfiguration;
 
-        public static async Task Run()
+        public EventProducerTest(ProducerConfiguration configuration)
         {
-            await Task.Delay(3000);
-            Console.WriteLine("HEllo :)");
+            testConfiguration = configuration;
+            metrics = new Metrics(configuration.InstrumentationKey);
+        }
+
+        public async Task Run()
+        {
+            using var publishCancellationSource = new CancellationTokenSource();
+
+            var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
+            publishCancellationSource.CancelAfter(runDuration);
+
+            var publishingTasks = default(IEnumerable<Task>);
+
+            try
+            {
+                // Begin publishing events in the background.
+
+                publishingTasks = Enumerable
+                    .Range(0, testConfiguration.ProducerCount)
+                    .Select(_ => Task.Run(() => new Publisher(testConfiguration, metrics).Start(publishCancellationSource.Token)))
+                    .ToList();
+
+                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException)
+            {
+                // No action needed.
+            }
+            catch (Exception ex) when
+                (ex is OutOfMemoryException
+                || ex is StackOverflowException
+                || ex is ThreadAbortException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                metrics.Client.TrackException(ex);
+            }
+
+            // The run is ending.  Clean up the outstanding background operations and
+            // complete the necessary metrics tracking.
+
+            try
+            {
+                publishCancellationSource.Cancel();
+                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                metrics.Client.TrackException(ex);
+            }
+            finally
+            {
+                // flush metrics
+            }
         }
     }
 }

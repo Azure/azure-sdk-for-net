@@ -1,3 +1,5 @@
 scenarios:
-- "BasicPublishReadTest"
-- "BufferedProducerTest"
+- "EventProd"
+- "EventBuffProd"
+- "BurstBuffProd"
+- "ConcurBuffProd"
