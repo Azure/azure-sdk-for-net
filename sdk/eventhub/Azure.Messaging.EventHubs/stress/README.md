@@ -2,12 +2,10 @@
 This is a preliminary README. It demonstrates how to use the stress tests in the current state.
 
 In order to run the stress tests locally, the necessary resource connections need to be input through the command line interface. Test runs can call any of the following tests:
-- Basic Publish Read Test ("BasicPublishReadTest")
-- Basic Event Processor Test  ("EventProcessorTest")
-- Event Producer Test ("EventProducerTest")
-- Processor Empty Read Test ("ProcessorEmptyReadTest")
-- Basic Buffered Producer Test ("BasicBufferedProducerTest")
-- Buffered Producer Test ("BufferedProducerTest")
+- EventProducerTest : "EventProd"
+- EventBufferedProducerTest : "EventBuffProd"
+- BurstBufferedProducerTest : "BurstBuffProd"
+- ConcurrentBufferedProducerTest : "ConcurBuffProd"
 
 ## Local Stress Test Runs
 ### Setting up resources and packages
@@ -19,12 +17,11 @@ In order to run the stress tests locally, the necessary resource connections nee
 ### Running Tests
 When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM template or bicep file, or the Azure Portal. The user is required to input the connection strings upon request on the command line when the test is being run. For more information about what resources are needed for each test, see the "Scenario Information" section below. 
 
-The recommended approach is to run tests one at a time. The default for all individual tests are multi-day test runs.
+The recommended approach is to run tests one at a time when running locally.
 To run any one test, run the following:
 ```cmd
 (env) ~/stress/src> dotnet run -f netcoreapp3.1 BasicPublishReadTest local
 ```
-TODO: there is an issue when running locally using net6.0 that needs to be debugged (need to see if this is true in the cluster as well)
 
 ## Deploy a stress test
 In order to deploy stress tests to be run in kubernetes clusters, run:
@@ -35,13 +32,8 @@ In order to deploy stress tests to be run in kubernetes clusters, run:
 ```
 This command requires Azure login credentials.
 
-## Scenario Information
-### Basic Publish Read Test
-The basic publish read test is a single process, stable throughput, producer client test, that simply sends batches, and then checks that the consumer properly ingests them. This test just requires any existing Event Hub within an Event Hub Namespace. Unlike other tests, Event Hubs instances with previous use are okay here. It also requires an Application Insights instance. Metrics and traces are sent to the application insights portal.
-
-
-
 ## Seeing Metrics and Logging in App Insights
-TODO: look at other app insights options that might be easier
-
-Status reports are sent to app insights as trace messages. To see these navigate to your App Insights instance within the azure portal. In the side panel, navigate to Monitoring > Logs. Input the query "traces" and press run. Sort the results by time to see the test outputs as they progress. Errors, exceptions, and failures are tracked through metrics. If any are reported, they will be populated in Monitoring > Metrics. The aggregation of these metrics is customizable within the portal.
+All metrics and logging are sent to App Insights via the Instrumentation Key provided during the initialization of the test. A brief explanation of the metrics collection approach is described below.
+- Any exceptions that occur are tracked by the telemetry client as exception telemetry. They can be accessed through the logs by filtering for exceptions, or through the application insights portal in the "Exceptions" blade. If an exception occured during send, the exception telemetry will include a "process" property containing "send"
+- Successful enqueues and sends are tracked through Metrics. For the buffered producer, the total number of enqueues is tracked, and the sends are tracked as both total and number of sends to each partition.
+- Events 

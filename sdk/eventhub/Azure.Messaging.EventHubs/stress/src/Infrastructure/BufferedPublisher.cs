@@ -45,12 +45,9 @@ namespace Azure.Messaging.EventHubs.Stress
                     producer.SendEventBatchSucceededAsync += args =>
                     {
                         var numEvents = args.EventBatch.ToList().Count;
-
                         var eventProperties = new Dictionary<String, String>();
-                        eventProperties.Add("PartitionId", args.PartitionId);
 
-                        metrics.Client.GetMetric(metrics.SuccessfullyPublishedFromQueue).TrackValue(numEvents);
-                        metrics.Client.TrackEvent("SuccessfullyPublishedFromQueue", eventProperties);
+                        metrics.Client.GetMetric(metrics.SuccessfullySentFromQueue, args.PartitionId).TrackValue(numEvents);
 
                         return Task.CompletedTask;
                     };
@@ -60,12 +57,9 @@ namespace Azure.Messaging.EventHubs.Stress
                         var numEvents = args.EventBatch.ToList().Count;
 
                         var eventProperties = new Dictionary<String, String>();
-                        eventProperties.Add("Exception", args.Exception.Message);
-                        eventProperties.Add("PartitionId", args.PartitionId);
 
-                        metrics.Client.GetMetric(metrics.EventsNotSentAfterEnqueue).TrackValue(numEvents);
+                        metrics.Client.GetMetric(metrics.EventsNotSentAfterEnqueue, args.PartitionId).TrackValue(numEvents);
                         metrics.Client.TrackException(args.Exception);
-                        metrics.Client.TrackEvent("EventsNotSentAfterEnqueue", eventProperties);
 
                         return Task.CompletedTask;
                     };
@@ -137,12 +131,13 @@ namespace Azure.Messaging.EventHubs.Stress
         private async Task PerformSend(EventHubBufferedProducerClient producer,
                                        CancellationToken cancellationToken)
         {
-            var events = EventGenerator.CreateEvents(10);
+            var events = EventGenerator.CreateEvents(50);
 
             try
             {
                 await producer.EnqueueEventsAsync(events, cancellationToken).ConfigureAwait(false);
-                metrics.Client.GetMetric(metrics.EventsEnqueuedPerTest).TrackValue(10);
+
+                metrics.Client.GetMetric(metrics.EventsEnqueued).TrackValue(50);
             }
             catch (TaskCanceledException)
             {
