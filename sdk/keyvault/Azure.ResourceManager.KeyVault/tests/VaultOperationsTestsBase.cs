@@ -97,6 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
+            VaultProperties.SoftDeleteRetentionInDays = 7;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
             VaultProperties.NetworkAcls = new NetworkRuleSet() {
                 Bypass = "AzureServices",
@@ -113,8 +114,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
             ManagedHsmProperties.CreateMode = CreateMode.Default;
-            ManagedHsmProperties.EnablePurgeProtection = false;
             ManagedHsmProperties.EnableSoftDelete = true;
+            VaultProperties.SoftDeleteRetentionInDays = 7;
+            ManagedHsmProperties.EnablePurgeProtection = false;
             ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
             {
                 Bypass = "AzureServices",
