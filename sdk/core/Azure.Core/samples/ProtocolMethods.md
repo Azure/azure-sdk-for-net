@@ -123,7 +123,7 @@ var doc = JsonDocument.Parse(content.ToMemory());
 string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
-Protocol methods, just like other methods that use models, throw a `RequestFailedException` when an error code is returned. This default behavior can be changed using `RequestContext` discussed below.
+Protocol methods, just like other methods that communicate with Azure services, throw a `RequestFailedException` when an error code is returned. This default behavior can be changed using `RequestContext` discussed below.
 
 ## Using `RequestContext` to customize behavior
 
