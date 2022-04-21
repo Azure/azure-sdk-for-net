@@ -131,13 +131,13 @@ namespace Azure.Messaging.EventHubs.Stress
         private async Task PerformSend(EventHubBufferedProducerClient producer,
                                        CancellationToken cancellationToken)
         {
-            var events = EventGenerator.CreateEvents(50);
+            var events = EventGenerator.CreateEvents(testConfiguration.EventEnqueueListSize);
 
             try
             {
                 await producer.EnqueueEventsAsync(events, cancellationToken).ConfigureAwait(false);
 
-                metrics.Client.GetMetric(metrics.EventsEnqueued).TrackValue(50);
+                metrics.Client.GetMetric(metrics.EventsEnqueued).TrackValue(testConfiguration.EventEnqueueListSize);
             }
             catch (TaskCanceledException)
             {

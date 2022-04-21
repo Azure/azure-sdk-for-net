@@ -40,9 +40,6 @@ namespace Azure.Messaging.EventHubs.Stress
             var runDuration = TimeSpan.FromHours(durationInHours);
             enqueueingCancellationSource.CancelAfter(runDuration);
 
-            var startOutput = $"Starting a {durationInHours} hour BufferedProducerTest run. Using Event Hub: {eventHubName} which has {testConfiguration.NumPartitions} partitions. See the App Insights dashboard for more information.";
-            metrics.Client.TrackTrace(startOutput);
-
             var enqueuingTasks = default(IEnumerable<Task>);
 
             try
