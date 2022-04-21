@@ -23,8 +23,10 @@ function Get-SmokeTestPkgProperties
 
     $NugetSource="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2"
     $allPackages = Get-AllPkgProperties
-    $excludePackages = (Get-Content "$PSScriptRoot/SmokeTestExcludePackage.json" | ConvertFrom-Json).ExcludePackages
-    $newPackages = $allPackages.Where({ $_.IsNewSdk -and !$excludePackages.Contains($_.Name) })
+    $excludePackages = @{
+        "Azure.AI.Personalizer" = 'Unable to load DLL rl.net.native.dll https://dev.azure.com/azure-sdk/internal/_build/results?buildId=1492856&view=ms.vss-test-web.build-test-results-tab&runId=30630890&resultId=100012&paneView=debug';
+    }
+    $newPackages = $allPackages.Where({ $_.IsNewSdk -and !$excludePackages.ContainsKey($_.Name) })
 
     $azureCorePkgInfo = $newPackages.Where({ $_.Name -eq "Azure.Core"})
     $azureCoreVer = [AzureEngSemanticVersion]::ParseVersionString($azureCorePkgInfo.Version)
