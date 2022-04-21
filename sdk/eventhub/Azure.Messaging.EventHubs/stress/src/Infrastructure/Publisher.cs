@@ -134,15 +134,6 @@ namespace Azure.Messaging.EventHubs.Stress
 
             using var batch = await producer.CreateBatchAsync().ConfigureAwait(false);
 
-            var batchEvents = new List<EventData>();
-
-            // var events = EventGenerator.CreateEvents(
-            //     batch.MaximumSizeInBytes,
-            //     Configuration.PublishBatchSize,
-            //     Configuration.LargeMessageRandomFactorPercent,
-            //     Configuration.PublishingBodyMinBytes,
-            //     Configuration.PublishingBodyRegularMaxBytes,
-            //     currentSequence);
             var events = EventGenerator.CreateEvents(testConfiguration.PublishBatchSize);
 
             foreach (var currentEvent in events)
@@ -151,8 +142,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     break;
                 }
-
-                batchEvents.Add(currentEvent);
             }
 
             // Publish the events and report them, capturing any failures specific to the send operation.
@@ -161,11 +150,17 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 if (batch.Count > 0)
                 {
+                    metrics.Client.GetMetric(metrics.PublishAttempts).TrackValue(1);
                     await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
                 }
+
+                metrics.Client.GetMetric(metrics.EventsPublished).TrackValue(batch.Count);
+                metrics.Client.GetMetric(metrics.BatchesPublished).TrackValue(1);
+                metrics.Client.GetMetric(metrics.TotalPublishedSizeBytes).TrackValue(batch.SizeInBytes);
             }
             catch (TaskCanceledException)
             {
+                metrics.Client.GetMetric(metrics.PublishAttempts).TrackValue(-1);
             }
             catch (Exception ex)
             {

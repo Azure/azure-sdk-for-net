@@ -39,8 +39,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 environment.TryGetValue("EVENTHUB_PARTITIONS_EPT", out testConfiguration.NumPartitions);
                 PromptForResources(testConfiguration, "EventProducerTest");
 
-                // want to add option to change publishing configurations outside of editing the code?
-
                 var testRun = new EventProducerTest(testConfiguration);
                 await testRun.Run();
             }
@@ -54,7 +52,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 environment.TryGetValue("EVENTHUB_PARTITIONS_EBPT", out testConfiguration.NumPartitions);
                 PromptForResources(testConfiguration, "EventBufferedProducerTest");
 
-                // want to add option to change publishing configurations outside of editing the code?
                 testConfiguration.ConcurrentSends = 1;
 
                 var testRun = new BufferedProducerTest(testConfiguration);
@@ -70,7 +67,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 environment.TryGetValue("EVENTHUB_PARTITIONS_CBPT", out testConfiguration.NumPartitions);
                 PromptForResources(testConfiguration, "ConcurrentBufferedProducerTest");
 
-                // want to add option to change publishing configurations outside of editing the code?
                 testConfiguration.ConcurrentSends = 5;
 
                 var testRun = new BufferedProducerTest(testConfiguration);
@@ -86,7 +82,6 @@ namespace Azure.Messaging.EventHubs.Stress
                 environment.TryGetValue("EVENTHUB_PARTITIONS_BBPT", out testConfiguration.NumPartitions);
                 PromptForResources(testConfiguration, "BurstBufferedProducerTest");
 
-                // want to add option to change publishing configurations outside of editing the code?
                 testConfiguration.ConcurrentSends = 5;
                 testConfiguration.ProducerPublishingDelay = TimeSpan.FromMinutes(15);
 

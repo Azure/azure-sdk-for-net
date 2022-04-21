@@ -35,44 +35,24 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier LostEventsCount = new MetricIdentifier("LostEventsCount");
 
         // Buffered Producer statistics
-        public MetricIdentifier EventsEnqueuedPerTest = new MetricIdentifier("EventsEnqueuedPerTest");
-        public MetricIdentifier EventsNotSentAfterEnqueue = new MetricIdentifier("EventsNotSentAfterEnqueue");
-        public MetricIdentifier SuccessfullyPublishedFromQueue = new MetricIdentifier("SuccessfullyPublishedFromQueue");
+        public string EventsNotSentAfterEnqueue = "EventsNotSentAfterEnqueue";
+        public string SuccessfullySentFromQueue = "SuccessfullySentFromQueue";
+        public MetricIdentifier EventsEnqueued = new MetricIdentifier("EventsEnqueued");
         public MetricIdentifier BufferedProducerRestarted = new MetricIdentifier("BufferedProducerRestarted");
 
-        // Statistics
+        // Event Producer Statistics
         public MetricIdentifier TotalServiceOperations = new MetricIdentifier("TotalServiceOperations");
         public MetricIdentifier EventsPublished = new MetricIdentifier("EventsPublished");
-        public MetricIdentifier EventsRead = new MetricIdentifier("EventsRead");
-        public MetricIdentifier EventsProcessed = new MetricIdentifier("EventsProcessed");
         public MetricIdentifier PublishAttempts = new MetricIdentifier("PublishAttempts");
         public MetricIdentifier BatchesPublished = new MetricIdentifier("BatchesPublished");
         public MetricIdentifier TotalPublishedSizeBytes = new MetricIdentifier("TotalPublishedSizeBytes");
-
-        // Event validation issues
-        public MetricIdentifier InvalidBodies = new MetricIdentifier("InvalidBodies");
-        public MetricIdentifier InvalidProperties = new MetricIdentifier("InvalidProperties");
-        public MetricIdentifier EventsNotReceived = new MetricIdentifier("EventsNotReceived");
-        public MetricIdentifier EventsOutOfOrder = new MetricIdentifier("EventsOutOfOrder");
-        public MetricIdentifier EventsFromWrongPartition = new MetricIdentifier("EventsFromWrongPartition");
-        public MetricIdentifier UnknownEventsProcessed = new MetricIdentifier("UnknownEventsProcessed");
-        public MetricIdentifier DuplicateEventsDiscarded = new MetricIdentifier("DuplicateEventsDiscarded");
 
         public Metrics(string instrumentationKey)
         {
             var configuration = TelemetryConfiguration.CreateDefault();
             configuration.InstrumentationKey = instrumentationKey;
 
-            // TODO: dispose??
             Client = new TelemetryClient(configuration);
-        }
-
-        public void UpdateEnvironmentStatistics(Process currentProcess, TelemetryClient client)
-        {
-            client.GetMetric(MemorySamples).TrackValue(1);
-            client.GetMetric(GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-            client.GetMetric(GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-            client.GetMetric(GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
         }
     }
 }
