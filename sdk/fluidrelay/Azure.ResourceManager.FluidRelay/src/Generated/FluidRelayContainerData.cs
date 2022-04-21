@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.FluidRelay.Models;
 using Azure.ResourceManager.Models;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="frsTenantId"> The Fluid tenantId for this container. </param>
         /// <param name="frsContainerId"> The frsContainerId for this container. </param>
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
-        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string frsTenantId, string frsContainerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string frsTenantId, Guid? frsContainerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             FrsTenantId = frsTenantId;
             FrsContainerId = frsContainerId;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <summary> The Fluid tenantId for this container. </summary>
         public string FrsTenantId { get; }
         /// <summary> The frsContainerId for this container. </summary>
-        public string FrsContainerId { get; }
+        public Guid? FrsContainerId { get; }
         /// <summary> Provision states for FluidRelay RP. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -37,8 +37,10 @@ rename-rules:
   URI: Uri
 
 directive:
-  - from: swagger-document
-    where: $.definitions.FluidRelayServerUpdate.properties.location
-    transform: $["x-ms-format"] = "azure-location";
+  - from: fluidrelay.json
+    where: "$.definitions"
+    transform: >
+       $.FluidRelayServerUpdate.properties.location["x-ms-format"] = "azure-location";
+       $.FluidRelayContainerProperties.properties.frsContainerId["format"] = "uuid";
 
 ```
