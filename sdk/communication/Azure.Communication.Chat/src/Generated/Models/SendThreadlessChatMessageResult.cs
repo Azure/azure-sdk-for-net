@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the send message operation. </summary>
-    public partial class SendCpmChatMessageResult
+    public partial class SendThreadlessChatMessageResult
     {
-        /// <summary> Initializes a new instance of SendCpmChatMessageResult. </summary>
+        /// <summary> Initializes a new instance of SendThreadlessChatMessageResult. </summary>
         /// <param name="id"> A server-generated message id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal SendCpmChatMessageResult(string id)
+        internal SendThreadlessChatMessageResult(string id)
         {
             if (id == null)
             {
@@ -25,22 +25,18 @@ namespace Azure.Communication.Chat
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of SendCpmChatMessageResult. </summary>
+        /// <summary> Initializes a new instance of SendThreadlessChatMessageResult. </summary>
         /// <param name="id"> A server-generated message id. </param>
-        /// <param name="externalMessageId"> The external message id. </param>
-        /// <param name="status"> Status of a CPM message. </param>
-        internal SendCpmChatMessageResult(string id, string externalMessageId, string status)
+        /// <param name="status"> The status of a threadless chat message. </param>
+        internal SendThreadlessChatMessageResult(string id, ThreadlessChatMessageStatus? status)
         {
             Id = id;
-            ExternalMessageId = externalMessageId;
             Status = status;
         }
 
         /// <summary> A server-generated message id. </summary>
         public string Id { get; }
-        /// <summary> The external message id. </summary>
-        public string ExternalMessageId { get; }
-        /// <summary> Status of a CPM message. </summary>
-        public string Status { get; }
+        /// <summary> The status of a threadless chat message. </summary>
+        public ThreadlessChatMessageStatus? Status { get; }
     }
 }

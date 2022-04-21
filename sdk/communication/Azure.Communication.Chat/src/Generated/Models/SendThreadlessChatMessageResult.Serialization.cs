@@ -10,13 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class SendCpmChatMessageResult
+    public partial class SendThreadlessChatMessageResult
     {
-        internal static SendCpmChatMessageResult DeserializeSendCpmChatMessageResult(JsonElement element)
+        internal static SendThreadlessChatMessageResult DeserializeSendThreadlessChatMessageResult(JsonElement element)
         {
             string id = default;
-            Optional<string> externalMessageId = default;
-            Optional<string> status = default;
+            Optional<ThreadlessChatMessageStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -24,18 +23,18 @@ namespace Azure.Communication.Chat
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("externalMessageId"))
-                {
-                    externalMessageId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new ThreadlessChatMessageStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new SendCpmChatMessageResult(id, externalMessageId.Value, status.Value);
+            return new SendThreadlessChatMessageResult(id, Optional.ToNullable(status));
         }
     }
 }
