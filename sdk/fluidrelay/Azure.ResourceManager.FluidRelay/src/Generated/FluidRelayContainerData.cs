@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="frsTenantId"> The Fluid tenantId for this container. </param>
         /// <param name="frsContainerId"> The frsContainerId for this container. </param>
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
-        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string frsTenantId, Guid? frsContainerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? frsTenantId, Guid? frsContainerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             FrsTenantId = frsTenantId;
             FrsContainerId = frsContainerId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary> The Fluid tenantId for this container. </summary>
-        public string FrsTenantId { get; }
+        public Guid? FrsTenantId { get; }
         /// <summary> The frsContainerId for this container. </summary>
         public Guid? FrsContainerId { get; }
         /// <summary> Provision states for FluidRelay RP. </summary>

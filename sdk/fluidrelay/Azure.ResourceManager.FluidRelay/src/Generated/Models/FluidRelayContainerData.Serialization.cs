@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FluidRelay
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> frsTenantId = default;
+            Optional<Guid> frsTenantId = default;
             Optional<Guid> frsContainerId = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,12 @@ namespace Azure.ResourceManager.FluidRelay
                     {
                         if (property0.NameEquals("frsTenantId"))
                         {
-                            frsTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frsTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("frsContainerId"))
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.FluidRelay
                     continue;
                 }
             }
-            return new FluidRelayContainerData(id, name, type, systemData, frsTenantId.Value, Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState));
+            return new FluidRelayContainerData(id, name, type, systemData, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState));
         }
     }
 }

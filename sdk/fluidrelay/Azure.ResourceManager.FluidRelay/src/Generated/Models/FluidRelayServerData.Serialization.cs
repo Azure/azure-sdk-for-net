@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.FluidRelay
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> frsTenantId = default;
+            Optional<Guid> frsTenantId = default;
             Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,12 @@ namespace Azure.ResourceManager.FluidRelay
                     {
                         if (property0.NameEquals("frsTenantId"))
                         {
-                            frsTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frsTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("fluidRelayEndpoints"))
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.FluidRelay
                     continue;
                 }
             }
-            return new FluidRelayServerData(id, name, type, systemData, tags, location, identity, frsTenantId.Value, fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState));
+            return new FluidRelayServerData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

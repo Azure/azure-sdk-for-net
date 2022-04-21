@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FluidRelay.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="frsTenantId"> The Fluid tenantId for this server. </param>
         /// <param name="fluidRelayEndpoints"> The Fluid Relay Service endpoints for this server. </param>
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
-        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             FrsTenantId = frsTenantId;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The Fluid tenantId for this server. </summary>
-        public string FrsTenantId { get; }
+        public Guid? FrsTenantId { get; }
         /// <summary> The Fluid Relay Service endpoints for this server. </summary>
         public FluidRelayEndpoints FluidRelayEndpoints { get; }
         /// <summary> Provision states for FluidRelay RP. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay
     {
         public FluidRelayContainerData() { }
         public System.Guid? FrsContainerId { get { throw null; } }
-        public string FrsTenantId { get { throw null; } }
+        public System.Guid? FrsTenantId { get { throw null; } }
         public Azure.ResourceManager.FluidRelay.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FluidRelayContainerResource : Azure.ResourceManager.ArmResource
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FluidRelay
     {
         public FluidRelayServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints FluidRelayEndpoints { get { throw null; } }
-        public string FrsTenantId { get { throw null; } }
+        public System.Guid? FrsTenantId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.FluidRelay.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
     }

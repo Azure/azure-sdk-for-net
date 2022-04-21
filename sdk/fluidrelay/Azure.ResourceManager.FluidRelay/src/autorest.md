@@ -42,5 +42,7 @@ directive:
     transform: >
        $.FluidRelayServerUpdate.properties.location["x-ms-format"] = "azure-location";
        $.FluidRelayContainerProperties.properties.frsContainerId["format"] = "uuid";
+       $.FluidRelayContainerProperties.properties.frsTenantId["format"] = "uuid";
+       $.FluidRelayServerProperties.properties.frsTenantId["format"] = "uuid";
 
 ```
