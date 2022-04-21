@@ -127,7 +127,7 @@ Protocol methods, just like other methods that use models, throw a `RequestFaile
 
 ## Using `RequestContext` to customize behavior
 
-`RequestContext` has some advanced features which allow users to customize behavior of each individual request.
+`RequestContext` has some advanced features which allow users to customize the behavior of each individual request.
 
 ### Customizing Exception Behavior
 
