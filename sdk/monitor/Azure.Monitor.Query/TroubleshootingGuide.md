@@ -101,32 +101,17 @@ Inner error: {
 
 The following code shows an example of setting the server timeout. By setting this server timeout, the Azure Monitor Query library will automatically extend the client timeout to wait for 10 minutes for the server to respond. You don't need to configure your HTTP client to extend the response timeout, as shown in the previous section.
 
-```csharp
-using Azure;
-using Azure.Identity;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
-
-string workspaceId = "<workspace_id>";
+```C# Snippet:QueryLogsWithStatistics
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-    workspaceId,
-    "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
-    new LogsQueryOptions
-    {
-        IncludeStatistics = true,
-    });
-
-    BinaryData stats = response.Value.GetStatistics();
-    using var statsDoc = JsonDocument.Parse(stats);
-    var queryStats = statsDoc.RootElement.GetProperty("query");
-    Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());                
 ```
 
 ### Troubleshooting partially successful logs query requests
 
 By default, if the execution of a Kusto query resulted in a partially successful response, the Azure Monitor Query client library will throw an exception. The exception indicates to the user that the query wasn't fully successful. The data and the error can be accessed using the `LogsQueryResultStatus` enum and `Error` fields.
+
+```C# Snippet:CreateLogsClient
+var client = new LogsQueryClient(new DefaultAzureCredential());
+```
 
 ```csharp
 var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
