@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class ImageOperationSource : IOperationSource<Image>
+    internal class ImageOperationSource : IOperationSource<ImageResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        Image IOperationSource<Image>.CreateResult(Response response, CancellationToken cancellationToken)
+        ImageResource IOperationSource<ImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ImageData.DeserializeImageData(document.RootElement);
-            return new Image(_client, data);
+            return new ImageResource(_client, data);
         }
 
-        async ValueTask<Image> IOperationSource<Image>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ImageResource> IOperationSource<ImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ImageData.DeserializeImageData(document.RootElement);
-            return new Image(_client, data);
+            return new ImageResource(_client, data);
         }
     }
 }

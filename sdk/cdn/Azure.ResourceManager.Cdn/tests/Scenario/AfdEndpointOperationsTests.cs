@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            await afdEndpointInstance.DeleteAsync(true);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            await afdEndpointInstance.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdEndpointInstance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -37,19 +37,16 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            AfdEndpointUpdateOptions updateOptions = new AfdEndpointUpdateOptions
-            {
-                OriginResponseTimeoutSeconds = 30
-            };
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointPatch updateOptions = new AfdEndpointPatch();
             updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await afdEndpointInstance.UpdateAsync(true, updateOptions);
-            AfdEndpoint updatedAfdEndpointInstance = lro.Value;
+            var lro = await afdEndpointInstance.UpdateAsync(WaitUntil.Completed, updateOptions);
+            AfdEndpointResource updatedAfdEndpointInstance = lro.Value;
             ResourceDataHelper.AssertAfdEndpointUpdate(updatedAfdEndpointInstance, updateOptions);
         }
 
@@ -57,29 +54,29 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Purge()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            AfdPurgeOptions purgeParameters = new AfdPurgeOptions(new List<string>
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdPurgeContent purgeParameters = new AfdPurgeContent(new List<string>
             {
                 "/*"
             });
-            Assert.DoesNotThrowAsync(async () => await afdEndpointInstance.PurgeContentAsync(true, purgeParameters));
+            Assert.DoesNotThrowAsync(async () => await afdEndpointInstance.PurgeContentAsync(WaitUntil.Completed, purgeParameters));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Usages()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             int count = 0;
             await foreach (var tempUsage in afdEndpointInstance.GetResourceUsageAsync())
             {
@@ -94,12 +91,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task ValidateCustomDomain()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             ValidateCustomDomainInput validateCustomDomainInput = new ValidateCustomDomainInput("customdomain4afd.azuretest.net");
             ValidateCustomDomainOutput validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainInput);
             Assert.False(validateCustomDomainOutput.CustomDomainValidated);

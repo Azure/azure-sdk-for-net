@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualRouter data model. </summary>
-    public partial class VirtualRouterData : Resource
+    public partial class VirtualRouterData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>
         public VirtualRouterData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal VirtualRouterData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             VirtualRouterAsn = virtualRouterAsn;

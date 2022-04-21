@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal const string DefaultExportIntervalMilliseconds = "60000";
         internal const string AggregationIntervalMsKey = "_MS.AggregationIntervalMs";
 
-        public MetricsData(int version, Metric metric, ref MetricPoint metricPoint) : base(version)
+        public MetricsData(int version, Metric metric, MetricPoint metricPoint) : base(version)
         {
             if (metric == null)
             {

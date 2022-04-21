@@ -7,8 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<OrderItemReturnEnum> returnStatus = default;
             Optional<ResourceProviderDetails> managementRpDetails = default;
             Optional<IReadOnlyList<ResourceProviderDetails>> managementRpDetailsList = default;
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"))
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
-            return new OrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRpDetails.Value, Optional.ToList(managementRpDetailsList), error);
+            return new OrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRpDetails.Value, Optional.ToList(managementRpDetailsList), error.Value);
         }
     }
 }

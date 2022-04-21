@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ExpressRouteConnection list. </summary>
-    public partial class ExpressRouteConnectionList
+    internal partial class ExpressRouteConnectionList
     {
         /// <summary> Initializes a new instance of ExpressRouteConnectionList. </summary>
         internal ExpressRouteConnectionList()

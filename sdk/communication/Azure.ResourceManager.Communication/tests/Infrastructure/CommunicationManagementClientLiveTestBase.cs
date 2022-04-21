@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Communication.Tests
             Init();
         }
 
-        internal async Task<CommunicationService> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroup _resourceGroup)
+        internal async Task<CommunicationServiceResource> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroupResource _resourceGroup)
         {
             CommunicationServiceData data = new CommunicationServiceData()
             {
                 Location = ResourceLocation,
                 DataLocation = ResourceDataLocation,
             };
-            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(true, communicationServiceName, data);
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
         }
     }

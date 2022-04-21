@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date. </param>
-        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string lastAvailableBackupDate) : base(id, name, type, systemData)
+        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastAvailableBackupDate) : base(id, name, resourceType, systemData)
         {
             LastAvailableBackupDate = lastAvailableBackupDate;
         }

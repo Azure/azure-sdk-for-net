@@ -19,7 +19,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Managing_Resource_Groups_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Colletion, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true,rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the WebPubSub inside this resource group.
@@ -64,7 +64,7 @@ WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
     ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
 };
 
-WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
+WebPubSubResource webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();
 ```
 
 ***Get a WebPubSub***
@@ -72,7 +72,7 @@ WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false,
 ```C# Snippet:Managing_WebPubSub_GetWebPubSub
 WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
 Console.WriteLine(webPubSub.Data.Name);
 ```
 
@@ -81,8 +81,8 @@ Console.WriteLine(webPubSub.Data.Name);
 ```C# Snippet:Managing_WebPubSub_ListAllWebPubSub
 WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-AsyncPageable<WebPubSub> response = WebPubSubColletion.GetAllAsync();
-await foreach (WebPubSub WebPubSub in response)
+AsyncPageable<WebPubSubResource> response = WebPubSubColletion.GetAllAsync();
+await foreach (WebPubSubResource WebPubSub in response)
 {
     Console.WriteLine(WebPubSub.Data.Name);
 }
@@ -93,6 +93,6 @@ await foreach (WebPubSub WebPubSub in response)
 ```C# Snippet:Managing_WebPubSub_DeleteWebPubSub
 WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-await webPubSub.DeleteAsync(true);
+WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+await webPubSub.DeleteAsync(WaitUntil.Completed);
 ```

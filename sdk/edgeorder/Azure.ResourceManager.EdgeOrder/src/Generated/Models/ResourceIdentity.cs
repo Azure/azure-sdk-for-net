@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Identity type. </summary>
-        public string Type { get; }
+        public string ResourceIdentityType { get; }
         /// <summary> Service Principal Id backing the Msi. </summary>
         public string PrincipalId { get; }
         /// <summary> Home Tenant Id. </summary>

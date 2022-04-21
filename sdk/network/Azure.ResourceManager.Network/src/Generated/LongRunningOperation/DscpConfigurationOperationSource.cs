@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class DscpConfigurationOperationSource : IOperationSource<DscpConfiguration>
+    internal class DscpConfigurationOperationSource : IOperationSource<DscpConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        DscpConfiguration IOperationSource<DscpConfiguration>.CreateResult(Response response, CancellationToken cancellationToken)
+        DscpConfigurationResource IOperationSource<DscpConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement);
-            return new DscpConfiguration(_client, data);
+            return new DscpConfigurationResource(_client, data);
         }
 
-        async ValueTask<DscpConfiguration> IOperationSource<DscpConfiguration>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DscpConfigurationResource> IOperationSource<DscpConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement);
-            return new DscpConfiguration(_client, data);
+            return new DscpConfigurationResource(_client, data);
         }
     }
 }

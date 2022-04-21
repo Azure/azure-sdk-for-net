@@ -524,10 +524,10 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Script>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Script,ScriptsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Script> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, scriptName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Script,ScriptsUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, scriptName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -851,10 +851,6 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1089,7 +1085,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Script>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Script,ScriptsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1246,7 +1242,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Script>();
+            var _result = new AzureOperationResponse<Script,ScriptsUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1288,6 +1284,19 @@ namespace Microsoft.Azure.Management.Kusto
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ScriptsUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

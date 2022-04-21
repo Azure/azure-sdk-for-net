@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("subscriptionId");
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupName");
@@ -35,6 +35,62 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("deleteRule");
             writer.WriteStringValue(DeleteRule.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static KeyVaultCertificateSourceParameters DeserializeKeyVaultCertificateSourceParameters(JsonElement element)
+        {
+            KeyVaultCertificateSourceParametersTypeName typeName = default;
+            string subscriptionId = default;
+            string resourceGroupName = default;
+            string vaultName = default;
+            string secretName = default;
+            Optional<string> secretVersion = default;
+            UpdateRule updateRule = default;
+            DeleteRule deleteRule = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("typeName"))
+                {
+                    typeName = new KeyVaultCertificateSourceParametersTypeName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"))
+                {
+                    subscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceGroupName"))
+                {
+                    resourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vaultName"))
+                {
+                    vaultName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secretName"))
+                {
+                    secretName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secretVersion"))
+                {
+                    secretVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("updateRule"))
+                {
+                    updateRule = new UpdateRule(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deleteRule"))
+                {
+                    deleteRule = new DeleteRule(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new KeyVaultCertificateSourceParameters(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule);
         }
     }
 }

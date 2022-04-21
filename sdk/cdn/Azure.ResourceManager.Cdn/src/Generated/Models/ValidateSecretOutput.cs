@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The validation status. </summary>
-        public Status? Status { get; }
+        public ValidationStatus? Status { get; }
         /// <summary> Detailed error message. </summary>
         public string Message { get; }
     }

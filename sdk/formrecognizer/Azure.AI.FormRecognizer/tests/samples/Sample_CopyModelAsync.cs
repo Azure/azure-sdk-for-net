@@ -14,22 +14,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
         [Test]
         public async Task CopyModelAsync()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
 #if SNIPPET
-            string endpoint = "<source_endpoint>";
-            string apiKey = "<source_apiKey>";
+            string sourceEndpoint = "<source_endpoint>";
+            string sourceApiKey = "<source_apiKey>";
+#else
+            string sourceEndpoint = TestEnvironment.Endpoint;
+            string sourceApiKey = TestEnvironment.ApiKey;
 #endif
-            var sourcecredential = new AzureKeyCredential(apiKey);
-            var sourceClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var sourcecredential = new AzureKeyCredential(sourceApiKey);
+            var sourceClient = new DocumentModelAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
             #endregion
 
             // For the purpose of this sample, we are going to create a model to copy. Please note that
             // if you already have a model, this is not necessary.
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
@@ -39,11 +39,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient
 #if SNIPPET
-            string endpoint = "<target_endpoint>";
-            string apiKey = "<target_apiKey>";
+            string targetEndpoint = "<target_endpoint>";
+            string targetApiKey = "<target_apiKey>";
+#else
+            string targetEndpoint = TestEnvironment.Endpoint;
+            string targetApiKey = TestEnvironment.ApiKey;
 #endif
-            var targetCredential = new AzureKeyCredential(apiKey);
-            var targetClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var targetCredential = new AzureKeyCredential(targetApiKey);
+            var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
             #endregion
 
             #region Snippet:FormRecognizerSampleGetCopyAuthorization
@@ -56,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             string modelId = model.ModelId;
 #endif
-            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelAsync(modelId, targetAuth);
+            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
             await newModelOperation.WaitForCompletionAsync();
             DocumentModel newModel = newModelOperation.Value;
 

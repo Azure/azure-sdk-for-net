@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopList
+    internal partial class DesktopList
     {
         internal static DesktopList DeserializeDesktopList(JsonElement element)
         {

@@ -5,16 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
-    public enum AfdQueryStringCachingBehavior
+    /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
+    public readonly partial struct AfdQueryStringCachingBehavior : IEquatable<AfdQueryStringCachingBehavior>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AfdQueryStringCachingBehavior"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AfdQueryStringCachingBehavior(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string IgnoreQueryStringValue = "IgnoreQueryString";
+        private const string UseQueryStringValue = "UseQueryString";
+        private const string IgnoreSpecifiedQueryStringsValue = "IgnoreSpecifiedQueryStrings";
+        private const string IncludeSpecifiedQueryStringsValue = "IncludeSpecifiedQueryStrings";
+
         /// <summary> IgnoreQueryString. </summary>
-        IgnoreQueryString,
+        public static AfdQueryStringCachingBehavior IgnoreQueryString { get; } = new AfdQueryStringCachingBehavior(IgnoreQueryStringValue);
         /// <summary> UseQueryString. </summary>
-        UseQueryString,
-        /// <summary> NotSet. </summary>
-        NotSet
+        public static AfdQueryStringCachingBehavior UseQueryString { get; } = new AfdQueryStringCachingBehavior(UseQueryStringValue);
+        /// <summary> IgnoreSpecifiedQueryStrings. </summary>
+        public static AfdQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new AfdQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
+        /// <summary> IncludeSpecifiedQueryStrings. </summary>
+        public static AfdQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new AfdQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
+        /// <summary> Determines if two <see cref="AfdQueryStringCachingBehavior"/> values are the same. </summary>
+        public static bool operator ==(AfdQueryStringCachingBehavior left, AfdQueryStringCachingBehavior right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AfdQueryStringCachingBehavior"/> values are not the same. </summary>
+        public static bool operator !=(AfdQueryStringCachingBehavior left, AfdQueryStringCachingBehavior right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AfdQueryStringCachingBehavior"/>. </summary>
+        public static implicit operator AfdQueryStringCachingBehavior(string value) => new AfdQueryStringCachingBehavior(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AfdQueryStringCachingBehavior other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AfdQueryStringCachingBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

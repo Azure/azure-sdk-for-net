@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureStorageInfoValue. </summary>
-        /// <param name="type"> Type of storage. </param>
+        /// <param name="storageType"> Type of storage. </param>
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>
         /// <param name="accessKey"> Access key for the storage account. </param>
         /// <param name="mountPath"> Path to mount the storage within the site&apos;s runtime environment. </param>
         /// <param name="state"> State of the storage account. </param>
-        internal AzureStorageInfoValue(AzureStorageType? type, string accountName, string shareName, string accessKey, string mountPath, AzureStorageState? state)
+        internal AzureStorageInfoValue(AzureStorageType? storageType, string accountName, string shareName, string accessKey, string mountPath, AzureStorageState? state)
         {
-            Type = type;
+            StorageType = storageType;
             AccountName = accountName;
             ShareName = shareName;
             AccessKey = accessKey;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Type of storage. </summary>
-        public AzureStorageType? Type { get; set; }
+        public AzureStorageType? StorageType { get; set; }
         /// <summary> Name of the storage account. </summary>
         public string AccountName { get; set; }
         /// <summary> Name of the file share (container name, for Blob storage). </summary>

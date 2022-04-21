@@ -301,11 +301,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 c => c.AppendInternal(
                     IsAny<Stream>(),
                     IsAny<long>(),
-                    IsAny<DataLakeFileAppendOptions>(),
                     IsAny<byte[]>(),
+                    IsAny<string>(),
+                    IsAny<IProgress<long>>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, DataLakeFileAppendOptions, byte[], bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, byte[], string, IProgress<long>, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -376,8 +377,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             public async Task<Response> AppendInternal(
                 Stream stream,
                 long offset,
-                DataLakeFileAppendOptions options,
                 byte[] md5,
+                string leaseId,
+                IProgress<long> progressHandler,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -385,7 +387,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     await Task.Delay(25);
                 }
-                options?.ProgressHandler.Report(stream.Length);
+                progressHandler.Report(stream.Length);
 
                 byte[] data = default;
                 if (_saveBytes)

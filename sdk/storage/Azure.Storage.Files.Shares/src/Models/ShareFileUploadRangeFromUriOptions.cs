@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -18,5 +20,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional.  Source authentication used to access the source blob.
         /// </summary>
         public HttpAuthorization SourceAuthentication { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
+        /// </summary>
+        public FileLastWrittenMode? FileLastWrittenMode { get; set; }
     }
 }

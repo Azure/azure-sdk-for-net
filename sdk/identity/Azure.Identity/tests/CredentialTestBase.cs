@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
@@ -14,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class CredentialTestBase : ClientTestBase
+    public abstract class CredentialTestBase : ClientTestBase
     {
         protected const string Scope = "https://vault.azure.net/.default";
         protected const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
@@ -36,16 +39,45 @@ namespace Azure.Identity.Tests
         protected string expectedCode;
         protected DeviceCodeResult deviceCodeResult;
 
-        public CredentialTestBase(bool isAsync) : base(isAsync)
-        { }
+        protected const string DiscoveryResponseBody =
+            "{\"tenant_discovery_endpoint\": \"https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/v2.0/.well-known/openid-configuration\",\"api-version\": \"1.1\",\"metadata\":[{\"preferred_network\": \"login.microsoftonline.com\",\"preferred_cache\": \"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]},{\"preferred_network\": \"login.partner.microsoftonline.cn\",\"preferred_cache\": \"login.partner.microsoftonline.cn\",\"aliases\":[\"login.partner.microsoftonline.cn\",\"login.chinacloudapi.cn\"]},{\"preferred_network\": \"login.microsoftonline.de\",\"preferred_cache\": \"login.microsoftonline.de\",\"aliases\":[\"login.microsoftonline.de\"]},{\"preferred_network\": \"login.microsoftonline.us\",\"preferred_cache\": \"login.microsoftonline.us\",\"aliases\":[\"login.microsoftonline.us\",\"login.usgovcloudapi.net\"]},{\"preferred_network\": \"login-us.microsoftonline.com\",\"preferred_cache\": \"login-us.microsoftonline.com\",\"aliases\":[\"login-us.microsoftonline.com\"]}]}";
 
-        public void TestSetup()
+        public CredentialTestBase(bool isAsync) : base(isAsync)
+        {
+        }
+
+        public abstract TokenCredential GetTokenCredential(TokenCredentialOptions options);
+
+        [Test]
+        public async Task IsAccountIdentifierLoggingEnabled([Values(true, false)] bool isOptionSet)
+        {
+            var options = new TokenCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = isOptionSet } };
+            TestSetup(options);
+            expectedTenantId = TenantId;
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
+            var credential = GetTokenCredential(options);
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
+            await credential.GetTokenAsync(context, default);
+
+            var loggedEvents = _listener.EventsById(AzureIdentityEventSource.AuthenticatedAccountDetailsEvent);
+            if (isOptionSet)
+            {
+                CollectionAssert.IsNotEmpty(loggedEvents);
+            }
+            else
+            {
+                CollectionAssert.IsEmpty(loggedEvents);
+            }
+        }
+
+        public void TestSetup(TokenCredentialOptions options = null)
         {
             expectedTenantId = null;
             expectedReplyUri = null;
             authCode = Guid.NewGuid().ToString();
-            options = new TokenCredentialOptions();
-            expectedToken = Guid.NewGuid().ToString();
+            options = options ?? new TokenCredentialOptions();
+            expectedToken = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.UtcNow.AddHours(1));
             expectedUserAssertion = Guid.NewGuid().ToString();
             expiresOn = DateTimeOffset.Now.AddHours(1);
             result = new AuthenticationResult(
@@ -57,12 +89,12 @@ namespace Azure.Identity.Tests
                 TenantId,
                 new MockAccount("username"),
                 null,
-                new[] { Scope },
+                new[] {Scope},
                 Guid.NewGuid(),
                 null,
                 "Bearer");
 
-            mockConfidentialMsalClient = new MockMsalConfidentialClient()
+            mockConfidentialMsalClient = new MockMsalConfidentialClient(null, null, null, null, null, options)
                 .WithSilentFactory(
                     (_, _tenantId, _replyUri, _) =>
                     {
@@ -91,7 +123,7 @@ namespace Azure.Identity.Tests
                     });
 
             expectedCode = Guid.NewGuid().ToString();
-            mockPublicMsalClient = new MockMsalPublicClient();
+            mockPublicMsalClient = new MockMsalPublicClient(null, null, null, null, options);
             deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
             mockPublicMsalClient.DeviceCodeResult = deviceCodeResult;
             var publicResult = new AuthenticationResult(
@@ -103,7 +135,7 @@ namespace Azure.Identity.Tests
                 TenantId,
                 new MockAccount("username"),
                 null,
-                new[] { Scope },
+                new[] {Scope},
                 Guid.NewGuid(),
                 null,
                 "Bearer");
@@ -150,6 +182,7 @@ namespace Azure.Identity.Tests
             {
                 return null;
             }
+
             using var memoryStream = new MemoryStream();
             request.Content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
@@ -159,7 +192,8 @@ namespace Azure.Identity.Tests
             }
         }
 
-        protected MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId, string userName)
+        protected MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId,
+            string userName)
         {
             var response = new MockResponse(responseCode);
             var idToken = CreateMsalIdToken(Guid.NewGuid().ToString(), userName, tenantId);
@@ -190,7 +224,7 @@ namespace Azure.Identity.Tests
             return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", MsalEncode(id));
         }
 
-         private const char base64PadCharacter = '=';
+        private const char base64PadCharacter = '=';
 #if NET45
         private const string doubleBase64PadCharacter = "==";
 #endif
@@ -204,11 +238,9 @@ namespace Azure.Identity.Tests
         /// </summary>
         internal static readonly char[] s_base64Table =
         {
-            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-            '0','1','2','3','4','5','6','7','8','9',
-            base64UrlCharacter62,
-            base64UrlCharacter63
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+            'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+            'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', base64UrlCharacter62, base64UrlCharacter63
         };
 
         /// <summary>
@@ -302,7 +334,7 @@ namespace Azure.Identity.Tests
                     }
                     break;
 
-                    //default or case 0: no further operations are needed.
+                //default or case 0: no further operations are needed.
             }
 
             return new string(output, 0, j);
@@ -323,5 +355,71 @@ namespace Azure.Identity.Tests
 
             return MsalEncode(inArray, 0, inArray.Length);
         }
+
+        protected bool RequestBodyHasUserAssertionWithHeader(Request req, string headerName)
+        {
+            req.Content.TryComputeLength(out var len);
+            byte[] content = new byte[len];
+            var stream = new MemoryStream((int)len);
+            req.Content.WriteTo(stream, default);
+            var body = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+            var parts = body.Split('&');
+            foreach (var part in parts)
+            {
+                if (part.StartsWith("client_assertion="))
+                {
+                    var assertion = part.AsSpan();
+                    int start = assertion.IndexOf('=') + 1;
+                    assertion = assertion.Slice(start);
+                    int end = assertion.IndexOf('.');
+                    var jwt = assertion.Slice(0, end);
+                    string convertedToken = jwt.ToString().Replace('_', '/').Replace('-', '+');
+                    switch (jwt.Length % 4)
+                    {
+                        case 2:
+                            convertedToken += "==";
+                            break;
+                        case 3:
+                            convertedToken += "=";
+                            break;
+                    }
+
+                    Utf8JsonReader reader = new Utf8JsonReader(Convert.FromBase64String(convertedToken));
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonTokenType.PropertyName)
+                        {
+                            var header = reader.GetString();
+                            if (header == headerName)
+                            {
+                                return true;
+                            }
+
+                            reader.Read();
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        protected MockTransport Createx5cValidatingTransport(bool sendCertChain) => new MockTransport((req) =>
+        {
+            // respond to tenant discovery
+            if (req.Uri.Path.StartsWith("/common/discovery"))
+            {
+                return new MockResponse(200).SetContent(DiscoveryResponseBody);
+            }
+
+            // respond to token request
+            if (req.Uri.Path.EndsWith("/token"))
+            {
+                Assert.That(sendCertChain, Is.EqualTo(RequestBodyHasUserAssertionWithHeader(req, "x5c")));
+                return new MockResponse(200).WithContent(
+                        $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{expectedToken}\" }}");
+            }
+            return new MockResponse(200);
+        });
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Core
         /// <summary>
         /// This dictionary is keyed with <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that even if the accessor methods
         /// become public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
-        /// by external code. See the <see cref="UserAgentValue"/> and <see cref="UserAgentValueKey"/> types for an example of this usage.
+        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage.
         /// </summary>
         private Dictionary<Type, object>? _typeProperties;
 

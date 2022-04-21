@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             Assert.AreEqual(afdRuleSetName, afdRuleSet.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdRuleSets().CreateOrUpdateAsync(true, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            _ = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            _ = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             int count = 0;
-            await foreach (var tempRuleSet in afdProfile.GetAfdRuleSets().GetAllAsync())
+            await foreach (var tempRuleSet in afdProfileResource.GetAfdRuleSets().GetAllAsync())
             {
                 count++;
             }
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
-            AfdRuleSet getAfdRuleSet = await afdProfile.GetAfdRuleSets().GetAsync(afdRuleSetName);
+            AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
+            AfdRuleSetResource getAfdRuleSet = await afdProfileResource.GetAfdRuleSets().GetAsync(afdRuleSetName);
             ResourceDataHelper.AssertValidAfdRuleSet(afdRuleSet, getAfdRuleSet);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdRuleSets().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetAfdRuleSets().GetAsync(null));
         }
     }
 }

@@ -635,7 +635,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified farmer. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -677,7 +677,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
@@ -687,7 +687,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -697,7 +697,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified farmer. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -739,7 +739,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(farmerId, nameof(farmerId));
@@ -749,7 +749,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -760,7 +760,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         internal HttpMessage CreateGetFarmersRequest(IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -821,13 +821,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFarmerRequest(string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -837,13 +836,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -855,13 +853,12 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteRequest(string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -871,13 +868,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -887,13 +883,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -904,13 +899,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFarmersNextPageRequest(string nextLink, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -918,62 +912,16 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

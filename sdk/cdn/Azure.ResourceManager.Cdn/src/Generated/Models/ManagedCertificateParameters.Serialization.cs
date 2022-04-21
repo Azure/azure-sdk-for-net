@@ -10,28 +10,40 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedCertificateParameters : IUtf8JsonSerializable
+    internal partial class ManagedCertificateParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 
         internal static ManagedCertificateParameters DeserializeManagedCertificateParameters(JsonElement element)
         {
+            Optional<string> subject = default;
+            Optional<string> expirationDate = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("subject"))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expirationDate"))
+                {
+                    expirationDate = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedCertificateParameters(type);
+            return new ManagedCertificateParameters(type, subject.Value, expirationDate.Value);
         }
     }
 }

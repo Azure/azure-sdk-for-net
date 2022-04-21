@@ -12,8 +12,29 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/068f1ecdf3abb35a6a32
 tag: package-2021-08-01
 output-folder: Generated/
 clear-output-folder: true
-mgmt-debug:
-  show-request-path: true
+modelerfour:
+  flatten-payloads: false
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 directive:
   - rename-model:
       from: Configuration

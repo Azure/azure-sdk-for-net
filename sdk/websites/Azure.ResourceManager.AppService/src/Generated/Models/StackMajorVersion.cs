@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         public StackMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<StackMinorVersion>();
-            AppSettingsDictionary = new ChangeTrackingDictionary<string, object>();
-            SiteConfigPropertiesDictionary = new ChangeTrackingDictionary<string, object>();
+            AppSettingsDictionary = new ChangeTrackingDictionary<string, BinaryData>();
+            SiteConfigPropertiesDictionary = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StackMajorVersion. </summary>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
-        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? applicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, object> appSettingsDictionary, IDictionary<string, object> siteConfigPropertiesDictionary)
+        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? applicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
@@ -78,13 +79,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;/appSettings&gt;
         ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
         /// </summary>
-        public IDictionary<string, object> AppSettingsDictionary { get; }
+        public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
         /// &lt;siteConfigProperties&gt;
         ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </summary>
-        public IDictionary<string, object> SiteConfigPropertiesDictionary { get; }
+        public IDictionary<string, BinaryData> SiteConfigPropertiesDictionary { get; }
     }
 }

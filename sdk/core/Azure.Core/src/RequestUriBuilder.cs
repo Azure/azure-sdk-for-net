@@ -199,7 +199,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Escapes and appends the <paramref name="value"/> to <see cref="Path"/> without adding path separator.
-        /// Path segments and any other characters will be escaped, e.g. "/" will be escaped as "%3a".
+        /// Path segments and any other characters will be escaped, e.g. ":" will be escaped as "%3a".
         /// </summary>
         /// <param name="value">The value to escape and append.</param>
         public void AppendPath(string value)
@@ -209,7 +209,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Optionally escapes and appends the <paramref name="value"/> to <see cref="Path"/> without adding path separator.
-        /// If <paramref name="escape"/> is true, path segments and any other characters will be escaped, e.g. "/" will be escaped as "%3a".
+        /// If <paramref name="escape"/> is true, path segments and any other characters will be escaped, e.g. ":" will be escaped as "%3a".
         /// </summary>
         /// <param name="value">The value to optionally escape and append.</param>
         /// <param name="escape">Whether value should be escaped.</param>

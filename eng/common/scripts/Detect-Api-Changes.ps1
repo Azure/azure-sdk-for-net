@@ -1,3 +1,5 @@
+# cSpell:ignore PULLREQUEST
+# cSpell:ignore TARGETBRANCH
 [CmdletBinding()]
 Param (
   [Parameter(Mandatory=$True)]
@@ -10,11 +12,13 @@ Param (
   [string] $CommitSha,
   [Parameter(Mandatory=$True)]
   [array] $ArtifactList,
+  [string] $APIViewUri,
   [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
-  [string] $APIViewUri = "https://apiview.dev/PullRequest/DetectApiChanges",
   [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
+
+. (Join-Path $PSScriptRoot common.ps1)
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
 function Submit-Request($filePath, $packageName)
@@ -61,8 +65,7 @@ function Should-Process-Package($pkgPath, $packageName)
     # Get package info from json file created before updating version to daily dev
     $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
     $packagePath = $pkgInfo.DirectoryPath
-    $modifiedFiles = git diff --name-only --relative $TargetBranch HEAD
-    $modifiedFiles = $modifiedFiles.Where({$_.startswith($packagePath)})
+    $modifiedFiles  = Get-ChangedFiles -DiffPath "$packagePath/*" -DiffFilterType ''
     $filteredFileCount = $modifiedFiles.Count
     Write-Host "Number of modified files for package: $filteredFileCount"
     return ($filteredFileCount -gt 0 -and $pkgInfo.IsNewSdk)
@@ -80,7 +83,6 @@ function Log-Input-Params()
     Write-Host "Package Name: $($PackageName)"
 }
 
-. (Join-Path $PSScriptRoot common.ps1)
 Log-Input-Params
 
 if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn")))
