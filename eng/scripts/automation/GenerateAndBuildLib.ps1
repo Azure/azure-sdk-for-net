@@ -64,9 +64,6 @@ function Update-AutorestConfigFile() {
             }
         } elseif ($inputfile -ne "") {
             Write-Host "Updating autorest.md file to update input-file."
-            Write-Host "inputfile:$inputfile END."
-            $autorestContent = Get-Content -Path $autorestFilePath
-            Write-Host "autorest: $autorestContent"
             $inputfileRex = "input-file *:*"
             if ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
                 (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
