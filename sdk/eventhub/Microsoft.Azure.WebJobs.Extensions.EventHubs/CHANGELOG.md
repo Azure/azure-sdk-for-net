@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0 (Unreleased)
+## 5.1.0 (2022-04-21)
 ### Features Added
 - Adding support for retry policy (SupportsRetryAttribute)
 
