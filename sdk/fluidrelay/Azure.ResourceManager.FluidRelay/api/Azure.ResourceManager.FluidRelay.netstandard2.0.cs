@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FluidRelay
     public partial class FluidRelayContainerData : Azure.ResourceManager.Models.ResourceData
     {
         public FluidRelayContainerData() { }
-        public string FrsContainerId { get { throw null; } }
+        public System.Guid? FrsContainerId { get { throw null; } }
         public string FrsTenantId { get { throw null; } }
         public Azure.ResourceManager.FluidRelay.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
