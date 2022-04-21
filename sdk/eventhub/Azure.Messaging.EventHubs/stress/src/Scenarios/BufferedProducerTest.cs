@@ -16,17 +16,32 @@ using Azure.Messaging.EventHubs.Tests;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
-    public class BufferedProducerTest
+    internal class BufferedProducerTest
     {
         private Metrics metrics;
+        private ProducerConfiguration testConfiguration;
 
-        public async Task Run(string connectionString, string eventHubName, string appInsightsKey, int durationInHours)
+        public BufferedProducerTest(ProducerConfiguration configuration)
         {
+            testConfiguration = configuration;
+            metrics = new Metrics(configuration.InstrumentationKey);
+        }
+
+        public async Task Run()
+        {
+            var connectionString = testConfiguration.EventHubsConnectionString;
+            var eventHubName = testConfiguration.EventHub;
+            var appInsightsKey = testConfiguration.InstrumentationKey;
+            var durationInHours = testConfiguration.DurationInHours;
+
             metrics = new Metrics(appInsightsKey);
             using var enqueueingCancellationSource = new CancellationTokenSource();
 
             var runDuration = TimeSpan.FromHours(durationInHours);
             enqueueingCancellationSource.CancelAfter(runDuration);
+
+            var startOutput = $"Starting a {durationInHours} hour BufferedProducerTest run. Using Event Hub: {eventHubName} which has {testConfiguration.NumPartitions} partitions. See the App Insights dashboard for more information.";
+            metrics.Client.TrackTrace(startOutput);
 
             var enqueuingTasks = default(IEnumerable<Task>);
 
@@ -34,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 enqueuingTasks = Enumerable
                     .Range(0, 2)
-                    .Select(_ => Task.Run(() => new BufferedPublisher(connectionString, eventHubName, metrics).Start(enqueueingCancellationSource.Token)))
+                    .Select(_ => Task.Run(() => new BufferedPublisher(testConfiguration, metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
                 await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
@@ -53,8 +68,6 @@ namespace Azure.Messaging.EventHubs.Stress
             }
             catch (Exception ex)
             {
-                metrics.Client.GetMetric(metrics.TotalExceptions).TrackValue(1);
-                metrics.Client.GetMetric(metrics.GeneralExceptions).TrackValue(1);
                 metrics.Client.TrackException(ex);
             }
         }
