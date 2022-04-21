@@ -64,6 +64,9 @@ function Update-AutorestConfigFile() {
             }
         } elseif ($inputfile -ne "") {
             Write-Host "Updating autorest.md file to update input-file."
+            Write-Host "inputfile:$inputfile END."
+            $autorestContent = Get-Content -Path $autorestFilePath
+            Write-Host "autorest: $autorestContent"
             $inputfileRex = "input-file *:*"
             if ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
                 (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
@@ -103,8 +106,8 @@ function New-DataPlanePackageFolder() {
   $inputfile = ""
   $fileArray = $inputfiles.Split(";")
   if (($inputfiles -ne "") -And ($fileArray.Length -gt 0)) {
-    $inputfile = "- " + $fileArray[0];
-    for ($i = 1; $i -lt $fileArray.Count ; $i++) {
+    # $inputfile = "- " + $fileArray[0];
+    for ($i = 0; $i -lt $fileArray.Count ; $i++) {
         $inputfile = $inputfile + [Environment]::NewLine + "- " + $fileArray[$i]
     }
   }
@@ -123,7 +126,7 @@ function New-DataPlanePackageFolder() {
         Write-Error "Error: input file should not be empty."
         exit 1
     }
-    dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
+    dotnet new -i $sdkPath/sdk/template/Azure.Template
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
     Push-Location $projectFolder
@@ -135,9 +138,9 @@ function New-DataPlanePackageFolder() {
 
     $libraryName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --groupName $groupName --includeCI true --force"
+    $dotnetNewCmd = "dotnet new dpg --libraryName $libraryName --groupName $groupName --includeCI true --force"
     if ($inputfile -ne "") {
-        $dotnetNewCmd = $dotnetNewCmd + " --swagger $inputfile"
+        $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
     }
     if ($securityScope -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
@@ -147,7 +150,7 @@ function New-DataPlanePackageFolder() {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
 
-    # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+    # dotnet new dpg --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
@@ -159,6 +162,7 @@ function New-DataPlanePackageFolder() {
     dotnet sln remove tests\$namespace.Tests.csproj
     dotnet sln add tests\$namespace.Tests.csproj
     Pop-Location
+    dotnet new -u $sdkPath/sdk/template/Azure.Template
   }
 
   Push-Location $sdkPath
@@ -244,6 +248,16 @@ function Invoke-Generate() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+    Pop-Location
+}
+
+function Invoke-Build() {
+    param(
+        [string]$sdkfolder= ""
+    )
+    $sdkfolder = $sdkfolder -replace "\\", "/"
+    Push-Location $sdkfolder
+    dotnet build
     Pop-Location
 }
 

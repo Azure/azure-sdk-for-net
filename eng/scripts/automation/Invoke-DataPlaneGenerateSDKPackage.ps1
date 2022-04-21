@@ -27,6 +27,13 @@ if ( $? -ne $True) {
   Write-Error "Failed to create generate sdk."
   exit 1
 }
+
+Invoke-Build -sdkfolder $projectFolder
+if ( $? -ne $True) {
+  Write-Error "Failed to build sdk. exit code: $?"
+  exit 1
+}
+
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. .. ..)
 Set-Location $repoRoot

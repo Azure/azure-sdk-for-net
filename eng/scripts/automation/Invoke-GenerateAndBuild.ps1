@@ -45,6 +45,12 @@ if ( $? -ne $True) {
   Write-Error "Failed to generate sdk. exit code: $?"
   exit 1
 }
+
+Invoke-Build -sdkfolder $projectFolder
+if ( $? -ne $True) {
+  Write-Error "Failed to build sdk. exit code: $?"
+  exit 1
+}
 $outputJson = [PSCustomObject]@{
     packages = @([pscustomobject]@{packageName="$packageName"; result='succeeded'; path=@("$path");packageFolder="$path"})
 }

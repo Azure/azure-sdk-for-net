@@ -61,7 +61,7 @@ sdk\<service name>\<package name>\CHANGELOG.md
 - `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
 - `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
   
-We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates) to automatically create the project.
+We will use dotnet project template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to automatically create the project.
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
@@ -111,8 +111,7 @@ Here is the step by step process to add tests:requirements
 
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
 - Update `<client-name>ClientTest.cs`.
-  - Comment-out the 'CreateClient' method, and update the new `<service>Client` statement.
-  - remove all the template project tests, and write the tests according to the commented Test method template. Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
+  - Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
 
 **Note**:
 
