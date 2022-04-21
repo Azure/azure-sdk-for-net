@@ -135,6 +135,11 @@ namespace Azure.Core.TestFramework
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
             }
 
+            foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
+            {
+                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
+            }
+
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
@@ -236,12 +241,17 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-        public async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync(bool save)
         {
             if (Mode == RecordedTestMode.Record)
             {
-                await _proxy.Client.StopRecordAsync(RecordingId, Variables);
+                await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsync(true);
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

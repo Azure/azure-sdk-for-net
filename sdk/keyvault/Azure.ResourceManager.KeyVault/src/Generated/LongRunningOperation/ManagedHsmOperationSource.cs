@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class ManagedHsmOperationSource : IOperationSource<ManagedHsm>
+    internal class ManagedHsmOperationSource : IOperationSource<ManagedHsmResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.KeyVault
             _client = client;
         }
 
-        ManagedHsm IOperationSource<ManagedHsm>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedHsmResource IOperationSource<ManagedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsm(_client, data);
+            return new ManagedHsmResource(_client, data);
         }
 
-        async ValueTask<ManagedHsm> IOperationSource<ManagedHsm>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedHsmResource> IOperationSource<ManagedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsm(_client, data);
+            return new ManagedHsmResource(_client, data);
         }
     }
 }

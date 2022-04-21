@@ -30,12 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            this.ActivityProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = EmptyConnectionString,
-                },
-                transmitter: this.Transmitter));
+            this.ActivityProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(this.Transmitter));
 
             builder.ConfigureServices(services => services.AddOpenTelemetryTracing((builder) => builder
                         .AddAspNetCoreInstrumentation()

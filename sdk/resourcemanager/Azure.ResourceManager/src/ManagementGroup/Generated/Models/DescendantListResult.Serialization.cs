@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantListResult
     {
         internal static DescendantListResult DeserializeDescendantListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DescendantInfo>> value = default;
+            Optional<IReadOnlyList<DescendantData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DescendantInfo> array = new List<DescendantInfo>();
+                    List<DescendantData> array = new List<DescendantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DescendantInfo.DeserializeDescendantInfo(item));
+                        array.Add(DescendantData.DeserializeDescendantData(item));
                     }
                     value = array;
                     continue;

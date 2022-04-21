@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,12 +28,16 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new();
+
         /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
-        private readonly SessionReceiverManager _receiverManager;
+        private readonly SessionReceiverManager _manager;
+
+        private bool _callbackCompleted;
 
         /// <summary>
         /// Gets the Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
@@ -56,20 +61,21 @@ namespace Azure.Messaging.ServiceBus
         public ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken) : this(message, manager: null, cancellationToken)
         {
-            Message = message;
             _sessionReceiver = receiver;
-            CancellationToken = cancellationToken;
         }
 
         internal ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
-            ServiceBusSessionReceiver receiver,
-            SessionReceiverManager receiverManager,
-            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+            SessionReceiverManager manager,
+            CancellationToken cancellationToken)
         {
-            _receiverManager = receiverManager;
+            Message = message;
+            Messages[message] = default;
+            _manager = manager;
+            _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
+            CancellationToken = cancellationToken;
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -159,12 +165,84 @@ namespace Azure.Messaging.ServiceBus
         /// This depends on what other session messages may be in the queue or subscription).
         /// </summary>
         public virtual void ReleaseSession() =>
-            _receiverManager.CancelSession();
+            // manager will be null if instance created using the public constructor which is exposed for testing purposes
+            _manager?.CancelSession();
 
         ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity using <see cref="ServiceBusReceiveMode"/> mode
+        /// configured in <see cref="ServiceBusSessionProcessorOptions.ReceiveMode"/>, which defaults to PeekLock mode.
+        /// This method doesn't guarantee to return exact `maxMessages` messages, even if there are `maxMessages` messages available in the queue or topic.
+        /// Messages received using this method are subject to the behavior defined in <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>.
+        /// </summary>
+        ///
+        /// <param name="maxMessages">The maximum number of messages that will be received.</param>
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages are available.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+            int maxMessages,
+            TimeSpan? maxWaitTime = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateCallbackInScope();
+            IReadOnlyList<ServiceBusReceivedMessage> messages = await _sessionReceiver.ReceiveMessagesAsync(maxMessages, maxWaitTime, cancellationToken).ConfigureAwait(false);
+            return TrackMessagesAsReceived(messages);
+        }
+
+        /// <summary>
+        /// Receives a <see cref="IList{ServiceBusReceivedMessage}"/> of deferred messages identified by <paramref name="sequenceNumbers"/>.
+        /// Messages received using this method are subject to the behavior defined in <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
+        ///
+        /// <returns>Messages identified by sequence number are returned.
+        /// Throws if the messages have not been deferred.</returns>
+        /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        /// <exception cref="ServiceBusException">
+        ///   The specified sequence number does not correspond to a message that has been deferred.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
+        /// </exception>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+            IEnumerable<long> sequenceNumbers,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateCallbackInScope();
+            IReadOnlyList<ServiceBusReceivedMessage> messages = await _sessionReceiver.ReceiveDeferredMessagesAsync(sequenceNumbers, cancellationToken).ConfigureAwait(false);
+            return TrackMessagesAsReceived(messages);
+        }
+
+        private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
+        {
+            foreach (ServiceBusReceivedMessage message in messages)
+            {
+                Messages[message] = default;
+            }
+
+            return messages;
+        }
+
+        internal void EndExecutionScope()
+        {
+            _callbackCompleted = true;
+        }
+
+        private void ValidateCallbackInScope()
+        {
+            if (Volatile.Read(ref _callbackCompleted))
+            {
+                throw new InvalidOperationException(
+                    "Messages cannot be received using the 'ProcessSessionMessageEventArgs' after the 'ProcessSessionMessageAsync' event handler has returned.");
+            }
         }
     }
 }

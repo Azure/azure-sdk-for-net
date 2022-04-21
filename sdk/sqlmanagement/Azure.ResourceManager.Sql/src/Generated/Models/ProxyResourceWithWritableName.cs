@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ProxyResourceWithWritableName. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        internal ProxyResourceWithWritableName(string id, string name, string type) : base(id, name, type)
+        /// <param name="resourceType"> Resource type. </param>
+        internal ProxyResourceWithWritableName(string id, string name, string resourceType) : base(id, name, resourceType)
         {
         }
     }

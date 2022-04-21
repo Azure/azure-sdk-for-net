@@ -160,7 +160,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
@@ -171,6 +172,8 @@ namespace Azure.Storage.Files.DataLake
                 authPolicy,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -382,7 +385,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
@@ -390,6 +394,8 @@ namespace Azure.Storage.Files.DataLake
                 authentication,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>

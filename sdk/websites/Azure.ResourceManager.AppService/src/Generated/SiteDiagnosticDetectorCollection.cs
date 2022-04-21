@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteDiagnosticDetector and their operations over its parent. </summary>
-    public partial class SiteDiagnosticDetectorCollection : ArmCollection, IEnumerable<SiteDiagnosticDetector>, IAsyncEnumerable<SiteDiagnosticDetector>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteDiagnosticDetectorResource" /> and their operations.
+    /// Each <see cref="SiteDiagnosticDetectorResource" /> in the collection will belong to the same instance of <see cref="SiteDiagnosticResource" />.
+    /// To get a <see cref="SiteDiagnosticDetectorCollection" /> instance call the GetSiteDiagnosticDetectors method from an instance of <see cref="SiteDiagnosticResource" />.
+    /// </summary>
+    public partial class SiteDiagnosticDetectorCollection : ArmCollection, IEnumerable<SiteDiagnosticDetectorResource>, IAsyncEnumerable<SiteDiagnosticDetectorResource>
     {
         private readonly ClientDiagnostics _siteDiagnosticDetectorDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteDiagnosticDetectorDiagnosticsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteDiagnosticDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDiagnosticDetector.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteDiagnosticDetector.ResourceType, out string siteDiagnosticDetectorDiagnosticsApiVersion);
-            _siteDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticDetectorDiagnosticsApiVersion);
+            _siteDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDiagnosticDetectorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteDiagnosticDetectorResource.ResourceType, out string siteDiagnosticDetectorDiagnosticsApiVersion);
+            _siteDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteDiagnosticDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteDiagnostic.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteDiagnostic.ResourceType), nameof(id));
+            if (id.ResourceType != SiteDiagnosticResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteDiagnosticResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<SiteDiagnosticDetector>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -69,8 +72,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteDiagnosticDetector> Get(string detectorName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDiagnosticDetectorResource> Get(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -98,8 +101,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +117,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectors
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDiagnosticDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteDiagnosticDetector> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteDiagnosticDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteDiagnosticDetector>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteDiagnosticDetectorResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +135,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteDiagnosticDetector>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteDiagnosticDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +159,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectors
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDiagnosticDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteDiagnosticDetector> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteDiagnosticDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteDiagnosticDetector> FirstPageFunc(int? pageSizeHint)
+            Page<SiteDiagnosticDetectorResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectors(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +177,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteDiagnosticDetector> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteDiagnosticDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,7 +204,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string detectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +239,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(detectorName, cancellationToken: cancellationToken);
+                var response = _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,65 +249,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetector
-        /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<SiteDiagnosticDetector>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteDiagnosticDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticDetector(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetector
-        /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteDiagnosticDetector> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteDiagnosticDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticDetector(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SiteDiagnosticDetector> IEnumerable<SiteDiagnosticDetector>.GetEnumerator()
+        IEnumerator<SiteDiagnosticDetectorResource> IEnumerable<SiteDiagnosticDetectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +259,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteDiagnosticDetector> IAsyncEnumerable<SiteDiagnosticDetector>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteDiagnosticDetectorResource> IAsyncEnumerable<SiteDiagnosticDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

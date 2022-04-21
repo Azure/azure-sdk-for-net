@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyClientOptions.ServiceVersion.V7_3)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -81,7 +81,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [TestCase(16)]
         [TestCase(32)]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task GetRandomBytes(int count)
         {
             byte[] rand = await Client.GetRandomBytesAsync(count);
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseImportedKey()
         {
             string keyName = Recording.GenerateId();

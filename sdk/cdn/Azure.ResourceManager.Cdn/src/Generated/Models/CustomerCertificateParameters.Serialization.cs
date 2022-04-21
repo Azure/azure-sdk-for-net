@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomerCertificateParameters : IUtf8JsonSerializable
+    internal partial class CustomerCertificateParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("secretVersion");
                 writer.WriteStringValue(SecretVersion);
-            }
-            if (Optional.IsDefined(CertificateAuthority))
-            {
-                writer.WritePropertyName("certificateAuthority");
-                writer.WriteStringValue(CertificateAuthority);
             }
             if (Optional.IsDefined(UseLatestVersion))
             {
@@ -44,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 
@@ -52,9 +47,12 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
-            Optional<string> certificateAuthority = default;
             Optional<bool> useLatestVersion = default;
+            Optional<string> subject = default;
+            Optional<string> expirationDate = default;
+            Optional<string> certificateAuthority = default;
             Optional<IList<string>> subjectAlternativeNames = default;
+            Optional<string> thumbprint = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,11 +66,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     secretVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateAuthority"))
-                {
-                    certificateAuthority = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("useLatestVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -81,6 +74,21 @@ namespace Azure.ResourceManager.Cdn.Models
                         continue;
                     }
                     useLatestVersion = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("subject"))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expirationDate"))
+                {
+                    expirationDate = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateAuthority"))
+                {
+                    certificateAuthority = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subjectAlternativeNames"))
@@ -98,13 +106,18 @@ namespace Azure.ResourceManager.Cdn.Models
                     subjectAlternativeNames = array;
                     continue;
                 }
+                if (property.NameEquals("thumbprint"))
+                {
+                    thumbprint = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
             }
-            return new CustomerCertificateParameters(type, secretSource, secretVersion.Value, certificateAuthority.Value, Optional.ToNullable(useLatestVersion), Optional.ToList(subjectAlternativeNames));
+            return new CustomerCertificateParameters(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, expirationDate.Value, certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
         }
     }
 }

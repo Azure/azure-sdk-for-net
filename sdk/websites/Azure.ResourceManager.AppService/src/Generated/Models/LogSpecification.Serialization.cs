@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<string> blobDuration = default;
+            Optional<TimeSpan> blobDuration = default;
             Optional<string> logFilterPattern = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +33,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("blobDuration"))
                 {
-                    blobDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    blobDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("logFilterPattern"))
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new LogSpecification(name.Value, displayName.Value, blobDuration.Value, logFilterPattern.Value);
+            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value);
         }
     }
 }

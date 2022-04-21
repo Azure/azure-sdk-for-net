@@ -32,8 +32,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
-Console.WriteLine($"Account has {accountProperties.Count} models.");
-Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
+Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
 AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
@@ -51,7 +51,7 @@ await foreach (DocumentModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
@@ -79,8 +79,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = client.GetAccountProperties();
-Console.WriteLine($"Account has {accountProperties.Count} models.");
-Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
+Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
 Pageable<DocumentModelInfo> models = client.GetModels();
@@ -96,7 +96,7 @@ foreach (DocumentModelInfo modelInfo in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;

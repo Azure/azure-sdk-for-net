@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteSourceControl> GetSiteSourceControlCollectionAsync()
+        private async Task<SiteSourceControlResource> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await resourceGroup.GetWebSites().CreateOrUpdateAsync(true, SiteName, SiteInput);
+            var lro = await resourceGroup.GetWebSites().CreateOrUpdateAsync(WaitUntil.Completed, SiteName, SiteInput);
             var Site = lro.Value;
             return Site.GetSiteSourceControl();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetSiteSourceControlCollectionAsync();
             //var name = Recording.GenerateAssetName("testSiteSource");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
-            var lro = await container.CreateOrUpdateAsync(true, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, input);
             var siteSourceControl = lro.Value;
             //Assert.AreEqual(name, siteSourceControl.Data.Name);
         }
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetSiteSourceControlCollectionAsync();
             //var controlName = Recording.GenerateAssetName("testSiteSourceControl-");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
-            var lro = await container.CreateOrUpdateAsync(true, input);
-            SiteSourceControl sourcecontrol1 = lro.Value;
-            SiteSourceControl sourcecontrol2 = await container.GetAsync();
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, input);
+            SiteSourceControlResource sourcecontrol1 = lro.Value;
+            SiteSourceControlResource sourcecontrol2 = await container.GetAsync();
             ResourceDataHelper.AssertSiteSourceControlData(sourcecontrol1.Data, sourcecontrol2.Data);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var planName = Recording.GenerateAssetName("testAppServicePlan-");
             var plan = await GetSiteSourceControlCollectionAsync();
-            await plan.DeleteAsync(true);
+            await plan.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
-            Optional<SecurityPolicyParameters> parameters = default;
+            Optional<string> profileName = default;
+            Optional<SecurityPolicyPropertiesParameters> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -88,6 +89,11 @@ namespace Azure.ResourceManager.Cdn
                             deploymentStatus = new DeploymentStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("profileName"))
+                        {
+                            profileName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("parameters"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -95,14 +101,14 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecurityPolicyParameters.DeserializeSecurityPolicyParameters(property0.Value);
+                            parameters = SecurityPolicyPropertiesParameters.DeserializeSecurityPolicyPropertiesParameters(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AfdSecurityPolicyData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), parameters.Value);
+            return new AfdSecurityPolicyData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
         }
     }
 }

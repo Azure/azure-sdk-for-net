@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionDate))
+            if (Optional.IsDefined(SourceDatabaseDeletionOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionDate.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             IDictionary<string, string> tags = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
             Optional<DatabaseReadScale> readScale = default;
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SecondaryType> secondaryType = default;
-            Optional<Models.Sku> currentSku = default;
+            Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
             Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentSku = Models.Sku.DeserializeSku(property0.Value);
+                            currentSku = SqlSku.DeserializeSqlSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"))

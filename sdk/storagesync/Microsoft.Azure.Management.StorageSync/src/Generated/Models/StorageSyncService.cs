@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="incomingTrafficPolicy">Incoming Traffic Policy.
         /// Possible values include: 'AllowAllTraffic',
@@ -59,8 +61,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connection associated with the specified storage sync
         /// service</param>
-        public StorageSyncService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string incomingTrafficPolicy = default(string), int? storageSyncServiceStatus = default(int?), string storageSyncServiceUid = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
-            : base(location, id, name, type, tags)
+        public StorageSyncService(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string incomingTrafficPolicy = default(string), int? storageSyncServiceStatus = default(int?), string storageSyncServiceUid = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
+            : base(location, id, name, type, systemData, tags)
         {
             IncomingTrafficPolicy = incomingTrafficPolicy;
             StorageSyncServiceStatus = storageSyncServiceStatus;

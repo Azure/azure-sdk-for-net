@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
         internal ResourceTypeAliases()
         {
-            Aliases = new ChangeTrackingList<Alias>();
+            Aliases = new ChangeTrackingList<ResourceTypeAlias>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
-        internal ResourceTypeAliases(string resourceType, IReadOnlyList<Alias> aliases)
+        internal ResourceTypeAliases(string resourceType, IReadOnlyList<ResourceTypeAlias> aliases)
         {
             ResourceType = resourceType;
             Aliases = aliases;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The resource type name. </summary>
         public string ResourceType { get; }
         /// <summary> The aliases for property names. </summary>
-        public IReadOnlyList<Alias> Aliases { get; }
+        public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
     }
 }

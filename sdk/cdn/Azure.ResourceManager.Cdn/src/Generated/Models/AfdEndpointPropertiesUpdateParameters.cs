@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object containing endpoint update parameters. </summary>
-    public partial class AfdEndpointPropertiesUpdateParameters
+    internal partial class AfdEndpointPropertiesUpdateParameters
     {
         /// <summary> Initializes a new instance of AfdEndpointPropertiesUpdateParameters. </summary>
-        public AfdEndpointPropertiesUpdateParameters()
+        internal AfdEndpointPropertiesUpdateParameters()
         {
         }
 
-        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        /// <summary> The name of the profile which holds the endpoint. </summary>
+        public string ProfileName { get; }
         /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
-        public EnabledState? EnabledState { get; set; }
+        public EnabledState? EnabledState { get; }
     }
 }

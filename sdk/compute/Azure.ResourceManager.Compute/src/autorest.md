@@ -17,6 +17,8 @@ skip-csproj: true
 output-folder: ./Generated
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -30,6 +32,11 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
@@ -94,4 +101,16 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
+  - from: compute.json
+    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.maximumDuration
+    transform: $["format"] = "duration"
+  - from: compute.json
+    where: $.definitions.VirtualMachineExtensionUpdateProperties.properties.type
+    transform: $["x-ms-client-name"] = "VirtualMachineExtensionType"
+  - from: communityGallery.json
+    where: $.definitions.PirCommunityGalleryResource.properties.type
+    transform: $["x-ms-client-name"] = "ResourceType"
+  - from: cloudService.json
+    where: $.definitions.UpdateDomain
+    transform: $["x-ms-client-name"] = "UpdateDomainIdentifier"
 ```

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VnetValidationTestFailure. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="testName"> The name of the test that failed. </param>
         /// <param name="details"> The details of what caused the failure, e.g. the blocking rule name, etc. </param>
-        internal VnetValidationTestFailure(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string testName, string details) : base(id, name, type, systemData, kind)
+        internal VnetValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string testName, string details) : base(id, name, resourceType, systemData, kind)
         {
             TestName = testName;
             Details = details;

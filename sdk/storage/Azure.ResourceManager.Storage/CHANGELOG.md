@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.6 (2022-01-30)
 
@@ -112,22 +133,20 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 
 After upgrade:
 ```C# Snippet:Create_Storage_Account
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-Models.Sku sku = new Models.Sku(SkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, AzureLocation.WestUS);
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(true, accountName, parameters).Value;
+StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

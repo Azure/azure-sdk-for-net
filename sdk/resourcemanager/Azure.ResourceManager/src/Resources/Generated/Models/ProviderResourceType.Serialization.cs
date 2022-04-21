@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<Alias>> aliases = default;
+            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<string> defaultApiVersion = default;
             Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Alias> array = new List<Alias>();
+                    List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Alias.DeserializeAlias(item));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
                     }
                     aliases = array;
                     continue;

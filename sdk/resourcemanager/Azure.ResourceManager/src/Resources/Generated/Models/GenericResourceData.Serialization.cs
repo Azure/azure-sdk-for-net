@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Kind))
             {
@@ -69,11 +73,11 @@ namespace Azure.ResourceManager.Resources
 
         internal static GenericResourceData DeserializeGenericResourceData(JsonElement element)
         {
-            Optional<Plan> plan = default;
-            Optional<object> properties = default;
+            Optional<ArmPlan> plan = default;
+            Optional<BinaryData> properties = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
-            Optional<Models.Sku> sku = default;
+            Optional<ResourcesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<Plan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = property.Value.GetObject();
+                    properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -124,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ResourcesSku.DeserializeResourcesSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

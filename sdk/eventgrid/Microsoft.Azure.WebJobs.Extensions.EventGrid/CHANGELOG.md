@@ -1,14 +1,10 @@
 # Release History
 
-## 3.2.0-beta.1 (Unreleased)
+## 3.2.0 (2022-04-20)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for creating CloudEvent subscriptions using OPTIONS handshake.
 
 ## 3.1.0 (2022-01-11)
 

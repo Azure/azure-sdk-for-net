@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<ComputeSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

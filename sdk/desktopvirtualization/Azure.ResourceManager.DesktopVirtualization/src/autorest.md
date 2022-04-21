@@ -15,6 +15,8 @@ clear-output-folder: true
 modelerfour:
   flatten-payloads: false
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -22,6 +24,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn

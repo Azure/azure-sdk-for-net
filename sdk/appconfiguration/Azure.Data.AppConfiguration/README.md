@@ -15,8 +15,8 @@ Use the client library for App Configuration to:
 
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Data.AppConfiguration
+```dotnetcli
+dotnet add package Azure.Data.AppConfiguration
 ```
 
 ### Prerequisites
@@ -60,8 +60,8 @@ var client = new ConfigurationClient(connectionString);
 Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][aad_register_app] and [grant access][aad_grant_access] to Configuration Store by assigning the `"App Configuration Data Reader"` or `"App Configuration Data Owner"` role to your service principal.

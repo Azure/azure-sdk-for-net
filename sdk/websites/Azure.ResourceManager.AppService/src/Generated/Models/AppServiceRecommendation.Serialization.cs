@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime");
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(RecommendationId))
             {
@@ -90,30 +90,30 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(NextNotificationTime))
+            if (Optional.IsDefined(NextNotificationOn))
             {
                 writer.WritePropertyName("nextNotificationTime");
-                writer.WriteStringValue(NextNotificationTime.Value, "O");
+                writer.WriteStringValue(NextNotificationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationExpirationTime))
+            if (Optional.IsDefined(NotificationExpirationOn))
             {
                 writer.WritePropertyName("notificationExpirationTime");
-                writer.WriteStringValue(NotificationExpirationTime.Value, "O");
+                writer.WriteStringValue(NotificationExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotifiedTime))
+            if (Optional.IsDefined(NotifiedOn))
             {
                 writer.WritePropertyName("notifiedTime");
-                writer.WriteStringValue(NotifiedTime.Value, "O");
+                writer.WriteStringValue(NotifiedOn.Value, "O");
             }
             if (Optional.IsDefined(Score))
             {

@@ -2,11 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
+using Microsoft.Azure.Management.SecurityInsights.Tests.AlertRules;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
@@ -19,7 +16,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
     {
         #region Test setup
 
-
         #endregion
 
         #region AlertRules
@@ -31,7 +27,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+
+                var AlertRuleId = Guid.NewGuid().ToString();
+                var AlertRuleProperties = AlertRulesUtils.GetDefaultAlertRuleProperties();
+                var AlertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
+
                 var AlertRules = SecurityInsightsClient.AlertRules.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
+
                 ValidateAlertRules(AlertRules);
             }
         }
@@ -44,12 +46,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var AlertRuleId = Guid.NewGuid().ToString();
-                var AlertRuleProperties = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var AlertRuleProperties = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
                 var AlertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
                 ValidateAlertRule(AlertRule);
@@ -64,12 +61,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var AlertRuleId = Guid.NewGuid().ToString();
-                var AlertRuleProperties = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var AlertRuleProperties = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
                 SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
                 var AlertRule = SecurityInsightsClient.AlertRules.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
@@ -78,41 +70,35 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             }
         }
 
-            [Fact]
-            public void AlertRules_Delete()
+        [Fact]
+        public void AlertRules_Delete()
+        {
+            using (var context = MockContext.Start(this.GetType()))
             {
-                using (var context = MockContext.Start(this.GetType()))
-                {
-                    var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                    var AlertRuleId = Guid.NewGuid().ToString();
-                    var AlertRuleProperties = new MicrosoftSecurityIncidentCreationAlertRule()
-                    {
-                        ProductFilter = "Microsoft Cloud App Security",
-                        Enabled = true,
-                        DisplayName = "SDKTest"
-                    };
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+                var AlertRuleId = Guid.NewGuid().ToString();
+                var AlertRuleProperties = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
-                    var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
-                    SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
-                }
+                var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId, AlertRuleProperties);
+                SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, AlertRuleId);
             }
-
-            #endregion
-
-            #region Validations
-
-            private void ValidateAlertRules(IPage<AlertRule> AlertRulePage)
-            {
-                Assert.True(AlertRulePage.IsAny());
-
-                AlertRulePage.ForEach(ValidateAlertRule);
-            }
-
-            private void ValidateAlertRule(AlertRule AlertRule)
-            {
-                Assert.NotNull(AlertRule);
-            }
-
-            #endregion
         }
+
+        #endregion
+
+        #region Validations
+
+        private void ValidateAlertRules(IPage<AlertRule> AlertRulePage)
+        {
+            Assert.True(AlertRulePage.IsAny());
+
+            AlertRulePage.ForEach(ValidateAlertRule);
+        }
+
+        private void ValidateAlertRule(AlertRule AlertRule)
+        {
+            Assert.NotNull(AlertRule);
+        }
+        #endregion
     }
+}

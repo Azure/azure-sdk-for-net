@@ -11,62 +11,16 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class Platform : IUtf8JsonSerializable
+    internal partial class Platform
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Os))
-            {
-                writer.WritePropertyName("os");
-                writer.WriteStringValue(Os);
-            }
-            if (Optional.IsDefined(OsVersion))
-            {
-                writer.WritePropertyName("os.version");
-                writer.WriteStringValue(OsVersion);
-            }
-            if (Optional.IsCollectionDefined(OsFeatures))
-            {
-                writer.WritePropertyName("os.features");
-                writer.WriteStartArray();
-                foreach (var item in OsFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Variant))
-            {
-                writer.WritePropertyName("variant");
-                writer.WriteStringValue(Variant);
-            }
-            if (Optional.IsCollectionDefined(Features))
-            {
-                writer.WritePropertyName("features");
-                writer.WriteStartArray();
-                foreach (var item in Features)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static Platform DeserializePlatform(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<string> osVersion = default;
-            Optional<IList<string>> osFeatures = default;
+            Optional<IReadOnlyList<string>> osFeatures = default;
             Optional<string> variant = default;
-            Optional<IList<string>> features = default;
+            Optional<IReadOnlyList<string>> features = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"))

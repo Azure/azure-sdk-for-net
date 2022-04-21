@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-preview.14 (Unreleased)
+## 1.0.0-preview.15 (2022-04-07)
+- Added LinkConnectionOperations.
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.0.0-preview.14 (2022-03-08)
+- Added ScriptActivity.
+- Added missing properties in SynapseNotebookActivity and SparkJobActivity.
+- Added TeamDeskLinkedService/QuickbaseLinkedService/SmartsheetLinkedService/ZendeskLinkedService.
 
 ## 1.0.0-preview.13 (2022-01-11)
 - Added `MetastoreOperations`.

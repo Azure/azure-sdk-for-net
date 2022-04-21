@@ -12,24 +12,24 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object containing security policy waf parameters. </summary>
-    public partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyParameters
+    internal partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyPropertiesParameters
     {
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
         public SecurityPolicyWebApplicationFirewallParameters()
         {
             Associations = new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
-            Type = SecurityPolicyType.WebApplicationFirewall;
+            PolicyType = SecurityPolicyType.WebApplicationFirewall;
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType type, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(type)
+        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType policyType, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
-            Type = type;
+            PolicyType = policyType;
         }
 
         /// <summary> Resource ID. </summary>

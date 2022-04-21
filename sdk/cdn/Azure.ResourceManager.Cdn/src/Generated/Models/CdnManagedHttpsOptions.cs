@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
-    public partial class CdnManagedHttpsOptions : CustomDomainHttpsOptions
+    public partial class CdnManagedHttpsOptions : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of CdnManagedHttpsOptions. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
@@ -27,7 +27,18 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource = CertificateSource.Cdn;
         }
 
+        /// <summary> Initializes a new instance of CdnManagedHttpsOptions. </summary>
+        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
+        internal CdnManagedHttpsOptions(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion, CdnCertificateSourceParameters certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        {
+            CertificateSourceParameters = certificateSourceParameters;
+            CertificateSource = certificateSource;
+        }
+
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
-        public CdnCertificateSourceParameters CertificateSourceParameters { get; }
+        public CdnCertificateSourceParameters CertificateSourceParameters { get; set; }
     }
 }

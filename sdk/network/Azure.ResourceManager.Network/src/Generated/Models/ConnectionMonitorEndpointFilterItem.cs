@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilterItem. </summary>
-        /// <param name="type"> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </param>
+        /// <param name="itemType"> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </param>
         /// <param name="address"> The address of the filter item. </param>
-        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? type, string address)
+        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? itemType, string address)
         {
-            Type = type;
+            ItemType = itemType;
             Address = address;
         }
 
         /// <summary> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </summary>
-        public ConnectionMonitorEndpointFilterItemType? Type { get; set; }
+        public ConnectionMonitorEndpointFilterItemType? ItemType { get; set; }
         /// <summary> The address of the filter item. </summary>
         public string Address { get; set; }
     }

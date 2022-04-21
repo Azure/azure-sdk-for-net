@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateOrUpdateParameters.EnableAutomaticFailover = false;
             databaseAccountCreateOrUpdateParameters.ConnectorOffer = "Small";
             databaseAccountCreateOrUpdateParameters.DisableKeyBasedMetadataWriteAccess = false;
-            DatabaseAccount databaseAccount1 =
+            DatabaseAccountResource databaseAccount1 =
                 await WaitForCompletionAsync(
                     await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateOrUpdateParameters));
             var response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
             Assert.AreEqual(true, response.Value);
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            DatabaseAccount databaseAccount2 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            DatabaseAccountResource databaseAccount2 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(databaseAccount1, databaseAccount2);
 
             var databaseAccountUpdateParameters = new DatabaseAccountUpdateParameters();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.DatabaseAccounts.StartFailoverPriorityChangeAsync(resourceGroupName, databaseAccountName, failoverPolicies));
-            DatabaseAccount databaseAccount3 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            DatabaseAccountResource databaseAccount3 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(databaseAccount3, databaseAccountUpdateParameters);
             VerifyFailoverPolicies(failoverPolicyList, databaseAccount3.FailoverPolicies);
         }
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task DatabaseAccountListBySubscriptionTest()
         {
-            List<DatabaseAccount> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListAsync().ToEnumerableAsync();
+            List<DatabaseAccountResource> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListAsync().ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             bool databaseAccountFound = false;
-            DatabaseAccount actualDatabaseAccount = null;
-            foreach (DatabaseAccount databaseAccount in databaseAccounts)
+            DatabaseAccountResource actualDatabaseAccount = null;
+            foreach (DatabaseAccountResource databaseAccount in databaseAccounts)
             {
                 if (databaseAccount.Name == databaseAccountName)
                 {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 }
             }
             Assert.AreEqual(true, databaseAccountFound);
-            DatabaseAccount expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            DatabaseAccountResource expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(expectedDatabaseAccount, actualDatabaseAccount);
         }
 
         [TestCase, Order(2)]
         public async Task DatabaseAccountListByResourceGroupTest()
         {
-            List<DatabaseAccount> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
+            List<DatabaseAccountResource> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             Assert.AreEqual(1, databaseAccounts.Count);
-            DatabaseAccount expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            DatabaseAccountResource expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(expectedDatabaseAccount, databaseAccounts[0]);
         }
 
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task DatabaseAccountDeleteTest()
         {
             await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartDeleteAsync(resourceGroupName, databaseAccountName));
-            List<DatabaseAccount> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
+            List<DatabaseAccountResource> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             Assert.AreEqual(0, databaseAccounts.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount expectedValue, DatabaseAccount actualValue)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource expectedValue, DatabaseAccountResource actualValue)
         {
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Location, actualValue.Location);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Cors.Count, actualValue.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, DatabaseAccountUpdateParameters parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, DatabaseAccountUpdateParameters parameters)
         {
             Assert.True(databaseAccount.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);

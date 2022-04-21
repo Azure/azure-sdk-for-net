@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class PrivateLinkResourcesListResult
+    internal partial class PrivateLinkResourcesListResult
     {
         internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element)
         {

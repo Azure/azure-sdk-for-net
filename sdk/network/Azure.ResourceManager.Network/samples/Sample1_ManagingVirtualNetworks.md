@@ -19,7 +19,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the virtual networks inside this resource group.
@@ -56,7 +56,7 @@ VirtualNetworkData input = new VirtualNetworkData()
     Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
 };
 
-VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, input).WaitForCompletionAsync();
+VirtualNetworkResource vnet = await virtualNetworkCollection.CreateOrUpdate(WaitUntil.Completed, vnetName, input).WaitForCompletionAsync();
 ```
 
 ***List all virtual networks***
@@ -64,8 +64,8 @@ VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetNa
 ```C# Snippet:Managing_Networks_ListAllVirtualNetworks
 VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-AsyncPageable<VirtualNetwork> response = virtualNetworkCollection.GetAllAsync();
-await foreach (VirtualNetwork virtualNetwork in response)
+AsyncPageable<VirtualNetworkResource> response = virtualNetworkCollection.GetAllAsync();
+await foreach (VirtualNetworkResource virtualNetwork in response)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
 }
@@ -76,25 +76,8 @@ await foreach (VirtualNetwork virtualNetwork in response)
 ```C# Snippet:Managing_Networks_GetAVirtualNetwork
 VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
+VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
 Console.WriteLine(virtualNetwork.Data.Name);
-```
-
-***Try to get a virtual network if it exists***
-
-```C# Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-
-VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
-if (virtualNetwork != null)
-{
-    Console.WriteLine(virtualNetwork.Data.Name);
-}
-
-if (await virtualNetworkCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
 ```
 
 ***Delete a virtual network***
@@ -102,8 +85,8 @@ if (await virtualNetworkCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Networks_DeleteAVirtualNetwork
 VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync(true);
+VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
+await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 ```
 
 ## Next steps

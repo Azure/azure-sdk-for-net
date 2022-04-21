@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private readonly StorageManager StorageManager;
+        private readonly CheckpointStore CheckpointStore;
 
         /// <summary>
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="PartitionLoadBalancer" /> class.
         /// </summary>
         ///
-        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
         /// <param name="identifier">The identifier of the EventProcessorClient that owns this load balancer.</param>
         /// <param name="consumerGroup">The name of the consumer group this load balancer is associated with.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace that the processor is associated with.</param>
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="ownershipExpirationInterval">The minimum amount of time for an ownership to be considered expired without further updates.</param>
         /// <param name="loadBalancingInterval">The minimum amount of time to be elapsed between two load balancing verifications.</param>
         ///
-        public PartitionLoadBalancer(StorageManager storageManager,
+        public PartitionLoadBalancer(CheckpointStore checkpointStore,
                                      string identifier,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
@@ -128,13 +128,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                                      TimeSpan ownershipExpirationInterval,
                                      TimeSpan loadBalancingInterval)
         {
-            Argument.AssertNotNull(storageManager, nameof(storageManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(identifier, nameof(identifier));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            StorageManager = storageManager;
+            CheckpointStore = checkpointStore;
             OwnerIdentifier = identifier;
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             try
             {
-                completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
+                completeOwnershipList = (await CheckpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
                     .ConfigureAwait(false))
                     .ToList();
             }
@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     Version = ownership.Version
                 });
 
-            await StorageManager.ClaimOwnershipAsync(ownershipToRelinquish, cancellationToken).ConfigureAwait(false);
+            await CheckpointStore.ClaimOwnershipAsync(ownershipToRelinquish, cancellationToken).ConfigureAwait(false);
             InstanceOwnership.Clear();
         }
 
@@ -490,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 // Update ownerships we renewed and remove the ones we didn't
 
-                var newOwnerships = await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
+                var newOwnerships = await CheckpointStore.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
                     .ConfigureAwait(false);
 
                 foreach (var oldOwnership in ownershipToRenew)
@@ -561,7 +561,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             try
             {
-                claimedOwnership = await StorageManager.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership> { newOwnership }, cancellationToken).ConfigureAwait(false);
+                claimedOwnership = await CheckpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership> { newOwnership }, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

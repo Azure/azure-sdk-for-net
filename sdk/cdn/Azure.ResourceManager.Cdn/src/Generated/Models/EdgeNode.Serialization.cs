@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpAddressGroups))
+            if (Optional.IsCollectionDefined(IPAddressGroups))
             {
                 writer.WritePropertyName("ipAddressGroups");
                 writer.WriteStartArray();
-                foreach (var item in IpAddressGroups)
+                foreach (var item in IPAddressGroups)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
-            Optional<IList<IpAddressGroup>> ipAddressGroups = default;
+            Optional<IList<IPAddressGroup>> ipAddressGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Cdn.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpAddressGroup> array = new List<IpAddressGroup>();
+                            List<IPAddressGroup> array = new List<IPAddressGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpAddressGroup.DeserializeIpAddressGroup(item));
+                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
                             }
                             ipAddressGroups = array;
                             continue;

@@ -519,7 +519,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="args">The event args containing information related to the message.</param>
         protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
-            await _processMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         /// <summary>
@@ -534,7 +541,14 @@ namespace Azure.Messaging.ServiceBus
 
         internal async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
-            await _processSessionMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processSessionMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         internal async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
@@ -717,7 +731,6 @@ namespace Azure.Messaging.ServiceBus
         /// canceled, the processor will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
             {
@@ -729,9 +742,17 @@ namespace Azure.Messaging.ServiceBus
                     Logger.StopProcessingStart(Identifier);
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    // Cancel the current running task.
+                    // Cancel the current running task. Catch any exception that are triggered due to customer token registrations, and
+                    // log these as warnings as we don't want to forego stopping due to these exceptions.
+                    try
+                    {
+                        RunningTaskTokenSource.Cancel();
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.ProcessorStoppingCancellationWarning(Identifier, exception.ToString());
+                    }
 
-                    RunningTaskTokenSource.Cancel();
                     RunningTaskTokenSource.Dispose();
                     RunningTaskTokenSource = null;
 
@@ -745,9 +766,13 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
-
-                    ActiveReceiveTask.Dispose();
-                    ActiveReceiveTask = null;
+                    finally
+                    {
+                        // If an unexpected exception occurred while awaiting the receive task, we still want to dispose and set to null
+                        // as the task is complete and there is no use in awaiting it again if StopProcessingAsync is called again.
+                        ActiveReceiveTask.Dispose();
+                        ActiveReceiveTask = null;
+                    }
                 }
             }
             catch (Exception exception)

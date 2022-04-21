@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
         {
             Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
             Optional<int> maxDatabaseCount = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"))

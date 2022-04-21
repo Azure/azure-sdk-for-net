@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static PolicyDefinitionReference DeserializePolicyDefinitionReference(JsonElement element)
         {
             string policyDefinitionId = default;
-            Optional<IDictionary<string, ParameterValuesValue>> parameters = default;
+            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IList<string>> groupNames = default;
             foreach (var property in element.EnumerateObject())
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                    Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterValuesValue.DeserializeParameterValuesValue(property0.Value));
+                        dictionary.Add(property0.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property0.Value));
                     }
                     parameters = dictionary;
                     continue;

@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Extensions
         {
             // Send Request
             AzureOperationResponse<Extension> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, extension, customHeaders, cancellationToken).ConfigureAwait(false);
-            return _response;
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

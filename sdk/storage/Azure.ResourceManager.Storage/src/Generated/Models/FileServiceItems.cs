@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The FileServiceItems. </summary>
-    public partial class FileServiceItems
+    internal partial class FileServiceItems
     {
         /// <summary> Initializes a new instance of FileServiceItems. </summary>
         internal FileServiceItems()
