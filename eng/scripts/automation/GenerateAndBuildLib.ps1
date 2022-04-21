@@ -1,5 +1,5 @@
 #Requires -Version 7.0
-
+$CI_YAML_FILE = "ci.yml"
 function Get-SwaggerInfo()
 {
     param(
@@ -88,6 +88,30 @@ function Update-AutorestConfigFile() {
         exit 1
     }
 }
+
+function Update-CIYmlFile() {
+    param (
+        [string]$ciFilePath,
+        [string]$artifact
+    )
+    if (Test-Path -Path $ciFilePath) {
+        $packageRex = "name *: $artifact"
+        if ((Get-Content $ciFilePath | Select-String -Pattern $packageRex).Matches.Success) {
+            Write-Host "CI already enabled."
+        } else {
+            $safeName = $artifact.Replace('.', '')
+            $artifactsBlockRex = "Artifacts *:"
+            $startNum = (Get-Content $ciFilePath | Select-String -Pattern $artifactsBlockRex).LineNumber[0]
+            $fileContent = Get-Content -Path $ciFilePath
+            $fileContent[$startNum - 1] += ([Environment]::NewLine + "    - " + "name: $artifact" + [Environment]::NewLine + "      safeName: $safeName")
+            $fileContent | Set-Content $ciFilePath
+        }
+    } else {
+        Write-Error "ci.yml doesn't exist."
+        exit 1
+    }
+}
+
 function New-DataPlanePackageFolder() {
   param(
       [string]$service,
@@ -113,6 +137,7 @@ function New-DataPlanePackageFolder() {
   }
 
   $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
+  $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
   $apifolder = (Join-Path $projectFolder "api")
   Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
   if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
@@ -120,6 +145,7 @@ function New-DataPlanePackageFolder() {
     # update the input-file url if needed.
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
     Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
+    Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "" -And $readme -eq "") {
@@ -138,7 +164,7 @@ function New-DataPlanePackageFolder() {
 
     $libraryName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new dpg --libraryName $libraryName --groupName $groupName --includeCI true --force"
+    $dotnetNewCmd = "dotnet new dpg --libraryName $libraryName --groupName $groupName --force"
     if ($inputfile -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
     }
@@ -150,12 +176,19 @@ function New-DataPlanePackageFolder() {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
 
+    if (Test-Path -Path $ciymlFilePath) {
+        Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
+        Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
+    } else {
+        $dotnetNewCmd = $dotnetNewCmd + " --includeCI true"
+    }
+
     # dotnet new dpg --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
+    Update-AutorestConfigFile -autorestFilePath $file -readme $readme
     # dotnet sln
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
