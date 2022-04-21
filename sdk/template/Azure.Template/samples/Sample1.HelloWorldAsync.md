@@ -13,8 +13,8 @@ using Azure.Template.Models;
 You can also get secrets asynchronously:
 
 ```C# Snippet:Azure_Template_GetSecretAsync
-string endpoint = "https://myvault.vault.azure.net";
-var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+endpoint = "https://myvault.vault.azure.net";
+TemplateClient client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
 SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 

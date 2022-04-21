@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Template.Models;
 
 namespace Azure.Template.Tests
 {
@@ -32,9 +33,9 @@ namespace Azure.Template.Tests
         [RecordedTest]
         public async Task CanGetSecret()
         {
-            var client = CreateClient();
+            TemplateClient client = CreateClient();
 
-            var secret = await client.GetSecretValueAsync("TestSecret");
+            Response<SecretBundle> secret = await client.GetSecretValueAsync("TestSecret");
 
             Assert.AreEqual("Very secret value", secret.Value.Value);
         }

@@ -12,19 +12,19 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class Sample1_HelloWorld: SamplesBase<TemplateClientTestEnvironment>
+    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
         public void GettingASecret()
         {
-            var endpoint = TestEnvironment.KeyVaultUri;
+            string endpoint = TestEnvironment.KeyVaultUri;
 
             #region Snippet:Azure_Template_GetSecret
 #if SNIPPET
-            string endpoint = "https://myvault.vault.azure.net";
+            endpoint = "https://myvault.vault.azure.net";
 #endif
-            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+            TemplateClient client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
             SecretBundle secret = client.GetSecretValue("TestSecret");
 

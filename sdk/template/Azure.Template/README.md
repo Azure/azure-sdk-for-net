@@ -78,8 +78,8 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 The `GetSecret` method retrieves a secret from the service.
 
 ```C# Snippet:Azure_Template_GetSecret
-string endpoint = "https://myvault.vault.azure.net";
-var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+endpoint = "https://myvault.vault.azure.net";
+TemplateClient client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
 SecretBundle secret = client.GetSecretValue("TestSecret");
 

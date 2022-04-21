@@ -136,6 +136,20 @@
       "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs",
       "replaces": "TestSampleLink"
     },
+    "samplesLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorld.cs",
+      "replaces": "SamplesLink"
+    },
+    "asyncSamplesLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorldAsync.cs",
+      "replaces": "AsyncSamplesLink"
+    },
     "ServiceName": {
       "type": "derived",
       "datatype": "text",

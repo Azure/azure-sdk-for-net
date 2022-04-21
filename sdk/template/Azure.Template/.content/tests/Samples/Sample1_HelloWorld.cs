@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class Sample1_HelloWorld: SamplesBase<TemplateClientTestEnvironment>
+    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
     {
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorld.cs to write samples. */
+        /* please refer to SamplesLink to write samples. */
         #region Snippet:Azure_Template_Scenario
 
         #endregion
