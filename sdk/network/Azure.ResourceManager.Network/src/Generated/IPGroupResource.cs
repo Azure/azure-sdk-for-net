@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -182,6 +183,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of an IpGroups resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_UpdateGroups
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<IPGroupResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroupResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _ipGroupIpGroupsRestClient.UpdateGroupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of an IpGroups resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_UpdateGroups
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<IPGroupResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroupResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _ipGroupIpGroupsRestClient.UpdateGroups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

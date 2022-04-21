@@ -195,6 +195,66 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates a virtual network gateway connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// Operation Id: VirtualNetworkGatewayConnections_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network gateway connection tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualNetworkGatewayConnectionResource>> UpdateAsync(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkGatewayConnectionRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionOperationSource(Client), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a virtual network gateway connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
+        /// Operation Id: VirtualNetworkGatewayConnections_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tagsObject"> Parameters supplied to update virtual network gateway connection tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual ArmOperation<VirtualNetworkGatewayConnectionResource> Update(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkGatewayConnectionRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionOperationSource(Client), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets a xml format representation for vpn device configuration script.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript
         /// Operation Id: VirtualNetworkGateways_VpnDeviceConfigurationScript
