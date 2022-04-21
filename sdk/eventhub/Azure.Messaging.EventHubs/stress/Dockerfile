@@ -1,7 +1,7 @@
 # right version of dotnet?
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env 
 
-# Copy in engineering system needed to build - TODO: cut this down to just what is needed
+# Copy in engineering system needed to build
 COPY /sdk/eventhub/Azure.Messaging.EventHubs/ /app/sdk/eventhub/Azure.Messaging.EventHubs/
 COPY /eng /app/eng
 COPY /tools /app/tools
