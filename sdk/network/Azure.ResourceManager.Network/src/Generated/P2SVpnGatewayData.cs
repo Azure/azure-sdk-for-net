@@ -60,9 +60,16 @@ namespace Azure.ResourceManager.Network
             get => VirtualHub is null ? default : VirtualHub.Id;
             set
             {
-                if (VirtualHub is null)
-                    VirtualHub = new WritableSubResource();
-                VirtualHub.Id = value;
+                if (value is not null)
+                {
+                    if (VirtualHub is null)
+                        VirtualHub = new WritableSubResource();
+                    VirtualHub.Id = value;
+                }
+                else
+                {
+                    VirtualHub = null;
+                }
             }
         }
 
@@ -80,9 +87,16 @@ namespace Azure.ResourceManager.Network
             get => VpnServerConfiguration is null ? default : VpnServerConfiguration.Id;
             set
             {
-                if (VpnServerConfiguration is null)
-                    VpnServerConfiguration = new WritableSubResource();
-                VpnServerConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (VpnServerConfiguration is null)
+                        VpnServerConfiguration = new WritableSubResource();
+                    VpnServerConfiguration.Id = value;
+                }
+                else
+                {
+                    VpnServerConfiguration = null;
+                }
             }
         }
 

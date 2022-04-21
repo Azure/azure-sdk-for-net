@@ -103,9 +103,16 @@ namespace Azure.ResourceManager.Network
             get => NatGateway is null ? default : NatGateway.Id;
             set
             {
-                if (NatGateway is null)
-                    NatGateway = new WritableSubResource();
-                NatGateway.Id = value;
+                if (value is not null)
+                {
+                    if (NatGateway is null)
+                        NatGateway = new WritableSubResource();
+                    NatGateway.Id = value;
+                }
+                else
+                {
+                    NatGateway = null;
+                }
             }
         }
 

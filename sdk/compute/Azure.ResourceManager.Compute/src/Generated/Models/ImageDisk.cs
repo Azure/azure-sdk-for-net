@@ -46,9 +46,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => Snapshot is null ? default : Snapshot.Id;
             set
             {
-                if (Snapshot is null)
-                    Snapshot = new WritableSubResource();
-                Snapshot.Id = value;
+                if (value is not null)
+                {
+                    if (Snapshot is null)
+                        Snapshot = new WritableSubResource();
+                    Snapshot.Id = value;
+                }
+                else
+                {
+                    Snapshot = null;
+                }
             }
         }
 
@@ -60,9 +67,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => ManagedDisk is null ? default : ManagedDisk.Id;
             set
             {
-                if (ManagedDisk is null)
-                    ManagedDisk = new WritableSubResource();
-                ManagedDisk.Id = value;
+                if (value is not null)
+                {
+                    if (ManagedDisk is null)
+                        ManagedDisk = new WritableSubResource();
+                    ManagedDisk.Id = value;
+                }
+                else
+                {
+                    ManagedDisk = null;
+                }
             }
         }
 
@@ -82,9 +96,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
             set
             {
-                if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
-                DiskEncryptionSet.Id = value;
+                if (value is not null)
+                {
+                    if (DiskEncryptionSet is null)
+                        DiskEncryptionSet = new WritableSubResource();
+                    DiskEncryptionSet.Id = value;
+                }
+                else
+                {
+                    DiskEncryptionSet = null;
+                }
             }
         }
     }

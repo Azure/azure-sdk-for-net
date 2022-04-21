@@ -38,9 +38,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => AutoUpgradePolicy is null ? default : AutoUpgradePolicy.ThroughputPolicy;
             set
             {
-                if (AutoUpgradePolicy is null)
-                    AutoUpgradePolicy = new AutoUpgradePolicyResource();
-                AutoUpgradePolicy.ThroughputPolicy = value;
+                if (value is not null)
+                {
+                    if (AutoUpgradePolicy is null)
+                        AutoUpgradePolicy = new AutoUpgradePolicyResource();
+                    AutoUpgradePolicy.ThroughputPolicy = value;
+                }
+                else
+                {
+                    AutoUpgradePolicy = null;
+                }
             }
         }
 

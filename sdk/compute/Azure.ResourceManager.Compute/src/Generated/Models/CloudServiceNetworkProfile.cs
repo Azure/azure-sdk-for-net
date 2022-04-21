@@ -39,9 +39,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => SwappableCloudService is null ? default : SwappableCloudService.Id;
             set
             {
-                if (SwappableCloudService is null)
-                    SwappableCloudService = new WritableSubResource();
-                SwappableCloudService.Id = value;
+                if (value is not null)
+                {
+                    if (SwappableCloudService is null)
+                        SwappableCloudService = new WritableSubResource();
+                    SwappableCloudService.Id = value;
+                }
+                else
+                {
+                    SwappableCloudService = null;
+                }
             }
         }
     }

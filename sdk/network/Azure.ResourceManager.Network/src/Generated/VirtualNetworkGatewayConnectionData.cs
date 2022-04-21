@@ -140,9 +140,16 @@ namespace Azure.ResourceManager.Network
             get => Peer is null ? default : Peer.Id;
             set
             {
-                if (Peer is null)
-                    Peer = new WritableSubResource();
-                Peer.Id = value;
+                if (value is not null)
+                {
+                    if (Peer is null)
+                        Peer = new WritableSubResource();
+                    Peer.Id = value;
+                }
+                else
+                {
+                    Peer = null;
+                }
             }
         }
 

@@ -40,9 +40,16 @@ namespace Azure.ResourceManager.Cdn.Models
             get => Secret is null ? default : Secret.Id;
             set
             {
-                if (Secret is null)
-                    Secret = new AfdCustomDomainHttpsParametersSecret();
-                Secret.Id = value;
+                if (value is not null)
+                {
+                    if (Secret is null)
+                        Secret = new AfdCustomDomainHttpsParametersSecret();
+                    Secret.Id = value;
+                }
+                else
+                {
+                    Secret = null;
+                }
             }
         }
     }

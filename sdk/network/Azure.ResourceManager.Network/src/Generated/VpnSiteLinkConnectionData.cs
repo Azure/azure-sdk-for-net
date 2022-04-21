@@ -83,9 +83,16 @@ namespace Azure.ResourceManager.Network
             get => VpnSiteLink is null ? default : VpnSiteLink.Id;
             set
             {
-                if (VpnSiteLink is null)
-                    VpnSiteLink = new WritableSubResource();
-                VpnSiteLink.Id = value;
+                if (value is not null)
+                {
+                    if (VpnSiteLink is null)
+                        VpnSiteLink = new WritableSubResource();
+                    VpnSiteLink.Id = value;
+                }
+                else
+                {
+                    VpnSiteLink = null;
+                }
             }
         }
 

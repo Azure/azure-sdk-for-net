@@ -62,9 +62,16 @@ namespace Azure.ResourceManager.Storage
             get => ProtocolSettings is null ? default : ProtocolSettings.Smb;
             set
             {
-                if (ProtocolSettings is null)
-                    ProtocolSettings = new ProtocolSettings();
-                ProtocolSettings.Smb = value;
+                if (value is not null)
+                {
+                    if (ProtocolSettings is null)
+                        ProtocolSettings = new ProtocolSettings();
+                    ProtocolSettings.Smb = value;
+                }
+                else
+                {
+                    ProtocolSettings = null;
+                }
             }
         }
     }

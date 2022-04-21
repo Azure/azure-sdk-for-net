@@ -61,9 +61,16 @@ namespace Azure.ResourceManager.Cdn.Models
             get => SecretSource is null ? default : SecretSource.Id;
             set
             {
-                if (SecretSource is null)
-                    SecretSource = new WritableSubResource();
-                SecretSource.Id = value;
+                if (value is not null)
+                {
+                    if (SecretSource is null)
+                        SecretSource = new WritableSubResource();
+                    SecretSource.Id = value;
+                }
+                else
+                {
+                    SecretSource = null;
+                }
             }
         }
 

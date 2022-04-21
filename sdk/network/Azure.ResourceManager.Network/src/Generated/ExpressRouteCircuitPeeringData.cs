@@ -118,9 +118,16 @@ namespace Azure.ResourceManager.Network
             get => RouteFilter is null ? default : RouteFilter.Id;
             set
             {
-                if (RouteFilter is null)
-                    RouteFilter = new WritableSubResource();
-                RouteFilter.Id = value;
+                if (value is not null)
+                {
+                    if (RouteFilter is null)
+                        RouteFilter = new WritableSubResource();
+                    RouteFilter.Id = value;
+                }
+                else
+                {
+                    RouteFilter = null;
+                }
             }
         }
 

@@ -83,9 +83,16 @@ namespace Azure.ResourceManager.Network
             get => RemoteVpnSite is null ? default : RemoteVpnSite.Id;
             set
             {
-                if (RemoteVpnSite is null)
-                    RemoteVpnSite = new WritableSubResource();
-                RemoteVpnSite.Id = value;
+                if (value is not null)
+                {
+                    if (RemoteVpnSite is null)
+                        RemoteVpnSite = new WritableSubResource();
+                    RemoteVpnSite.Id = value;
+                }
+                else
+                {
+                    RemoteVpnSite = null;
+                }
             }
         }
 

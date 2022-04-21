@@ -41,9 +41,16 @@ namespace Azure.ResourceManager.Cdn.Models
             get => PrivateLink is null ? default : PrivateLink.Id;
             set
             {
-                if (PrivateLink is null)
-                    PrivateLink = new WritableSubResource();
-                PrivateLink.Id = value;
+                if (value is not null)
+                {
+                    if (PrivateLink is null)
+                        PrivateLink = new WritableSubResource();
+                    PrivateLink.Id = value;
+                }
+                else
+                {
+                    PrivateLink = null;
+                }
             }
         }
 

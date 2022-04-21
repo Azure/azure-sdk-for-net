@@ -69,9 +69,16 @@ namespace Azure.ResourceManager.Network.Models
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
             set
             {
-                if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
-                FrontendIPConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (FrontendIPConfiguration is null)
+                        FrontendIPConfiguration = new WritableSubResource();
+                    FrontendIPConfiguration.Id = value;
+                }
+                else
+                {
+                    FrontendIPConfiguration = null;
+                }
             }
         }
 
@@ -83,9 +90,16 @@ namespace Azure.ResourceManager.Network.Models
             get => FrontendPort is null ? default : FrontendPort.Id;
             set
             {
-                if (FrontendPort is null)
-                    FrontendPort = new WritableSubResource();
-                FrontendPort.Id = value;
+                if (value is not null)
+                {
+                    if (FrontendPort is null)
+                        FrontendPort = new WritableSubResource();
+                    FrontendPort.Id = value;
+                }
+                else
+                {
+                    FrontendPort = null;
+                }
             }
         }
 
@@ -101,9 +115,16 @@ namespace Azure.ResourceManager.Network.Models
             get => SslCertificate is null ? default : SslCertificate.Id;
             set
             {
-                if (SslCertificate is null)
-                    SslCertificate = new WritableSubResource();
-                SslCertificate.Id = value;
+                if (value is not null)
+                {
+                    if (SslCertificate is null)
+                        SslCertificate = new WritableSubResource();
+                    SslCertificate.Id = value;
+                }
+                else
+                {
+                    SslCertificate = null;
+                }
             }
         }
 
@@ -115,9 +136,16 @@ namespace Azure.ResourceManager.Network.Models
             get => SslProfile is null ? default : SslProfile.Id;
             set
             {
-                if (SslProfile is null)
-                    SslProfile = new WritableSubResource();
-                SslProfile.Id = value;
+                if (value is not null)
+                {
+                    if (SslProfile is null)
+                        SslProfile = new WritableSubResource();
+                    SslProfile.Id = value;
+                }
+                else
+                {
+                    SslProfile = null;
+                }
             }
         }
 
@@ -135,9 +163,16 @@ namespace Azure.ResourceManager.Network.Models
             get => FirewallPolicy is null ? default : FirewallPolicy.Id;
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (value is not null)
+                {
+                    if (FirewallPolicy is null)
+                        FirewallPolicy = new WritableSubResource();
+                    FirewallPolicy.Id = value;
+                }
+                else
+                {
+                    FirewallPolicy = null;
+                }
             }
         }
 

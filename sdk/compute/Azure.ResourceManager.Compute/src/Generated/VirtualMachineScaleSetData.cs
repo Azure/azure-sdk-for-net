@@ -114,9 +114,16 @@ namespace Azure.ResourceManager.Compute
             get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
             set
             {
-                if (ProximityPlacementGroup is null)
-                    ProximityPlacementGroup = new WritableSubResource();
-                ProximityPlacementGroup.Id = value;
+                if (value is not null)
+                {
+                    if (ProximityPlacementGroup is null)
+                        ProximityPlacementGroup = new WritableSubResource();
+                    ProximityPlacementGroup.Id = value;
+                }
+                else
+                {
+                    ProximityPlacementGroup = null;
+                }
             }
         }
 
@@ -128,9 +135,16 @@ namespace Azure.ResourceManager.Compute
             get => HostGroup is null ? default : HostGroup.Id;
             set
             {
-                if (HostGroup is null)
-                    HostGroup = new WritableSubResource();
-                HostGroup.Id = value;
+                if (value is not null)
+                {
+                    if (HostGroup is null)
+                        HostGroup = new WritableSubResource();
+                    HostGroup.Id = value;
+                }
+                else
+                {
+                    HostGroup = null;
+                }
             }
         }
 

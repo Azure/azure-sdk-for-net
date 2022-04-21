@@ -288,9 +288,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => ApiDefinition is null ? default : ApiDefinition.Uri;
             set
             {
-                if (ApiDefinition is null)
-                    ApiDefinition = new ApiDefinitionInfo();
-                ApiDefinition.Uri = value;
+                if (value is not null)
+                {
+                    if (ApiDefinition is null)
+                        ApiDefinition = new ApiDefinitionInfo();
+                    ApiDefinition.Uri = value;
+                }
+                else
+                {
+                    ApiDefinition = null;
+                }
             }
         }
 
@@ -302,9 +309,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => ApiManagementConfig is null ? default : ApiManagementConfig.Id;
             set
             {
-                if (ApiManagementConfig is null)
-                    ApiManagementConfig = new ApiManagementConfig();
-                ApiManagementConfig.Id = value;
+                if (value is not null)
+                {
+                    if (ApiManagementConfig is null)
+                        ApiManagementConfig = new ApiManagementConfig();
+                    ApiManagementConfig.Id = value;
+                }
+                else
+                {
+                    ApiManagementConfig = null;
+                }
             }
         }
 

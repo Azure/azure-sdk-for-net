@@ -63,9 +63,16 @@ namespace Azure.ResourceManager.Network
             get => VirtualWan is null ? default : VirtualWan.Id;
             set
             {
-                if (VirtualWan is null)
-                    VirtualWan = new WritableSubResource();
-                VirtualWan.Id = value;
+                if (value is not null)
+                {
+                    if (VirtualWan is null)
+                        VirtualWan = new WritableSubResource();
+                    VirtualWan.Id = value;
+                }
+                else
+                {
+                    VirtualWan = null;
+                }
             }
         }
 
@@ -104,9 +111,16 @@ namespace Azure.ResourceManager.Network
             get => O365Policy is null ? default : O365Policy.BreakOutCategories;
             set
             {
-                if (O365Policy is null)
-                    O365Policy = new O365PolicyProperties();
-                O365Policy.BreakOutCategories = value;
+                if (value is not null)
+                {
+                    if (O365Policy is null)
+                        O365Policy = new O365PolicyProperties();
+                    O365Policy.BreakOutCategories = value;
+                }
+                else
+                {
+                    O365Policy = null;
+                }
             }
         }
     }

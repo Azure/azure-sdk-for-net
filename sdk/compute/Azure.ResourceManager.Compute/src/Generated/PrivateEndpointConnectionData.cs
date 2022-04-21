@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint.Id;
+            get => PrivateEndpoint?.Id;
         }
 
         /// <summary> A collection of information about the state of the connection between DiskAccess and Virtual Network. </summary>

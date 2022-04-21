@@ -67,9 +67,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
             set
             {
-                if (DiagnosticsProfile is null)
-                    DiagnosticsProfile = new DiagnosticsProfile();
-                DiagnosticsProfile.BootDiagnostics = value;
+                if (value is not null)
+                {
+                    if (DiagnosticsProfile is null)
+                        DiagnosticsProfile = new DiagnosticsProfile();
+                    DiagnosticsProfile.BootDiagnostics = value;
+                }
+                else
+                {
+                    DiagnosticsProfile = null;
+                }
             }
         }
 
@@ -89,9 +96,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => BillingProfile is null ? default : BillingProfile.MaxPrice;
             set
             {
-                if (BillingProfile is null)
-                    BillingProfile = new BillingProfile();
-                BillingProfile.MaxPrice = value;
+                if (value is not null)
+                {
+                    if (BillingProfile is null)
+                        BillingProfile = new BillingProfile();
+                    BillingProfile.MaxPrice = value;
+                }
+                else
+                {
+                    BillingProfile = null;
+                }
             }
         }
 
@@ -103,9 +117,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
             set
             {
-                if (ScheduledEventsProfile is null)
-                    ScheduledEventsProfile = new ScheduledEventsProfile();
-                ScheduledEventsProfile.TerminateNotificationProfile = value;
+                if (value is not null)
+                {
+                    if (ScheduledEventsProfile is null)
+                        ScheduledEventsProfile = new ScheduledEventsProfile();
+                    ScheduledEventsProfile.TerminateNotificationProfile = value;
+                }
+                else
+                {
+                    ScheduledEventsProfile = null;
+                }
             }
         }
 
@@ -119,9 +140,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
             set
             {
-                if (CapacityReservation is null)
-                    CapacityReservation = new CapacityReservationProfile();
-                CapacityReservation.CapacityReservationGroupId = value;
+                if (value is not null)
+                {
+                    if (CapacityReservation is null)
+                        CapacityReservation = new CapacityReservationProfile();
+                    CapacityReservation.CapacityReservationGroupId = value;
+                }
+                else
+                {
+                    CapacityReservation = null;
+                }
             }
         }
 

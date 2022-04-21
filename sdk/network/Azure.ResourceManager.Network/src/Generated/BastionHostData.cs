@@ -50,9 +50,16 @@ namespace Azure.ResourceManager.Network
             get => Sku is null ? default : Sku.Name;
             set
             {
-                if (Sku is null)
-                    Sku = new NetworkSku();
-                Sku.Name = value;
+                if (value is not null)
+                {
+                    if (Sku is null)
+                        Sku = new NetworkSku();
+                    Sku.Name = value;
+                }
+                else
+                {
+                    Sku = null;
+                }
             }
         }
 

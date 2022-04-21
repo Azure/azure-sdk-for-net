@@ -43,9 +43,16 @@ namespace Azure.ResourceManager.Monitor
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             set
             {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
+                if (value is not null)
+                {
+                    if (PrivateEndpoint is null)
+                        PrivateEndpoint = new WritableSubResource();
+                    PrivateEndpoint.Id = value;
+                }
+                else
+                {
+                    PrivateEndpoint = null;
+                }
             }
         }
 

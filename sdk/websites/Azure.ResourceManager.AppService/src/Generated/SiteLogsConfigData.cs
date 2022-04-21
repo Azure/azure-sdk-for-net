@@ -49,9 +49,16 @@ namespace Azure.ResourceManager.AppService
             get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
             set
             {
-                if (FailedRequestsTracing is null)
-                    FailedRequestsTracing = new EnabledConfig();
-                FailedRequestsTracing.Enabled = value;
+                if (value is not null)
+                {
+                    if (FailedRequestsTracing is null)
+                        FailedRequestsTracing = new EnabledConfig();
+                    FailedRequestsTracing.Enabled = value;
+                }
+                else
+                {
+                    FailedRequestsTracing = null;
+                }
             }
         }
 
@@ -63,9 +70,16 @@ namespace Azure.ResourceManager.AppService
             get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
             set
             {
-                if (DetailedErrorMessages is null)
-                    DetailedErrorMessages = new EnabledConfig();
-                DetailedErrorMessages.Enabled = value;
+                if (value is not null)
+                {
+                    if (DetailedErrorMessages is null)
+                        DetailedErrorMessages = new EnabledConfig();
+                    DetailedErrorMessages.Enabled = value;
+                }
+                else
+                {
+                    DetailedErrorMessages = null;
+                }
             }
         }
     }

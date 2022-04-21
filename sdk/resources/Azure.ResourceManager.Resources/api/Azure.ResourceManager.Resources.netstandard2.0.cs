@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact> Artifacts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization> Authorizations { get { throw null; } }
         public System.BinaryData CreateUiDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode DeploymentMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode? DeploymentMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ArmDeploymentPropertiesExtended() { }
         public string CorrelationId { get { throw null; } }
-        public string DebugSettingDetailLevel { get { throw null; } set { } }
+        public string DebugSettingDetailLevel { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmDependency> Dependencies { get { throw null; } }
         public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }

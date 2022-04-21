@@ -27,8 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier AzureDnsZoneId
         {
-            get => AzureDnsZone.Id;
-            set => AzureDnsZone.Id = value;
+            get => AzureDnsZone?.Id;
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
@@ -36,8 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource ID. </summary>
         public string PreValidatedCustomDomainResourceIdId
         {
-            get => PreValidatedCustomDomainResourceId.Id;
-            set => PreValidatedCustomDomainResourceId.Id = value;
+            get => PreValidatedCustomDomainResourceId?.Id;
         }
     }
 }

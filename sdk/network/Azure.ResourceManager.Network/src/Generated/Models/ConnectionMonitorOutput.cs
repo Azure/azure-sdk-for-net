@@ -34,9 +34,16 @@ namespace Azure.ResourceManager.Network.Models
             get => WorkspaceSettings is null ? default : WorkspaceSettings.WorkspaceResourceId;
             set
             {
-                if (WorkspaceSettings is null)
-                    WorkspaceSettings = new ConnectionMonitorWorkspaceSettings();
-                WorkspaceSettings.WorkspaceResourceId = value;
+                if (value is not null)
+                {
+                    if (WorkspaceSettings is null)
+                        WorkspaceSettings = new ConnectionMonitorWorkspaceSettings();
+                    WorkspaceSettings.WorkspaceResourceId = value;
+                }
+                else
+                {
+                    WorkspaceSettings = null;
+                }
             }
         }
     }

@@ -69,9 +69,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => Image is null ? default : Image.Uri;
             set
             {
-                if (Image is null)
-                    Image = new VirtualHardDisk();
-                Image.Uri = value;
+                if (value is not null)
+                {
+                    if (Image is null)
+                        Image = new VirtualHardDisk();
+                    Image.Uri = value;
+                }
+                else
+                {
+                    Image = null;
+                }
             }
         }
 

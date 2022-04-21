@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint.Id;
+            get => PrivateEndpoint?.Id;
         }
 
         /// <summary> Approval state of the private link connection. </summary>

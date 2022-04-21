@@ -84,8 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
-            get => LoadBalancerFrontendIPConfiguration.Id;
-            set => LoadBalancerFrontendIPConfiguration.Id = value;
+            get => LoadBalancerFrontendIPConfiguration?.Id;
         }
 
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>
@@ -96,9 +95,16 @@ namespace Azure.ResourceManager.Network
             get => CustomIPPrefix is null ? default : CustomIPPrefix.Id;
             set
             {
-                if (CustomIPPrefix is null)
-                    CustomIPPrefix = new WritableSubResource();
-                CustomIPPrefix.Id = value;
+                if (value is not null)
+                {
+                    if (CustomIPPrefix is null)
+                        CustomIPPrefix = new WritableSubResource();
+                    CustomIPPrefix.Id = value;
+                }
+                else
+                {
+                    CustomIPPrefix = null;
+                }
             }
         }
 

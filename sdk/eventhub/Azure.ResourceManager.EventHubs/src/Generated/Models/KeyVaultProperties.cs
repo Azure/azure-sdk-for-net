@@ -44,9 +44,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             get => Identity is null ? default : Identity.UserAssignedIdentity;
             set
             {
-                if (Identity is null)
-                    Identity = new UserAssignedIdentityProperties();
-                Identity.UserAssignedIdentity = value;
+                if (value is not null)
+                {
+                    if (Identity is null)
+                        Identity = new UserAssignedIdentityProperties();
+                    Identity.UserAssignedIdentity = value;
+                }
+                else
+                {
+                    Identity = null;
+                }
             }
         }
     }

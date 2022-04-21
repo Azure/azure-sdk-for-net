@@ -37,10 +37,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Preferences related to the shipment logistics of the order. </summary>
         internal TransportPreferences TransportPreferences { get; set; }
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
-        public TransportShipmentTypes TransportPreferencesPreferredShipmentType
+        public TransportShipmentTypes? TransportPreferencesPreferredShipmentType
         {
             get => TransportPreferences is null ? default : TransportPreferences.PreferredShipmentType;
-            set => TransportPreferences = new TransportPreferences(value);
+            set
+            {
+                TransportPreferences = value.HasValue ? new TransportPreferences(value.Value) : null;
+            }
         }
 
         /// <summary> Preferences related to the Encryption. </summary>
@@ -51,9 +54,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryptionStatus;
             set
             {
-                if (EncryptionPreferences is null)
-                    EncryptionPreferences = new EncryptionPreferences();
-                EncryptionPreferences.DoubleEncryptionStatus = value;
+                if (value is not null)
+                {
+                    if (EncryptionPreferences is null)
+                        EncryptionPreferences = new EncryptionPreferences();
+                    EncryptionPreferences.DoubleEncryptionStatus = value;
+                }
+                else
+                {
+                    EncryptionPreferences = null;
+                }
             }
         }
 
@@ -65,9 +75,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             get => ManagementResourcePreferences is null ? default : ManagementResourcePreferences.PreferredManagementResourceId;
             set
             {
-                if (ManagementResourcePreferences is null)
-                    ManagementResourcePreferences = new ManagementResourcePreferences();
-                ManagementResourcePreferences.PreferredManagementResourceId = value;
+                if (value is not null)
+                {
+                    if (ManagementResourcePreferences is null)
+                        ManagementResourcePreferences = new ManagementResourcePreferences();
+                    ManagementResourcePreferences.PreferredManagementResourceId = value;
+                }
+                else
+                {
+                    ManagementResourcePreferences = null;
+                }
             }
         }
     }

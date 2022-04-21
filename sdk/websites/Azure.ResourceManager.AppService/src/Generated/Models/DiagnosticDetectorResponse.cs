@@ -71,9 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
             set
             {
-                if (ResponseMetaData is null)
-                    ResponseMetaData = new ResponseMetaData();
-                ResponseMetaData.DataSource = value;
+                if (value is not null)
+                {
+                    if (ResponseMetaData is null)
+                        ResponseMetaData = new ResponseMetaData();
+                    ResponseMetaData.DataSource = value;
+                }
+                else
+                {
+                    ResponseMetaData = null;
+                }
             }
         }
     }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of disk types. </summary>
         public IList<string> DisallowedDiskTypes
         {
-            get => Disallowed.DiskTypes;
+            get => Disallowed?.DiskTypes;
         }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>

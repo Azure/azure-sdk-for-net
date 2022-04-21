@@ -8,8 +8,7 @@ library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-resources-2022-04
-
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 model-namespace: true
@@ -51,6 +50,11 @@ override-operation-name:
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
+
+#needed until we finish https://github.com/Azure/autorest.csharp/issues/2157
+no-property-type-replacement:
+  ArmDeploymentScriptPropertiesBase;ArmDeploymentPropertiesExtended
+#end
 
 rename-rules:
   CPU: Cpu

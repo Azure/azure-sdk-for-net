@@ -33,9 +33,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => CapacityReservationGroup is null ? default : CapacityReservationGroup.Id;
             set
             {
-                if (CapacityReservationGroup is null)
-                    CapacityReservationGroup = new WritableSubResource();
-                CapacityReservationGroup.Id = value;
+                if (value is not null)
+                {
+                    if (CapacityReservationGroup is null)
+                        CapacityReservationGroup = new WritableSubResource();
+                    CapacityReservationGroup.Id = value;
+                }
+                else
+                {
+                    CapacityReservationGroup = null;
+                }
             }
         }
     }

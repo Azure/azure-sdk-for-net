@@ -34,9 +34,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => FileSystem is null ? default : FileSystem.Level;
             set
             {
-                if (FileSystem is null)
-                    FileSystem = new FileSystemApplicationLogsConfig();
-                FileSystem.Level = value;
+                if (value is not null)
+                {
+                    if (FileSystem is null)
+                        FileSystem = new FileSystemApplicationLogsConfig();
+                    FileSystem.Level = value;
+                }
+                else
+                {
+                    FileSystem = null;
+                }
             }
         }
 

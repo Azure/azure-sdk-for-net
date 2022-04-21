@@ -69,9 +69,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
             set
             {
-                if (NetworkSecurityGroup is null)
-                    NetworkSecurityGroup = new WritableSubResource();
-                NetworkSecurityGroup.Id = value;
+                if (value is not null)
+                {
+                    if (NetworkSecurityGroup is null)
+                        NetworkSecurityGroup = new WritableSubResource();
+                    NetworkSecurityGroup.Id = value;
+                }
+                else
+                {
+                    NetworkSecurityGroup = null;
+                }
             }
         }
 

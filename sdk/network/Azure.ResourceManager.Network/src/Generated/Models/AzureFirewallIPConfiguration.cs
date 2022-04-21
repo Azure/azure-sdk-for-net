@@ -54,9 +54,16 @@ namespace Azure.ResourceManager.Network.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (value is not null)
+                {
+                    if (Subnet is null)
+                        Subnet = new WritableSubResource();
+                    Subnet.Id = value;
+                }
+                else
+                {
+                    Subnet = null;
+                }
             }
         }
 
@@ -68,9 +75,16 @@ namespace Azure.ResourceManager.Network.Models
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
             set
             {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
+                if (value is not null)
+                {
+                    if (PublicIPAddress is null)
+                        PublicIPAddress = new WritableSubResource();
+                    PublicIPAddress.Id = value;
+                }
+                else
+                {
+                    PublicIPAddress = null;
+                }
             }
         }
 

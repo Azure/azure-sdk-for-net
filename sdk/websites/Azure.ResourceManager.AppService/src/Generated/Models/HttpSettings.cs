@@ -36,9 +36,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => Routes is null ? default : Routes.ApiPrefix;
             set
             {
-                if (Routes is null)
-                    Routes = new HttpSettingsRoutes();
-                Routes.ApiPrefix = value;
+                if (value is not null)
+                {
+                    if (Routes is null)
+                        Routes = new HttpSettingsRoutes();
+                    Routes.ApiPrefix = value;
+                }
+                else
+                {
+                    Routes = null;
+                }
             }
         }
 

@@ -68,9 +68,16 @@ namespace Azure.ResourceManager.Network
             get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
             set
             {
-                if (FlowAnalyticsConfiguration is null)
-                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                if (value is not null)
+                {
+                    if (FlowAnalyticsConfiguration is null)
+                        FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                    FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                }
+                else
+                {
+                    FlowAnalyticsConfiguration = null;
+                }
             }
         }
 

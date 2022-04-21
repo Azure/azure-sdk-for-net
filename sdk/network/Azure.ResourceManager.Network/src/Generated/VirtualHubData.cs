@@ -84,9 +84,16 @@ namespace Azure.ResourceManager.Network
             get => VirtualWan is null ? default : VirtualWan.Id;
             set
             {
-                if (VirtualWan is null)
-                    VirtualWan = new WritableSubResource();
-                VirtualWan.Id = value;
+                if (value is not null)
+                {
+                    if (VirtualWan is null)
+                        VirtualWan = new WritableSubResource();
+                    VirtualWan.Id = value;
+                }
+                else
+                {
+                    VirtualWan = null;
+                }
             }
         }
 
@@ -98,9 +105,16 @@ namespace Azure.ResourceManager.Network
             get => VpnGateway is null ? default : VpnGateway.Id;
             set
             {
-                if (VpnGateway is null)
-                    VpnGateway = new WritableSubResource();
-                VpnGateway.Id = value;
+                if (value is not null)
+                {
+                    if (VpnGateway is null)
+                        VpnGateway = new WritableSubResource();
+                    VpnGateway.Id = value;
+                }
+                else
+                {
+                    VpnGateway = null;
+                }
             }
         }
 
@@ -112,9 +126,16 @@ namespace Azure.ResourceManager.Network
             get => P2SVpnGateway is null ? default : P2SVpnGateway.Id;
             set
             {
-                if (P2SVpnGateway is null)
-                    P2SVpnGateway = new WritableSubResource();
-                P2SVpnGateway.Id = value;
+                if (value is not null)
+                {
+                    if (P2SVpnGateway is null)
+                        P2SVpnGateway = new WritableSubResource();
+                    P2SVpnGateway.Id = value;
+                }
+                else
+                {
+                    P2SVpnGateway = null;
+                }
             }
         }
 
@@ -126,9 +147,16 @@ namespace Azure.ResourceManager.Network
             get => ExpressRouteGateway is null ? default : ExpressRouteGateway.Id;
             set
             {
-                if (ExpressRouteGateway is null)
-                    ExpressRouteGateway = new WritableSubResource();
-                ExpressRouteGateway.Id = value;
+                if (value is not null)
+                {
+                    if (ExpressRouteGateway is null)
+                        ExpressRouteGateway = new WritableSubResource();
+                    ExpressRouteGateway.Id = value;
+                }
+                else
+                {
+                    ExpressRouteGateway = null;
+                }
             }
         }
 
@@ -140,9 +168,16 @@ namespace Azure.ResourceManager.Network
             get => AzureFirewall is null ? default : AzureFirewall.Id;
             set
             {
-                if (AzureFirewall is null)
-                    AzureFirewall = new WritableSubResource();
-                AzureFirewall.Id = value;
+                if (value is not null)
+                {
+                    if (AzureFirewall is null)
+                        AzureFirewall = new WritableSubResource();
+                    AzureFirewall.Id = value;
+                }
+                else
+                {
+                    AzureFirewall = null;
+                }
             }
         }
 
@@ -154,9 +189,16 @@ namespace Azure.ResourceManager.Network
             get => SecurityPartnerProvider is null ? default : SecurityPartnerProvider.Id;
             set
             {
-                if (SecurityPartnerProvider is null)
-                    SecurityPartnerProvider = new WritableSubResource();
-                SecurityPartnerProvider.Id = value;
+                if (value is not null)
+                {
+                    if (SecurityPartnerProvider is null)
+                        SecurityPartnerProvider = new WritableSubResource();
+                    SecurityPartnerProvider.Id = value;
+                }
+                else
+                {
+                    SecurityPartnerProvider = null;
+                }
             }
         }
 

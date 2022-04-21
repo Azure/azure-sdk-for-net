@@ -58,9 +58,16 @@ namespace Azure.ResourceManager.Network.Models
             get => ClientAuthConfiguration is null ? default : ClientAuthConfiguration.VerifyClientCertIssuerDN;
             set
             {
-                if (ClientAuthConfiguration is null)
-                    ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
-                ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
+                if (value is not null)
+                {
+                    if (ClientAuthConfiguration is null)
+                        ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
+                    ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
+                }
+                else
+                {
+                    ClientAuthConfiguration = null;
+                }
             }
         }
 

@@ -62,9 +62,16 @@ namespace Azure.ResourceManager.Network
             get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
             set
             {
-                if (ExpressRouteCircuitPeering is null)
-                    ExpressRouteCircuitPeering = new WritableSubResource();
-                ExpressRouteCircuitPeering.Id = value;
+                if (value is not null)
+                {
+                    if (ExpressRouteCircuitPeering is null)
+                        ExpressRouteCircuitPeering = new WritableSubResource();
+                    ExpressRouteCircuitPeering.Id = value;
+                }
+                else
+                {
+                    ExpressRouteCircuitPeering = null;
+                }
             }
         }
 

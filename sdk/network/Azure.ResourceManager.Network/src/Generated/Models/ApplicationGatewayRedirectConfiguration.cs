@@ -67,9 +67,16 @@ namespace Azure.ResourceManager.Network.Models
             get => TargetListener is null ? default : TargetListener.Id;
             set
             {
-                if (TargetListener is null)
-                    TargetListener = new WritableSubResource();
-                TargetListener.Id = value;
+                if (value is not null)
+                {
+                    if (TargetListener is null)
+                        TargetListener = new WritableSubResource();
+                    TargetListener.Id = value;
+                }
+                else
+                {
+                    TargetListener = null;
+                }
             }
         }
 

@@ -37,9 +37,16 @@ namespace Azure.ResourceManager.Resources.Models
             get => DebugSetting is null ? default : DebugSetting.DetailLevel;
             set
             {
-                if (DebugSetting is null)
-                    DebugSetting = new DebugSetting();
-                DebugSetting.DetailLevel = value;
+                if (value is not null)
+                {
+                    if (DebugSetting is null)
+                        DebugSetting = new DebugSetting();
+                    DebugSetting.DetailLevel = value;
+                }
+                else
+                {
+                    DebugSetting = null;
+                }
             }
         }
 
@@ -53,9 +60,16 @@ namespace Azure.ResourceManager.Resources.Models
             get => ExpressionEvaluation is null ? default : ExpressionEvaluation.Scope;
             set
             {
-                if (ExpressionEvaluation is null)
-                    ExpressionEvaluation = new ExpressionEvaluationOptions();
-                ExpressionEvaluation.Scope = value;
+                if (value is not null)
+                {
+                    if (ExpressionEvaluation is null)
+                        ExpressionEvaluation = new ExpressionEvaluationOptions();
+                    ExpressionEvaluation.Scope = value;
+                }
+                else
+                {
+                    ExpressionEvaluation = null;
+                }
             }
         }
     }

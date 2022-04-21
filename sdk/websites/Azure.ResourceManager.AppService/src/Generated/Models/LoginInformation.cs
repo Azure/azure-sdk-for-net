@@ -48,9 +48,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => Routes is null ? default : Routes.LogoutEndpoint;
             set
             {
-                if (Routes is null)
-                    Routes = new LoginRoutes();
-                Routes.LogoutEndpoint = value;
+                if (value is not null)
+                {
+                    if (Routes is null)
+                        Routes = new LoginRoutes();
+                    Routes.LogoutEndpoint = value;
+                }
+                else
+                {
+                    Routes = null;
+                }
             }
         }
 

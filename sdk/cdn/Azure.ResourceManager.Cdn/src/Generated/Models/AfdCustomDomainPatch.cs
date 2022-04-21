@@ -30,9 +30,16 @@ namespace Azure.ResourceManager.Cdn.Models
             get => AzureDnsZone is null ? default : AzureDnsZone.Id;
             set
             {
-                if (AzureDnsZone is null)
-                    AzureDnsZone = new WritableSubResource();
-                AzureDnsZone.Id = value;
+                if (value is not null)
+                {
+                    if (AzureDnsZone is null)
+                        AzureDnsZone = new WritableSubResource();
+                    AzureDnsZone.Id = value;
+                }
+                else
+                {
+                    AzureDnsZone = null;
+                }
             }
         }
 
@@ -44,9 +51,16 @@ namespace Azure.ResourceManager.Cdn.Models
             get => PreValidatedCustomDomainResourceId is null ? default : PreValidatedCustomDomainResourceId.Id;
             set
             {
-                if (PreValidatedCustomDomainResourceId is null)
-                    PreValidatedCustomDomainResourceId = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
-                PreValidatedCustomDomainResourceId.Id = value;
+                if (value is not null)
+                {
+                    if (PreValidatedCustomDomainResourceId is null)
+                        PreValidatedCustomDomainResourceId = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResourceId.Id = value;
+                }
+                else
+                {
+                    PreValidatedCustomDomainResourceId = null;
+                }
             }
         }
     }

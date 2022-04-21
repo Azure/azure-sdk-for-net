@@ -128,9 +128,16 @@ namespace Azure.ResourceManager.Compute
             get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
             set
             {
-                if (SupportedCapabilities is null)
-                    SupportedCapabilities = new SupportedCapabilities();
-                SupportedCapabilities.AcceleratedNetwork = value;
+                if (value is not null)
+                {
+                    if (SupportedCapabilities is null)
+                        SupportedCapabilities = new SupportedCapabilities();
+                    SupportedCapabilities.AcceleratedNetwork = value;
+                }
+                else
+                {
+                    SupportedCapabilities = null;
+                }
             }
         }
 
@@ -175,7 +182,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
         public string PropertyUpdatesInProgressTargetTier
         {
-            get => PropertyUpdatesInProgress.TargetTier;
+            get => PropertyUpdatesInProgress?.TargetTier;
         }
 
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>

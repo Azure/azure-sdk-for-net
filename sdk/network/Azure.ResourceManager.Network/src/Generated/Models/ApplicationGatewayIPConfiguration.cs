@@ -48,9 +48,16 @@ namespace Azure.ResourceManager.Network.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (value is not null)
+                {
+                    if (Subnet is null)
+                        Subnet = new WritableSubResource();
+                    Subnet.Id = value;
+                }
+                else
+                {
+                    Subnet = null;
+                }
             }
         }
 

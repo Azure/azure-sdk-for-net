@@ -60,9 +60,16 @@ namespace Azure.ResourceManager.Network.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (value is not null)
+                {
+                    if (Subnet is null)
+                        Subnet = new WritableSubResource();
+                    Subnet.Id = value;
+                }
+                else
+                {
+                    Subnet = null;
+                }
             }
         }
 
@@ -74,9 +81,16 @@ namespace Azure.ResourceManager.Network.Models
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
             set
             {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
+                if (value is not null)
+                {
+                    if (PublicIPAddress is null)
+                        PublicIPAddress = new WritableSubResource();
+                    PublicIPAddress.Id = value;
+                }
+                else
+                {
+                    PublicIPAddress = null;
+                }
             }
         }
 
@@ -88,9 +102,16 @@ namespace Azure.ResourceManager.Network.Models
             get => PrivateLinkConfiguration is null ? default : PrivateLinkConfiguration.Id;
             set
             {
-                if (PrivateLinkConfiguration is null)
-                    PrivateLinkConfiguration = new WritableSubResource();
-                PrivateLinkConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (PrivateLinkConfiguration is null)
+                        PrivateLinkConfiguration = new WritableSubResource();
+                    PrivateLinkConfiguration.Id = value;
+                }
+                else
+                {
+                    PrivateLinkConfiguration = null;
+                }
             }
         }
 

@@ -73,9 +73,16 @@ namespace Azure.ResourceManager.Network
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
             set
             {
-                if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
-                FrontendIPConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (FrontendIPConfiguration is null)
+                        FrontendIPConfiguration = new WritableSubResource();
+                    FrontendIPConfiguration.Id = value;
+                }
+                else
+                {
+                    FrontendIPConfiguration = null;
+                }
             }
         }
 
@@ -87,9 +94,16 @@ namespace Azure.ResourceManager.Network
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (value is not null)
+                {
+                    if (BackendAddressPool is null)
+                        BackendAddressPool = new WritableSubResource();
+                    BackendAddressPool.Id = value;
+                }
+                else
+                {
+                    BackendAddressPool = null;
+                }
             }
         }
 
@@ -103,9 +117,16 @@ namespace Azure.ResourceManager.Network
             get => Probe is null ? default : Probe.Id;
             set
             {
-                if (Probe is null)
-                    Probe = new WritableSubResource();
-                Probe.Id = value;
+                if (value is not null)
+                {
+                    if (Probe is null)
+                        Probe = new WritableSubResource();
+                    Probe.Id = value;
+                }
+                else
+                {
+                    Probe = null;
+                }
             }
         }
 

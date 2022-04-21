@@ -49,9 +49,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
             set
             {
-                if (ProximityPlacementGroup is null)
-                    ProximityPlacementGroup = new WritableSubResource();
-                ProximityPlacementGroup.Id = value;
+                if (value is not null)
+                {
+                    if (ProximityPlacementGroup is null)
+                        ProximityPlacementGroup = new WritableSubResource();
+                    ProximityPlacementGroup.Id = value;
+                }
+                else
+                {
+                    ProximityPlacementGroup = null;
+                }
             }
         }
     }

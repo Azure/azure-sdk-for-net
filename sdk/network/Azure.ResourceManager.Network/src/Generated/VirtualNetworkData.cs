@@ -113,9 +113,16 @@ namespace Azure.ResourceManager.Network
             get => DdosProtectionPlan is null ? default : DdosProtectionPlan.Id;
             set
             {
-                if (DdosProtectionPlan is null)
-                    DdosProtectionPlan = new WritableSubResource();
-                DdosProtectionPlan.Id = value;
+                if (value is not null)
+                {
+                    if (DdosProtectionPlan is null)
+                        DdosProtectionPlan = new WritableSubResource();
+                    DdosProtectionPlan.Id = value;
+                }
+                else
+                {
+                    DdosProtectionPlan = null;
+                }
             }
         }
 

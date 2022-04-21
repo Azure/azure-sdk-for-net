@@ -37,9 +37,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             get => ManagedIdentity is null ? default : ManagedIdentity.Resource;
             set
             {
-                if (ManagedIdentity is null)
-                    ManagedIdentity = new ManagedIdentitySettings();
-                ManagedIdentity.Resource = value;
+                if (value is not null)
+                {
+                    if (ManagedIdentity is null)
+                        ManagedIdentity = new ManagedIdentitySettings();
+                    ManagedIdentity.Resource = value;
+                }
+                else
+                {
+                    ManagedIdentity = null;
+                }
             }
         }
     }

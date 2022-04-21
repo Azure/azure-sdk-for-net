@@ -69,9 +69,16 @@ namespace Azure.ResourceManager.Monitor.Models
             get => Claims is null ? default : Claims.EmailAddress;
             set
             {
-                if (Claims is null)
-                    Claims = new RuleManagementEventClaimsDataSource();
-                Claims.EmailAddress = value;
+                if (value is not null)
+                {
+                    if (Claims is null)
+                        Claims = new RuleManagementEventClaimsDataSource();
+                    Claims.EmailAddress = value;
+                }
+                else
+                {
+                    Claims = null;
+                }
             }
         }
     }

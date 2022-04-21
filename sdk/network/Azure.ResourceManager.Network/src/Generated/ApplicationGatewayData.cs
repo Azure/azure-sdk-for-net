@@ -171,9 +171,16 @@ namespace Azure.ResourceManager.Network
             get => FirewallPolicy is null ? default : FirewallPolicy.Id;
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (value is not null)
+                {
+                    if (FirewallPolicy is null)
+                        FirewallPolicy = new WritableSubResource();
+                    FirewallPolicy.Id = value;
+                }
+                else
+                {
+                    FirewallPolicy = null;
+                }
             }
         }
 

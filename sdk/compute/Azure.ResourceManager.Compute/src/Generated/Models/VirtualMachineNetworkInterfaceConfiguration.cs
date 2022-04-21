@@ -74,9 +74,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
             set
             {
-                if (NetworkSecurityGroup is null)
-                    NetworkSecurityGroup = new WritableSubResource();
-                NetworkSecurityGroup.Id = value;
+                if (value is not null)
+                {
+                    if (NetworkSecurityGroup is null)
+                        NetworkSecurityGroup = new WritableSubResource();
+                    NetworkSecurityGroup.Id = value;
+                }
+                else
+                {
+                    NetworkSecurityGroup = null;
+                }
             }
         }
 
@@ -103,9 +110,16 @@ namespace Azure.ResourceManager.Compute.Models
             get => DscpConfiguration is null ? default : DscpConfiguration.Id;
             set
             {
-                if (DscpConfiguration is null)
-                    DscpConfiguration = new WritableSubResource();
-                DscpConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (DscpConfiguration is null)
+                        DscpConfiguration = new WritableSubResource();
+                    DscpConfiguration.Id = value;
+                }
+                else
+                {
+                    DscpConfiguration = null;
+                }
             }
         }
     }

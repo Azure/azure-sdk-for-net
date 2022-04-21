@@ -51,9 +51,16 @@ namespace Azure.ResourceManager.Network
             get => O365Policy is null ? default : O365Policy.BreakOutCategories;
             set
             {
-                if (O365Policy is null)
-                    O365Policy = new Office365PolicyProperties();
-                O365Policy.BreakOutCategories = value;
+                if (value is not null)
+                {
+                    if (O365Policy is null)
+                        O365Policy = new Office365PolicyProperties();
+                    O365Policy.BreakOutCategories = value;
+                }
+                else
+                {
+                    O365Policy = null;
+                }
             }
         }
 

@@ -66,9 +66,16 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (value is not null)
+                {
+                    if (BackendAddressPool is null)
+                        BackendAddressPool = new WritableSubResource();
+                    BackendAddressPool.Id = value;
+                }
+                else
+                {
+                    BackendAddressPool = null;
+                }
             }
         }
 
@@ -80,9 +87,16 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
             set
             {
-                if (BackendHttpSettings is null)
-                    BackendHttpSettings = new WritableSubResource();
-                BackendHttpSettings.Id = value;
+                if (value is not null)
+                {
+                    if (BackendHttpSettings is null)
+                        BackendHttpSettings = new WritableSubResource();
+                    BackendHttpSettings.Id = value;
+                }
+                else
+                {
+                    BackendHttpSettings = null;
+                }
             }
         }
 
@@ -94,9 +108,16 @@ namespace Azure.ResourceManager.Network.Models
             get => HttpListener is null ? default : HttpListener.Id;
             set
             {
-                if (HttpListener is null)
-                    HttpListener = new WritableSubResource();
-                HttpListener.Id = value;
+                if (value is not null)
+                {
+                    if (HttpListener is null)
+                        HttpListener = new WritableSubResource();
+                    HttpListener.Id = value;
+                }
+                else
+                {
+                    HttpListener = null;
+                }
             }
         }
 
@@ -108,9 +129,16 @@ namespace Azure.ResourceManager.Network.Models
             get => UrlPathMap is null ? default : UrlPathMap.Id;
             set
             {
-                if (UrlPathMap is null)
-                    UrlPathMap = new WritableSubResource();
-                UrlPathMap.Id = value;
+                if (value is not null)
+                {
+                    if (UrlPathMap is null)
+                        UrlPathMap = new WritableSubResource();
+                    UrlPathMap.Id = value;
+                }
+                else
+                {
+                    UrlPathMap = null;
+                }
             }
         }
 
@@ -122,9 +150,16 @@ namespace Azure.ResourceManager.Network.Models
             get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
             set
             {
-                if (RewriteRuleSet is null)
-                    RewriteRuleSet = new WritableSubResource();
-                RewriteRuleSet.Id = value;
+                if (value is not null)
+                {
+                    if (RewriteRuleSet is null)
+                        RewriteRuleSet = new WritableSubResource();
+                    RewriteRuleSet.Id = value;
+                }
+                else
+                {
+                    RewriteRuleSet = null;
+                }
             }
         }
 
@@ -136,9 +171,16 @@ namespace Azure.ResourceManager.Network.Models
             get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
             set
             {
-                if (RedirectConfiguration is null)
-                    RedirectConfiguration = new WritableSubResource();
-                RedirectConfiguration.Id = value;
+                if (value is not null)
+                {
+                    if (RedirectConfiguration is null)
+                        RedirectConfiguration = new WritableSubResource();
+                    RedirectConfiguration.Id = value;
+                }
+                else
+                {
+                    RedirectConfiguration = null;
+                }
             }
         }
 

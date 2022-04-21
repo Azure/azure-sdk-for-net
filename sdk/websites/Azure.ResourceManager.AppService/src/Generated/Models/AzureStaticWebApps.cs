@@ -34,9 +34,16 @@ namespace Azure.ResourceManager.AppService.Models
             get => Registration is null ? default : Registration.ClientId;
             set
             {
-                if (Registration is null)
-                    Registration = new AzureStaticWebAppsRegistration();
-                Registration.ClientId = value;
+                if (value is not null)
+                {
+                    if (Registration is null)
+                        Registration = new AzureStaticWebAppsRegistration();
+                    Registration.ClientId = value;
+                }
+                else
+                {
+                    Registration = null;
+                }
             }
         }
     }

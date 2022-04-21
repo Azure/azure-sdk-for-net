@@ -100,9 +100,16 @@ namespace Azure.ResourceManager.Network
             get => GatewayDefaultSite is null ? default : GatewayDefaultSite.Id;
             set
             {
-                if (GatewayDefaultSite is null)
-                    GatewayDefaultSite = new WritableSubResource();
-                GatewayDefaultSite.Id = value;
+                if (value is not null)
+                {
+                    if (GatewayDefaultSite is null)
+                        GatewayDefaultSite = new WritableSubResource();
+                    GatewayDefaultSite.Id = value;
+                }
+                else
+                {
+                    GatewayDefaultSite = null;
+                }
             }
         }
 

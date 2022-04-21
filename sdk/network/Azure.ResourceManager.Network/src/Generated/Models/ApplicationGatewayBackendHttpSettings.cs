@@ -83,9 +83,16 @@ namespace Azure.ResourceManager.Network.Models
             get => Probe is null ? default : Probe.Id;
             set
             {
-                if (Probe is null)
-                    Probe = new WritableSubResource();
-                Probe.Id = value;
+                if (value is not null)
+                {
+                    if (Probe is null)
+                        Probe = new WritableSubResource();
+                    Probe.Id = value;
+                }
+                else
+                {
+                    Probe = null;
+                }
             }
         }
 

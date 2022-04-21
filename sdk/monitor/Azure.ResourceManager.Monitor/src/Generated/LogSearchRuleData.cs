@@ -99,9 +99,16 @@ namespace Azure.ResourceManager.Monitor
             get => Action is null ? default : Action.OdataType;
             set
             {
-                if (Action is null)
-                    Action = new MonitorAction();
-                Action.OdataType = value;
+                if (value is not null)
+                {
+                    if (Action is null)
+                        Action = new MonitorAction();
+                    Action.OdataType = value;
+                }
+                else
+                {
+                    Action = null;
+                }
             }
         }
     }
