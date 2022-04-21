@@ -15,30 +15,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SipSignalingPort != null)
-            {
-                writer.WritePropertyName("sipSignalingPort");
-                writer.WriteNumberValue(SipSignalingPort.Value);
-            }
-            else
-            {
-                writer.WriteNull("sipSignalingPort");
-            }
+            writer.WritePropertyName("sipSignalingPort");
+            writer.WriteNumberValue(SipSignalingPort);
             writer.WriteEndObject();
         }
 
         internal static SipTrunk DeserializeSipTrunk(JsonElement element)
         {
-            int? sipSignalingPort = default;
+            int sipSignalingPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sipSignalingPort"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sipSignalingPort = null;
-                        continue;
-                    }
                     sipSignalingPort = property.Value.GetInt32();
                     continue;
                 }

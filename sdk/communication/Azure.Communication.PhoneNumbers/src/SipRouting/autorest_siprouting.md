@@ -45,15 +45,6 @@ directive:
     delete $.SipConfigurationPatch
 ```
 
-### Relax constraints on SipTrunk object to use it instead of TrunkPatch
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.SipTrunk
-  transform: >
-    delete $.required;
-```
-
 ### Move all the models to the main namespace
 ```yaml
 directive:

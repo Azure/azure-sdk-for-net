@@ -21,23 +21,23 @@ To retrieve or replace current Trunk or Route configuration, SDK provides severa
 #### Set SIP configuration
 Set SIP trunks and routes in bulk.
 
-```C# Snippet: Replace whole configuration
+```C# Snippet: Replace SIP trunks and routes
 // Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
 var newTrunks = <new_trunks_list>;
 var newRoutes = <new_routes_list>;
 
-client.SetRoutesAsync(new List<SipTrunkRoute>());
-client.SetTrunksAsync(<trunks_list>);
-client.SetRoutesAsync(<routes_list>);
+await client.SetRoutesAsync(new List<SipTrunkRoute>());
+await client.SetTrunksAsync(<trunks_list>);
+await client.SetRoutesAsync(<routes_list>);
 ```
 
 #### Retrieve SIP configuration
-```C# Snippet:Retrieve whole configuration
-var trunks = client.GetTrunksAsync();
-var routes = client.GetRoutesAsync();
+```C# Snippet:Retrieve SIP trunks and routes
+var trunks = await client.GetTrunksAsync();
+var routes = await client.GetRoutesAsync();
 ```
 
-## Operations on a single item
+## Operations on a single trunk
 The SDK allows also for retrieving, setting and deleting single item from the collection.
 
 #### Retrieve single item

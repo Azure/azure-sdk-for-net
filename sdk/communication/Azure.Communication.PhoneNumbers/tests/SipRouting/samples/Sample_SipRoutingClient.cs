@@ -34,7 +34,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var client = new SipRoutingClient(connectionString);
             #endregion Snippet:CreateSipRoutingClient
 
-            #region Snippet:Set whole configuration
+            #region Snippet:Replace SIP trunks and routes
             // Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
             //@@var newTrunks = < new_trunks_list >;
             //@@var newRoutes = < new_routes_list >;
@@ -42,38 +42,34 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             client.SetRoutes(new List<SipTrunkRoute>());
             client.SetTrunks(new List<SipTrunk> { TestData.NewTrunk });
             client.SetRoutes(new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk });
-            #endregion Snippet:Set whole configuration
+            #endregion Snippet:Replace SIP trunks and routes
 
-            #region Snippet:Retrieve whole configuration
+            #region Snippet:Retrieve SIP trunks and routes
             var trunksResponse = client.GetTrunks();
             var routesResponse = client.GetRoutes();
-            #endregion Snippet:Retrieve whole configuration
+            #endregion Snippet:Retrieve SIP trunks and routes
 
             Assert.AreEqual(1, trunksResponse.Value.Count);
             Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
             Assert.AreEqual(1, routesResponse.Value.Count);
             Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
 
-            #region Snippet:Retrieve one item
+            #region Snippet:Retrieve one trunk
             var trunkResponse = client.GetTrunk(TestData.NewTrunk.Fqdn);
-            var routeResponse = client.GetRoute(TestData.RuleNavigateToNewTrunk.Name);
-            # endregion Snippet:Retrieve one item
+            # endregion Snippet:Retrieve one trunk
 
-            #region Snippet:Set one item
-            // Set function will either modify existing item, or append the new item to the collection.
+            #region Snippet:Set one trunk
             var updatedTrunk = new SipTrunk(TestData.NewTrunk.Fqdn, 9999);
-            var updatedRoute = new SipTrunkRoute(TestData.RuleNavigateToNewTrunk.Name, TestData.RuleNavigateToNewTrunk.NumberPattern, "Alternative description");
-
             client.SetTrunk(updatedTrunk); // Modify currently used trunk
-            client.SetTrunk(TestData.TrunkList[0]); // Add new trunk
-            client.SetRoute(updatedRoute); // Modify currently used route
-            client.SetRoute(TestData.RuleNavigateToTrunk1); // Add new route
-            #endregion Snippet:Set one item
+            #endregion Snippet:Set one trunk
 
-            #region Snippet:Delete one item
-            client.DeleteRoute(TestData.RuleNavigateToTrunk1.Name);  //Delete route before the trunk, it depends on.
+            #region Snippet:Add one trunk
+            client.SetTrunk(TestData.TrunkList[0]);
+            #endregion Snippet:Add one trunk
+
+            #region Snippet:Delete one trunk
             client.DeleteTrunk(TestData.Fqdns[0]);
-            #endregion Snippet:Delete one item
+            #endregion Snippet:Delete one trunk
 
             var trunksFinalResponse = client.GetTrunksAsync();
             var routesFinalResponse = client.GetRoutesAsync();
@@ -81,7 +77,6 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             Assert.AreEqual(1, trunksFinalResponse.Result.Value.Count);
             Assert.IsTrue(TrunkAreEqual(updatedTrunk, trunksFinalResponse.Result.Value[0]));
             Assert.AreEqual(1, routesFinalResponse.Result.Value.Count);
-            Assert.IsTrue(RouteAreEqual(updatedRoute, routesFinalResponse.Result.Value[0]));
         }
 
         [Test]
@@ -99,7 +94,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var client = new SipRoutingClient(connectionString);
             #endregion Snippet:CreateSipRoutingClient
 
-            #region Snippet:Set whole configuration
+            #region Snippet:Replace SIP trunks and routes
             // Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
             //@@var newTrunks = < new_trunks_list >;
             //@@var newRoutes = < new_routes_list >;
@@ -107,38 +102,34 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             await client.SetRoutesAsync(new List<SipTrunkRoute>());
             await client.SetTrunksAsync(new List<SipTrunk> { TestData.NewTrunk });
             await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk });
-            #endregion Snippet:Set whole configuration
+            #endregion Snippet:Replace SIP trunks and routes
 
-            #region Snippet:Retrieve whole configuration
+            #region Snippet:Retrieve SIP trunks and routes
             var trunksResponse = client.GetTrunksAsync();
             var routesResponse = client.GetRoutesAsync();
-            #endregion Snippet:Retrieve whole configuration
+            #endregion Snippet:Retrieve SIP trunks and routes
 
             Assert.AreEqual(1, trunksResponse.Result.Value.Count);
             Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Result.Value[0]));
             Assert.AreEqual(1, routesResponse.Result.Value.Count);
             Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Result.Value[0]));
 
-            #region Snippet:Retrieve one item
+            #region Snippet:Retrieve one trunk
             var trunkResponse = client.GetTrunkAsync(TestData.NewTrunk.Fqdn);
-            var routeResponse = client.GetRouteAsync(TestData.RuleNavigateToNewTrunk.Name);
-            # endregion Snippet:Retrieve one item
+            # endregion Snippet:Retrieve one trunk
 
-            #region Snippet:Set one item
+            #region Snippet:Set one trunk
             // Set function will either modify existing item, or append the new item to the collection.
             var updatedTrunk = new SipTrunk(TestData.NewTrunk.Fqdn, 9999);
             var updatedRoute = new SipTrunkRoute(TestData.RuleNavigateToNewTrunk.Name, TestData.RuleNavigateToNewTrunk.NumberPattern, "Alternative description");
 
             await client.SetTrunkAsync(updatedTrunk); // Modify currently used trunk
             await client.SetTrunkAsync(TestData.TrunkList[0]); // Add new trunk
-            await client.SetRouteAsync(updatedRoute); // Modify currently used route
-            await client.SetRouteAsync(TestData.RuleNavigateToTrunk1); // Add new route
-            #endregion Snippet:Set one item
+            #endregion Snippet:Set one trunk
 
-            #region Snippet:Delete one item
-            await client.DeleteRouteAsync(TestData.RuleNavigateToTrunk1.Name);  //Delete route before the trunk, it depends on.
+            #region Snippet:Delete one trunk
             await client.DeleteTrunkAsync(TestData.Fqdns[0]);
-            #endregion Snippet:Delete one item
+            #endregion Snippet:Delete one trunk
 
             var trunksFinalResponse = client.GetTrunksAsync();
             var routesFinalResponse = client.GetRoutesAsync();
