@@ -95,9 +95,7 @@ public virtual async Task<Response> PutRequiredOptionalAsync(string requiredPara
 ```
 
 **Notice:**
-Now the customization method has one more parameter, so we should call it with `newParameter` `null` as `CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);`.
-
-Now calling `client.PutRequiredOptionalAsync("requiredParam", "optionalParam", ErrorOptions.NoThrow)` with V2 will invoke the customization method we added.
+Now calling `client.PutRequiredOptionalAsync("requiredParam", "optionalParam", ErrorOptions.NoThrow)` with V2 will invoke the `PutRequiredOptionalAsync` method we added. But the `CreatePutRequiredOptionalRequest` method has one more parameter, so we should call it with `newParameter` `null` as `CreatePutRequiredOptionalRequest(requiredParam, optionalParam, null, context);`.
 
 ## A method changes a required parameter to optional
 
