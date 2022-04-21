@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A complete ordered set of utterances (spoken or written), by one or more speakers to be used for analysis. </summary>
-    public partial class Conversation
+    public partial class GeneratedConversation
     {
-        /// <summary> Initializes a new instance of Conversation. </summary>
+        /// <summary> Initializes a new instance of GeneratedConversation. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> The language of the conversation item in BCP-47 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="language"/> is null. </exception>
-        public Conversation(string id, string language)
+        public GeneratedConversation(string id, string language)
         {
             if (id == null)
             {

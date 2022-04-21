@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class Entity : IUtf8JsonSerializable
+    public partial class GeneratedEntity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations
             writer.WriteEndObject();
         }
 
-        internal static Entity DeserializeEntity(JsonElement element)
+        internal static GeneratedEntity DeserializeGeneratedEntity(JsonElement element)
         {
             string text = default;
             string category = default;
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new GeneratedEntity(text, category, subcategory.Value, offset, length, confidenceScore);
         }
     }
 }

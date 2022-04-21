@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of MultiLanguageConversationAnalysisInput. </summary>
         /// <param name="conversations"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
-        public MultiLanguageConversationAnalysisInput(IEnumerable<Conversation> conversations)
+        public MultiLanguageConversationAnalysisInput(IEnumerable<GeneratedConversation> conversations)
         {
             if (conversations == null)
             {
@@ -28,6 +29,6 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Gets the conversations. </summary>
-        public IList<Conversation> Conversations { get; }
+        public IList<GeneratedConversation> Conversations { get; }
     }
 }

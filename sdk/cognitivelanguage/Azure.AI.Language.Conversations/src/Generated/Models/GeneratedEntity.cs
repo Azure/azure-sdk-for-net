@@ -7,19 +7,19 @@
 
 using System;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The Entity. </summary>
-    public partial class Entity
+    public partial class GeneratedEntity
     {
-        /// <summary> Initializes a new instance of Entity. </summary>
+        /// <summary> Initializes a new instance of GeneratedEntity. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        public Entity(string text, string category, int offset, int length, double confidenceScore)
+        public GeneratedEntity(string text, string category, int offset, int length, double confidenceScore)
         {
             if (text == null)
             {
@@ -37,14 +37,14 @@ namespace Azure.AI.Language.Conversations
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of Entity. </summary>
+        /// <summary> Initializes a new instance of GeneratedEntity. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        internal Entity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
+        internal GeneratedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
         {
             Text = text;
             Category = category;

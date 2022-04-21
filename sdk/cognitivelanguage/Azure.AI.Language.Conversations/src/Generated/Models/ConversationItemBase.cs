@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Enumeration of supported conversational modalities. </summary>
         public InputModality? Modality { get; set; }
         /// <summary> The role of the participant. </summary>
-        public Role? Role { get; set; }
+        public GeneratedRole? Role { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

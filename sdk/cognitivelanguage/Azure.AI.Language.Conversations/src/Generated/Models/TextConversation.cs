@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The TextConversation. </summary>
-    public partial class TextConversation : Conversation
+    public partial class TextConversation : GeneratedConversation
     {
         /// <summary> Initializes a new instance of TextConversation. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
