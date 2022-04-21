@@ -11,16 +11,51 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    internal partial class Error
+    public partial class Error : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("code");
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message");
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target");
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details");
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror");
+                writer.WriteObjectValue(Innererror);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static Error DeserializeError(JsonElement element)
         {
             ErrorCode code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> details = default;
+            Optional<IList<Error>> details = default;
             Optional<InnerErrorModel> innererror = default;
-            IReadOnlyDictionary<string, object> additionalProperties = default;
+            IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {

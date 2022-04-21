@@ -20,8 +20,8 @@ namespace Azure.AI.Language.Conversations
                 writer.WritePropertyName("callingOptions");
                 writer.WriteObjectValue(CallingOptions);
             }
-            writer.WritePropertyName("targetKind");
-            writer.WriteStringValue(TargetKind.ToString());
+            writer.WritePropertyName("targetProjectKind");
+            writer.WriteStringValue(TargetProjectKind.ToString());
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion");

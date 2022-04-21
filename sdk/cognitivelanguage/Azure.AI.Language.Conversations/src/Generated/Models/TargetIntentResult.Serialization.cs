@@ -14,24 +14,24 @@ namespace Azure.AI.Language.Conversations
     {
         internal static TargetIntentResult DeserializeTargetIntentResult(JsonElement element)
         {
-            if (element.TryGetProperty("targetKind", out JsonElement discriminator))
+            if (element.TryGetProperty("targetProjectKind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "conversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
-                    case "luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element);
-                    case "non_linked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element);
-                    case "question_answering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element);
+                    case "CustomConversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
+                    case "Luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element);
+                    case "NonLinked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element);
+                    case "QuestionAnswering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element);
                 }
             }
-            TargetKind targetKind = default;
+            TargetProjectKind targetProjectKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetKind"))
+                if (property.NameEquals("targetProjectKind"))
                 {
-                    targetKind = new TargetKind(property.Value.GetString());
+                    targetProjectKind = new TargetProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new TargetIntentResult(targetKind, apiVersion.Value, confidenceScore);
+            return new TargetIntentResult(targetProjectKind, apiVersion.Value, confidenceScore);
         }
     }
 }

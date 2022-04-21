@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations
         {
             string query = default;
             Optional<string> detectedLanguage = default;
-            ConversationPrediction prediction = default;
+            Optional<ConversationPrediction> prediction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -31,11 +31,16 @@ namespace Azure.AI.Language.Conversations
                 }
                 if (property.NameEquals("prediction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     prediction = ConversationPrediction.DeserializeConversationPrediction(property.Value);
                     continue;
                 }
             }
-            return new ConversationResult(query, detectedLanguage.Value, prediction);
+            return new ConversationResult(query, detectedLanguage.Value, prediction.Value);
         }
     }
 }

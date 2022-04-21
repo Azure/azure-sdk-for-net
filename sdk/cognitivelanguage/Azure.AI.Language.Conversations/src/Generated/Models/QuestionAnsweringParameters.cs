@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of QuestionAnsweringParameters. </summary>
         public QuestionAnsweringParameters()
         {
-            TargetKind = TargetKind.QuestionAnswering;
+            TargetProjectKind = TargetProjectKind.QuestionAnswering;
         }
 
         /// <summary> The options sent to a Question Answering KB. </summary>

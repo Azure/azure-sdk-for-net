@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -29,6 +31,7 @@ namespace Azure.AI.Language.Conversations
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
+            TargetProjectParameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
         }
 
         /// <summary> The name of the project to use. </summary>
@@ -37,5 +40,13 @@ namespace Azure.AI.Language.Conversations
         public string DeploymentName { get; }
         /// <summary> If true, the service will return more detailed information in the response. </summary>
         public bool? Verbose { get; set; }
+        /// <summary> If true, the service will keep the query for further review. </summary>
+        public bool? IsLoggingEnabled { get; set; }
+        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
+        public StringIndexType? StringIndexType { get; set; }
+        /// <summary> The name of a target project to forward the request to. </summary>
+        public string DirectTarget { get; set; }
+        /// <summary> A dictionary representing the parameters for each target project. </summary>
+        public IDictionary<string, AnalysisParameters> TargetProjectParameters { get; }
     }
 }

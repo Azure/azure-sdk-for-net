@@ -13,19 +13,19 @@ namespace Azure.AI.Language.Conversations
     public partial class TextConversationItem : ConversationItemBase
     {
         /// <summary> Initializes a new instance of TextConversationItem. </summary>
-        /// <param name="participantId"> The participant Id of a ConversationItem. </param>
-        /// <param name="id"> The Id of a ConversationItem. </param>
+        /// <param name="id"> The ID of a conversation item. </param>
+        /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="text"> The single input query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantId"/>, <paramref name="id"/> or <paramref name="text"/> is null. </exception>
-        public TextConversationItem(string participantId, string id, string text) : base(participantId, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="participantId"/> or <paramref name="text"/> is null. </exception>
+        public TextConversationItem(string id, string participantId, string text) : base(id, participantId)
         {
-            if (participantId == null)
-            {
-                throw new ArgumentNullException(nameof(participantId));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
             }
             if (text == null)
             {
@@ -33,7 +33,6 @@ namespace Azure.AI.Language.Conversations
             }
 
             Text = text;
-            Modality = InputModality.Text;
         }
 
         /// <summary> The single input query. </summary>

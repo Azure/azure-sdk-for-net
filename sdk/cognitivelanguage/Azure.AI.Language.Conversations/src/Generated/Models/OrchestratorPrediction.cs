@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Intents = intents;
-            ProjectKind = Conversations.ProjectKind.Workflow;
+            ProjectKind = Conversations.ProjectKind.Orchestrator;
         }
 
         /// <summary> Initializes a new instance of OrchestratorPrediction. </summary>

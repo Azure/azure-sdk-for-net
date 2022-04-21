@@ -14,13 +14,13 @@ namespace Azure.AI.Language.Conversations
     {
         internal static CustomConversationalTaskResult DeserializeCustomConversationalTaskResult(JsonElement element)
         {
-            AnalyzeConversationResult results = default;
+            AnalyzeConversationResult result = default;
             AnalyzeConversationTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("result"))
                 {
-                    results = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(property.Value);
+                    result = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new CustomConversationalTaskResult(kind, results);
+            return new CustomConversationalTaskResult(kind, result);
         }
     }
 }

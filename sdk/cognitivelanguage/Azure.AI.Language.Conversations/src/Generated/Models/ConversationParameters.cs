@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ConversationParameters. </summary>
         public ConversationParameters()
         {
-            TargetKind = TargetKind.Conversation;
+            TargetProjectKind = TargetProjectKind.CustomConversation;
         }
 
         /// <summary> The option to set to call a Conversation project. </summary>

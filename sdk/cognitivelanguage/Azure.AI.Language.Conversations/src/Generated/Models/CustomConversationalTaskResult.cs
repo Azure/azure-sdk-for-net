@@ -13,29 +13,29 @@ namespace Azure.AI.Language.Conversations
     public partial class CustomConversationalTaskResult : AnalyzeConversationTaskResult
     {
         /// <summary> Initializes a new instance of CustomConversationalTaskResult. </summary>
-        /// <param name="results"> Represents a conversation analysis response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal CustomConversationalTaskResult(AnalyzeConversationResult results)
+        /// <param name="result"> Represents a conversation analysis response. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
+        internal CustomConversationalTaskResult(AnalyzeConversationResult result)
         {
-            if (results == null)
+            if (result == null)
             {
-                throw new ArgumentNullException(nameof(results));
+                throw new ArgumentNullException(nameof(result));
             }
 
-            Results = results;
+            Result = result;
             Kind = AnalyzeConversationTaskResultsKind.CustomConversationResult;
         }
 
         /// <summary> Initializes a new instance of CustomConversationalTaskResult. </summary>
         /// <param name="kind"> Enumeration of supported conversational task results. </param>
-        /// <param name="results"> Represents a conversation analysis response. </param>
-        internal CustomConversationalTaskResult(AnalyzeConversationTaskResultsKind kind, AnalyzeConversationResult results) : base(kind)
+        /// <param name="result"> Represents a conversation analysis response. </param>
+        internal CustomConversationalTaskResult(AnalyzeConversationTaskResultsKind kind, AnalyzeConversationResult result) : base(kind)
         {
-            Results = results;
+            Result = result;
             Kind = kind;
         }
 
         /// <summary> Represents a conversation analysis response. </summary>
-        public AnalyzeConversationResult Results { get; }
+        public AnalyzeConversationResult Result { get; }
     }
 }

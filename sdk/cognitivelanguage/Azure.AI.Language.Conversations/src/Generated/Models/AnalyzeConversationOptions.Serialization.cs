@@ -17,27 +17,6 @@ namespace Azure.AI.Language.Conversations
             writer.WriteStartObject();
             writer.WritePropertyName("conversationItem");
             writer.WriteObjectValue(ConversationItem);
-            if (Optional.IsDefined(DirectTarget))
-            {
-                writer.WritePropertyName("directTarget");
-                writer.WriteStringValue(DirectTarget);
-            }
-            if (Optional.IsDefined(IsLoggingEnabled))
-            {
-                writer.WritePropertyName("isLoggingEnabled");
-                writer.WriteBooleanValue(IsLoggingEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters");
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
         }
     }

@@ -24,6 +24,32 @@ namespace Azure.AI.Language.Conversations
                 writer.WritePropertyName("verbose");
                 writer.WriteBooleanValue(Verbose.Value);
             }
+            if (Optional.IsDefined(IsLoggingEnabled))
+            {
+                writer.WritePropertyName("isLoggingEnabled");
+                writer.WriteBooleanValue(IsLoggingEnabled.Value);
+            }
+            if (Optional.IsDefined(StringIndexType))
+            {
+                writer.WritePropertyName("stringIndexType");
+                writer.WriteStringValue(StringIndexType.Value.ToString());
+            }
+            if (Optional.IsDefined(DirectTarget))
+            {
+                writer.WritePropertyName("directTarget");
+                writer.WriteStringValue(DirectTarget);
+            }
+            if (Optional.IsCollectionDefined(TargetProjectParameters))
+            {
+                writer.WritePropertyName("targetProjectParameters");
+                writer.WriteStartObject();
+                foreach (var item in TargetProjectParameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
     }

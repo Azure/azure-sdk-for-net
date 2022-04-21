@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
         public LuisParameters()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            TargetKind = TargetKind.Luis;
+            TargetProjectKind = TargetProjectKind.Luis;
         }
 
         /// <summary> The utterance to predict. </summary>

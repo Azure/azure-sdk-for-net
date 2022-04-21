@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations
         internal static NoneLinkedTargetIntentResult DeserializeNoneLinkedTargetIntentResult(JsonElement element)
         {
             Optional<ConversationResult> result = default;
-            TargetKind targetKind = default;
+            TargetProjectKind targetProjectKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
@@ -30,9 +30,9 @@ namespace Azure.AI.Language.Conversations
                     result = ConversationResult.DeserializeConversationResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetKind"))
+                if (property.NameEquals("targetProjectKind"))
                 {
-                    targetKind = new TargetKind(property.Value.GetString());
+                    targetProjectKind = new TargetProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new NoneLinkedTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
+            return new NoneLinkedTargetIntentResult(targetProjectKind, apiVersion.Value, confidenceScore, result.Value);
         }
     }
 }

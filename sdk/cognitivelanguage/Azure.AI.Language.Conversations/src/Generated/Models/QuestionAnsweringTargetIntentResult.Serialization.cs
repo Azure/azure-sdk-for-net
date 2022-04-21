@@ -14,8 +14,8 @@ namespace Azure.AI.Language.Conversations
     {
         internal static QuestionAnsweringTargetIntentResult DeserializeQuestionAnsweringTargetIntentResult(JsonElement element)
         {
-            Optional<KnowledgeBaseAnswers> result = default;
-            TargetKind targetKind = default;
+            Optional<object> result = default;
+            TargetProjectKind targetProjectKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Conversations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    result = KnowledgeBaseAnswers.DeserializeKnowledgeBaseAnswers(property.Value);
+                    result = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("targetKind"))
+                if (property.NameEquals("targetProjectKind"))
                 {
-                    targetKind = new TargetKind(property.Value.GetString());
+                    targetProjectKind = new TargetProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new QuestionAnsweringTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
+            return new QuestionAnsweringTargetIntentResult(targetProjectKind, apiVersion.Value, confidenceScore, result.Value);
         }
     }
 }
