@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25c1aa450b42fe911e067d/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5448af9ce57e4942832fe/specification/appconfiguration/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 no-property-type-replacement: RegenerateKeyContent
