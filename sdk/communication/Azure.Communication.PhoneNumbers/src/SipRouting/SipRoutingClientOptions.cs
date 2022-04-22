@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
@@ -15,7 +14,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary>
         /// The latest version of the calling configuration service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview1;
+
         internal string ApiVersion { get; }
 
         /// <summary>
@@ -39,8 +39,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             /// The V1 of the calling configuration service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016
             V2021_05_01_preview1 = 1
+#pragma warning restore AZC0016
 #pragma warning restore CA1707 // Identifiers should not contain underscores
+
         }
     }
 }

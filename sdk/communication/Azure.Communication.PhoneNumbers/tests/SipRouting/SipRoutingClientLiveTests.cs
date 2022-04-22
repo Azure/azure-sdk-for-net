@@ -1,17 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.PhoneNumbers.SipRouting;
 using Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure;
-using Azure.Communication.Tests;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.SipRouting.Tests
@@ -36,7 +30,6 @@ namespace Azure.Communication.SipRouting.Tests
             return client;
         }
 
-        [LiveOnly]
         [Test]
         public async Task GetFunctionUsingTokenAuthentication()
         {
@@ -46,13 +39,12 @@ namespace Azure.Communication.SipRouting.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
-        [LiveOnly]
         [Test]
         public async Task SetFunctionUsingTokenAuthentication()
         {
             var client = CreateClientWithTokenCredential();
 
-            var response = await client.SetTrunksAsync(new List<SipTrunk> { TestData.NewTrunk }).ConfigureAwait(false);
+            var response = await client.SetTrunkAsync(new SipTrunk(TestData.TrunkList[0].Fqdn,5555)).ConfigureAwait(false);
             Assert.AreEqual(200, response.Status);
         }
 

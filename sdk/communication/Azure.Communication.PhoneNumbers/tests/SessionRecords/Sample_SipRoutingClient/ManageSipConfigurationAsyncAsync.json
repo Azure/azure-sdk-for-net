@@ -1,6 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://e2e_test.communication.azure.com/;accesskey=Kg=="
-  }
-}
