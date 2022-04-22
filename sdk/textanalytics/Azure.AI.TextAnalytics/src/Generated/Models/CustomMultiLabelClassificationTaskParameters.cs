@@ -9,14 +9,14 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> Supported parameters for a Custom Single Classification task. </summary>
-    internal partial class CustomSingleClassificationTaskParameters : CustomTaskParameters
+    /// <summary> Supported parameters for a Custom Multi Classification task. </summary>
+    internal partial class CustomMultiLabelClassificationTaskParameters : CustomTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomSingleClassificationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomSingleClassificationTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
+        public CustomMultiLabelClassificationTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
             if (projectName == null)
             {
@@ -28,11 +28,11 @@ namespace Azure.AI.TextAnalytics.Models
             }
         }
 
-        /// <summary> Initializes a new instance of CustomSingleClassificationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationTaskParameters. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
-        internal CustomSingleClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut, projectName, deploymentName)
+        internal CustomMultiLabelClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut, projectName, deploymentName)
         {
         }
     }

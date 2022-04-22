@@ -12,13 +12,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("classification");
-            writer.WriteObjectValue(Classification);
+            writer.WritePropertyName("class");
+            writer.WriteStartArray();
+            foreach (var item in Class)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings");
@@ -36,17 +41,22 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomSingleClassificationResultDocumentsItem DeserializeCustomSingleClassificationResultDocumentsItem(JsonElement element)
+        internal static CustomMultiLabelClassificationResultDocumentsItem DeserializeCustomMultiLabelClassificationResultDocumentsItem(JsonElement element)
         {
-            ClassificationResult classification = default;
+            IList<ClassificationResult> @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classification"))
+                if (property.NameEquals("class"))
                 {
-                    classification = ClassificationResult.DeserializeClassificationResult(property.Value);
+                    List<ClassificationResult> array = new List<ClassificationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ClassificationResult.DeserializeClassificationResult(item));
+                    }
+                    @class = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -75,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomSingleClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), classification);
+            return new CustomMultiLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
         }
     }
 }

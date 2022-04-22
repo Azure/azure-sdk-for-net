@@ -8,25 +8,25 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Use custom models to classify text into single label taxonomy. </summary>
-    internal partial class CustomSingleClassificationLROTask : AnalyzeTextLROTask
+    internal partial class CustomSingleLabelClassificationLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of CustomSingleClassificationLROTask. </summary>
-        public CustomSingleClassificationLROTask()
+        /// <summary> Initializes a new instance of CustomSingleLabelClassificationLROTask. </summary>
+        public CustomSingleLabelClassificationLROTask()
         {
-            Kind = AnalyzeTextLROTaskKind.CustomSingleClassification;
+            Kind = AnalyzeTextLROTaskKind.CustomSingleLabelClassification;
         }
 
-        /// <summary> Initializes a new instance of CustomSingleClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of CustomSingleLabelClassificationLROTask. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Custom Single Classification task. </param>
-        internal CustomSingleClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomSingleClassificationTaskParameters parameters) : base(taskName, kind)
+        internal CustomSingleLabelClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomSingleLabelClassificationTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
             Kind = kind;
         }
 
         /// <summary> Supported parameters for a Custom Single Classification task. </summary>
-        public CustomSingleClassificationTaskParameters Parameters { get; set; }
+        public CustomSingleLabelClassificationTaskParameters Parameters { get; set; }
     }
 }

@@ -8,25 +8,25 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
-    internal partial class CustomMultiClassificationLROTask : AnalyzeTextLROTask
+    internal partial class CustomMultiLabelClassificationLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of CustomMultiClassificationLROTask. </summary>
-        public CustomMultiClassificationLROTask()
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROTask. </summary>
+        public CustomMultiLabelClassificationLROTask()
         {
-            Kind = AnalyzeTextLROTaskKind.CustomMultiClassification;
+            Kind = AnalyzeTextLROTaskKind.CustomMultiLabelClassification;
         }
 
-        /// <summary> Initializes a new instance of CustomMultiClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROTask. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Custom Multi Classification task. </param>
-        internal CustomMultiClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomMultiClassificationTaskParameters parameters) : base(taskName, kind)
+        internal CustomMultiLabelClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomMultiLabelClassificationTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
             Kind = kind;
         }
 
         /// <summary> Supported parameters for a Custom Multi Classification task. </summary>
-        public CustomMultiClassificationTaskParameters Parameters { get; set; }
+        public CustomMultiLabelClassificationTaskParameters Parameters { get; set; }
     }
 }
