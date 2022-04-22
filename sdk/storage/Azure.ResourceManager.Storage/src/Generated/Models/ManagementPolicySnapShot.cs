@@ -16,12 +16,20 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
+        /// <param name="tierToCool"> The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier. </param>
+        /// <param name="tierToArchive"> The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier. </param>
         /// <param name="delete"> The function to delete the blob snapshot. </param>
-        internal ManagementPolicySnapShot(DateAfterCreation delete)
+        internal ManagementPolicySnapShot(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation delete)
         {
+            TierToCool = tierToCool;
+            TierToArchive = tierToArchive;
             Delete = delete;
         }
 
+        /// <summary> The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot tier. </summary>
+        public DateAfterCreation TierToCool { get; set; }
+        /// <summary> The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot or Cool tier. </summary>
+        public DateAfterCreation TierToArchive { get; set; }
         /// <summary> The function to delete the blob snapshot. </summary>
         public DateAfterCreation Delete { get; set; }
     }

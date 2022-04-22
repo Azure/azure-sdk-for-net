@@ -143,6 +143,38 @@ namespace Microsoft.Kubernetes
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets cluster user credentials of a connected cluster
+        /// </summary>
+        /// <remarks>
+        /// Gets cluster user credentials of the connected cluster with a
+        /// specified resource group and name.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kubernetes cluster on which get is called.
+        /// </param>
+        /// <param name='properties'>
+        /// ListClusterUserCredential properties
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CredentialResults>> ListClusterUserCredentialWithHttpMessagesAsync(string resourceGroupName, string clusterName, ListClusterUserCredentialProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists all connected clusters
         /// </summary>
         /// <remarks>

@@ -64,5 +64,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// internet address.
         /// </summary>
         public const string OpenapijsonLink = "openapi+json-link";
+        /// <summary>
+        /// The GraphQL API endpoint hosted on a publicly accessible internet
+        /// address.
+        /// </summary>
+        public const string GraphqlLink = "graphql-link";
     }
 }

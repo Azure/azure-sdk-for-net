@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Avs.Models
     /// </summary>
     public static class PortMirroringStatusEnum
     {
-        public const string SUCCESSFAILURE = "SUCCESS, FAILURE";
+        public const string SUCCESS = "SUCCESS";
+        public const string FAILURE = "FAILURE";
     }
 }

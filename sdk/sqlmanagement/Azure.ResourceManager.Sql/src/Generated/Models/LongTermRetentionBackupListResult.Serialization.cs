@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static LongTermRetentionBackupListResult DeserializeLongTermRetentionBackupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LongTermRetentionBackup>> value = default;
+            Optional<IReadOnlyList<LongTermRetentionBackupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LongTermRetentionBackup> array = new List<LongTermRetentionBackup>();
+                    List<LongTermRetentionBackupData> array = new List<LongTermRetentionBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LongTermRetentionBackup.DeserializeLongTermRetentionBackup(item));
+                        array.Add(LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(item));
                     }
                     value = array;
                     continue;

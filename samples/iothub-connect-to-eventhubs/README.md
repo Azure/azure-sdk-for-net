@@ -20,7 +20,7 @@ This sample illustrates querying the IoT Hub service to obtain the connection st
 
 ## Getting started
 
-- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **.NET Core 3.1:** This sample targets [.NET Core 3.1](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks) and makes use of language features that were introduced in C# 8.0.  In order to build and run the sample without modifications, you will need the [.NET Core SDK](https://dotnet.microsoft.com/download) available.  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects nor target .NET Core 3.1.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
 

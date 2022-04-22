@@ -53,7 +53,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="propertyColumns">A string array of the names of output
         /// columns to be attached to Service Bus messages as custom
         /// properties.</param>
-        public ServiceBusQueueOutputDataSource(string serviceBusNamespace = default(string), string sharedAccessPolicyName = default(string), string sharedAccessPolicyKey = default(string), string authenticationMode = default(string), string queueName = default(string), IList<string> propertyColumns = default(IList<string>), IDictionary<string, string> systemPropertyColumns = default(IDictionary<string, string>))
+        /// <param name="systemPropertyColumns">The system properties
+        /// associated with the Service Bus Queue. The following system
+        /// properties are supported: ReplyToSessionId, ContentType, To,
+        /// Subject, CorrelationId, TimeToLive, PartitionKey, SessionId,
+        /// ScheduledEnqueueTime, MessageId, ReplyTo, Label,
+        /// ScheduledEnqueueTimeUtc.</param>
+        public ServiceBusQueueOutputDataSource(string serviceBusNamespace = default(string), string sharedAccessPolicyName = default(string), string sharedAccessPolicyKey = default(string), string authenticationMode = default(string), string queueName = default(string), IList<string> propertyColumns = default(IList<string>), object systemPropertyColumns = default(object))
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -115,9 +121,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public IList<string> PropertyColumns { get; set; }
 
         /// <summary>
+        /// Gets or sets the system properties associated with the Service Bus
+        /// Queue. The following system properties are supported:
+        /// ReplyToSessionId, ContentType, To, Subject, CorrelationId,
+        /// TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime,
+        /// MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.systemPropertyColumns")]
-        public IDictionary<string, string> SystemPropertyColumns { get; set; }
+        public object SystemPropertyColumns { get; set; }
 
     }
 }

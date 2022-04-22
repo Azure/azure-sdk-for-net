@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> A particular API error with an error code and a message. </summary>
-    public partial class TimeSeriesOperationError : IReadOnlyDictionary<string, object>
+    public partial class TimeSeriesOperationError
     {
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
         internal TimeSeriesOperationError()
@@ -27,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="target"> Target of the particular error (for example, the name of the property in error). May be null. </param>
         /// <param name="innerError"> Contains more specific error that narrows down the cause. May be null. </param>
         /// <param name="details"> Contains additional error information. May be null. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal TimeSeriesOperationError(string code, string message, string target, TimeSeriesOperationError innerError, IReadOnlyList<TimeSeriesOperationErrorDetails> details, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Code = code;
@@ -48,25 +47,5 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesOperationError InnerError { get; }
         /// <summary> Contains additional error information. May be null. </summary>
         public IReadOnlyList<TimeSeriesOperationErrorDetails> Details { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
     }
 }

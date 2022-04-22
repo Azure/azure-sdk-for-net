@@ -124,7 +124,8 @@ namespace Management.HDInsight.Tests.UnitTests
                 Location = commonData.Location,
                 SshUserName = commonData.SshUsername,
                 SshPassword = commonData.SshPassword,
-                Version = "3.6"
+                Version = "3.6",
+                ClusterTier = Tier.Standard
             };
             return clusterparams;
         }

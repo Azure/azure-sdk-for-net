@@ -260,6 +260,16 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset LastAccessed { get; }
 
         /// <summary>
+        /// The <see cref="BlobImmutabilityPolicy"/> associated with the blob.
+        /// </summary>
+        public BlobImmutabilityPolicy ImmutabilityPolicy { get; internal set; }
+
+        /// <summary>
+        /// Indicates if the blob has a legal hold.
+        /// </summary>
+        public bool HasLegalHold { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public BlobProperties()
@@ -313,7 +323,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset expiresOn,
             bool isSealed,
             string rehydratePriority,
-            DateTimeOffset lastAccessed)
+            DateTimeOffset lastAccessed,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool hasLegalHold)
         {
             LastModified = lastModified;
             LeaseStatus = leaseStatus;
@@ -357,6 +369,8 @@ namespace Azure.Storage.Blobs.Models
             RehydratePriority = rehydratePriority;
             ContentHash = contentHash;
             LastAccessed = lastAccessed;
+            ImmutabilityPolicy = immutabilityPolicy;
+            HasLegalHold = hasLegalHold;
         }
     }
 }

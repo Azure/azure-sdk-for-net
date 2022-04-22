@@ -137,33 +137,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       [CallerMemberName] string caller = "") => BuildScope(partitionCount, consumerGroups, caller);
 
         /// <summary>
-        ///   Performs the tasks needed to create a new Event Hubs namespace within a resource group, intended to be used as
-        ///   an ephemeral container for the Event Hub instances used in a given test run.
-        /// </summary>
-        ///
-        /// <returns>The key attributes for identifying and accessing a dynamically created Event Hubs namespace.</returns>
-        ///
-        public static async Task<EventHubsTestEnvironment.NamespaceProperties> CreateNamespaceAsync()
-        {
-            var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-
-            string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
-
-            using (var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = subscription })
-            {
-                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription).ConfigureAwait(false);
-
-                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
-                eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace)).ConfigureAwait(false);
-
-                var accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, EventHubsTestEnvironment.EventHubsDefaultSharedAccessKey)).ConfigureAwait(false);
-                return new EventHubsTestEnvironment.NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString, shouldRemoveAtCompletion: true);
-            }
-        }
-
-        /// <summary>
         ///   Performs the tasks needed to remove an ephemeral Event Hubs namespace used as a container for Event Hub instances
         ///   for a specific test run.
         /// </summary>

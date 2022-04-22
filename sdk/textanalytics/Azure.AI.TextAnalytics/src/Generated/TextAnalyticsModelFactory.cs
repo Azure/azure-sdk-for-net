@@ -14,47 +14,21 @@ namespace Azure.AI.TextAnalytics
     public static partial class TextAnalyticsModelFactory
     {
 
-        /// <summary> Initializes new instance of LinkedEntity structure. </summary>
-        /// <param name="name"> Entity Linking formal name. </param>
-        /// <param name="matches"> List of instances this entity appears in the text. </param>
-        /// <param name="language"> Language used in the data source. </param>
-        /// <param name="dataSourceEntityId"> Unique identifier of the recognized entity from the data source. </param>
-        /// <param name="url"> URL for the entity&apos;s page from the data source. </param>
-        /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
-        /// <param name="bingEntitySearchApiId"> Bing Entity Search API unique identifier of the recognized entity. </param>
-        /// <returns> A new <see cref="TextAnalytics.LinkedEntity"/> instance for mocking. </returns>
-        public static LinkedEntity LinkedEntity(string name = default, IEnumerable<LinkedEntityMatch> matches = default, string language = default, string dataSourceEntityId = default, Uri url = default, string dataSource = default, string bingEntitySearchApiId = default)
-        {
-            matches ??= new List<LinkedEntityMatch>();
-            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, bingEntitySearchApiId);
-        }
-
-        /// <summary> Initializes new instance of LinkedEntityMatch structure. </summary>
-        /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="offset"> Start position for the entity match text. </param>
-        /// <param name="length"> Length for the entity match text. </param>
-        /// <returns> A new <see cref="TextAnalytics.LinkedEntityMatch"/> instance for mocking. </returns>
-        public static LinkedEntityMatch LinkedEntityMatch(double confidenceScore = default, string text = default, int offset = default, int length = default)
-        {
-            return new LinkedEntityMatch(confidenceScore, text, offset, length);
-        }
-
-        /// <summary> Initializes new instance of HealthcareEntityAssertion class. </summary>
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <returns> A new <see cref="TextAnalytics.HealthcareEntityAssertion"/> instance for mocking. </returns>
-        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = default, EntityCertainty? certainty = default, EntityAssociation? association = default)
+        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = null, EntityCertainty? certainty = null, EntityAssociation? association = null)
         {
             return new HealthcareEntityAssertion(conditionality, certainty, association);
         }
 
-        /// <summary> Initializes new instance of EntityDataSource class. </summary>
+        /// <summary> Initializes a new instance of EntityDataSource. </summary>
         /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="entityId"> Entity id in the given source catalog. </param>
         /// <returns> A new <see cref="TextAnalytics.EntityDataSource"/> instance for mocking. </returns>
-        public static EntityDataSource EntityDataSource(string name = default, string entityId = default)
+        public static EntityDataSource EntityDataSource(string name = null, string entityId = null)
         {
             return new EntityDataSource(name, entityId);
         }

@@ -17,7 +17,7 @@ namespace Azure.Communication.NetworkTraversal
         internal static CommunicationRelayConfiguration DeserializeCommunicationRelayConfiguration(JsonElement element)
         {
             DateTimeOffset expiresOn = default;
-            IReadOnlyList<CommunicationTurnServer> turnServers = default;
+            IReadOnlyList<CommunicationIceServer> iceServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiresOn"))
@@ -25,18 +25,18 @@ namespace Azure.Communication.NetworkTraversal
                     expiresOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("turnServers"))
+                if (property.NameEquals("iceServers"))
                 {
-                    List<CommunicationTurnServer> array = new List<CommunicationTurnServer>();
+                    List<CommunicationIceServer> array = new List<CommunicationIceServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationTurnServer.DeserializeCommunicationTurnServer(item));
+                        array.Add(CommunicationIceServer.DeserializeCommunicationIceServer(item));
                     }
-                    turnServers = array;
+                    iceServers = array;
                     continue;
                 }
             }
-            return new CommunicationRelayConfiguration(expiresOn, turnServers);
+            return new CommunicationRelayConfiguration(expiresOn, iceServers);
         }
     }
 }

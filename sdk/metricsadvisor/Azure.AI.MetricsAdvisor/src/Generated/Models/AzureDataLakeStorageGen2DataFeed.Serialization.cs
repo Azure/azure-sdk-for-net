@@ -167,7 +167,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static AzureDataLakeStorageGen2DataFeed DeserializeAzureDataLakeStorageGen2DataFeed(JsonElement element)
         {
             AzureDataLakeStorageGen2Parameter dataSourceParameter = default;
-            DataFeedSourceType dataSourceType = default;
+            DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
             Optional<string> dataFeedDescription = default;
@@ -206,7 +206,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dataSourceType"))
                 {
-                    dataSourceType = new DataFeedSourceType(property.Value.GetString());
+                    dataSourceType = new DataFeedSourceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataFeedId"))

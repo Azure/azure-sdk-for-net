@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Network;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal PrivateLinkServiceIpConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, Subnet subnet, bool? primary, ProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
+        internal PrivateLinkServiceIpConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, ProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
-        public Subnet Subnet { get; set; }
+        public SubnetData Subnet { get; set; }
         /// <summary> Whether the ip configuration is primary or not. </summary>
         public bool? Primary { get; set; }
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>

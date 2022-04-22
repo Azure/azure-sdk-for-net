@@ -7,34 +7,21 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Gets or sets the tone info. </summary>
+    /// <summary> The information about the tone. </summary>
     public partial class ToneInfo
     {
         /// <summary> Initializes a new instance of ToneInfo. </summary>
-        public ToneInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
-        /// <param name="sequenceId">
-        /// Gets or sets the sequence id. This id can be used to determine if the same tone
-        /// 
-        /// was played multiple times or if any tones were missed.
-        /// </param>
-        /// <param name="tone"> Gets or sets the tone detected. </param>
-        internal ToneInfo(int? sequenceId, ToneValue? tone)
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
+        /// <param name="tone"> The tone value. </param>
+        internal ToneInfo(int sequenceId, ToneValue tone)
         {
             SequenceId = sequenceId;
             Tone = tone;
         }
 
-        /// <summary>
-        /// Gets or sets the sequence id. This id can be used to determine if the same tone
-        /// 
-        /// was played multiple times or if any tones were missed.
-        /// </summary>
-        public int? SequenceId { get; set; }
-        /// <summary> Gets or sets the tone detected. </summary>
-        public ToneValue? Tone { get; set; }
+        /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>
+        public int SequenceId { get; }
+        /// <summary> The tone value. </summary>
+        public ToneValue Tone { get; }
     }
 }

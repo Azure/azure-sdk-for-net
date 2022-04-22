@@ -32,11 +32,13 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="name">storage MB name</param>
         /// <param name="supportedIops">supported IOPS</param>
         /// <param name="storageSizeMB">storage size in MB</param>
-        public StorageMBCapability(string name = default(string), long? supportedIops = default(long?), long? storageSizeMB = default(long?))
+        /// <param name="status">The status</param>
+        public StorageMBCapability(string name = default(string), long? supportedIops = default(long?), long? storageSizeMB = default(long?), string status = default(string))
         {
             Name = name;
             SupportedIops = supportedIops;
             StorageSizeMB = storageSizeMB;
+            Status = status;
             CustomInit();
         }
 
@@ -62,6 +64,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageSizeMB")]
         public long? StorageSizeMB { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

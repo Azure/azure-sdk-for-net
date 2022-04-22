@@ -55,6 +55,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("enableSoftDelete");
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
+            if (Optional.IsDefined(EnableRbacAuthorization))
+            {
+                writer.WritePropertyName("enableRbacAuthorization");
+                writer.WriteBooleanValue(EnableRbacAuthorization.Value);
+            }
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            {
+                writer.WritePropertyName("softDeleteRetentionInDays");
+                writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
+            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
@@ -69,6 +79,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("networkAcls");
                 writer.WriteObjectValue(NetworkAcls);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess);
             }
             writer.WriteEndObject();
         }

@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
     using System.Linq;
 
     /// <summary>
-    /// Policy that determines how a video can be accessed.
+    /// Access policies help define the authentication rules, and control
+    /// access to specific video resources.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AccessPolicyEntity : ProxyResource
@@ -38,18 +39,17 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="role">Defines the access level granted by this policy.
         /// Possible values include: 'Reader'</param>
         /// <param name="authentication">Authentication method to be used when
         /// validating client API access.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public AccessPolicyEntity(string id = default(string), string name = default(string), string type = default(string), AccessPolicyRole? role = default(AccessPolicyRole?), AuthenticationBase authentication = default(AuthenticationBase), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public AccessPolicyEntity(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), AccessPolicyRole? role = default(AccessPolicyRole?), AuthenticationBase authentication = default(AuthenticationBase))
+            : base(id, name, type, systemData)
         {
             Role = role;
             Authentication = authentication;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -71,12 +71,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.authentication")]
         public AuthenticationBase Authentication { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

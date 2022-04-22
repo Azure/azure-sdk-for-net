@@ -7,6 +7,13 @@ namespace Azure.Data.Tables
     {
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
+        internal const string StorageScope = "https://storage.azure.com/.default";
+
+        internal static class CompatSwitches
+        {
+            public const string DisableEscapeSingleQuotesOnGetEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity";
+            public const string DisableEscapeSingleQuotesOnGetEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY";
+        }
 
         internal static class HeaderNames
         {

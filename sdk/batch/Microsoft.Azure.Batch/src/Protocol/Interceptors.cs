@@ -108,7 +108,7 @@
         }
 
         /// <summary>
-        /// A replacment interceptor that calls our modification interceptor.
+        /// A replacement interceptor that calls our modification interceptor.
         /// </summary>
         private new void ReplacementInterceptHandler(ref Protocol.IBatchRequest request)
         {

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Batch.FileStaging
         /// Begins an asynchronous operation to stage all of the files in the given collection.
         /// When file staging begins, all instances of IFileStagingProvider are bucketized by their implementation type.
         /// This produces one collection of instances per implementation.
-        /// Each implmentation of IFileStagingProvider has a StageFilesAsync() method.  That method is called once with the 
+        /// Each implementation of IFileStagingProvider has a StageFilesAsync() method.  That method is called once with the 
         /// collection produced by the bucketization step oulined above.
         /// </summary>
         /// <param name="filesToStage">Collection of all file staging objects to be staged.  All instances must have the same implementation type.</param>

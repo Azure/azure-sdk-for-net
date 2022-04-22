@@ -41,8 +41,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("TLXDWCAR")]
-        [TestCase("racwdxlt")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IFTPUCALYXDWR")]
+        [TestCase("rwdxylacuptfi")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -60,7 +61,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             accountSasBuilder.SetPermissions(permissionsString);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            Assert.AreEqual("rwdxylacuptfi", accountSasBuilder.Permissions);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             Uri uri = new Uri($"{test.FileSystem.Uri}?{accountSasBuilder.ToSasQueryParameters(sharedKeyCredential)}");
 
@@ -109,7 +112,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             dataLakeSasBuilder.SetPermissions(permissions);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
@@ -145,7 +148,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 rawPermissions: permissionsString,
                 normalize: true);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
@@ -552,7 +555,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subdirectory3.Uri)
             {

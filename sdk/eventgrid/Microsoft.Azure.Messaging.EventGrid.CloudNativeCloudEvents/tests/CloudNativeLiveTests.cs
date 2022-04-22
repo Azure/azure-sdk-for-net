@@ -34,18 +34,17 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             for (int i = 0; i < 10; i++)
             {
                 eventsList.Add(
-                    new CloudEvent(
-                        "record",
-                        new Uri("http://localHost"),
-                        Recording.Random.NewGuid().ToString(),
-                        Recording.Now.DateTime)
+                    new CloudEvent
                     {
+                        Type = "record",
+                        Source = new Uri("http://localHost"),
+                        Id = Recording.Random.NewGuid().ToString(),
+                        Time = Recording.Now,
                         Data = new TestPayload("name", i)
-                    }
-                    );
+                    });
             }
 
-            await client.SendCloudEventsAsync(eventsList);
+            await client.SendCloudNativeCloudEventsAsync(eventsList);
         }
 
         [RecordedTest]
@@ -59,16 +58,47 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                     options));
 
             CloudEvent cloudEvent =
-                new CloudEvent(
-                    "record",
-                    new Uri("http://localHost"),
-                    Recording.Random.NewGuid().ToString(),
-                    Recording.Now.DateTime)
+                new CloudEvent
                 {
+                    Type = "record",
+                    Source = new Uri("http://localHost"),
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Time = Recording.Now,
                     Data = new TestPayload("name", 0)
                 };
 
-            await client.SendCloudEventAsync(cloudEvent);
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
+        }
+
+        [RecordedTest]
+        public async Task CanPublishCloudEventToDomain()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CloudEventDomainHost),
+                    new AzureKeyCredential(TestEnvironment.CloudEventDomainKey),
+                    options));
+
+            #region Snippet:CloudNativePublishToDomain
+            CloudEvent cloudEvent =
+                new CloudEvent
+                {
+                    Type = "record",
+                    // Event Grid does not allow absolute URIs as the domain topic
+                    Source = new Uri("test", UriKind.Relative),
+#if SNIPPET
+                    Id = "eventId",
+                    Time = DateTimeOffset.Now,
+#else
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Time = Recording.Now,
+#endif
+                    Data = new TestPayload("name", 0)
+                };
+
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
+            #endregion
         }
 
         private class TestPayload

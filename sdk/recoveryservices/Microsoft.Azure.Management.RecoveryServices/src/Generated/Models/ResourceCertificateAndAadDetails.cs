@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="validFrom">Certificate Validity start Date
         /// time.</param>
         /// <param name="validTo">Certificate Validity End Date time.</param>
-        public ResourceCertificateAndAadDetails(string aadAuthority, string aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, byte[] certificate = default(byte[]), string friendlyName = default(string), string issuer = default(string), long? resourceId = default(long?), string subject = default(string), string thumbprint = default(string), System.DateTime? validFrom = default(System.DateTime?), System.DateTime? validTo = default(System.DateTime?))
+        /// <param name="serviceResourceId">Service Resource Id.</param>
+        public ResourceCertificateAndAadDetails(string aadAuthority, string aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, byte[] certificate = default(byte[]), string friendlyName = default(string), string issuer = default(string), long? resourceId = default(long?), string subject = default(string), string thumbprint = default(string), System.DateTime? validFrom = default(System.DateTime?), System.DateTime? validTo = default(System.DateTime?), string serviceResourceId = default(string))
             : base(certificate, friendlyName, issuer, resourceId, subject, thumbprint, validFrom, validTo)
         {
             AadAuthority = aadAuthority;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             ServicePrincipalClientId = servicePrincipalClientId;
             ServicePrincipalObjectId = servicePrincipalObjectId;
             AzureManagementEndpointAudience = azureManagementEndpointAudience;
+            ServiceResourceId = serviceResourceId;
             CustomInit();
         }
 
@@ -96,6 +98,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "azureManagementEndpointAudience")]
         public string AzureManagementEndpointAudience { get; set; }
+
+        /// <summary>
+        /// Gets or sets service Resource Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceResourceId")]
+        public string ServiceResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

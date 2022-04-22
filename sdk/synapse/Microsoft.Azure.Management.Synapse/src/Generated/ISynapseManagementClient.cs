@@ -46,11 +46,6 @@ namespace Microsoft.Azure.Management.Synapse
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,9 +65,9 @@ namespace Microsoft.Azure.Management.Synapse
 
 
         /// <summary>
-        /// Gets the IBigDataPoolsOperations.
+        /// Gets the IAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        IBigDataPoolsOperations BigDataPools { get; }
+        IAzureADOnlyAuthenticationsOperations AzureADOnlyAuthentications { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -85,64 +80,9 @@ namespace Microsoft.Azure.Management.Synapse
         IIpFirewallRulesOperations IpFirewallRules { get; }
 
         /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
-        /// </summary>
-        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
-        /// </summary>
-        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeCredentialsOperations.
-        /// </summary>
-        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
-        /// </summary>
-        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeAuthKeysOperations.
-        /// </summary>
-        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
-        /// </summary>
-        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeStatusOperations.
-        /// </summary>
-        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
-
-        /// <summary>
         /// Gets the IKeysOperations.
         /// </summary>
         IKeysOperations Keys { get; }
-
-        /// <summary>
-        /// Gets the ILibraryOperations.
-        /// </summary>
-        ILibraryOperations Library { get; }
-
-        /// <summary>
-        /// Gets the ILibrariesOperations.
-        /// </summary>
-        ILibrariesOperations Libraries { get; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -373,6 +313,116 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IRestorableDroppedSqlPoolsOperations.
         /// </summary>
         IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
+
+        /// <summary>
+        /// Gets the IBigDataPoolsOperations.
+        /// </summary>
+        IBigDataPoolsOperations BigDataPools { get; }
+
+        /// <summary>
+        /// Gets the ILibraryOperations.
+        /// </summary>
+        ILibraryOperations Library { get; }
+
+        /// <summary>
+        /// Gets the ILibrariesOperations.
+        /// </summary>
+        ILibrariesOperations Libraries { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimesOperations.
+        /// </summary>
+        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
+        /// </summary>
+        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodesOperations.
+        /// </summary>
+        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeCredentialsOperations.
+        /// </summary>
+        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
+        /// </summary>
+        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeAuthKeysOperations.
+        /// </summary>
+        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
+        /// </summary>
+        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeStatusOperations.
+        /// </summary>
+        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
+
+        /// <summary>
+        /// Gets the ISparkConfigurationOperations.
+        /// </summary>
+        ISparkConfigurationOperations SparkConfiguration { get; }
+
+        /// <summary>
+        /// Gets the ISparkConfigurationsOperations.
+        /// </summary>
+        ISparkConfigurationsOperations SparkConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IKustoOperations.
+        /// </summary>
+        IKustoOperations KustoOperations { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolsOperations.
+        /// </summary>
+        IKustoPoolsOperations KustoPools { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolChildResourceOperations.
+        /// </summary>
+        IKustoPoolChildResourceOperations KustoPoolChildResource { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        IKustoPoolAttachedDatabaseConfigurationsOperations KustoPoolAttachedDatabaseConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasesOperations.
+        /// </summary>
+        IKustoPoolDatabasesOperations KustoPoolDatabases { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDataConnectionsOperations.
+        /// </summary>
+        IKustoPoolDataConnectionsOperations KustoPoolDataConnections { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolPrincipalAssignmentsOperations.
+        /// </summary>
+        IKustoPoolPrincipalAssignmentsOperations KustoPoolPrincipalAssignments { get; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasePrincipalAssignmentsOperations.
+        /// </summary>
+        IKustoPoolDatabasePrincipalAssignmentsOperations KustoPoolDatabasePrincipalAssignments { get; }
 
     }
 }

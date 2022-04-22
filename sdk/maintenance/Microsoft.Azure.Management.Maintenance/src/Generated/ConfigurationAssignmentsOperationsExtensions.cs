@@ -24,6 +24,82 @@ namespace Microsoft.Azure.Management.Maintenance
     public static partial class ConfigurationAssignmentsOperationsExtensions
     {
             /// <summary>
+            /// Get configuration assignment
+            /// </summary>
+            /// <remarks>
+            /// Get configuration for resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceParentType'>
+            /// Resource parent type
+            /// </param>
+            /// <param name='resourceParentName'>
+            /// Resource parent identifier
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='configurationAssignmentName'>
+            /// Configuration assignment name
+            /// </param>
+            public static ConfigurationAssignment GetParent(this IConfigurationAssignmentsOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName)
+            {
+                return operations.GetParentAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get configuration assignment
+            /// </summary>
+            /// <remarks>
+            /// Get configuration for resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceParentType'>
+            /// Resource parent type
+            /// </param>
+            /// <param name='resourceParentName'>
+            /// Resource parent identifier
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='configurationAssignmentName'>
+            /// Configuration assignment name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigurationAssignment> GetParentAsync(this IConfigurationAssignmentsOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetParentWithHttpMessagesAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create configuration assignment
             /// </summary>
             /// <remarks>
@@ -176,6 +252,70 @@ namespace Microsoft.Azure.Management.Maintenance
             public static async Task<ConfigurationAssignment> DeleteParentAsync(this IConfigurationAssignmentsOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteParentWithHttpMessagesAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get configuration assignment
+            /// </summary>
+            /// <remarks>
+            /// Get configuration for resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='configurationAssignmentName'>
+            /// Configuration assignment name
+            /// </param>
+            public static ConfigurationAssignment Get(this IConfigurationAssignmentsOperations operations, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName)
+            {
+                return operations.GetAsync(resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get configuration assignment
+            /// </summary>
+            /// <remarks>
+            /// Get configuration for resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='configurationAssignmentName'>
+            /// Configuration assignment name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigurationAssignment> GetAsync(this IConfigurationAssignmentsOperations operations, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

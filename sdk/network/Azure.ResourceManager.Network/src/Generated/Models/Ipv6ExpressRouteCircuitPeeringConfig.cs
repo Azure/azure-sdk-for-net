@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains IPv6 peering config. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
         /// <param name="routeFilter"> The reference to the RouteFilter resource. </param>
         /// <param name="state"> The state of peering. </param>
-        internal Ipv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, SubResource routeFilter, ExpressRouteCircuitPeeringState? state)
+        internal Ipv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, WritableSubResource routeFilter, ExpressRouteCircuitPeeringState? state)
         {
             PrimaryPeerAddressPrefix = primaryPeerAddressPrefix;
             SecondaryPeerAddressPrefix = secondaryPeerAddressPrefix;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Microsoft peering configuration. </summary>
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The reference to the RouteFilter resource. </summary>
-        public SubResource RouteFilter { get; set; }
+        public WritableSubResource RouteFilter { get; set; }
         /// <summary> The state of peering. </summary>
         public ExpressRouteCircuitPeeringState? State { get; set; }
     }

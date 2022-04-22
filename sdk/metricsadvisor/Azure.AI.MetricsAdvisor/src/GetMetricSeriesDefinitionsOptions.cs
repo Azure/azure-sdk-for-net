@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor
         public GetMetricSeriesDefinitionsOptions(DateTimeOffset activeSince)
         {
             ActiveSince = activeSince;
-            DimensionCombinationsToFilter = new ChangeTrackingDictionary<string, IList<string>>();
+            DimensionCombinationsFilter = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary>
@@ -32,7 +32,8 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result, mapping a dimension's name to a list of possible values it can assume. Only time series
         /// with the specified dimension values will be returned.
         /// </summary>
-        public IDictionary<string, IList<string>> DimensionCombinationsToFilter { get; }
+        /// JS and Python use DimensionFilter
+        public IDictionary<string, IList<string>> DimensionCombinationsFilter { get; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

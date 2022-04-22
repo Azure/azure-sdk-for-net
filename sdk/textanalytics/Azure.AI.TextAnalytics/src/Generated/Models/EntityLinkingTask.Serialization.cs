@@ -20,6 +20,11 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName");
+                writer.WriteStringValue(TaskName);
+            }
             writer.WriteEndObject();
         }
     }

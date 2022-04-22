@@ -38,14 +38,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="eTag">Optional ETag.</param>
+        /// <param name="etag">Optional ETag.</param>
         /// <param name="tags">Resource tags.</param>
-        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityData identity = default(IdentityData), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku))
-            : base(location, id, name, type, eTag, tags)
+        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityData identity = default(IdentityData), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, etag, tags)
         {
             Identity = identity;
             Properties = properties;
             Sku = sku;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -68,6 +69,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.

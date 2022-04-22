@@ -1,5 +1,19 @@
 # Release History
 
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2021-11-05)
+- Adding MessageState property to SystemProperties [PR 25158](https://github.com/Azure/azure-sdk-for-net/pull/25158)
+- Allow receiving empty string session id sessions [PR 24570](https://github.com/Azure/azure-sdk-for-net/pull/24570)
+
 ## 5.1.3 (2021-04-15)
 
 Update package description to include pointer to the new Azure.Messaging.ServiceBus package and the migration guide.

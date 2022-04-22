@@ -1,7 +1,19 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 1.0.0-preview.6 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-preview.5 (2021-08-10)
+
+### Changed
+- Updated to use service API version `2020-12-01`
 
 ## 1.0.0-preview.4 (2021-05-11)
 ### Key Bug Fixes

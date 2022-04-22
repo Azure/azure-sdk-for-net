@@ -12,25 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureTableParameterPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            if (Optional.IsDefined(Table))
-            {
-                writer.WritePropertyName("table");
-                writer.WriteStringValue(Table);
-            }
-            if (Optional.IsDefined(Query))
-            {
-                writer.WritePropertyName("query");
-                writer.WriteStringValue(Query);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

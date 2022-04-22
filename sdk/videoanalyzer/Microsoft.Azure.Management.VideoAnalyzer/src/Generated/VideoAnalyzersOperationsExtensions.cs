@@ -255,61 +255,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Synchronizes Storage Account Keys
-            /// </summary>
-            /// <remarks>
-            /// Synchronizes storage account keys for a storage account associated with the
-            /// Video Analyzer account.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Video Analyzer account name.
-            /// </param>
-            /// <param name='id'>
-            /// The ID of the storage account resource.
-            /// </param>
-            public static void SyncStorageKeys(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, string id = default(string))
-            {
-                operations.SyncStorageKeysAsync(resourceGroupName, accountName, id).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Synchronizes Storage Account Keys
-            /// </summary>
-            /// <remarks>
-            /// Synchronizes storage account keys for a storage account associated with the
-            /// Video Analyzer account.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Video Analyzer account name.
-            /// </param>
-            /// <param name='id'>
-            /// The ID of the storage account resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task SyncStorageKeysAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, string id = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.SyncStorageKeysWithHttpMessagesAsync(resourceGroupName, accountName, id, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// List Video Analyzer accounts
             /// </summary>
             /// <remarks>
-            /// Lists the Video Analyzer accounts in the specific subscription.
+            /// List all Video Analyzer accounts in the specified subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,7 +272,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// List Video Analyzer accounts
             /// </summary>
             /// <remarks>
-            /// Lists the Video Analyzer accounts in the specific subscription.
+            /// List all Video Analyzer accounts in the specified subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -334,6 +283,110 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             public static async Task<VideoAnalyzerCollection> ListBySubscriptionAsync(this IVideoAnalyzersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update a Video Analyzer account
+            /// </summary>
+            /// <remarks>
+            /// Create or update an instance of a Video Analyzer account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Video Analyzer account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            public static VideoAnalyzerAccount BeginCreateOrUpdate(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerAccount parameters)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a Video Analyzer account
+            /// </summary>
+            /// <remarks>
+            /// Create or update an instance of a Video Analyzer account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Video Analyzer account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VideoAnalyzerAccount> BeginCreateOrUpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a Video Analyzer account
+            /// </summary>
+            /// <remarks>
+            /// Updates an existing instance of Video Analyzer account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Video Analyzer account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            public static VideoAnalyzerAccount BeginUpdate(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a Video Analyzer account
+            /// </summary>
+            /// <remarks>
+            /// Updates an existing instance of Video Analyzer account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Video Analyzer account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VideoAnalyzerAccount> BeginUpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

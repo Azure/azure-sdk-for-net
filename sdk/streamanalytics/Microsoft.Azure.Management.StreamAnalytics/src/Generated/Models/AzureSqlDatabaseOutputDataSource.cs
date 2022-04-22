@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="maxBatchCount">Max Batch count for write to Sql
         /// database, the default value is 10,000. Optional on PUT
         /// requests.</param>
-        /// <param name="maxWriterCount">Max Write r count, currently only
+        /// <param name="maxWriterCount">Max Writer count, currently only
         /// 1(single writer) and 0(based on query partition) are available.
         /// Optional on PUT requests.</param>
         /// <param name="authenticationMode">Authentication Mode. Possible
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public double? MaxBatchCount { get; set; }
 
         /// <summary>
-        /// Gets or sets max Write r count, currently only 1(single writer) and
+        /// Gets or sets max Writer count, currently only 1(single writer) and
         /// 0(based on query partition) are available. Optional on PUT
         /// requests.
         /// </summary>

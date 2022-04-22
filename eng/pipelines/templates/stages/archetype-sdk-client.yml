@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20210603.1
+      ref: refs/tags/azure-sdk-build-tools_20211209.1
 
 parameters:
 - name: Artifacts
@@ -42,7 +42,6 @@ parameters:
     - Name: NET_ci_test_base
       Path: eng/pipelines/templates/stages/platform-matrix.json
       Selection: sparse
-      NonSparseParameters: AdditionalTestArguments
       GenerateVMJobs: true
 - name: AdditionalMatrixConfigs
   type: object
@@ -53,9 +52,6 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
-- name: SpellCheckPublicApiSurface
-  type: boolean
-  default: false
 
 variables:
   - template: ../variables/globals.yml
@@ -74,14 +70,17 @@ stages:
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-        SpellCheckPublicApiSurface: ${{ parameters.SpellCheckPublicApiSurface }}
         MatrixConfigs:
           - ${{ each config in parameters.MatrixConfigs }}:
             -  ${{ config }}
           - ${{ each config in parameters.AdditionalMatrixConfigs }}:
             -  ${{ config }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace: ${{ parameters.MatrixReplace }}
+        MatrixReplace:
+          # For nightly/release pipelines we build and test release only
+          - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            - BuildConfiguration=Debug/Release
+          - ${{ parameters.MatrixReplace }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

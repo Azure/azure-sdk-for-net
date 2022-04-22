@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element)
         {
-            IReadOnlyList<AvailabilitySet> value = default;
+            IReadOnlyList<AvailabilitySetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AvailabilitySet> array = new List<AvailabilitySet>();
+                    List<AvailabilitySetData> array = new List<AvailabilitySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilitySet.DeserializeAvailabilitySet(item));
+                        array.Add(AvailabilitySetData.DeserializeAvailabilitySetData(item));
                     }
                     value = array;
                     continue;

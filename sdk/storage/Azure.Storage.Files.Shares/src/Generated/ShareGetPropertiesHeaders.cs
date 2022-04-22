@@ -36,6 +36,8 @@ namespace Azure.Storage.Files.Shares
         public int? ProvisionedEgressMBps => _response.Headers.TryGetValue("x-ms-share-provisioned-egress-mbps", out int? value) ? value : null;
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
+        public int? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
         /// <summary> Lease state of the share. </summary>
@@ -46,7 +48,7 @@ namespace Azure.Storage.Files.Shares
         public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
         /// <summary> Returns the last modified time (in UTC) of the access tier of the share. </summary>
         public DateTimeOffset? AccessTierChangeTime => _response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Returns the transition state betweeen access tiers, when present. </summary>
+        /// <summary> Returns the transition state between access tiers, when present. </summary>
         public string AccessTierTransitionState => _response.Headers.TryGetValue("x-ms-access-tier-transition-state", out string value) ? value : null;
         /// <summary> The protocols that have been enabled on the share. </summary>
         public string EnabledProtocols => _response.Headers.TryGetValue("x-ms-enabled-protocols", out string value) ? value : null;

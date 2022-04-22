@@ -12,7 +12,6 @@
     <PackageReleaseNotes>
       Improve usability of GetOutputStoragePath.
     </PackageReleaseNotes>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <SignAssembly>true</SignAssembly>

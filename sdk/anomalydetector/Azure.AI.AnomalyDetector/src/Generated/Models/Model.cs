@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Response of get model. </summary>
+    /// <summary> Response of getting a model. </summary>
     public partial class Model
     {
         /// <summary> Initializes a new instance of Model. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        /// <param name="modelInfo"> Training Status of the model. </param>
+        /// <param name="modelInfo"> Train result of a model including status, errors and diagnose info for model and variables. </param>
         internal Model(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
         {
             ModelId = modelId;
@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector.Models
         public DateTimeOffset CreatedTime { get; }
         /// <summary> Date and time (UTC) when the model was last updated. </summary>
         public DateTimeOffset LastUpdatedTime { get; }
-        /// <summary> Training Status of the model. </summary>
+        /// <summary> Train result of a model including status, errors and diagnose info for model and variables. </summary>
         public ModelInfo ModelInfo { get; }
     }
 }

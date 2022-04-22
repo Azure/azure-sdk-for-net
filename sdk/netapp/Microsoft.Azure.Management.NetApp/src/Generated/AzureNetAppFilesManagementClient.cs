@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.NetApp
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// Gets the INetAppResourceOperations.
         /// </summary>
         public virtual INetAppResourceOperations NetAppResource { get; private set; }
+
+        /// <summary>
+        /// Gets the INetAppResourceQuotaLimitsOperations.
+        /// </summary>
+        public virtual INetAppResourceQuotaLimitsOperations NetAppResourceQuotaLimits { get; private set; }
 
         /// <summary>
         /// Gets the IAccountsOperations.
@@ -130,6 +135,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// Gets the IVaultsOperations.
         /// </summary>
         public virtual IVaultsOperations Vaults { get; private set; }
+
+        /// <summary>
+        /// Gets the IVolumeGroupsOperations.
+        /// </summary>
+        public virtual IVolumeGroupsOperations VolumeGroups { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AzureNetAppFilesManagementClient class.
@@ -374,6 +384,7 @@ namespace Microsoft.Azure.Management.NetApp
         {
             Operations = new Operations(this);
             NetAppResource = new NetAppResourceOperations(this);
+            NetAppResourceQuotaLimits = new NetAppResourceQuotaLimitsOperations(this);
             Accounts = new AccountsOperations(this);
             Pools = new PoolsOperations(this);
             Volumes = new VolumesOperations(this);
@@ -383,8 +394,9 @@ namespace Microsoft.Azure.Management.NetApp
             AccountBackups = new AccountBackupsOperations(this);
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
+            VolumeGroups = new VolumeGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-02-01";
+            ApiVersion = "2021-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

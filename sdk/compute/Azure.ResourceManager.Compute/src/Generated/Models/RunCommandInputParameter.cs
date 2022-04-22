@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The run command parameter name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The run command parameter value. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }

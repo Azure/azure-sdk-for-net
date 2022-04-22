@@ -328,7 +328,7 @@ namespace Storage.Tests
                     Assert.True(legalHold.HasLegalHold);
                     Assert.Equal(new List<string> { "tag1", "tag2", "tag3" }, legalHold.Tags);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", immutabilityPeriodSinceCreationInDays: 3);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 3));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -343,7 +343,7 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 100);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 100));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -407,9 +407,10 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    LegalHold legalHold = storageMgmtClient.BlobContainers.SetLegalHold(rgName, accountName, containerName, new List<string> { "tag1", "tag2", "tag3" });
+                    LegalHold legalHold = storageMgmtClient.BlobContainers.SetLegalHold(rgName, accountName, containerName, new List<string> { "tag1", "tag2", "tag3" }, true);
                     Assert.True(legalHold.HasLegalHold);
                     Assert.Equal(new List<string> { "tag1", "tag2", "tag3" }, legalHold.Tags);
+                    Assert.True(legalHold.AllowProtectedAppendWritesAll);
 
                     legalHold = storageMgmtClient.BlobContainers.ClearLegalHold(rgName, accountName, containerName, new List<string> { "tag1", "tag2", "tag3" });
                     Assert.False(legalHold.HasLegalHold);
@@ -503,11 +504,12 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays:3);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays:3, allowProtectedAppendWritesAll: true));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.True(immutabilityPolicy.AllowProtectedAppendWritesAll);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
                     immutabilityPolicy = storageMgmtClient.BlobContainers.DeleteImmutabilityPolicy(rgName, accountName, containerName, ifMatch:immutabilityPolicy.Etag);
@@ -555,19 +557,20 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", immutabilityPeriodSinceCreationInDays: 3);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 3));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 5);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 5, allowProtectedAppendWritesAll: true));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                    Assert.True(immutabilityPolicy.AllowProtectedAppendWritesAll);
 
                     immutabilityPolicy = storageMgmtClient.BlobContainers.GetImmutabilityPolicy(rgName, accountName, containerName);
                     Assert.NotNull(immutabilityPolicy.Id);
@@ -575,6 +578,7 @@ namespace Storage.Tests
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                    Assert.True(immutabilityPolicy.AllowProtectedAppendWritesAll);
                 }
                 finally
                 {
@@ -614,7 +618,7 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", immutabilityPeriodSinceCreationInDays: 4, allowProtectedAppendWrites: true);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 4, allowProtectedAppendWrites: true));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -622,7 +626,7 @@ namespace Storage.Tests
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
                     Assert.True(immutabilityPolicy.AllowProtectedAppendWrites.Value);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 5, allowProtectedAppendWrites: false);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 5, allowProtectedAppendWrites: false));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -677,7 +681,7 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", immutabilityPeriodSinceCreationInDays: 3);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 3));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -734,7 +738,7 @@ namespace Storage.Tests
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
-                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 3);
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 3));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -748,7 +752,7 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 100);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 100));
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -1399,7 +1403,7 @@ namespace Storage.Tests
                     string containerName2 = TestUtilities.GenerateName("container2");
                     BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName2,
                         new BlobContainer());
-                    storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName2, immutabilityPeriodSinceCreationInDays: 1);
+                    storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName2, parameters: new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays: 1));
 
                     // migrate contaienr to VLW and check the result
                     storageMgmtClient.BlobContainers.ObjectLevelWorm(rgName, accountName, containerName2);

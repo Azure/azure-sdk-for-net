@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Batch
     public partial class ComputeNode : IRefreshable
     {
 
-#region ComputeNode
+        #region ComputeNode
 
         /// <summary>
         /// Instantiates an unbound ComputeNodeUser object to be populated by the caller and used to create a user account on the compute node in the Azure Batch service.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.DeleteComputeNodeUser(this.parentPoolId, this.Id, userName, bhMgr, cancellationToken);
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
         public Task GetRDPFileAsync(Stream rdpStream, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(this.parentPoolId, this.Id, rdpStream, bhMgr, cancellationToken);
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.PoolOperations.GetRDPFileViaFileNameAsyncImpl(this.parentPoolId, this.Id, rdpFileNameToCreate, bhMgr, cancellationToken);
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             List<string> computeNodeIds = new List<string> {this.Id};
@@ -508,6 +508,51 @@ namespace Microsoft.Azure.Batch
                 containerUrl,
                 startTime,
                 endTime,
+                null,
+                bhMgr,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Upload Azure Batch service log files from the compute node.
+        /// </summary>
+        /// <param name="containerUrl">
+        /// The URL of the container within Azure Blob Storage to which to upload the Batch Service log file(s). The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
+        /// </param>
+        /// <param name="identityReference">A managed identity to use for writing to the container.</param>
+        /// <param name="startTime">
+        /// The start of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded.
+        /// </param>
+        /// <param name="endTime">
+        /// The end of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded. If this is omitted, the default is the current time.
+        /// </param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
+        /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
+        /// </remarks>
+        public System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
+            string containerUrl,
+            ComputeNodeIdentityReference identityReference,
+            DateTime startTime,
+            DateTime? endTime = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // craft the behavior manager for this call
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            return this.parentBatchClient.PoolOperations.UploadComputeNodeBatchServiceLogsAsyncImpl(
+                this.parentPoolId,
+                this.Id,
+                containerUrl,
+                startTime,
+                endTime,
+                identityReference,
                 bhMgr,
                 cancellationToken);
         }
@@ -546,6 +591,43 @@ namespace Microsoft.Azure.Batch
             return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 
+        /// <summary>
+        /// Upload Azure Batch service log files from the specified compute node.
+        /// </summary>
+        /// <param name="containerUrl">
+        /// The URL of the container within Azure Blob Storage to which to upload the Batch Service log file(s). The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
+        /// </param>
+        /// <param name="identityReference">A managed identity to use for writing to the container.</param>
+        /// <param name="startTime">
+        /// The start of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded.
+        /// </param>
+        /// <param name="endTime">
+        /// The end of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded. If this is omitted, the default is the current time.
+        /// </param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
+        /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
+        /// </remarks>
+        /// <returns>The result of uploading the batch service logs.</returns>
+        public UploadBatchServiceLogsResult UploadComputeNodeBatchServiceLogs(
+            string containerUrl,
+            ComputeNodeIdentityReference identityReference,
+            DateTime startTime,
+            DateTime? endTime = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            var asyncTask = this.UploadComputeNodeBatchServiceLogsAsync(
+                containerUrl,
+                identityReference,
+                startTime,
+                endTime,
+                additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
         #endregion ComputeNode
 
         #region IRefreshable
@@ -559,7 +641,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="Task"/> representing the asynchronous refresh operation.</returns>
         public async Task RefreshAsync(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
             System.Threading.Tasks.Task<AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders>> asyncTask = 

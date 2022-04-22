@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="createOption"> Specifies how the virtual machines in the scale set should be created.&lt;br&gt;&lt;br&gt; The only allowed value is: **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
         /// <param name="diffDiskSettings"> Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set. </param>
         /// <param name="diskSizeGB"> Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
+        /// <param name="oSType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="image"> Specifies information about the unmanaged user image to base the scale set on. </param>
         /// <param name="vhdContainers"> Specifies the container urls that are used to store operating system disks for the scale set. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        internal VirtualMachineScaleSetOSDisk(string name, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk)
+        internal VirtualMachineScaleSetOSDisk(string name, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? oSType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk)
         {
             Name = name;
             Caching = caching;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             CreateOption = createOption;
             DiffDiskSettings = diffDiskSettings;
             DiskSizeGB = diskSizeGB;
-            OsType = osType;
+            OSType = oSType;
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         public VirtualHardDisk Image { get; set; }
         /// <summary> Specifies the container urls that are used to store operating system disks for the scale set. </summary>

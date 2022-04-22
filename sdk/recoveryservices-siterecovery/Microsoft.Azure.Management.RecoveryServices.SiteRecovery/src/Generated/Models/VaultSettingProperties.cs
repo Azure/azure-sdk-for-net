@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="migrationSolutionId">The migration solution ARM
         /// Id.</param>
-        public VaultSettingProperties(string migrationSolutionId = default(string))
+        /// <param name="vmwareToAzureProviderType">VMware to Azure provider
+        /// type.</param>
+        public VaultSettingProperties(string migrationSolutionId = default(string), string vmwareToAzureProviderType = default(string))
         {
             MigrationSolutionId = migrationSolutionId;
+            VmwareToAzureProviderType = vmwareToAzureProviderType;
             CustomInit();
         }
 
@@ -47,6 +50,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "migrationSolutionId")]
         public string MigrationSolutionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets vMware to Azure provider type.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmwareToAzureProviderType")]
+        public string VmwareToAzureProviderType { get; set; }
 
     }
 }

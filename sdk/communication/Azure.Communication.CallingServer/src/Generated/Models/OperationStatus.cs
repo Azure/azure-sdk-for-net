@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Gets or sets the status of the operation. </summary>
+    /// <summary> The status of the operation. </summary>
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationStatus(string value)
         {

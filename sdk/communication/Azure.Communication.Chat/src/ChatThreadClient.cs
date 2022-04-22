@@ -642,7 +642,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.SendTypingNotificationAsync(Id, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.SendTypingNotificationAsync(Id, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -660,7 +660,45 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.SendTypingNotification(Id, cancellationToken);
+                return _chatThreadRestClient.SendTypingNotification(Id, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Posts a typing event to a thread, on behalf of a user asynchronously. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="options"> Typing notification options. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> SendTypingNotificationAsync(TypingNotificationOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendTypingNotification)}");
+            scope.Start();
+            try
+            {
+                return await _chatThreadRestClient.SendTypingNotificationAsync(Id, options.SenderDisplayName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Posts a typing event to a thread, on behalf of a user. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="options"> Typing notification options. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response SendTypingNotification(TypingNotificationOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendTypingNotification)}");
+            scope.Start();
+            try
+            {
+                return _chatThreadRestClient.SendTypingNotification(Id, options.SenderDisplayName, cancellationToken);
             }
             catch (Exception ex)
             {

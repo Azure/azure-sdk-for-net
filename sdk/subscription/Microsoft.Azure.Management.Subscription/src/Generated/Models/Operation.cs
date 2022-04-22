@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             CustomInit();
         }
@@ -50,6 +53,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets the object that represents the operation.

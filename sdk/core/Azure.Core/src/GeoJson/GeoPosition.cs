@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.GeoJson
 {
     /// <summary>
-    /// Represents a single spatial position with altitude, longitude, and optional latitude.
+    /// Represents a single spatial position with latitude, longitude, and optional altitude.
     /// </summary>
     public readonly struct GeoPosition : IEquatable<GeoPosition>
     {

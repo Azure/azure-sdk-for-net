@@ -1,0 +1,183 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "639",
+        "Content-Type": "multipart/mixed; boundary=batch_4b0849f6-9fea-403d-96ad-e83f9a51d3c5",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8a1c5bda011917e7adac09b507414c6b",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": "LS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1tdWx0aXBhcnRfYm91bmRhcnkNCg0KLS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cA0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5DQoNClBPU1QgaHR0cHM6Ly9wYWtyeW10YWJsZXMzcHJpbS50YWJsZS5jb3Ntb3MuYXp1cmUuY29tL3Rlc3R0YWJsZWlqUHJkWEFJPyRmb3JtYXQ9YXBwbGljYXRpb24lMkZqc29uJTNCb2RhdGElM0RtaW5pbWFsbWV0YWRhdGEgSFRUUC8xLjENCkhvc3Q6IHBha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvc21vcy5henVyZS5jb20NCngtbXMtdmVyc2lvbjogMjAxOS0wMi0wMg0KRGF0YVNlcnZpY2VWZXJzaW9uOiAzLjANClByZWZlcjogcmV0dXJuLW5vLWNvbnRlbnQNCkFjY2VwdDogYXBwbGljYXRpb24vanNvbjtvZGF0YT1taW5pbWFsbWV0YWRhdGENCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjtvZGF0YT1ub21ldGFkYXRhDQoNCnsiUm93S2V5IjoiUksiLCJQYXJ0aXRpb25LZXkiOiJQSyIsIlZhbHVlIjoidGVzdCB2YWx1ZSJ9DQotLW11bHRpcGFydF9ib3VuZGFyeQ0KDQotLW11bHRpcGFydF9ib3VuZGFyeQ0K",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Type": "multipart/mixed; boundary=batchresponse_a48942b0-4e8a-48aa-85a2-7cca7c6164b2",
+        "Date": "Wed, 29 Dec 2021 00:06:48 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "52d1e79c-051d-4877-973f-93c4f9139259"
+      },
+      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlX2E0ODk0MmIwLTRlOGEtNDhhYS04NWEyLTdjY2E3YzYxNjRiMg0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlX2IzZjA2N2VkLWNmNzktNDU2Ni1iODY5LTc1ZDEzOTM2M2Y2Zg0KDQotLWNoYW5nZXNldHJlc3BvbnNlX2IzZjA2N2VkLWNmNzktNDU2Ni1iODY5LTc1ZDEzOTM2M2Y2ZgpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2h0dHAKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5CgpIVFRQLzEuMSA0MDQgTm90IEZvdW5kDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb247b2RhdGE9ZnVsbG1ldGFkYXRhDQoNCnsib2RhdGEuZXJyb3IiOnsiY29kZSI6IlJlc291cmNlTm90Rm91bmQiLCJtZXNzYWdlIjp7ImxhbmciOiJlbi11cyIsInZhbHVlIjoiVGhlIHNwZWNpZmllZCByZXNvdXJjZSBkb2VzIG5vdCBleGlzdC5cblJlcXVlc3RJRDo1MmQxZTc5Yy0wNTFkLTQ4NzctOTczZi05M2M0ZjkxMzkyNTlcbiJ9fX0NCi0tY2hhbmdlc2V0cmVzcG9uc2VfYjNmMDY3ZWQtY2Y3OS00NTY2LWI4NjktNzVkMTM5MzYzZjZmLS0KLS1iYXRjaHJlc3BvbnNlX2E0ODk0MmIwLTRlOGEtNDhhYS04NWEyLTdjY2E3YzYxNjRiMi0tDQo="
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json;odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "72be8f9e9af3c27a6d7f0aacd648b48d",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": {
+        "TableName": "testtableijPrdXAI"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "ETag": "W/\u0022datetime\u00272021-12-29T00%3A06%3A49.7576968Z\u0027\u0022",
+        "Location": "https://pakrymtables3prim.table.cosmos.azure.com/Tables(\u0027testtableijPrdXAI\u0027)",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "b631c9f5-2066-4a9b-ad12-93231065a3da"
+      },
+      "ResponseBody": {
+        "TableName": "testtableijPrdXAI",
+        "odata.metadata": "https://pakrymtables3prim.table.cosmos.azure.com/$metadata#Tables/@Element"
+      }
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "639",
+        "Content-Type": "multipart/mixed; boundary=batch_d03408c4-a6c9-488f-bb81-cd666227bffd",
+        "DataServiceVersion": "3.0",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8b55aa4019711f61a7bdc2e7d0f35e60",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:50 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": "LS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1tdWx0aXBhcnRfYm91bmRhcnkNCg0KLS1tdWx0aXBhcnRfYm91bmRhcnkNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cA0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5DQoNClBPU1QgaHR0cHM6Ly9wYWtyeW10YWJsZXMzcHJpbS50YWJsZS5jb3Ntb3MuYXp1cmUuY29tL3Rlc3R0YWJsZWlqUHJkWEFJPyRmb3JtYXQ9YXBwbGljYXRpb24lMkZqc29uJTNCb2RhdGElM0RtaW5pbWFsbWV0YWRhdGEgSFRUUC8xLjENCkhvc3Q6IHBha3J5bXRhYmxlczNwcmltLnRhYmxlLmNvc21vcy5henVyZS5jb20NCngtbXMtdmVyc2lvbjogMjAxOS0wMi0wMg0KRGF0YVNlcnZpY2VWZXJzaW9uOiAzLjANClByZWZlcjogcmV0dXJuLW5vLWNvbnRlbnQNCkFjY2VwdDogYXBwbGljYXRpb24vanNvbjtvZGF0YT1taW5pbWFsbWV0YWRhdGENCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjtvZGF0YT1ub21ldGFkYXRhDQoNCnsiUm93S2V5IjoiUksiLCJQYXJ0aXRpb25LZXkiOiJQSyIsIlZhbHVlIjoidGVzdCB2YWx1ZSJ9DQotLW11bHRpcGFydF9ib3VuZGFyeQ0KDQotLW11bHRpcGFydF9ib3VuZGFyeQ0K",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Type": "multipart/mixed; boundary=batchresponse_47c7721a-9f8c-488d-89a1-0108f2f22b24",
+        "Date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "0d227a70-8eea-4918-a14b-e1f749e5d965"
+      },
+      "ResponseBody": "LS1iYXRjaHJlc3BvbnNlXzQ3Yzc3MjFhLTlmOGMtNDg4ZC04OWExLTAxMDhmMmYyMmIyNA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldHJlc3BvbnNlXzNiMTUwNjYzLWI1MGMtNDA2Yy05ZjVjLTRkMTNhYzc2NzBhNA0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzNiMTUwNjYzLWI1MGMtNDA2Yy05ZjVjLTRkMTNhYzc2NzBhNApDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2h0dHAKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5CgpIVFRQLzEuMSAyMDQgTm8gQ29udGVudA0KRVRhZzogVy8iZGF0ZXRpbWUnMjAyMS0xMi0yOVQwMCUzQTA2JTNBNTAuMjc4ODEwNFonIg0KUHJlZmVyZW5jZS1BcHBsaWVkOiByZXR1cm4tbm8tY29udGVudA0KTG9jYXRpb246IGh0dHBzOi8vcGFrcnltdGFibGVzM3ByaW0udGFibGUuY29zbW9zLmF6dXJlLmNvbS90ZXN0dGFibGVpalByZFhBSShQYXJ0aXRpb25LZXk9J1BLJyxSb3dLZXk9J1JLJykNCkNvbnRlbnQtSUQ6IDENCg0KDQotLWNoYW5nZXNldHJlc3BvbnNlXzNiMTUwNjYzLWI1MGMtNDA2Yy05ZjVjLTRkMTNhYzc2NzBhNC0tCi0tYmF0Y2hyZXNwb25zZV80N2M3NzIxYS05ZjhjLTQ4OGQtODlhMS0wMTA4ZjJmMjJiMjQtLQ0K"
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/testtableijPrdXAI(PartitionKey=\u0027PK\u0027,RowKey=\u0027RK\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-4143cf95ebba3e45b94a4801d8ac9a66-e94998f9902b0345-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "38be672001c83f9fe1591c9af73b4164",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:50 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "ETag": "W/\u0022datetime\u00272021-12-29T00%3A06%3A50.2788104Z\u0027\u0022",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "17a923e7-2893-4640-9754-e34195b9b8ba"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://pakrymtables3prim.table.cosmos.azure.com/testtableijPrdXAI/$metadata#testtableijPrdXAI/@Element",
+        "odata.etag": "W/\u0022datetime\u00272021-12-29T00%3A06%3A50.2788104Z\u0027\u0022",
+        "RowKey": "RK",
+        "PartitionKey": "PK",
+        "Value": "test value",
+        "Timestamp": "2021-12-29T00:06:50.2788104Z"
+      }
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/testtableijPrdXAI()?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-c3a1c07ad47f3e448f3e28258bc96b99-74600d5b88454c44-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5d747cf8c0ec85fa2d9eca35d892f27a",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:50 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "Date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "56d9b0e0-fab8-48bd-a343-6a786f107461"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "odata.etag": "W/\u0022datetime\u00272021-12-29T00%3A06%3A50.2788104Z\u0027\u0022",
+            "RowKey": "RK",
+            "PartitionKey": "PK",
+            "Value": "test value",
+            "Timestamp": "2021-12-29T00:06:50.2788104Z"
+          }
+        ],
+        "odata.metadata": "https://pakrymtables3prim.table.cosmos.azure.com/$metadata#testtableijPrdXAI"
+      }
+    },
+    {
+      "RequestUri": "https://pakrymtables3prim.table.cosmos.azure.com/testtableijPrdXAI(PartitionKey=\u0027PK\u0027,RowKey=\u0027RK\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json;odata=minimalmetadata",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "If-Match": "*",
+        "traceparent": "00-db458e871126bf46befbe302d4b3220c-b1367e9fe7431c40-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.4.0-alpha.20211228.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6e8ca9207b8a3ec50a16aa17fcc6286c",
+        "x-ms-date": "Wed, 29 Dec 2021 00:06:50 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Wed, 29 Dec 2021 00:06:49 GMT",
+        "x-ms-request-id": "2da0b7f1-f8e8-4579-b1a5-9853a58d2459"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "402608978",
+    "TableName": "testtableijPrdXAI",
+    "TABLES_COSMOS_ACCOUNT_NAME": "pakrymtables3prim",
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
+  }
+}

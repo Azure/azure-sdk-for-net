@@ -33,17 +33,8 @@ namespace Azure.AI.FormRecognizer
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public FormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -640,9 +631,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Compose request would include list of models ids.
-        /// 
         /// It would validate what all models either trained with labels model or composed model.
-        /// 
         /// It would validate limit of models put together.
         /// </summary>
         /// <param name="composeRequest"> Compose models. </param>
@@ -669,9 +658,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Compose request would include list of models ids.
-        /// 
         /// It would validate what all models either trained with labels model or composed model.
-        /// 
         /// It would validate limit of models put together.
         /// </summary>
         /// <param name="composeRequest"> Compose models. </param>

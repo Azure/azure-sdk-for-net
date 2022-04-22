@@ -16,15 +16,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of ErrorCode. </summary>
-        /// <param name="message"> . </param>
-        /// <param name="code"> . </param>
+        /// <param name="message"></param>
+        /// <param name="code"></param>
         internal ErrorCode(string message, string code)
         {
             Message = message;
             Code = code;
         }
 
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
     }
 }

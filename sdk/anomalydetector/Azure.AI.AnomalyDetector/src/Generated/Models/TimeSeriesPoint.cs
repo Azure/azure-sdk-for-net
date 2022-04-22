@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The TimeSeriesPoint. </summary>
+    /// <summary> The definition of input timeseries points. </summary>
     public partial class TimeSeriesPoint
     {
         /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>

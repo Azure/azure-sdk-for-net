@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application newApp = new Application
             {
                 DisplayName = $"Microsoft.Azure.Services.AppAuthentication.Test{guid}",
-                IdentifierUris = new List<string> { $"https://Microsoft.Azure.Services.AppAuthentication/{guid}" },
-                ReplyUrls = new List<string> { "https://Microsoft.Azure.Services.AppAuthentication/" },
+                IdentifierUris = new List<string> { $"https://microsoft.com/{guid}" },
+                ReplyUrls = new List<string> { "https://microsoft.com/" },
                 OdataType = "Microsoft.DirectoryServices.Application",
                 AppRolesODataType = "Collection(Microsoft.DirectoryServices.AppRole)",
                 IdentifierUrisODataType = "Collection(Edm.String)",
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application newApp = new Application
             {
                 DisplayName = $"Microsoft.Azure.Services.AppAuthentication.Test{guid}",
-                IdentifierUris = new List<string> { $"https://localhost/demo/{guid}" },
-                ReplyUrls = new List<string> { "https://localhost/demo" },
+                IdentifierUris = new List<string> { $"https://microsoft.com/demo/{guid}" },
+                ReplyUrls = new List<string> { "https://microsoft.com/demo" },
                 OdataType = "Microsoft.DirectoryServices.Application",
                 AppRolesODataType = "Collection(Microsoft.DirectoryServices.AppRole)",
                 IdentifierUrisODataType = "Collection(Edm.String)",

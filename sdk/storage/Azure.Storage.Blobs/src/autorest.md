@@ -4,9 +4,30 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee9bd6fe35eb7850ff0d1496c59259eb74f0d446/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-08-04/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/564d0137d08defea63d9de2413ef5336fbfe2e6d/specification/storage/data-plane/Microsoft.BlobStorage/preview/2021-04-10/blob.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
+```
+
+### Don't include container name or blob in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{containerName}/{blob}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName") && false == param['$ref'].endsWith("#/parameters/Blob"))});
+        } 
+        else if (property.includes('/{containerName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ContainerName"))});
+        }
+    }
 ```
 
 ### Move path parameters to constructor.
@@ -305,10 +326,19 @@ directive:
 ```
 
 ### Don't buffer downloads and query
-
 ``` yaml
 directive:
 - from: swagger-document
   where: $..[?(@.operationId=='Blob_Query' || @.operationId=='Blob_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Fix XML string "ObjectReplicationMetadata" to "OrMetadata"
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobItemInternal.properties["OrMetadata"] = $.BlobItemInternal.properties["ObjectReplicationMetadata"];
+    delete $.BlobItemInternal.properties["ObjectReplicationMetadata"];
 ```

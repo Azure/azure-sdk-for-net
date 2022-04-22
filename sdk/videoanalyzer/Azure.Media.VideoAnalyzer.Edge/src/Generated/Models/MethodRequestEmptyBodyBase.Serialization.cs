@@ -37,6 +37,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "livePipelineGet": return LivePipelineGetRequest.DeserializeLivePipelineGetRequest(element);
                     case "pipelineTopologyDelete": return PipelineTopologyDeleteRequest.DeserializePipelineTopologyDeleteRequest(element);
                     case "pipelineTopologyGet": return PipelineTopologyGetRequest.DeserializePipelineTopologyGetRequest(element);
+                    case "remoteDeviceAdapterDelete": return RemoteDeviceAdapterDeleteRequest.DeserializeRemoteDeviceAdapterDeleteRequest(element);
+                    case "remoteDeviceAdapterGet": return RemoteDeviceAdapterGetRequest.DeserializeRemoteDeviceAdapterGetRequest(element);
                 }
             }
             string name = default;

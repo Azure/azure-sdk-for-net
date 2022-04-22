@@ -15,13 +15,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyPermissions"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPermissions"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyPermissions(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AllValue = "all";
         private const string EncryptValue = "encrypt";
         private const string DecryptValue = "decrypt";
         private const string WrapKeyValue = "wrapKey";
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
 
+        /// <summary> all. </summary>
+        public static KeyPermissions All { get; } = new KeyPermissions(AllValue);
         /// <summary> encrypt. </summary>
         public static KeyPermissions Encrypt { get; } = new KeyPermissions(EncryptValue);
         /// <summary> decrypt. </summary>

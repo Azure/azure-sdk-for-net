@@ -67,6 +67,16 @@ namespace Azure.Storage.Sas
         Execute = 512,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 1024,
+
+        /// <summary>
+        /// Indicates that filtering by tag is permitted.
+        /// </summary>
+        Filter = 2048,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -119,6 +129,14 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobContainerSasPermissions.Tag) == BlobContainerSasPermissions.Tag)
             {
                 sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & BlobContainerSasPermissions.Filter) == BlobContainerSasPermissions.Filter)
+            {
+                sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            if ((permissions & BlobContainerSasPermissions.SetImmutabilityPolicy) == BlobContainerSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

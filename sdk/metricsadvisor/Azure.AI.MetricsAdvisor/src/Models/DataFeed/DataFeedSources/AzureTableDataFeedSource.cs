@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an Azure Table data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -23,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is empty.</exception>
         public AzureTableDataFeedSource(string connectionString, string table, string query)
-            : base(DataFeedSourceType.AzureTable)
+            : base(DataFeedSourceKind.AzureTable)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(table, nameof(table));
@@ -35,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal AzureTableDataFeedSource(AzureTableParameter parameter)
-            : base(DataFeedSourceType.AzureTable)
+            : base(DataFeedSourceKind.AzureTable)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

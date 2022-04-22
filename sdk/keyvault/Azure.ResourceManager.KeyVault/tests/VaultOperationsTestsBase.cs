@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
@@ -17,6 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
     [ClientTestFixture]
     public abstract class VaultOperationsTestsBase : ManagementRecordedTestBase<KeyVaultManagementTestEnvironment>
     {
+        protected ArmClient Client { get; private set; }
+
         private const string ObjectIdKey = "ObjectId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
@@ -24,17 +25,19 @@ namespace Azure.ResourceManager.KeyVault.Tests
         //Could not use TestEnvironment.Location since Location is got dynamically
         public string Location { get; set; }
 
+        public Subscription Subscription { get; private set; }
         public AccessPolicyEntry AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
+        public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
-        public VaultsOperations VaultsClient { get; set; }
-        public ResourcesOperations ResourcesClient { get; set; }
-        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
-        public ProvidersOperations ResourceProvidersClient { get; set; }
+        public VaultCollection VaultCollection { get; set; }
+        public DeletedVaultCollection DeletedVaultCollection { get; set; }
+        public ManagedHsmCollection ManagedHsmCollection { get; set; }
+        public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -43,13 +46,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = resourceManagementClient.Resources;
-            ResourceGroupsClient = resourceManagementClient.ResourceGroups;
-            ResourceProvidersClient = resourceManagementClient.Providers;
-
-            var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = keyVaultManagementClient.Vaults;
+            Location = "westcentralus";
+            Client = GetArmClient();
+            Subscription = await Client.GetDefaultSubscriptionAsync();
+            DeletedVaultCollection = Subscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -66,25 +66,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            var provider = (await ResourceProvidersClient.GetAsync("Microsoft.KeyVault")).Value;
-            this.Location = provider.ResourceTypes.Where(
-                (resType) =>
-                {
-                    if (resType.ResourceType == "vaults")
-                        return true;
-                    else
-                        return false;
-                }
-                ).First().Locations.FirstOrDefault();
 
-            ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new ResourceManager.Resources.Models.ResourceGroup(Location));
-            VaultName = Recording.GenerateAssetName("sdktestvault");
+            ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(true, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ResourceGroup = rgResponse.Value;
 
+            VaultCollection = ResourceGroup.GetVaults();
+            VaultName = Recording.GenerateAssetName("sdktest-vault-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new Permissions
+            var permissions = new AccessPermissions
             {
                 Keys = { new KeyPermissions("all") },
                 Secrets = { new SecretPermissions("all") },
@@ -110,13 +102,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
-        }
 
-        internal KeyVaultManagementClient GetKeyVaultManagementClient()
-        {
-            return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+            ManagedHsmCollection = ResourceGroup.GetManagedHsms();
+            ManagedHsmProperties = new ManagedHsmProperties();
+            ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
+            ManagedHsmProperties.CreateMode = CreateMode.Default;
+            ManagedHsmProperties.EnablePurgeProtection = false;
+            ManagedHsmProperties.EnableSoftDelete = true;
+            ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
+            {
+                Bypass = "AzureServices",
+                DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
+            };
+            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
+            ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
+            ManagedHsmProperties.TenantId = TenantIdGuid;
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        /// Gets the component of the <see cref="GeoBoundingBox"/> based on it's index.
+        /// Gets the component of the <see cref="GeoBoundingBox"/> based on its index.
         /// </summary>
         /// <param name="index">The index of the bounding box component.</param>
         public double this[int index]

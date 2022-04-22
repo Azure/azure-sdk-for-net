@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Gets or sets the tone detected. </summary>
+    /// <summary> The tone value. </summary>
     public readonly partial struct ToneValue : IEquatable<ToneValue>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ToneValue"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneValue"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ToneValue(string value)
         {

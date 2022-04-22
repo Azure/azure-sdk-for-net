@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// Execution of a process that isn't allowed. Allow list consists of
     /// process names to allow.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ProcessNotAllowed")]
     public partial class ProcessNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary>

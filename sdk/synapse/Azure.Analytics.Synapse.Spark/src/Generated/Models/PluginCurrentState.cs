@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PluginCurrentState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PluginCurrentState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PluginCurrentState(string value)
         {

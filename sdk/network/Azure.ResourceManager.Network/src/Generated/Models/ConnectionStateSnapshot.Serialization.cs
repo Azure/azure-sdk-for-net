@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<EvaluationState> evaluationState = default;
-            Optional<int> avgLatencyInMs = default;
-            Optional<int> minLatencyInMs = default;
-            Optional<int> maxLatencyInMs = default;
-            Optional<int> probesSent = default;
-            Optional<int> probesFailed = default;
+            Optional<long> avgLatencyInMs = default;
+            Optional<long> minLatencyInMs = default;
+            Optional<long> maxLatencyInMs = default;
+            Optional<long> probesSent = default;
+            Optional<long> probesFailed = default;
             Optional<IReadOnlyList<ConnectivityHop>> hops = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    avgLatencyInMs = property.Value.GetInt32();
+                    avgLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("minLatencyInMs"))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    minLatencyInMs = property.Value.GetInt32();
+                    minLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxLatencyInMs"))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxLatencyInMs = property.Value.GetInt32();
+                    maxLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("probesSent"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    probesSent = property.Value.GetInt32();
+                    probesSent = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("probesFailed"))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    probesFailed = property.Value.GetInt32();
+                    probesFailed = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("hops"))

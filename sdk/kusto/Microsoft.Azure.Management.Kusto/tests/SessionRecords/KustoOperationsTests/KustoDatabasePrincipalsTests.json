@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,12 +57,12 @@
           "9073"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto\",\r\n  \"namespace\": \"Microsoft.Kusto\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"2746ea77-4702-4b45-80ca-3c97e680e8b7\",\r\n      \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037c\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Canada Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Germany West Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Brazil South\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/attacheddatabaseconfigurations\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/eventhubconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto\",\r\n  \"namespace\": \"Microsoft.Kusto\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"2746ea77-4702-4b45-80ca-3c97e680e8b7\",\r\n      \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037c\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": [\r\n            \"2\",\r\n            \"1\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Canada Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Germany West Central\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Brazil South\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/attacheddatabaseconfigurations\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/eventhubconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/databases/principalassignments\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\",\r\n        \"2019-09-07\",\r\n        \"2019-05-15\",\r\n        \"2019-01-21\",\r\n        \"2018-09-07-preview\",\r\n        \"2017-09-07-privatepreview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters/dataconnections\",\r\n      \"locations\": [\r\n        \"Australia Central\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Brazil Southeast\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"France Central\",\r\n        \"France South\",\r\n        \"Germany West Central\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Norway East\",\r\n        \"South Africa North\",\r\n        \"South Africa West\",\r\n        \"South Central US\",\r\n        \"South India\",\r\n        \"Southeast Asia\",\r\n        \"Switzerland North\",\r\n        \"UAE North\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"West India\",\r\n        \"West US\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-09-18\",\r\n        \"2020-06-14\",\r\n        \"2020-02-15\",\r\n        \"2019-11-09\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg9935?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzk5MzU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourcegroups/sdktestrg9935?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzk5MzU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Australia Central\"\r\n}",
       "RequestHeaders": {
@@ -123,12 +123,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935\",\r\n  \"name\": \"sdktestrg9935\",\r\n  \"location\": \"australiacentral\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935\",\r\n  \"name\": \"sdktestrg9935\",\r\n  \"location\": \"australiacentral\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Australia Central\"\r\n}",
       "RequestHeaders": {
@@ -165,7 +165,7 @@
           "ac3a46e6-e1bd-4d70-a920-ace04784105b"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27"
         ],
         "Set-Cookie": [
           "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
@@ -202,12 +202,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810\",\r\n  \"name\": \"testcluster6810\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"state\": \"Creating\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810\",\r\n  \"name\": \"testcluster6810\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"state\": \"Creating\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -266,12 +266,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -330,12 +330,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -394,12 +394,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -458,12 +458,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -522,12 +522,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -586,12 +586,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -650,12 +650,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -714,12 +714,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -778,12 +778,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -842,12 +842,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -906,12 +906,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -970,12 +970,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1034,12 +1034,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1098,12 +1098,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1162,12 +1162,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1226,12 +1226,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1290,12 +1290,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:03:58.911124Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy84NTcwNjg1YS1hOGNhLTRkMTUtYmQ3NC1mMzVmOGExZTFiYWY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1354,12 +1354,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:09:48.535372Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"name\": \"8570685a-a8ca-4d15-bd74-f35f8a1e1baf\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:00:54.9720251Z\",\r\n  \"endTime\": \"2020-10-20T08:09:48.535372Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterCreateExternal\",\r\n    \"RootActivityId\": \"52c23c5f-35d3-4a40-bf85-2ce4bbe722dc\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1421,12 +1421,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810\",\r\n  \"name\": \"testcluster6810\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"stateReason\": null,\r\n    \"uri\": \"https://testcluster6810.australiacentral.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-testcluster6810.australiacentral.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": null,\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": null,\r\n    \"languageExtensions\": {\r\n      \"value\": []\r\n    },\r\n    \"enablePurge\": null,\r\n    \"enableDoubleEncryption\": false,\r\n    \"engineType\": \"V2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810\",\r\n  \"name\": \"testcluster6810\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"state\": \"Running\",\r\n    \"stateReason\": null,\r\n    \"uri\": \"https://testcluster6810.australiacentral.kusto.windows.net\",\r\n    \"dataIngestionUri\": \"https://ingest-testcluster6810.australiacentral.kusto.windows.net\",\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"optimizedAutoscale\": null,\r\n    \"enableDiskEncryption\": false,\r\n    \"enableStreamingIngest\": false,\r\n    \"keyVaultProperties\": null,\r\n    \"languageExtensions\": {\r\n      \"value\": []\r\n    },\r\n    \"enablePurge\": null,\r\n    \"enableDoubleEncryption\": false,\r\n    \"engineType\": \"V2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"ReadWrite\",\r\n  \"properties\": {\r\n    \"softDeletePeriod\": \"P4D\",\r\n    \"hotCachePeriod\": \"P2D\"\r\n  },\r\n  \"location\": \"Australia Central\"\r\n}",
       "RequestHeaders": {
@@ -1463,7 +1463,7 @@
           "1ce3f8f1-7289-4f6c-9e4f-a2d173ee1bb6"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/00e0df62-e97f-4509-8857-3190a67c3921?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationResults/00e0df62-e97f-4509-8857-3190a67c3921?api-version=2021-08-27"
         ],
         "Set-Cookie": [
           "ARRAffinity=2178e553889a2baebeafe5c8f11834575983f3128efba736a18021d968aa0b1a;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
@@ -1500,12 +1500,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810/Databases/testdatabase8370\",\r\n  \"name\": \"testcluster6810/testdatabase8370\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"kind\": \"ReadWrite\",\r\n  \"properties\": {\r\n    \"softDeletePeriod\": \"P4D\",\r\n    \"hotCachePeriod\": \"P2D\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810/Databases/testdatabase8370\",\r\n  \"name\": \"testcluster6810/testdatabase8370\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"kind\": \"ReadWrite\",\r\n  \"properties\": {\r\n    \"softDeletePeriod\": \"P4D\",\r\n    \"hotCachePeriod\": \"P2D\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/00e0df62-e97f-4509-8857-3190a67c3921?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wMGUwZGY2Mi1lOTdmLTQ1MDktODg1Ny0zMTkwYTY3YzM5MjE/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/00e0df62-e97f-4509-8857-3190a67c3921?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wMGUwZGY2Mi1lOTdmLTQ1MDktODg1Ny0zMTkwYTY3YzM5MjE/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1564,12 +1564,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/00e0df62-e97f-4509-8857-3190a67c3921\",\r\n  \"name\": \"00e0df62-e97f-4509-8857-3190a67c3921\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:10:08.1896061Z\",\r\n  \"endTime\": \"2020-10-20T08:10:10.1428979Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DatabaseCreate\",\r\n    \"RootActivityId\": \"4d352aca-e5c3-4634-96c6-a472b274cbc0\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/00e0df62-e97f-4509-8857-3190a67c3921\",\r\n  \"name\": \"00e0df62-e97f-4509-8857-3190a67c3921\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:10:08.1896061Z\",\r\n  \"endTime\": \"2020-10-20T08:10:10.1428979Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DatabaseCreate\",\r\n    \"RootActivityId\": \"4d352aca-e5c3-4634-96c6-a472b274cbc0\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1631,12 +1631,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810/Databases/testdatabase8370\",\r\n  \"name\": \"testcluster6810/testdatabase8370\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"kind\": \"ReadWrite\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"isFollowed\": false,\r\n    \"softDeletePeriodInDays\": 4,\r\n    \"softDeletePeriod\": \"P4D\",\r\n    \"hotCachePeriodInDays\": 2,\r\n    \"hotCachePeriod\": \"P2D\",\r\n    \"statistics\": {\r\n      \"size\": 0.0\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/Clusters/testcluster6810/Databases/testdatabase8370\",\r\n  \"name\": \"testcluster6810/testdatabase8370\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Australia Central\",\r\n  \"kind\": \"ReadWrite\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"isFollowed\": false,\r\n    \"softDeletePeriodInDays\": 4,\r\n    \"softDeletePeriod\": \"P4D\",\r\n    \"hotCachePeriodInDays\": 2,\r\n    \"hotCachePeriod\": \"P2D\",\r\n    \"statistics\": {\r\n      \"size\": 0.0\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/addPrincipals?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvYWRkUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIxLTAxLTAx",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/addPrincipals?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvYWRkUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIxLTA4LTI3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"User1\",\r\n      \"type\": \"User\",\r\n      \"fqn\": \"aaduser=astauben@microsoft.com\",\r\n      \"email\": \"astauben@microsoft.com\",\r\n      \"appId\": \"\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -1711,8 +1711,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/listPrincipals?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvbGlzdFByaW5jaXBhbHM/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/listPrincipals?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvbGlzdFByaW5jaXBhbHM/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1781,8 +1781,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/removePrincipals?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvcmVtb3ZlUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIxLTAxLTAx",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370/removePrincipals?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzAvcmVtb3ZlUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIxLTA4LTI3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"User1\",\r\n      \"type\": \"User\",\r\n      \"fqn\": \"aaduser=astauben@microsoft.com\",\r\n      \"email\": \"astauben@microsoft.com\",\r\n      \"appId\": \"\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -1857,8 +1857,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810/databases/testdatabase8370?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTAvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTgzNzA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1883,10 +1883,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-01-01&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-08-27&operationResultResponseType=Location"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-08-27"
         ],
         "Set-Cookie": [
           "ARRAffinity=2178e553889a2baebeafe5c8f11834575983f3128efba736a18021d968aa0b1a;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
@@ -1927,8 +1927,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NDMzNGJhYy0zZWM5LTRjNWItODQ5NC05MjZhMDg2NTUyZDE/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NDMzNGJhYy0zZWM5LTRjNWItODQ5NC05MjZhMDg2NTUyZDE/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1987,12 +1987,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/44334bac-3ec9-4c5b-8494-926a086552d1\",\r\n  \"name\": \"44334bac-3ec9-4c5b-8494-926a086552d1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:10:42.4345637Z\",\r\n  \"endTime\": \"2020-10-20T08:10:44.6794205Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DatabaseDelete\",\r\n    \"RootActivityId\": \"96b5ed3b-e9f1-420f-8194-fab068ac02e6\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/44334bac-3ec9-4c5b-8494-926a086552d1\",\r\n  \"name\": \"44334bac-3ec9-4c5b-8494-926a086552d1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:10:42.4345637Z\",\r\n  \"endTime\": \"2020-10-20T08:10:44.6794205Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DatabaseDelete\",\r\n    \"RootActivityId\": \"96b5ed3b-e9f1-420f-8194-fab068ac02e6\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-01-01&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NDMzNGJhYy0zZWM5LTRjNWItODQ5NC05MjZhMDg2NTUyZDE/YXBpLXZlcnNpb249MjAyMS0wMS0wMSZvcGVyYXRpb25SZXN1bHRSZXNwb25zZVR5cGU9TG9jYXRpb24=",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/44334bac-3ec9-4c5b-8494-926a086552d1?api-version=2021-08-27&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NDMzNGJhYy0zZWM5LTRjNWItODQ5NC05MjZhMDg2NTUyZDE/YXBpLXZlcnNpb249MjAyMS0wOC0yNyZvcGVyYXRpb25SZXN1bHRSZXNwb25zZVR5cGU9TG9jYXRpb24=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2049,8 +2049,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/resourceGroups/sdktestrg9935/providers/Microsoft.Kusto/clusters/testcluster6810?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzk5MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjY4MTA/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2075,10 +2075,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27&operationResultResponseType=Location"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27"
         ],
         "Set-Cookie": [
           "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
@@ -2119,8 +2119,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2179,12 +2179,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2243,12 +2243,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2307,12 +2307,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2371,12 +2371,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2435,12 +2435,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2499,12 +2499,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2563,12 +2563,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2627,12 +2627,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2691,12 +2691,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2755,12 +2755,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2819,12 +2819,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:11:15.7338744Z\",\r\n  \"percentComplete\": 0.5,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Running\",\r\n    \"OperationState\": \"InProgress\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2883,12 +2883,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:17:08.6861274Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia Central/operationresults/073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"name\": \"073a71bd-0b61-4652-85ff-4547feee6c86\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-10-20T08:11:14.843242Z\",\r\n  \"endTime\": \"2020-10-20T08:17:08.6861274Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"ClusterDelete\",\r\n    \"RootActivityId\": \"6ad1bc8c-a8ad-494b-bdf7-8a14bc843a5d\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"OperationState\": \"Completed\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-01-01&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wMS0wMSZvcGVyYXRpb25SZXN1bHRSZXNwb25zZVR5cGU9TG9jYXRpb24=",
+      "RequestUri": "/subscriptions/ed0cf569-9dc0-455c-9905-afdded5e1504/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/073a71bd-0b61-4652-85ff-4547feee6c86?api-version=2021-08-27&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWQwY2Y1NjktOWRjMC00NTVjLTk5MDUtYWZkZGVkNWUxNTA0L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy8wNzNhNzFiZC0wYjYxLTQ2NTItODVmZi00NTQ3ZmVlZTZjODY/YXBpLXZlcnNpb249MjAyMS0wOC0yNyZvcGVyYXRpb25SZXN1bHRSZXNwb25zZVR5cGU9TG9jYXRpb24=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2954,12 +2954,14 @@
       "testattacheddatabaseconfiguration5410",
       "eventhubConnection6488",
       "eventGridConnection6636",
-      "iothubConnection4169"
+      "iothubConnection4169",
+      "privateendpointname5377",
+      "managedprivateendpointname6714"
     ]
   },
   "Variables": {
-    "SubscriptionId": "11d5f159-a21d-4a6c-8053-c3aae30057cf",
+    "SubscriptionId": "ed0cf569-9dc0-455c-9905-afdded5e1504",
     "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-    "SubId": "11d5f159-a21d-4a6c-8053-c3aae30057cf"
+    "SubId": "ed0cf569-9dc0-455c-9905-afdded5e1504"
   }
 }

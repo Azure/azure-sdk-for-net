@@ -10,7 +10,7 @@ namespace Azure.Communication.Chat
     /// <summary>
     /// Model factory that enables mocking for the Chat library.
     /// </summary>
-    public static class ChatModelFactory
+    public static partial class ChatModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Chat.ChatMessage"/> class.

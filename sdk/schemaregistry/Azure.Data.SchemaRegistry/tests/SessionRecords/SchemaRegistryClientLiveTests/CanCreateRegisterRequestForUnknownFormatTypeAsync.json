@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test1?api-version=2021-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json; serialization=JSON",
+        "User-Agent": [
+          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211109.1",
+          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "f244e9e37506fcd6a40f4b79c8599035",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "{\u0022type\u0022 : \u0022record\u0022,\u0022namespace\u0022 : \u0022TestSchema\u0022,\u0022name\u0022 : \u0022Employee\u0022,\u0022fields\u0022 : [{ \u0022name\u0022 : \u0022Name\u0022 , \u0022type\u0022 : \u0022string\u0022 },{ \u0022name\u0022 : \u0022Age\u0022, \u0022type\u0022 : \u0022int\u0022 }]}",
+      "StatusCode": 415,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 10 Nov 2021 02:07:51 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": "{\u0022Code\u0022:415,\u0022Detail\u0022:\u0022Invalid schema type for PUT request. \u0027json\u0027 is not supported. TrackingId:40428996-7316-454d-bdfb-de4e02d70b0c_G26, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups\\/azsdk_net_test_group\\/schemas\\/test1, Timestamp:2021-11-10T02:07:51\u0022}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1148640210",
+    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
+  }
+}

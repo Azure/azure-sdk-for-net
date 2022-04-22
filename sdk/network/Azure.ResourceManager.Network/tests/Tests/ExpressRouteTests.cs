@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class ExpressRouteTests : NetworkTestsManagementClientBase
+    public class ExpressRouteTests : NetworkServiceClientTestBase
     {
         public ExpressRouteTests(bool isAsync) : base(isAsync)
         {
@@ -26,12 +28,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
-        }
-
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
         }
 
         public const string MS_PrimaryPrefix = "199.168.200.0/30";
@@ -48,109 +44,66 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public const string Circuit_BW = "200";
         public const string MS_VlanId = "400";
 
-        public const string Filter_Commmunity = "12076:5010";
-        public const string Filter_Access = "allow";
-        public const string Filter_Type = "Community";
-
         public const string Peering_Microsoft = "MicrosoftPeering";
 
         [Test]
+        [RecordedTest]
         public async Task BGPCommunityApiTest()
         {
-            _ = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            AsyncPageable<Models.BgpServiceCommunity> communitiesAsync = NetworkManagementClient.BgpServiceCommunities.ListAsync();
-            Task<List<Models.BgpServiceCommunity>> communities = communitiesAsync.ToEnumerableAsync();
-            Assert.NotNull(communities);
-            Assert.True(communities.Result.First().BgpCommunities.First().IsAuthorizedToUse);
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
+            List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
+            Assert.IsNotEmpty(communities);
+            Assert.That(communities.Any(c => c.BgpCommunities.Any(b => b.IsAuthorizedToUse.HasValue ? b.IsAuthorizedToUse.Value : false)));
         }
 
         [Test]
-        public async Task RouteFilterApiTest()
-        {
-            string resourceGroupName = Recording.GenerateAssetName("csmrg");
-
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
-
-            // Create route filter
-            string filterName = "filter";
-            string ruleName = "rule";
-
-            Models.RouteFilter filter = await CreateDefaultRouteFilter(resourceGroupName,
-                filterName, location, NetworkManagementClient);
-
-            Assert.AreEqual(filter.Name, filterName);
-            Assert.IsEmpty(filter.Rules);
-
-            // Update route filter with rule by put on parent resources
-            filter = await CreateDefaultRouteFilter(resourceGroupName,
-                filterName, location, NetworkManagementClient, true);
-
-            Assert.AreEqual(filter.Name, filterName);
-            Assert.IsNotEmpty(filter.Rules);
-
-            // Update route filter and delete rules
-            filter = await CreateDefaultRouteFilter(resourceGroupName,
-               filterName, location, NetworkManagementClient);
-
-            Assert.AreEqual(filter.Name, filterName);
-            Assert.IsEmpty(filter.Rules);
-
-            filter = await CreateDefaultRouteFilterRule(resourceGroupName,
-                filterName, ruleName, location, NetworkManagementClient);
-
-            Assert.AreEqual(filter.Name, filterName);
-            Assert.IsNotEmpty(filter.Rules);
-        }
-
-        [Test]
+        [RecordedTest]
         [Ignore("Track2: The corresponding configuration is needed, and the account is missing the key configuration")]
         public async Task ExpressRouteMicrosoftPeeringApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string circuitName = "circuit";
 
-            Models.ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
-                circuitName, location, NetworkManagementClient);
+            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.AreEqual(circuit.Name, circuitName);
-            Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.AreEqual(circuit.Data.Name, circuitName);
+            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroupName,
-                circuitName, NetworkManagementClient);
+            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup,circuitName);
 
-            Assert.AreEqual(circuit.Name, circuitName);
-            Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
-            Assert.NotNull(circuit.Peerings);
+            Assert.AreEqual(circuit.Data.Name, circuitName);
+            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.NotNull(circuit.Data.Peerings);
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: The corresponding configuration is needed, and the account is missing the key configuration")]
         public async Task ExpressRouteMicrosoftPeeringApiWithIpv6Test()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string circuitName = "circuit";
 
-            Models.ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
-                circuitName, location, NetworkManagementClient);
+            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.AreEqual(circuit.Name, circuitName);
-            Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.AreEqual(circuit.Data.Name, circuitName);
+            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroupName,
-                circuitName, NetworkManagementClient);
+            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroup,
+                circuitName);
 
-            Assert.AreEqual(circuit.Name, circuitName);
-            Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
-            Assert.NotNull(circuit.Peerings);
+            Assert.AreEqual(circuit.Data.Name, circuitName);
+            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.NotNull(circuit.Data.Peerings);
         }
     }
 }

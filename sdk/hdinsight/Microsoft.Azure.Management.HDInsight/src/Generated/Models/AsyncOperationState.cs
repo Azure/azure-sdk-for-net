@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AsyncOperationState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AsyncOperationState
+    public static class AsyncOperationState
     {
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed
-    }
-    internal static class AsyncOperationStateEnumExtension
-    {
-        internal static string ToSerializedValue(this AsyncOperationState? value)
-        {
-            return value == null ? null : ((AsyncOperationState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AsyncOperationState value)
-        {
-            switch( value )
-            {
-                case AsyncOperationState.InProgress:
-                    return "InProgress";
-                case AsyncOperationState.Succeeded:
-                    return "Succeeded";
-                case AsyncOperationState.Failed:
-                    return "Failed";
-            }
-            return null;
-        }
-
-        internal static AsyncOperationState? ParseAsyncOperationState(this string value)
-        {
-            switch( value )
-            {
-                case "InProgress":
-                    return AsyncOperationState.InProgress;
-                case "Succeeded":
-                    return AsyncOperationState.Succeeded;
-                case "Failed":
-                    return AsyncOperationState.Failed;
-            }
-            return null;
-        }
+        public const string InProgress = "InProgress";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
     }
 }

@@ -86,6 +86,11 @@ namespace Azure.Storage.Sas
         public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
         /// class.
         /// </summary>
@@ -162,6 +167,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
             Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.PermanentDelete,
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Add,
             Constants.Sas.Permissions.Create,
@@ -169,6 +175,7 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Process,
             Constants.Sas.Permissions.Tag,
             Constants.Sas.Permissions.FilterByTags,
+            Constants.Sas.Permissions.SetImmutabilityPolicy,
         };
 
         /// <summary>
@@ -195,11 +202,11 @@ namespace Azure.Storage.Sas
 
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
                 Services.ToPermissionsString(),
@@ -209,10 +216,11 @@ namespace Azure.Storage.Sas
                 IPRange.ToString(),
                 Protocol.ToProtocolString(),
                 Version,
-                "");  // That's right, the account SAS requires a terminating extra newline
+                EncryptionScope,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = SasQueryParametersInternals.Create(
+            string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 Version,
                 Services,
                 ResourceTypes,
@@ -220,10 +228,11 @@ namespace Azure.Storage.Sas
                 StartsOn,
                 ExpiresOn,
                 IPRange,
-                null, // Identifier
-                null, // Resource
+                identifier: null,
+                resource: null,
                 Permissions,
-                signature);
+                signature,
+                encryptionScope: EncryptionScope);
             return p;
         }
 

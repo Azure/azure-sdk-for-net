@@ -19,6 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public double? Sensitivity { get; set; }
         /// <summary> detection direction. </summary>
         public AnomalyDetectorDirection? AnomalyDetectorDirection { get; set; }
+        /// <summary> Gets or sets the suppress condition. </summary>
         public SuppressConditionPatch SuppressCondition { get; set; }
     }
 }

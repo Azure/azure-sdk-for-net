@@ -3,6 +3,7 @@
 
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -11,13 +12,10 @@ namespace Azure.Data.Tables.Tests
         public TablesRecordedTestSanitizer()
         {
             SanitizedHeaders.Add("My-Custom-Auth-Header");
-        }
-
-        private Regex SignatureRegEx = new Regex(@"([\x0026|&|?]sig=)([\w\d%]+)", RegexOptions.Compiled);
-
-        public override string SanitizeUri(string uri)
-        {
-            return SignatureRegEx.Replace(uri, $"$1{SanitizeValue}");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }

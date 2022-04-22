@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Batch
     public class JobOperations : IInheritedBehaviors
     {
 
-#region // constructors
+        #region // constructors
 
-        private JobOperations()
+        public JobOperations()
         {
         }
 
@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Batch
 
         #endregion //constructors
 
-
         #region IInheritedBehaviors
 
         /// <summary>
@@ -54,9 +53,9 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public IList<BatchClientBehavior> CustomBehaviors { get; set; }
 
-#endregion IInheritedBehaviors
+        #endregion IInheritedBehaviors
 
-#region // JobOperations
+        #region // JobOperations
 
         /// <summary>
         /// Creates an instance of CloudJob that is unbound and does not have a consistency relationship to any job in the Batch Service.
@@ -83,10 +82,10 @@ namespace Microsoft.Azure.Batch
         public CloudJob CreateJob(string jobId, PoolInformation poolInformation)
         {
             CloudJob unboundJob = new CloudJob(ParentBatchClient, CustomBehaviors)
-                                  {
-                                      Id = jobId,
-                                      PoolInformation = poolInformation
-                                  };
+            {
+                Id = jobId,
+                PoolInformation = poolInformation
+            };
 
             return unboundJob;
         }
@@ -120,7 +119,7 @@ namespace Microsoft.Azure.Batch
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-            
+
             IPagedEnumerable<CloudJob> enumerable = ListJobsImpl(bhMgr, detailLevel);
 
             return enumerable;
@@ -151,8 +150,8 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="CloudJob"/> containing information about the specified Azure Batch job.</returns>
         /// <remarks>The get job operation runs asynchronously.</remarks>
         public async Task<CloudJob> GetJobAsync(
-            string jobId, 
-            DetailLevel detailLevel = null, 
+            string jobId,
+            DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
@@ -267,8 +266,8 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The disable operation runs asynchronously.</remarks>
         public async Task DisableJobAsync(
-            string jobId, 
-            Common.DisableJobOption disableJobOption, 
+            string jobId,
+            Common.DisableJobOption disableJobOption,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
@@ -303,8 +302,8 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
         /// <remarks>The terminate operation runs asynchronously.</remarks>
         public async Task TerminateJobAsync(
-            string jobId, 
-            string terminateReason = null, 
+            string jobId,
+            string terminateReason = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
@@ -395,8 +394,8 @@ namespace Microsoft.Azure.Batch
         /// <remarks>This method returns immediately; the tasks are retrieved from the Batch service only when the collection is enumerated.
         /// Retrieval is non-atomic; tasks are retrieved in pages during enumeration of the collection.</remarks>
         public IPagedEnumerable<CloudTask> ListTasks(
-                                                        string jobId, 
-                                                        DetailLevel detailLevel = null, 
+                                                        string jobId,
+                                                        DetailLevel detailLevel = null,
                                                         IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
@@ -410,7 +409,7 @@ namespace Microsoft.Azure.Batch
 
         internal async Task<CloudTask> GetTaskAsyncImpl(
                                                                     string jobId,
-                                                                    string taskId, 
+                                                                    string taskId,
                                                                     BehaviorManager bhMgr,
                                                                     CancellationToken cancellationToken)
         {
@@ -444,8 +443,8 @@ namespace Microsoft.Azure.Batch
         /// <remarks>The get task operation runs asynchronously.</remarks>
         public Task<CloudTask> GetTaskAsync(
             string jobId,
-            string taskId, 
-            DetailLevel detailLevel = null, 
+            string taskId,
+            DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
@@ -500,7 +499,7 @@ namespace Microsoft.Azure.Batch
 
         internal async Task AddTaskAsyncImpl(
             string jobId,
-            CloudTask taskToAdd, 
+            CloudTask taskToAdd,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken,
             ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts = null)
@@ -556,14 +555,14 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public Task AddTaskAsync(
             string jobId,
-            CloudTask taskToAdd, 
-            ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts = null, 
+            CloudTask taskToAdd,
+            ConcurrentDictionary<Type, IFileStagingArtifact> allFileStagingArtifacts = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-            
+
             Task asyncTask = AddTaskAsyncImpl(jobId, taskToAdd, bhMgr, cancellationToken, allFileStagingArtifacts);
 
             return asyncTask;
@@ -588,7 +587,7 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public ConcurrentDictionary<Type, IFileStagingArtifact> AddTask(string jobId, CloudTask taskToAdd, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            ConcurrentDictionary<Type, IFileStagingArtifact> artifacts = new ConcurrentDictionary<Type,IFileStagingArtifact>();
+            ConcurrentDictionary<Type, IFileStagingArtifact> artifacts = new ConcurrentDictionary<Type, IFileStagingArtifact>();
 
             Task asyncTask = AddTaskAsync(jobId, taskToAdd, artifacts, additionalBehaviors);
 
@@ -777,7 +776,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
-            
+
             return asyncTask;
         }
 
@@ -816,9 +815,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken)
         {
             var getNodeFilePropertiesTask = await ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByTask(
-                jobId, 
-                taskId, 
-                filePath, 
+                jobId,
+                taskId,
+                filePath,
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
@@ -1034,8 +1033,8 @@ namespace Microsoft.Azure.Batch
 
             var asyncTask = ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(
                 jobId,
-                taskId, 
-                filePath, 
+                taskId,
+                filePath,
                 recursive,
                 bhMgr,
                 cancellationToken);
@@ -1202,13 +1201,13 @@ namespace Microsoft.Azure.Batch
         /// <returns>The aggregated job statistics.</returns>
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
         public async Task<JobStatistics> GetAllLifetimeStatisticsAsync(
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default)
         {
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask = 
+            Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask =
                 ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
                     bhMgr,
                     cancellationToken);
@@ -1265,12 +1264,12 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-#endregion // JobOperations
+        #endregion // JobOperations
 
-#region // internal/private
+        #region // internal/private
 
-        internal BatchClient ParentBatchClient { get; set;}
+        internal BatchClient ParentBatchClient { get; set; }
 
-#endregion // internal/private
+        #endregion // internal/private
     }
 }

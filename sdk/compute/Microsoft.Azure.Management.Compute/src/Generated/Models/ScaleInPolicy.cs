@@ -51,9 +51,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// across zones. Within each zone, the newest virtual machines that
         /// are not protected will be chosen for removal.
         /// &lt;br&gt;&lt;br&gt;</param>
-        public ScaleInPolicy(IList<string> rules = default(IList<string>))
+        /// <param name="forceDeletion">This property allows you to specify if
+        /// virtual machines chosen for removal have to be force deleted when a
+        /// virtual machine scale set is being scaled-in.(Feature in
+        /// Preview)</param>
+        public ScaleInPolicy(IList<string> rules = default(IList<string>), bool? forceDeletion = default(bool?))
         {
             Rules = rules;
+            ForceDeletion = forceDeletion;
             CustomInit();
         }
 
@@ -87,6 +92,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "rules")]
         public IList<string> Rules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property allows you to specify if virtual
+        /// machines chosen for removal have to be force deleted when a virtual
+        /// machine scale set is being scaled-in.(Feature in Preview)
+        /// </summary>
+        [JsonProperty(PropertyName = "forceDeletion")]
+        public bool? ForceDeletion { get; set; }
 
     }
 }

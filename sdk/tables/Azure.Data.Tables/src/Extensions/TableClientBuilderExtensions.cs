@@ -22,6 +22,17 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
+        /// Registers a <see cref="TableServiceClient"/> instance with the provided <paramref name="serviceUri"/>
+        /// </summary>
+        public static IAzureClientBuilder<TableServiceClient, TableClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<TableServiceClient, TableClientOptions>(
+                (options, token) => token != null ? new TableServiceClient(serviceUri, token, options) : new TableServiceClient(serviceUri, options),
+                requiresCredential: false);
+        }
+
+        /// <summary>
         /// Registers a <see cref="TableServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sharedKeyCredential"/>
         /// </summary>
         public static IAzureClientBuilder<TableServiceClient, TableClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TableSharedKeyCredential sharedKeyCredential)

@@ -151,10 +151,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="userData">UserData for the VM, which must be base-64
         /// encoded. Customer should not pass any secrets in here.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
+        /// <param name="capacityReservation">Specifies information about the
+        /// capacity reservation that is used to allocate virtual machine.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01.</param>
+        /// <param name="applicationProfile">Specifies the gallery applications
+        /// that should be made available to the VM/VMSS</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -181,6 +186,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             PlatformFaultDomain = platformFaultDomain;
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
+            CapacityReservation = capacityReservation;
+            ApplicationProfile = applicationProfile;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -431,6 +438,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userData")]
         public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the capacity reservation
+        /// that is used to allocate virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2021-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityReservation")]
+        public CapacityReservationProfile CapacityReservation { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the gallery applications that should be made
+        /// available to the VM/VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationProfile")]
+        public ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine, if configured.

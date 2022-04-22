@@ -9,7 +9,7 @@ namespace Azure.Data.Tables.Sas
 {
     /// <summary>
     /// <see cref="TableSasPermissions"/> contains the list of
-    /// permissions that can be set for a file's access policy.  Use
+    /// permissions that can be set for a table's access policy.  Use
     /// <see cref="TableSasBuilder.SetPermissions(TableSasPermissions)"/>
     /// to set the permissions on the <see cref="TableSasBuilder"/>.
     /// </summary>

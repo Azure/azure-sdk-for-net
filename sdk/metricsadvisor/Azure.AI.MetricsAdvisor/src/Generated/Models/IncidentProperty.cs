@@ -15,9 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="incidentStatus">
         /// incident status
         /// 
-        /// 
-        /// 
-        /// only return for alerting incident result.
+        /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
         internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode)
@@ -32,9 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="incidentStatus">
         /// incident status
         /// 
-        /// 
-        /// 
-        /// only return for alerting incident result.
+        /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
         /// <param name="expectedValueOfRootNode"> expected value of the root node given by smart detector. </param>
@@ -51,9 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// incident status
         /// 
-        /// 
-        /// 
-        /// only return for alerting incident result.
+        /// only return for alerting incident result
         /// </summary>
         public AnomalyIncidentStatus IncidentStatus { get; }
         /// <summary> value of the root node. </summary>

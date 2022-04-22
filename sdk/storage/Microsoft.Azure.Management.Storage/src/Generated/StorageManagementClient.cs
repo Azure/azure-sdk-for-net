@@ -125,6 +125,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IObjectReplicationPoliciesOperations ObjectReplicationPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the ILocalUsersOperations.
+        /// </summary>
+        public virtual ILocalUsersOperations LocalUsers { get; private set; }
+
+        /// <summary>
         /// Gets the IEncryptionScopesOperations.
         /// </summary>
         public virtual IEncryptionScopesOperations EncryptionScopes { get; private set; }
@@ -420,6 +425,7 @@ namespace Microsoft.Azure.Management.Storage
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             ObjectReplicationPolicies = new ObjectReplicationPoliciesOperations(this);
+            LocalUsers = new LocalUsersOperations(this);
             EncryptionScopes = new EncryptionScopesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
@@ -430,7 +436,7 @@ namespace Microsoft.Azure.Management.Storage
             TableServices = new TableServicesOperations(this);
             Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-04-01";
+            ApiVersion = "2021-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

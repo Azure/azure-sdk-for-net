@@ -11,10 +11,5 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("State")]
     public partial struct TextAnalyticsOperationStatus
     {
-        [CodeGenMember("PartiallyCompletedValue")]
-        private const string PartiallySucceededValue = "partiallySucceeded";
-
-        /// <summary> partiallyCompleted. </summary>
-        public static TextAnalyticsOperationStatus PartiallySucceeded { get; } = new TextAnalyticsOperationStatus(PartiallySucceededValue);
     }
 }

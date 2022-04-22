@@ -19,15 +19,6 @@ namespace Azure.ResourceManager.Network.Models
             Value = new ChangeTrackingList<BastionShareableLink>();
         }
 
-        /// <summary> Initializes a new instance of BastionShareableLinkListResult. </summary>
-        /// <param name="value"> List of Bastion Shareable Links for the request. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BastionShareableLinkListResult(IReadOnlyList<BastionShareableLink> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
-        }
-
         /// <summary> List of Bastion Shareable Links for the request. </summary>
         public IReadOnlyList<BastionShareableLink> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>

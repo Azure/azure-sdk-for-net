@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.VideoAnalyzer</PackageId>
     <Description>Provides developers with libraries for managing Azure Video Analyzer using the Azure Resource Manager API.</Description>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <AssemblyName>Microsoft.Azure.Management.VideoAnalyzer</AssemblyName>
     <PackageTags>management;media;VideoAnalyzer;Video Analyzer</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/videoanalyzer/Microsoft.Azure.Management.VideoAnalyzer/CHANGELOG.md
+        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/videoanalyzer/Microsoft.Azure.Management.VideoAnalyzer/CHANGELOG.md
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

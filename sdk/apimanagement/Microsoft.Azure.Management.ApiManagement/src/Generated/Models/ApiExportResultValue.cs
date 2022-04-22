@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// The object defining the schema of the exported Api Detail
+    /// The object defining the schema of the exported API Detail
     /// </summary>
     public partial class ApiExportResultValue
     {

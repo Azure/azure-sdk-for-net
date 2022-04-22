@@ -54,8 +54,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// using private endpoints on disks.</param>
         /// <param name="supportsHibernation">Indicates the OS on a snapshot
         /// supports hibernation.</param>
+        /// <param name="publicNetworkAccess">Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="supportedCapabilities">List of supported capabilities
+        /// (like accelerated networking) for the image from which the OS disk
+        /// was created.</param>
         /// <param name="tags">Resource tags</param>
-        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
+        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -64,6 +69,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
             SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            SupportedCapabilities = supportedCapabilities;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -125,6 +132,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHibernation")]
         public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of supported capabilities (like accelerated
+        /// networking) for the image from which the OS disk was created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportedCapabilities")]
+        public SupportedCapabilities SupportedCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Producer;
@@ -34,20 +33,22 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_DefaultAzureCredential
 
-            TokenCredential credential = new DefaultAzureCredential();
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
-            /*@@*/
+#else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
+
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -81,23 +82,25 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_SharedAccessSignature
 
+#if SNIPPET
             var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/
-            /*@@*/ var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(new EventHubProducerClientOptions().ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
-            /*@@*/ var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
-            /*@@*/ credential = new AzureSasCredential(signature.Value);
-            /*@@*/
+#else
+            var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(new EventHubProducerClientOptions().ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+            var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
+
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
+
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -131,20 +134,22 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_SharedAccessKey
 
+#if SNIPPET
             var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
-            /*@@*/
+#else
+            var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+#endif
+
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -178,18 +183,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_ConnectionStringParse
 
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+#endif
 
             EventHubsConnectionStringProperties properties =
                 EventHubsConnectionStringProperties.Parse(connectionString);
-
-            TokenCredential credential = new DefaultAzureCredential();
-            /*@@*/
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
 
             var producer = new EventHubProducerClient(
                 properties.FullyQualifiedNamespace,
@@ -198,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             try
             {
-                using var eventBatch = await producer.CreateBatchAsync();
+                using EventDataBatch eventBatch = await producer.CreateBatchAsync();
 
                 for (var index = 0; index < 5; ++index)
                 {

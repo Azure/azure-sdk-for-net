@@ -3,7 +3,6 @@
   "ProtocolName": "Models.ImageReference",
   "SummaryComment": "A reference to an Azure Virtual Machines Marketplace Image or a custom Azure Virtual Machine Image. To get the list of all Azure Marketplace Image references verified by Azure Batch, see <see cref=\"PoolOperations.ListSupportedImages\"/>.",
   "IsUsedInCollections": true,
-  "IsConstructorPublic": false,
   "Properties": [
     {
       "Key": {
@@ -62,6 +61,17 @@
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ExactVersion",
+        "SummaryComment": "The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read"
       },
       "Value": null
     }

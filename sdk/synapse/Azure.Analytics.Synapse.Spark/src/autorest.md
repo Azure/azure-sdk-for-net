@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-spark-2019-11-01-preview
+tag: package-spark-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/c9992af7235a6550087d4fed8f081ed35019f605/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Spark
 public-clients: true
 security: AADToken

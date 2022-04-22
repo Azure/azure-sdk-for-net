@@ -98,7 +98,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanDeleteRepostitory()
+        public async Task CanDeleteRepository()
         {
             // Arrange
             string registry = TestEnvironment.Registry;
@@ -144,7 +144,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public void CanDeleteRepostitory_Anonymous()
+        public void CanDeleteRepository_Anonymous()
         {
             // Arrange
             string repository = $"library/hello-world";

@@ -267,7 +267,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"8934755D40083A8A1278D89355F90CF9\",\r\n  \"secondaryKey\": \"5712ECB938C2E22AF9E57A06B72A524F\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -336,7 +336,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"8934755D40083A8A1278D89355F90CF9\",\r\n  \"secondaryKey\": \"5712ECB938C2E22AF9E57A06B72A524F\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -474,7 +474,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"8F64AB339DBC57796D3BD341D5F042A4\",\r\n  \"secondaryKey\": \"5712ECB938C2E22AF9E57A06B72A524F\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -543,7 +543,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"8F64AB339DBC57796D3BD341D5F042A4\",\r\n  \"secondaryKey\": \"FEE56DBC6AD2454F8EDCC800C4E46EDA\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {

@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Tests
     public abstract class E2eTestBase : RecordedTestBase<IotHubServiceTestEnvironment>
     {
         public E2eTestBase(bool isAsync)
-         : base(isAsync, TestSettings.Instance.TestMode)
+         : base(isAsync, TestSettings.Instance.TestMode, useLegacyTransport: true)
         {
             Sanitizer = new CustomRequestSanitizer();
         }

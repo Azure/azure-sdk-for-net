@@ -177,6 +177,11 @@ namespace Azure.Storage.Sas
         public string CorrelationId { get; set; }
 
         /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -196,7 +201,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -216,7 +222,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Container Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -340,7 +347,7 @@ namespace Azure.Storage.Sas
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
+            string stringToSign = String.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
@@ -351,15 +358,16 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 Snapshot ?? BlobVersionId,
+                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
 
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
-            var p = new BlobSasQueryParameters(
+            BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -375,7 +383,8 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -398,40 +407,41 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(accountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
-                userDelegationKey.SignedObjectId,
-                userDelegationKey.SignedTenantId,
-                signedStart,
-                signedExpiry,
-                userDelegationKey.SignedService,
-                userDelegationKey.SignedVersion,
-                PreauthorizedAgentObjectId,
-                null, // AgentObjectId - enabled only in HNS accounts
-                CorrelationId,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                Snapshot ?? BlobVersionId,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(accountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
+                    userDelegationKey.SignedObjectId,
+                    userDelegationKey.SignedTenantId,
+                    signedStart,
+                    signedExpiry,
+                    userDelegationKey.SignedService,
+                    userDelegationKey.SignedVersion,
+                    PreauthorizedAgentObjectId,
+                    null, // AgentObjectId - enabled only in HNS accounts
+                    CorrelationId,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    Snapshot ?? BlobVersionId,
+                    EncryptionScope,
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
 
-            var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = new BlobSasQueryParameters(
+            BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -455,7 +465,8 @@ namespace Azure.Storage.Sas
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
-                correlationId: CorrelationId);
+                correlationId: CorrelationId,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -581,7 +592,8 @@ namespace Azure.Storage.Sas
                 ContentLanguage = originalBlobSasBuilder.ContentLanguage,
                 ContentType = originalBlobSasBuilder.ContentType,
                 PreauthorizedAgentObjectId = originalBlobSasBuilder.PreauthorizedAgentObjectId,
-                CorrelationId = originalBlobSasBuilder.CorrelationId
+                CorrelationId = originalBlobSasBuilder.CorrelationId,
+                EncryptionScope = originalBlobSasBuilder.EncryptionScope
             };
     }
 }

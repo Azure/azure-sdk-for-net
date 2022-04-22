@@ -5,6 +5,7 @@ class PackageProps
 {
     [string]$Name
     [string]$Version
+    [string]$DevVersion
     [string]$DirectoryPath
     [string]$ServiceDirectory
     [string]$ReadMePath
@@ -13,6 +14,7 @@ class PackageProps
     [string]$SdkType
     [boolean]$IsNewSdk
     [string]$ArtifactName
+    [string]$ReleaseStatus
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -48,6 +50,12 @@ class PackageProps
         if (Test-Path (Join-Path $directoryPath "CHANGELOG.md"))
         {
             $this.ChangeLogPath = Join-Path $directoryPath "CHANGELOG.md"
+            # Get release date for current version and set in package property
+            $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $this.ChangeLogPath -VersionString $this.Version
+            if ($changeLogEntry -and $changeLogEntry.ReleaseStatus)
+            {
+              $this.ReleaseStatus = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
+            } 
         }
         else
         {
@@ -126,7 +134,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
     return $pkgPropsResult
 }
 
-# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest,
+# Given the metadata url under https://github.com/Azure/azure-sdk/tree/main/_data/releases/latest,
 # the function will return the csv metadata back as part of response.
 function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 {
@@ -143,7 +151,7 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
     {
         LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
         Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-        See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+        See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
     }
 
     foreach ($directory in (Get-ChildItem $serviceDirectoryPath -Directory))

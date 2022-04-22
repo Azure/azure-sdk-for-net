@@ -1,0 +1,83 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/63d7e191-c910-43ba-908f-252519936998/resourceGroups/labservices-sdk-testing/providers/Microsoft.LabServices/labs/test-sdk-lab?api-version=2021-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNkN2UxOTEtYzkxMC00M2JhLTkwOGYtMjUyNTE5OTM2OTk4L3Jlc291cmNlR3JvdXBzL2xhYnNlcnZpY2VzLXNkay10ZXN0aW5nL3Byb3ZpZGVycy9NaWNyb3NvZnQuTGFiU2VydmljZXMvbGFicy90ZXN0LXNkay1sYWI/YXBpLXZlcnNpb249MjAyMS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"title\": \"new title\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9f2d2090-3dde-4d05-860c-77c0e931b083"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22473.",
+          "Microsoft.Azure.Management.LabServices.LabServicesClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "54"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107"
+        ],
+        "x-ms-request-id": [
+          "0HMCAK2QINH1N:00000002"
+        ],
+        "x-ms-correlation-request-id": [
+          "638294a7-72de-4f53-9e25-7434436eba0b"
+        ],
+        "traceparent": [
+          "00-d5d2d7809809e242b184ab41b605b8ef-c15922de3c30c97f-01"
+        ],
+        "api-supported-versions": [
+          "2020-05-01-preview, 2021-10-01-preview"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211011T191846Z:638294a7-72de-4f53-9e25-7434436eba0b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 11 Oct 2021 19:18:46 GMT"
+        ],
+        "Content-Length": [
+          "1316"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"systemData\": {\r\n    \"createdBy\": \"4a3eb18c-e705-400a-8461-78eadf7acb48\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-10-11T19:12:44.6201258Z\",\r\n    \"lastModifiedBy\": \"4a3eb18c-e705-400a-8461-78eadf7acb48\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-10-11T19:18:46.7109615Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Draft\",\r\n    \"autoShutdownProfile\": {\r\n      \"shutdownOnDisconnect\": \"Disabled\",\r\n      \"shutdownWhenNotConnected\": \"Disabled\",\r\n      \"shutdownOnIdle\": \"UserAbsence\",\r\n      \"idleDelay\": \"PT15M\"\r\n    },\r\n    \"connectionProfile\": {\r\n      \"webSshAccess\": \"None\",\r\n      \"webRdpAccess\": \"None\",\r\n      \"clientSshAccess\": \"Public\",\r\n      \"clientRdpAccess\": \"Public\"\r\n    },\r\n    \"virtualMachineProfile\": {\r\n      \"createOption\": \"TemplateVM\",\r\n      \"imageReference\": {\r\n        \"offer\": \"0001-com-ubuntu-server-focal\",\r\n        \"publisher\": \"canonical\",\r\n        \"sku\": \"20_04-lts\",\r\n        \"version\": \"latest\"\r\n      },\r\n      \"osType\": \"Linux\",\r\n      \"sku\": {\r\n        \"name\": \"Basic\",\r\n        \"capacity\": 0\r\n      },\r\n      \"additionalCapabilities\": {\r\n        \"installGpuDrivers\": \"Disabled\"\r\n      },\r\n      \"usageQuota\": \"PT2H\",\r\n      \"useSharedPassword\": \"Enabled\",\r\n      \"adminUser\": {\r\n        \"username\": \"student\"\r\n      }\r\n    },\r\n    \"securityProfile\": {\r\n      \"registrationCode\": \"ba5uugkmddfu3l7u5qzmiyu5re\",\r\n      \"openAccess\": \"Disabled\"\r\n    },\r\n    \"title\": \"new title\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"id\": \"/subscriptions/63d7e191-c910-43ba-908f-252519936998/resourceGroups/labservices-sdk-testing/providers/Microsoft.LabServices/labs/test-sdk-lab\",\r\n  \"name\": \"test-sdk-lab\",\r\n  \"type\": \"Microsoft.LabServices/labs\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "63d7e191-c910-43ba-908f-252519936998"
+  }
+}

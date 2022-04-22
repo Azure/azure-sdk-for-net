@@ -79,12 +79,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
         /// <seealso cref="TimeSeriesInsightsClient(string, TokenCredential, TimeSeriesInsightsClientOptions)">
         /// This other constructor provides an opportunity to override default behavior, including specifying API version,
-        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
-        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
-        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret" language="csharp">
         /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
         /// // It attempts to use multiple credential types in an order until it finds a working credential.
         /// var tokenCredential = new DefaultAzureCredential();
@@ -109,9 +109,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// <para>
         /// The options parameter provides an opportunity to override default behavior, including specifying API version,
-        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
-        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
-        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </para>
         /// </remarks>
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential, TimeSeriesInsightsClientOptions options)

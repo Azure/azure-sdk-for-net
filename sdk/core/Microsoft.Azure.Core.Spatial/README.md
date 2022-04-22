@@ -10,7 +10,7 @@ Install this package if you use the Microsoft.Spatial package in your applicatio
 
 Install this package from [NuGet] using the .NET CLI:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Core.Spatial
 ```
 
@@ -71,7 +71,7 @@ foreach (SearchResult<Mountain> result in results.Value.GetResults())
     Console.WriteLine("https://www.bing.com/maps?cp={0}~{1}&sp=point.{0}_{1}_{2}",
         mountain.Summit.Latitude,
         mountain.Summit.Longitude,
-        Uri.EscapeUriString(mountain.Name));
+        Uri.EscapeDataString(mountain.Name));
 }
 ```
 
@@ -92,7 +92,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FMicrosoft.Azure.Core.NewtonsoftJson%2FREADME.png)
 
 [azure_search_documents_package]: https://www.nuget.org/packages/Azure.Search.Documents/
-[azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/README.md
+[azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/README.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [JsonSerializerOptions]: https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions

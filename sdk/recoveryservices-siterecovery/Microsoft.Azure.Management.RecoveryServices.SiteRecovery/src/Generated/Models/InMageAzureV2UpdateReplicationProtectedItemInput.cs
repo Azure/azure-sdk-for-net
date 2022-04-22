@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="sqlServerLicenseType">The SQL Server license type.
         /// Possible values include: 'NotSpecified', 'NoLicenseType', 'PAYG',
         /// 'AHUB'</param>
-        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string), string targetProximityPlacementGroupId = default(string), string targetAvailabilityZone = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), string sqlServerLicenseType = default(string))
+        /// <param name="vmDisks">The list of disk update properties.</param>
+        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string), string targetProximityPlacementGroupId = default(string), string targetAvailabilityZone = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), string sqlServerLicenseType = default(string), IList<UpdateDiskInput> vmDisks = default(IList<UpdateDiskInput>))
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
@@ -62,6 +63,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetManagedDiskTags = targetManagedDiskTags;
             TargetNicTags = targetNicTags;
             SqlServerLicenseType = sqlServerLicenseType;
+            VmDisks = vmDisks;
             CustomInit();
         }
 
@@ -127,6 +129,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "sqlServerLicenseType")]
         public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of disk update properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmDisks")]
+        public IList<UpdateDiskInput> VmDisks { get; set; }
 
     }
 }

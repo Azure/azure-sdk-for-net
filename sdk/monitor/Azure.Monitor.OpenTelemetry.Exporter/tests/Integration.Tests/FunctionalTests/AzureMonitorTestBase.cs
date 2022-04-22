@@ -22,9 +22,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
     {
         public int FlushTimeoutMilliseconds = 15000;
 
-        public AzureMonitorTestBase(bool isAsync) : base(isAsync) { }
+        public AzureMonitorTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true) { }
 
-        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true) { }
 
         [SetUp]
         public void SetUp()

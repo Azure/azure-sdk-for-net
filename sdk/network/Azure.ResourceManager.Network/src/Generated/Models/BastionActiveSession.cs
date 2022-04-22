@@ -8,38 +8,11 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The session detail for a target. </summary>
-    public partial class BastionActiveSession
+    internal partial class BastionActiveSession
     {
         /// <summary> Initializes a new instance of BastionActiveSession. </summary>
         internal BastionActiveSession()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionActiveSession. </summary>
-        /// <param name="sessionId"> A unique id for the session. </param>
-        /// <param name="startTime"> The time when the session started. </param>
-        /// <param name="targetSubscriptionId"> The subscription id for the target virtual machine. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="targetHostName"> The host name of the target. </param>
-        /// <param name="targetResourceGroup"> The resource group of the target. </param>
-        /// <param name="userName"> The user name who is active on this session. </param>
-        /// <param name="targetIpAddress"> The IP Address of the target. </param>
-        /// <param name="protocol"> The protocol used to connect to the target. </param>
-        /// <param name="targetResourceId"> The resource id of the target. </param>
-        /// <param name="sessionDurationInMins"> Duration in mins the session has been active. </param>
-        internal BastionActiveSession(string sessionId, object startTime, string targetSubscriptionId, string resourceType, string targetHostName, string targetResourceGroup, string userName, string targetIpAddress, BastionConnectProtocol? protocol, string targetResourceId, float? sessionDurationInMins)
-        {
-            SessionId = sessionId;
-            StartTime = startTime;
-            TargetSubscriptionId = targetSubscriptionId;
-            ResourceType = resourceType;
-            TargetHostName = targetHostName;
-            TargetResourceGroup = targetResourceGroup;
-            UserName = userName;
-            TargetIpAddress = targetIpAddress;
-            Protocol = protocol;
-            TargetResourceId = targetResourceId;
-            SessionDurationInMins = sessionDurationInMins;
         }
 
         /// <summary> A unique id for the session. </summary>

@@ -2,7 +2,7 @@
   "Name": "OutputFileUploadOptions",
   "ProtocolName": "Models.OutputFileUploadOptions",
   "SummaryComment": "Details about an output file upload operation, including under what conditions to perform the upload.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "Properties": [
     {
       "Key": {

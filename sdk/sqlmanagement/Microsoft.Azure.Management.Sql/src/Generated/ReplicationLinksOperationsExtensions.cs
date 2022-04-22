@@ -73,6 +73,60 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Gets a replication link.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='linkId'>
+            /// The name of the replication link.
+            /// </param>
+            public static ReplicationLink Get(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                return operations.GetAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a replication link.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='linkId'>
+            /// The name of the replication link.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationLink> GetAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Sets which replica database is primary by failing over from the current
             /// primary replica database.
             /// </summary>
@@ -246,10 +300,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the server containing the replication link.
+            /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database containing the replication link.
+            /// The name of the database.
             /// </param>
             public static IPage<ReplicationLink> ListByDatabase(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -267,10 +321,10 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the server containing the replication link.
+            /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database containing the replication link.
+            /// The name of the database.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -278,60 +332,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<ReplicationLink>> ListByDatabaseAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a replication link.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server containing the replication link.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the replication link.
-            /// </param>
-            /// <param name='replicationLinkName'>
-            /// The name of the replication link.
-            /// </param>
-            public static ReplicationLink Get(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string replicationLinkName)
-            {
-                return operations.GetAsync(resourceGroupName, serverName, databaseName, replicationLinkName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a replication link.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server containing the replication link.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the replication link.
-            /// </param>
-            /// <param name='replicationLinkName'>
-            /// The name of the replication link.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ReplicationLink> GetAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string replicationLinkName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicationLinkName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the server containing the replication link.
+            /// The name of the server.
             /// </param>
             public static IPage<ReplicationLink> ListByServer(this IReplicationLinksOperations operations, string resourceGroupName, string serverName)
             {
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Sql
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='serverName'>
-            /// The name of the server containing the replication link.
+            /// The name of the server.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

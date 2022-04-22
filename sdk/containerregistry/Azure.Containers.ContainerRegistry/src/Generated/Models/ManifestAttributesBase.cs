@@ -46,9 +46,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        /// <param name="quarantineState"> Quarantine state. </param>
-        /// <param name="quarantineDetails"> Quarantine details. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
         {
             Digest = digest;
             Size = size;
@@ -62,8 +60,6 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
-            QuarantineState = quarantineState;
-            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Manifest. </summary>
@@ -90,9 +86,5 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanList { get; }
         /// <summary> Read enabled. </summary>
         public bool? CanRead { get; }
-        /// <summary> Quarantine state. </summary>
-        public string QuarantineState { get; }
-        /// <summary> Quarantine details. </summary>
-        public string QuarantineDetails { get; }
     }
 }

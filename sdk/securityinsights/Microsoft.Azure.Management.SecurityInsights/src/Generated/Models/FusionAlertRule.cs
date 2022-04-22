@@ -39,9 +39,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// template used to create this rule.</param>
         /// <param name="enabled">Determines whether this alert rule is enabled
         /// or disabled.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="description">The description of the alert
         /// rule.</param>
@@ -53,8 +58,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// alert rule. Possible values include: 'High', 'Medium', 'Low',
         /// 'Informational'</param>
         /// <param name="tactics">The tactics of the alert rule</param>
-        public FusionAlertRule(string alertRuleTemplateName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string description = default(string), string displayName = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string severity = default(string), IList<string> tactics = default(IList<string>))
-            : base(id, name, type, etag)
+        public FusionAlertRule(string alertRuleTemplateName, bool enabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string description = default(string), string displayName = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string severity = default(string), IList<string> tactics = default(IList<string>))
+            : base(id, name, type, systemData, etag)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;

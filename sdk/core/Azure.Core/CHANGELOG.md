@@ -1,7 +1,95 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.23.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+- Cookies are no longer set on requests by default. Cookies can be re-enabled for `HttpClientTransport` by either setting an AppContext switch named "Azure.Core.Pipeline.HttpClientTransport.EnableCookies" to true or by setting the environment variable, "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES" to "true". Note: AppContext switches can also be configured via configuration like below:
+```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
+  </ItemGroup>
+```
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.22.0 (2022-01-11)
+
+### Features Added
+
+- Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
+- Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
+- Added `RequestFailedException` constructor that takes a `Response`.
+- Added `AzureLocation`. This class gives static references to known Azure regions.
+- Added `ResourceIdentifier`. This class allows users to load an Azure resource identifier string and parse out the pieces of that string such as which `SubscriptionId` does the resource belong to.
+- Added `ResourceType`. This class represents the ARM provider information for a given resource and is used by the `ResourceIdentifier` class.
+- Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called to validate the server side TLS certificate.
+- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`). 
+
+### Breaking Changes
+
+- Added logging of `api-version` query parameter by default. In order to redact this, you can do the following:
+```c#
+options.Diagnostics.LoggedQueryParameters.Remove("api-version");
+```
+
+### Bugs Fixed
+
+- Fixed a bug where requests were failing with `NotImplementedException` on Unity with .NET Framework scripting.
+
+
+## 1.21.0 (2021-11-03)
+
+### Features Added
+
+- Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
+- Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
+
+## 1.20.0 (2021-10-01)
+
+### Features Added
+
+- Added the static `DelegatedTokenCredential` type with a `Create` method, which returns an instance of `TokenCredential` that uses the supplied delgates to produce an `AccessToken`. This would most typically be used when an token has previously been obtained from some other source and that token needs to be returned by a `TokenCredential` instance.
+- Added `ResponseError` type to represent an Azure error type.
+- Added an experimental `ActivitySource` support.
+
+### Bugs Fixed
+
+- Fixed an exception during EventSource creation on Xamarin.
+
+## 1.19.0 (2021-09-07)
+
+### Features Added
+
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
+
+## 1.18.0 (2021-08-18)
+
+### Bugs Fixed
+
+- Fixed a bug where a buffered error responses on .NET Framework were prematurely disposed
+- Fixed relative redirect support.
+
+## 1.17.0 (2021-08-10)
+
+### Features Added
+
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
+
+### Fixed
+
+- Fixed `NotSupportedException` when running in Unity.
+
+## 1.16.0 (2021-06-30)
+
+### Changed
+
+- Added `TenantId` to the properties on `TokenRequestContext` to enable multi-tenant support in Azure.Identity.
 
 ## 1.15.0 (2021-06-08)
 
@@ -50,7 +138,7 @@
 
 ## Features Added
 
-- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/).
 
 ## 1.9.0 (2021-02-09)
 

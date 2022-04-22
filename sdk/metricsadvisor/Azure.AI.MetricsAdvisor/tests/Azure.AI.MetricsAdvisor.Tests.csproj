@@ -16,7 +16,7 @@
     <ProjectReference Include="..\src\Azure.AI.MetricsAdvisor.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

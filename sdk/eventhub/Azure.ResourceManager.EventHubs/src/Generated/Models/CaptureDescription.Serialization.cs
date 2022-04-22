@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<EncodingCaptureDescription> encoding = default;
             Optional<int> intervalInSeconds = default;
             Optional<int> sizeLimitInBytes = default;
-            Optional<Destination> destination = default;
+            Optional<EventHubDestination> destination = default;
             Optional<bool> skipEmptyArchives = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    destination = Destination.DeserializeDestination(property.Value);
+                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"))

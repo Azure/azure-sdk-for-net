@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.LabServices
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,346 +22,610 @@ namespace Microsoft.Azure.Management.LabServices
     public static partial class UsersOperationsExtensions
     {
             /// <summary>
-            /// List users in a given lab.
+            /// Get all users for a lab.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all users for a lab.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='filter'>
+            /// The filter to apply to the operation.
             /// </param>
-            public static IPage<User> List(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, ODataQuery<User> odataQuery = default(ODataQuery<User>))
+            public static IPage<User> ListByLab(this IUsersOperations operations, string resourceGroupName, string labName, string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName, labAccountName, labName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByLabAsync(resourceGroupName, labName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List users in a given lab.
+            /// Get all users for a lab.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all users for a lab.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='filter'>
+            /// The filter to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<User>> ListAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, ODataQuery<User> odataQuery = default(ODataQuery<User>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<User>> ListByLabAsync(this IUsersOperations operations, string resourceGroupName, string labName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByLabWithHttpMessagesAsync(resourceGroupName, labName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get user
+            /// Get a lab user.
             /// </summary>
+            /// <remarks>
+            /// Returns the properties of a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=email)'
-            /// </param>
-            public static User Get(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, string expand = default(string))
+            public static User Get(this IUsersOperations operations, string resourceGroupName, string labName, string userName)
             {
-                return operations.GetAsync(resourceGroupName, labAccountName, labName, userName, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, labName, userName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get user
+            /// Get a lab user.
             /// </summary>
+            /// <remarks>
+            /// Returns the properties of a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=email)'
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<User> GetAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<User> GetAsync(this IUsersOperations operations, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, userName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create or replace an existing User.
+            /// Create or update a lab user.
             /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
-            /// <param name='user'>
-            /// The User registered to a lab
-            /// </param>
-            public static User CreateOrUpdate(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, User user)
+            public static User CreateOrUpdate(this IUsersOperations operations, User body, string resourceGroupName, string labName, string userName)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labAccountName, labName, userName, user).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or replace an existing User.
+            /// Create or update a lab user.
             /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
-            /// </param>
-            /// <param name='user'>
-            /// The User registered to a lab
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<User> CreateOrUpdateAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, User user, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<User> CreateOrUpdateAsync(this IUsersOperations operations, User body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, userName, user, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete user. This operation can take a while to complete
+            /// Update a lab user.
             /// </summary>
+            /// <remarks>
+            /// Operation to update a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
-            public static void Delete(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName)
+            public static User Update(this IUsersOperations operations, UserUpdate body, string resourceGroupName, string labName, string userName)
             {
-                operations.DeleteAsync(resourceGroupName, labAccountName, labName, userName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete user. This operation can take a while to complete
+            /// Update a lab user.
             /// </summary>
+            /// <remarks>
+            /// Operation to update a lab user.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<User> UpdateAsync(this IUsersOperations operations, UserUpdate body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Modify properties of users.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user.
-            /// </param>
-            /// <param name='user'>
-            /// The User registered to a lab
-            /// </param>
-            public static User Update(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, UserFragment user)
-            {
-                return operations.UpdateAsync(resourceGroupName, labAccountName, labName, userName, user).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Modify properties of users.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user.
-            /// </param>
-            /// <param name='user'>
-            /// The User registered to a lab
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<User> UpdateAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, UserFragment user, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, userName, user, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete user. This operation can take a while to complete
+            /// Deletes a user resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to delete a user resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
-            public static void BeginDelete(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName)
+            public static void Delete(this IUsersOperations operations, string resourceGroupName, string labName, string userName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, labAccountName, labName, userName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, labName, userName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete user. This operation can take a while to complete
+            /// Deletes a user resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to delete a user resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user.
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IUsersOperations operations, string resourceGroupName, string labAccountName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IUsersOperations operations, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// List users in a given lab.
+            /// Invite a user to a lab.
             /// </summary>
+            /// <remarks>
+            /// Operation to invite a user to a lab.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            public static void Invite(this IUsersOperations operations, InviteBody body, string resourceGroupName, string labName, string userName)
+            {
+                operations.InviteAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Invite a user to a lab.
+            /// </summary>
+            /// <remarks>
+            /// Operation to invite a user to a lab.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task InviteAsync(this IUsersOperations operations, InviteBody body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.InviteWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create or update a lab user.
+            /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab user.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            public static User BeginCreateOrUpdate(this IUsersOperations operations, User body, string resourceGroupName, string labName, string userName)
+            {
+                return operations.BeginCreateOrUpdateAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a lab user.
+            /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab user.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<User> BeginCreateOrUpdateAsync(this IUsersOperations operations, User body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a lab user.
+            /// </summary>
+            /// <remarks>
+            /// Operation to update a lab user.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            public static User BeginUpdate(this IUsersOperations operations, UserUpdate body, string resourceGroupName, string labName, string userName)
+            {
+                return operations.BeginUpdateAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a lab user.
+            /// </summary>
+            /// <remarks>
+            /// Operation to update a lab user.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<User> BeginUpdateAsync(this IUsersOperations operations, UserUpdate body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a user resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to delete a user resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            public static void BeginDelete(this IUsersOperations operations, string resourceGroupName, string labName, string userName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, labName, userName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a user resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to delete a user resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IUsersOperations operations, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Invite a user to a lab.
+            /// </summary>
+            /// <remarks>
+            /// Operation to invite a user to a lab.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            public static void BeginInvite(this IUsersOperations operations, InviteBody body, string resourceGroupName, string labName, string userName)
+            {
+                operations.BeginInviteAsync(body, resourceGroupName, labName, userName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Invite a user to a lab.
+            /// </summary>
+            /// <remarks>
+            /// Operation to invite a user to a lab.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='userName'>
+            /// The name of the user that uniquely identifies it within containing lab.
+            /// Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginInviteAsync(this IUsersOperations operations, InviteBody body, string resourceGroupName, string labName, string userName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginInviteWithHttpMessagesAsync(body, resourceGroupName, labName, userName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get all users for a lab.
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all users for a lab.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<User> ListNext(this IUsersOperations operations, string nextPageLink)
+            public static IPage<User> ListByLabNext(this IUsersOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByLabNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List users in a given lab.
+            /// Get all users for a lab.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all users for a lab.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -372,9 +635,9 @@ namespace Microsoft.Azure.Management.LabServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<User>> ListNextAsync(this IUsersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<User>> ListByLabNextAsync(this IUsersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByLabNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             SynapseNotebookReference notebook = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            Optional<IDictionary<string, NotebookParameter>> parameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, NotebookParameter> dictionary = new Dictionary<string, NotebookParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, NotebookParameter.DeserializeNotebookParameter(property1.Value));
                             }
                             parameters = dictionary;
                             continue;

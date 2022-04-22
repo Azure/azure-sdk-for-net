@@ -14,35 +14,37 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class AnomalyValue
     {
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="isAnomaly"> To indicate whether current timestamp is anomaly or not. </param>
-        /// <param name="severity"> anomaly score of the current timestamp, the more significant an anomaly is, the higher the score will be. </param>
-        internal AnomalyValue(bool isAnomaly, float severity)
+        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
+        /// <param name="severity"> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </param>
+        /// <param name="score"> Raw score from the model. </param>
+        internal AnomalyValue(bool isAnomaly, float severity, float score)
         {
-            Contributors = new ChangeTrackingList<AnomalyContributor>();
-            IsAnomaly = isAnomaly;
-            Severity = severity;
-        }
-
-        /// <summary> Initializes a new instance of AnomalyValue. </summary>
-        /// <param name="contributors"> If current timestamp is an anomaly, contributors will show potential root cause for thus anomaly. Contributors can help us understand why current timestamp has been detected as an anomaly. </param>
-        /// <param name="isAnomaly"> To indicate whether current timestamp is anomaly or not. </param>
-        /// <param name="severity"> anomaly score of the current timestamp, the more significant an anomaly is, the higher the score will be. </param>
-        /// <param name="score"> anomaly score of the current timestamp, the more significant an anomaly is, the higher the score will be, score measures global significance. </param>
-        internal AnomalyValue(IReadOnlyList<AnomalyContributor> contributors, bool isAnomaly, float severity, float? score)
-        {
-            Contributors = contributors;
             IsAnomaly = isAnomaly;
             Severity = severity;
             Score = score;
+            Interpretation = new ChangeTrackingList<AnomalyInterpretation>();
         }
 
-        /// <summary> If current timestamp is an anomaly, contributors will show potential root cause for thus anomaly. Contributors can help us understand why current timestamp has been detected as an anomaly. </summary>
-        public IReadOnlyList<AnomalyContributor> Contributors { get; }
-        /// <summary> To indicate whether current timestamp is anomaly or not. </summary>
+        /// <summary> Initializes a new instance of AnomalyValue. </summary>
+        /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
+        /// <param name="severity"> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </param>
+        /// <param name="score"> Raw score from the model. </param>
+        /// <param name="interpretation"></param>
+        internal AnomalyValue(bool isAnomaly, float severity, float score, IReadOnlyList<AnomalyInterpretation> interpretation)
+        {
+            IsAnomaly = isAnomaly;
+            Severity = severity;
+            Score = score;
+            Interpretation = interpretation;
+        }
+
+        /// <summary> True if an anomaly is detected at the current timestamp. </summary>
         public bool IsAnomaly { get; }
-        /// <summary> anomaly score of the current timestamp, the more significant an anomaly is, the higher the score will be. </summary>
+        /// <summary> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </summary>
         public float Severity { get; }
-        /// <summary> anomaly score of the current timestamp, the more significant an anomaly is, the higher the score will be, score measures global significance. </summary>
-        public float? Score { get; }
+        /// <summary> Raw score from the model. </summary>
+        public float Score { get; }
+        /// <summary> Gets the interpretation. </summary>
+        public IReadOnlyList<AnomalyInterpretation> Interpretation { get; }
     }
 }

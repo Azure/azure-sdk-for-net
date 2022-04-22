@@ -5,26 +5,34 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Identity for the resource. </summary>
     public partial class Identity
     {
         /// <summary> Initializes a new instance of Identity. </summary>
-        public Identity()
+        /// <param name="type"> The identity type. </param>
+        public Identity(IdentityType type)
         {
-            Type = "SystemAssigned";
+            Type = type;
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of Identity. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="type"> The identity type. </param>
-        internal Identity(string principalId, string tenantId, string type)
+        /// <param name="userAssignedIdentities"> Gets or sets a list of key value pairs that describe the set of User Assigned identities that will be used with this storage account. The key is the ARM resource identifier of the identity. Only 1 User Assigned identity is permitted here. </param>
+        internal Identity(string principalId, string tenantId, IdentityType type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> The principal ID of resource identity. </summary>
@@ -32,6 +40,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The tenant ID of resource. </summary>
         public string TenantId { get; }
         /// <summary> The identity type. </summary>
-        public string Type { get; set; }
+        public IdentityType Type { get; set; }
+        /// <summary> Gets or sets a list of key value pairs that describe the set of User Assigned identities that will be used with this storage account. The key is the ARM resource identifier of the identity. Only 1 User Assigned identity is permitted here. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

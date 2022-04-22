@@ -11,26 +11,17 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsActionResult
     {
-        internal TextAnalyticsActionResult (DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal TextAnalyticsActionResult(string actionName, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
         {
+            ActionName = actionName;
             CompletedOn = completedOn;
             Error = error != null ? Transforms.ConvertToError(error) : default;
         }
 
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal TextAnalyticsActionResult(DateTimeOffset completedOn)
+        internal TextAnalyticsActionResult(string actionName, DateTimeOffset completedOn)
         {
+            ActionName = actionName;
             CompletedOn = completedOn;
-        }
-
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal TextAnalyticsActionResult(TextAnalyticsErrorInternal error)
-        {
-            Error = Transforms.ConvertToError(error);
         }
 
         /// <summary>
@@ -47,5 +38,10 @@ namespace Azure.AI.TextAnalytics
         /// Indicates that the document was not successfully processed and an error was returned for this document.
         /// </summary>
         public bool HasError => Error.ErrorCode != default;
+
+        /// <summary>
+        /// Gets the name for this action.
+        /// </summary>
+        public string ActionName { get; }
     }
 }

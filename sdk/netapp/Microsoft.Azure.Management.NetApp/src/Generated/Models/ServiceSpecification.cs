@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <param name="metricSpecifications">Metric specifications of
         /// operation.</param>
-        public ServiceSpecification(IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>))
+        /// <param name="logSpecifications">Log specification of
+        /// operation.</param>
+        public ServiceSpecification(IList<MetricSpecification> metricSpecifications = default(IList<MetricSpecification>), IList<LogSpecification> logSpecifications = default(IList<LogSpecification>))
         {
             MetricSpecifications = metricSpecifications;
+            LogSpecifications = logSpecifications;
             CustomInit();
         }
 
@@ -49,6 +52,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "metricSpecifications")]
         public IList<MetricSpecification> MetricSpecifications { get; set; }
+
+        /// <summary>
+        /// Gets or sets log specification of operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "logSpecifications")]
+        public IList<LogSpecification> LogSpecifications { get; set; }
 
     }
 }

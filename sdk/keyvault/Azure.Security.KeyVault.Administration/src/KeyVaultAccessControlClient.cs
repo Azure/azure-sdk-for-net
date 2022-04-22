@@ -236,7 +236,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 return await _definitionsRestClient.CreateOrUpdateAsync(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
-                    scope: options.RoleScope == default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    scope: options.RoleScope != default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
                     roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
                     cancellationToken: cancellationToken)
@@ -268,7 +268,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 return _definitionsRestClient.CreateOrUpdate(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
-                    scope: options.RoleScope == default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    scope: options.RoleScope != default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
                     roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
                     cancellationToken: cancellationToken);

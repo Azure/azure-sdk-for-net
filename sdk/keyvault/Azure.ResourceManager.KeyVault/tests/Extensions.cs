@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.ResourceManager.KeyVault.Models;
-
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -41,19 +40,73 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this DeletedVault deletedVault, Vault createdVault)
+        public static bool DictionaryEqual<TKey, TValue>(this IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second)
         {
-            Assert.AreEqual(createdVault.Location, deletedVault.Properties.Location);
-            Assert.AreEqual(createdVault.Name, deletedVault.Name);
-            Assert.AreEqual(createdVault.Id, deletedVault.Properties.VaultId);
-            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Type);
-            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Properties.Tags));
-            Assert.NotNull(deletedVault.Properties.ScheduledPurgeDate);
-            Assert.NotNull(deletedVault.Properties.DeletionDate);
+            return first.DictionaryEqual(second, null);
+        }
+
+        public static bool DictionaryEqual<TKey, TValue>(
+            this IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second,
+            IEqualityComparer<TValue> valueComparer)
+        {
+            if (first == second)
+                return true;
+            if ((first == null) || (second == null))
+                return false;
+            if (first.Count != second.Count)
+                return false;
+
+            valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;
+
+            foreach (var kvp in first)
+            {
+                TValue secondValue;
+                if (!second.TryGetValue(kvp.Key, out secondValue))
+                    return false;
+                if (!valueComparer.Equals(kvp.Value, secondValue))
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
+        {
+            Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
+            Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);
+            Assert.AreEqual(createdVault.Id, deletedVault.Data.Properties.VaultId);
+            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Data.Type);
+            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags));
+            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeDate);
+            Assert.NotNull(deletedVault.Data.Properties.DeletionDate);
             Assert.NotNull(deletedVault.Id);
             return true;
         }
-        public static bool IsEqual(this Vault vault1, Vault vault2)
+
+        public static bool IsEqual(this ManagedHsmData vault1, ManagedHsmData vault2)
+        {
+            Assert.AreEqual(vault2.Location, vault1.Location);
+            Assert.AreEqual(vault2.Name, vault1.Name);
+            Assert.AreEqual(vault2.Id, vault1.Id);
+            Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
+
+            Assert.AreEqual(vault2.Properties.HsmUri.TrimEnd('/'), vault1.Properties.HsmUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
+            Assert.AreEqual(vault2.Sku.Name, vault1.Sku.Name);
+            Assert.AreEqual(vault2.Sku.Family, vault1.Sku.Family);
+            Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
+            //Assert.AreEqual(vault2.Properties.CreateMode, vault1.Properties.CreateMode);
+            Assert.AreEqual(vault2.Properties.EnablePurgeProtection, vault1.Properties.EnablePurgeProtection);
+            Assert.AreEqual(vault2.Properties.InitialAdminObjectIds, vault1.Properties.InitialAdminObjectIds);
+            //Assert.AreEqual(vault2.Properties.PrivateEndpointConnections, vault1.Properties.PrivateEndpointConnections);
+            Assert.AreEqual(vault2.Properties.PublicNetworkAccess, vault1.Properties.PublicNetworkAccess);
+            //Assert.AreEqual(vault2.Properties.ScheduledPurgeDate, vault1.Properties.ScheduledPurgeDate);
+            Assert.AreEqual(vault2.Properties.SoftDeleteRetentionInDays, vault1.Properties.SoftDeleteRetentionInDays);
+            Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
+            //Assert.True(vault2.Properties.NetworkAcls.IsEqual(vault1.Properties.NetworkAcls));
+            return true;
+        }
+
+        public static bool IsEqual(this VaultData vault1, VaultData vault2)
         {
             Assert.AreEqual(vault2.Location, vault1.Location);
             Assert.AreEqual(vault2.Name, vault1.Name);

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
         public CustomDomain CustomDomain { get; set; }
         /// <summary> Provides the encryption settings on the account. The default setting is unencrypted. </summary>
         public Encryption Encryption { get; set; }
+        /// <summary> SasPolicy assigned to the storage account. </summary>
+        public SasPolicy SasPolicy { get; set; }
+        /// <summary> KeyPolicy assigned to the storage account. </summary>
+        public KeyPolicy KeyPolicy { get; set; }
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
         public AccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
@@ -43,5 +47,13 @@ namespace Azure.ResourceManager.Storage.Models
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
+        /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is true for this property. </summary>
+        public bool? AllowBlobPublicAccess { get; set; }
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        public MinimumTlsVersion? MinimumTlsVersion { get; set; }
+        /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
+        public bool? AllowSharedKeyAccess { get; set; }
+        /// <summary> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </summary>
+        public bool? AllowCrossTenantReplication { get; set; }
     }
 }

@@ -13,7 +13,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class IncidentRootCause
     {
         /// <summary>
-        /// The key that, within a metric, uniquely identifies the time series in which this <see cref="IncidentRootCause"/> has been created.
+        /// The key that, within a metric, uniquely identifies the time series that has been detected as an
+        /// <see cref="IncidentRootCause"/>. In this key, a value is assigned to every possible dimension.
         /// </summary>
         [CodeGenMember("RootCause")]
         public DimensionKey SeriesKey { get; }

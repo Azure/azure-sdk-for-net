@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4314",
         "Content-Type": "application/json",
-        "traceparent": "00-cce56040c297754da8e58c43ce7afe41-d84bb4a1aab98443-00",
+        "traceparent": "00-6b9633aa30196c4da2da10165d3cd487-b6e039ab78fbfb4f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
+          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
         ],
         "x-ms-client-request-id": "62e943843b5a3dfda55d7936ea8d46fa",
         "x-ms-return-client-request-id": "true"
@@ -327,13 +327,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "62e94384-3b5a-3dfd-a55d-7936ea8d46fa",
-        "Content-Length": "6655",
+        "Content-Length": "7122",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sat, 27 Mar 2021 18:44:25 GMT",
-        "elapsed-time": "641",
-        "ETag": "W/\u00220x8D8F150586FFE37\u0022",
+        "Date": "Tue, 31 Aug 2021 23:41:04 GMT",
+        "elapsed-time": "660",
+        "ETag": "W/\u00220x8D96CD8CC218AC9\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -343,7 +343,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8F150586FFE37\u0022",
+        "@odata.etag": "\u00220x8D96CD8CC218AC9\u0022",
         "name": "mvqfigik",
         "defaultScoringProfile": null,
         "fields": [
@@ -359,6 +359,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -373,6 +374,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -387,6 +389,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -401,6 +404,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "fr.lucene",
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -415,6 +419,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -429,6 +434,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -443,6 +449,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -457,6 +464,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -471,6 +479,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -485,6 +494,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -499,6 +509,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -513,6 +524,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -531,6 +543,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -545,6 +558,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -559,6 +573,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -573,6 +588,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -587,6 +603,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -607,6 +624,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -621,6 +639,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -635,6 +654,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -649,6 +669,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -663,6 +684,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -677,6 +699,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -691,6 +714,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -705,6 +729,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -757,6 +782,7 @@
           }
         ],
         "analyzers": [],
+        "normalizers": [],
         "tokenizers": [],
         "tokenFilters": [],
         "charFilters": [],
@@ -769,19 +795,19 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?allowIndexDowntime=true\u0026api-version=2021-04-30-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "5318",
+        "Content-Length": "5335",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D8F150586FFE37\u0022",
+        "If-Match": "\u00220x8D96CD8CC218AC9\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-9a7a5ff31111cc47a5a5ab29238ac079-1f59032e5311c94d-00",
+        "traceparent": "00-0dceea2e654f1d41bd2181146b2efa73-4822ef11b54b9743-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
+          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
         ],
         "x-ms-client-request-id": "b20370b178072cf624850527937d7829",
         "x-ms-return-client-request-id": "true"
@@ -1146,20 +1172,21 @@
         "tokenizers": [],
         "tokenFilters": [],
         "charFilters": [],
+        "normalizers": [],
         "similarity": {
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
         },
-        "@odata.etag": "\u00220x8D8F150586FFE37\u0022"
+        "@odata.etag": "\u00220x8D96CD8CC218AC9\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "b20370b1-7807-2cf6-2485-0527937d7829",
-        "Content-Length": "7074",
+        "Content-Length": "7559",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sat, 27 Mar 2021 18:44:26 GMT",
-        "elapsed-time": "559",
-        "ETag": "W/\u00220x8D8F15058CD4A6C\u0022",
+        "Date": "Tue, 31 Aug 2021 23:41:04 GMT",
+        "elapsed-time": "308",
+        "ETag": "W/\u00220x8D96CD8CC572390\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1170,7 +1197,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8F15058CD4A6C\u0022",
+        "@odata.etag": "\u00220x8D96CD8CC572390\u0022",
         "name": "mvqfigik",
         "defaultScoringProfile": null,
         "fields": [
@@ -1186,6 +1213,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1200,6 +1228,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1214,6 +1243,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1228,6 +1258,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "fr.lucene",
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1242,6 +1273,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1256,6 +1288,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1270,6 +1303,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1284,6 +1318,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1298,6 +1333,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1312,6 +1348,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1326,6 +1363,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1340,6 +1378,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -1358,6 +1397,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1372,6 +1412,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1386,6 +1427,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1400,6 +1442,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1414,6 +1457,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -1434,6 +1478,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1448,6 +1493,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1462,6 +1508,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1476,6 +1523,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1490,6 +1538,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1504,6 +1553,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1518,6 +1568,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               },
               {
@@ -1532,6 +1583,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
+                "normalizer": null,
                 "synonymMaps": []
               }
             ]
@@ -1548,6 +1600,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "asciiTags",
+            "normalizer": null,
             "synonymMaps": []
           }
         ],
@@ -1611,6 +1664,7 @@
             ]
           }
         ],
+        "normalizers": [],
         "tokenizers": [],
         "tokenFilters": [],
         "charFilters": [],
@@ -1623,15 +1677,15 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-be6d1e06decd284d98c0a0870db86a29-153b23fdce51eb4f-00",
+        "traceparent": "00-9f71f7bb03f69940bad160f055802411-a474b878fbcea144-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
+          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
         ],
         "x-ms-client-request-id": "2f006d0b543d6ef41f058a4a0d2e28c5",
         "x-ms-return-client-request-id": "true"
@@ -1641,8 +1695,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "2f006d0b-543d-6ef4-1f05-8a4a0d2e28c5",
-        "Date": "Sat, 27 Mar 2021 18:44:26 GMT",
-        "elapsed-time": "168",
+        "Date": "Tue, 31 Aug 2021 23:41:04 GMT",
+        "elapsed-time": "338",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "2f006d0b-543d-6ef4-1f05-8a4a0d2e28c5",

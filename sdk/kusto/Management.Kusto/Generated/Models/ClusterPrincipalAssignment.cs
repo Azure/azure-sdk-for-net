@@ -109,12 +109,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string PrincipalName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

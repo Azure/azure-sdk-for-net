@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,10 +18,8 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of JoinCallRequestInternal. </summary>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="requestedModalities"> The requested modalities. </param>
-        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
+        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri)
         {
             if (source == null)
             {
@@ -31,19 +29,11 @@ namespace Azure.Communication.CallingServer
             {
                 throw new ArgumentNullException(nameof(callbackUri));
             }
-            if (requestedModalities == null)
-            {
-                throw new ArgumentNullException(nameof(requestedModalities));
-            }
-            if (requestedCallEvents == null)
-            {
-                throw new ArgumentNullException(nameof(requestedCallEvents));
-            }
 
             Source = source;
             CallbackUri = callbackUri;
-            RequestedModalities = requestedModalities.ToList();
-            RequestedCallEvents = requestedCallEvents.ToList();
+            RequestedMediaTypes = new ChangeTrackingList<MediaType>();
+            RequestedCallEvents = new ChangeTrackingList<EventSubscriptionType>();
         }
 
         /// <summary> The source of the call. </summary>
@@ -53,7 +43,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IList<CallModality> RequestedModalities { get; }
+        public IList<MediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
         public IList<EventSubscriptionType> RequestedCallEvents { get; }
     }

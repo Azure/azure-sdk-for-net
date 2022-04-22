@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEvents">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEvents" language="csharp">
         /// Console.WriteLine(&quot;\n\nQuery for raw temperature events over the past 10 minutes.\n&quot;);
         ///
         /// // Get events from last 10 minute
@@ -112,7 +112,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan" language="csharp">
         /// Console.WriteLine(&quot;\n\nQuery for raw humidity events over the past 30 seconds.\n&quot;);
         ///
         /// TimeSeriesQueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
@@ -180,7 +180,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeries">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeries" language="csharp">
         /// Console.WriteLine($&quot;\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. &quot; +
         ///     $&quot;The Time Series instance belongs to a type that has predefined numeric variable that represents the temperature &quot; +
         ///     $&quot;in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n&quot;);
@@ -241,7 +241,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables" language="csharp">
         /// Console.WriteLine(&quot;\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n&quot;);
         ///
         /// var celsiusVariable = new NumericVariable(
@@ -312,7 +312,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable" language="csharp">
         /// Console.WriteLine(&quot;\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n&quot;);
         ///
         /// // Get the count of events in 60-second time slots over the past 3 minutes
@@ -383,7 +383,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="TimeSeriesQueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithNumericVariable">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithNumericVariable" language="csharp">
         /// Console.WriteLine(&quot;\n\nQuery for the average temperature over the past 30 seconds, in 2-second time slots.\n&quot;);
         ///
         /// var numericVariable = new NumericVariable(

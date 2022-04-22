@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

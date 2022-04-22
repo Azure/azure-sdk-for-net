@@ -38,15 +38,14 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="edgeModuleId">Internal ID generated for the instance
         /// of the Video Analyzer edge module.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public EdgeModuleEntity(string id = default(string), string name = default(string), string type = default(string), System.Guid edgeModuleId = default(System.Guid), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public EdgeModuleEntity(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.Guid edgeModuleId = default(System.Guid))
+            : base(id, name, type, systemData)
         {
             EdgeModuleId = edgeModuleId;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -61,12 +60,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.edgeModuleId")]
         public System.Guid EdgeModuleId { get; private set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

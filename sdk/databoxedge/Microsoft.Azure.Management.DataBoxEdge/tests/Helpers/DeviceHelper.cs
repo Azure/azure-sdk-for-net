@@ -1,7 +1,11 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest.Azure;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataBoxEdge.Tests
 {
@@ -129,6 +133,36 @@ namespace DataBoxEdge.Tests
             IPage<DataBoxEdgeDevice> resourceList = client.Devices.ListBySubscriptionNext(nextLink);
             continuationToken = resourceList.NextPageLink;
             return resourceList;
+        }
+
+        
+        /// <summary>
+        /// Delete Secret from KeyVault
+        /// </summary>
+        /// <param name="keyVaultName">Name of the KeyVault</param>
+        /// <param name="secretName">Name of the Secret</param>
+        /// <returns></returns>
+        public static void DeleteSecretFromKeyVault(string keyVaultName, string secretName)
+        {
+            var client = GetKeyVaultClient(keyVaultName);
+
+            var secretDeleteOperation = client.StartDeleteSecret(secretName);
+
+            secretDeleteOperation.WaitForCompletionAsync();
+
+            client.PurgeDeletedSecret(secretName);
+        }
+
+        /// <summary>
+        /// Creates and Returns KeyVault Client
+        /// </summary>
+        /// <param name="keyvaultName">Name of the KeyVault</param>
+        /// <returns>Returns keyVault Client</returns>
+        private static SecretClient GetKeyVaultClient(string keyvaultName)
+        {
+            var kvUri = $"https://{keyvaultName}.vault.azure.net";
+
+            return new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
         }
     }
 }

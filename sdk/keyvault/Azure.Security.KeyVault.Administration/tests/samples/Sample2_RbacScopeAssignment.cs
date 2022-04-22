@@ -17,8 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public partial class RbacScopeAssignment : AccessControlTestBase
     {
-        public RbacScopeAssignment(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public RbacScopeAssignment(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]

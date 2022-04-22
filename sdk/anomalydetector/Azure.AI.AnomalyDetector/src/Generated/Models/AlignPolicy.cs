@@ -16,21 +16,21 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
-        /// <param name="alignMode"> An optional field, indicates how we align different variables into the same time-range which is required by the model.{Inner, Outer}. </param>
-        /// <param name="fillNAMethod"> An optional field, indicates how missed values will be filled with. Can not be set to NotFill, when alignMode is Outer.{Previous, Subsequent, Linear, Zero, Fix, NotFill}. </param>
-        /// <param name="paddingValue"> optional field, only be useful if FillNAMethod is set to Pad. </param>
-        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, int? paddingValue)
+        /// <param name="alignMode"> An optional field, indicating how we align different variables to the same time-range. Either Inner or Outer. </param>
+        /// <param name="fillNAMethod"> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed, and NotFill. Cannot be set to NotFill, when the alignMode is Outer. </param>
+        /// <param name="paddingValue"> An optional field. Required when fillNAMethod is Fixed. </param>
+        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
         {
             AlignMode = alignMode;
             FillNAMethod = fillNAMethod;
             PaddingValue = paddingValue;
         }
 
-        /// <summary> An optional field, indicates how we align different variables into the same time-range which is required by the model.{Inner, Outer}. </summary>
+        /// <summary> An optional field, indicating how we align different variables to the same time-range. Either Inner or Outer. </summary>
         public AlignMode? AlignMode { get; set; }
-        /// <summary> An optional field, indicates how missed values will be filled with. Can not be set to NotFill, when alignMode is Outer.{Previous, Subsequent, Linear, Zero, Fix, NotFill}. </summary>
+        /// <summary> An optional field, indicating how missing values will be filled. One of Previous, Subsequent, Linear, Zero, Fixed, and NotFill. Cannot be set to NotFill, when the alignMode is Outer. </summary>
         public FillNAMethod? FillNAMethod { get; set; }
-        /// <summary> optional field, only be useful if FillNAMethod is set to Pad. </summary>
-        public int? PaddingValue { get; set; }
+        /// <summary> An optional field. Required when fillNAMethod is Fixed. </summary>
+        public float? PaddingValue { get; set; }
     }
 }

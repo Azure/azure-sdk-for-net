@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Network;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal IPConfiguration(string id, string name, string etag, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, Subnet subnet, PublicIPAddress publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal IPConfiguration(string id, string name, string etag, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,9 +46,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
-        public Subnet Subnet { get; set; }
+        public SubnetData Subnet { get; set; }
         /// <summary> The reference to the public IP resource. </summary>
-        public PublicIPAddress PublicIPAddress { get; set; }
+        public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

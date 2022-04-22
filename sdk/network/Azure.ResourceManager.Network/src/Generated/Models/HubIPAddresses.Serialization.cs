@@ -5,33 +5,43 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class HubIPAddresses
+    public partial class HubIPAddresses : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PublicIPs))
+            {
+                writer.WritePropertyName("publicIPs");
+                writer.WriteObjectValue(PublicIPs);
+            }
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIPAddress");
+                writer.WriteStringValue(PrivateIPAddress);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureFirewallPublicIPAddress>> publicIPAddresses = default;
+            Optional<HubPublicIPAddresses> publicIPs = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPAddresses"))
+                if (property.NameEquals("publicIPs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureFirewallPublicIPAddress> array = new List<AzureFirewallPublicIPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item));
-                    }
-                    publicIPAddresses = array;
+                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"))
@@ -40,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new HubIPAddresses(Optional.ToList(publicIPAddresses), privateIPAddress.Value);
+            return new HubIPAddresses(publicIPs.Value, privateIPAddress.Value);
         }
     }
 }

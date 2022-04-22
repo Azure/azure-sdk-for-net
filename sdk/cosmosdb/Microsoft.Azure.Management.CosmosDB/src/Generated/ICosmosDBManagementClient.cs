@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -159,9 +159,19 @@ namespace Microsoft.Azure.Management.CosmosDB
         IGremlinResourcesOperations GremlinResources { get; }
 
         /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        ILocationsOperations Locations { get; }
+
+        /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         INotebookWorkspacesOperations NotebookWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -169,9 +179,49 @@ namespace Microsoft.Azure.Management.CosmosDB
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// Gets the IRestorableDatabaseAccountsOperations.
         /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+        IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlDatabasesOperations.
+        /// </summary>
+        IRestorableSqlDatabasesOperations RestorableSqlDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlContainersOperations.
+        /// </summary>
+        IRestorableSqlContainersOperations RestorableSqlContainers { get; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlResourcesOperations.
+        /// </summary>
+        IRestorableSqlResourcesOperations RestorableSqlResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbDatabasesOperations.
+        /// </summary>
+        IRestorableMongodbDatabasesOperations RestorableMongodbDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbCollectionsOperations.
+        /// </summary>
+        IRestorableMongodbCollectionsOperations RestorableMongodbCollections { get; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbResourcesOperations.
+        /// </summary>
+        IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        ICassandraClustersOperations CassandraClusters { get; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        ICassandraDataCentersOperations CassandraDataCenters { get; }
 
     }
 }

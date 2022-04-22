@@ -59,6 +59,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
+        ///   A unique name used to identify this producer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
+
+        /// <summary>
         ///   The flags specifying the set of special transport features that this producer has opted-into.
         /// </summary>
         ///
@@ -73,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   updates.
         /// </remarks>
         ///
-        private PartitionPublishingOptions ActiveOptions { get; }
+        private PartitionPublishingOptionsInternal ActiveOptions { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -118,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   producer was initialized; they do not necessarily represent the current state of the service.
         /// </remarks>
         ///
-        private PartitionPublishingProperties InitializedPartitionProperties { get; set; }
+        private PartitionPublishingPropertiesInternal InitializedPartitionProperties { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpProducer"/> class.
@@ -126,6 +132,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="eventHubName">The name of the Event Hub to which events will be published.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition to which it is bound; if unbound, <c>null</c>.</param>
+        /// <param name="producerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
@@ -143,27 +150,34 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpProducer(string eventHubName,
                             string partitionId,
+                            string producerIdentifier,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
                             EventHubsRetryPolicy retryPolicy,
                             TransportProducerFeatures requestedFeatures = TransportProducerFeatures.None,
-                            PartitionPublishingOptions partitionOptions = null)
+                            PartitionPublishingOptionsInternal partitionOptions = null)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            if (string.IsNullOrEmpty(producerIdentifier))
+            {
+                producerIdentifier = Guid.NewGuid().ToString();
+            }
+
             EventHubName = eventHubName;
             PartitionId = partitionId;
+            Identifier = producerIdentifier;
             RetryPolicy = retryPolicy;
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
             ActiveFeatures = requestedFeatures;
-            ActiveOptions = partitionOptions?.Clone() ?? new PartitionPublishingOptions();
+            ActiveOptions = partitionOptions?.Clone() ?? new PartitionPublishingOptionsInternal();
 
             SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
-                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, ActiveOptions, timeout, CancellationToken.None),
+                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, producerIdentifier, ActiveOptions, timeout, CancellationToken.None),
                 link =>
                 {
                     link.Session?.SafeClose();
@@ -255,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     try
                     {
-                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         break;
                     }
                     catch (Exception ex)
@@ -302,14 +316,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
-        /// <returns>The set of <see cref="PartitionPublishingProperties" /> observed when the producer was initialized.</returns>
+        /// <returns>The set of <see cref="PartitionPublishingPropertiesInternal" /> observed when the producer was initialized.</returns>
         ///
         /// <remarks>
         ///   It is important to note that these properties are a snapshot of the service state at the time when the
         ///   producer was initialized; they do not necessarily represent the current state of the service.
         /// </remarks>
         ///
-        public override async ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken)
+        public override async ValueTask<PartitionPublishingPropertiesInternal> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
             Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
@@ -323,8 +337,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             // Initialize the properties by forcing the link to be opened.
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
@@ -332,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 try
                 {
-                    await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                    await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                     break;
                 }
                 catch (Exception ex)
@@ -378,6 +390,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return;
             }
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -386,12 +399,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (SendLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await SendLink.CloseAsync().ConfigureAwait(false);
+                    await SendLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 SendLink?.Dispose();
@@ -445,9 +456,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // again after the operation completes to provide best efforts in respecting it.
 
                         EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, operationId);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         // Validate that the batch of messages is not too large to send.  This is done after the link is created to ensure
@@ -461,7 +471,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // Attempt to send the message batch.
 
                         var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, cancellationToken).ConfigureAwait(false);
 
                         if (outcome.DescriptorCode != Accepted.Code)
                         {
@@ -529,8 +539,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition to which it is bound; if unbound, <c>null</c>.</param>
+        /// <param name="producerIdentifier">The identifier associated with the producer.</param>
         /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="timeout">The timeout to apply for creating the link.</param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
         /// <returns>The AMQP link to use for producer-related operations.</returns>
@@ -543,15 +554,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </remarks>
         ///
         protected virtual async Task<SendingAmqpLink> CreateLinkAndEnsureProducerStateAsync(string partitionId,
-                                                                                            PartitionPublishingOptions partitionOptions,
+                                                                                            string producerIdentifier,
+                                                                                            PartitionPublishingOptionsInternal partitionOptions,
                                                                                             TimeSpan timeout,
                                                                                             CancellationToken cancellationToken)
         {
             var link = default(SendingAmqpLink);
+            var operationTimeout = RetryPolicy.CalculateTryTimeout(0);
 
             try
             {
-                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, timeout, cancellationToken).ConfigureAwait(false);
+                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, operationTimeout, timeout, producerIdentifier, cancellationToken).ConfigureAwait(false);
 
                 if (!MaximumMessageSize.HasValue)
                 {
@@ -577,7 +590,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     // sequence tracked by the service is used should the link need to be recreated; this avoids the need for
                     // the transport producer to have awareness of the sequence numbers of events being sent.
 
-                    InitializedPartitionProperties = new PartitionPublishingProperties(false, producerGroup, ownerLevel, sequence);
+                    InitializedPartitionProperties = new PartitionPublishingPropertiesInternal(false, producerGroup, ownerLevel, sequence);
                     partitionOptions.StartingSequenceNumber = null;
                 }
             }

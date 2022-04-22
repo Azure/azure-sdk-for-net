@@ -2,7 +2,7 @@
       "Name": "AutoScaleRun",
       "ProtocolName": "Models.AutoScaleRun",
       "SummaryComment": "The results and errors from an evaluation or execution of a pool autoscale formula.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

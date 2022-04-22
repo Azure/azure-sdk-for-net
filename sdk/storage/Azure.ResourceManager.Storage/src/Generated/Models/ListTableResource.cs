@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListTableResource. </summary>
         internal ListTableResource()
         {
-            Value = new ChangeTrackingList<Table>();
+            Value = new ChangeTrackingList<TableData>();
         }
 
         /// <summary> Initializes a new instance of ListTableResource. </summary>
         /// <param name="value"> List of tables returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of tables. </param>
-        internal ListTableResource(IReadOnlyList<Table> value, string nextLink)
+        internal ListTableResource(IReadOnlyList<TableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of tables returned. </summary>
-        public IReadOnlyList<Table> Value { get; }
+        public IReadOnlyList<TableData> Value { get; }
         /// <summary> Request URL that can be used to query next page of tables. </summary>
         public string NextLink { get; }
     }

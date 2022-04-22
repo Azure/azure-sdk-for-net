@@ -12,9 +12,13 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class ParticipantsUpdatedEvent : CallingServerEventBase
     {
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
-        public ParticipantsUpdatedEvent()
+        /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="participants"> The list of participants. </param>
+        internal ParticipantsUpdatedEvent(string callConnectionId, IEnumerable<CallParticipant> participants)
         {
+            CallConnectionId = callConnectionId;
+            Participants = participants;
         }
 
         /// <summary>
@@ -28,18 +32,15 @@ namespace Azure.Communication.CallingServer
             JsonElement element = document.RootElement;
 
             var participantsUpdatedEventInternal = ParticipantsUpdatedEventInternal.DeserializeParticipantsUpdatedEventInternal(element);
+            var callParticipants = participantsUpdatedEventInternal.Participants?.Select(x => new CallParticipant(identifier: CommunicationIdentifierSerializer.Deserialize(x.Identifier), isMuted: x.IsMuted, participantId: x.ParticipantId));
 
-            return new ParticipantsUpdatedEvent
-            {
-                CallLegId = participantsUpdatedEventInternal.CallLegId,
-                Participants = participantsUpdatedEventInternal.Participants?.Select(x => new CommunicationParticipant { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId })
-            };
+            return new ParticipantsUpdatedEvent(participantsUpdatedEventInternal.CallConnectionId, callParticipants);
         }
 
-        /// <summary> The call leg.id. </summary>
-        public string CallLegId { get; set; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; }
 
         /// <summary> The list of participants. </summary>
-        public IEnumerable<CommunicationParticipant> Participants { get; set; }
+        public IEnumerable<CallParticipant> Participants { get; }
     }
 }

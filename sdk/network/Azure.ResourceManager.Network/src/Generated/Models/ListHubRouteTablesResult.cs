@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>
         internal ListHubRouteTablesResult()
         {
-            Value = new ChangeTrackingList<HubRouteTable>();
+            Value = new ChangeTrackingList<HubRouteTableData>();
         }
 
         /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>
         /// <param name="value"> List of RouteTables. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListHubRouteTablesResult(IReadOnlyList<HubRouteTable> value, string nextLink)
+        internal ListHubRouteTablesResult(IReadOnlyList<HubRouteTableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of RouteTables. </summary>
-        public IReadOnlyList<HubRouteTable> Value { get; }
+        public IReadOnlyList<HubRouteTableData> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

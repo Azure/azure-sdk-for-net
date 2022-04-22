@@ -24,6 +24,54 @@ namespace Microsoft.Azure.Management.Kusto
     public static partial class AttachedDatabaseConfigurationsOperationsExtensions
     {
             /// <summary>
+            /// Checks that the attached database configuration resource name is valid and
+            /// is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
+            /// </param>
+            public static CheckNameResult CheckNameAvailability(this IAttachedDatabaseConfigurationsOperations operations, string resourceGroupName, string clusterName, AttachedDatabaseConfigurationsCheckNameRequest resourceName)
+            {
+                return operations.CheckNameAvailabilityAsync(resourceGroupName, clusterName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the attached database configuration resource name is valid and
+            /// is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IAttachedDatabaseConfigurationsOperations operations, string resourceGroupName, string clusterName, AttachedDatabaseConfigurationsCheckNameRequest resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, clusterName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns the list of attached database configurations of the given Kusto
             /// cluster.
             /// </summary>

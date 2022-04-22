@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConfigurationStore>> value = default;
+            Optional<IReadOnlyList<ConfigurationStoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationStore> array = new List<ConfigurationStore>();
+                    List<ConfigurationStoreData> array = new List<ConfigurationStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationStore.DeserializeConfigurationStore(item));
+                        array.Add(ConfigurationStoreData.DeserializeConfigurationStoreData(item));
                     }
                     value = array;
                     continue;

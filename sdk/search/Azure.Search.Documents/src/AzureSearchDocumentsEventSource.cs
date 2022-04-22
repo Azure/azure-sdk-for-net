@@ -8,7 +8,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Search.Documents
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureSearchDocumentsEventSource : EventSource
+    internal sealed class AzureSearchDocumentsEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Search-Documents";
 
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents
         internal const int BatchActionPayloadTooLargeEvent = 8;
 
         private AzureSearchDocumentsEventSource() :
-            base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+            base(EventSourceName)
         { }
 
         public static AzureSearchDocumentsEventSource Instance { get; } = new AzureSearchDocumentsEventSource();

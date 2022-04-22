@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
-                var message = GetMessage(useSessions ? "sessionId" : null);
+                var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
-                var message = GetMessage(useSessions ? "sessionId" : null);
+                var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
@@ -198,7 +198,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        [Ignore("reverted cancellation support outside of processor")]
         public async Task AcceptNextSessionRespectsCancellation()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
@@ -213,12 +212,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
                 Assert.Less(stop - start, duration.Add(duration));
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
 
                 start = DateTime.UtcNow;
                 var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 stop = DateTime.UtcNow;
                 Assert.Less(stop - start, duration.Add(duration));
+            }
+        }
+
+        [Test]
+        public async Task CanAcceptBlankSession()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = CreateClient();
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
+                Assert.AreEqual("", receiver.SessionId);
             }
         }
     }

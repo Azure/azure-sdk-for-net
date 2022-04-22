@@ -8,6 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         public AzureMonitorExporterOptions(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion version = Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion.V2020_09_15_Preview) { }
         public string ConnectionString { get { throw null; } set { } }
+        public string StorageDirectory { get { throw null; } set { } }
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion Version { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -18,5 +19,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         public AzureMonitorTraceExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
         public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
+    }
+}
+namespace Microsoft.Extensions.Logging
+{
+    public static partial class AzureMonitorExporterLoggingExtensions
+    {
+        public static OpenTelemetry.Logs.OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetry.Logs.OpenTelemetryLoggerOptions loggerOptions, System.Action<Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions> configure = null) { throw null; }
     }
 }

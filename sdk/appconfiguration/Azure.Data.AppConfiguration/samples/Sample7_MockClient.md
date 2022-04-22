@@ -1,10 +1,10 @@
 # Mock a client for testing using the Moq library
 
-This sample illustrates how to use [Moq](https://github.com/Moq/moq4/) to create a unit test that mocks the response from a ConfigurationClient method. For more examples of mocking, see the [Azure.Data.AppConfiguration.Tests](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/tests/ConfigurationMockTests.cs) project.
+This sample illustrates how to use [Moq](https://github.com/Moq/moq4/) to create a unit test that mocks the response from a ConfigurationClient method. For more examples of mocking, see the [Azure.Data.AppConfiguration.Tests](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/tests/ConfigurationMockTests.cs) project.
 
 ## Define method that uses `ConfigurationClient`
 
-To show the usage of mocks, define a method that will be tested with mocked objects. For more details about this sample method, see "[Update a Configuration If Unchanged](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md)" sample.  
+To show the usage of mocks, define a method that will be tested with mocked objects. For more details about this sample method, see "[Update a Configuration If Unchanged](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md)" sample.  
 
 ```C# Snippet:AzConfigSample7_MethodToTest
 private static async Task<int> UpdateAvailableVmsAsync(ConfigurationClient client, int releasedVMs, CancellationToken cancellationToken)

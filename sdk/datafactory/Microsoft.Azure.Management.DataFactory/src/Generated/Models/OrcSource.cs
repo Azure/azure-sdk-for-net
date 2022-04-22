@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// with resultType boolean).</param>
         /// <param name="storeSettings">ORC store settings.</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
-        public OrcSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
+        public OrcSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), object additionalColumns = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             StoreSettings = storeSettings;
@@ -69,11 +69,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets specifies the additional columns to be added to source
-        /// data. Type: array of objects (or Expression with resultType array
-        /// of objects).
+        /// data. Type: array of objects(AdditionalColumns) (or Expression with
+        /// resultType array of objects).
         /// </summary>
         [JsonProperty(PropertyName = "additionalColumns")]
-        public IList<AdditionalColumns> AdditionalColumns { get; set; }
+        public object AdditionalColumns { get; set; }
 
     }
 }

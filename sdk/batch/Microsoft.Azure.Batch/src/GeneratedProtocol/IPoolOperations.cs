@@ -454,7 +454,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// This operation can only run when the allocation state of the Pool
         /// is steady. When this operation runs, the allocation state changes
-        /// from steady to resizing.
+        /// from steady to resizing. Each request may remove up to 100 nodes.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the Pool from which you want to remove Compute Nodes.

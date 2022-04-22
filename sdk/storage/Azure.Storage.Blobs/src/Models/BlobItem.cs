@@ -58,5 +58,10 @@ namespace Azure.Storage.Blobs.Models
         /// Object Replication Metadata (OrMetadata)
         /// </summary>
         public IList<ObjectReplicationPolicy> ObjectReplicationSourceProperties { get; internal set; }
+
+        /// <summary>
+        /// Indicates that this root blob has been deleted, but it has versions that are active.
+        /// </summary>
+        public bool? HasVersionsOnly { get; internal set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,6 +27,8 @@ namespace Azure.ResourceManager.Storage.Models
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
             Optional<string> keyUri = default;
+            Optional<string> currentVersionedKeyIdentifier = default;
+            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"))
@@ -33,8 +36,23 @@ namespace Azure.ResourceManager.Storage.Models
                     keyUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("currentVersionedKeyIdentifier"))
+                {
+                    currentVersionedKeyIdentifier = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastKeyRotationTimestamp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new EncryptionScopeKeyVaultProperties(keyUri.Value);
+            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp));
         }
     }
 }

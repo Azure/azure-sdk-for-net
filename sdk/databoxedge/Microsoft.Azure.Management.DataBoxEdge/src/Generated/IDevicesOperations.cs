@@ -202,7 +202,32 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// </exception>
         Task<AzureOperationResponse> DownloadUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets additional information for the specified Data Box Edge/Data
+        /// Generates certificate for activation key.
+        /// </summary>
+        /// <param name='deviceName'>
+        /// The device name.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GenerateCertResponse>> GenerateCertificateWithHttpMessagesAsync(string deviceName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets additional information for the specified Azure Stack Edge/Data
         /// Box Gateway device.
         /// </summary>
         /// <param name='deviceName'>
@@ -324,6 +349,35 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// </exception>
         Task<AzureOperationResponse> CreateOrUpdateSecuritySettingsWithHttpMessagesAsync(string deviceName, SecuritySettings securitySettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets additional information for the specified Data Box Edge/Data
+        /// Box Gateway device.
+        /// </summary>
+        /// <param name='deviceName'>
+        /// The device name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The patch object.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationWithHttpMessagesAsync(string deviceName, DataBoxEdgeDeviceExtendedInfoPatch parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets information about the availability of updates based on the
         /// last scan of the device. It also gets information about any ongoing
         /// download or install jobs on the device.
@@ -378,34 +432,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<UploadCertificateResponse>> UploadCertificateWithHttpMessagesAsync(string deviceName, UploadCertificateRequest parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a Data Box Edge/Data Box Gateway resource.
-        /// </summary>
-        /// <param name='deviceName'>
-        /// The device name.
-        /// </param>
-        /// <param name='dataBoxEdgeDevice'>
-        /// The resource object.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<DataBoxEdgeDevice>> BeginCreateOrUpdateWithHttpMessagesAsync(string deviceName, DataBoxEdgeDevice dataBoxEdgeDevice, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the Data Box Edge/Data Box Gateway device.
         /// </summary>

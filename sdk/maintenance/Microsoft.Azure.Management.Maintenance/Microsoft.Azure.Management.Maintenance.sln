@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Maintenance", "src\Microsoft.Azure.Management.Maintenance.csproj", "{18EFDFC3-523F-4AA2-BD40-21CB366C83EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{3B1D989F-3FB3-4D39-A607-3D1E78D563CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{BFA0CA5E-3D5B-4304-BFAB-0689C4BFEEA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{18EFDFC3-523F-4AA2-BD40-21CB366C83EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18EFDFC3-523F-4AA2-BD40-21CB366C83EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18EFDFC3-523F-4AA2-BD40-21CB366C83EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B1D989F-3FB3-4D39-A607-3D1E78D563CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B1D989F-3FB3-4D39-A607-3D1E78D563CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B1D989F-3FB3-4D39-A607-3D1E78D563CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B1D989F-3FB3-4D39-A607-3D1E78D563CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA0CA5E-3D5B-4304-BFAB-0689C4BFEEA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA0CA5E-3D5B-4304-BFAB-0689C4BFEEA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA0CA5E-3D5B-4304-BFAB-0689C4BFEEA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA0CA5E-3D5B-4304-BFAB-0689C4BFEEA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

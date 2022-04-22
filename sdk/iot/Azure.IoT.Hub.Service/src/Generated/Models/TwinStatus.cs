@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TwinStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TwinStatus(string value)
         {

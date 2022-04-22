@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// class.
         /// </summary>
         /// <param name="skuName">Type of the device. Possible values include:
-        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'</param>
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         public TransportAvailabilityRequest(SkuName? skuName = default(SkuName?))
         {
             SkuName = skuName;
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets type of the device. Possible values include:
-        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy', 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "skuName")]
         public SkuName? SkuName { get; set; }

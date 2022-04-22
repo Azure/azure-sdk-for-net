@@ -28,9 +28,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="apiVersion"> Api Version. </param>
         public MixedRealityStsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2019-02-28-preview")
         {
-            endpoint ??= new Uri("https://sts.mixedreality.azure.com");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("https://sts.mixedreality.azure.com");
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -46,10 +44,7 @@ namespace Azure.MixedReality.Authentication
             uri.AppendPath("/Accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/token", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (tokenRequestOptions?.ClientRequestId != null)
             {

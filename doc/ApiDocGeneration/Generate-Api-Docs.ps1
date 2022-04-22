@@ -77,6 +77,7 @@ $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
+$GACampaignId = "UA-62780441-41"
 
 if ($LibType -eq 'management') {
     $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
@@ -145,6 +146,14 @@ Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
 Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
 Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
+
+$headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
+
+if (Test-Path $headerTemplateLocation){
+    $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
+    $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
+    Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
+}
 
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force

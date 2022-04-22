@@ -9,13 +9,16 @@ This sample shows how to list the tags for an image with anonymous access.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient for anonymous access
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
+{
+    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+});
 
 // Obtain a RegistryArtifact object to get access to image operations
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-Pageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollection();
+Pageable<ArtifactTagProperties> tags = image.GetAllTagProperties();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");

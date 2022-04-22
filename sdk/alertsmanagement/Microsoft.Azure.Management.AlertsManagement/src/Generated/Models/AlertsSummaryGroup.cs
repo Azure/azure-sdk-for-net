@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// groups.</param>
         /// <param name="groupedby">Name of the field aggregated</param>
         /// <param name="values">List of the items</param>
-        public AlertsSummaryGroup(int? total = default(int?), int? smartGroupsCount = default(int?), string groupedby = default(string), IList<AlertsSummaryGroupItem> values = default(IList<AlertsSummaryGroupItem>))
+        public AlertsSummaryGroup(long? total = default(long?), long? smartGroupsCount = default(long?), string groupedby = default(string), IList<AlertsSummaryGroupItem> values = default(IList<AlertsSummaryGroupItem>))
         {
             Total = total;
             SmartGroupsCount = smartGroupsCount;
@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Gets or sets total count of the result set.
         /// </summary>
         [JsonProperty(PropertyName = "total")]
-        public int? Total { get; set; }
+        public long? Total { get; set; }
 
         /// <summary>
         /// Gets or sets total count of the smart groups.
         /// </summary>
         [JsonProperty(PropertyName = "smartGroupsCount")]
-        public int? SmartGroupsCount { get; set; }
+        public long? SmartGroupsCount { get; set; }
 
         /// <summary>
         /// Gets or sets name of the field aggregated

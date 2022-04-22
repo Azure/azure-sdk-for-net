@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">Display name of the VM.</param>
         /// <param name="vmType">Virtual machine type. Possible values include:
-        /// 'REGULAR, EDGE, SERVICE'</param>
+        /// 'REGULAR', 'EDGE', 'SERVICE'</param>
         public WorkloadNetworkVirtualMachine(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string vmType = default(string))
             : base(id, name, type)
         {
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Avs.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets virtual machine type. Possible values include: 'REGULAR, EDGE,
-        /// SERVICE'
+        /// Gets virtual machine type. Possible values include: 'REGULAR',
+        /// 'EDGE', 'SERVICE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmType")]
         public string VmType { get; private set; }

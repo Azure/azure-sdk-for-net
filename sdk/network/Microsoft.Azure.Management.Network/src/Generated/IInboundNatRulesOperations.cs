@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IInboundNatRulesOperations
     {
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<IPage<InboundNatRule>>> ListWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='expand'>
         /// Expands referenced resources.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<InboundNatRule>> GetWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -114,10 +114,10 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='inboundNatRuleParameters'>
-        /// Parameters supplied to the create or update inbound nat rule
+        /// Parameters supplied to the create or update inbound NAT rule
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<InboundNatRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -171,10 +171,10 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='inboundNatRuleParameters'>
-        /// Parameters supplied to the create or update inbound nat rule
+        /// Parameters supplied to the create or update inbound NAT rule
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<InboundNatRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

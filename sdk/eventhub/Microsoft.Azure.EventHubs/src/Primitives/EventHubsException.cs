@@ -107,7 +107,7 @@ namespace Microsoft.Azure.EventHubs
         public bool IsTransient { get; }
 
         /// <summary>
-        /// Gets the Event Hubs namespace from which the exception occured, if available.
+        /// Gets the Event Hubs namespace from which the exception occurred, if available.
         /// </summary>
         public string EventHubsNamespace { get; internal set; }
 

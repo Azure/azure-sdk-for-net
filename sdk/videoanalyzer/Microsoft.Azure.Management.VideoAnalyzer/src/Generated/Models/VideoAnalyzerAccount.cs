@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
     using System.Linq;
 
     /// <summary>
-    /// A Video Analyzer account.
+    /// The Video Analyzer account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VideoAnalyzerAccount : TrackedResource
@@ -36,29 +36,44 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
+        /// <param name="storageAccounts">The storage accounts for this
+        /// resource.</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="storageAccounts">The storage accounts for this
-        /// resource.</param>
-        /// <param name="endpoints">The list of endpoints associated with this
+        /// <param name="endpoints">The endpoints associated with this
         /// resource.</param>
         /// <param name="encryption">The account encryption properties.</param>
-        /// <param name="systemData">The system data of the Video Analyzer
-        /// account.</param>
-        /// <param name="identity">The set of managed identities associated
-        /// with the Video Analyzer resource.</param>
-        public VideoAnalyzerAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), IList<Endpoint> endpoints = default(IList<Endpoint>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData), VideoAnalyzerIdentity identity = default(VideoAnalyzerIdentity))
-            : base(location, id, name, type, tags)
+        /// <param name="iotHubs">The IoT Hubs for this resource.</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for resources under the Video Analyzer account.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="networkAccessControl">Network access control for Video
+        /// Analyzer.</param>
+        /// <param name="provisioningState">Provisioning state of the Video
+        /// Analyzer account. Possible values include: 'Failed', 'InProgress',
+        /// 'Succeeded'</param>
+        /// <param name="privateEndpointConnections">Private Endpoint
+        /// Connections created under Video Analyzer account.</param>
+        /// <param name="identity">The identities associated to the Video
+        /// Analyzer resource.</param>
+        public VideoAnalyzerAccount(string location, IList<StorageAccount> storageAccounts, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Endpoint> endpoints = default(IList<Endpoint>), AccountEncryption encryption = default(AccountEncryption), IList<IotHub> iotHubs = default(IList<IotHub>), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), NetworkAccessControl networkAccessControl = default(NetworkAccessControl), ProvisioningState provisioningState = default(ProvisioningState), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), VideoAnalyzerIdentity identity = default(VideoAnalyzerIdentity))
+            : base(location, id, name, type, systemData, tags)
         {
             StorageAccounts = storageAccounts;
             Endpoints = endpoints;
             Encryption = encryption;
-            SystemData = systemData;
+            IotHubs = iotHubs;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkAccessControl = networkAccessControl;
+            ProvisioningState = provisioningState;
+            PrivateEndpointConnections = privateEndpointConnections;
             Identity = identity;
             CustomInit();
         }
@@ -75,7 +90,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public IList<StorageAccount> StorageAccounts { get; set; }
 
         /// <summary>
-        /// Gets the list of endpoints associated with this resource.
+        /// Gets the endpoints associated with this resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoints")]
         public IList<Endpoint> Endpoints { get; private set; }
@@ -87,14 +102,42 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public AccountEncryption Encryption { get; set; }
 
         /// <summary>
-        /// Gets the system data of the Video Analyzer account.
+        /// Gets or sets the IoT Hubs for this resource.
         /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
+        [JsonProperty(PropertyName = "properties.iotHubs")]
+        public IList<IotHub> IotHubs { get; set; }
 
         /// <summary>
-        /// Gets or sets the set of managed identities associated with the
-        /// Video Analyzer resource.
+        /// Gets or sets whether or not public network access is allowed for
+        /// resources under the Video Analyzer account. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets network access control for Video Analyzer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAccessControl")]
+        public NetworkAccessControl NetworkAccessControl { get; set; }
+
+        /// <summary>
+        /// Gets provisioning state of the Video Analyzer account. Possible
+        /// values include: 'Failed', 'InProgress', 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProvisioningState ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets private Endpoint Connections created under Video Analyzer
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identities associated to the Video Analyzer
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public VideoAnalyzerIdentity Identity { get; set; }
@@ -108,6 +151,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public override void Validate()
         {
             base.Validate();
+            if (StorageAccounts == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccounts");
+            }
             if (StorageAccounts != null)
             {
                 foreach (var element in StorageAccounts)
@@ -121,6 +168,26 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (IotHubs != null)
+            {
+                foreach (var element1 in IotHubs)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element2 in PrivateEndpointConnections)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
             }
             if (Identity != null)
             {

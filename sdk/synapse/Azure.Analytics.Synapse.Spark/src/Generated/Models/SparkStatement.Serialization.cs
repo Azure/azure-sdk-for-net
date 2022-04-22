@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             int id = default;
             Optional<string> code = default;
-            Optional<string> state = default;
+            Optional<LivyStatementStates> state = default;
             Optional<SparkStatementOutput> output = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    state = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new LivyStatementStates(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("output"))
@@ -46,7 +51,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatement(id, code.Value, state.Value, output.Value);
+            return new SparkStatement(id, code.Value, Optional.ToNullable(state), output.Value);
         }
     }
 }

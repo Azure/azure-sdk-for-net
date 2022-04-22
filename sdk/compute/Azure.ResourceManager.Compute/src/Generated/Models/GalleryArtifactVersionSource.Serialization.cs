@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri");
+                writer.WriteStringValue(Uri);
+            }
             writer.WriteEndObject();
         }
 
         internal static GalleryArtifactVersionSource DeserializeGalleryArtifactVersionSource(JsonElement element)
         {
             Optional<string> id = default;
+            Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -33,8 +39,13 @@ namespace Azure.ResourceManager.Compute.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("uri"))
+                {
+                    uri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new GalleryArtifactVersionSource(id.Value);
+            return new GalleryArtifactVersionSource(id.Value, uri.Value);
         }
     }
 }

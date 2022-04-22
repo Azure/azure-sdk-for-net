@@ -8,5 +8,5 @@ using System.Runtime.CompilerServices;
 
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Insights")]
 
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Monitor.Query.Models.Metric")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Monitor.Query.Models.MetricResult")]
 [assembly: SuppressMessage("Usage", "AZC0014:Types from System.Text.Json, Newtonsoft.Json, System.Collections.Immutable assemblies should not be exposed as part of public API surface.", Justification = "<Pending>")]

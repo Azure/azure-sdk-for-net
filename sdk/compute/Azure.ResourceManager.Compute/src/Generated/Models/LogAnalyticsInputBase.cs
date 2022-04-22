@@ -41,5 +41,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? GroupByOperationName { get; set; }
         /// <summary> Group query result by Resource Name. </summary>
         public bool? GroupByResourceName { get; set; }
+        /// <summary> Group query result by Client Application ID. </summary>
+        public bool? GroupByClientApplicationId { get; set; }
+        /// <summary> Group query result by User Agent. </summary>
+        public bool? GroupByUserAgent { get; set; }
     }
 }

@@ -1,19 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-Dns-9382/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/NS/ns_record?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b5abaa5de97b5c4cafe7224b0f7c0c7a-4a5874d930535f4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-beta.5 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d0d642e58f1e57e6fd277129b9b141c5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "404",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Jan 2022 06:40:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4315c42c-3fd9-45b9-8120-6501a587569d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "4315c42c-3fd9-45b9-8120-6501a587569d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220118T064028Z:4315c42c-3fd9-45b9-8120-6501a587569d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6",
+        "tenantId": "6d1de6b2-88b7-42b6-9b3e-89a4351d16b4",
+        "displayName": "Azure for Students",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "AzureForStudents_2018-01-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6/resourceGroups/Default-Dns-4914/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/NS/ns_record?api-version=2018-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "126",
         "Content-Type": "application/json",
-        "traceparent": "00-24f166bd6706a0438379ba742e3a9efa-2f68916b7fea0346-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200930.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "c391b38fcce832880f43eeeb394e81bc",
+        "traceparent": "00-ac542643bbd3b945b2464c903a9f495f-375fc41989bf2a4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20220118.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6b6a7481923b5e29bd4c67ca8327762e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -37,22 +76,44 @@
         "Cache-Control": "private",
         "Content-Length": "497",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Sep 2020 06:15:42 GMT",
-        "ETag": "da1171d8-db44-4f6a-97d5-68156539e652",
+        "Date": "Tue, 18 Jan 2022 06:40:31 GMT",
+        "ETag": "47a8523a-28fb-4dff-acf6-358bf5f30da7",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "39cafdfa-18f8-4ab9-8b48-82679e48c303",
+        "x-ms-correlation-request-id": "503f79b0-f398-41e7-86b0-20df169ccdff",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
-        "x-ms-request-id": "c391b38f-cce8-3288-0f43-eeeb394e81bc",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T061543Z:39cafdfa-18f8-4ab9-8b48-82679e48c303",
+        "x-ms-request-id": "6b6a7481-923b-5e29-bd4c-67ca8327762e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220118T064031Z:503f79b0-f398-41e7-86b0-20df169ccdff",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/c9cbd920-c00c-427c-852b-8aaf38badaeb\\/resourceGroups\\/Default-Dns-9382\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/NS\\/ns_record\u0022,\u0022name\u0022:\u0022ns_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/NS\u0022,\u0022etag\u0022:\u0022da1171d8-db44-4f6a-97d5-68156539e652\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022ns_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022NSRecords\u0022:[{\u0022nsdname\u0022:\u0022ns1.scsfsm.com\u0022},{\u0022nsdname\u0022:\u0022ns2.scsfsm.com\u0022}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": {
+        "id": "/subscriptions/c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6/resourceGroups/Default-Dns-4914/providers/Microsoft.Network/dnszones/azure.ameredmond.dns/NS/ns_record",
+        "name": "ns_record",
+        "type": "Microsoft.Network/dnszones/NS",
+        "etag": "47a8523a-28fb-4dff-acf6-358bf5f30da7",
+        "properties": {
+          "metadata": {
+            "tag1": "value1"
+          },
+          "fqdn": "ns_record.azure.ameredmond.dns.",
+          "TTL": 60,
+          "NSRecords": [
+            {
+              "nsdname": "ns1.scsfsm.com"
+            },
+            {
+              "nsdname": "ns2.scsfsm.com"
+            }
+          ],
+          "targetResource": {},
+          "provisioningState": "Succeeded"
+        }
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1289985884",
-    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+    "RandomSeed": "1229712392",
+    "SUBSCRIPTION_ID": "c7e7b7a5-88b9-4cd9-a5ed-cc6e3aa4b9c6"
   }
 }

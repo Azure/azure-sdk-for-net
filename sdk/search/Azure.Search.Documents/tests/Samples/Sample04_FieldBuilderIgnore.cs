@@ -24,7 +24,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

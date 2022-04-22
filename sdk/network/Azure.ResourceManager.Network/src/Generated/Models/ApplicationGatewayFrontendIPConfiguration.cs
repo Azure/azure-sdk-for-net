@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP configuration of an application gateway. </summary>
@@ -24,8 +26,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
+        /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubResource subnet, SubResource publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PrivateLinkConfiguration = privateLinkConfiguration;
             ProvisioningState = provisioningState;
         }
 
@@ -48,9 +52,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> Reference to the PublicIP resource. </summary>
-        public SubResource PublicIPAddress { get; set; }
+        public WritableSubResource PublicIPAddress { get; set; }
+        /// <summary> Reference to the application gateway private link configuration. </summary>
+        public WritableSubResource PrivateLinkConfiguration { get; set; }
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -18,25 +18,28 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
     public class LiveVideoAnalyzerSample
     {
-        private ServiceClient serviceClient;
-        private String deviceId = "lva-sample-device";
-        private String moduleId = "mediaEdge";
+        private ServiceClient _serviceClient;
+        private RegistryManager _registryManager;
+        private string _deviceId = System.Environment.GetEnvironmentVariable("iothub_deviceid", EnvironmentVariableTarget.User);
+        private string _moduleId = System.Environment.GetEnvironmentVariable("iothub_moduleid", EnvironmentVariableTarget.User);
 
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            String connectionString = "connectionString";
-            ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+            string connectionString = System.Environment.GetEnvironmentVariable("iothub_connectionstring", EnvironmentVariableTarget.User);
+            var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            this.serviceClient = serviceClient;
+
+            _serviceClient = serviceClient;
+            _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
         }
 
         [Test]
-        public async Task SendPipelineRequests()
+        public async Task SendRequests()
         {
             try
             {
-                // create a pipeline topology and live pipeline
+                //create a pipeline topology and live pipeline
                 var pipelineTopology = BuildPipelineTopology();
                 var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
@@ -47,7 +50,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-                var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
+                var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
                 #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 
                 // get a topology using helper function
@@ -79,6 +82,33 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
                 //delete live pipeline
                 var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(pipelineTopology.Name));
+
+                //get an onvif device
+                var onvifDeviceGetRequest = await InvokeDirectMethodHelper(new OnvifDeviceGetRequest(new UnsecuredEndpoint("rtsp://camerasimulator:8554")));
+                var onvifDeviceGetResponse = OnvifDevice.Deserialize(onvifDeviceGetRequest.GetPayloadAsJson());
+
+                //get all onvif devices on the network
+                var onvifDiscoverRequest = await InvokeDirectMethodHelper(new OnvifDeviceDiscoverRequest());
+                var onvifDiscoverResponse = DiscoveredOnvifDeviceCollection.Deserialize(onvifDiscoverRequest.GetPayloadAsJson());
+
+                // create a remote device adapter and send a set request for it
+                var iotDeviceName = "iotDeviceSample";
+                var remoteDeviceName = "remoteDeviceSample";
+                var iotDevice = await GetOrAddIoTDeviceAsync(iotDeviceName);
+                var remoteDeviceAdapter = CreateRemoteDeviceAdapter(remoteDeviceName, iotDeviceName, iotDevice.Authentication.SymmetricKey.PrimaryKey);
+                var remoteDeviceAdapterSetRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterSetRequest(remoteDeviceAdapter));
+                var remoteDeviceAdapterSetResponse = RemoteDeviceAdapter.Deserialize(remoteDeviceAdapterSetRequest.GetPayloadAsJson());
+
+                //get a remote device adapter
+                var remoteDeviceAdapterGetRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterGetRequest(remoteDeviceName));
+                var remoteDeviceAdapterGetResponse = RemoteDeviceAdapter.Deserialize(remoteDeviceAdapterGetRequest.GetPayloadAsJson());
+
+                //list all remote device adapters
+                var remoteDeviceAdapterListRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterListRequest());
+                var remoteDeviceAdapterListResponse = RemoteDeviceAdapterCollection.Deserialize(remoteDeviceAdapterListRequest.GetPayloadAsJson());
+
+                //delete a remote device adapater
+                var remoteDeviceAdapterDeleteRequest = await InvokeDirectMethodHelper(new RemoteDeviceAdapterDeleteRequest(remoteDeviceName));
             }
             catch (Exception ex)
             {
@@ -92,7 +122,36 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             var directMethod = new CloudToDeviceMethod(bc.MethodName);
             directMethod.SetPayloadJson(bc.GetPayloadAsJson());
 
-            return await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
+            return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+        }
+
+        protected async Task<Device> GetOrAddIoTDeviceAsync(string iotDeviceName)
+        {
+            var iotDevice = await _registryManager.GetDeviceAsync(iotDeviceName);
+            if (iotDevice == null)
+            {
+                iotDevice = await _registryManager.AddDeviceAsync(new Device(iotDeviceName));
+            }
+
+            return iotDevice;
+        }
+
+        private RemoteDeviceAdapter CreateRemoteDeviceAdapter(string deviceProxyName, string iotDeviceName, string symmetricKey)
+        {
+            var targetHost = new Uri("rtsp://camerasimulator:8554").Host;
+
+            return new RemoteDeviceAdapter(deviceProxyName)
+            {
+                Properties = new RemoteDeviceAdapterProperties(
+                    new RemoteDeviceAdapterTarget(targetHost),
+                    new IotHubDeviceConnection(iotDeviceName)
+                    {
+                        Credentials = new SymmetricKeyCredentials(symmetricKey),
+                    })
+                {
+                    Description = "description",
+                },
+            };
         }
 
         private LivePipeline BuildLivePipeline(string topologyName)
@@ -148,10 +207,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Description = "rtsp Url"
             });
-            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
-            {
-                Description = "hub sink output"
-            });
             #endregion Snippet:Azure_VideoAnalyzerSamples_SetParameters
         }
 
@@ -175,7 +230,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 new NodeInput("rtspSource")
             };
-            pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
+            pipelineTopologyProps.Sinks.Add(new VideoSink("videoSink", nodeInput, "video", "/var/lib/videoanalyzer/tmp/", "1024"));
             #endregion Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
         }
     }

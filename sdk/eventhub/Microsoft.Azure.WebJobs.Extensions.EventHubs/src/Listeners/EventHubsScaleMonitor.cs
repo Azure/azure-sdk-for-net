@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     continue;
                 }
 
-                // Check for the unprocessed messages when there are messages on the event hub parition
+                // Check for the unprocessed messages when there are messages on the event hub partition
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
                 if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != checkpoint.SequenceNumber)
                     || (checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))

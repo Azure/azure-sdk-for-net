@@ -16,12 +16,13 @@ $servicesProj = Resolve-Path "$PSScriptRoot/../service.proj"
 
 dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope="$ServiceDirectory" /p:SDKType=$SDKType /restore $servicesProj
 
-if ($SpellCheckPublicApiSurface) { 
+if ($SpellCheckPublicApiSurface) {
     Write-Host "Spell check public API surface"
-    npx cspell lint `
-        --config "$PSScriptRoot/../../.vscode/cspell.json" `
-        "$PSScriptRoot/../../sdk/$ServiceDirectory/*/api/*.cs"
-    if ($LASTEXITCODE) { 
+    &"$PSScriptRoot/../common/spelling/Invoke-Cspell.ps1" `
+        -CSpellConfigPath "$PSScriptRoot/../../.vscode/cspell.json" `
+        -ScanGlobs "sdk/$ServiceDirectory/*/api/*.cs"
+
+    if ($LASTEXITCODE) {
         Write-Host "##vso[task.LogIssue type=error;]Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
     }
 }

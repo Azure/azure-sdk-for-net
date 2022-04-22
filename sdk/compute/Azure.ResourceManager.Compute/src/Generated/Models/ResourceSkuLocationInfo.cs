@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ResourceSkuLocationInfo. </summary>
+    /// <summary> Describes an available Compute SKU Location Information. </summary>
     public partial class ResourceSkuLocationInfo
     {
         /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
@@ -18,17 +18,22 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
+            ExtendedLocations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
+        /// <param name="extendedLocations"> The names of extended locations. </param>
+        /// <param name="type"> The type of the extended location. </param>
+        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? type)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
+            ExtendedLocations = extendedLocations;
+            Type = type;
         }
 
         /// <summary> Location of the SKU. </summary>
@@ -37,5 +42,9 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
         public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        /// <summary> The names of extended locations. </summary>
+        public IReadOnlyList<string> ExtendedLocations { get; }
+        /// <summary> The type of the extended location. </summary>
+        public ExtendedLocationType? Type { get; }
     }
 }

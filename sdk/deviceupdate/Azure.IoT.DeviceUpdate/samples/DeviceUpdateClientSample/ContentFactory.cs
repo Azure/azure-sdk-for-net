@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Azure.IoT.DeviceUpdate.Models;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Newtonsoft.Json;
@@ -45,7 +44,7 @@ namespace ConsoleTest
         /// <returns>
         /// An asynchronous result that yields the new import update.
         /// </returns>
-        public async Task<ImportUpdateInput> CreateImportUpdate(string manufacturer, string name, string version)
+        public async Task<object> CreateImportUpdate(string manufacturer, string name, string version)
         {
             // Create actual update payload (fake "setup.exe")
             string payloadLocalFile = CreateAduPayloadFile(FileName);
@@ -62,7 +61,7 @@ namespace ConsoleTest
                 FileName,
                 payloadFileSize,
                 payloadFileHash,
-                new Tuple<string, string>[] {new Tuple<string, string>(manufacturer.ToLowerInvariant(), name.ToLowerInvariant())});
+                new Tuple<string, string>[] { new Tuple<string, string>(manufacturer.ToLowerInvariant(), name.ToLowerInvariant()) });
             long importManifestFileSize = GetFileSize(importManifestFile);
             string importManifestFileHash = GetFileHash(importManifestFile);
             // Upload the import manifest file to Azure Blob storage
@@ -71,7 +70,7 @@ namespace ConsoleTest
             // Create import update request body (containing Urls to import manifest and update payload files)
             return CreateImportBody(importManifestUrl, importManifestFileSize, importManifestFileHash, payloadUrl);
         }
-        
+
         private string CreateAduPayloadFile(string fileName)
         {
             var content = new
@@ -82,52 +81,65 @@ namespace ConsoleTest
 
             string filePath = Path.GetTempFileName();
             File.WriteAllText(filePath, JsonConvert.SerializeObject(content, Formatting.Indented));
-            
+
             return filePath;
         }
-        
+
         private string CreateImportManifestContent(string provider, string name, string version, string fileName, long fileSize, string fileHash, Tuple<string, string>[] compatibilityIds)
         {
-            var aduContent = new ImportManifest(
-                new UpdateId(provider, name, version),
-                "microsoft/swupdate:1", "1.2.3.4",
-                new List<ImportManifestCompatibilityInfo>(
-                    compatibilityIds.Select(c => new ImportManifestCompatibilityInfo(c.Item1, c.Item2))),
-                DateTime.UtcNow, new Version(2, 0), new List<ImportManifestFile>()
+            var aduContent = new
+            {
+                updateId = new {provider, name, version},
+                updateType = "microsoft/swupdate:1",
+                installedCriteria = "1.2.3.4",
+                compatibility = compatibilityIds.Select(c => new
                 {
-                    new ImportManifestFile(
-                        fileName, 
-                        fileSize, 
-                        new Dictionary<HashType, string>()
+                    deviceManufacturer = c.Item1, 
+                    deviceModel = c.Item2
+                }).ToArray(),
+                createdDateTime = DateTime.UtcNow,
+                manifestVersion = new Version(2, 0),
+                files = new[]
+                {
+                    new
+                    {
+                        fileName= fileName, 
+                        sizeInBytes = fileSize, 
+                        hashes = new Dictionary<string, string>()
                         {
-                            {
-                                HashType.Sha256, fileHash
-                            }
-                        })
-                });
+                            {"Sha256", fileHash}
+                        }
+                    }
+                }
+            };
 
             string filePath = Path.GetTempFileName();
             File.WriteAllText(filePath, JsonConvert.SerializeObject(aduContent, Formatting.Indented));
 
             return filePath;
         }
-        
-        private ImportUpdateInput CreateImportBody(string importManifestUrl, long importManifestFileSize, string importManifestFileHash, string payloadUrl)
+
+        private object CreateImportBody(string importManifestUrl, long importManifestFileSize, string importManifestFileHash, string payloadUrl)
         {
-            return new ImportUpdateInput(
-                new ImportManifestMetadata(
-                    importManifestUrl, 
-                    importManifestFileSize, 
-                    new Dictionary<string, string>()
-                    {
-                        { "SHA256", importManifestFileHash}
-                    }), 
-                new[]
+            return new
+            {
+                importManifest = new
                 {
-                    new FileImportMetadata(FileName, payloadUrl)
-                });
-        }        
-        
+                    url = importManifestUrl, 
+                    sizeInBytes = importManifestFileSize, 
+                    hashes = new Dictionary<string, string>()
+                    {
+                        {"SHA256", importManifestFileHash}
+                    }
+                }, 
+                files = new[] {new
+                {
+                    filename = FileName, 
+                    url = payloadUrl
+                }}
+            };
+        }
+
         private async Task<string> UploadFileAsync(string localFileToUpload, string storageId)
         {
             if (!CloudStorageAccount.TryParse(_storageConnectionString, out CloudStorageAccount storageAccount))
@@ -150,7 +162,7 @@ namespace ConsoleTest
             return $"{cloudBlockBlob.Uri.ToString()}{token}";
         }
 
-        
+
         private long GetFileSize(string filePath)
         {
             return new FileInfo(filePath).Length;

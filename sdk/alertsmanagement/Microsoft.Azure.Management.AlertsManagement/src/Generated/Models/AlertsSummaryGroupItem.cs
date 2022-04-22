@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <param name="count">Count of the aggregated field</param>
         /// <param name="groupedby">Name of the field aggregated</param>
         /// <param name="values">List of the items</param>
-        public AlertsSummaryGroupItem(string name = default(string), int? count = default(int?), string groupedby = default(string), IList<AlertsSummaryGroupItem> values = default(IList<AlertsSummaryGroupItem>))
+        public AlertsSummaryGroupItem(string name = default(string), long? count = default(long?), string groupedby = default(string), IList<AlertsSummaryGroupItem> values = default(IList<AlertsSummaryGroupItem>))
         {
             Name = name;
             Count = count;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Gets or sets count of the aggregated field
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
+        public long? Count { get; set; }
 
         /// <summary>
         /// Gets or sets name of the field aggregated

@@ -46,7 +46,6 @@
     },
     "variables": {
         "iotHubResourceId": "[resourceId('Microsoft.Devices/IotHubs', parameters('baseName'))]",
-        "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
         "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "serviceSasProperties": {
           "canonicalizedResource": "[concat('/blob/', parameters('storageAccountName'),'/',parameters('blobContainerName'))]",
@@ -58,15 +57,6 @@
       }
     },
     "resources": [
-        {
-            "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2018-09-01-preview",
-            "name": "[guid(resourceGroup().id)]",
-            "properties": {
-              "roleDefinitionId": "[variables('rbacOwnerRoleDefinitionId')]",
-              "principalId": "[parameters('testApplicationOid')]"
-            }
-        },
         {
             "type": "Microsoft.Devices/IotHubs",
             "apiVersion": "2020-03-01",

@@ -5,32 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application artifact. </summary>
     public partial class ApplicationArtifact
     {
         /// <summary> Initializes a new instance of ApplicationArtifact. </summary>
-        public ApplicationArtifact()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ApplicationArtifact. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
         /// <param name="type"> The managed application artifact type. </param>
-        internal ApplicationArtifact(string name, string uri, ApplicationArtifactType? type)
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        internal ApplicationArtifact(ApplicationArtifactName name, string uri, ApplicationArtifactType type)
         {
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
             Name = name;
             Uri = uri;
             Type = type;
         }
 
         /// <summary> The managed application artifact name. </summary>
-        public string Name { get; set; }
+        public ApplicationArtifactName Name { get; }
         /// <summary> The managed application artifact blob uri. </summary>
-        public string Uri { get; set; }
+        public string Uri { get; }
         /// <summary> The managed application artifact type. </summary>
-        public ApplicationArtifactType? Type { get; set; }
+        public ApplicationArtifactType Type { get; }
     }
 }

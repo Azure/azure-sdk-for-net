@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
         /// <param name="type"> The Compression setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         internal ZipDeflateReadSettings(string type, IDictionary<string, object> additionalProperties, object preserveZipFileNameAsFolder) : base(type, additionalProperties)
         {

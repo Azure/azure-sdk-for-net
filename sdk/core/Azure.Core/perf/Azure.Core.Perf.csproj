@@ -10,7 +10,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <!-- 
+      Explicit references to pull in patched versions of ASP.NET Core packages
+    -->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
 
 </Project>

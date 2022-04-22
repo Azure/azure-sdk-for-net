@@ -1,7 +1,7 @@
 # Signing and verifying keys
 
 This sample demonstrates how to sign data with both a RSA key and an EC key.
-To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
@@ -110,7 +110,7 @@ Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult
 
 To see the full example source, see:
 
-* [Synchronous Sample5_SignVerify.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerify.cs)
-* [Asynchronous Sample5_SignVerifyAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerifyAsync.cs)
+* [Synchronous Sample5_SignVerify.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerify.cs)
+* [Asynchronous Sample5_SignVerifyAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerifyAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

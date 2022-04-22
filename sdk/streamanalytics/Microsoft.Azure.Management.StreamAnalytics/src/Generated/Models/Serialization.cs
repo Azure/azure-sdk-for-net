@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Describes how data from an input is serialized or how data is
     /// serialized when written to an output.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Serialization")]
     public partial class Serialization
     {
         /// <summary>

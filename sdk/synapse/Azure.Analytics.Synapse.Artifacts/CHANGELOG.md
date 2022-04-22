@@ -1,7 +1,28 @@
 # Release History
 
-## 1.0.0-preview.11 (Unreleased)
+## 1.0.0-preview.14 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-preview.13 (2022-01-11)
+- Added `MetastoreOperations`.
+
+## 1.0.0-preview.12 (2021-11-09)
+- Added data flow flowlet
+- `KqlScriptContentCurrentConnection` now has poolName and databaseName properties
+
+## 1.0.0-preview.11 (2021-10-05)
+- Upgrade to [package-artifacts-composite-v1](https://github.com/Azure/azure-rest-api-specs/blob/bee724836ffdeb5458274037dc75f4d43576b5e3/specification/synapse/data-plane/readme.md#tag-package-artifacts-composite-v1)
+- Added `SparkConfigurationClient`, `KqlScriptsClient` and associated support types.
+- Update type of many modles from string to object
+- `SparkJobDefinition`, `Notebook` and `SqlScript` now has a folder property
+- `SqlScript` now has poolName and databaseName properties
 
 ## 1.0.0-preview.10 (2021-05-13)
 ### Key Bug Fixes

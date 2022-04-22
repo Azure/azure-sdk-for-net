@@ -24,8 +24,8 @@ namespace Azure.Storage
         /// <param name="range">
         /// Content range to download.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// Whether to request a transactional MD5 for the ranged download.
+        /// <param name="hashingOptions">
+        /// Options for transactional hashing on downloads.
         /// </param>
         /// <param name="async">
         /// Whether to perform the operation asynchronously.
@@ -38,7 +38,7 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            bool rangeGetContentHash,
+            DownloadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
 
@@ -106,9 +106,15 @@ namespace Azure.Storage
         /// </summary>
         private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
+        /// <summary>
+        /// Hashing options to use with <see cref="_downloadInternalFunc"/>.
+        /// </summary>
+        private readonly DownloadTransactionalHashingOptions _hashingOptions;
+
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
+            DownloadTransactionalHashingOptions hashingOptions,
             bool allowModifications,
             long initialLenght,
             long position = 0,
@@ -124,6 +130,20 @@ namespace Azure.Storage
             _bufferLength = 0;
             _length = initialLenght;
             _bufferInvalidated = false;
+
+            // the caller to this stream cannot defer validation, as they cannot access a returned hash
+            if (!(hashingOptions?.Validate ?? true))
+            {
+                throw Errors.CannotDeferTransactionalHashVerification();
+            }
+            // we defer hash validation on download calls to validate in-place with our existing buffer
+            _hashingOptions = hashingOptions == default
+                ? default
+                : new DownloadTransactionalHashingOptions
+                {
+                    Algorithm = hashingOptions.Algorithm,
+                    Validate = false
+                };
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -195,7 +215,7 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-            response = await _downloadInternalFunc(range, default, async, cancellationToken).ConfigureAwait(false);
+            response = await _downloadInternalFunc(range, _hashingOptions, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;
 
@@ -237,6 +257,13 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
+
+            // if we deferred transactional hash validation on download, validate now
+            // currently we always do but that may change
+            if (_hashingOptions != default && !_hashingOptions.Validate)
+            {
+                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _hashingOptions.Algorithm, response.GetRawResponse());
+            }
 
             return totalCopiedBytes;
         }

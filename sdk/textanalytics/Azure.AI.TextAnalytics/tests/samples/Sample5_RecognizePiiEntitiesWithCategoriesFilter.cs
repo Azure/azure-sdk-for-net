@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void RecognizePiiEntitiesWithCategories()
@@ -17,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string document = @"Parker Doe has repaid all of their loans as of 2020-04-25.
                                 Their SSN is 859-98-0987. To contact them, use their phone number 800-102-1100.
@@ -26,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             try
             {
                 // For sample purposes we want the service to only return SSN.
-                RecognizePiiEntitiesOptions options = new() { CategoriesFilter = { PiiEntityCategory.PhoneNumber } };
+                RecognizePiiEntitiesOptions options = new() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } };
                 Response<PiiEntityCollection> response = client.RecognizePiiEntities(document, options: options);
                 PiiEntityCollection entities = response.Value;
 

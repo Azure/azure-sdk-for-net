@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         internal static QueueScope _firstQueueScope;
         protected static QueueScope _secondaryNamespaceQueueScope;
-        private QueueScope _secondQueueScope;
+        protected static QueueScope _secondQueueScope;
         private QueueScope _thirdQueueScope;
         protected static TopicScope _topicScope;
 
@@ -197,6 +197,33 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await sender.SendMessageAsync(messageObj);
         }
 
+        internal async Task WriteQueueMessages(string[] messages, string[] sessionIds = null, string connectionString = default, string queueName = default)
+        {
+            await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
+
+            ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+            int sessionCounter = 0;
+            for (int i = 0; i < messages.Length; i++)
+            {
+                var message = new ServiceBusMessage(messages[i]);
+                message.ContentType = "application/text";
+
+                if (sessionIds != null && sessionIds.Length > 0)
+                {
+                    // evenly distribute the messages across sessions
+                    message.SessionId = sessionIds[sessionCounter++ % sessionIds.Length];
+                }
+
+                if (!batch.TryAddMessage(message))
+                {
+                    throw new InvalidOperationException("Unable to add message to batch.");
+                }
+            }
+
+            await sender.SendMessagesAsync(batch);
+        }
+
         internal async Task WriteQueueMessage(TestPoco obj, string sessionId = null)
         {
             var serializer = new DataContractSerializer(typeof(TestPoco));
@@ -232,6 +259,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
             await sender.SendMessageAsync(messageObj);
         }
+
+        protected static Action<IHostBuilder> EnableCrossEntityTransactions =>
+            builder => builder.ConfigureWebJobs(b =>
+            b.AddServiceBus(sbOptions =>
+            {
+                sbOptions.EnableCrossEntityTransactions = true;
+            }));
+
+        protected static Action<IHostBuilder> SetCustomErrorHandler =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.ProcessErrorAsync = ServiceBusEndToEndTests.TestCustomErrorHandler.ErrorHandler;
+                    sbOptions.MaxAutoLockRenewalDuration = TimeSpan.Zero;
+                    sbOptions.MaxConcurrentCalls = 1;
+                }));
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

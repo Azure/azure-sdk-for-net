@@ -58,11 +58,13 @@
                 Models.PoolInformation modelPoolInformation = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolInformation, item => item.GetTransportObject());
                     
                 asyncTask = this.parentBatchClient.ProtocolLayer.UpdateJob(
-                    this.Id,
-                    this.Priority,
+                    Id,
+                    Priority,
                     UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                     modelPoolInformation,
                     modelJobConstraints,
+                    MaxParallelTasks,
+                    AllowTaskPreemption,
                     modelMetadata,
                     behaveMgr,
                     cancellationToken);
@@ -121,10 +123,13 @@
             Models.PoolInformation modelPoolInformation = this.propertyContainer.PoolInformationProperty.
                 GetTransportObjectIfChanged<PoolInformation, Models.PoolInformation>();
             int? priority = this.propertyContainer.PriorityProperty.GetIfChangedOrNull();
+            int? maxParallelTasks = this.propertyContainer.MaxParallelTasksProperty.GetIfChangedOrNull();
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchJob(
-                this.Id,
+                Id,
                 priority,
+                maxParallelTasks,
+                AllowTaskPreemption,
                 UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                 modelPoolInformation,
                 modelJobConstraints,

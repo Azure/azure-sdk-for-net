@@ -56,9 +56,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Bytes > 8192)
+            if (Bytes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Bytes", 8192);
+                if (Bytes > 8192)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Bytes", 8192);
+                }
             }
         }
     }

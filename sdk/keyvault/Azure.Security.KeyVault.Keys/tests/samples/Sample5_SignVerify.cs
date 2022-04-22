@@ -98,7 +98,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 #endregion
 
-#region Snippet:KeysSample5DeleteKeys
             DeleteKeyOperation rsaKeyOperation = keyClient.StartDeleteKey(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = keyClient.StartDeleteKey(ecKeyName);
 
@@ -110,7 +109,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 rsaKeyOperation.UpdateStatus();
                 ecKeyOperation.UpdateStatus();
             }
-#endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);

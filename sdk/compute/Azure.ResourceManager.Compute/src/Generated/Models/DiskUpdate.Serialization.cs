@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -77,6 +77,46 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                writer.WritePropertyName("networkAccessPolicy");
+                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                writer.WritePropertyName("diskAccessId");
+                writer.WriteStringValue(DiskAccessId);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier");
+                writer.WriteStringValue(Tier);
+            }
+            if (Optional.IsDefined(BurstingEnabled))
+            {
+                writer.WritePropertyName("burstingEnabled");
+                writer.WriteBooleanValue(BurstingEnabled.Value);
+            }
+            if (Optional.IsDefined(PurchasePlan))
+            {
+                writer.WritePropertyName("purchasePlan");
+                writer.WriteObjectValue(PurchasePlan);
+            }
+            if (Optional.IsDefined(SupportedCapabilities))
+            {
+                writer.WritePropertyName("supportedCapabilities");
+                writer.WriteObjectValue(SupportedCapabilities);
+            }
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                writer.WritePropertyName("supportsHibernation");
+                writer.WriteBooleanValue(SupportsHibernation.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

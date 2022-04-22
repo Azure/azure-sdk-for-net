@@ -25,6 +25,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             {
                 return (IConverter<TInput, ServiceBusMessage>)new ByteArrayToMessageConverter();
             }
+            else if (typeof(TInput) == typeof(BinaryData))
+            {
+                return (IConverter<TInput, ServiceBusMessage>)new BinaryDataToMessageConverter();
+            }
             else
             {
                 if (typeof(TInput).IsPrimitive)

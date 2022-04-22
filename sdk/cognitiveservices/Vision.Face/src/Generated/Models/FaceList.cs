@@ -19,7 +19,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// <summary>
     /// Face list object.
     /// </summary>
-    public partial class FaceList : MetaDataContract
+    public partial class FaceList
     {
         /// <summary>
         /// Initializes a new instance of the FaceList class.
@@ -43,10 +43,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// 'recognition_04'</param>
         /// <param name="persistedFaces">Persisted faces within the face
         /// list.</param>
-        public FaceList(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
-            : base(name, userData, recognitionModel)
+        public FaceList(string faceListId, string name, string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
         {
             FaceListId = faceListId;
+            Name = name;
+            UserData = userData;
+            RecognitionModel = recognitionModel;
             PersistedFaces = persistedFaces;
             CustomInit();
         }
@@ -63,6 +65,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public string FaceListId { get; set; }
 
         /// <summary>
+        /// Gets or sets user defined name, maximum length is 128.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets user specified data. Length should not exceed 16KB.
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'recognition_01',
+        /// 'recognition_02', 'recognition_03', 'recognition_04'
+        /// </summary>
+        [JsonProperty(PropertyName = "recognitionModel")]
+        public string RecognitionModel { get; set; }
+
+        /// <summary>
         /// Gets or sets persisted faces within the face list.
         /// </summary>
         [JsonProperty(PropertyName = "persistedFaces")]
@@ -74,12 +95,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (FaceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceListId");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
             if (FaceListId != null)
             {
@@ -90,6 +114,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(FaceListId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "FaceListId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
+            }
+            if (UserData != null)
+            {
+                if (UserData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
                 }
             }
             if (PersistedFaces != null)

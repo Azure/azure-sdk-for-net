@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seanmccragrs.queue.core.windows.net/test-queue-a4fd0840-f2ce-3b43-3783-67e896c703d5",
@@ -59,7 +59,7 @@
         "x-ms-request-id": "13a78f03-5003-0006-3ad4-e360d6000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanmccragrs.queue.core.windows.net/\u0022\u003E\u003CQueues\u003E\u003CQueue\u003E\u003CName\u003Etest-queue-a4fd0840-f2ce-3b43-3783-67e896c703d5\u003C/Name\u003E\u003C/Queue\u003E\u003C/Queues\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"http://seanmccragrs.queue.core.windows.net/\"><Queues><Queue><Name>test-queue-a4fd0840-f2ce-3b43-3783-67e896c703d5</Name></Queue></Queues><NextMarker /></EnumerationResults>"
     },
     {
       "RequestUri": "http://seanmccragrs.queue.core.windows.net/test-queue-a4fd0840-f2ce-3b43-3783-67e896c703d5",
@@ -94,6 +94,6 @@
   ],
   "Variables": {
     "RandomSeed": "278158023",
-    "Storage_TestConfigSecondary": "SecondaryTenant\nseanmccragrs\nU2FuaXRpemVk\nhttp://seanmccragrs.blob.core.windows.net\nhttp://seanmccragrs.file.core.windows.net\nhttp://seanmccragrs.queue.core.windows.net\nhttp://seanmccragrs.table.core.windows.net\n\n\n\n\nhttp://seanmccragrs-secondary.blob.core.windows.net\nhttp://seanmccragrs-secondary.file.core.windows.net\nhttp://seanmccragrs-secondary.queue.core.windows.net\nhttp://seanmccragrs-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanmccragrs.blob.core.windows.net/;QueueEndpoint=http://seanmccragrs.queue.core.windows.net/;FileEndpoint=http://seanmccragrs.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccragrs-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccragrs-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccragrs-secondary.file.core.windows.net/;AccountName=seanmccragrs;AccountKey=Sanitized\n"
+    "Storage_TestConfigSecondary": "SecondaryTenant\nseanmccragrs\nU2FuaXRpemVk\nhttp://seanmccragrs.blob.core.windows.net\nhttp://seanmccragrs.file.core.windows.net\nhttp://seanmccragrs.queue.core.windows.net\nhttp://seanmccragrs.table.core.windows.net\n\n\n\n\nhttp://seanmccragrs-secondary.blob.core.windows.net\nhttp://seanmccragrs-secondary.file.core.windows.net\nhttp://seanmccragrs-secondary.queue.core.windows.net\nhttp://seanmccragrs-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanmccragrs.blob.core.windows.net/;QueueEndpoint=http://seanmccragrs.queue.core.windows.net/;FileEndpoint=http://seanmccragrs.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccragrs-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccragrs-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccragrs-secondary.file.core.windows.net/;AccountName=seanmccragrs;AccountKey=Sanitized\n\n\n"
   }
 }

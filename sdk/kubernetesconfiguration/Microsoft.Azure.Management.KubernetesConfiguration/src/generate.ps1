@@ -1,1 +1,2 @@
-Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2020-07-01-preview
+Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-03 -Namespace "Microsoft.Azure.Management.KubernetesConfiguration" -SdkGenerationDirectory "$PSScriptRoot\Generated"
+Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-09 -Namespace "Microsoft.Azure.Management.KubernetesConfiguration.Extensions" -SdkGenerationDirectory "$PSScriptRoot\Extensions\Generated" -ClearMetadataLog $false

@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Data flow debug session info. </summary>
-    public partial class DataFlowDebugSessionInfo : IReadOnlyDictionary<string, object>
+    public partial class DataFlowDebugSessionInfo
     {
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
         internal DataFlowDebugSessionInfo()
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="startTime"> Start time of data flow debug session. </param>
         /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, string sessionId, string startTime, int? timeToLiveInMinutes, string lastActivityTime, IReadOnlyDictionary<string, object> additionalProperties)
         {
             DataFlowName = dataFlowName;
@@ -63,25 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int? TimeToLiveInMinutes { get; }
         /// <summary> Last activity time of data flow debug session. </summary>
         public string LastActivityTime { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

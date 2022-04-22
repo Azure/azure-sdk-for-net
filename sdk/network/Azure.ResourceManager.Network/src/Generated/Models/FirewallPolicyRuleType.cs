@@ -10,25 +10,28 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The type of the rule. </summary>
+    /// <summary> Rule Type. </summary>
     public readonly partial struct FirewallPolicyRuleType : IEquatable<FirewallPolicyRuleType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="FirewallPolicyRuleType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyRuleType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string FirewallPolicyNatRuleValue = "FirewallPolicyNatRule";
-        private const string FirewallPolicyFilterRuleValue = "FirewallPolicyFilterRule";
+        private const string ApplicationRuleValue = "ApplicationRule";
+        private const string NetworkRuleValue = "NetworkRule";
+        private const string NatRuleValue = "NatRule";
 
-        /// <summary> FirewallPolicyNatRule. </summary>
-        public static FirewallPolicyRuleType FirewallPolicyNatRule { get; } = new FirewallPolicyRuleType(FirewallPolicyNatRuleValue);
-        /// <summary> FirewallPolicyFilterRule. </summary>
-        public static FirewallPolicyRuleType FirewallPolicyFilterRule { get; } = new FirewallPolicyRuleType(FirewallPolicyFilterRuleValue);
+        /// <summary> ApplicationRule. </summary>
+        public static FirewallPolicyRuleType ApplicationRule { get; } = new FirewallPolicyRuleType(ApplicationRuleValue);
+        /// <summary> NetworkRule. </summary>
+        public static FirewallPolicyRuleType NetworkRule { get; } = new FirewallPolicyRuleType(NetworkRuleValue);
+        /// <summary> NatRule. </summary>
+        public static FirewallPolicyRuleType NatRule { get; } = new FirewallPolicyRuleType(NatRuleValue);
         /// <summary> Determines if two <see cref="FirewallPolicyRuleType"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicyRuleType left, FirewallPolicyRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyRuleType"/> values are not the same. </summary>

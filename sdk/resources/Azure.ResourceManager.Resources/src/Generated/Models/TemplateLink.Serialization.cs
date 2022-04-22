@@ -15,20 +15,41 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri");
+                writer.WriteStringValue(Uri);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(RelativePath))
+            {
+                writer.WritePropertyName("relativePath");
+                writer.WriteStringValue(RelativePath);
+            }
             if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion");
                 writer.WriteStringValue(ContentVersion);
+            }
+            if (Optional.IsDefined(QueryString))
+            {
+                writer.WritePropertyName("queryString");
+                writer.WriteStringValue(QueryString);
             }
             writer.WriteEndObject();
         }
 
         internal static TemplateLink DeserializeTemplateLink(JsonElement element)
         {
-            string uri = default;
+            Optional<string> uri = default;
+            Optional<string> id = default;
+            Optional<string> relativePath = default;
             Optional<string> contentVersion = default;
+            Optional<string> queryString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
@@ -36,13 +57,28 @@ namespace Azure.ResourceManager.Resources.Models
                     uri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("relativePath"))
+                {
+                    relativePath = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("contentVersion"))
                 {
                     contentVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("queryString"))
+                {
+                    queryString = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TemplateLink(uri, contentVersion.Value);
+            return new TemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value);
         }
     }
 }

@@ -2,7 +2,7 @@
   "Name": "DiskEncryptionConfiguration",
   "ProtocolName": "Models.DiskEncryptionConfiguration",
   "SummaryComment": "The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Shared Image Gallery Image.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "Properties": [
     {
       "Key": {

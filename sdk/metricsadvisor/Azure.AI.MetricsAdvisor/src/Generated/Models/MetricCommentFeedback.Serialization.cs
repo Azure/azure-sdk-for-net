@@ -7,33 +7,34 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     public partial class MetricCommentFeedback : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
-                if (StartTime != null)
+                if (StartsOn != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartTime.Value, "O");
+                    writer.WriteStringValue(StartsOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn))
             {
-                if (EndTime != null)
+                if (EndsOn != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndTime.Value, "O");
+                    writer.WriteStringValue(EndsOn.Value, "O");
                 }
                 else
                 {
@@ -43,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -56,12 +57,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             CommentFeedbackValue value = default;
-            FeedbackType feedbackType = default;
+            MetricFeedbackKind feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackDimensionFilter dimensionFilter = default;
+            FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -91,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("feedbackType"))
                 {
-                    feedbackType = new FeedbackType(property.Value.GetString());
+                    feedbackType = new MetricFeedbackKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("feedbackId"))
@@ -121,7 +122,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
             }

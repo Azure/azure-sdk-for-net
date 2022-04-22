@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "netapp/resource-manager" -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--use:@microsoft.azure/autorest.csharp@2.3.90"
+Start-AutoRestCodeGeneration -ResourceProvider "netapp/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch "main" -AutoRestCodeGenerationFlags "--use:@microsoft.azure/autorest.csharp@2.3.90"

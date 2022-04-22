@@ -3,6 +3,7 @@
 
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -14,15 +15,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             SanitizedHeaders.Add(Constants.SubscriptionAuthorizationHeader);
             SanitizedHeaders.Add(Constants.ApiAuthorizationHeader);
             AddJsonPathSanitizer("$..password");
+            AddJsonPathSanitizer("$..certificatePassword");
             AddJsonPathSanitizer("$..clientSecret");
             AddJsonPathSanitizer("$..keyVaultClientSecret");
-            AddJsonPathSanitizer("$..connectionString");
             AddJsonPathSanitizer("$..apiKey");
             AddJsonPathSanitizer("$..accountKey");
             AddJsonPathSanitizer("$..authHeader");
             AddJsonPathSanitizer("$..httpHeader");
-            // TODO: Remove when re-recording
-            LegacyConvertJsonDateTokens = true;
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"\w+@microsoft.com", "foo@contoso.com"));
         }
 
         public override string SanitizeTextBody(string contentType, string body)

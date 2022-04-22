@@ -2,7 +2,7 @@
 
 The `EventProcessorClient` supports a set of options to configure many aspects of its core functionality including how it communicates with the Event Hubs service.  This sample demonstrates some of these options.  Configuration of processing-related configuration will be discussed in the samples dedicated to that feature.
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
 ## Influencing load balancing behavior
 
@@ -216,6 +216,52 @@ var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 var processorOptions = new EventProcessorClientOptions();
 processorOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    eventHubsConnectionString,
+    eventHubName,
+    processorOptions);
+```
+
+### Influencing SSL certificate validation
+
+For some environments using a proxy or custom gateway for routing traffic to Event Hubs, a certificate not trusted by the root certificate authorities may be issued.  This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.  
+
+By default, these certificates are not trusted by the Event Hubs client library and the connection will be refused.  To enable these scenarios, a [RemoteCertificateValidationCallback](https://docs.microsoft.com/dotnet/api/system.net.security.remotecertificatevalidationcallback) can be registered to provide custom validation logic for remote certificates.  This allows an application to override the default trust decision and assert responsibility for accepting or rejecting the certificate.
+
+```C# Snippet:EventHubs_Processor_Sample02_RemoteCertificateValidationCallback
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+static bool ValidateServerCertificate(
+      object sender,
+      X509Certificate certificate,
+      X509Chain chain,
+      SslPolicyErrors sslPolicyErrors)
+{
+    if ((sslPolicyErrors == SslPolicyErrors.None)
+        || (certificate.Issuer == "My Company CA"))
+    {
+         return true;
+    }
+
+    // Do not allow communication with unauthorized servers.
+
+    return false;
+}
+
+var processorOptions = new EventProcessorClientOptions();
+processorOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
 
 var storageClient = new BlobContainerClient(
     storageConnectionString,

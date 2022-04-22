@@ -11,17 +11,26 @@ namespace Azure.AI.TextAnalytics
     public class AnalyzeActionsResult
     {
         internal AnalyzeActionsResult(
-            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
-            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
+            )
         {
-            ExtractKeyPhrasesResults = extractKeyPhrasesActionResult;
+            ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
             RecognizeEntitiesResults = recognizeEntitiesActionResults;
             RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
-            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionsResults;
-            AnalyzeSentimentResults = analyzeSentimentActionsResults;
+            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
+            AnalyzeSentimentResults = analyzeSentimentActionResults;
+            ExtractSummaryResults = extractSummaryActionResults;
+            SingleCategoryClassifyResults = singleCategoryClassifyActionResults;
+            MultiCategoryClassifyResults = multiCategoryClassifyActionResults;
+            RecognizeCustomEntitiesResults = recognizeCustomEntitiesActionResults;
         }
 
         /// <summary>
@@ -48,5 +57,25 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="AnalyzeSentimentActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="RecognizeCustomEntitiesActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="SingleCategoryClassifyActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<SingleCategoryClassifyActionResult> SingleCategoryClassifyResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="MultiCategoryClassifyActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<MultiCategoryClassifyActionResult> MultiCategoryClassifyResults { get; }
     }
 }

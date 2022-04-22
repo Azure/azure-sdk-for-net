@@ -267,7 +267,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"9C51A40D7D9DD9268A7DB61866C64B72\",\r\n  \"secondaryKey\": \"5FE92070E6326F966A041DE922E51657\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -487,7 +487,7 @@
       "RequestUri": "/indexes('azsmnet4633')/docs/search.index?api-version=2019-05-06",
       "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NjMzJykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxOS0wNS0wNg==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"Key\": \"1\",\r\n      \"Bools\": [\r\n        true,\r\n        false\r\n      ],\r\n      \"Dates\": [\r\n        \"2019-04-14T21:24:00+00:00\",\r\n        \"1999-12-31T23:59:59+00:00\"\r\n      ],\r\n      \"Doubles\": [\r\n        \"-INF\",\r\n        0.0,\r\n        2.78,\r\n        \"NaN\",\r\n        3.14,\r\n        \"INF\"\r\n      ],\r\n      \"Ints\": [\r\n        1,\r\n        2,\r\n        3,\r\n        4,\r\n        -13,\r\n        5,\r\n        0\r\n      ],\r\n      \"Longs\": [\r\n        -9999999999999999,\r\n        832372345832523\r\n      ],\r\n      \"Points\": [\r\n        {\r\n          \"type\": \"Point\",\r\n          \"coordinates\": [\r\n            -123.0,\r\n            49.0\r\n          ]\r\n        },\r\n        {\r\n          \"type\": \"Point\",\r\n          \"coordinates\": [\r\n            -121.0,\r\n            47.0\r\n          ]\r\n        }\r\n      ],\r\n      \"Strings\": [\r\n        \"hello\",\r\n        \"2019-04-14T21:56:00+00:00\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"Key\": \"1\",\r\n      \"Bools\": [\r\n        true,\r\n        false\r\n      ],\r\n      \"Dates\": [\r\n        \"2019-04-14T14:24:00-07:00\",\r\n        \"1999-12-31T15:59:59-08:00\"\r\n      ],\r\n      \"Doubles\": [\r\n        \"-INF\",\r\n        0.0,\r\n        2.78,\r\n        \"NaN\",\r\n        3.14,\r\n        \"INF\"\r\n      ],\r\n      \"Ints\": [\r\n        1,\r\n        2,\r\n        3,\r\n        4,\r\n        -13,\r\n        5,\r\n        0\r\n      ],\r\n      \"Longs\": [\r\n        -9999999999999999,\r\n        832372345832523\r\n      ],\r\n      \"Points\": [\r\n        {\r\n          \"type\": \"Point\",\r\n          \"coordinates\": [\r\n            -123.0,\r\n            49.0\r\n          ]\r\n        },\r\n        {\r\n          \"type\": \"Point\",\r\n          \"coordinates\": [\r\n            -121.0,\r\n            47.0\r\n          ]\r\n        }\r\n      ],\r\n      \"Strings\": [\r\n        \"hello\",\r\n        \"2019-04-14T14:56:00-07:00\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
           "f745f4c0-f321-4cf0-8d17-bb62946becc7"
@@ -612,7 +612,7 @@
           "463"
         ]
       },
-      "ResponseBody": "{\r\n  \"Key\": \"1\",\r\n  \"Bools\": [\r\n    true,\r\n    false\r\n  ],\r\n  \"Dates\": [\r\n    \"2019-04-14T21:24:00Z\",\r\n    \"1999-12-31T23:59:59Z\"\r\n  ],\r\n  \"Doubles\": [\r\n    \"-INF\",\r\n    0.0,\r\n    2.78,\r\n    \"NaN\",\r\n    3.14,\r\n    \"INF\"\r\n  ],\r\n  \"Ints\": [\r\n    1,\r\n    2,\r\n    3,\r\n    4,\r\n    -13,\r\n    5,\r\n    0\r\n  ],\r\n  \"Longs\": [\r\n    -9999999999999999,\r\n    832372345832523\r\n  ],\r\n  \"Points\": [\r\n    {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [\r\n        -123.0,\r\n        49.0\r\n      ],\r\n      \"crs\": {\r\n        \"type\": \"name\",\r\n        \"properties\": {\r\n          \"name\": \"EPSG:4326\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [\r\n        -121.0,\r\n        47.0\r\n      ],\r\n      \"crs\": {\r\n        \"type\": \"name\",\r\n        \"properties\": {\r\n          \"name\": \"EPSG:4326\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"Strings\": [\r\n    \"hello\",\r\n    \"2019-04-14T21:56:00+00:00\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"Key\": \"1\",\r\n  \"Bools\": [\r\n    true,\r\n    false\r\n  ],\r\n  \"Dates\": [\r\n    \"2019-04-14T21:24:00Z\",\r\n    \"1999-12-31T23:59:59Z\"\r\n  ],\r\n  \"Doubles\": [\r\n    \"-INF\",\r\n    0.0,\r\n    2.78,\r\n    \"NaN\",\r\n    3.14,\r\n    \"INF\"\r\n  ],\r\n  \"Ints\": [\r\n    1,\r\n    2,\r\n    3,\r\n    4,\r\n    -13,\r\n    5,\r\n    0\r\n  ],\r\n  \"Longs\": [\r\n    -9999999999999999,\r\n    832372345832523\r\n  ],\r\n  \"Points\": [\r\n    {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [\r\n        -123.0,\r\n        49.0\r\n      ],\r\n      \"crs\": {\r\n        \"type\": \"name\",\r\n        \"properties\": {\r\n          \"name\": \"EPSG:4326\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [\r\n        -121.0,\r\n        47.0\r\n      ],\r\n      \"crs\": {\r\n        \"type\": \"name\",\r\n        \"properties\": {\r\n          \"name\": \"EPSG:4326\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"Strings\": [\r\n    \"hello\",\r\n    \"2019-04-14T14:56:00-07:00\"\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Details about a user assigned identity.
+    /// </summary>
     public partial class UserAssignedIdentity
     {
         /// <summary>
@@ -26,11 +29,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the UserAssignedIdentity class.
         /// </summary>
-        /// <param name="resourceId">The resource id of the user assigned
+        /// <param name="resourceId">The resource ID of the user assigned
         /// identity.</param>
-        /// <param name="clientId">The client id of the user assigned
+        /// <param name="clientId">The client ID of the user assigned
         /// identity.</param>
-        /// <param name="objectId">The object id of the user assigned
+        /// <param name="objectId">The object ID of the user assigned
         /// identity.</param>
         public UserAssignedIdentity(string resourceId = default(string), string clientId = default(string), string objectId = default(string))
         {
@@ -46,19 +49,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource id of the user assigned identity.
+        /// Gets or sets the resource ID of the user assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the client id of the user assigned identity.
+        /// Gets or sets the client ID of the user assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets the object id of the user assigned identity.
+        /// Gets or sets the object ID of the user assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }

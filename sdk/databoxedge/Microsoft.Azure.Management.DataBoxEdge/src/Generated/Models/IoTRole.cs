@@ -47,15 +47,25 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
+        /// <param name="systemData">Role configured on ASE resource</param>
         /// <param name="shareMappings">Mount points of shares in
         /// role(s).</param>
-        public IoTRole(string hostPlatform, IoTDeviceInfo ioTDeviceDetails, IoTDeviceInfo ioTEdgeDeviceDetails, string roleStatus, string id = default(string), string name = default(string), string type = default(string), IList<MountPointMap> shareMappings = default(IList<MountPointMap>))
-            : base(id, name, type)
+        /// <param name="ioTEdgeAgentInfo">Iot edge agent details to download
+        /// the agent and bootstrap iot runtime.</param>
+        /// <param name="hostPlatformType">Platform where the Iot runtime is
+        /// hosted. Possible values include: 'KubernetesCluster',
+        /// 'LinuxVM'</param>
+        /// <param name="computeResource">Resource allocation</param>
+        public IoTRole(string hostPlatform, IoTDeviceInfo ioTDeviceDetails, IoTDeviceInfo ioTEdgeDeviceDetails, string roleStatus, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<MountPointMap> shareMappings = default(IList<MountPointMap>), IoTEdgeAgentInfo ioTEdgeAgentInfo = default(IoTEdgeAgentInfo), string hostPlatformType = default(string), ComputeResource computeResource = default(ComputeResource))
+            : base(id, name, type, systemData)
         {
             HostPlatform = hostPlatform;
             IoTDeviceDetails = ioTDeviceDetails;
             IoTEdgeDeviceDetails = ioTEdgeDeviceDetails;
             ShareMappings = shareMappings;
+            IoTEdgeAgentInfo = ioTEdgeAgentInfo;
+            HostPlatformType = hostPlatformType;
+            ComputeResource = computeResource;
             RoleStatus = roleStatus;
             CustomInit();
         }
@@ -91,6 +101,26 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareMappings")]
         public IList<MountPointMap> ShareMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets iot edge agent details to download the agent and
+        /// bootstrap iot runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ioTEdgeAgentInfo")]
+        public IoTEdgeAgentInfo IoTEdgeAgentInfo { get; set; }
+
+        /// <summary>
+        /// Gets platform where the Iot runtime is hosted. Possible values
+        /// include: 'KubernetesCluster', 'LinuxVM'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostPlatformType")]
+        public string HostPlatformType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource allocation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computeResource")]
+        public ComputeResource ComputeResource { get; set; }
 
         /// <summary>
         /// Gets or sets role status. Possible values include: 'Enabled',
@@ -140,6 +170,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
                         element.Validate();
                     }
                 }
+            }
+            if (IoTEdgeAgentInfo != null)
+            {
+                IoTEdgeAgentInfo.Validate();
+            }
+            if (ComputeResource != null)
+            {
+                ComputeResource.Validate();
             }
         }
     }

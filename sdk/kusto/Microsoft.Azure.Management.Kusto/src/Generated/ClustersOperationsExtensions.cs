@@ -594,6 +594,46 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Gets the network endpoints of all outbound dependencies of a Kusto cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IPage<OutboundNetworkDependenciesEndpoint> ListOutboundNetworkDependenciesEndpoints(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the network endpoints of all outbound dependencies of a Kusto cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OutboundNetworkDependenciesEndpoint>> ListOutboundNetworkDependenciesEndpointsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns a list of language extensions that can run within KQL queries.
             /// </summary>
             /// <param name='operations'>
@@ -1121,6 +1161,40 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task BeginRemoveLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRemoveLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, languageExtensionsToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the network endpoints of all outbound dependencies of a Kusto cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<OutboundNetworkDependenciesEndpoint> ListOutboundNetworkDependenciesEndpointsNext(this IClustersOperations operations, string nextPageLink)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the network endpoints of all outbound dependencies of a Kusto cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OutboundNetworkDependenciesEndpoint>> ListOutboundNetworkDependenciesEndpointsNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

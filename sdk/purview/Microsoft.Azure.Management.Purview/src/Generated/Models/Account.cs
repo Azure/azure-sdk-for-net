@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// resource</param>
         /// <param name="location">Gets or sets the location.</param>
         /// <param name="name">Gets or sets the name.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="tags">Tags on the azure resource.</param>
         /// <param name="type">Gets or sets the type.</param>
         /// <param name="cloudConnectors">Cloud connectors.
@@ -52,6 +54,8 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// <param name="endpoints">The URIs that are the public endpoints of
         /// the account.</param>
         /// <param name="friendlyName">Gets or sets the friendly name.</param>
+        /// <param name="managedResourceGroupName">Gets or sets the managed
+        /// resource group name</param>
         /// <param name="managedResources">Gets the resource identifiers of the
         /// managed resources.</param>
         /// <param name="privateEndpointConnections">Gets the private endpoint
@@ -59,13 +63,13 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// <param name="provisioningState">Gets or sets the state of the
         /// provisioning. Possible values include: 'Unknown', 'Creating',
         /// 'Moving', 'Deleting', 'SoftDeleting', 'SoftDeleted', 'Failed',
-        /// 'Succeeded'</param>
+        /// 'Succeeded', 'Canceled'</param>
         /// <param name="publicNetworkAccess">Gets or sets the public network
         /// access. Possible values include: 'NotSpecified', 'Enabled',
         /// 'Disabled'</param>
         /// <param name="sku">Gets or sets the Sku.</param>
-        public Account(string id = default(string), Identity identity = default(Identity), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), CloudConnectors cloudConnectors = default(CloudConnectors), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string createdByObjectId = default(string), AccountPropertiesEndpoints endpoints = default(AccountPropertiesEndpoints), string friendlyName = default(string), AccountPropertiesManagedResources managedResources = default(AccountPropertiesManagedResources), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string publicNetworkAccess = default(string), AccountSku sku = default(AccountSku))
-            : base(id, identity, location, name, tags, type)
+        public Account(string id = default(string), Identity identity = default(Identity), string location = default(string), string name = default(string), TrackedResourceSystemData systemData = default(TrackedResourceSystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), CloudConnectors cloudConnectors = default(CloudConnectors), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string createdByObjectId = default(string), AccountPropertiesEndpoints endpoints = default(AccountPropertiesEndpoints), string friendlyName = default(string), string managedResourceGroupName = default(string), AccountPropertiesManagedResources managedResources = default(AccountPropertiesManagedResources), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string publicNetworkAccess = default(string), AccountSku sku = default(AccountSku))
+            : base(id, identity, location, name, systemData, tags, type)
         {
             CloudConnectors = cloudConnectors;
             CreatedAt = createdAt;
@@ -73,6 +77,7 @@ namespace Microsoft.Azure.Management.Purview.Models
             CreatedByObjectId = createdByObjectId;
             Endpoints = endpoints;
             FriendlyName = friendlyName;
+            ManagedResourceGroupName = managedResourceGroupName;
             ManagedResources = managedResources;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
@@ -124,6 +129,12 @@ namespace Microsoft.Azure.Management.Purview.Models
         public string FriendlyName { get; private set; }
 
         /// <summary>
+        /// Gets or sets the managed resource group name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedResourceGroupName")]
+        public string ManagedResourceGroupName { get; set; }
+
+        /// <summary>
         /// Gets the resource identifiers of the managed resources.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedResources")]
@@ -138,7 +149,7 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// <summary>
         /// Gets or sets the state of the provisioning. Possible values
         /// include: 'Unknown', 'Creating', 'Moving', 'Deleting',
-        /// 'SoftDeleting', 'SoftDeleted', 'Failed', 'Succeeded'
+        /// 'SoftDeleting', 'SoftDeleted', 'Failed', 'Succeeded', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

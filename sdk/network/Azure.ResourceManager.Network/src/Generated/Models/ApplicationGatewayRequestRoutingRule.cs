@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request routing rule of an application gateway. </summary>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(string id, string name, string etag, string type, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, SubResource backendAddressPool, SubResource backendHttpSettings, SubResource httpListener, SubResource urlPathMap, SubResource rewriteRuleSet, SubResource redirectConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayRequestRoutingRule(string id, string name, string etag, string type, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -56,17 +58,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the request routing rule. </summary>
         public int? Priority { get; set; }
         /// <summary> Backend address pool resource of the application gateway. </summary>
-        public SubResource BackendAddressPool { get; set; }
+        public WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Backend http settings resource of the application gateway. </summary>
-        public SubResource BackendHttpSettings { get; set; }
+        public WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Http listener resource of the application gateway. </summary>
-        public SubResource HttpListener { get; set; }
+        public WritableSubResource HttpListener { get; set; }
         /// <summary> URL path map resource of the application gateway. </summary>
-        public SubResource UrlPathMap { get; set; }
+        public WritableSubResource UrlPathMap { get; set; }
         /// <summary> Rewrite Rule Set resource in Basic rule of the application gateway. </summary>
-        public SubResource RewriteRuleSet { get; set; }
+        public WritableSubResource RewriteRuleSet { get; set; }
         /// <summary> Redirect configuration resource of the application gateway. </summary>
-        public SubResource RedirectConfiguration { get; set; }
+        public WritableSubResource RedirectConfiguration { get; set; }
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -31,9 +31,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         /// <param name="certificate">base-64 representation of the X509 leaf
         /// certificate .cer file or just .pem file content.</param>
-        public CertificateBodyDescription(string certificate = default(string))
+        /// <param name="isVerified">True indicates that the certificate will
+        /// be created in verified state and proof of possession will not be
+        /// required.</param>
+        public CertificateBodyDescription(string certificate = default(string), bool? isVerified = default(bool?))
         {
             Certificate = certificate;
+            IsVerified = isVerified;
             CustomInit();
         }
 
@@ -48,6 +52,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificate")]
         public string Certificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets true indicates that the certificate will be created in
+        /// verified state and proof of possession will not be required.
+        /// </summary>
+        [JsonProperty(PropertyName = "isVerified")]
+        public bool? IsVerified { get; set; }
 
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     return new EcCryptographyProvider(keyMaterial, keyProperties, localOnly);
                 }
 
-                if (keyMaterial.KeyType == KeyType.Oct || keyMaterial.KeyType == KeyType.OctHsm)
+                if ((keyMaterial.KeyType == KeyType.Oct || keyMaterial.KeyType == KeyType.OctHsm) && keyMaterial.HasPrivateKey)
                 {
                     return new AesCryptographyProvider(keyMaterial, keyProperties, localOnly);
                 }

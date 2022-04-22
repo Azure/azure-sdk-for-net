@@ -15,23 +15,47 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("daysAfterModificationGreaterThan");
-            writer.WriteNumberValue(DaysAfterModificationGreaterThan);
+            if (Optional.IsDefined(DaysAfterModificationGreaterThan))
+            {
+                writer.WritePropertyName("daysAfterModificationGreaterThan");
+                writer.WriteNumberValue(DaysAfterModificationGreaterThan.Value);
+            }
+            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
+            {
+                writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan");
+                writer.WriteNumberValue(DaysAfterLastAccessTimeGreaterThan.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
         {
-            float daysAfterModificationGreaterThan = default;
+            Optional<float> daysAfterModificationGreaterThan = default;
+            Optional<float> daysAfterLastAccessTimeGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterModificationGreaterThan"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     daysAfterModificationGreaterThan = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("daysAfterLastAccessTimeGreaterThan"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    daysAfterLastAccessTimeGreaterThan = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new DateAfterModification(daysAfterModificationGreaterThan);
+            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan));
         }
     }
 }

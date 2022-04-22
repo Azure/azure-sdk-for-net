@@ -37,12 +37,16 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// assigned to.</param>
         /// <param name="userPrincipalName">The user principal name of the user
         /// the incident is assigned to.</param>
-        public IncidentOwnerInfo(string email = default(string), string assignedTo = default(string), System.Guid? objectId = default(System.Guid?), string userPrincipalName = default(string))
+        /// <param name="ownerType">The type of the owner the incident is
+        /// assigned to. Possible values include: 'Unknown', 'User',
+        /// 'Group'</param>
+        public IncidentOwnerInfo(string email = default(string), string assignedTo = default(string), System.Guid? objectId = default(System.Guid?), string userPrincipalName = default(string), string ownerType = default(string))
         {
             Email = email;
             AssignedTo = assignedTo;
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
+            OwnerType = ownerType;
             CustomInit();
         }
 
@@ -75,6 +79,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "userPrincipalName")]
         public string UserPrincipalName { get; set; }
+
+        /// <summary>
+        /// Gets the type of the owner the incident is assigned to. Possible
+        /// values include: 'Unknown', 'User', 'Group'
+        /// </summary>
+        [JsonProperty(PropertyName = "ownerType")]
+        public string OwnerType { get; private set; }
 
     }
 }

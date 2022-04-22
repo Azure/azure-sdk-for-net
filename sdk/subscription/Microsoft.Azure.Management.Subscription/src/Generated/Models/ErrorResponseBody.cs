@@ -31,9 +31,14 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// Initializes a new instance of the ErrorResponseBody class.
         /// </summary>
         /// <param name="error">The details of the error.</param>
-        public ErrorResponseBody(ErrorResponse error = default(ErrorResponse))
+        /// <param name="code">Error code</param>
+        /// <param name="message">Error message indicating why the operation
+        /// failed.</param>
+        public ErrorResponseBody(ErrorResponse error = default(ErrorResponse), string code = default(string), string message = default(string))
         {
             Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -47,6 +52,18 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorResponse Error { get; set; }
+
+        /// <summary>
+        /// Gets or sets error code
+        /// </summary>
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets error message indicating why the operation failed.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }

@@ -32,8 +32,16 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventPosition DefaultStartingPosition { get; set; }
 
         /// <summary>
-        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> indicate that the processor is requesting that the handler
+        ///   stop its activities.  If this token is requesting cancellation, then either the processor is attempting to
+        ///   shutdown or ownership of the partition has changed.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler for initialization has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the processor will wait for the
+        ///   handler to complete before taking further action.
+        /// </remarks>
         ///
         public CancellationToken CancellationToken { get; }
 

@@ -702,12 +702,12 @@ namespace Storage.Tests
                     DateTime start2 = datenow.AddMinutes(1);
                     DateTime end2 = datenow.AddMinutes(40);
                     SignedIdentifier sig1 = new SignedIdentifier("testSig1",
-                        new AccessPolicy(start: start1,
-                            expiry: end1,
+                        new AccessPolicy(startTime: start1,
+                            expiryTime: end1,
                             permission: "rw"));
                     SignedIdentifier sig2 = new SignedIdentifier("testSig2",
-                        new AccessPolicy(start: start2,
-                            expiry: end2,
+                        new AccessPolicy(startTime: start2,
+                            expiryTime: end2,
                             permission: "rwdl"));
                     sigs.Add(sig1);
                     sigs.Add(sig2);

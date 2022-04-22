@@ -40,11 +40,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="displayName">Display name of the port mirroring
         /// profile.</param>
         /// <param name="direction">Direction of port mirroring profile.
-        /// Possible values include: 'INGRESS, EGRESS, BIDIRECTIONAL'</param>
+        /// Possible values include: 'INGRESS', 'EGRESS',
+        /// 'BIDIRECTIONAL'</param>
         /// <param name="source">Source VM Group.</param>
         /// <param name="destination">Destination VM Group.</param>
         /// <param name="status">Port Mirroring Status. Possible values
-        /// include: 'SUCCESS, FAILURE'</param>
+        /// include: 'SUCCESS', 'FAILURE'</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
         /// 'Updating'</param>
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets or sets direction of port mirroring profile. Possible values
-        /// include: 'INGRESS, EGRESS, BIDIRECTIONAL'
+        /// include: 'INGRESS', 'EGRESS', 'BIDIRECTIONAL'
         /// </summary>
         [JsonProperty(PropertyName = "properties.direction")]
         public string Direction { get; set; }
@@ -93,8 +94,8 @@ namespace Microsoft.Azure.Management.Avs.Models
         public string Destination { get; set; }
 
         /// <summary>
-        /// Gets port Mirroring Status. Possible values include: 'SUCCESS,
-        /// FAILURE'
+        /// Gets port Mirroring Status. Possible values include: 'SUCCESS',
+        /// 'FAILURE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

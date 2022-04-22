@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AppAction"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppAction"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppAction(string value)
         {

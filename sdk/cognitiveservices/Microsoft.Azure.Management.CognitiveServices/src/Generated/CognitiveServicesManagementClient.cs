@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the ICommitmentTiersOperations.
+        /// </summary>
+        public virtual ICommitmentTiersOperations CommitmentTiers { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -105,6 +110,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeploymentsOperations.
+        /// </summary>
+        public virtual IDeploymentsOperations Deployments { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        public virtual ICommitmentPlansOperations CommitmentPlans { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
@@ -351,10 +366,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             DeletedAccounts = new DeletedAccountsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Operations = new Operations(this);
+            CommitmentTiers = new CommitmentTiersOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Deployments = new DeploymentsOperations(this);
+            CommitmentPlans = new CommitmentPlansOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-04-30";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -626,6 +644,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='type'>
         /// The Type of the resource.
         /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -647,7 +668,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, string kind = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -680,10 +701,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             CheckDomainAvailabilityParameter parameters = new CheckDomainAvailabilityParameter();
-            if (subdomainName != null || type != null)
+            if (subdomainName != null || type != null || kind != null)
             {
                 parameters.SubdomainName = subdomainName;
                 parameters.Type = type;
+                parameters.Kind = kind;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

@@ -121,8 +121,8 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
-        [Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
-        //[Fact]
+        //[Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
+        [Fact]
         public void CreateVolumeWithBackupPolicy()
         {            
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -287,8 +287,7 @@ namespace NetApp.Tests.ResourceTests
                 Enabled = true,
                 DailyBackupsToKeep = 4,
                 WeeklyBackupsToKeep = 3,
-                MonthlyBackupsToKeep = 2,
-                YearlyBackupsToKeep = 1
+                MonthlyBackupsToKeep = 2
             };
 
             return testBackupPolicy;

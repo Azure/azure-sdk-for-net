@@ -12,7 +12,7 @@ namespace Azure.Core.GeoJson
     /// </summary>
     /// <example>
     /// Creating a polygon:
-    /// <code snippet="Snippet:CreatePolygon">
+    /// <code snippet="Snippet:CreatePolygon" language="csharp">
     /// var polygon = new GeoPolygon(new[]
     /// {
     ///     new GeoPosition(-122.108727, 47.649383),
@@ -23,7 +23,7 @@ namespace Azure.Core.GeoJson
     /// });
     /// </code>
     /// Creating a polygon with holes:
-    /// <code snippet="Snippet:CreatePolygonWithHoles">
+    /// <code snippet="Snippet:CreatePolygonWithHoles" language="csharp">
     /// var polygon = new GeoPolygon(new[]
     /// {
     ///     // Outer ring

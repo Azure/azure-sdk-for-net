@@ -50,5 +50,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "dataTypes")]
         public AlertsDataTypeOfDataConnector DataTypes { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DataTypes != null)
+            {
+                DataTypes.Validate();
+            }
+        }
     }
 }

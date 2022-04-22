@@ -21,15 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task CreateAndUploadNotebook()
         {
             #region Snippet:CreateNotebookClient
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
             var client = new NotebookClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:ConfigureNotebookResource
             string notebookName = "Test-Notebook";
-            var cell = new NotebookCell("code", new NotebookMetadata (), new string[] {
+            var cell = new NotebookCell("code", new NotebookMetadata(), new string[] {
                 "from azureml.opendatasets import NycTlcYellow\n",
                 "\n",
                 "data = NycTlcYellow()\n",

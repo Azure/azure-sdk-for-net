@@ -1,23 +1,36 @@
 {
-  "@id": "dtmi:com:example:Phone;2",
-  "@type": "Interface",
-  "displayName": "Phone",
-  "contents": [
-    {
-      "@type": "Component",
-      "name": "frontCamera",
-      "schema": "dtmi:com:example:Camera;3"
-    },
-    {
-      "@type": "Component",
-      "name": "backCamera",
-      "schema": "dtmi:com:example:Camera;3"
-    },
-    {
-      "@type": "Component",
-      "name": "deviceInfo",
-      "schema": "dtmi:azure:DeviceManagement:DeviceInformation;2"
-    }
-  ],
-  "@context": "dtmi:dtdl:context;2"
+    "@id": "dtmi:com:example:Phone;2",
+    "@type": "Interface",
+    "displayName": "Phone",
+    "contents": [
+        {
+            "@type": "Component",
+            "name": "frontCamera",
+            "schema": "dtmi:com:example:Camera;3"
+        },
+        {
+            "@type": "Component",
+            "name": "backCamera",
+            "schema": "dtmi:com:example:Camera;3"
+        },
+        {
+            "@type": "Component",
+            "name": "deviceInfo",
+            "schema": {
+                "@id": "dtmi:azure:DeviceManagement:DeviceInformation;3",
+                "@type": "Interface",
+                "extends": "dtmi:azure:DeviceManagement:DeviceInformation;2",
+                "contents": [
+                    {
+                        "@type": "Property",
+                        "name": "bootDevice",
+                        "displayName": "System Boot Device",
+                        "schema": "string",
+                        "description": "System Boot Device i.e. \\Device\\HardDiskVolume2"
+                    }
+                ]
+            }
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
 }

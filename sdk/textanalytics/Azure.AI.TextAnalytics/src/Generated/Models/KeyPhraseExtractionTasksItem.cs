@@ -14,22 +14,23 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class KeyPhraseExtractionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }
 
+        /// <summary> Gets the results. </summary>
         public KeyPhraseResult Results { get; }
     }
 }

@@ -27,5 +27,11 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

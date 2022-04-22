@@ -80,14 +80,18 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// schedules are formatted as [Frequency as integer]['Month(s)']
         /// [Comma separated list of month days] or [Frequency as
         /// integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth,
-        /// Last)] [Weekday Monday-Sunday]. Monthly schedule examples are
-        /// recurEvery: Month, recurEvery: 2Months, recurEvery: Month
-        /// day23,day24, recurEvery: Month Last Sunday, recurEvery: Month
-        /// Fourth Monday.</param>
+        /// Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)].
+        /// Offset value must be between -6 to 6 inclusive. Monthly schedule
+        /// examples are recurEvery: Month, recurEvery: 2Months, recurEvery:
+        /// Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month
+        /// Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery:
+        /// Month Third Sunday Offset6.</param>
         /// <param name="visibility">Gets or sets the visibility of the
         /// configuration. The default value is 'Custom'. Possible values
         /// include: 'Custom', 'Public'</param>
-        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string), string startDateTime = default(string), string expirationDateTime = default(string), string duration = default(string), string timeZone = default(string), string recurEvery = default(string), string visibility = default(string))
+        /// <param name="installPatches">The input parameters to be passed to
+        /// the patch run operation.</param>
+        public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string), string startDateTime = default(string), string expirationDateTime = default(string), string duration = default(string), string timeZone = default(string), string recurEvery = default(string), string visibility = default(string), InputPatchConfiguration installPatches = default(InputPatchConfiguration))
             : base(id, name, type, systemData)
         {
             Location = location;
@@ -101,6 +105,7 @@ namespace Microsoft.Azure.Management.Maintenance.Models
             TimeZone = timeZone;
             RecurEvery = recurEvery;
             Visibility = visibility;
+            InstallPatches = installPatches;
             CustomInit();
         }
 
@@ -191,10 +196,12 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are
         /// formatted as [Frequency as integer]['Month(s)'] [Comma separated
         /// list of month days] or [Frequency as integer]['Month(s)'] [Week of
-        /// Month (First, Second, Third, Fourth, Last)] [Weekday
-        /// Monday-Sunday]. Monthly schedule examples are recurEvery: Month,
+        /// Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]
+        /// [Optional Offset(No. of days)]. Offset value must be between -6 to
+        /// 6 inclusive. Monthly schedule examples are recurEvery: Month,
         /// recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery:
-        /// Month Last Sunday, recurEvery: Month Fourth Monday.
+        /// Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery:
+        /// Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceWindow.recurEvery")]
         public string RecurEvery { get; set; }
@@ -205,6 +212,13 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.visibility")]
         public string Visibility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the input parameters to be passed to the patch run
+        /// operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.installPatches")]
+        public InputPatchConfiguration InstallPatches { get; set; }
 
     }
 }

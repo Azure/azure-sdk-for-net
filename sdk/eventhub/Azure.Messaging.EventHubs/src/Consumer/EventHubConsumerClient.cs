@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
     ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubConsumerClient : IAsyncDisposable
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
@@ -73,6 +73,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         public string ConsumerGroup { get; }
+
+        /// <summary>
+        ///   A unique name used to identify this consumer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="EventHubConsumerClient"/> has been closed.
@@ -216,6 +222,10 @@ namespace Azure.Messaging.EventHubs.Consumer
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             ConsumerGroup = consumerGroup;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -293,6 +303,10 @@ namespace Azure.Messaging.EventHubs.Consumer
             Connection = connection;
             ConsumerGroup = consumerGroup;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -331,6 +345,10 @@ namespace Azure.Messaging.EventHubs.Consumer
             Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             ConsumerGroup = consumerGroup;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
+                ? Guid.NewGuid().ToString()
+                : clientOptions.Identifier;
         }
 
         /// <summary>
@@ -405,6 +423,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
@@ -432,6 +455,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso cref="ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
         ///
         public virtual async IAsyncEnumerable<PartitionEvent> ReadEventsFromPartitionAsync(string partitionId,
@@ -458,7 +486,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                 try
                 {
-                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
+                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
                     partitionContext = new PartitionContext(partitionId, transportConsumer);
                     emptyPartitionEvent = new PartitionEvent(partitionContext, null);
                 }
@@ -571,6 +599,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
@@ -601,6 +634,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
@@ -634,6 +672,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Each reader of events is presented with an independent iterator; if there are multiple readers, each receive their own copy of an event to
         ///   process, rather than competing for them.
         /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="EventHubConsumerClient"/> is unable to read from the Event Hub due to another reader having asserted exclusive ownership. In
+        ///   this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
@@ -731,9 +774,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
 
             IsClosed = true;
-
-            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, clientHash);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, Identifier);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -754,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -770,13 +811,13 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, Identifier, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, clientHash);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, Identifier);
             }
 
             // If there was an active exception pending from closing the individual
@@ -920,7 +961,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {

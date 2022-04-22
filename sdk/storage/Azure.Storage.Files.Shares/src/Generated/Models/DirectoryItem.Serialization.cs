@@ -15,11 +15,31 @@ namespace Azure.Storage.Files.Shares.Models
         internal static DirectoryItem DeserializeDirectoryItem(XElement element)
         {
             string name = default;
+            string fileId = default;
+            FileProperty properties = default;
+            string attributes = default;
+            string permissionKey = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = (string)nameElement;
             }
-            return new DirectoryItem(name);
+            if (element.Element("FileId") is XElement fileIdElement)
+            {
+                fileId = (string)fileIdElement;
+            }
+            if (element.Element("Properties") is XElement propertiesElement)
+            {
+                properties = FileProperty.DeserializeFileProperty(propertiesElement);
+            }
+            if (element.Element("Attributes") is XElement attributesElement)
+            {
+                attributes = (string)attributesElement;
+            }
+            if (element.Element("PermissionKey") is XElement permissionKeyElement)
+            {
+                permissionKey = (string)permissionKeyElement;
+            }
+            return new DirectoryItem(name, fileId, properties, attributes, permissionKey);
         }
     }
 }

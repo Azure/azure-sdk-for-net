@@ -1364,7 +1364,7 @@ namespace Microsoft.Azure.Search.Tests
                             }
                         }
                     },
-                    // Maximimum values
+                    // Maximum values
                     new Hotel()
                     {
                         HotelId = "2",

@@ -2,7 +2,7 @@
       "Name": "BatchError",
       "ProtocolName": "Models.BatchError",
       "SummaryComment": "An error received from the Azure Batch service.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

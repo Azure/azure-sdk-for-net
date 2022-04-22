@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Bastion Shareable Link. </summary>
-    public partial class BastionShareableLink
+    internal partial class BastionShareableLink
     {
         /// <summary> Initializes a new instance of BastionShareableLink. </summary>
         /// <param name="vm"> Reference of the virtual machine resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vm"/> is null. </exception>
-        public BastionShareableLink(VM vm)
+        internal BastionShareableLink(VM vm)
         {
             if (vm == null)
             {
@@ -25,21 +25,8 @@ namespace Azure.ResourceManager.Network.Models
             Vm = vm;
         }
 
-        /// <summary> Initializes a new instance of BastionShareableLink. </summary>
-        /// <param name="vm"> Reference of the virtual machine resource. </param>
-        /// <param name="bsl"> The unique Bastion Shareable Link to the virtual machine. </param>
-        /// <param name="createdAt"> The time when the link was created. </param>
-        /// <param name="message"> Optional field indicating the warning or error message related to the vm in case of partial failure. </param>
-        internal BastionShareableLink(VM vm, string bsl, string createdAt, string message)
-        {
-            Vm = vm;
-            Bsl = bsl;
-            CreatedAt = createdAt;
-            Message = message;
-        }
-
         /// <summary> Reference of the virtual machine resource. </summary>
-        public VM Vm { get; set; }
+        public VM Vm { get; }
         /// <summary> The unique Bastion Shareable Link to the virtual machine. </summary>
         public string Bsl { get; }
         /// <summary> The time when the link was created. </summary>

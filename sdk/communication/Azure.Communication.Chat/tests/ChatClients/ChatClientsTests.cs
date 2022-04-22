@@ -249,6 +249,20 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task SendTypingIndicatorWithOptionsShouldSucceed()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200);
+            TypingNotificationOptions options = new TypingNotificationOptions { SenderDisplayName = "display name test" };
+
+            //act
+            Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync(options);
+
+            //assert
+            Assert.AreEqual(200, typingNotificationResponse.Status);
+        }
+
+        [Test]
         public async Task SendReadReceiptShouldSucceed()
         {
             //arrange

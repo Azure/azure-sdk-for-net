@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,12 +30,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -1387,7 +1383,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateCreateCredentialRequest(DatasourceCredential body)
+        internal HttpMessage CreateCreateCredentialRequest(DataSourceCredentialEntity body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1409,7 +1405,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DatasourceCredential body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1432,7 +1428,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DatasourceCredential body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1541,7 +1537,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<DatasourceCredential>> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        public async Task<Response<DataSourceCredentialEntity>> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1554,9 +1550,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DatasourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatasourceCredential.DeserializeDatasourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1569,7 +1565,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<DatasourceCredential> UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        public Response<DataSourceCredentialEntity> UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1582,9 +1578,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DatasourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatasourceCredential.DeserializeDatasourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1657,7 +1653,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DatasourceCredential>> GetCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
+        public async Task<Response<DataSourceCredentialEntity>> GetCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCredentialRequest(credentialId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1665,9 +1661,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DatasourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatasourceCredential.DeserializeDatasourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1678,7 +1674,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DatasourceCredential> GetCredential(Guid credentialId, CancellationToken cancellationToken = default)
+        public Response<DataSourceCredentialEntity> GetCredential(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCredentialRequest(credentialId);
             _pipeline.Send(message, cancellationToken);
@@ -1686,9 +1682,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DatasourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatasourceCredential.DeserializeDatasourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1696,7 +1692,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
+        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1747,7 +1743,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1774,7 +1770,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
@@ -4563,7 +4559,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
+        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4588,7 +4584,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4622,7 +4618,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [],
+    "outputs": {
+        // TODO: Uncomment and define when test resources are deployed dynamically.
+        // Developers should define the following environment variables to run tests locally.
+        // Live test CIs will use environment variables defined via tests.yml.
+        //
+        // "CONVERSATIONS_KEY": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "CONVERSATIONS_PROJECT": {
+        //     "type": "string",
+        //     "value": "antischOne"
+        // },
+        // "CONVERSATIONS_URI": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "QUESTIONANSWERING_ENDPOINT": {
+        //     "type": "string",
+        //     "value": "https://wuppe.api.cognitive.microsoft.com"
+        // },
+        // "QUESTIONANSWERING_KEY": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "QUESTIONANSWERING_PROJECT": {
+        //     "type": "string",
+        //     "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
+        // }
+    }
+}

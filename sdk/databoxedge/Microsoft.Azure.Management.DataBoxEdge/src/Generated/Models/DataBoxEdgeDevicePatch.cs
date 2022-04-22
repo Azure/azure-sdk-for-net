@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DataBoxEdge.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
     /// <summary>
     /// The Data Box Edge/Gateway device patch.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DataBoxEdgeDevicePatch
     {
         /// <summary>
@@ -33,9 +36,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         /// <param name="tags">The tags attached to the Data Box Edge/Gateway
         /// resource.</param>
-        public DataBoxEdgeDevicePatch(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">Msi identity of the resource</param>
+        /// <param name="edgeProfile">Edge Profile property of the Data Box
+        /// Edge/Gateway device</param>
+        public DataBoxEdgeDevicePatch(IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), EdgeProfilePatch edgeProfile = default(EdgeProfilePatch))
         {
             Tags = tags;
+            Identity = identity;
+            EdgeProfile = edgeProfile;
             CustomInit();
         }
 
@@ -50,6 +58,19 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets msi identity of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets edge Profile property of the Data Box Edge/Gateway
+        /// device
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.edgeProfile")]
+        public EdgeProfilePatch EdgeProfile { get; set; }
 
     }
 }

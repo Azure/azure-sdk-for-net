@@ -222,9 +222,9 @@
 
         private static bool OverridesEqualsMethod(Type t)
         {
-            MethodInfo equalsMethod = t.GetMethods().Single(IsObjectEqualsMethod);
+            IEnumerable<MethodInfo> equalsMethods = t.GetMethods().Where(IsObjectEqualsMethod);
 
-            return !equalsMethod.DeclaringType.Equals(typeof (object));
+            return !equalsMethods.Any(d => d.DeclaringType.Equals(typeof (object)));
         }
     }
 }

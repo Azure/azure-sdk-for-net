@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="id">The resource Id for private endpoint</param>
+        /// <param name="id">The resource ID of the private endpoint</param>
         public PrivateEndpoint(string id = default(string))
         {
             Id = id;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource Id for private endpoint
+        /// Gets or sets the resource ID of the private endpoint
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

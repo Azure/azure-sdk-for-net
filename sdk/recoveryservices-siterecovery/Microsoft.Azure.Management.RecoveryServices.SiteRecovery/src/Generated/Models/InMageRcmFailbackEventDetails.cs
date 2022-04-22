@@ -33,9 +33,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="protectedItemName">The protected item name.</param>
-        public InMageRcmFailbackEventDetails(string protectedItemName = default(string))
+        /// <param name="vmName">The protected item name.</param>
+        /// <param name="applianceName">The appliance name.</param>
+        /// <param name="serverType">The server type.</param>
+        /// <param name="componentDisplayName">The component display
+        /// name.</param>
+        public InMageRcmFailbackEventDetails(string protectedItemName = default(string), string vmName = default(string), string applianceName = default(string), string serverType = default(string), string componentDisplayName = default(string))
         {
             ProtectedItemName = protectedItemName;
+            VmName = vmName;
+            ApplianceName = applianceName;
+            ServerType = serverType;
+            ComponentDisplayName = componentDisplayName;
             CustomInit();
         }
 
@@ -49,6 +58,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemName")]
         public string ProtectedItemName { get; private set; }
+
+        /// <summary>
+        /// Gets the protected item name.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmName")]
+        public string VmName { get; private set; }
+
+        /// <summary>
+        /// Gets the appliance name.
+        /// </summary>
+        [JsonProperty(PropertyName = "applianceName")]
+        public string ApplianceName { get; private set; }
+
+        /// <summary>
+        /// Gets the server type.
+        /// </summary>
+        [JsonProperty(PropertyName = "serverType")]
+        public string ServerType { get; private set; }
+
+        /// <summary>
+        /// Gets the component display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "componentDisplayName")]
+        public string ComponentDisplayName { get; private set; }
 
     }
 }

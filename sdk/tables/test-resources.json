@@ -4,10 +4,32 @@
     "parameters": {
         "baseName": {
             "type": "String"
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
+        },
+        "cosmosEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "cosmos.azure.com",
+          "metadata": {
+              "description": "The url suffix to use when accessing the cosmos data plane."
+          }
+        },
+        "storageEndpointSuffix": {
+          "type": "string",
+          "defaultValue": "core.windows.net",
+          "metadata": {
+              "description": "The url suffix to use when accessing the storage data plane."
+          }
         }
     },
     "variables": {
         "mgmtApiVersion": "2019-04-01",
+        "authorizationApiVersion": "2018-09-01-preview",
+        "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
         "location": "[resourceGroup().location]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
         "encryption": {
@@ -29,6 +51,15 @@
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('tableDataContributorRoleId', resourceGroup().id))]",
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",
@@ -90,6 +121,14 @@
         }
     ],
     "outputs": {
+        "COSMOS_TABLES_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('cosmosEndpointSuffix')]"
+        },
+        "STORAGE_ENDPOINT_SUFFIX": {
+            "type": "string",
+            "value": "[parameters('storageEndpointSuffix')]"
+        },
         "TABLES_STORAGE_ACCOUNT_NAME": {
             "type": "string",
             "value": "[variables('primaryAccountName')]"

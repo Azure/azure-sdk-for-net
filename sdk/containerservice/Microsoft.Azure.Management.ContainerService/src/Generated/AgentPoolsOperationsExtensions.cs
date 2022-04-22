@@ -24,10 +24,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Gets a list of agent pools in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Gets a list of agent pools in the specified managed cluster. The operation
-            /// returns properties of each agent pool.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -45,10 +41,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Gets a list of agent pools in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Gets a list of agent pools in the specified managed cluster. The operation
-            /// returns properties of each agent pool.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -70,11 +62,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets the agent pool.
+            /// Gets the specified managed cluster agent pool.
             /// </summary>
-            /// <remarks>
-            /// Gets the details of the agent pool by managed cluster and resource group.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -93,11 +82,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets the agent pool.
+            /// Gets the specified managed cluster agent pool.
             /// </summary>
-            /// <remarks>
-            /// Gets the details of the agent pool by managed cluster and resource group.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -122,11 +108,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Creates or updates an agent pool.
-            /// </summary>
-            /// <remarks>
             /// Creates or updates an agent pool in the specified managed cluster.
-            /// </remarks>
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -140,7 +123,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// The name of the agent pool.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update an agent pool operation.
+            /// The agent pool to create or update.
             /// </param>
             public static AgentPool CreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters)
             {
@@ -148,11 +131,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Creates or updates an agent pool.
-            /// </summary>
-            /// <remarks>
             /// Creates or updates an agent pool in the specified managed cluster.
-            /// </remarks>
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -166,7 +146,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// The name of the agent pool.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update an agent pool operation.
+            /// The agent pool to create or update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -180,11 +160,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Deletes an agent pool.
+            /// Deletes an agent pool in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Deletes the agent pool in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -203,11 +180,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Deletes an agent pool.
+            /// Deletes an agent pool in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Deletes the agent pool in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -229,12 +203,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets upgrade profile for an agent pool.
+            /// Gets the upgrade profile for an agent pool.
             /// </summary>
-            /// <remarks>
-            /// Gets the details of the upgrade profile for an agent pool with a specified
-            /// resource group and managed cluster name.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -253,12 +223,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets upgrade profile for an agent pool.
+            /// Gets the upgrade profile for an agent pool.
             /// </summary>
-            /// <remarks>
-            /// Gets the details of the upgrade profile for an agent pool with a specified
-            /// resource group and managed cluster name.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -283,10 +249,12 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets a list of supported versions for the specified agent pool.
+            /// Gets a list of supported Kubernetes versions for the specified agent pool.
             /// </summary>
             /// <remarks>
-            /// Gets a list of supported versions for the specified agent pool.
+            /// See [supported Kubernetes
+            /// versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions)
+            /// for more details about the version lifecycle.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -303,10 +271,12 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets a list of supported versions for the specified agent pool.
+            /// Gets a list of supported Kubernetes versions for the specified agent pool.
             /// </summary>
             /// <remarks>
-            /// Gets a list of supported versions for the specified agent pool.
+            /// See [supported Kubernetes
+            /// versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions)
+            /// for more details about the version lifecycle.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -329,10 +299,13 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Creates or updates an agent pool.
+            /// Upgrades the node image version of an agent pool to the latest.
             /// </summary>
             /// <remarks>
-            /// Creates or updates an agent pool in the specified managed cluster.
+            /// Upgrading the node image version of an agent pool applies the newest OS and
+            /// runtime updates to the nodes. AKS provides one new image per week with the
+            /// latest updates. For more details on node image versions, see:
+            /// https://docs.microsoft.com/azure/aks/node-image-upgrade
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,8 +319,60 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='agentPoolName'>
             /// The name of the agent pool.
             /// </param>
+            public static AgentPool UpgradeNodeImageVersion(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.UpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades the node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrading the node image version of an agent pool applies the newest OS and
+            /// runtime updates to the nodes. AKS provides one new image per week with the
+            /// latest updates. For more details on node image versions, see:
+            /// https://docs.microsoft.com/azure/aks/node-image-upgrade
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> UpgradeNodeImageVersionAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates an agent pool in the specified managed cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update an agent pool operation.
+            /// The agent pool to create or update.
             /// </param>
             public static AgentPool BeginCreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters)
             {
@@ -355,11 +380,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Creates or updates an agent pool.
-            /// </summary>
-            /// <remarks>
             /// Creates or updates an agent pool in the specified managed cluster.
-            /// </remarks>
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -373,7 +395,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// The name of the agent pool.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update an agent pool operation.
+            /// The agent pool to create or update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -387,11 +409,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Deletes an agent pool.
+            /// Deletes an agent pool in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Deletes the agent pool in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -410,11 +429,8 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Deletes an agent pool.
+            /// Deletes an agent pool in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Deletes the agent pool in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -436,12 +452,66 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets a list of agent pools in the specified managed cluster.
+            /// Upgrades the node image version of an agent pool to the latest.
             /// </summary>
             /// <remarks>
-            /// Gets a list of agent pools in the specified managed cluster. The operation
-            /// returns properties of each agent pool.
+            /// Upgrading the node image version of an agent pool applies the newest OS and
+            /// runtime updates to the nodes. AKS provides one new image per week with the
+            /// latest updates. For more details on node image versions, see:
+            /// https://docs.microsoft.com/azure/aks/node-image-upgrade
             /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPool BeginUpgradeNodeImageVersion(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.BeginUpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades the node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrading the node image version of an agent pool applies the newest OS and
+            /// runtime updates to the nodes. AKS provides one new image per week with the
+            /// latest updates. For more details on node image versions, see:
+            /// https://docs.microsoft.com/azure/aks/node-image-upgrade
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> BeginUpgradeNodeImageVersionAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of agent pools in the specified managed cluster.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -456,10 +526,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Gets a list of agent pools in the specified managed cluster.
             /// </summary>
-            /// <remarks>
-            /// Gets a list of agent pools in the specified managed cluster. The operation
-            /// returns properties of each agent pool.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

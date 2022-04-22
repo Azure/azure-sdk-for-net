@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static IpAllocationListResult DeserializeIpAllocationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<IpAllocation>> value = default;
+            Optional<IReadOnlyList<IpAllocationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IpAllocation> array = new List<IpAllocation>();
+                    List<IpAllocationData> array = new List<IpAllocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpAllocation.DeserializeIpAllocation(item));
+                        array.Add(IpAllocationData.DeserializeIpAllocationData(item));
                     }
                     value = array;
                     continue;

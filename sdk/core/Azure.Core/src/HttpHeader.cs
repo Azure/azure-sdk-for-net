@@ -132,6 +132,10 @@ namespace Azure.Core
             /// </summary>
             public static string IfUnmodifiedSince => "If-Unmodified-Since";
             /// <summary>
+            /// Returns. <code>"Prefer"</code>
+            /// </summary>
+            public static string Prefer => "Prefer";
+            /// <summary>
             /// Returns. <code>"Referer"</code>
             /// </summary>
             public static string Referer => "Referer";

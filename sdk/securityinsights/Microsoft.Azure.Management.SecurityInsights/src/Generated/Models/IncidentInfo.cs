@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="incidentId">Incident Id</param>
         /// <param name="severity">The severity of the incident. Possible
-        /// values include: 'Critical', 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
+        /// values include: 'High', 'Medium', 'Low', 'Informational'</param>
         /// <param name="title">The title of the incident</param>
         /// <param name="relationName">Relation Name</param>
         public IncidentInfo(string incidentId = default(string), string severity = default(string), string title = default(string), string relationName = default(string))
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
 
         /// <summary>
         /// Gets or sets the severity of the incident. Possible values include:
-        /// 'Critical', 'High', 'Medium', 'Low', 'Informational'
+        /// 'High', 'Medium', 'Low', 'Informational'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public string Severity { get; set; }

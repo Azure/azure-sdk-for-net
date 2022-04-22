@@ -116,5 +116,15 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </summary>
         IVirtualMachinesOperations VirtualMachines { get; }
 
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
     }
 }

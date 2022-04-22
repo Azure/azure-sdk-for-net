@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     internal static class FirewallPolicyRuleGroupTestResource
     {

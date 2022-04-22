@@ -58,6 +58,102 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
+            /// Gets the list of Batch supported Virtual Machine VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The region for which to retrieve Batch service supported SKUs.
+            /// </param>
+            /// <param name='maxresults'>
+            /// The maximum number of items to return in the response.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression. Valid properties for filtering are "familyName".
+            /// </param>
+            public static IPage<SupportedSku> ListSupportedVirtualMachineSkus(this ILocationOperations operations, string locationName, int? maxresults = default(int?), string filter = default(string))
+            {
+                return operations.ListSupportedVirtualMachineSkusAsync(locationName, maxresults, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Virtual Machine VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The region for which to retrieve Batch service supported SKUs.
+            /// </param>
+            /// <param name='maxresults'>
+            /// The maximum number of items to return in the response.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression. Valid properties for filtering are "familyName".
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SupportedSku>> ListSupportedVirtualMachineSkusAsync(this ILocationOperations operations, string locationName, int? maxresults = default(int?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSupportedVirtualMachineSkusWithHttpMessagesAsync(locationName, maxresults, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Cloud Service VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The region for which to retrieve Batch service supported SKUs.
+            /// </param>
+            /// <param name='maxresults'>
+            /// The maximum number of items to return in the response.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression. Valid properties for filtering are "familyName".
+            /// </param>
+            public static IPage<SupportedSku> ListSupportedCloudServiceSkus(this ILocationOperations operations, string locationName, int? maxresults = default(int?), string filter = default(string))
+            {
+                return operations.ListSupportedCloudServiceSkusAsync(locationName, maxresults, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Cloud Service VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The region for which to retrieve Batch service supported SKUs.
+            /// </param>
+            /// <param name='maxresults'>
+            /// The maximum number of items to return in the response.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression. Valid properties for filtering are "familyName".
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SupportedSku>> ListSupportedCloudServiceSkusAsync(this ILocationOperations operations, string locationName, int? maxresults = default(int?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSupportedCloudServiceSkusWithHttpMessagesAsync(locationName, maxresults, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Checks whether the Batch account name is available in the specified region.
             /// </summary>
             /// <param name='operations'>
@@ -92,6 +188,78 @@ namespace Microsoft.Azure.Management.Batch
             public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this ILocationOperations operations, string locationName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(locationName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Virtual Machine VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SupportedSku> ListSupportedVirtualMachineSkusNext(this ILocationOperations operations, string nextPageLink)
+            {
+                return operations.ListSupportedVirtualMachineSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Virtual Machine VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SupportedSku>> ListSupportedVirtualMachineSkusNextAsync(this ILocationOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSupportedVirtualMachineSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Cloud Service VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SupportedSku> ListSupportedCloudServiceSkusNext(this ILocationOperations operations, string nextPageLink)
+            {
+                return operations.ListSupportedCloudServiceSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of Batch supported Cloud Service VM sizes available at the
+            /// given location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SupportedSku>> ListSupportedCloudServiceSkusNextAsync(this ILocationOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSupportedCloudServiceSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

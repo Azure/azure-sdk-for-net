@@ -14,8 +14,11 @@ description: Gets a full certificate including the private key from Azure Key Va
 
 [Azure Key Vault certificates][azure-keyvault-certificates] are a great way to manage certificates. They allow you to set policies, automatically renew near-expiring certificates, and permit cryptographic operations with access to the private key. There are times, however, when you may want to download and use the entire certificate - including the private key - locally. You might have a legacy application, for example, that needs access to a key pair.
 
-> [!NOTE]
+> [!CAUTION]
 > We recommend you keep cryptographic operations using the private key - including decryption, signing, and unwrapping - in Key Vault to minimize access to the private and mitigate possible breaches with a properly secured Key Vault.
+
+> [!NOTE]
+> The functions `CertificateClient.DownloadCertificate` and `CertificateClient.DownloadCertificateAsync` were [added](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/CHANGELOG.md#420-2021-06-15) in [Azure.Security.KeyVault.Certificates](https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates/4.2.0) 4.2.0. Those new functions effectively replace this sample, though we have retained this sample that shows some best practices and to notify any developers redirected here of these new functions.
 
 Key Vault stores the public key as a managed key but the entire key pair including the private key - if created or imported as exportable - as a [secret][azure-keyvault-secrets]. This example shows you how download the key pair and uses it to encrypt and decrypt a plain text message.
 
@@ -59,7 +62,7 @@ To build the sample:
 
 2. Run in the project directory:
 
-   ```bash
+   ```dotnetcli
    dotnet build
    ```
 
@@ -67,7 +70,7 @@ To build the sample:
 
 You can either run the executable you just build, or build and run the project at the same time:
 
-```bash
+```dotnetcli
 dotnet run -- --vault-name <KeyVaultName> -n <CertificateName> -m "Message you want to encrypt and decrypt"
 ```
 

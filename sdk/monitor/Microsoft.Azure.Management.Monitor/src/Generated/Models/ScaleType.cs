@@ -26,7 +26,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         [EnumMember(Value = "PercentChangeCount")]
         PercentChangeCount,
         [EnumMember(Value = "ExactCount")]
-        ExactCount
+        ExactCount,
+        [EnumMember(Value = "ServiceAllowedNextValue")]
+        ServiceAllowedNextValue
     }
     internal static class ScaleTypeEnumExtension
     {
@@ -45,6 +47,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return "PercentChangeCount";
                 case ScaleType.ExactCount:
                     return "ExactCount";
+                case ScaleType.ServiceAllowedNextValue:
+                    return "ServiceAllowedNextValue";
             }
             return null;
         }
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return ScaleType.PercentChangeCount;
                 case "ExactCount":
                     return ScaleType.ExactCount;
+                case "ServiceAllowedNextValue":
+                    return ScaleType.ServiceAllowedNextValue;
             }
             return null;
         }

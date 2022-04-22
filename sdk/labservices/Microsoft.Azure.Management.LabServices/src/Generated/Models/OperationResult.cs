@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.LabServices.Models
     using System.Linq;
 
     /// <summary>
-    /// An Operation Result
+    /// A long running operation result
     /// </summary>
     public partial class OperationResult
     {
@@ -29,12 +29,25 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// <summary>
         /// Initializes a new instance of the OperationResult class.
         /// </summary>
-        /// <param name="status">The operation status.</param>
-        /// <param name="error">Error details for the operation in case of a
-        /// failure.</param>
-        public OperationResult(string status = default(string), OperationError error = default(OperationError))
+        /// <param name="status">The operation status. Possible values include:
+        /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed',
+        /// 'Canceled'</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="startTime">Start time</param>
+        /// <param name="endTime">End time</param>
+        /// <param name="percentComplete">Percent completion</param>
+        /// <param name="error">The error for a failure if the operation
+        /// failed.</param>
+        public OperationResult(OperationStatus status, string id = default(string), string name = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), double? percentComplete = default(double?), ErrorDetail error = default(ErrorDetail))
         {
+            Id = id;
+            Name = name;
             Status = status;
+            StartTime = startTime;
+            EndTime = endTime;
+            PercentComplete = percentComplete;
             Error = error;
             CustomInit();
         }
@@ -45,16 +58,57 @@ namespace Microsoft.Azure.Management.LabServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the operation status.
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets error details for the operation in case of a failure.
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the operation status. Possible values include:
+        /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed', 'Canceled'
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public OperationStatus Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets start time
+        /// </summary>
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets end time
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets percent completion
+        /// </summary>
+        [JsonProperty(PropertyName = "percentComplete")]
+        public double? PercentComplete { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error for a failure if the operation failed.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public OperationError Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

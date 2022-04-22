@@ -26,13 +26,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the AccessPolicy class.
         /// </summary>
-        /// <param name="start">Start time of the access policy</param>
-        /// <param name="expiry">Expiry time of the access policy</param>
+        /// <param name="startTime">Start time of the access policy</param>
+        /// <param name="expiryTime">Expiry time of the access policy</param>
         /// <param name="permission">List of abbreviated permissions.</param>
-        public AccessPolicy(System.DateTime? start = default(System.DateTime?), System.DateTime? expiry = default(System.DateTime?), string permission = default(string))
+        public AccessPolicy(System.DateTime? startTime = default(System.DateTime?), System.DateTime? expiryTime = default(System.DateTime?), string permission = default(string))
         {
-            Start = start;
-            Expiry = expiry;
+            StartTime = startTime;
+            ExpiryTime = expiryTime;
             Permission = permission;
             CustomInit();
         }
@@ -45,14 +45,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets start time of the access policy
         /// </summary>
-        [JsonProperty(PropertyName = "start")]
-        public System.DateTime? Start { get; set; }
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets expiry time of the access policy
         /// </summary>
-        [JsonProperty(PropertyName = "expiry")]
-        public System.DateTime? Expiry { get; set; }
+        [JsonProperty(PropertyName = "expiryTime")]
+        public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets list of abbreviated permissions.

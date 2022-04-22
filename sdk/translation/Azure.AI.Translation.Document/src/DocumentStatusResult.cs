@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -12,11 +13,14 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("DocumentStatus")]
     public partial class DocumentStatusResult
     {
+        [CodeGenMember("Error")]
+        private readonly JsonElement _error;
+
         /// <summary>
         /// Document Id.
         /// </summary>
         [CodeGenMember("Id")]
-        public string DocumentId { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Location of the translated document in the target container.
@@ -35,7 +39,7 @@ namespace Azure.AI.Translation.Document
         /// This property will have a value only when the document was successfully processed.
         /// </summary>
         [CodeGenMember("To")]
-        public string TranslatedTo { get; }
+        public string TranslatedToLanguageCode { get; }
 
         /// <summary>
         /// The date time when the document was created.
@@ -63,22 +67,14 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Status of the document.
         /// </summary>
-        public TranslationStatus Status { get; }
+        public DocumentTranslationStatus Status { get; }
 
         /// <summary>
         /// Gets the error explaining why the translation operation failed on this
         /// document. This property will have a value only when the document
         /// cannot be processed.
         /// </summary>
-        public DocumentTranslationError Error { get; }
-
-        /// <summary>
-        /// Returns true if the translation on the document is completed, independent if it succeeded or failed.
-        /// </summary>
-        public bool HasCompleted => Status == TranslationStatus.Succeeded
-                                    || Status == TranslationStatus.Failed
-                                    || Status == TranslationStatus.Cancelled
-                                    || Status == TranslationStatus.ValidationFailed;
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
         [CodeGenMember("Progress")]
         internal float Progress { get; }

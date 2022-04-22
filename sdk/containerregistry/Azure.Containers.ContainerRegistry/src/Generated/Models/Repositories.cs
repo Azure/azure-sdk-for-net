@@ -21,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of Repositories. </summary>
         /// <param name="repositoriesValue"> Repository names. </param>
-        /// <param name="link"> . </param>
+        /// <param name="link"></param>
         internal Repositories(IReadOnlyList<string> repositoriesValue, string link)
         {
             RepositoriesValue = repositoriesValue;
@@ -30,6 +30,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Repository names. </summary>
         public IReadOnlyList<string> RepositoriesValue { get; }
+        /// <summary> Gets the link. </summary>
         public string Link { get; }
     }
 }

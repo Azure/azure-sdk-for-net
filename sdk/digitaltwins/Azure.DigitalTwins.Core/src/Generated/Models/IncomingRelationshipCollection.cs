@@ -20,7 +20,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
         internal IncomingRelationshipCollection(IReadOnlyList<IncomingRelationship> value, string nextLink)
         {
@@ -28,6 +28,7 @@ namespace Azure.DigitalTwins.Core
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IncomingRelationship> Value { get; }
         /// <summary> A URI to retrieve the next page of objects. </summary>
         public string NextLink { get; }

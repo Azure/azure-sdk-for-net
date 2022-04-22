@@ -81,6 +81,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("azureCloudType");
                 writer.WriteObjectValue(AzureCloudType);
             }
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
+            {
+                writer.WritePropertyName("servicePrincipalCredentialType");
+                writer.WriteObjectValue(ServicePrincipalCredentialType);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential");
+                writer.WriteObjectValue(ServicePrincipalCredential);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
@@ -108,6 +118,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
             Optional<object> azureCloudType = default;
+            Optional<object> servicePrincipalCredentialType = default;
+            Optional<SecretBase> servicePrincipalCredential = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -227,6 +239,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             azureCloudType = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("servicePrincipalCredentialType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            servicePrincipalCredentialType = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalCredential"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -243,7 +275,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value);
+            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
         }
 
         internal partial class AzureBlobFSLinkedServiceConverter : JsonConverter<AzureBlobFSLinkedService>

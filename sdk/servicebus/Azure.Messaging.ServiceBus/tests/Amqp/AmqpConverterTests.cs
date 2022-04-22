@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-    public class AmqpConverterTests : ServiceBusTestBase
+    public class AmqpConverterTests
     {
         [Test]
         public void ConvertAmqpMessageToSBMessage()
@@ -135,6 +135,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             body = sbMessage.GetRawAmqpMessage().Body;
             Assert.IsTrue(body.TryGetValue(out val));
             Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
+        }
+
+        [Test]
+        public void CanParseMaxAbsoluteExpiryTime()
+        {
+            var data = new Data();
+            var amqpMessage = AmqpMessage.Create(data);
+            amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
+
+            var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+
+            Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
         }
     }
 }

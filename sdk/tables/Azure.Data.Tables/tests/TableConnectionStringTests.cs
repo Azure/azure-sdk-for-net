@@ -16,6 +16,8 @@ namespace Azure.Data.Tables.Tests
         private const string Secret = "Kg==";
         private readonly TableSharedKeyCredential _expectedCred = new TableSharedKeyCredential(AccountName, Secret);
         private readonly TableSharedKeyCredential _expectedDevStoraageCred = new TableSharedKeyCredential(TableConstants.ConnectionStrings.DevStoreAccountName, TableConstants.ConnectionStrings.DevStoreAccountKey);
+        private const string cosmosPubDomain = "table.cosmos.azure.com";
+        private const string cosmosUsSecDomain = "table.cosmos.azure.microsoft.scloud";
 
         /// <summary>
         /// Validates the functionality of the TableConnectionString.
@@ -97,8 +99,12 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidCosmosConnStrings()
         {
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
-            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosPubDomain}:443/;", cosmosPubDomain };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.{cosmosUsSecDomain}:443/;", cosmosUsSecDomain };
         }
 
         /// <summary>
@@ -106,13 +112,13 @@ namespace Azure.Data.Tables.Tests
         /// </summary>
         [Test]
         [TestCaseSource(nameof(ValidCosmosConnStrings))]
-        public void ParsesCosmos(string connString)
+        public void ParsesCosmos(string connString, string domain)
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
-            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com:443/")), "The PrimaryUri should have matched.");
-            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com:443/")), "The SecondaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.{domain}:443/")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.{domain}:443/")), "The SecondaryUri should have matched.");
         }
 
         public static IEnumerable<object[]> ValidSasStorageConnStrings()
@@ -156,6 +162,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
+            Assert.AreEqual(AccountName,tcs._accountName);
         }
         public static IEnumerable<object[]> InvalidConnStrings()
         {
@@ -208,40 +215,57 @@ namespace Azure.Data.Tables.Tests
             var uri = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
 
             var result = TableConnectionString.Parse(uri);
+            Assert.AreEqual("devstoreaccount1", result._accountName);
+        }
+
+        [Test]
+        public void ParseCosmosEmulatorConnString()
+        {
+            var uri = "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;";
+
+            var result = TableConnectionString.Parse(uri);
+            Assert.AreEqual("localhost", result._accountName);
         }
 
         public static IEnumerable<object[]> UriInputs()
         {
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}/") };
-            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}/") };
-            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/Tables('{TableName}')/") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/") };
-            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/Tables('{TableName}')/") };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.cosmos.azure.com:443/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://{AccountName}.table.core.windows.net/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{AccountName}"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{AccountName}/"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://127.0.0.1:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://10.0.0.1:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{AccountName}"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{AccountName}/"), AccountName, AccountName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{TableName}"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/{TableName}/"), AccountName, TableName };
+            yield return new object[] { new Uri($"https://localhost:10002/{AccountName}/Tables('{TableName}')/"), AccountName, TableName };
         }
 
         [Test]
         [TestCaseSource(nameof(UriInputs))]
-        public void GetAccountNameFromUri(Uri uri)
+        public void GetAccountNameFromUri(Uri uri, string expectedAccountName, string expectedTableName)
         {
-            string expectedAccountName = TableConnectionString.GetAccountNameFromUri(uri);
+            string actualAccountName = TableConnectionString.GetAccountNameFromUri(uri);
 
-            Assert.That(expectedAccountName, Is.EqualTo(AccountName));
+            Assert.That(actualAccountName, Is.EqualTo(expectedAccountName));
         }
 
         [Test]
         [TestCaseSource(nameof(UriInputs))]
-        public void GetTableNameFromUri(Uri uri)
+        public void GetTableNameFromUri(Uri uri, string expectedAccountName, string expectedTableName)
         {
-            string expectedTableName = TableConnectionString.GetTableNameFromUri(uri);
+            string actualTableName = TableConnectionString.GetTableNameFromUri(uri);
 
-            Assert.That(expectedTableName, Is.EqualTo(TableName));
+            Assert.That(actualTableName, Is.EqualTo(expectedTableName));
         }
 
         private string GetExpectedHash(TableSharedKeyCredential cred) => cred.ComputeHMACSHA256("message");

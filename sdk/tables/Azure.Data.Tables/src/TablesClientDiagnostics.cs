@@ -21,20 +21,16 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected override void ExtractFailureContent(
+        protected override ResponseError ExtractFailureContent(
             string content,
             ResponseHeaders responseHeaders,
-            ref string message,
-            ref string errorCode,
             ref IDictionary<string, string> additionalInfo
             )
         {
             if (string.IsNullOrEmpty(content))
             {
-                return;
+                return null;
             }
 
             try
@@ -44,6 +40,8 @@ namespace Azure.Core.Pipeline
                 odataError.MoveNext();
                 if (odataError.Current.Name == "odata.error")
                 {
+                    string errorCode = null;
+                    string message = null;
                     foreach (var odataErrorProp in odataError.Current.Value.EnumerateObject())
                     {
                         if (odataErrorProp.NameEquals("code"))
@@ -69,9 +67,13 @@ namespace Azure.Core.Pipeline
                             }
                         }
                     }
+
+                    return new ResponseError(errorCode, message);
                 }
             }
             catch { }
+
+            return null;
         }
 
         private static bool TryParseBatchIndex(string message, out int index)

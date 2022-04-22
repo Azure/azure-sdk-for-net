@@ -122,7 +122,7 @@ namespace Monitor.Tests.BasicTests
             monitorManagementClient = GetMonitorManagementClient(handler);
 
             AzureOperationResponse response = monitorManagementClient.ActivityLogAlerts.DeleteWithHttpMessagesAsync(
-                resourceGroupName: " rg1",
+                resourceGroupName: "rg1",
                 activityLogAlertName: "name1").Result;
 
             Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
@@ -153,7 +153,7 @@ namespace Monitor.Tests.BasicTests
             };
 
             ActivityLogAlertResource response = monitorManagementClient.ActivityLogAlerts.Update(
-                resourceGroupName: " rg1",
+                resourceGroupName: "rg1",
                 activityLogAlertName: "name1",
                 activityLogAlertPatch: bodyParameter);
 

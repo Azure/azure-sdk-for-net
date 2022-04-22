@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/centraluseuap/checkSkuAvailability?api-version=2021-04-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL2NlbnRyYWx1c2V1YXAvY2hlY2tTa3VBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMS0wNC0zMA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/centraluseuap/checkSkuAvailability?api-version=2021-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL2NlbnRyYWx1c2V1YXAvY2hlY2tTa3VBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMS0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"skus\": [\r\n    \"S0\"\r\n  ],\r\n  \"kind\": \"Face\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "781a1a82-58ba-488c-b259-a1427b6e1fd4"
+          "a1bb12d0-d989-4a18-a1d9-b22b522c09e0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
           "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
         ],
         "Content-Type": [
@@ -32,8 +32,11 @@
         "Pragma": [
           "no-cache"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-envoy-upstream-service-time": [
-          "47"
+          "42"
         ],
         "Server": [
           "istio-envoy"
@@ -42,25 +45,22 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "c0bb2837-9eed-424b-8cdc-e10b8d2f0e45"
+          "b5753567-77d9-4d91-8c2b-d6b10ca89df6"
         ],
         "x-ms-correlation-request-id": [
-          "c0bb2837-9eed-424b-8cdc-e10b8d2f0e45"
+          "b5753567-77d9-4d91-8c2b-d6b10ca89df6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210517T192627Z:c0bb2837-9eed-424b-8cdc-e10b8d2f0e45"
+          "WESTUS2:20211101T184925Z:b5753567-77d9-4d91-8c2b-d6b10ca89df6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
         "Date": [
-          "Mon, 17 May 2021 19:26:27 GMT"
+          "Mon, 01 Nov 2021 18:49:25 GMT"
         ],
         "Content-Length": [
-          "137"
+          "108"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,7 +69,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"Face\",\r\n      \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n      \"skuName\": \"S0\",\r\n      \"skuAvailable\": true,\r\n      \"reason\": null,\r\n      \"message\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"Face\",\r\n      \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n      \"skuName\": \"S0\",\r\n      \"skuAvailable\": true\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

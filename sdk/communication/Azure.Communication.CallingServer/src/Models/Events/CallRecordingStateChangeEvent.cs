@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The call recording state change event.
     /// </summary>
-    [CodeGenModel("CallRecordingStateChangeEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("CallRecordingStateChangeEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallRecordingStateChangeEvent : CallingServerEventBase
     {
         /// <summary>

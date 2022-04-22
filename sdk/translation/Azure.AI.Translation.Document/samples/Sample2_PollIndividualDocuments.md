@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -27,13 +27,14 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 TimeSpan pollingInterval = new(1000);
 
-await foreach (DocumentStatusResult document in operation.GetAllDocumentStatusesAsync())
+await foreach (DocumentStatusResult document in operation.GetDocumentStatusesAsync())
 {
     Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-    Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+    Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
 
-    while (!responseDocumentStatus.Value.HasCompleted)
+    while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
+              responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
     {
         if (responseDocumentStatus.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
         {
@@ -41,19 +42,19 @@ await foreach (DocumentStatusResult document in operation.GetAllDocumentStatuses
         }
 
         await Task.Delay(pollingInterval);
-        responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+        responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
     }
 
-    if (responseDocumentStatus.Value.Status == TranslationStatus.Succeeded)
+    if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
@@ -61,8 +62,8 @@ await foreach (DocumentStatusResult document in operation.GetAllDocumentStatuses
 
 To see the full example source files, see:
 
-* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
-* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
+* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
+* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

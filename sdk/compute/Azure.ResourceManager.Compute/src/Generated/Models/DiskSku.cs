@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS. </summary>
+    /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </summary>
     public partial class DiskSku
     {
         /// <summary> Initializes a new instance of DiskSku. </summary>

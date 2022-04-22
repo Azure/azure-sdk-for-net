@@ -18,12 +18,13 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PiiTaskResult. </summary>
-        /// <param name="results"> . </param>
+        /// <param name="results"></param>
         internal PiiTaskResult(PiiEntitiesResult results)
         {
             Results = results;
         }
 
+        /// <summary> Gets the results. </summary>
         public PiiEntitiesResult Results { get; }
     }
 }

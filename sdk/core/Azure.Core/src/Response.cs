@@ -83,6 +83,14 @@ namespace Azure
         public abstract void Dispose();
 
         /// <summary>
+        /// Indicates whether the status code of the returned response is considered
+        /// an error code.
+        /// </summary>
+        public virtual bool IsError { get; internal set; }
+
+        internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
+
+        /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
         /// <param name="name">The header name.</param>
@@ -132,15 +140,16 @@ namespace Azure
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
 
-        internal void DisposeContentStreamIfNotBuffered()
+        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
         {
             // We want to keep the ContentStream readable
             // even after the response is disposed but only if it's a
             // buffered memory stream otherwise we can leave a network
             // connection hanging open
-            if (ContentStream is not MemoryStream)
+            if (stream is not MemoryStream)
             {
-                ContentStream?.Dispose();
+                stream?.Dispose();
+                stream = null;
             }
         }
     }

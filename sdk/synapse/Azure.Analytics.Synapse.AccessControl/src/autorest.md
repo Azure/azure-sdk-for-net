@@ -6,11 +6,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-access-control-2020-08-01-preview
+tag: package-access-control-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/37c4ff1612668f5acec62dea729ca3a66b591d7f/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.AccessControl
 public-clients: true
+data-plane: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 ```

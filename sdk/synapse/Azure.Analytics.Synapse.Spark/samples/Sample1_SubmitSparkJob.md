@@ -1,6 +1,6 @@
 # Create, Run and Cancel Synapse Spark jobs
 
-This sample demonstrates basic operations with two core classes in this library: `SparkBatchClient` and `SparkBatchJob`. `SparkBatchClient` is used to interact with Spark jobs running on Azure Synapse - each method call sends a request to the service's REST API. `SparkBatchJob` is an entity that represents a batched Spark job within Synapse. The sample walks through the basics of creating, running, and canceling job requests. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Spark/README.md) for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: `SparkBatchClient` and `SparkBatchJob`. `SparkBatchClient` is used to interact with Spark jobs running on Azure Synapse - each method call sends a request to the service's REST API. `SparkBatchJob` is an entity that represents a batched Spark job within Synapse. The sample walks through the basics of creating, running, and canceling job requests. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Spark/README.md) for links and instructions.
 
 ## Create Spark batch client
 
@@ -9,11 +9,8 @@ To interact with Spark jobs running on Azure Synapse, you need to instantiate a 
 ```C# Snippet:CreateSparkBatchClient
 // Replace the strings below with the spark, endpoint, and file system information
 string sparkPoolName = "<my-spark-pool-name>";
-
 string endpoint = "<my-endpoint-url>";
-
 string storageAccount = "<my-storage-account-name>";
-
 string fileSystem = "<my-storage-filesystem-name>";
 
 SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
@@ -55,7 +52,7 @@ SparkBatchJob jobCreated = createOperation.Value;
 To retrieve the details of a Spark job call `StartGetSparkBatchJob`, passing in the Spark job ID.
 
 ```C# Snippet:GetSparkBatchJob
-SparkBatchJob retrievedJob = client.GetSparkBatchJob (jobCreated.Id);
+SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
 Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
 ```
 

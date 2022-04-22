@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.EventHub.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -106,30 +105,5 @@ namespace Microsoft.Azure.Management.EventHub.Models
         [JsonProperty(PropertyName = "skipEmptyArchives")]
         public bool? SkipEmptyArchives { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IntervalInSeconds > 900)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "IntervalInSeconds", 900);
-            }
-            if (IntervalInSeconds < 60)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "IntervalInSeconds", 60);
-            }
-            if (SizeLimitInBytes > 524288000)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "SizeLimitInBytes", 524288000);
-            }
-            if (SizeLimitInBytes < 10485760)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "SizeLimitInBytes", 10485760);
-            }
-        }
     }
 }

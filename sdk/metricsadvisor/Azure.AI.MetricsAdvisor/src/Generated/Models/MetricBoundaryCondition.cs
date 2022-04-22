@@ -15,33 +15,27 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="lowerBound">
         /// lower bound
         /// 
-        /// 
-        /// 
-        /// should be specified when direction is Both or Down.
+        /// should be specified when direction is Both or Down
         /// </param>
         /// <param name="upperBound">
         /// upper bound
         /// 
-        /// 
-        /// 
-        /// should be specified when direction is Both or Up.
+        /// should be specified when direction is Both or Up
         /// </param>
         /// <param name="direction"> value filter direction. </param>
-        /// <param name="type"> data used to implement value filter. </param>
+        /// <param name="measureType"> data used to implement value filter. </param>
         /// <param name="companionMetricId"> the other metric unique id used for value filter. </param>
         /// <param name="shouldAlertIfDataPointMissing">
         /// trigger alert when the corresponding point is missing in the other metric
         /// 
-        /// 
-        /// 
-        /// should be specified only when using other metric to filter.
+        /// should be specified only when using other metric to filter
         /// </param>
-        internal MetricBoundaryCondition(double? lowerBound, double? upperBound, BoundaryDirection direction, ValueType? type, string companionMetricId, bool? shouldAlertIfDataPointMissing)
+        internal MetricBoundaryCondition(double? lowerBound, double? upperBound, BoundaryDirection direction, BoundaryMeasureType? measureType, string companionMetricId, bool? shouldAlertIfDataPointMissing)
         {
             LowerBound = lowerBound;
             UpperBound = upperBound;
             Direction = direction;
-            Type = type;
+            MeasureType = measureType;
             CompanionMetricId = companionMetricId;
             ShouldAlertIfDataPointMissing = shouldAlertIfDataPointMissing;
         }

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SparkSessionResultType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionResultType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SparkSessionResultType(string value)
         {

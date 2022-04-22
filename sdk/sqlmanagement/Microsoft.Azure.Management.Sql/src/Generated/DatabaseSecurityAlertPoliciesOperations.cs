@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string securityAlertPolicyName = "default";
+            string securityAlertPolicyName = "Default";
             string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string securityAlertPolicyName = "default";
+            string securityAlertPolicyName = "Default";
             string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

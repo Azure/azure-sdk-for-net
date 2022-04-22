@@ -17,11 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             try
             {
-                Version dotnetSdkVersion = GetVersion(typeof(object));
-                Version otelSdkVersion = GetVersion(typeof(Sdk));
-                Version extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
+                string dotnetSdkVersion = GetVersion(typeof(object));
+                string otelSdkVersion = GetVersion(typeof(Sdk));
+                string extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 
-                return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
+                return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
             }
             catch (Exception ex)
             {
@@ -30,18 +30,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        private static Version GetVersion(Type type)
+        private static string GetVersion(Type type)
         {
-            // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
-            string versionString = type
+            try
+            {
+                string versionString = type
                 .Assembly
-                .GetCustomAttributes(false)
-                .OfType<AssemblyFileVersionAttribute>()
+                .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
                 .First()
-                .Version;
+                .InformationalVersion;
 
-            // Return zeros rather then failing if the version string fails to parse
-            return Version.TryParse(versionString, out var version) ? version : new Version();
+                // Informational version will be something like 1.1.0-beta2+a25741030f05c60c85be102ce7c33f3899290d49.
+                // Ignoring part after '+' if it is present.
+                string shortVersion = versionString?.Split('+')[0];
+
+                return shortVersion;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPartOfSdkVersion{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                return null;
+            }
         }
     }
 }

@@ -26,7 +26,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()));
+            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            }));
         }
 
         /// <summary>
@@ -39,7 +42,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.That(() => new ContainerRegistryClient(_url, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
-            Assert.That(() => new ContainerRegistryClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor not accept null options.");
+            Assert.That(() => new ContainerRegistryClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept null options.");
+
+            Assert.That(() => new ContainerRegistryClient(_url, GetCredential()), Throws.InstanceOf<InvalidOperationException>(), "The constructor should not accept default ClientOptions");
         }
 
         /// <summary>

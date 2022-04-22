@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="deviceId">Device identifier.</param>
         /// <param name="alertsCount">Number of alerts raised for this
         /// device.</param>
-        public IoTSecurityAlertedDevice(string deviceId = default(string), int? alertsCount = default(int?))
+        public IoTSecurityAlertedDevice(string deviceId = default(string), long? alertsCount = default(long?))
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of alerts raised for this device.
         /// </summary>
         [JsonProperty(PropertyName = "alertsCount")]
-        public int? AlertsCount { get; private set; }
+        public long? AlertsCount { get; private set; }
 
     }
 }

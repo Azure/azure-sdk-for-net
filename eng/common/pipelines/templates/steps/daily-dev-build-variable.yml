@@ -21,4 +21,4 @@ steps:
     }
     echo "##vso[task.setvariable variable=SetDevVersion]$setDailyDevBuild"
   displayName: "Setup Versioning Properties"
-  condition: eq(variables['SetDevVersion'], '')
+  condition: and(succeeded(), eq(variables['SetDevVersion'], ''))

@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataColumnDataType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataColumnDataType(string value)
         {
@@ -29,6 +29,9 @@ namespace Azure.Monitor.Query.Models
         private const string LongValue = "long";
         private const string RealValue = "real";
         private const string StringValue = "string";
+        private const string GuidValue = "guid";
+        private const string DecimalValue = "decimal";
+        private const string TimespanValue = "timespan";
 
         /// <summary> bool. </summary>
         public static MetadataColumnDataType Bool { get; } = new MetadataColumnDataType(BoolValue);
@@ -44,6 +47,12 @@ namespace Azure.Monitor.Query.Models
         public static MetadataColumnDataType Real { get; } = new MetadataColumnDataType(RealValue);
         /// <summary> string. </summary>
         public static MetadataColumnDataType String { get; } = new MetadataColumnDataType(StringValue);
+        /// <summary> guid. </summary>
+        public static MetadataColumnDataType Guid { get; } = new MetadataColumnDataType(GuidValue);
+        /// <summary> decimal. </summary>
+        public static MetadataColumnDataType Decimal { get; } = new MetadataColumnDataType(DecimalValue);
+        /// <summary> timespan. </summary>
+        public static MetadataColumnDataType Timespan { get; } = new MetadataColumnDataType(TimespanValue);
         /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are the same. </summary>
         public static bool operator ==(MetadataColumnDataType left, MetadataColumnDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are not the same. </summary>

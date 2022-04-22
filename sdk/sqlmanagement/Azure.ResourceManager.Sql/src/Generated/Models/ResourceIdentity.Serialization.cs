@@ -6,8 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,6 +18,17 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities");
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
@@ -26,11 +39,27 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             Optional<Guid> principalId = default;
             Optional<IdentityType> type = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("userAssignedIdentities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.ToString()));
+                    }
+                    userAssignedIdentities = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("principalId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -62,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ResourceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(type), Optional.ToNullable(tenantId));
+            return new ResourceIdentity(Optional.ToDictionary(userAssignedIdentities), Optional.ToNullable(principalId), Optional.ToNullable(type), Optional.ToNullable(tenantId));
         }
     }
 }

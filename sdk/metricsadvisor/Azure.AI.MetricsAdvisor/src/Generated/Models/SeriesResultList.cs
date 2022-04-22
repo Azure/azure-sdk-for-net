@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class SeriesResultList
     {
         /// <summary> Initializes a new instance of SeriesResultList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SeriesResultList(IEnumerable<MetricEnrichedSeriesData> value)
         {
@@ -28,12 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of SeriesResultList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         internal SeriesResultList(IReadOnlyList<MetricEnrichedSeriesData> value)
         {
             Value = value;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<MetricEnrichedSeriesData> Value { get; }
     }
 }

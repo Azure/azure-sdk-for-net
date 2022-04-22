@@ -4,6 +4,7 @@
 
 using Microsoft.Azure.Management.Kusto;
 using Microsoft.Azure.Management.Kusto.Models;
+using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -13,7 +14,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Kusto.Tests.Utils;
+using Microsoft.Azure.Management.Network.Models;
 using Xunit;
+using PrivateEndpointConnection = Microsoft.Azure.Management.Kusto.Models.PrivateEndpointConnection;
 
 namespace Kusto.Tests.ScenarioTests
 {
@@ -672,6 +675,125 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.KeyVaultUriForKeyVaultPropertiesTest);
             }
         }
+        
+        [Fact]
+        public void KustoPrivateEndpointConnectionsTests()
+        {
+            using (MockContext context = MockContext.Start(GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+        
+                // create cluster
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+                
+                // create private end point (external network resource that can't be created in advance because it depends on the cluster)
+                CreatePrivateEndpoints(testBase, createdCluster.Id);
+                
+                // Get list
+                var privateEndpointConnections = testBase.client.PrivateEndpointConnections.List(testBase.rgName, testBase.clusterName).ToList();
+                Assert.Single(privateEndpointConnections);
+                
+                var privateEndpointConnection = privateEndpointConnections.First();
+                VerifyPrivateEndpointConnection(privateEndpointConnection, testBase.privateEndpointConnectionName, PrivateEndpointStatus.Pending);
+
+                // private endpoint connection approval - Patch
+                privateEndpointConnection.PrivateLinkServiceConnectionState.Status = PrivateEndpointStatus.Approved.ToString();
+                var createdPrivateEndpointConnection = testBase.client.PrivateEndpointConnections.CreateOrUpdate(
+                    testBase.rgName, 
+                    testBase.clusterName, 
+                    privateEndpointConnection.Name, 
+                    privateEndpointConnection
+                );
+                VerifyPrivateEndpointConnection(createdPrivateEndpointConnection, testBase.privateEndpointConnectionName, PrivateEndpointStatus.Approved);
+
+                // Get private endpoint connection 
+                var privateEndpointConnectionFetched = testBase.client.PrivateEndpointConnections.Get(testBase.rgName, testBase.clusterName, privateEndpointConnection.Name);
+                VerifyPrivateEndpointConnection(privateEndpointConnectionFetched, testBase.privateEndpointConnectionName, PrivateEndpointStatus.Approved);
+                
+                //private endpoint connection rejection - Patch
+                privateEndpointConnectionFetched.PrivateLinkServiceConnectionState.Status = PrivateEndpointStatus.Rejected.ToString();
+                var rejectedPrivateEndpointConnection = testBase.client.PrivateEndpointConnections.CreateOrUpdate(
+                    testBase.rgName, 
+                    testBase.clusterName, 
+                    privateEndpointConnectionFetched.Name, 
+                    privateEndpointConnectionFetched
+                );
+                VerifyPrivateEndpointConnection(rejectedPrivateEndpointConnection, testBase.privateEndpointConnectionName, PrivateEndpointStatus.Rejected);
+        
+                // Delete private endpoint connection
+                testBase.client.PrivateEndpointConnections.Delete(testBase.rgName, testBase.clusterName, testBase.privateEndpointConnectionName);
+                
+                // Delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoManagedPrivateEndpointsTests()
+        {
+            using (MockContext context = MockContext.Start(GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                // create cluster
+                testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                // create private endpoint connection
+                var managedPrivateEndpoint = testBase.client.ManagedPrivateEndpoints.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.managedPrivateEndpointName, new ManagedPrivateEndpoint
+                {
+                    PrivateLinkResourceId = testBase.eventHubNamespaceResourceId,
+                    GroupId = "namespace",
+                    RequestMessage = "Please Approve Kusto"
+                });
+                VerifyManagedPrivateEndpoints(managedPrivateEndpoint, testBase.clusterName, testBase.managedPrivateEndpointName, testBase.eventHubNamespaceResourceId);
+
+                var list1 = testBase.client.ManagedPrivateEndpoints.List(testBase.rgName, testBase.clusterName);
+                Assert.Single(list1);
+                
+                var fetchedManagedPrivateEndpoint = testBase.client.ManagedPrivateEndpoints.Get(testBase.rgName, testBase.clusterName, testBase.managedPrivateEndpointName);
+                VerifyManagedPrivateEndpoints(fetchedManagedPrivateEndpoint, testBase.clusterName, testBase.managedPrivateEndpointName, testBase.eventHubNamespaceResourceId);
+
+                //delete managed private endpoint
+                testBase.client.ManagedPrivateEndpoints.Delete(testBase.rgName, testBase.clusterName, testBase.managedPrivateEndpointName);
+                var list2 = testBase.client.ManagedPrivateEndpoints.List(testBase.rgName, testBase.clusterName);
+                Assert.Empty(list2);
+                
+                //delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoPrivateLinkResourcesTests()
+        {
+            using (MockContext context = MockContext.Start(GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                //create cluster
+                var cluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                //create privateEndpointConnection
+                var privateLinkResources = testBase.client.PrivateLinkResources.List(testBase.rgName, testBase.clusterName).ToList();
+                Assert.Single(privateLinkResources);
+
+                var privateLinkResource = privateLinkResources.First();
+                Assert.Equal("cluster", privateLinkResource.GroupId);
+                Assert.Equal(cluster.Id + "/PrivateLinkResources/cluster", privateLinkResource.Id);
+                Assert.Equal(cluster.Name + "/cluster", privateLinkResource.Name);
+                Assert.Equal(8, privateLinkResource.RequiredMembers.Count);
+                Assert.Equal("Engine", privateLinkResource.RequiredMembers[0]);
+                Assert.Equal("DataManagement", privateLinkResource.RequiredMembers[1]);
+                Assert.Equal(4, privateLinkResource.RequiredZoneNames.Count);
+                Assert.Equal($"privatelink.westus2.dev.kusto.windows.net", privateLinkResource.RequiredZoneNames[0]);
+                Assert.Equal("privatelink.blob.core.windows.net", privateLinkResource.RequiredZoneNames[1]);
+                Assert.Equal("privatelink.queue.core.windows.net", privateLinkResource.RequiredZoneNames[2]);
+                Assert.Equal("privatelink.table.core.windows.net", privateLinkResource.RequiredZoneNames[3]);
+                
+                //delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
 
         private void TestReadonlyFollowingDatabase(KustoTestBase testBase)
         {
@@ -788,6 +910,20 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(state, cluster.State);
             AssetEqualtsExtrnalTenants(cluster.TrustedExternalTenants, trustedExternalTenants);
         }
+        
+        private void VerifyPrivateEndpointConnection(PrivateEndpointConnection privateEndpointConnection, string privateEndpointConnectionNamePrefix, PrivateEndpointStatus privateEndpointStatus)
+        {
+            Assert.Contains(privateEndpointConnectionNamePrefix, privateEndpointConnection.Name);
+            Assert.Equal(privateEndpointStatus.ToString(), privateEndpointConnection.PrivateLinkServiceConnectionState.Status);
+        }
+
+        private void VerifyManagedPrivateEndpoints(ManagedPrivateEndpoint managedPrivateEndpoint, string clusterName, string managedPrivateEndpointName, string eventHubNamespaceResourceId) 
+        {
+            Assert.Equal(clusterName + "/" + managedPrivateEndpointName, managedPrivateEndpoint.Name);
+            Assert.Equal("Please Approve Kusto", managedPrivateEndpoint.RequestMessage);
+            Assert.Equal(eventHubNamespaceResourceId, managedPrivateEndpoint.PrivateLinkResourceId);
+
+        }
 
         private void ValidateOptimizedAutoscale(Cluster createdCluster, OptimizedAutoscale expectedOptimizedAutoscale)
         {
@@ -823,6 +959,35 @@ namespace Kusto.Tests.ScenarioTests
                 });
                 Assert.Single(equalExternalTenants);
             }
+        }
+
+        private static void CreatePrivateEndpoints( KustoTestBase testBase, string clusterId)
+        {
+            testBase.networkManagementClient.PrivateEndpoints.CreateOrUpdate(
+                testBase.resourceGroupForTest,
+                testBase.privateEndpointConnectionName,
+                new PrivateEndpoint
+                {
+                    Location = testBase.location,
+                    Subnet = new Subnet { Id = testBase.privateNetworkSubnetId },
+                    ManualPrivateLinkServiceConnections = new List<PrivateLinkServiceConnection>(1)
+                    {
+                        new PrivateLinkServiceConnection
+                        {
+                            Name = testBase.privateEndpointConnectionName,
+                            GroupIds = new List<string>(1) { "cluster" },
+                            PrivateLinkServiceId = clusterId,
+                            RequestMessage = "Please Approve"
+                        }
+                    }
+                });
+        }
+
+        private enum PrivateEndpointStatus
+        {
+            Pending,
+            Approved,
+            Rejected
         }
     }
 }

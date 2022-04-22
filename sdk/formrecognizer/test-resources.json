@@ -67,10 +67,28 @@
                 "signedResource": "c"
             }
         },
+        "trainingDataSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('trainingDataContainer'), '-v3')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
         "multipageTrainingDataSasProperties": {
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('multipageTrainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "multipageTrainingDataSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('multipageTrainingDataContainer'), '-v3')]",
                 "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
@@ -85,6 +103,15 @@
                 "signedResource": "c"
             }
         },
+        "selectionMarkTrainingDataSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('selectionMarkTrainingDataContainer'), '-v3')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
         "labelTablesVariableRowsSasProperties": {
             "type": "object",
             "defaultValue": {
@@ -94,10 +121,28 @@
                 "signedResource": "c"
             }
         },
+        "labelTablesVariableRowsSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesVariableRowsDataContainer'), '-v3')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
         "labelTablesFixedRowsSasProperties": {
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesFixedRowsDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "labelTablesFixedRowsSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesFixedRowsDataContainer'), '-v3')]",
                 "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
@@ -142,23 +187,23 @@
             "type": "string",
             "value": "[variables('endpointValue')]"
         },
-        "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": {
+        "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL_V2": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('trainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('trainingDataSasProperties')).serviceSasToken)]"
         },
-        "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": {
+        "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL_V2": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('multipageTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('multipageTrainingDataSasProperties')).serviceSasToken)]"
         },
-        "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": {
+        "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL_V2": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('selectionMarkTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('selectionMarkTrainingDataSasProperties')).serviceSasToken)]"
         },
-        "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL": {
+        "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL_V2": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesVariableRowsDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesVariableRowsSasProperties')).serviceSasToken)]"
         },
-        "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL": {
+        "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL_V2": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesFixedRowsDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesFixedRowsSasProperties')).serviceSasToken)]"
         },
@@ -169,6 +214,26 @@
         "FORM_RECOGNIZER_TARGET_RESOURCE_ID": {
             "type": "string",
             "value": "[resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName'))]"
+        },
+        "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('trainingDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('trainingDataSasPropertiesV3')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('multipageTrainingDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('multipageTrainingDataSasPropertiesV3')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('selectionMarkTrainingDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('selectionMarkTrainingDataSasPropertiesV3')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesVariableRowsDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesVariableRowsSasPropertiesV3')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesFixedRowsDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesFixedRowsSasPropertiesV3')).serviceSasToken)]"
         }
     }
 }

@@ -49,15 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("requestInterval");
                 writer.WriteObjectValue(RequestInterval);
             }
-            if (Optional.IsCollectionDefined(AdditionalColumns))
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-                writer.WriteStartArray();
-                foreach (var item in AdditionalColumns)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -92,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> paginationRules = default;
             Optional<object> httpRequestTimeout = default;
             Optional<object> requestInterval = default;
-            Optional<IList<AdditionalColumns>> additionalColumns = default;
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -168,12 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AdditionalColumns> array = new List<AdditionalColumns>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
-                    }
-                    additionalColumns = array;
+                    additionalColumns = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -214,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, Optional.ToList(additionalColumns));
+            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);
         }
 
         internal partial class RestSourceConverter : JsonConverter<RestSource>

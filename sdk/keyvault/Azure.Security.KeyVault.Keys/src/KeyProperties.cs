@@ -19,10 +19,13 @@ namespace Azure.Security.KeyVault.Keys
         private const string ManagedPropertyName = "managed";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
-        internal Dictionary<string, string> _tags;
+        private Dictionary<string, string> _tags;
 
         internal KeyProperties() { }
 
@@ -90,6 +93,11 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the private key can be exported.
+        /// </summary>
+        public bool? Exportable { get => _attributes.Exportable; set => _attributes.Exportable = value; }
+
+        /// <summary>
         /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will be valid and can be used for cryptographic operations.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
@@ -123,22 +131,22 @@ namespace Azure.Security.KeyVault.Keys
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
+        /// Gets or sets the policy rules under which the key can be exported.
+        /// </summary>
+        public KeyReleasePolicy ReleasePolicy { get; set; }
+
+        /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
-        /// <param name="idToParse">The key vault object identifier.</param>
-        internal void ParseId(Uri idToParse)
+        /// <param name="id">The key vault object identifier.</param>
+        internal void ParseId(Uri id)
         {
-            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
+            KeyVaultIdentifier identifier = KeyVaultIdentifier.ParseWithCollection(id, "keys");
 
-            if (!string.Equals(idToParse.Segments[1], "keys" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", idToParse, idToParse.Segments[1]));
-
-            Id = idToParse;
-            VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
-            Name = idToParse.Segments[2].Trim('/');
-            Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
+            Id = id;
+            VaultUri = identifier.VaultUri;
+            Name = identifier.Name;
+            Version = identifier.Version;
         }
 
         internal void ReadProperty(JsonProperty prop)
@@ -162,6 +170,10 @@ namespace Azure.Security.KeyVault.Keys
                         Tags[tagProp.Name] = tagProp.Value.GetString();
                     }
                     break;
+                case ReleasePolicyPropertyName:
+                    ReleasePolicy = new();
+                    ReleasePolicy.ReadProperties(prop.Value);
+                    break;
             }
         }
 
@@ -180,6 +192,33 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
+
+                json.WriteEndObject();
+            }
+        }
+
+        internal void WriteTags(Utf8JsonWriter json)
+        {
+            if (_tags != null && _tags.Count > 0)
+            {
+                json.WriteStartObject(s_tagsPropertyNameBytes);
+
+                foreach (KeyValuePair<string, string> kvp in _tags)
+                {
+                    json.WriteString(kvp.Key, kvp.Value);
+                }
+
+                json.WriteEndObject();
+            }
+        }
+
+        internal void WriteReleasePolicy(Utf8JsonWriter json)
+        {
+            if (ReleasePolicy != null)
+            {
+                json.WriteStartObject(s_releasePolicyPropertyNameBytes);
+
+                ReleasePolicy.WriteProperties(json);
 
                 json.WriteEndObject();
             }

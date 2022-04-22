@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="EncryptionScopeSource"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeSource"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EncryptionScopeSource(string value)
         {

@@ -15,7 +15,11 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public ListArtifacts(PerfOptions options) : base(options)
         {
-            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential);
+            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential,
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
         }
 
         public override async Task GlobalSetupAsync()
@@ -38,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            foreach (var manifest in _repository.GetManifestPropertiesCollection())
+            foreach (var manifest in _repository.GetAllManifestProperties())
             {
                  _client.GetArtifact($"library/node", manifest.Digest);
             }
@@ -46,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await foreach (var manifest in _repository.GetManifestPropertiesCollectionAsync())
+            await foreach (var manifest in _repository.GetAllManifestPropertiesAsync())
             {
                 _client.GetArtifact($"library/node", manifest.Digest);
             }

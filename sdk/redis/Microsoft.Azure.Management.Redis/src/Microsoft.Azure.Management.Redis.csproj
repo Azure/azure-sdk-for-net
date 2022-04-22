@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Redis</PackageId>
+    <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
+    <Version>8.0.0</Version>
+    <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
+    <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
+    <PackageReleaseNotes>
+      [Breaking changes included]
+        1. The type of "RedisConfiguration" is modified from IDictionary&lt;string, string&gt; to Microsoft.Azure.Management.Redis.Models.RedisCommonPropertiesRedisConfiguration in the following places
+            Microsoft.Azure.Management.Redis.Models.RedisResource
+            Microsoft.Azure.Management.Redis.Models.RedisCreateParameters
+            Microsoft.Azure.Management.Redis.Models.RedisUpdateParameters
+
+      [New Features]
+        1. Managed Identity can be assigned during creation of Microsoft.Azure.Management.Redis.Models.RedisResource
+        2. Managed Identity assigned to RedisResource can be updated or deleted.
+        
+      [Updates]
+        1. Api version "2021-06-01" will be used in the HTTP requests.
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

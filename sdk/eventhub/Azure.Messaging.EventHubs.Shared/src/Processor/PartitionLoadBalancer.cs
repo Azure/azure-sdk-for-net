@@ -91,6 +91,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
 
         /// <summary>
+        ///   The number of partitions currently owned by the associated event processor.
+        /// </summary>
+        ///
+        public virtual int OwnedPartitionCount => InstanceOwnership.Count;
+
+        /// <summary>
         ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
         /// </summary>
         ///

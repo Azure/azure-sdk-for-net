@@ -23,7 +23,7 @@ namespace BatchClientIntegrationTests.Fixtures
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
                 imageInfo.ImageReference.Publisher == "canonical" &&
                 imageInfo.ImageReference.Offer == "ubuntuserver" &&
-                imageInfo.ImageReference.Sku.Contains("16.04");
+                imageInfo.ImageReference.Sku.Contains("18.04");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 

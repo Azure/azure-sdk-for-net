@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// link scope resources.</param>
         /// <param name="features">Workspace features.</param>
         /// <param name="eTag">The ETag of the workspace.</param>
-        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), WorkspaceCapping workspaceCapping = default(WorkspaceCapping), string createdDate = default(string), string modifiedDate = default(string), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), bool? forceCmkForQuery = default(bool?), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), IDictionary<string, object> features = default(IDictionary<string, object>), string eTag = default(string))
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), WorkspaceCapping workspaceCapping = default(WorkspaceCapping), string createdDate = default(string), string modifiedDate = default(string), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), bool? forceCmkForQuery = default(bool?), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), WorkspaceFeatures features = default(WorkspaceFeatures), string eTag = default(string))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -169,8 +169,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Gets or sets workspace features.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.properties.features")]
-        public IDictionary<string, object> Features { get; set; }
+        [JsonProperty(PropertyName = "properties.features")]
+        public WorkspaceFeatures Features { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the workspace.

@@ -102,7 +102,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareDirectoryInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties
                 {
@@ -126,7 +126,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareDirectoryProperties()
             {
                 Metadata = response.Headers.Metadata,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties()
@@ -150,7 +150,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareDirectoryInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties
                 {
@@ -172,11 +172,12 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            // Set Directory metadata returns limited resposne headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
+            // Set Directory metadata returns limited response headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
             return new ShareDirectoryInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties()
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                SmbProperties = new FileSmbProperties(),
+                LastModified = response.GetRawResponse().Headers.ExtractLastModified()
             };
         }
 
@@ -200,6 +201,7 @@ namespace Azure.Storage.Files.Shares
             {
                 return null;
             }
+
             return new StorageClosedHandlesSegment
             {
                 Marker = response.Headers.Marker,
@@ -217,7 +219,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties()
@@ -241,7 +243,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileCopyInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 CopyId = response.Headers.CopyId,
                 CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
@@ -260,7 +262,7 @@ namespace Azure.Storage.Files.Shares
                 Metadata = response.Headers.Metadata,
                 ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
                 ContentType = response.Headers.ContentType,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 ContentHash = response.Headers.ContentMD5,
                 CacheControl = response.Headers.CacheControl,
                 ContentDisposition = response.Headers.ContentDisposition,
@@ -307,7 +309,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties
@@ -331,7 +333,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties {}
@@ -346,7 +348,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileUploadInfo()
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
@@ -361,7 +363,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileUploadInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
@@ -377,7 +379,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareFileRangeInfo
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 FileContentLength = response.Headers.FileContentLength.GetValueOrDefault(),
                 Ranges = response.Value.Ranges.Select(r => r.ToHttpRange()).ToList(),
                 ClearRanges = response.Value.ClearRanges.Select(r => r.ToHttpRange()).ToList(),
@@ -420,7 +422,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileLease()
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = leaseTime
@@ -435,7 +437,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 // File Aquire Lease does not return LeastTime.
@@ -450,7 +452,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new FileLeaseReleaseInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -463,7 +465,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new FileLeaseReleaseInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
             };
         }
@@ -484,7 +486,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = leaseTime,
@@ -507,7 +509,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = leaseTime
@@ -530,7 +532,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = leaseTime,
@@ -553,7 +555,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // Break lease does not return lease Id.
                 LeaseId = null,
@@ -569,7 +571,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
                 LeaseTime = response.Headers.LeaseTime
@@ -584,7 +586,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileLease
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 // File Release Lease does not return LeaseId or LeaseTime
             };
@@ -598,7 +600,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -613,7 +615,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareSnapshotInfo
             {
                 Snapshot = response.Headers.Snapshot,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -628,10 +630,11 @@ namespace Azure.Storage.Files.Shares
             return new ShareProperties
             {
                 LastModified = response.Headers.LastModified,
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 ProvisionedIops = response.Headers.ProvisionedIops,
                 ProvisionedIngressMBps = response.Headers.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = response.Headers.ProvisionedEgressMBps,
+                ProvisionedBandwidthMiBps = response.Headers.ProvisionedBandwidthMibps,
                 NextAllowedQuotaDowngradeTime = response.Headers.NextAllowedQuotaDowngradeTime,
                 DeletedOn = null,
                 RemainingRetentionDays = null,
@@ -657,7 +660,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -670,7 +673,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -683,7 +686,7 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
         }
@@ -744,6 +747,7 @@ namespace Azure.Storage.Files.Shares
                 ProvisionedIops = sharePropertiesInternal.ProvisionedIops,
                 ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
+                ProvisionedBandwidthMiBps = sharePropertiesInternal.ProvisionedBandwidthMiBps,
                 NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
                 DeletedOn = sharePropertiesInternal.DeletedTime,
                 RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
@@ -777,7 +781,7 @@ namespace Azure.Storage.Files.Shares
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = response.Headers.Metadata,
                     ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                     CacheControl = response.Headers.CacheControl,
                     ContentDisposition = response.Headers.ContentDisposition,
                     AcceptRanges = response.Headers.AcceptRanges,
@@ -843,6 +847,68 @@ namespace Azure.Storage.Files.Shares
             }
 
             return httpHeaders;
+        }
+
+        internal static ShareFileItem ToShareFileItem(this DirectoryItem directoryItem)
+        {
+            if (directoryItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: true,
+                name: directoryItem.Name,
+                id: directoryItem.FileId,
+                properties: directoryItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(directoryItem.Attributes),
+                permissionKey: directoryItem.PermissionKey,
+                fileSize: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(fileItem.Attributes),
+                permissionKey: fileItem.PermissionKey,
+                fileSize: fileItem.Properties.ContentLength);
+        }
+
+        internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
+        {
+            if (fileProperty == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItemProperties(
+                createdOn: fileProperty.CreationTime,
+                lastAccessedOn: fileProperty.LastAccessTime,
+                lastWrittenOn: fileProperty.LastWriteTime,
+                changedOn: fileProperty.ChangeTime,
+                lastModified: fileProperty.LastModified,
+                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+        }
+
+        internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)
+        {
+            DateTimeOffset lastModified = DateTimeOffset.MinValue;
+
+            if (responseHeaders.TryGetValue(Constants.HeaderNames.LastModified, out string lastModifiedString))
+            {
+                lastModified = DateTimeOffset.Parse(lastModifiedString, CultureInfo.InvariantCulture);
+            }
+
+            return lastModified;
         }
     }
 }

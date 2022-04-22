@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(new BinaryData(input));
 
             // Return a single message. Doesn't support multiple dispatch
-            return ServiceBusTriggerInput.CreateSingle(message);
+            return ServiceBusTriggerInput.CreateSingle(message, null, null);
         }
 
         // Single instance: Core --> Message
@@ -58,6 +58,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("MessageSession", value.MessageActions));
             SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
             SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("Client", value.Client));
 
             if (value.IsSingleDispatch)
             {
@@ -95,6 +96,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
             contract.Add("MessageActions", typeof(ServiceBusMessageActions));
             contract.Add("SessionActions", typeof(ServiceBusSessionMessageActions));
+            contract.Add("Client", typeof(ServiceBusClient));
             return contract;
         }
 

@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="location">The location of the cluster.</param>
         /// <param name="tags">The resource tags.</param>
+        /// <param name="zones">The availability zones.</param>
         /// <param name="properties">The cluster create parameters.</param>
         /// <param name="identity">The identity of the cluster, if
         /// configured.</param>
@@ -43,8 +44,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="tenantId">The tenant id.</param>
         /// <param name="fetchAaddsResource">This indicates whether fetch Aadds
         /// resource or not.</param>
-        public ClusterCreateRequestValidationParameters(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterCreateProperties properties = default(ClusterCreateProperties), ClusterIdentity identity = default(ClusterIdentity), string name = default(string), string type = default(string), string tenantId = default(string), bool? fetchAaddsResource = default(bool?))
-            : base(location, tags, properties, identity)
+        public ClusterCreateRequestValidationParameters(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), ClusterCreateProperties properties = default(ClusterCreateProperties), ClusterIdentity identity = default(ClusterIdentity), string name = default(string), string type = default(string), string tenantId = default(string), bool? fetchAaddsResource = default(bool?))
+            : base(location, tags, zones, properties, identity)
         {
             Name = name;
             Type = type;

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceListResult DeserializeNetworkInterfaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkInterface>> value = default;
+            Optional<IReadOnlyList<NetworkInterfaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkInterface> array = new List<NetworkInterface>();
+                    List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterface.DeserializeNetworkInterface(item));
+                        array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
                     }
                     value = array;
                     continue;

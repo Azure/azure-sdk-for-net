@@ -11,6 +11,10 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
     if ($pkgInfo.ReleaseNotes -ne $null) {
       $releaseNotes = $pkgInfo.ReleaseNotes
     }
+    # As github api limit the body param length with 125000 characters, we have to truncate the release note if needed.
+    if ($releaseNotes.Length -gt 124996) {
+      $releaseNotes = $releaseNotes.SubString(0, 124996) + " ..."
+    }
 
     $isPrerelease = $False
 
@@ -101,7 +105,7 @@ function RetrievePackages($artifactLocation) {
   {
     LogError "The function for '$GetPackageInfoFromPackageFileFn' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   }
 }
 

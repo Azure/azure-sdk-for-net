@@ -23,6 +23,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         private Dictionary<string, KeyVaultSecret> _loadedSecrets;
         private Task _pollingTask;
         private readonly CancellationTokenSource _cancellationToken;
+        private bool _disposed;
 
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationProvider"/>.
@@ -148,8 +149,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         {
             if (disposing)
             {
-                _cancellationToken.Cancel();
-                _cancellationToken.Dispose();
+                if (!_disposed)
+                {
+                    _cancellationToken.Cancel();
+                    _cancellationToken.Dispose();
+                }
+
+                _disposed = true;
             }
         }
 

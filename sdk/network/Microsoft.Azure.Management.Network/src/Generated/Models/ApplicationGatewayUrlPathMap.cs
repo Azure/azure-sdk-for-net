@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource of URL path map.</param>
         /// <param name="defaultRedirectConfiguration">Default redirect
         /// configuration resource of URL path map.</param>
+        /// <param name="defaultLoadDistributionPolicy">Default Load
+        /// Distribution Policy resource of URL path map.</param>
         /// <param name="pathRules">Path rule of URL path map resource.</param>
         /// <param name="provisioningState">The provisioning state of the URL
         /// path map resource. Possible values include: 'Succeeded',
@@ -55,13 +57,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), SubResource defaultRewriteRuleSet = default(SubResource), SubResource defaultRedirectConfiguration = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), SubResource defaultRewriteRuleSet = default(SubResource), SubResource defaultRedirectConfiguration = default(SubResource), SubResource defaultLoadDistributionPolicy = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
             DefaultRedirectConfiguration = defaultRedirectConfiguration;
+            DefaultLoadDistributionPolicy = defaultLoadDistributionPolicy;
             PathRules = pathRules;
             ProvisioningState = provisioningState;
             Name = name;
@@ -100,6 +103,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultRedirectConfiguration")]
         public SubResource DefaultRedirectConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets default Load Distribution Policy resource of URL path
+        /// map.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultLoadDistributionPolicy")]
+        public SubResource DefaultLoadDistributionPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource.

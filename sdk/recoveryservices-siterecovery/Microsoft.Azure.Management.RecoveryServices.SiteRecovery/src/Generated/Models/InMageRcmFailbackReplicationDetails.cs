@@ -80,7 +80,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="mobilityAgentDetails">The mobility agent
         /// information.</param>
         /// <param name="vmNics">The network details.</param>
-        public InMageRcmFailbackReplicationDetails(string internalIdentifier = default(string), string azureVirtualMachineId = default(string), string multiVmGroupName = default(string), string reprotectAgentId = default(string), string reprotectAgentName = default(string), string osType = default(string), string logStorageAccountId = default(string), string targetvCenterId = default(string), string targetDataStoreName = default(string), string targetVmName = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), IList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default(IList<InMageRcmFailbackProtectedDiskDetails>), InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = default(InMageRcmFailbackMobilityAgentDetails), IList<InMageRcmFailbackNicDetails> vmNics = default(IList<InMageRcmFailbackNicDetails>))
+        /// <param name="lastPlannedFailoverStartTime">The last planned
+        /// failover start time.</param>
+        /// <param name="lastPlannedFailoverStatus">The last planned failover
+        /// status. Possible values include: 'Succeeded', 'Failed',
+        /// 'Cancelled', 'Unknown'</param>
+        /// <param name="discoveredVmDetails">The discovered VM
+        /// information.</param>
+        /// <param name="lastUsedPolicyId">The policy Id used by the forward
+        /// replication.</param>
+        /// <param name="lastUsedPolicyFriendlyName">The policy friendly name
+        /// used by the forward replication.</param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover">A value
+        /// indicating whether agent registration was successful after
+        /// failover.</param>
+        public InMageRcmFailbackReplicationDetails(string internalIdentifier = default(string), string azureVirtualMachineId = default(string), string multiVmGroupName = default(string), string reprotectAgentId = default(string), string reprotectAgentName = default(string), string osType = default(string), string logStorageAccountId = default(string), string targetvCenterId = default(string), string targetDataStoreName = default(string), string targetVmName = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), IList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default(IList<InMageRcmFailbackProtectedDiskDetails>), InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = default(InMageRcmFailbackMobilityAgentDetails), IList<InMageRcmFailbackNicDetails> vmNics = default(IList<InMageRcmFailbackNicDetails>), System.DateTime? lastPlannedFailoverStartTime = default(System.DateTime?), string lastPlannedFailoverStatus = default(string), InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = default(InMageRcmFailbackDiscoveredProtectedVmDetails), string lastUsedPolicyId = default(string), string lastUsedPolicyFriendlyName = default(string), bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?))
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;
@@ -105,6 +119,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ProtectedDisks = protectedDisks;
             MobilityAgentDetails = mobilityAgentDetails;
             VmNics = vmNics;
+            LastPlannedFailoverStartTime = lastPlannedFailoverStartTime;
+            LastPlannedFailoverStatus = lastPlannedFailoverStatus;
+            DiscoveredVmDetails = discoveredVmDetails;
+            LastUsedPolicyId = lastUsedPolicyId;
+            LastUsedPolicyFriendlyName = lastUsedPolicyFriendlyName;
+            IsAgentRegistrationSuccessfulAfterFailover = isAgentRegistrationSuccessfulAfterFailover;
             CustomInit();
         }
 
@@ -258,6 +278,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmNics")]
         public IList<InMageRcmFailbackNicDetails> VmNics { get; set; }
+
+        /// <summary>
+        /// Gets the last planned failover start time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastPlannedFailoverStartTime")]
+        public System.DateTime? LastPlannedFailoverStartTime { get; private set; }
+
+        /// <summary>
+        /// Gets the last planned failover status. Possible values include:
+        /// 'Succeeded', 'Failed', 'Cancelled', 'Unknown'
+        /// </summary>
+        [JsonProperty(PropertyName = "lastPlannedFailoverStatus")]
+        public string LastPlannedFailoverStatus { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the discovered VM information.
+        /// </summary>
+        [JsonProperty(PropertyName = "discoveredVmDetails")]
+        public InMageRcmFailbackDiscoveredProtectedVmDetails DiscoveredVmDetails { get; set; }
+
+        /// <summary>
+        /// Gets the policy Id used by the forward replication.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastUsedPolicyId")]
+        public string LastUsedPolicyId { get; private set; }
+
+        /// <summary>
+        /// Gets the policy friendly name used by the forward replication.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastUsedPolicyFriendlyName")]
+        public string LastUsedPolicyFriendlyName { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether agent registration was successful
+        /// after failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAgentRegistrationSuccessfulAfterFailover")]
+        public bool? IsAgentRegistrationSuccessfulAfterFailover { get; private set; }
 
     }
 }

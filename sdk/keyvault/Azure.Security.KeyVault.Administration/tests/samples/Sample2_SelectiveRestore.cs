@@ -11,11 +11,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample2_SelectiveRestore : BackupRestoreTestBase
     {
-        public Sample2_SelectiveRestore(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample2_SelectiveRestore(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;

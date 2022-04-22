@@ -31,25 +31,16 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30-Preview")
+        public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2021-04-30-Preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.xMsClientRequestId = xMsClientRequestId;
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,6 +51,10 @@ namespace Azure.Search.Documents
             uri.AppendPath(dataSourceName, true);
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", skipIndexerResetRequirementForCache.Value, true);
+            }
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -83,9 +78,10 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -96,7 +92,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -118,9 +114,10 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="skipIndexerResetRequirementForCache"> Ignores cache reset requirements. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="dataSource"/> is null. </exception>
-        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSourceConnection> CreateOrUpdate(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch = null, string ifNoneMatch = null, bool? skipIndexerResetRequirementForCache = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -131,7 +128,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, ifMatch, ifNoneMatch, skipIndexerResetRequirementForCache);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

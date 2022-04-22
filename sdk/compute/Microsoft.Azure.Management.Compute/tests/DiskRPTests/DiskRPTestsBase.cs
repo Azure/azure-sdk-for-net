@@ -14,6 +14,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using ResourceIdentityType = Microsoft.Azure.Management.ResourceManager.Models.ResourceIdentityType;
 using NM = Microsoft.Azure.Management.Network.Models;
+using System.Threading;
 
 namespace Compute.Tests.DiskRPTests
 {
@@ -21,6 +22,15 @@ namespace Compute.Tests.DiskRPTests
     {
         protected const string DiskNamePrefix = "diskrp";
         private string DiskRPLocation = ComputeManagementTestUtilities.DefaultLocation.ToLower();
+        private enum ProvisioningState
+        {
+            Creating = 1,
+            Updating = 2,
+            Failed = 3,
+            Succeeded = 4,
+            Deleting = 5,
+            Migrating = 6
+        }
 
         #region Execution
         protected void Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
@@ -202,7 +212,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = null, string location = null)
+        protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = "E4", string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -319,49 +329,10 @@ namespace Compute.Tests.DiskRPTests
                     // **********
                     // TEST
                     // **********
-                    // Put
+
                     Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
                     Validate(snapshot, snapshotOut, incremental: incremental);
-
-                    // Get
-                    snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut, incremental: incremental);
-
-                    // Get access
-                    AccessUri accessUri = m_CrpClient.Snapshots.GrantAccess(rgName, snapshotName, AccessDataDefault);
-                    Assert.NotNull(accessUri.AccessSAS);
-
-                    // Get
-                    snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut, incremental: incremental);
-
-                    // Patch
-                    var updatesnapshot = new SnapshotUpdate();
-                    const string tagKey = "tageKey";
-                    updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
-                    snapshotOut = m_CrpClient.Snapshots.Update(rgName, snapshotName, updatesnapshot);
-                    Validate(snapshot, snapshotOut, incremental: incremental);
-
-                    // Get
-                    snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut, incremental: incremental);
-
-                    // End access
-                    m_CrpClient.Snapshots.RevokeAccess(rgName, snapshotName);
-
-                    // Delete
-                    m_CrpClient.Snapshots.Delete(rgName, snapshotName);
-
-                    try
-                    {
-                        // Ensure it was really deleted
-                        m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                        Assert.False(true);
-                    }
-                    catch (CloudException ex)
-                    {
-                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                    }
+                    OperateSnapshot(snapshot, rgName, snapshotName, incremental: incremental);
                 }
                 finally
                 {
@@ -370,6 +341,99 @@ namespace Compute.Tests.DiskRPTests
                 }
             }
 
+        }
+
+        protected void Snapshot_CRUD_WithSecurityType_Execute(string methodName, string location)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
+                disk.Location = location;
+                disk.OsType = OperatingSystemTypes.Linux;
+                disk.CreationData.ImageReference = new ImageDiskReference
+                {
+                    Id = "/Subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/Providers/Microsoft.Compute/Locations/EASTUS2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2/Versions/latest"
+                };
+                disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.TrustedLaunch };
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+
+                    // Generate snapshot using disk info
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, location: location);
+
+                    // **********
+                    // TEST
+                    // **********
+
+                    Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
+                    Validate(snapshot, snapshotOut);
+                    Assert.NotNull(snapshotOut.SecurityProfile);
+                    Assert.Equal(disk.SecurityProfile.SecurityType, snapshotOut.SecurityProfile.SecurityType);
+                    OperateSnapshot(snapshot, rgName, snapshotName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        protected void Snapshot_CRUD_WithAcceleratedNetwork_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB);
+                disk.SupportedCapabilities = new SupportedCapabilities { AcceleratedNetwork = true };
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+
+                    // Generate snapshot using disk info
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, location: location);
+
+                    // **********
+                    // TEST
+                    // **********
+
+                    Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
+                    Validate(snapshot, snapshotOut);
+                    Assert.NotNull(snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    Assert.Equal(disk.SupportedCapabilities.AcceleratedNetwork, snapshotOut.SupportedCapabilities.AcceleratedNetwork);
+                    OperateSnapshot(snapshot, rgName, snapshotName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
         }
 
         protected void DiskEncryptionSet_CRUD_Execute(string methodName, string encryptionType, string location = null)
@@ -1042,7 +1106,8 @@ namespace Compute.Tests.DiskRPTests
                     //Update Disk with DiskAccess
                     DiskUpdate diskUpdate = new DiskUpdate
                     {
-                        DiskAccessId = diskAccessOut.Id
+                        DiskAccessId = diskAccessOut.Id,
+                        PublicNetworkAccess = PublicNetworkAccess.Disabled
                     };
 
                     m_CrpClient.Disks.Update(rgName, diskName, diskUpdate);
@@ -1050,6 +1115,7 @@ namespace Compute.Tests.DiskRPTests
 
                     Assert.Equal(diskAccessOut.Id.ToLower(), diskOut.DiskAccessId.ToLower());
                     Assert.Equal(NetworkAccessPolicy.AllowPrivate, diskOut.NetworkAccessPolicy);
+                    Assert.Equal(PublicNetworkAccess.Disabled, diskOut.PublicNetworkAccess);
 
                     m_CrpClient.Disks.Delete(rgName, diskName);
                     m_CrpClient.DiskAccesses.Delete(rgName, diskAccessName);
@@ -1157,6 +1223,16 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(disk.SecurityProfile.SecurityType, diskOut.SecurityProfile.SecurityType);
 
+                    // Begin get access with VmGuestStateSas
+                    GrantAccessData accessData = AccessDataDefault;
+                    accessData.GetSecureVMGuestStateSAS = true;
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, accessData);
+                    Assert.NotNull(accessUri.AccessSAS);
+                    Assert.NotNull(accessUri.SecurityDataAccessSAS);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
 
@@ -1240,6 +1316,95 @@ namespace Compute.Tests.DiskRPTests
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.False(diskOut.SupportsHibernation, "Supports Hibernation should be set to false");
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+
+        }
+
+        protected void Disk_CRUD_WithAcceleratedNetworking_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                IList<string> zones = null;
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.SupportedCapabilities = new SupportedCapabilities { AcceleratedNetwork = true };
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.True(diskOut.SupportedCapabilities.AcceleratedNetwork, "Accelerated Networking flag should be set to true");
+
+                    // Get disk access
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    Assert.NotNull(accessUri.AccessSAS);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Patch
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
+                    {
+                        Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } },
+                        SupportedCapabilities = new SupportedCapabilities { AcceleratedNetwork = false }
+                    };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.False(diskOut.SupportedCapabilities.AcceleratedNetwork, "Accelerated Networking should be set to false");
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
@@ -1353,12 +1518,11 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
-
         }
 
         #endregion
 
-        #region Generation
+            #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
         protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)
@@ -1368,15 +1532,17 @@ namespace Compute.Tests.DiskRPTests
             switch (diskCreateOption)
             {
                 case "Upload":
-                    disk = GenerateBaseDisk(diskCreateOption);
+                case "UploadPreparedSecure":
+                    disk = GenerateBaseDisk(diskCreateOption, location);
                     disk.CreationData.UploadSizeBytes = (long) (diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
                     break;
                 case "Empty":
-                    disk = GenerateBaseDisk(diskCreateOption);
+                    disk = GenerateBaseDisk(diskCreateOption, location);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
                     break;
                 case "Import":
+                case "ImportSecure":
                     disk = GenerateImportDisk(diskCreateOption, rgName, location);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
@@ -1479,11 +1645,11 @@ namespace Compute.Tests.DiskRPTests
             return diskAccess;
         }
 
-        public Disk GenerateBaseDisk(string diskCreateOption)
+        public Disk GenerateBaseDisk(string diskCreateOption, string location = null)
         {
             var disk = new Disk
             {
-                Location = DiskRPLocation,
+                Location = location ?? DiskRPLocation,
             };
             disk.Sku = new DiskSku()
             {
@@ -1498,17 +1664,17 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS", bool incremental = false)
+        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS", bool incremental = false, string location = null)
         {
-            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes, incremental);
+            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes, incremental, location);
             return snapshot;
         }
 
-        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes, bool incremental = false)
+        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes, bool incremental = false, string location = null)
         {
             var snapshot = new Snapshot()
             {
-                Location = DiskRPLocation,
+                Location = location ?? DiskRPLocation,
                 Incremental = incremental
             };
             snapshot.Sku = new SnapshotSku()
@@ -1523,6 +1689,27 @@ namespace Compute.Tests.DiskRPTests
 
             return snapshot;
         }
+
+        protected Snapshot GenerateCopyStartSnapshot(string sourceSnapshotId, string snapshotStorageAccountTypes = "Standard_LRS", string location = null)
+        {
+            var snapshot = new Snapshot()
+            {
+                Location = location ?? DiskRPLocation,
+                Incremental = true
+            };
+            snapshot.Sku = new SnapshotSku()
+            {
+                Name = snapshotStorageAccountTypes ?? SnapshotStorageAccountTypes.StandardLRS
+            };
+            snapshot.CreationData = new CreationData()
+            {
+                CreateOption = DiskCreateOption.CopyStart,
+                SourceResourceId = sourceSnapshotId,
+            };
+
+            return snapshot;
+        }
+
         #endregion
 
         #region Helpers
@@ -1569,6 +1756,34 @@ namespace Compute.Tests.DiskRPTests
             return privateEndpointOut;
         }
 
+        public Snapshot PollCloneSnaphotToCompletion(string resourceGroup, string snapshotName, int timeoutInHours = 3)
+        {
+            bool continuePolling = true;
+            Snapshot retrievedSnapshot = null;
+            DateTime startingTime = DateTime.UtcNow;
+            DateTime maxWaitingTimeForCompletion = startingTime.AddHours(timeoutInHours);
+
+            do
+            {
+                DateTime currentTime = DateTime.UtcNow;
+                Assert.True(maxWaitingTimeForCompletion >= currentTime, $"Clone did not complete in more than timeout {timeoutInHours} hours.");
+
+                retrievedSnapshot = m_CrpClient.Snapshots.Get(resourceGroup, snapshotName);
+
+                continuePolling = retrievedSnapshot.CompletionPercent < 100 && !retrievedSnapshot.ProvisioningState.Equals(ProvisioningState.Failed);
+                if (!continuePolling)
+                {
+                    Assert.True(retrievedSnapshot.CompletionPercent == 100 && !retrievedSnapshot.ProvisioningState.Equals(ProvisioningState.Succeeded),
+                        $"CopyStart operation failed: CompletionPercent {retrievedSnapshot.CompletionPercent}, ProvisioningState {retrievedSnapshot.ProvisioningState} ");
+                    break;
+                }
+
+                Thread.Sleep(60 * 1000);
+            } while (continuePolling);
+
+            return retrievedSnapshot;
+        }
+
         #endregion
 
         #region Validation
@@ -1613,12 +1828,12 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal("privatelink.blob.core.windows.net", privateLinkResources.Value[0].RequiredZoneNames[0]);
         }
 
-        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)
+        protected void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)
         {
             // snapshot resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "snapshots"), snapshotActual.Type);
             Assert.NotNull(snapshotActual.Name);
-            Assert.Equal(DiskRPLocation, snapshotActual.Location);
+            Assert.Equal(snapshotExpected.Location, snapshotActual.Location);
 
             // snapshot properties
             Assert.Equal(snapshotExpected.Sku.Name, snapshotActual.Sku.Name);
@@ -1758,6 +1973,49 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(inputPlan.Publisher, outPutPlan.Publisher);
             Assert.Equal(inputPlan.Product, outPutPlan.Product);
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
+        }
+
+        protected void OperateSnapshot(Snapshot snapshot, string rgName, string snapshotName, bool incremental = false)
+        {
+            // Get
+            Snapshot snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
+            Validate(snapshot, snapshotOut, incremental: incremental);
+
+            // Get access
+            AccessUri accessUri = m_CrpClient.Snapshots.GrantAccess(rgName, snapshotName, AccessDataDefault);
+            Assert.NotNull(accessUri.AccessSAS);
+
+            // Get
+            snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
+            Validate(snapshot, snapshotOut, incremental: incremental);
+
+            // Patch
+            var updatesnapshot = new SnapshotUpdate();
+            const string tagKey = "tageKey";
+            updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+            snapshotOut = m_CrpClient.Snapshots.Update(rgName, snapshotName, updatesnapshot);
+            Validate(snapshot, snapshotOut, incremental: incremental);
+
+            // Get
+            snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
+            Validate(snapshot, snapshotOut, incremental: incremental);
+
+            // End access
+            m_CrpClient.Snapshots.RevokeAccess(rgName, snapshotName);
+
+            // Delete
+            m_CrpClient.Snapshots.Delete(rgName, snapshotName);
+
+            try
+            {
+                // Ensure it was really deleted
+                m_CrpClient.Snapshots.Get(rgName, snapshotName);
+                Assert.False(true);
+            }
+            catch (CloudException ex)
+            {
+                Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+            }
         }
         #endregion
 

@@ -150,6 +150,8 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
+            Assert.False(signalr.DisableAadAuth);
+            Assert.False(signalr.DisableLocalAuth);
             foreach(SignalRFeature feature in signalr.Features)
             {
                 switch (feature.Flag) 
@@ -216,6 +218,7 @@ namespace SignalR.Tests
                             "https://contoso.com",
                         }
                 },
+                DisableLocalAuth=true,
             },resourceGroup.Name, signalr.Name);
 
             // Validate the updated SignalR instance
@@ -241,6 +244,7 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
+            Assert.True(signalr.DisableLocalAuth);
             foreach (SignalRFeature feature in signalr.Features)
             {
                 switch (feature.Flag)

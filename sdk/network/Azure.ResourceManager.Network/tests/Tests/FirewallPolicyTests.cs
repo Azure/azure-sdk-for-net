@@ -3,47 +3,100 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.Core;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class FirewallPolicyTests : NetworkTestsManagementClientBase
+    public class FirewallPolicyTests : NetworkServiceClientTestBase
     {
+        private ResourceGroup _resourceGroup;
+        private VirtualNetwork _network;
+        private PublicIPAddress _publicIPAddress;
+        private AzureFirewall _firewall;
+
+        private ResourceIdentifier _resourceGroupIdentifier;
+        private ResourceIdentifier _networkIdentifier;
+        private ResourceIdentifier _publicIPAddressIdentifier;
+        private ResourceIdentifier _firewallIdentifier;
+
         public FirewallPolicyTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
+        [OneTimeSetUp]
+        public async Task GlobalSetUp()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("FirewallPolicyRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroup rg = rgLro.Value;
+            _resourceGroupIdentifier = rg.Id;
+
+            VirtualNetworkData vnetData = new VirtualNetworkData()
             {
-                Initialize();
-            }
+                Location = AzureLocation.WestUS2,
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = { "10.26.0.0/16", }
+                },
+                Subnets = {
+                    new SubnetData() { Name = "Default", AddressPrefix = "10.26.1.0/26", },
+                    new SubnetData() { Name = "AzureFirewallSubnet", AddressPrefix = "10.26.2.0/26", },
+                },
+            };
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("vnet-"), vnetData);
+            _network = vnetLro.Value;
+            _networkIdentifier = _network.Id;
+
+            PublicIPAddressData ipData = new PublicIPAddressData()
+            {
+                Location = AzureLocation.WestUS2,
+                PublicIPAllocationMethod = IPAllocationMethod.Static,
+                Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
+            };
+            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("publicIp-"), ipData);
+            _publicIPAddress = ipLro.Value;
+            _publicIPAddressIdentifier = _publicIPAddress.Id;
+
+            AzureFirewallData firewallData = new AzureFirewallData();
+            firewallData.Location = AzureLocation.WestUS2;
+            firewallData.IpConfigurations.Add(new AzureFirewallIPConfiguration()
+            {
+                Name = "fwpip",
+                PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
+            });
+            var firewallLro = await rg.GetAzureFirewalls().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("firewall-"), firewallData);
+            _firewall = firewallLro.Value;
+            _firewallIdentifier = _firewall.Id;
+
+            await StopSessionRecordingAsync();
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
+        [SetUp]
+        public async Task TestSetUp()
         {
-            await CleanupResourceGroupsAsync();
+            var client = GetArmClient();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _network = await _resourceGroup.GetVirtualNetworks().GetAsync(_networkIdentifier.Name);
+            _publicIPAddress = await _resourceGroup.GetPublicIPAddresses().GetAsync(_publicIPAddressIdentifier.Name);
+            _firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallIdentifier.Name);
         }
 
         [Test]
-        [Ignore("Track2: Nunit cannot implement this test")]
-        public void FirewallPolicyRuleGroupDeserializationTest()
+        [RecordedTest]
+        [Ignore("Need to research how to associate with firewalls")]
+        public async Task CreateOrUpdate()
         {
-            //ServiceClientCredentials creds = new MockServiceClientCredentials();
-            //var networkManagementClient = new NetworkManagementClient(new Uri("https://management.azure.com"), creds);
-            //var responseContent = FirewallPolicyRuleGroupTestResource.GetSampleResource().ToString();
-            //var middle = networkManagementClient.DeserializationSettings;
-            //var ruleGroup = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleGroup>(responseContent, networkManagementClient.DeserializationSettings);
-
-            //Assert.True(ruleGroup != null);
-            //Assert.Equal(1, ruleGroup.Rules.Count);
-
-            //FirewallPolicyNatRule policyRule = ruleGroup.Rules[0] as FirewallPolicyNatRule;
-            //Assert.Equal(typeof(NetworkRuleCondition), policyRule.RuleCondition.GetType());
+            string FirewallPolicyName = Recording.GenerateAssetName("policy-");
+            FirewallPolicyData data = new FirewallPolicyData();
+            data.Location = AzureLocation.WestUS2;
+            await _resourceGroup.GetFirewallPolicies().CreateOrUpdateAsync(true, FirewallPolicyName, data);
         }
     }
 }

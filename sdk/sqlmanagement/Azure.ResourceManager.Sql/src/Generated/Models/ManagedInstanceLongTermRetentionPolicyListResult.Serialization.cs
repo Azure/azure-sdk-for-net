@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceLongTermRetentionPolicyListResult DeserializeManagedInstanceLongTermRetentionPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstanceLongTermRetentionPolicy>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceLongTermRetentionPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstanceLongTermRetentionPolicy> array = new List<ManagedInstanceLongTermRetentionPolicy>();
+                    List<ManagedInstanceLongTermRetentionPolicyData> array = new List<ManagedInstanceLongTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceLongTermRetentionPolicy.DeserializeManagedInstanceLongTermRetentionPolicy(item));
+                        array.Add(ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(item));
                     }
                     value = array;
                     continue;

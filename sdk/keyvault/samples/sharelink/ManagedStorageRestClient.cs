@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Storage
                 new ChallengeBasedAuthenticationPolicy(credential ?? throw new ArgumentNullException(nameof(credential))));
 
             ClientDiagnostics diagnostics = new ClientDiagnostics(options);
-            return new ManagedStorageRestClient(diagnostics, pipeline, vaultUri.ToString());
+            return new ManagedStorageRestClient(diagnostics, pipeline, vaultUri.AbsoluteUri);
         }
     }
 }

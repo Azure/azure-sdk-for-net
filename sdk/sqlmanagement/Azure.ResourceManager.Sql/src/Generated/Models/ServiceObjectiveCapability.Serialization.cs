@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
             Optional<IReadOnlyList<MinCapacityCapability>> supportedMinCapacities = default;
             Optional<string> computeModel = default;
+            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
             Optional<CapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
@@ -146,6 +147,21 @@ namespace Azure.ResourceManager.Sql.Models
                     computeModel = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("supportedMaintenanceConfigurations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                    }
+                    supportedMaintenanceConfigurations = array;
+                    continue;
+                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -162,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToNullable(status), reason.Value);
+            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
         }
     }
 }

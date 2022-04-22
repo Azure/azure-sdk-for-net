@@ -19,6 +19,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="id">The <see cref="Uri"/> to a certificate or deleted certificate.</param>
         /// <exception cref="ArgumentException"><paramref name="id"/> is not a valid Key Vault certificate ID.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <remarks>
+        /// Successfully parsing the given <see cref="Uri"/> does not guarantee that the <paramref name="id"/> is a valid Key Vault certificate identifier:
+        /// only that it contains the necessary number of path parts that look like a Key Vault certificate identifier. If the <see cref="VaultUri"/> references
+        /// a valid Key Vault, the service will return an error if the <see cref="Name"/> and <see cref="Version"/> do not specify a valid certificate.
+        /// </remarks>
         public KeyVaultCertificateIdentifier(Uri id)
         {
             Argument.AssertNotNull(id, nameof(id));
@@ -34,6 +39,14 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 throw new ArgumentException($"{id} is not a valid Key Vault certificate ID", nameof(id));
             }
+        }
+
+        private KeyVaultCertificateIdentifier(Uri sourceId, Uri vaultUri, string name, string version)
+        {
+            SourceId = sourceId;
+            VaultUri = vaultUri;
+            Name = name;
+            Version = version;
         }
 
         /// <summary>
@@ -56,6 +69,29 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public string Version { get; }
 
+        /// <summary>
+        /// Tries to create a new instance of the <see cref="KeyVaultCertificateIdentifier"/> from the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">A <see cref="Uri"/> to a Key Vault certificate with or without a version.</param>
+        /// <param name="identifier">A <see cref="KeyVaultCertificateIdentifier"/> from the given <paramref name="id"/> if valid; otherwise, an empty structure if invalid.</param>
+        /// <returns>True if the <see cref="Uri"/> contains a <see cref="VaultUri"/>, <see cref="Name"/>, and optional <see cref="Version"/>; otherwise, false.</returns>
+        /// <remarks>
+        /// Successfully parsing the given <see cref="Uri"/> does not guarantee that the <paramref name="id"/> is a valid Key Vault certificate identifier:
+        /// only that it contains the necessary number of path parts that look like a Key Vault certificate identifier. If the <see cref="VaultUri"/> references
+        /// a valid Key Vault, the service will return an error if the <see cref="Name"/> and <see cref="Version"/> do not specify a valid certificate.
+        /// </remarks>
+        public static bool TryCreate(Uri id, out KeyVaultCertificateIdentifier identifier)
+        {
+            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier value))
+            {
+                identifier = new KeyVaultCertificateIdentifier(value.Id, value.VaultUri, value.Name, value.Version);
+                return true;
+            }
+
+            identifier = default;
+            return false;
+        }
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
@@ -63,12 +99,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <inheritdoc/>
         public bool Equals(KeyVaultCertificateIdentifier other) =>
-            SourceId.Equals(other.SourceId);
+            SourceId == other.SourceId;
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            SourceId.GetHashCode();
+            SourceId?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

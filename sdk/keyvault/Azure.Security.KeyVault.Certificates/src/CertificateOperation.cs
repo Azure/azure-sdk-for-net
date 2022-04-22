@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             Properties = new CertificateOperationProperties(client.VaultUri, name);
 
-            Id = Properties.Id.ToString();
+            Id = Properties.Id.AbsoluteUri;
             _client = client;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             Properties = properties;
 
-            Id = Properties.Id.ToString();
+            Id = Properties.Id.AbsoluteUri;
             _client = client;
         }
 

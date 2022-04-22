@@ -15,6 +15,7 @@ namespace Azure.Storage.Blobs.Models
         {
             ListContainersIncludeType.Metadata => "metadata",
             ListContainersIncludeType.Deleted => "deleted",
+            ListContainersIncludeType.System => "system",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListContainersIncludeType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (string.Equals(value, "metadata", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.Metadata;
             if (string.Equals(value, "deleted", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.Deleted;
+            if (string.Equals(value, "system", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.System;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListContainersIncludeType value.");
         }
     }

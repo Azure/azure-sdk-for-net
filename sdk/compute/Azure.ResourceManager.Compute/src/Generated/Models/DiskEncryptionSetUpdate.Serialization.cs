@@ -26,12 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(EncryptionType))
+            {
+                writer.WritePropertyName("encryptionType");
+                writer.WriteStringValue(EncryptionType.Value.ToString());
+            }
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey");
                 writer.WriteObjectValue(ActiveKey);
+            }
+            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            {
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
+                writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

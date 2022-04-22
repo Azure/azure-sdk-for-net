@@ -1,22 +1,35 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
-    <Description>This Azure Functions extension for Web PubSub</Description>
-    <Version>1.0.0-beta.2</Version>
-    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1056</NoWarn>
+    <PackageTags>Azure, WebPubSub</PackageTags>
+    <Description>Azure Functions extension for the WebPubSub service</Description>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <NoWarn>$(NoWarn);AZC0001;CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.WebPubSub" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-    <PackageReference Include="System.Memory.Data" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
   </ItemGroup>
 
   <ItemGroup>
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.WebPubSub" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+
+    <!--
+	TODO: Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.
+	<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />
+	-->
+	<PackageReference Include="Azure.Messaging.WebPubSub" />
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -308,7 +309,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(), options)
+            : this(blobContainerUri, credential.AsPolicy(options), options)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
         }
@@ -1457,6 +1458,14 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Delete)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlobContainerClient.Delete),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1733,6 +1742,16 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetProperties)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.GetProperties),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1895,15 +1914,14 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfUnmodifiedSince != default ||
-                        conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(
-                            nameof(RequestConditions.IfUnmodifiedSince),
-                            nameof(RequestConditions.IfMatch),
-                            nameof(RequestConditions.IfNoneMatch));
-                    }
+                    conditions.ValidateConditionsNotPresent(
+                        invalidConditions:
+                            BlobRequestConditionProperty.TagConditions
+                            | BlobRequestConditionProperty.IfMatch
+                            | BlobRequestConditionProperty.IfNoneMatch
+                            | BlobRequestConditionProperty.IfUnmodifiedSince,
+                        operationName: nameof(BlobContainerClient.SetMetadata),
+                        parameterName: nameof(conditions));
 
                     ResponseWithHeaders<ContainerSetMetadataHeaders> response;
 
@@ -2055,6 +2073,16 @@ namespace Azure.Storage.Blobs
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.GetAccessPolicy),
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -2266,6 +2294,14 @@ namespace Azure.Storage.Blobs
                     $"{nameof(accessType)}: {accessType}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}");
+
+                conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.TagConditions
+                    | BlobRequestConditionProperty.IfMatch
+                    | BlobRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(BlobContainerClient.SetAccessPolicy),
+                parameterName: nameof(conditions));
 
                 try
                 {
@@ -2525,7 +2561,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
@@ -2801,7 +2838,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
@@ -3284,6 +3322,16 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Rename)}");
 
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.Rename),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -3333,6 +3381,130 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Rename
+
+        #region FilterBlobs
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
+            string marker,
+            string expression,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(expression)}: {expression}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(FindBlobsByTags)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<FilterBlobSegment, ContainerFilterBlobsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.FilterBlobsAsync(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.FilterBlobs(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion FilterBlobs
 
         #region GenerateSas
         /// <summary>

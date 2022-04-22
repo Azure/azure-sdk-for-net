@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyCertificateResolution"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyCertificateResolution(string value)
         {

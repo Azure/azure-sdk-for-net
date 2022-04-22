@@ -150,22 +150,40 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
-        public async Task ExchangeTeamsToken()
+        [SyncOnly]
+        public void GetTokenForTeamsUser()
+        {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
+            {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
+            var teamsToken = generateTeamsToken().Result;
+            var client = CreateClientWithConnectionString();
+
+            #region Snippet:GetTokenForTeamsUser
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
+            string token = tokenResponse.Value.Token;
+            Console.WriteLine($"Token: {token}");
+            #endregion Snippet:GetTokenForTeamsUser
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetTokenForTeamsUserAsync()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-            var client = new CommunicationIdentityClient(connectionString);
             var teamsToken = await generateTeamsToken();
-            client = CreateClientWithConnectionString();
+            var client = CreateClientWithConnectionString();
 
-            #region  Snippet:ExchangeTeamsToken
-            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+            #region Snippet:GetTokenForTeamsUserAsync
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
-            #endregion Snippet:ExchangeTeamsToken
+            #endregion Snippet:GetTokenForTeamsUserAsync
         }
 
         [Test]

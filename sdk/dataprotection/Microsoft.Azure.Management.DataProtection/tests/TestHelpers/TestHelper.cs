@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
         {
             string requestData = "{\"objectType\":\"ValidateRestoreRequestObject\",\"restoreRequestObject\":{\"objectType\":\"AzureBackupRecoveryPointBasedRestoreRequest\",\"sourceDataStoreType\":\"OperationalStore\",\"restoreTargetInfo\":{\"objectType\":\"restoreTargetInfo\",\"recoveryOption\":\"FailIfExists\",\"dataSourceInfo\":{\"objectType\":\"Datasource\",\"resourceID\":\"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggartargetrg/providers/Microsoft.Compute/disks/restoredisk1\",\"resourceName\":\"restoredisk1\",\"resourceType\":\"Microsoft.Compute/disks\",\"resourceLocation\":\"centraluseuap\",\"resourceUri\":\"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggartargetrg/providers/Microsoft.Compute/disks/restoredisk1\",\"datasourceType\":\"Microsoft.Compute/disks\"},\"restoreLocation\":\"southeastasia\"},\"recoveryPointId\":\"7327d7065c4145b3b6d80bcb8a787ea6\"}}";
             ValidateRestoreRequestObject body = SafeJsonConvert.DeserializeObject<ValidateRestoreRequestObject>(requestData.ToString(), BackupClient.DeserializationSettings);
-            var response = BackupClient.BackupInstances.ValidateRestore(VaultName, ResourceGroup, backupInstanceName, body.RestoreRequestObject);
+            var response = BackupClient.BackupInstances.ValidateForRestore(VaultName, ResourceGroup, backupInstanceName, body.RestoreRequestObject);
             Assert.NotNull(response);
             Assert.Null(response.JobId);
         }

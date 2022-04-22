@@ -28,15 +28,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("debug");
                 writer.WriteStringValue(Debug);
             }
+            if (Optional.IsDefined(CalibrationConfiguration))
+            {
+                writer.WritePropertyName("calibrationConfiguration");
+                writer.WriteStringValue(CalibrationConfiguration);
+            }
             if (Optional.IsDefined(CameraConfiguration))
             {
                 writer.WritePropertyName("cameraConfiguration");
                 writer.WriteStringValue(CameraConfiguration);
             }
+            if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
+            {
+                writer.WritePropertyName("cameraCalibratorNodeConfiguration");
+                writer.WriteStringValue(CameraCalibratorNodeConfiguration);
+            }
             if (Optional.IsDefined(DetectorNodeConfiguration))
             {
                 writer.WritePropertyName("detectorNodeConfiguration");
                 writer.WriteStringValue(DetectorNodeConfiguration);
+            }
+            if (Optional.IsDefined(TrackerNodeConfiguration))
+            {
+                writer.WritePropertyName("trackerNodeConfiguration");
+                writer.WriteStringValue(TrackerNodeConfiguration);
             }
             if (Optional.IsDefined(EnableFaceMaskClassifier))
             {
@@ -52,8 +67,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             IList<SpatialAnalysisPersonCountZoneEvents> zones = default;
             Optional<string> debug = default;
+            Optional<string> calibrationConfiguration = default;
             Optional<string> cameraConfiguration = default;
+            Optional<string> cameraCalibratorNodeConfiguration = default;
             Optional<string> detectorNodeConfiguration = default;
+            Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
@@ -73,14 +91,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     debug = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("calibrationConfiguration"))
+                {
+                    calibrationConfiguration = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("cameraConfiguration"))
                 {
                     cameraConfiguration = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("cameraCalibratorNodeConfiguration"))
+                {
+                    cameraCalibratorNodeConfiguration = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("detectorNodeConfiguration"))
                 {
                     detectorNodeConfiguration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("trackerNodeConfiguration"))
+                {
+                    trackerNodeConfiguration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("enableFaceMaskClassifier"))
@@ -94,7 +127,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonCountOperation(type, debug.Value, cameraConfiguration.Value, detectorNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
+            return new SpatialAnalysisPersonCountOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
         }
     }
 }

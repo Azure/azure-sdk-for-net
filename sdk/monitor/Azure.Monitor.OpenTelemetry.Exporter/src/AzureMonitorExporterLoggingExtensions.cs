@@ -10,7 +10,7 @@ using OpenTelemetry.Logs;
 
 namespace Microsoft.Extensions.Logging
 {
-    internal static class AzureMonitorExporterLoggingExtensions
+    public static class AzureMonitorExporterLoggingExtensions
     {
         public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure = null)
         {

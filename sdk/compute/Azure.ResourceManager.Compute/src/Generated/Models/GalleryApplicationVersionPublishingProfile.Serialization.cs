@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("source");
             writer.WriteObjectValue(Source);
-            if (Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ManageActions))
             {
-                writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WritePropertyName("manageActions");
+                writer.WriteObjectValue(ManageActions);
             }
             if (Optional.IsDefined(EnableHealthCheck))
             {
@@ -59,13 +59,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                writer.WritePropertyName("replicationMode");
+                writer.WriteStringValue(ReplicationMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
             UserArtifactSource source = default;
-            Optional<string> contentType = default;
+            Optional<UserArtifactManage> manageActions = default;
             Optional<bool> enableHealthCheck = default;
             Optional<IList<TargetRegion>> targetRegions = default;
             Optional<int> replicaCount = default;
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<StorageAccountType> storageAccountType = default;
+            Optional<ReplicationMode> replicationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -80,9 +86,14 @@ namespace Azure.ResourceManager.Compute.Models
                     source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("manageActions"))
                 {
-                    contentType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    manageActions = UserArtifactManage.DeserializeUserArtifactManage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableHealthCheck"))
@@ -160,8 +171,18 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("replicationMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    replicationMode = new ReplicationMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), source, contentType.Value, Optional.ToNullable(enableHealthCheck));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), source, manageActions.Value, Optional.ToNullable(enableHealthCheck));
         }
     }
 }

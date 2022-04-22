@@ -40,6 +40,20 @@ jobs:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
     steps:
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+              Paths:
+                - "/*"
+                - "!SessionRecords"
+                - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
+      - pwsh: |
+          $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+        displayName: 'Language Specific Certificate Trust'
+      - pwsh: |
+          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
+          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+        displayName: 'Configure Kestrel Environment Variables'
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
@@ -56,8 +70,10 @@ jobs:
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          /p:EnableSourceLink=false
+          $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
         condition: always()

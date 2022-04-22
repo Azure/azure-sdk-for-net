@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "3785",
         "Content-Type": "application/json",
-        "traceparent": "00-52e5409a3097224dbfa5319feed5aaec-e4635de733df2546-00",
+        "traceparent": "00-637b061c40d6364e85035b1e977014f4-f753a7ccb260034e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "0dea3d3b17b185f4c9b18e55f3aeabcb",
         "x-ms-return-client-request-id": "true"
@@ -264,11 +264,11 @@
         "client-request-id": "0dea3d3b-17b1-85f4-c9b1-8e55f3aeabcb",
         "Content-Length": "5483",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "80",
-        "ETag": "W/\u00220x8D92C576E80667D\u0022",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "86",
+        "ETag": "W/\u00220x8D93D95922626B2\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2020-06-30-Preview",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -278,7 +278,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D92C576E80667D\u0022",
+        "@odata.etag": "\u00220x8D93D95922626B2\u0022",
         "name": "wmviqrdd",
         "description": null,
         "skills": [
@@ -615,19 +615,19 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4274",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D92C576E80667D\u0022",
+        "If-Match": "\u00220x8D93D95922626B2\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-50a644c89a52e140bf3766ae5f2652e6-300fedca53da034f-00",
+        "traceparent": "00-bb0674dad0aff74699dad526b7490c97-90a83f251e64554a-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "732939573cf56ee1dac818da12ea768c",
         "x-ms-return-client-request-id": "true"
@@ -908,7 +908,7 @@
             }
           ]
         },
-        "@odata.etag": "\u00220x8D92C576E80667D\u0022"
+        "@odata.etag": "\u00220x8D93D95922626B2\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -916,9 +916,9 @@
         "client-request-id": "73293957-3cf5-6ee1-dac8-18da12ea768c",
         "Content-Length": "5499",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "77",
-        "ETag": "W/\u00220x8D92C576E8F3635\u0022",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "74",
+        "ETag": "W/\u00220x8D93D95923592D4\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -929,7 +929,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D92C576E8F3635\u0022",
+        "@odata.etag": "\u00220x8D93D95923592D4\u0022",
         "name": "wmviqrdd",
         "description": "Update description",
         "skills": [
@@ -1266,15 +1266,15 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-1c2fe5661f1cde4f80b7df6cb38d2c49-127013209d0dde4f-00",
+        "traceparent": "00-d407f4a72ca533449f884ea6cc7313c3-38c41231e58a454f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "4aa65c66418122d836018835b1aa4d21",
         "x-ms-return-client-request-id": "true"
@@ -1286,9 +1286,9 @@
         "client-request-id": "4aa65c66-4181-22d8-3601-8835b1aa4d21",
         "Content-Length": "5530",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "66",
-        "ETag": "W/\u00220x8D92C576E8F3635\u0022",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "18",
+        "ETag": "W/\u00220x8D93D95923592D4\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1299,7 +1299,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D92C576E8F3635\u0022",
+        "@odata.etag": "\u00220x8D93D95923592D4\u0022",
         "name": "wmviqrdd",
         "description": "Update description",
         "skills": [
@@ -1638,16 +1638,16 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027wmviqrdd\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "If-Match": "\u00220x8D92C576E8F3635\u0022",
-        "traceparent": "00-0c075be9067bdd4fbe40ba0f41b6a405-f6fb0b5e186afe4f-00",
+        "If-Match": "\u00220x8D93D95923592D4\u0022",
+        "traceparent": "00-7cafaf529824254695c436f17f8a17b2-9583a3ead372c448-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "ceac00024630fe495c7b33e8ff1972de",
         "x-ms-return-client-request-id": "true"
@@ -1657,8 +1657,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "ceac0002-4630-fe49-5c7b-33e8ff1972de",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "28",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "29",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "ceac0002-4630-fe49-5c7b-33e8ff1972de",
@@ -1668,15 +1668,15 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?$select=name\u0026api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?$select=name\u0026api-version=2021-04-30-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-d464daa2af10ca4a9d0ef982cc13007d-9321ca7f2df3e448-00",
+        "traceparent": "00-cbe0597e03f33d43a50b1d7920213b1a-cd13dd63a6af3c4d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "96ef023b6107164a60073df4b3abbd2f",
         "x-ms-return-client-request-id": "true"
@@ -1686,10 +1686,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "96ef023b-6107-164a-6007-3df4b3abbd2f",
-        "Content-Length": "334",
+        "Content-Length": "95",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "9",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "7",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1700,56 +1700,19 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets(name)",
-        "value": [
-          {
-            "name": "fhwknkeu"
-          },
-          {
-            "name": "fpmjeogx"
-          },
-          {
-            "name": "fxinfwlr"
-          },
-          {
-            "name": "ghgktlfa"
-          },
-          {
-            "name": "htuvtukj"
-          },
-          {
-            "name": "ibrpdmcv"
-          },
-          {
-            "name": "jebupdca"
-          },
-          {
-            "name": "lefvvewn"
-          },
-          {
-            "name": "njocduti"
-          },
-          {
-            "name": "onpkdgap"
-          },
-          {
-            "name": "pthnpgbp"
-          },
-          {
-            "name": "rutdlrna"
-          }
-        ]
+        "value": []
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xhattutv\u0027)?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027efhdqfbm\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-dae6b24853a4064ba775232ea06103fd-49ec65baccb9a440-00",
+        "traceparent": "00-a2d74a3cecdf8046850ca0f99536885d-8dbb9053b308374d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210702.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "11d8f67ba73e205c13a8ee060def221c",
         "x-ms-return-client-request-id": "true"
@@ -1759,8 +1722,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "11d8f67b-a73e-205c-13a8-ee060def221c",
-        "Date": "Thu, 10 Jun 2021 21:33:47 GMT",
-        "elapsed-time": "168",
+        "Date": "Fri, 02 Jul 2021 20:11:26 GMT",
+        "elapsed-time": "128",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "11d8f67b-a73e-205c-13a8-ee060def221c",
@@ -1771,9 +1734,9 @@
     }
   ],
   "Variables": {
-    "BlobContainerName": "lfohtxae",
+    "BlobContainerName": "swrpjdxi",
     "RandomSeed": "234438998",
-    "SearchIndexName": "xhattutv",
+    "SearchIndexName": "efhdqfbm",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
     "SEARCH_SERVICE_NAME": "mohitc-acs",

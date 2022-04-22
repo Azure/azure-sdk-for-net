@@ -22,6 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/24360")]
         public async Task VerifyLogExporter()
         {
             // SETUP

@@ -37,14 +37,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the
         /// MicrosoftSecurityIncidentCreationAlertRuleTemplate class.
         /// </summary>
-        /// <param name="productFilter">The alerts' productName on which the
-        /// cases will be generated. Possible values include: 'Microsoft Cloud
-        /// App Security', 'Azure Security Center', 'Azure Advanced Threat
-        /// Protection', 'Azure Active Directory Identity Protection', 'Azure
-        /// Security Center for IoT'</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
         /// <param name="alertRulesCreatedByTemplateCount">the number of alert
         /// rules that were created by this template</param>
         /// <param name="createdDateUTC">The time that this alert rule template
@@ -53,20 +45,37 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// template.</param>
         /// <param name="displayName">The display name for alert rule
         /// template.</param>
-        /// <param name="requiredDataConnectors">The required data connectors
-        /// for this template</param>
         /// <param name="status">The alert rule template status. Possible
         /// values include: 'Installed', 'Available', 'NotAvailable'</param>
+        /// <param name="productFilter">The alerts' productName on which the
+        /// cases will be generated. Possible values include: 'Microsoft Cloud
+        /// App Security', 'Azure Security Center', 'Azure Advanced Threat
+        /// Protection', 'Azure Active Directory Identity Protection', 'Azure
+        /// Security Center for IoT', 'Office 365 Advanced Threat Protection',
+        /// 'Microsoft Defender Advanced Threat Protection'</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        /// <param name="lastUpdatedDateUTC">The last time that this alert rule
+        /// template has been updated.</param>
+        /// <param name="requiredDataConnectors">The required data sources for
+        /// this template</param>
         /// <param name="displayNamesFilter">the alerts' displayNames on which
         /// the cases will be generated</param>
         /// <param name="displayNamesExcludeFilter">the alerts' displayNames on
         /// which the cases will not be generated</param>
         /// <param name="severitiesFilter">the alerts' severities on which the
         /// cases will be generated</param>
-        public MicrosoftSecurityIncidentCreationAlertRuleTemplate(string productFilter, string id = default(string), string name = default(string), string type = default(string), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), IList<string> displayNamesFilter = default(IList<string>), IList<string> displayNamesExcludeFilter = default(IList<string>), IList<string> severitiesFilter = default(IList<string>))
-            : base(id, name, type)
+        public MicrosoftSecurityIncidentCreationAlertRuleTemplate(int alertRulesCreatedByTemplateCount, System.DateTime createdDateUTC, string description, string displayName, string status, string productFilter, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), IList<string> displayNamesFilter = default(IList<string>), IList<string> displayNamesExcludeFilter = default(IList<string>), IList<string> severitiesFilter = default(IList<string>))
+            : base(id, name, type, systemData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
+            LastUpdatedDateUTC = lastUpdatedDateUTC;
             CreatedDateUTC = createdDateUTC;
             Description = description;
             DisplayName = displayName;
@@ -89,13 +98,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// template
         /// </summary>
         [JsonProperty(PropertyName = "properties.alertRulesCreatedByTemplateCount")]
-        public int? AlertRulesCreatedByTemplateCount { get; set; }
+        public int AlertRulesCreatedByTemplateCount { get; set; }
+
+        /// <summary>
+        /// Gets the last time that this alert rule template has been updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUpdatedDateUTC")]
+        public System.DateTime? LastUpdatedDateUTC { get; private set; }
 
         /// <summary>
         /// Gets the time that this alert rule template has been added.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDateUTC")]
-        public System.DateTime? CreatedDateUTC { get; private set; }
+        public System.DateTime CreatedDateUTC { get; private set; }
 
         /// <summary>
         /// Gets or sets the description of the alert rule template.
@@ -110,7 +125,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the required data connectors for this template
+        /// Gets or sets the required data sources for this template
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; set; }
@@ -141,7 +156,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// generated. Possible values include: 'Microsoft Cloud App Security',
         /// 'Azure Security Center', 'Azure Advanced Threat Protection', 'Azure
         /// Active Directory Identity Protection', 'Azure Security Center for
-        /// IoT'
+        /// IoT', 'Office 365 Advanced Threat Protection', 'Microsoft Defender
+        /// Advanced Threat Protection'
         /// </summary>
         [JsonProperty(PropertyName = "properties.productFilter")]
         public string ProductFilter { get; set; }
@@ -161,6 +177,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+            if (DisplayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Status == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+            }
             if (ProductFilter == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ProductFilter");

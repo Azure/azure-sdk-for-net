@@ -84,8 +84,10 @@ namespace Azure.Storage.Test
                 }
                 if (_currentInvocationNumber <= _numberOfFailuresToSimulate)
                 {
-                    message.Response = new MockResponse(
+                    var response = new MockResponse(
                         _simulate404 && message.Request.Uri.Host == _secondaryUri?.Host ? 404 : 429);
+                    response.SetIsError(true);
+                    message.Response = response;
                     return true;
                 }
             }

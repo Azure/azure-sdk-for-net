@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Describe=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "1903"
+          "653"
         ],
         "apim-request-id": [
-          "b1ab4936-8c8d-442f-a63d-a383a68a404b"
+          "de8f2295-8ecc-4d3c-b9c0-d08922ab50a5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:55 GMT"
+          "Thu, 04 Nov 2021 04:51:39 GMT"
         ],
         "Content-Length": [
           "330"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"grass\",\r\n      \"outdoor\",\r\n      \"sky\",\r\n      \"house\",\r\n      \"building\",\r\n      \"green\",\r\n      \"lawn\",\r\n      \"residential\",\r\n      \"grassy\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"a house with a flag on the front\",\r\n        \"confidence\": 0.43686139583587646\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"b1ab4936-8c8d-442f-a63d-a383a68a404b\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"grass\",\r\n      \"outdoor\",\r\n      \"sky\",\r\n      \"house\",\r\n      \"building\",\r\n      \"green\",\r\n      \"lawn\",\r\n      \"residential\",\r\n      \"grassy\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"a house with a flag on the front\",\r\n        \"confidence\": 0.43686121702194214\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"de8f2295-8ecc-4d3c-b9c0-d08922ab50a5\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

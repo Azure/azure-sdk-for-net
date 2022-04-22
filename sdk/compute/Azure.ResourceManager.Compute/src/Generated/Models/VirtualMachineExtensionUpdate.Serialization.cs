@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("autoUpgradeMinorVersion");
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
@@ -62,6 +67,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("protectedSettings");
                 writer.WriteObjectValue(ProtectedSettings);
+            }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures");
+                writer.WriteBooleanValue(SuppressFailures.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

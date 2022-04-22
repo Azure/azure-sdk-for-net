@@ -13,9 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of MongoDBDataFeedPatch. </summary>
         public MongoDBDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.MongoDb;
+            DataSourceType = DataFeedSourceKind.MongoDb;
         }
 
+        /// <summary> Gets or sets the data source parameter. </summary>
         public MongoDBParameterPatch DataSourceParameter { get; set; }
     }
 }

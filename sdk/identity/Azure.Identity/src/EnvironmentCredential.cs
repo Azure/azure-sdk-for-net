@@ -19,17 +19,19 @@ namespace Azure.Identity
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="UsernamePasswordCredential"/> to
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="ClientCertificateCredential"/>, or <see cref="UsernamePasswordCredential"/> to
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
+        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
+        private readonly TokenCredentialOptions _options;
 
         internal TokenCredential Credential { get; }
 
@@ -39,8 +41,7 @@ namespace Azure.Identity
         /// </summary>
         public EnvironmentCredential()
             : this(CredentialPipeline.GetInstance(null))
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -48,18 +49,19 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options))
-        {
-        }
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
 
-        internal EnvironmentCredential(CredentialPipeline pipeline)
+        internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
+            _options = options ?? new TokenCredentialOptions();
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
+            string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
@@ -67,15 +69,25 @@ namespace Azure.Identity
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
+                    bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
+                        (clientSendCertificateChain == "1" || clientSendCertificateChain == "true");
+
+                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
+                    {
+                        AuthorityHost = _options.AuthorityHost,
+                        IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
+                        Transport = _options.Transport,
+                        SendCertificateChain = sendCertificateChain
+                    };
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificateCredentialOptions, _pipeline, null);
                 }
             }
         }

@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using Azure.Storage;
-using Azure.Storage.Blobs;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
@@ -180,6 +176,19 @@ namespace Azure.Storage.Blobs.Samples
                 // An aggregate exception is thrown for all the individual failures
                 // Check ex.InnerExceptions for RequestFailedException instances
             }
+            #endregion
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void Authenticate()
+        {
+            #region Snippet:SampleSnippetsBlobBatch_Auth
+            // Create a BlobServiceClient that will authenticate through Active Directory
+            Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
+            BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
+            BlobBatchClient batch = client.GetBlobBatchClient();
             #endregion
         }
     }

@@ -12,7 +12,6 @@ namespace Azure.Batch.Unit.Tests
     using BatchTestCommon;
 
     using Microsoft.Azure.Batch;
-    using Microsoft.Azure.Batch.Auth;
     using Microsoft.Azure.Batch.Common;
     using Microsoft.Rest.Azure;
     using Xunit;
@@ -271,7 +270,7 @@ namespace Azure.Batch.Unit.Tests
                 };
             });
 
-            List<Microsoft.Azure.Batch.ComputeNode> vms = client.PoolOperations.ListComputeNodes("foo", additionalBehaviors: new List<BatchClientBehavior> { interceptor }).ToList();
+            List<ComputeNode> vms = client.PoolOperations.ListComputeNodes("foo", additionalBehaviors: new List<BatchClientBehavior> { interceptor }).ToList();
 
             Assert.Single(vms);
             Assert.Equal("computeNode1", vms[0].Id);

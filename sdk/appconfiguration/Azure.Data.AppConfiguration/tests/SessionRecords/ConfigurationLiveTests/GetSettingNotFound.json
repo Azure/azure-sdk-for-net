@@ -6,7 +6,6 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
         "Date": "Mon, 08 Feb 2021 19:13:48 GMT",
         "traceparent": "00-c76e65fec5369244acdd988cafcaccea-8a36ebb6facb3f4f-00",
         "User-Agent": [

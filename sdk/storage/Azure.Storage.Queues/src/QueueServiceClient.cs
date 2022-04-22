@@ -220,7 +220,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueServiceClient(Uri serviceUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options, null)
+            : this(serviceUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -292,7 +292,7 @@ namespace Azure.Storage.Queues
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.ToString(),
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 

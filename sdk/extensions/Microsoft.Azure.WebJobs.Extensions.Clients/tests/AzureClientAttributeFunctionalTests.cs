@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
 {
     public class AzureClientAttributeFunctionalTests : RecordedTestBase<WebJobsTestEnvironment>
     {
-        public AzureClientAttributeFunctionalTests(bool isAsync) : base(isAsync)
+        public AzureClientAttributeFunctionalTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
         {
             Matcher = new RecordMatcher()
             {

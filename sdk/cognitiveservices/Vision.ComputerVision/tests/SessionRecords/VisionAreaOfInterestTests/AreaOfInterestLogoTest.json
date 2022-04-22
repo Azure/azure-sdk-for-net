@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.AreaOfInterest=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "1098"
+          "139"
         ],
         "apim-request-id": [
-          "c2acc46b-6f51-4ab4-8ec1-e937fc817455"
+          "7addb44f-5f97-480b-a744-8fbc3c3416ac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:42 GMT"
+          "Thu, 04 Nov 2021 04:51:48 GMT"
         ],
         "Content-Length": [
           "181"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 0,\r\n    \"y\": 0,\r\n    \"w\": 800,\r\n    \"h\": 578\r\n  },\r\n  \"requestId\": \"c2acc46b-6f51-4ab4-8ec1-e937fc817455\",\r\n  \"metadata\": {\r\n    \"height\": 578,\r\n    \"width\": 800,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 0,\r\n    \"y\": 0,\r\n    \"w\": 800,\r\n    \"h\": 578\r\n  },\r\n  \"requestId\": \"7addb44f-5f97-480b-a744-8fbc3c3416ac\",\r\n  \"metadata\": {\r\n    \"height\": 578,\r\n    \"width\": 800,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

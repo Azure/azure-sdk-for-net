@@ -2,7 +2,7 @@
   "Name": "TaskFailureInformation",
   "ProtocolName": "Models.TaskFailureInformation",
   "SummaryComment": "Information about a task failure.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

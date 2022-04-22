@@ -17,15 +17,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startedOn, DateTimeOffset lastDetectedOn, SeriesIdentity rootNode, IncidentProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = detectionConfigurationId;
             Id = id;
-            StartTime = startTime;
-            LastTime = endTime;
-            RootDimensionKey = new DimensionKey(rootNode.Dimension);
+            StartedOn = startedOn;
+            LastDetectedOn = lastDetectedOn;
+            RootSeriesKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
             ValueOfRootNode = property.ValueOfRootNode;
@@ -41,8 +41,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeed"/> in which this incident was detected. This
         /// property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string DataFeedId { get; }
@@ -57,8 +57,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeedMetric"/> of the time series in which this
         /// <see cref="AnomalyIncident"/> has been detected. This property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string MetricId { get; }
@@ -67,19 +67,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The key that, within a metric, uniquely identifies the time series in which the data point
         /// at the root of this <see cref="AnomalyIncident"/> has been detected. The root node is defined
         /// as the data point at the root of this incident's root-cause analysis tree. In this key, a value
-        /// is assigned to every dimension column contained in the associated <see cref="DataFeed"/>.
+        /// is assigned to every possible dimension.
         /// </summary>
-        public DimensionKey RootDimensionKey { get; }
+        public DimensionKey RootSeriesKey { get; }
 
         /// <summary>
         /// Corresponds to the time, in UTC, when the first associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        [CodeGenMember("StartTime")]
+        public DateTimeOffset StartedOn { get; }
 
         /// <summary>
         /// Corresponds to the time, in UTC, when the last associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        public DateTimeOffset LastTime { get; }
+        [CodeGenMember("LastTime")]
+        public DateTimeOffset LastDetectedOn { get; }
 
         /// <summary>
         /// The severity of the detected <see cref="AnomalyIncident"/>, as evaluated by the service.

@@ -4,7 +4,7 @@
       "TransportProtocolName": "Models.CertificateAddParameter",
       "SummaryComment": "A certificate that can be installed on compute nodes and can be used to authenticate operations on a node.",
       "IsTopLevelObject": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

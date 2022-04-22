@@ -47,9 +47,9 @@ namespace LabServices.Tests
             return result;
         }
 
-        public ManagedLabsClient GetManagedLabsClient(MockContext context)
+        public LabServicesClient GetManagedLabsClient(MockContext context)
         {
-            var client = context.GetServiceClient<ManagedLabsClient>();
+            var client = context.GetServiceClient<LabServicesClient>();
 
             client.SubscriptionId = GetEnvironmentInfo().SubscriptionId;
 

@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> the unit of the metric. </summary>
+    /// <summary> The unit of the metric. </summary>
     public readonly partial struct MetricUnit : IEquatable<MetricUnit>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="MetricUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricUnit(string value)
         {

@@ -38,8 +38,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// include: 'NotStarted', 'InProgress', 'Completed',
         /// 'CompletedWithErrors', 'Failed', 'NotReturned', 'HardwareError',
         /// 'DeviceFormatted', 'DeviceMetadataModified',
-        /// 'StorageAccountNotAccessible', 'UnsupportedData'</param>
-        public DataBoxDiskCopyProgress(string serialNumber = default(string), long? bytesCopied = default(long?), int? percentComplete = default(int?), CopyStatus? status = default(CopyStatus?))
+        /// 'StorageAccountNotAccessible', 'UnsupportedData',
+        /// 'DriveNotReceived', 'UnsupportedDrive', 'OtherServiceError',
+        /// 'OtherUserError', 'DriveNotDetected', 'DriveCorrupted',
+        /// 'MetadataFilesModifiedOrRemoved'</param>
+        public DataBoxDiskCopyProgress(string serialNumber = default(string), long? bytesCopied = default(long?), int? percentComplete = default(int?), string status = default(string))
         {
             SerialNumber = serialNumber;
             BytesCopied = bytesCopied;
@@ -76,10 +79,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'InProgress', 'Completed', 'CompletedWithErrors', 'Failed',
         /// 'NotReturned', 'HardwareError', 'DeviceFormatted',
         /// 'DeviceMetadataModified', 'StorageAccountNotAccessible',
-        /// 'UnsupportedData'
+        /// 'UnsupportedData', 'DriveNotReceived', 'UnsupportedDrive',
+        /// 'OtherServiceError', 'OtherUserError', 'DriveNotDetected',
+        /// 'DriveCorrupted', 'MetadataFilesModifiedOrRemoved'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public CopyStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
     }
 }

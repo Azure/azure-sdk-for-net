@@ -12,9 +12,13 @@ namespace Azure.Security.KeyVault
 {
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
-        private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
-        private AuthorityScope _scope;
+
+        /// <summary>
+        /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
+        private ChallengeParameters _challenge;
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
@@ -34,17 +38,17 @@ namespace Azure.Security.KeyVault
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            // If this policy doesn't have _scope cached try to get it from the static challenge cache.
-            if (_scope == null)
+            // If this policy doesn't have challenge parameters cached try to get it from the static challenge cache.
+            if (_challenge == null)
             {
                 string authority = GetRequestAuthority(message.Request);
-                _scopeCache.TryGetValue(authority, out _scope);
+                s_challengeCache.TryGetValue(authority, out _challenge);
             }
 
-            if (_scope != null)
+            if (_challenge != null)
             {
-                // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+                // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
+                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -53,6 +57,7 @@ namespace Azure.Security.KeyVault
                 {
                     AuthenticateAndAuthorizeRequest(message, context);
                 }
+
                 return;
             }
 
@@ -86,7 +91,7 @@ namespace Azure.Security.KeyVault
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
             if (scope != null)
             {
-                scope = scope + "/.default";
+                scope += "/.default";
             }
             else
             {
@@ -95,18 +100,29 @@ namespace Azure.Security.KeyVault
 
             if (scope is null)
             {
-                if (_scopeCache.TryGetValue(authority, out _scope))
+                if (s_challengeCache.TryGetValue(authority, out _challenge))
                 {
                     return false;
                 }
             }
             else
             {
-                _scope = new AuthorityScope(authority, new string[] { scope });
-                _scopeCache[authority] = _scope;
+                string authorization = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization");
+                if (authorization is null)
+                {
+                    authorization = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization_uri");
+                }
+
+                if (!Uri.TryCreate(authorization, UriKind.Absolute, out Uri authorizationUri))
+                {
+                    throw new UriFormatException($"The challenge authorization URI '{authorization}' is invalid.");
+                }
+
+                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
+                s_challengeCache[authority] = _challenge;
             }
 
-            var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -115,36 +131,53 @@ namespace Azure.Security.KeyVault
             {
                 AuthenticateAndAuthorizeRequest(message, context);
             }
+
             return true;
         }
 
-        internal class AuthorityScope
+        internal class ChallengeParameters
         {
-            internal AuthorityScope(string authrority, string[] scopes)
+            internal ChallengeParameters(Uri authorizationUri, string[] scopes)
             {
-                Authority = authrority;
+                AuthorizationUri = authorizationUri;
+                TenantId = authorizationUri.Segments[1].Trim('/');
                 Scopes = scopes;
             }
 
-            public string Authority { get; }
+            /// <summary>
+            /// Gets the "authorization" or "authorization_uri" parameter from the challenge response.
+            /// </summary>
+            public Uri AuthorizationUri { get; }
 
+            /// <summary>
+            /// Gets the "resource" or "scope" parameter from the challenge response. This should end with "/.default".
+            /// </summary>
             public string[] Scopes { get; }
+
+            /// <summary>
+            /// Gets the tenant ID from <see cref="AuthorizationUri"/>.
+            /// </summary>
+            public string TenantId { get; }
         }
 
         internal static void ClearCache()
         {
-            _scopeCache.Clear();
+            s_challengeCache.Clear();
         }
 
+        /// <summary>
+        /// Gets the host name and port of the Key Vault or Managed HSM endpoint.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         private static string GetRequestAuthority(Request request)
         {
             Uri uri = request.Uri.ToUri();
 
             string authority = uri.Authority;
-
             if (!authority.Contains(":") && uri.Port > 0)
             {
-                // Append port for complete authority
+                // Append port for complete authority.
                 authority = uri.Authority + ":" + uri.Port.ToString(CultureInfo.InvariantCulture);
             }
 

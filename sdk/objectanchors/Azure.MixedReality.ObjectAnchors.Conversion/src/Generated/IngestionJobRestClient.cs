@@ -28,9 +28,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="apiVersion"> Api Version. </param>
         public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.1")
         {
-            endpoint ??= new Uri("");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("");
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -47,10 +45,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {
@@ -128,10 +123,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {

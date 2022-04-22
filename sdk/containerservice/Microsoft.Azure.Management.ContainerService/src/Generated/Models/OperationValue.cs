@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the properties of a Compute Operation value.
+    /// Describes the properties of a Operation value.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class OperationValue
@@ -32,10 +32,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the OperationValue class.
         /// </summary>
-        /// <param name="origin">The origin of the compute operation.</param>
-        /// <param name="name">The name of the compute operation.</param>
-        /// <param name="operation">The display name of the compute
-        /// operation.</param>
+        /// <param name="origin">The origin of the operation.</param>
+        /// <param name="name">The name of the operation.</param>
+        /// <param name="operation">The display name of the operation.</param>
         /// <param name="resource">The display name of the resource the
         /// operation applies to.</param>
         /// <param name="description">The description of the operation.</param>
@@ -58,19 +57,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the origin of the compute operation.
+        /// Gets the origin of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; private set; }
 
         /// <summary>
-        /// Gets the name of the compute operation.
+        /// Gets the name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the display name of the compute operation.
+        /// Gets the display name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "display.operation")]
         public string Operation { get; private set; }

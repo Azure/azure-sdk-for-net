@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.Subscription
         public virtual IAliasOperations Alias { get; private set; }
 
         /// <summary>
+        /// Gets the ISubscriptionPolicyOperations.
+        /// </summary>
+        public virtual ISubscriptionPolicyOperations SubscriptionPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountOperations.
+        /// </summary>
+        public virtual IBillingAccountOperations BillingAccount { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SubscriptionClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -335,6 +345,8 @@ namespace Microsoft.Azure.Management.Subscription
             Subscription = new SubscriptionOperations(this);
             Operations = new Operations(this);
             Alias = new AliasOperations(this);
+            SubscriptionPolicy = new SubscriptionPolicyOperations(this);
+            BillingAccount = new BillingAccountOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

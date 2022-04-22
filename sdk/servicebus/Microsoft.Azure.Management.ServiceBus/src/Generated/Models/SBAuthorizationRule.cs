@@ -38,10 +38,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SBAuthorizationRule(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SBAuthorizationRule(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Rights = rights;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.rights")]
         public IList<AccessRights?> Rights { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

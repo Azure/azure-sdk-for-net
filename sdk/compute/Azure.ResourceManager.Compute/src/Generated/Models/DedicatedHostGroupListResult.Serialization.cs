@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DedicatedHostGroupListResult DeserializeDedicatedHostGroupListResult(JsonElement element)
         {
-            IReadOnlyList<DedicatedHostGroup> value = default;
+            IReadOnlyList<DedicatedHostGroupData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DedicatedHostGroup> array = new List<DedicatedHostGroup>();
+                    List<DedicatedHostGroupData> array = new List<DedicatedHostGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostGroup.DeserializeDedicatedHostGroup(item));
+                        array.Add(DedicatedHostGroupData.DeserializeDedicatedHostGroupData(item));
                     }
                     value = array;
                     continue;

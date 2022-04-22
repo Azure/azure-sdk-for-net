@@ -27,7 +27,19 @@ namespace Azure.Core.Amqp
         /// Gets the header of the AMQP message.
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header" />
         /// </summary>
-        public AmqpMessageHeader Header { get; } = new AmqpMessageHeader();
+        public AmqpMessageHeader Header
+        {
+            get
+            {
+                if (_header == null)
+                {
+                    _header = new AmqpMessageHeader();
+                }
+                return _header;
+            }
+        }
+
+        private AmqpMessageHeader? _header;
 
         /// <summary>
         /// Gets the footer of the AMQP message.
@@ -86,7 +98,19 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Gets the properties of the AMQP message.
         /// </summary>
-        public AmqpMessageProperties Properties { get; } = new AmqpMessageProperties();
+        public AmqpMessageProperties Properties
+        {
+            get
+            {
+                if (_properties == null)
+                {
+                    _properties = new AmqpMessageProperties();
+                }
+                return _properties;
+            }
+        }
+
+        private AmqpMessageProperties? _properties;
 
         /// <summary>
         /// Gets the application properties of the AMQP message.
@@ -111,5 +135,23 @@ namespace Azure.Core.Amqp
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
         /// </summary>
         public AmqpMessageBody Body { get; set; }
+
+        /// <summary>
+        /// Determines whether the specified section is present for the AMQP message.
+        /// </summary>
+        /// <param name="section">The section to consider.</param>
+        /// <returns><c>true</c> if the specified <paramref name="section"/> is populated for the AMQP message; otherwise, <c>false</c>.</returns>
+        public bool HasSection(AmqpMessageSection section) =>
+            section switch
+            {
+                AmqpMessageSection.Header => (_header != null),
+                AmqpMessageSection.DeliveryAnnotations => (_deliveryAnnotations != null),
+                AmqpMessageSection.MessageAnnotations => (_messageAnnotations != null),
+                AmqpMessageSection.Properties => (_properties != null),
+                AmqpMessageSection.ApplicationProperties => (_applicationProperties != null),
+                AmqpMessageSection.Body => (Body != null),
+                AmqpMessageSection.Footer => (_footer != null),
+                _ => throw new ArgumentException($"Unknown AMQP message section: { section }.", nameof(section))
+            };
     }
 }

@@ -38,7 +38,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">The identity type. Set this to 'SystemAssigned'
         /// in order to automatically create and assign an Azure Active
         /// Directory principal for the resource. Possible values include:
-        /// 'None', 'SystemAssigned', 'UserAssigned'</param>
+        /// 'None', 'SystemAssigned', 'UserAssigned',
+        /// 'SystemAssigned,UserAssigned'</param>
         /// <param name="tenantId">The Azure Active Directory tenant
         /// id.</param>
         public ResourceIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = default(IDictionary<string, UserIdentity>), System.Guid? principalId = default(System.Guid?), string type = default(string), System.Guid? tenantId = default(System.Guid?))
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets the identity type. Set this to 'SystemAssigned' in
         /// order to automatically create and assign an Azure Active Directory
         /// principal for the resource. Possible values include: 'None',
-        /// 'SystemAssigned', 'UserAssigned'
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

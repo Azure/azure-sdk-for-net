@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstanceUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
         /// <summary> Managed instance sku. </summary>
         public Sku Sku { get; set; }
+        /// <summary> Managed instance identity. </summary>
+        public ResourceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Gets the provisioning state. </summary>
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Specifies the mode of database creation.
         /// 
-        /// 
-        /// 
         /// Default: Regular instance creation.
-        /// 
-        /// 
         /// 
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
@@ -69,15 +69,10 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
         /// Id of the timezone. Allowed values are timezones supported by Windows.
-        /// 
         /// Windows keeps details on supported timezones, including the id, in registry under
-        /// 
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-        /// 
         /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
-        /// 
         /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// 
         /// An example of valid timezone id is &quot;Pacific Standard Time&quot; or &quot;W. Europe Standard Time&quot;.
         /// </summary>
         public string TimezoneId { get; set; }
@@ -85,7 +80,19 @@ namespace Azure.ResourceManager.Sql.Models
         public string InstancePoolId { get; set; }
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         public string MaintenanceConfigurationId { get; set; }
+        /// <summary> List of private endpoint connections on a managed instance. </summary>
+        public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
+        /// <summary> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </summary>
+        public StorageAccountType? StorageAccountType { get; set; }
+        /// <summary> Whether or not the multi-az is enabled. </summary>
+        public bool? ZoneRedundant { get; set; }
+        /// <summary> The resource id of a user assigned identity to be used by default. </summary>
+        public string PrimaryUserAssignedIdentityId { get; set; }
+        /// <summary> A CMK URI of the key to use for encryption. </summary>
+        public string KeyId { get; set; }
+        /// <summary> The Azure Active Directory administrator of the server. </summary>
+        public ManagedInstanceExternalAdministrator Administrators { get; set; }
     }
 }

@@ -24,20 +24,26 @@ namespace Azure.Communication.CallingServer
             }
             writer.WritePropertyName("callbackUri");
             writer.WriteStringValue(CallbackUri);
-            writer.WritePropertyName("requestedModalities");
-            writer.WriteStartArray();
-            foreach (var item in RequestedModalities)
+            if (Optional.IsCollectionDefined(RequestedMediaTypes))
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("requestedMediaTypes");
+                writer.WriteStartArray();
+                foreach (var item in RequestedMediaTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("requestedCallEvents");
-            writer.WriteStartArray();
-            foreach (var item in RequestedCallEvents)
+            if (Optional.IsCollectionDefined(RequestedCallEvents))
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("requestedCallEvents");
+                writer.WriteStartArray();
+                foreach (var item in RequestedCallEvents)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

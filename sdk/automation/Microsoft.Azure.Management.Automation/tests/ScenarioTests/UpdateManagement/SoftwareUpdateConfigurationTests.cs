@@ -12,7 +12,6 @@
 
     public class SoftwareUpdateConfigurationTests : BaseTest
     {
-        [Fact]
         public void CanCreateGetAndDelete()
         {
             using (var context = MockContext.Start(this.GetType()))

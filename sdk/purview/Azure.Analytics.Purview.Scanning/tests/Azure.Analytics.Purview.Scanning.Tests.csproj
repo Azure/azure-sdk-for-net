@@ -3,6 +3,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <Import Project="..\..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems" Label="Shared" />
+
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

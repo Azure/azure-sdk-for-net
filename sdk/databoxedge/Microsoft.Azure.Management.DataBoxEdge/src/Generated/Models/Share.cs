@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
+        /// <param name="systemData">Share on ASE device</param>
         /// <param name="description">Description for the share.</param>
         /// <param name="azureContainerInfo">Azure container mapping for the
         /// share.</param>
@@ -58,9 +59,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="shareMappings">Share mount point to the role.</param>
         /// <param name="dataPolicy">Data policy of the share. Possible values
         /// include: 'Cloud', 'Local'</param>
-        public Share(string shareStatus, string monitoringStatus, string accessProtocol, string id = default(string), string name = default(string), string type = default(string), string description = default(string), AzureContainerInfo azureContainerInfo = default(AzureContainerInfo), IList<UserAccessRight> userAccessRights = default(IList<UserAccessRight>), IList<ClientAccessRight> clientAccessRights = default(IList<ClientAccessRight>), RefreshDetails refreshDetails = default(RefreshDetails), IList<MountPointMap> shareMappings = default(IList<MountPointMap>), string dataPolicy = default(string))
+        public Share(string shareStatus, string monitoringStatus, string accessProtocol, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), AzureContainerInfo azureContainerInfo = default(AzureContainerInfo), IList<UserAccessRight> userAccessRights = default(IList<UserAccessRight>), IList<ClientAccessRight> clientAccessRights = default(IList<ClientAccessRight>), RefreshDetails refreshDetails = default(RefreshDetails), IList<MountPointMap> shareMappings = default(IList<MountPointMap>), string dataPolicy = default(string))
             : base(id, name, type)
         {
+            SystemData = systemData;
             Description = description;
             ShareStatus = shareStatus;
             MonitoringStatus = monitoringStatus;
@@ -78,6 +80,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets share on ASE device
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets or sets description for the share.

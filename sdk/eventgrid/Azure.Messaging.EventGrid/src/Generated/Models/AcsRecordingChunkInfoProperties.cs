@@ -21,13 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
         /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
         /// <param name="contentLocation"> The location of the content for this chunk. </param>
-        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation)
+        /// <param name="deleteLocation"> The location to delete all chunk storage. </param>
+        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation)
         {
             DocumentId = documentId;
             Index = index;
             EndReason = endReason;
             MetadataLocation = metadataLocation;
             ContentLocation = contentLocation;
+            DeleteLocation = deleteLocation;
         }
 
         /// <summary> The documentId of the recording chunk. </summary>
@@ -40,5 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string MetadataLocation { get; }
         /// <summary> The location of the content for this chunk. </summary>
         public string ContentLocation { get; }
+        /// <summary> The location to delete all chunk storage. </summary>
+        public string DeleteLocation { get; }
     }
 }

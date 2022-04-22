@@ -2,7 +2,7 @@
       "Name": "AutoScaleRunError",
       "ProtocolName": "Models.AutoScaleRunError",
       "SummaryComment": "An error that occurred when executing or evaluating a pool autoscale formula.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

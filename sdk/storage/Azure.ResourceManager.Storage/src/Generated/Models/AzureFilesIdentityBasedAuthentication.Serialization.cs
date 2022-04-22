@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("activeDirectoryProperties");
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
+            if (Optional.IsDefined(DefaultSharePermission))
+            {
+                writer.WritePropertyName("defaultSharePermission");
+                writer.WriteStringValue(DefaultSharePermission.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -29,6 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             DirectoryServiceOptions directoryServiceOptions = default;
             Optional<ActiveDirectoryProperties> activeDirectoryProperties = default;
+            Optional<DefaultSharePermission> defaultSharePermission = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"))
@@ -46,8 +52,18 @@ namespace Azure.ResourceManager.Storage.Models
                     activeDirectoryProperties = ActiveDirectoryProperties.DeserializeActiveDirectoryProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("defaultSharePermission"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    defaultSharePermission = new DefaultSharePermission(property.Value.GetString());
+                    continue;
+                }
             }
-            return new AzureFilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value);
+            return new AzureFilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Optional.ToNullable(defaultSharePermission));
         }
     }
 }

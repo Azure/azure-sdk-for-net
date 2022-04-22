@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<bool?> AllowTaskPreemptionProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> CommonEnvironmentSettingsProperty;
             public readonly PropertyAccessor<JobConstraints> ConstraintsProperty;
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<JobPreparationTask> JobPreparationTaskProperty;
             public readonly PropertyAccessor<JobReleaseTask> JobReleaseTaskProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
+            public readonly PropertyAccessor<int?> MaxParallelTasksProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
             public readonly PropertyAccessor<JobNetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<Common.OnAllTasksComplete?> OnAllTasksCompleteProperty;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.AllowTaskPreemptionProperty = this.CreatePropertyAccessor<bool?>(nameof(AllowTaskPreemption), BindingAccess.Read | BindingAccess.Write);
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(CommonEnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
                 this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Batch
                 this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>(nameof(JobPreparationTask), BindingAccess.Read | BindingAccess.Write);
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>(nameof(JobReleaseTask), BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
+                this.MaxParallelTasksProperty = this.CreatePropertyAccessor<int?>(nameof(MaxParallelTasks), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<JobNetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>(nameof(OnAllTasksComplete), BindingAccess.Read | BindingAccess.Write);
@@ -79,6 +83,10 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.CloudJob protocolObject) : base(BindingState.Bound)
             {
+                this.AllowTaskPreemptionProperty = this.CreatePropertyAccessor(
+                    protocolObject.AllowTaskPreemption,
+                    nameof(AllowTaskPreemption),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollectionAndFreeze(protocolObject.CommonEnvironmentSettings),
                     nameof(CommonEnvironmentSettings),
@@ -123,6 +131,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.LastModified,
                     nameof(LastModified),
                     BindingAccess.Read);
+                this.MaxParallelTasksProperty = this.CreatePropertyAccessor(
+                    protocolObject.MaxParallelTasks,
+                    nameof(MaxParallelTasks),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     nameof(Metadata),
@@ -198,6 +210,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudJob"/> class.
+        /// </summary>
+        protected CloudJob()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudJob(
             BatchClient parentBatchClient,
             Models.CloudJob protocolObject,
@@ -225,6 +245,20 @@ namespace Microsoft.Azure.Batch
         #endregion IInheritedBehaviors
 
         #region CloudJob
+
+        /// <summary>
+        /// Gets or sets whether Tasks in this job can be preempted by other high priority jobs.
+        /// </summary>
+        /// <remarks>
+        /// If the value is set to True, other high priority jobs submitted to the system will take precedence and will be 
+        /// able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using 
+        /// the update job API.
+        /// </remarks>
+        public bool? AllowTaskPreemption
+        {
+            get { return this.propertyContainer.AllowTaskPreemptionProperty.Value; }
+            set { this.propertyContainer.AllowTaskPreemptionProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets a list of common environment variable settings. These environment variables are set for all tasks 
@@ -334,6 +368,20 @@ namespace Microsoft.Azure.Batch
         public DateTime? LastModified
         {
             get { return this.propertyContainer.LastModifiedProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum number of tasks that can be executed in parallel for the job.
+        /// </summary>
+        /// <remarks>
+        /// The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value 
+        /// is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks 
+        /// after it has been created using the update job API.
+        /// </remarks>
+        public int? MaxParallelTasks
+        {
+            get { return this.propertyContainer.MaxParallelTasksProperty.Value; }
+            set { this.propertyContainer.MaxParallelTasksProperty.Value = value; }
         }
 
         /// <summary>
@@ -500,6 +548,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.JobAddParameter result = new Models.JobAddParameter()
             {
+                AllowTaskPreemption = this.AllowTaskPreemption,
                 CommonEnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.CommonEnvironmentSettings),
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
@@ -507,6 +556,7 @@ namespace Microsoft.Azure.Batch
                 JobManagerTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobManagerTask, (o) => o.GetTransportObject()),
                 JobPreparationTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobPreparationTask, (o) => o.GetTransportObject()),
                 JobReleaseTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobReleaseTask, (o) => o.GetTransportObject()),
+                MaxParallelTasks = this.MaxParallelTasks,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),

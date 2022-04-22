@@ -16,10 +16,10 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class HealthcareJobState : JobMetadata
     {
         /// <summary> Initializes a new instance of HealthcareJobState. </summary>
-        /// <param name="createdDateTime"> . </param>
-        /// <param name="jobId"> . </param>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal HealthcareJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
@@ -32,14 +32,14 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareJobState. </summary>
-        /// <param name="createdDateTime"> . </param>
-        /// <param name="expirationDateTime"> . </param>
-        /// <param name="jobId"> . </param>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        /// <param name="errors"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="expirationDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        /// <param name="errors"></param>
+        /// <param name="nextLink"></param>
         internal HealthcareJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, HealthcareResult results, IReadOnlyList<TextAnalyticsErrorInternal> errors, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Results = results;
@@ -47,8 +47,11 @@ namespace Azure.AI.TextAnalytics.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the results. </summary>
         public HealthcareResult Results { get; }
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

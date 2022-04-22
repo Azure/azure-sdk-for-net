@@ -16,7 +16,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class NetworkMode
     {
+        /// <summary>
+        /// No bridge is created. Intra-VM Pod to Pod communication is through
+        /// IP routes created by Azure CNI. See [Transparent
+        /// Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode)
+        /// for more information.
+        /// </summary>
         public const string Transparent = "transparent";
+        /// <summary>
+        /// This is no longer supported
+        /// </summary>
         public const string Bridge = "bridge";
     }
 }

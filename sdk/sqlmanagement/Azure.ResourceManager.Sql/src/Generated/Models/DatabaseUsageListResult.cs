@@ -5,36 +5,32 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list database metrics request. </summary>
+    /// <summary> A list of database usage metrics. </summary>
     internal partial class DatabaseUsageListResult
     {
         /// <summary> Initializes a new instance of DatabaseUsageListResult. </summary>
-        /// <param name="value"> The list of database usages for the database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatabaseUsageListResult(IEnumerable<DatabaseUsage> value)
+        internal DatabaseUsageListResult()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<DatabaseUsage>();
         }
 
         /// <summary> Initializes a new instance of DatabaseUsageListResult. </summary>
-        /// <param name="value"> The list of database usages for the database. </param>
-        internal DatabaseUsageListResult(IReadOnlyList<DatabaseUsage> value)
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        internal DatabaseUsageListResult(IReadOnlyList<DatabaseUsage> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> The list of database usages for the database. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<DatabaseUsage> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

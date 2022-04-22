@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern");
-                writer.WriteStringValue(FilePattern.Value.ToString());
+                writer.WriteObjectValue(FilePattern);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonWriteSettings DeserializeJsonWriteSettings(JsonElement element)
         {
-            Optional<JsonWriteFilePattern> filePattern = default;
+            Optional<object> filePattern = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filePattern = new JsonWriteFilePattern(property.Value.GetString());
+                    filePattern = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonWriteSettings(type, additionalProperties, Optional.ToNullable(filePattern));
+            return new JsonWriteSettings(type, additionalProperties, filePattern.Value);
         }
 
         internal partial class JsonWriteSettingsConverter : JsonConverter<JsonWriteSettings>

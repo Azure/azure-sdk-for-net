@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="contentType">Specifies a registered or custom content
         /// type for this representation, e.g. application/xml.</param>
-        /// <param name="sample">An example of the representation.</param>
         /// <param name="schemaId">Schema identifier. Applicable only if
         /// 'contentType' value is neither 'application/x-www-form-urlencoded'
         /// nor 'multipart/form-data'.</param>
@@ -46,13 +45,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Required if 'contentType' value is either
         /// 'application/x-www-form-urlencoded' or
         /// 'multipart/form-data'..</param>
-        public RepresentationContract(string contentType, string sample = default(string), string schemaId = default(string), string typeName = default(string), IList<ParameterContract> formParameters = default(IList<ParameterContract>))
+        /// <param name="examples">Exampled defined for the
+        /// representation.</param>
+        public RepresentationContract(string contentType, string schemaId = default(string), string typeName = default(string), IList<ParameterContract> formParameters = default(IList<ParameterContract>), IDictionary<string, ParameterExampleContract> examples = default(IDictionary<string, ParameterExampleContract>))
         {
             ContentType = contentType;
-            Sample = sample;
             SchemaId = schemaId;
             TypeName = typeName;
             FormParameters = formParameters;
+            Examples = examples;
             CustomInit();
         }
 
@@ -67,12 +68,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
-
-        /// <summary>
-        /// Gets or sets an example of the representation.
-        /// </summary>
-        [JsonProperty(PropertyName = "sample")]
-        public string Sample { get; set; }
 
         /// <summary>
         /// Gets or sets schema identifier. Applicable only if 'contentType'
@@ -97,6 +92,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "formParameters")]
         public IList<ParameterContract> FormParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets exampled defined for the representation.
+        /// </summary>
+        [JsonProperty(PropertyName = "examples")]
+        public IDictionary<string, ParameterExampleContract> Examples { get; set; }
 
         /// <summary>
         /// Validate the object.

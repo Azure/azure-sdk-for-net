@@ -2,7 +2,7 @@
   "Name": "DataDisk",
   "ProtocolName": "Models.DataDisk",
   "SummaryComment": "Settings which will be used by the data disks associated to compute nodes in the pool.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "IsUsedInCollections":  true,
   "Properties": [
     {

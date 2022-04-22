@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>An empty set of events which can be dispatched when no events are available.</summary>
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
+        /// <summary>The interval that an attempt to receive events should wait for additional events when less than the requested count was available.</summary>
+        private static readonly TimeSpan ReceiveBuildBatchInterval = TimeSpan.FromMilliseconds(20);
+
         /// <summary>A captured exception that indicates the partition was stolen by another consumer; this should be surfaced when an attempt is made to open a consumer link.</summary>
         private volatile Exception _activePartitionStolenException;
 
@@ -67,6 +70,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         private string PartitionId { get; }
+
+        /// <summary>
+        ///   A unique name used to identify this consumer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
 
         /// <summary>
         ///   The current position for the consumer, updated as events are received from the
@@ -132,6 +141,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventHubName">The name of the Event Hub from which events will be consumed.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -154,6 +164,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpConsumer(string eventHubName,
                             string consumerGroup,
                             string partitionId,
+                            string consumerIdentifier,
                             EventPosition eventPosition,
                             bool trackLastEnqueuedEventProperties,
                             bool invalidateConsumerWhenPartitionStolen,
@@ -171,9 +182,15 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            if (string.IsNullOrEmpty(consumerIdentifier))
+            {
+                consumerIdentifier = Guid.NewGuid().ToString();
+            }
+
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
+            Identifier = consumerIdentifier;
             CurrentEventPosition = eventPosition;
             TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             InvalidateConsumerWhenPartitionStolen = invalidateConsumerWhenPartitionStolen;
@@ -186,6 +203,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                    CreateConsumerLinkAsync(
                         consumerGroup,
                         partitionId,
+                        consumerIdentifier,
                         CurrentEventPosition,
                         prefetchCount ?? DefaultPrefetchCount,
                         prefetchSizeInBytes,
@@ -243,30 +261,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // again after the operation completes to provide best efforts in respecting it.
 
                         EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId, operationId);
+
+                        link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        var messagesReceived = await Task.Factory.FromAsync<(ReceivingAmqpLink, int, TimeSpan), IEnumerable<AmqpMessage>>
-                        (
-                            static (arguments, callback, state) =>
-                            {
-                                var (link, maximumEventCount, waitTime) = arguments;
-                                return link.BeginReceiveMessages(maximumEventCount, waitTime, callback, link);
-                            },
-                            static asyncResult =>
-                            {
-                                var link = (ReceivingAmqpLink)asyncResult.AsyncState;
-                                var received = link.EndReceiveMessages(asyncResult, out var amqpMessages);
-
-                                return received ? amqpMessages : null;
-                            },
-                            (link, maximumEventCount, waitTime),
-                            default
-                        ).ConfigureAwait(false);
-
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        var messagesReceived = await link.ReceiveMessagesAsync(maximumEventCount, ReceiveBuildBatchInterval, waitTime, cancellationToken).ConfigureAwait(false);
 
                         // If no messages were received, then just return the empty set.
 
@@ -402,6 +401,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return;
             }
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -410,12 +410,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await ReceiveLink.CloseAsync().ConfigureAwait(false);
+                    await ReceiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 ReceiveLink?.Dispose();
@@ -439,18 +437,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="consumerGroup">The consumer group of the Event Hub to which the link is bound.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
+        /// <param name="consumerIdentifier">The identifier associated with the consumer.</param>
         /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="timeout">The timeout to apply for creating the link.</param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
         /// <returns>The AMQP link to use for consumer-related operations.</returns>
         ///
         protected async Task<ReceivingAmqpLink> CreateConsumerLinkAsync(string consumerGroup,
                                                                         string partitionId,
+                                                                        string consumerIdentifier,
                                                                         EventPosition eventStartingPosition,
                                                                         uint prefetchCount,
                                                                         long? prefetchSizeInBytes,
@@ -486,6 +486,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             // Create and open the consumer link.
 
             var link = default(ReceivingAmqpLink);
+            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
             try
             {
@@ -493,11 +494,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                     consumerGroup,
                     partitionId,
                     eventStartingPosition,
+                    tryTimeout,
                     timeout,
                     prefetchCount,
                     prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
+                    consumerIdentifier,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

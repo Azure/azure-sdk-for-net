@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="port">Port for Server</param>
         /// <param name="userName">User name</param>
         /// <param name="password">Password credential.</param>
-        public MySqlConnectionInfo(string serverName, int port, string userName = default(string), string password = default(string))
+        /// <param name="encryptConnection">Whether to encrypt the
+        /// connection</param>
+        public MySqlConnectionInfo(string serverName, int port, string userName = default(string), string password = default(string), bool? encryptConnection = default(bool?))
             : base(userName, password)
         {
             ServerName = serverName;
             Port = port;
+            EncryptConnection = encryptConnection;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "port")]
         public int Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to encrypt the connection
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptConnection")]
+        public bool? EncryptConnection { get; set; }
 
         /// <summary>
         /// Validate the object.

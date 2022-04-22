@@ -241,7 +241,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty or null, or name starts or ends with "/".</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty or null, or name starts or ends with "/".</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <exception cref="ArgumentException"><paramref name="topicName"/> or <paramref name="subscriptionName"/> is empty or null, or path starts or ends with "/".</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription name is greater than 50.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -345,7 +345,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Rule with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="QueueProperties"/> containing information about the queue.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of queue name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="TopicProperties"/> containing information about the topic.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -461,7 +461,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="SubscriptionProperties"/> containing information about the subscription.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name is greater than 50.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic or Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -503,7 +503,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="RuleProperties"/> containing information about the rule.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic/Subscription/Rule with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="QueueRuntimeProperties"/> containing runtime properties about the queue.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of queue name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -584,7 +584,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="TopicRuntimeProperties"/> containing runtime properties about the topic.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="name"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -622,7 +622,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns><see cref="SubscriptionRuntimeProperties"/> containing runtime properties about the subscription.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name is greater than 50.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityNotFound">Topic or Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -663,7 +663,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -699,7 +699,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -735,7 +735,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the subscriptions.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -776,7 +776,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the rules.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -819,7 +819,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -854,7 +854,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -890,7 +890,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///  <returns>An <see cref="AsyncPageable{T}"/> describing the subscriptions runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
@@ -935,7 +935,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">Queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="name"/> is greater than 260 characters.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">An entity with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -957,7 +957,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="QueueProperties"/> of the newly created queue.</returns>
         /// <exception cref="ArgumentNullException">Queue name is null or empty.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">An entity with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1004,7 +1004,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">Topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="name"/> is greater than 260 characters.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A topic with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1027,7 +1027,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="TopicProperties"/> of the newly created topic.</returns>
         /// <exception cref="ArgumentNullException">Topic description is null.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A topic with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1078,7 +1078,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">Topic name or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="topicName"/> is greater than 260 characters or <paramref name="subscriptionName"/> is greater than 50 characters.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A subscription with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1104,7 +1104,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="SubscriptionProperties"/> of the newly created subscription.</returns>
         /// <exception cref="ArgumentNullException">Subscription description is null.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A subscription with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1129,7 +1129,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="SubscriptionProperties"/> of the newly created subscription.</returns>
         /// <exception cref="ArgumentNullException">Subscription description is null.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A subscription with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
@@ -1179,7 +1179,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <exception cref="ArgumentNullException">Subscription or rule description is null.</exception>
         /// <exception cref="ServiceBusFailureReason.MessagingEntityAlreadyExists">A subscription with the same name exists under the same service namespace.</exception>
-        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="ServiceBusFailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusAdministrationClientOptions"/> class (see Retry property). You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusFailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusFailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>

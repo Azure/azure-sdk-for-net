@@ -41,7 +41,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The geo-location where the resource
         /// lives.</param>
-        public MoveCollection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Identity identity = default(Identity), MoveCollectionProperties properties = default(MoveCollectionProperties))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public MoveCollection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Identity identity = default(Identity), MoveCollectionProperties properties = default(MoveCollectionProperties), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
             Location = location;
             Identity = identity;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -104,6 +107,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public MoveCollectionProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

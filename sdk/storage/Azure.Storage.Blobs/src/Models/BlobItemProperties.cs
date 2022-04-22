@@ -199,6 +199,16 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset? AccessTierChangedOn { get; internal set; }
 
         /// <summary>
+        /// The <see cref="BlobImmutabilityPolicy"/> associated with the blob.
+        /// </summary>
+        public BlobImmutabilityPolicy ImmutabilityPolicy { get; internal set; }
+
+        /// <summary>
+        /// Indicates if the blob has a legal hold.
+        /// </summary>
+        public bool HasLegalHold { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlobItemProperties instances.
         /// You can use BlobsModelFactory.BlobItemProperties instead.
         /// </summary>

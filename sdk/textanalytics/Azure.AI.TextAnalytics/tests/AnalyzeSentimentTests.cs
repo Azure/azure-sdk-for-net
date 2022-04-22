@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMiningEmpty()
         {
             TextAnalyticsClient client = GetClient();
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMiningNegated()
         {
             TextAnalyticsClient client = GetClient();
@@ -162,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentBatchConvenienceWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -340,7 +340,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentBatchWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -432,6 +432,43 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[0].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].DocumentSentiment.GetType());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [RecordedTest]
+        public async Task AnalyzeSentimentWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>()
+                {
+                    new AnalyzeSentimentAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "AnalyzeSentimentWithDisabledServiceLogs"
+                    },
+                    new AnalyzeSentimentAction()
+                    {
+                        ActionName = "AnalyzeSentiment"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+
+            Assert.IsNotNull(AnalyzeSentimentActionsResults);
+
+            IList<string> expected = new List<string> { "AnalyzeSentiment", "AnalyzeSentimentWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
         }
 
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)

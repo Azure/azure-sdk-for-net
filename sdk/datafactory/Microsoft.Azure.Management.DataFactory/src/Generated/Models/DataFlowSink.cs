@@ -33,13 +33,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Transformation description.</param>
         /// <param name="dataset">Dataset reference.</param>
         /// <param name="linkedService">Linked service reference.</param>
+        /// <param name="flowlet">Flowlet Reference</param>
         /// <param name="schemaLinkedService">Schema linked service
         /// reference.</param>
-        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference))
-            : base(name, description)
+        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference))
+            : base(name, description, dataset, linkedService, flowlet)
         {
-            Dataset = dataset;
-            LinkedService = linkedService;
             SchemaLinkedService = schemaLinkedService;
             CustomInit();
         }
@@ -48,18 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets dataset reference.
-        /// </summary>
-        [JsonProperty(PropertyName = "dataset")]
-        public DatasetReference Dataset { get; set; }
-
-        /// <summary>
-        /// Gets or sets linked service reference.
-        /// </summary>
-        [JsonProperty(PropertyName = "linkedService")]
-        public LinkedServiceReference LinkedService { get; set; }
 
         /// <summary>
         /// Gets or sets schema linked service reference.
@@ -76,14 +63,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Dataset != null)
-            {
-                Dataset.Validate();
-            }
-            if (LinkedService != null)
-            {
-                LinkedService.Validate();
-            }
             if (SchemaLinkedService != null)
             {
                 SchemaLinkedService.Validate();

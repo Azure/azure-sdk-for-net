@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS. </summary>
+        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
@@ -41,5 +41,23 @@ namespace Azure.ResourceManager.Compute.Models
         public int? MaxShares { get; set; }
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
         public Encryption Encryption { get; set; }
+        /// <summary> Policy for accessing the disk via network. </summary>
+        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
+        /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
+        public string DiskAccessId { get; set; }
+        /// <summary> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </summary>
+        public string Tier { get; set; }
+        /// <summary> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </summary>
+        public bool? BurstingEnabled { get; set; }
+        /// <summary> Purchase plan information to be added on the OS disk. </summary>
+        public DiskPurchasePlan PurchasePlan { get; set; }
+        /// <summary> List of supported capabilities (like accelerated networking) to be added on the OS disk. </summary>
+        public SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> Properties of the disk for which update is pending. </summary>
+        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
+        /// <summary> Indicates the OS on a disk supports hibernation. </summary>
+        public bool? SupportsHibernation { get; set; }
+        /// <summary> Policy for controlling export on the disk. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

@@ -44,12 +44,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// and 272.</param>
         /// <param name="timeToLive">Time to live (in minutes) setting of the
         /// cluster which will execute data flow job.</param>
-        public IntegrationRuntimeDataFlowProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?))
+        /// <param name="cleanup">Cluster will not be recycled and it will be
+        /// used in next data flow activity run until TTL (time to live) is
+        /// reached if this is set as false. Default is true.</param>
+        public IntegrationRuntimeDataFlowProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?), bool? cleanup = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             ComputeType = computeType;
             CoreCount = coreCount;
             TimeToLive = timeToLive;
+            Cleanup = cleanup;
             CustomInit();
         }
 
@@ -86,6 +90,14 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "timeToLive")]
         public int? TimeToLive { get; set; }
+
+        /// <summary>
+        /// Gets or sets cluster will not be recycled and it will be used in
+        /// next data flow activity run until TTL (time to live) is reached if
+        /// this is set as false. Default is true.
+        /// </summary>
+        [JsonProperty(PropertyName = "cleanup")]
+        public bool? Cleanup { get; set; }
 
         /// <summary>
         /// Validate the object.

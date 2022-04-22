@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ReplicationLinkListResult DeserializeReplicationLinkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReplicationLink>> value = default;
+            Optional<IReadOnlyList<ReplicationLinkData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +27,21 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReplicationLink> array = new List<ReplicationLink>();
+                    List<ReplicationLinkData> array = new List<ReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationLink.DeserializeReplicationLink(item));
+                        array.Add(ReplicationLinkData.DeserializeReplicationLinkData(item));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ReplicationLinkListResult(Optional.ToList(value));
+            return new ReplicationLinkListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

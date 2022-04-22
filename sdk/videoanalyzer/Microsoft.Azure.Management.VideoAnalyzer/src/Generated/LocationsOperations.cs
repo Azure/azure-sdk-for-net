@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// Checks whether the Video Analyzer resource name is available.
         /// </remarks>
         /// <param name='locationName'>
-        /// The name of the location.
+        /// Location Name.
         /// </param>
         /// <param name='name'>
         /// The name of the resource for which availability needs to be checked.

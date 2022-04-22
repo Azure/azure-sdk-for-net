@@ -1,7 +1,7 @@
 variables:
   DocWardenVersion: '0.6.1'
   OfficialBuildId: $(Build.BuildNumber)
-  ConvertToProjectReferenceOption: ''
+  AdditionalTestArguments: ''
   skipComponentGovernanceDetection: true
   NugetSecurityAnalysisWarningLevel: 'none'
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:
@@ -14,3 +14,5 @@ variables:
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages/
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+  Package.EnableSBOMSigning: true

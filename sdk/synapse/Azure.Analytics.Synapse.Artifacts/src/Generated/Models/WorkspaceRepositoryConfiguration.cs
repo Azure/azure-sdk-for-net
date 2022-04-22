@@ -27,7 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="rootFolder"> Root folder to use in the repository. </param>
         /// <param name="lastCommitId"> The last commit ID. </param>
         /// <param name="tenantId"> The VSTS tenant ID. </param>
-        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId)
+        /// <param name="clientId"> GitHub bring your own app client id. </param>
+        /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
+        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId, string clientId, GitHubClientSecret clientSecret)
         {
             Type = type;
             HostName = hostName;
@@ -38,6 +40,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
             TenantId = tenantId;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
         }
 
         /// <summary> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </summary>
@@ -58,5 +62,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string LastCommitId { get; set; }
         /// <summary> The VSTS tenant ID. </summary>
         public Guid? TenantId { get; set; }
+        /// <summary> GitHub bring your own app client id. </summary>
+        public string ClientId { get; set; }
+        /// <summary> GitHub bring your own app client secret information. </summary>
+        public GitHubClientSecret ClientSecret { get; set; }
     }
 }

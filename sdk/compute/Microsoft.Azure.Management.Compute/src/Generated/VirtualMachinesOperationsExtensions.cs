@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,9 +394,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
+            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?))
             {
-                operations.DeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.DeallocateAsync(resourceGroupName, vmName, hibernate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -412,12 +415,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, hibernate, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1248,7 +1254,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -1268,7 +1274,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1330,9 +1336,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
+            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?))
             {
-                operations.BeginDeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginDeallocateAsync(resourceGroupName, vmName, hibernate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1348,12 +1357,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, hibernate, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

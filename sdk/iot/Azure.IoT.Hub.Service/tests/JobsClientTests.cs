@@ -102,10 +102,7 @@ namespace Azure.IoT.Hub.Service.Tests
 
                 // We do not need to really wait when running on mocked values(Playback mode).
                 // This will speed up testing in Playback mode and the PR pipeline.
-                if (TestSettings.Instance.TestMode != Core.TestFramework.RecordedTestMode.Playback)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-                }
+                await Delay(5000);
             } while (!IsTerminalStatus(response.Value.Status));
 
             return response;

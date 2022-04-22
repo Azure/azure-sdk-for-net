@@ -92,6 +92,16 @@ namespace Microsoft.Azure.Management.PolicyInsights
         public virtual IPolicyMetadataOperations PolicyMetadata { get; private set; }
 
         /// <summary>
+        /// Gets the IPolicyRestrictionsOperations.
+        /// </summary>
+        public virtual IPolicyRestrictionsOperations PolicyRestrictions { get; private set; }
+
+        /// <summary>
+        /// Gets the IAttestationsOperations.
+        /// </summary>
+        public virtual IAttestationsOperations Attestations { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the PolicyInsightsClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -338,6 +348,8 @@ namespace Microsoft.Azure.Management.PolicyInsights
             PolicyStates = new PolicyStatesOperations(this);
             Operations = new Operations(this);
             PolicyMetadata = new PolicyMetadataOperations(this);
+            PolicyRestrictions = new PolicyRestrictionsOperations(this);
+            Attestations = new AttestationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

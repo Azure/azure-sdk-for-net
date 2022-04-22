@@ -33,10 +33,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
-        private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
+        private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(30);
 
         /// <summary>The desired amount of time to consider a partition owned by a specific event processor.</summary>
-        private TimeSpan _partitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30);
+        private TimeSpan _partitionOwnershipExpirationInterval = TimeSpan.FromMinutes(2);
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
@@ -81,6 +81,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   it is empty.
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
         public TimeSpan? MaximumWaitTime
         {
             get => _maximumWaitTime;
@@ -123,6 +125,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   times as large as the number of events in a batch to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
+        ///
         public int PrefetchCount
         {
             get => _prefetchCount;
@@ -152,6 +156,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
+        ///
         public long? PrefetchSizeInBytes
         {
             get => _prefetchSizeInBytes;
@@ -170,13 +176,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The desired amount of time to allow between load balancing verification attempts.
         /// </summary>
         ///
-        /// <value>If not specified, a load balancing interval of 10 seconds will be assumed.</value>
+        /// <value>If not specified, a load balancing interval of 30 seconds will be assumed.</value>
         ///
         /// <remarks>
         ///   Because load balancing holds less priority than processing events, this interval
         ///   should be considered the minimum time that will elapse between verification attempts; operations
-        ///   with higher priority may cause a minor delay longer than this interval for load balancing.
+        ///   with higher priority may cause a delay longer than this interval for load balancing.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan LoadBalancingUpdateInterval
         {
@@ -195,7 +203,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   requested by another event processor that wishes to assume responsibility for processing it.
         /// </summary>
         ///
-        /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        /// <value>If not specified, an ownership interval of 2 minutes will be assumed.</value>
+        ///
+        /// <remarks>
+        ///   As a general guideline, it is advised that this value be greater than the configured
+        ///   <see cref="LoadBalancingUpdateInterval" /> by at least a factor of two. It is recommended that
+        ///   this be a factor of three or more, unless there are application scenarios that require more
+        ///   aggressive ownership expiration.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {
@@ -252,9 +269,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   other event processors.
         /// </summary>
         ///
+        /// <value>If not specified, the <see cref="LoadBalancingStrategy.Greedy" /> strategy will be used.</value>
+        ///
         /// <seealso cref="Processor.LoadBalancingStrategy" />
         ///
-        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Balanced;
+        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Greedy;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

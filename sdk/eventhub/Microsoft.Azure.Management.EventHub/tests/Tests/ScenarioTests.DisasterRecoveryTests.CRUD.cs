@@ -93,7 +93,7 @@ namespace EventHub.Tests.ScenarioTests
                     };
 
                     var createNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
-                        authorizationRuleName, createAutorizationRuleParameter);
+                        authorizationRuleName, createAutorizationRuleParameter.Rights);
                     Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                     foreach (var right in createAutorizationRuleParameter.Rights)
@@ -117,20 +117,17 @@ namespace EventHub.Tests.ScenarioTests
 
                     //CheckNameavaliability for Alias
 
-                    var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(disasterRecoveryName));
+                    var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, disasterRecoveryName);
 
-                    Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not avilable");
+                    Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not available");
 
                     //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
-                    var checknameAliasSame = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
+                    var checknameAliasSame = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, namespaceName);
 
-                    // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
+                    // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not available");
 
 
-                    var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
-                    {
-                        PartnerNamespace = createNamespaceResponse2.Id
-                    });
+                    var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, createNamespaceResponse2.Id);
                     Assert.NotNull(DisasterRecoveryResponse);
 
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
@@ -178,10 +175,7 @@ namespace EventHub.Tests.ScenarioTests
                         TestUtilities.Wait(TimeSpan.FromSeconds(10));
                     }
 
-                    var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
-                    {
-                        PartnerNamespace = createNamespaceResponse2.Id
-                    });
+                    var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, createNamespaceResponse2.Id);
 
                     Assert.NotNull(DisasterRecoveryResponse_update);
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));

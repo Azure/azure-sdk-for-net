@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         internal ConnectivityHop()
         {
             NextHopIds = new ChangeTrackingList<string>();
+            PreviousHopIds = new ChangeTrackingList<string>();
+            Links = new ChangeTrackingList<HopLink>();
+            PreviousLinks = new ChangeTrackingList<HopLink>();
             Issues = new ChangeTrackingList<ConnectivityIssue>();
         }
 
@@ -26,14 +29,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="address"> The IP address of the hop. </param>
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
         /// <param name="nextHopIds"> List of next hop identifiers. </param>
+        /// <param name="previousHopIds"> List of previous hop identifiers. </param>
+        /// <param name="links"> List of hop links. </param>
+        /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHop(string type, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues)
+        internal ConnectivityHop(string type, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
         {
             Type = type;
             Id = id;
             Address = address;
             ResourceId = resourceId;
             NextHopIds = nextHopIds;
+            PreviousHopIds = previousHopIds;
+            Links = links;
+            PreviousLinks = previousLinks;
             Issues = issues;
         }
 
@@ -47,6 +56,12 @@ namespace Azure.ResourceManager.Network.Models
         public string ResourceId { get; }
         /// <summary> List of next hop identifiers. </summary>
         public IReadOnlyList<string> NextHopIds { get; }
+        /// <summary> List of previous hop identifiers. </summary>
+        public IReadOnlyList<string> PreviousHopIds { get; }
+        /// <summary> List of hop links. </summary>
+        public IReadOnlyList<HopLink> Links { get; }
+        /// <summary> List of previous hop links. </summary>
+        public IReadOnlyList<HopLink> PreviousLinks { get; }
         /// <summary> List of issues. </summary>
         public IReadOnlyList<ConnectivityIssue> Issues { get; }
     }

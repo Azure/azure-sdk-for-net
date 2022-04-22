@@ -16,10 +16,15 @@
 ### Install Bicep
 
 - Install using the instructions in [bicep](https://github.com/Azure/bicep/blob/main/docs/installing.md)
+- Note that to deploy Bicep files, use Bicep CLI version 0.3.1 or later. To check your Bicep CLI version, run:
+
+```bash
+bicep --version
+```
 
 ### Generate the ARM template
 
-The ARM template [test-resources.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/test-resources.json) is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/test-resources.bicep) file by running the following script
+The ARM template is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/timeseriesinsights/test-resources.bicep) file by running the following script
 
 - `.\generateArmTemplate.ps1`
 

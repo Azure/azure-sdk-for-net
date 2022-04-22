@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.Categories=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "242"
+          "218"
         ],
         "apim-request-id": [
-          "d234b5b2-84a4-41ae-98db-85a6de57966b"
+          "61c5f69f-0781-40a0-824b-4bf4198d712d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:26 GMT"
+          "Thu, 04 Nov 2021 04:51:35 GMT"
         ],
         "Content-Length": [
           "231"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"categories\": [\r\n    {\r\n      \"name\": \"building_\",\r\n      \"score\": 0.640625\r\n    },\r\n    {\r\n      \"name\": \"outdoor_house\",\r\n      \"score\": 0.31640625\r\n    }\r\n  ],\r\n  \"requestId\": \"d234b5b2-84a4-41ae-98db-85a6de57966b\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"categories\": [\r\n    {\r\n      \"name\": \"building_\",\r\n      \"score\": 0.640625\r\n    },\r\n    {\r\n      \"name\": \"outdoor_house\",\r\n      \"score\": 0.31640625\r\n    }\r\n  ],\r\n  \"requestId\": \"61c5f69f-0781-40a0-824b-4bf4198d712d\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

@@ -1,0 +1,26 @@
+{
+  "UpdateId": {
+    "Provider": "manufacturer",
+    "Name": "name",
+    "Version": "version"
+  },
+  "UpdateType": "microsoft/swupdate:1",
+  "InstalledCriteria": "1.2.3.4",
+  "Compatibility": [
+    {
+      "DeviceManufacturer": "manufacturer",
+      "DeviceModel": "name"
+    }
+  ],
+  "CreatedDateTime": "2021-06-14T17:48:33.3121363Z",
+  "ManifestVersion": "2.0",
+  "Files": [
+    {
+      "FileName": "setup.exe",
+      "SizeInBytes": 94,
+      "Hashes": {
+        "Sha256": "rL0zrlcS1Zkg4HgyZPqryYGXYgOiZdYhiXIR85efk9M="
+      }
+    }
+  ]
+}

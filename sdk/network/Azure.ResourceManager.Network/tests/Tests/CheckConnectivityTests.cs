@@ -4,17 +4,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class CheckConnectivityTests : NetworkTestsManagementClientBase
+    public class CheckConnectivityTests : NetworkServiceClientTestBase
     {
         public CheckConnectivityTests(bool isAsync) : base(isAsync)
         {
@@ -29,61 +27,35 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         [Test]
+        [RecordedTest]
+        [Ignore("Review this after preview")]
         public async Task CheckConnectivityVmToInternetTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
-            string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
+            await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
-
-            //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
-            //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            string networkWatcherName = Recording.GenerateAssetName("azsmnet");
+            var properties = new NetworkWatcherData { Location = location };
+            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(true, networkWatcherName, properties);
 
             ConnectivityParameters connectivityParameters =
-                new ConnectivityParameters(new ConnectivitySource(getVm.Value.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
+                new ConnectivityParameters(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await NetworkManagementClient.NetworkWatchers.StartCheckConnectivityAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectivityParameters);
-            Response<ConnectivityInformation> connectivityCheck = await WaitForCompletionAsync(connectivityCheckOperation);
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(true, connectivityParameters);
+            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.ConnectionStatus.ToString());

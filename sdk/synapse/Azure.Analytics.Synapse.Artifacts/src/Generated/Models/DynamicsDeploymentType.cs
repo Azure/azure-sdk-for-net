@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The deployment type of the Dynamics instance. &apos;Online&apos; for Dynamics Online and &apos;OnPremisesWithIfd&apos; for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
-    public readonly partial struct DynamicsDeploymentType : IEquatable<DynamicsDeploymentType>
+    /// <summary> All available dynamicsDeploymentType values. </summary>
+    internal readonly partial struct DynamicsDeploymentType : IEquatable<DynamicsDeploymentType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DynamicsDeploymentType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsDeploymentType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsDeploymentType(string value)
         {

@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public const string Failed = "Failed";
         public const string Creating = "Creating";
         public const string Updating = "Updating";
+        public const string Deleting = "Deleting";
     }
 }

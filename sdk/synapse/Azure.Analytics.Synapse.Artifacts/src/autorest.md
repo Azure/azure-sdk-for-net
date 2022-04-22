@@ -6,15 +6,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-artifacts-2019-06-01-preview
+tag: package-artifacts-composite-v3
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/949388b9dfddc435859fda2850c5bb5019aa217b/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
+  seal-single-value-enum-by-default: true
 ```
 
 ### Make Endpoint type as Uri
@@ -24,6 +25,32 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
+```
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SparkJobDefinition
+  transform: >
+    $.properties.folder["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlScript
+  transform: >
+    $.properties.folder["x-nullable"] = true;
 ```
 
 ### Expose serialization and deserialization methods and internal models
@@ -36,12 +63,14 @@ directive:
     for (var path in $)
     {
       if (path.endsWith("AvroFormat") ||
+          path.endsWith("CreateDataFlowDebugSessionRequest") ||
           path.endsWith("CopyBehaviorType") ||
           path.endsWith("CopyTranslator") ||
           path.endsWith("DataFlowDebugPreviewDataRequest") ||
           path.endsWith("DataFlowDebugQueryResponse") ||
           path.endsWith("DataFlowDebugResultResponse") ||
           path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DataFlowDebugPackage") ||
           path.endsWith("DatasetDataElement") ||
           path.endsWith("DatasetSchemaDataElement") ||
           path.endsWith("DatasetStorageFormat") ||
@@ -73,4 +102,23 @@ directive:
         $[path]["x-csharp-usage"] = "converter";
       }
     }
+```
+
+### Fix spelling issues
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Notebook.properties
+  transform: >
+    $.nbformat['x-ms-client-name'] = 'NotebookFormat';
+    $.nbformat_minor['x-ms-client-name'] = 'NotebookFormatMinor';
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TriggerRun.properties
+  transform: >
+    $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
 ```

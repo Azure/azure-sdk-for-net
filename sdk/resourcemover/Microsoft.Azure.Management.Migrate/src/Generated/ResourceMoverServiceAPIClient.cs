@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             UnresolvedDependencies = new UnresolvedDependenciesOperations(this);
             OperationsDiscovery = new OperationsDiscoveryOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-01";
+            ApiVersion = "2021-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

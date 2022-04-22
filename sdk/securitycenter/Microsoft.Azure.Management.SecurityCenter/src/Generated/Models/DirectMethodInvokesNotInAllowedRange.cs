@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of direct method invokes is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DirectMethodInvokesNotInAllowedRange")]
     public partial class DirectMethodInvokesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

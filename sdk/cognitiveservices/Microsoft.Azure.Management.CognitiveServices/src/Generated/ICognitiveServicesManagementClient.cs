@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the ICommitmentTiersOperations.
+        /// </summary>
+        ICommitmentTiersOperations CommitmentTiers { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
@@ -102,6 +107,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IDeploymentsOperations.
+        /// </summary>
+        IDeploymentsOperations Deployments { get; }
+
+        /// <summary>
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        ICommitmentPlansOperations CommitmentPlans { get; }
 
         /// <summary>
         /// Check available SKUs.
@@ -135,13 +150,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='type'>
         /// The Type of the resource.
         /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, string kind = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

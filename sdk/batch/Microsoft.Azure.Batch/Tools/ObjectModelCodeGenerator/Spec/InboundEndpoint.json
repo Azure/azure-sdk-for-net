@@ -3,7 +3,7 @@
     "ProtocolName": "Models.InboundEndpoint",
     "SummaryComment": "An inbound endpoint on a compute node.",
     "IsUsedInCollections": true,
-    "IsConstructorPublic": false,
+    "ConstructorAccess": "internal",
     "Properties": [
         {
             "Key": {

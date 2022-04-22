@@ -62,6 +62,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob");
             writer.WriteObjectValue(SparkJob);
+            if (Optional.IsCollectionDefined(Arguments))
+            {
+                writer.WritePropertyName("args");
+                writer.WriteStartArray();
+                foreach (var item in Arguments)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -81,6 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
+            Optional<IList<object>> args = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +175,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("args"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<object> array = new List<object>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetObject());
+                            }
+                            args = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob);
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args));
         }
 
         internal partial class SynapseSparkJobDefinitionActivityConverter : JsonConverter<SynapseSparkJobDefinitionActivity>

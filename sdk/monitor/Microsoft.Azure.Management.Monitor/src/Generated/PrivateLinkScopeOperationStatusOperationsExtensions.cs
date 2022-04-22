@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operation Id.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static OperationStatus Get(this IPrivateLinkScopeOperationStatusOperations operations, string asyncOperationId, string resourceGroupName)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operation Id.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

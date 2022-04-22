@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> region = default;
             Optional<string> systemService = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"))
@@ -51,8 +52,13 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixes = array;
                     continue;
                 }
+                if (property.NameEquals("state"))
+                {
+                    state = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes));
+            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value);
         }
     }
 }

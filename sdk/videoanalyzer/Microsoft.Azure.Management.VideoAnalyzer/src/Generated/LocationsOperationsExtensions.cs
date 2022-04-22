@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The name of the location.
+            /// Location Name.
             /// </param>
             /// <param name='name'>
             /// The name of the resource for which availability needs to be checked.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The name of the location.
+            /// Location Name.
             /// </param>
             /// <param name='name'>
             /// The name of the resource for which availability needs to be checked.

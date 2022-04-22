@@ -10,20 +10,18 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.5.0</Version>
+		<Version>21.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added new api version 2021-02-01
-			- Swagger change for CustomIpPrefix. Adding four new attributes
-			- VPN NAT for Virtual Network Gateway feature changes
-			- Added a new feature FlowTimeoutInMinutes under Virtual Network Property
-			- Added new failedMessage property for CustomIpPrefix
-			- Added Preferred Routing Gateway Support 
-			- Feature: Address space update in peered vNets
-			- Removed max file size limit enforcement as it is done in NRP
-			- Hotfix extended location parameter hierarchy
-			- Added bastion SKU
+			- Added new api version 2021-05-01
+			- Added routing intent resource
+			- Updated exclusion match variable enum to support new values
+			- Added new SKU values
+			- Updated WAF policy exclusions to include ruleset/rulegroup/rule hierarchy
+			- Vnet encryption: added NIC flag, vnet property, vnet peering property
+			- Fixed cycles in custom IP prefix
+			- Added missed property to LBAddress
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

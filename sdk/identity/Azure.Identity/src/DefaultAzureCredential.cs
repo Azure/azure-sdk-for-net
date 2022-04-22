@@ -36,7 +36,7 @@ namespace Azure.Identity
     /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
     /// deployed to an Azure resource with a user assigned managed identity configured.
     /// </para>
-    /// <code snippet="Snippet:UserAssignedManagedIdentity">
+    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
     /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
     ///
     /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
@@ -47,7 +47,8 @@ namespace Azure.Identity
     /// </example>
     public class DefaultAzureCredential : TokenCredential
     {
-        private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot";
+        private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials. " + Troubleshooting;
         private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed due to an unhandled exception: ";
         private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(null), new DefaultAzureCredentialOptions());
 
@@ -134,13 +135,14 @@ namespace Azure.Identity
                     (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
                     _sources = default;
                     asyncLock.SetValue(credential);
+                    AzureIdentityEventSource.Singleton.DefaultAzureCredentialCredentialSelected(credential.GetType().FullName);
                 }
 
                 return scope.Succeeded(token);
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -228,7 +230,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
+                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId, options.InteractiveBrowserCredentialClientId);
             }
 
             if (i == 0)

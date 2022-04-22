@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="vnetRoutes"> List of routes that control routing from VirtualHub into a virtual network connection. </param>
-        internal RoutingConfiguration(SubResource associatedRouteTable, PropagatedRouteTable propagatedRouteTables, VnetRoute vnetRoutes)
+        internal RoutingConfiguration(WritableSubResource associatedRouteTable, PropagatedRouteTable propagatedRouteTables, VnetRoute vnetRoutes)
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>
-        public SubResource AssociatedRouteTable { get; set; }
+        public WritableSubResource AssociatedRouteTable { get; set; }
         /// <summary> The list of RouteTables to advertise the routes to. </summary>
         public PropagatedRouteTable PropagatedRouteTables { get; set; }
         /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>

@@ -59,7 +59,7 @@ handlers are still raised if cancellation occurs.  You should both pass
 synchronous operations and consider calling `CancellationToken.ThrowIfCancellationRequested`
 in compute heavy handlers.
 
-A [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+A [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
 is wrapped around your handlers using the event name so you can see how long
 your handlers took to run, whether they made other calls to Azure services, and
 details about any exceptions that were thrown.

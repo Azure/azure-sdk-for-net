@@ -36,11 +36,17 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// registry.</param>
         /// <param name="password">The password for the private
         /// registry.</param>
-        public ImageRegistryCredential(string server, string username, string password = default(string))
+        /// <param name="identity">The identity for the private
+        /// registry.</param>
+        /// <param name="identityUrl">The identity URL for the private
+        /// registry.</param>
+        public ImageRegistryCredential(string server, string username, string password = default(string), string identity = default(string), string identityUrl = default(string))
         {
             Server = server;
             Username = username;
             Password = password;
+            Identity = identity;
+            IdentityUrl = identityUrl;
             CustomInit();
         }
 
@@ -67,6 +73,18 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity for the private registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public string Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity URL for the private registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityUrl")]
+        public string IdentityUrl { get; set; }
 
         /// <summary>
         /// Validate the object.

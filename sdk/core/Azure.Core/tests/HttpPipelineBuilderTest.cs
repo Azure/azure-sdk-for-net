@@ -2,13 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Azure;
 using Moq;
 using NUnit.Framework;
 
@@ -19,6 +24,7 @@ namespace Azure.Core.Tests
         [Theory]
         [TestCase(HttpPipelinePosition.PerCall, 1)]
         [TestCase(HttpPipelinePosition.PerRetry, 2)]
+        [TestCase(HttpPipelinePosition.BeforeTransport, 2)]
         public async Task CanAddCustomPolicy(HttpPipelinePosition position, int expectedCount)
         {
             var policy = new CounterPolicy();
@@ -41,6 +47,52 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task CustomPolicyOrdering()
+        {
+            bool perCallRan = false;
+            bool perRetryRan = false;
+            bool beforeTransportRan = false;
+
+            var transport = new MockTransport(new MockResponse(200));
+            var options = new TestOptions();
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                perCallRan = true;
+                Assert.False(perRetryRan);
+                Assert.False(beforeTransportRan);
+            }), HttpPipelinePosition.PerCall);
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                perRetryRan = true;
+                Assert.True(perCallRan);
+                Assert.False(beforeTransportRan);
+            }), HttpPipelinePosition.PerRetry);
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                beforeTransportRan = true;
+                Assert.True(perRetryRan);
+                Assert.True(perCallRan);
+            }), HttpPipelinePosition.BeforeTransport);
+
+            options.Transport = transport;
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            using Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
+
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            Assert.True(perRetryRan);
+            Assert.True(perCallRan);
+            Assert.True(beforeTransportRan);
+        }
+
+        [Test]
         public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettings()
         {
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
@@ -58,7 +110,11 @@ namespace Azure.Core.Tests
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            informationalVersion = informationalVersion.Substring(0, informationalVersion.IndexOf('+'));
+            var i = informationalVersion.IndexOf('+');
+            if (i > 0)
+            {
+                informationalVersion = informationalVersion.Substring(0, i);
+            }
 
             Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
             StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
@@ -138,6 +194,63 @@ namespace Azure.Core.Tests
             Assert.AreEqual("MyPolicyClientId", value);
         }
 
+        [Test]
+        public void SetTransportOptions([Values(true, false)] bool isCustomTransportSet)
+        {
+            using var testListener = new TestEventListener();
+            testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
+
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions();
+            if (isCustomTransportSet)
+            {
+                options.Transport = transport;
+            }
+
+            List<EventWrittenEventArgs> events = new();
+
+            using var listener = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    events.Add(args);
+                },
+                EventLevel.Verbose);
+
+            var pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelineTransportOptions(),
+                ResponseClassifier.Shared);
+
+            HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
+            if (isCustomTransportSet)
+            {
+                Assert.That(transportField, Is.TypeOf<MockTransport>());
+                events.Any(
+                    e => e.EventId == 23 &&
+                         e.EventName == "PipelineTransportOptionsNotApplied" &&
+                         e.GetProperty<string>("optionsType") == options.GetType().FullName);
+            }
+            else
+            {
+                Assert.That(transportField, Is.Not.TypeOf<MockTransport>());
+            }
+        }
+
+        [Test]
+        public void CanPassNullPolicies([Values(true, false)] bool isCustomTransportSet)
+        {
+            var pipeline = HttpPipelineBuilder.Build(
+                new TestOptions(),
+                new HttpPipelinePolicy[] { null },
+                new HttpPipelinePolicy[] { null },
+                null);
+
+            var message = pipeline.CreateMessage();
+            pipeline.SendAsync(message, message.CancellationToken);
+        }
+
         private class TestOptions : ClientOptions
         {
             public TestOptions()
@@ -154,6 +267,21 @@ namespace Azure.Core.Tests
             }
 
             public int ExecutionCount { get; set; }
+        }
+
+        private class CallbackPolicy : HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<HttpMessage> _message;
+
+            public CallbackPolicy(Action<HttpMessage> message)
+            {
+                _message = message;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                _message(message);
+            }
         }
     }
 }

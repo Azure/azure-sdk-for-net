@@ -38,13 +38,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// 'Disconnected'</param>
         /// <param name="description">The reason for approval or
         /// rejection.</param>
-        /// <param name="actionRequired">A message indicating if changes on the
-        /// service provider require any updates on the consumer.</param>
-        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionRequired = default(string))
+        /// <param name="actionsRequired">A message indicating if changes on
+        /// the service provider require any updates on the consumer. Possible
+        /// values include: 'None'</param>
+        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -69,10 +70,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 
         /// <summary>
         /// Gets or sets a message indicating if changes on the service
-        /// provider require any updates on the consumer.
+        /// provider require any updates on the consumer. Possible values
+        /// include: 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "actionRequired")]
-        public string ActionRequired { get; set; }
+        [JsonProperty(PropertyName = "actionsRequired")]
+        public string ActionsRequired { get; set; }
 
     }
 }

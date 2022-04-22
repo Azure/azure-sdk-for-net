@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ChatMessageType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChatMessageType(string value)
         {

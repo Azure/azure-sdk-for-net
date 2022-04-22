@@ -31,14 +31,8 @@ namespace Azure.IoT.Hub.Service
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
-            endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? new Uri("https://fully-qualified-iothubname.azure-devices.net");
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

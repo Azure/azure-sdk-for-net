@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter");
-                writer.WriteObjectValue(RouteFilter);
+                JsonSerializer.Serialize(writer, RouteFilter);
             }
             if (Optional.IsDefined(State))
             {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> primaryPeerAddressPrefix = default;
             Optional<string> secondaryPeerAddressPrefix = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<SubResource> routeFilter = default;
+            Optional<WritableSubResource> routeFilter = default;
             Optional<ExpressRouteCircuitPeeringState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routeFilter = SubResource.DeserializeSubResource(property.Value);
+                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Ipv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter.Value, Optional.ToNullable(state));
+            return new Ipv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state));
         }
     }
 }

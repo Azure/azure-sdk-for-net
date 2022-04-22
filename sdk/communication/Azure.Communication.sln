@@ -14,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{378D2940
 		ci.yml = ci.yml
 		Directory.Build.props = Directory.Build.props
 		test-resources.json = test-resources.json
-		tests.yml = tests.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Common", "Azure.Communication.Common\src\Azure.Communication.Common.csproj", "{A3844101-D370-4963-B450-71851034C3D6}"
@@ -119,6 +118,10 @@ Global
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static SnapshotPolicy Get(this ISnapshotPoliciesOperations operations, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static SnapshotPolicy Create(this ISnapshotPoliciesOperations operations, SnapshotPolicy body, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static SnapshotPolicy Update(this ISnapshotPoliciesOperations operations, SnapshotPolicyPatch body, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static void Delete(this ISnapshotPoliciesOperations operations, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static SnapshotPolicyVolumeList ListVolumes(this ISnapshotPoliciesOperations operations, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static SnapshotPolicy BeginUpdate(this ISnapshotPoliciesOperations operations, SnapshotPolicyPatch body, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             public static void BeginDelete(this ISnapshotPoliciesOperations operations, string resourceGroupName, string accountName, string snapshotPolicyName)
             {
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the NetApp account
             /// </param>
             /// <param name='snapshotPolicyName'>
-            /// The name of the snapshot policy target
+            /// The name of the snapshot policy
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

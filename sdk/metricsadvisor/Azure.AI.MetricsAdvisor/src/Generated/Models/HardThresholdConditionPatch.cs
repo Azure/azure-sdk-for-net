@@ -18,21 +18,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// lower bound
         /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Down.
+        /// should be specified when anomalyDetectorDirection is Both or Down
         /// </summary>
         public double? LowerBound { get; set; }
         /// <summary>
         /// upper bound
         /// 
-        /// 
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Up.
+        /// should be specified when anomalyDetectorDirection is Both or Up
         /// </summary>
         public double? UpperBound { get; set; }
         /// <summary> detection direction. </summary>
         public AnomalyDetectorDirection? AnomalyDetectorDirection { get; set; }
+        /// <summary> Gets or sets the suppress condition. </summary>
         public SuppressConditionPatch SuppressCondition { get; set; }
     }
 }

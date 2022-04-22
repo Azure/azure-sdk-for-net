@@ -1557,8 +1557,78 @@ namespace Azure.Storage.Files.Shares
 
         #region GetFilesAndDirectories
         /// <summary>
-        /// The <see cref="GetFilesAndDirectories"/> operation returns an async
-        /// sequence of files and subdirectories in this directory.
+        /// The <see cref="GetFilesAndDirectoriesAsync(ShareDirectoryGetFilesAndDirectoriesOptions, CancellationToken)"/>
+        /// operation returns an async sequence of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareDirectoryGetFilesAndDirectoriesOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> of <see cref="Response{StorageFileItem}"/>
+        /// describing  the items in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: options?.Prefix,
+                traits: options?.Traits,
+                includeExtendedInfo: options?.IncludeExtendedInfo)
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFilesAndDirectoriesAsync(ShareDirectoryGetFilesAndDirectoriesOptions, CancellationToken)"/>
+        /// operation returns an async collection of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareDirectoryGetFilesAndDirectoriesOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AsyncPageable{T}"/> describing the
+        /// items in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: options?.Prefix,
+                traits: options?.Traits,
+                includeExtendedInfo: options?.IncludeExtendedInfo)
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFilesAndDirectories(string, CancellationToken)"/>
+        /// operation returns an async sequence of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
@@ -1583,13 +1653,18 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
-            string prefix = default,
+            string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToSyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: prefix,
+                traits: null,
+                includeExtendedInfo: null)
+            .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
-        /// async collection of files and subdirectories in this directory.
+        /// The <see cref="GetFilesAndDirectoriesAsync(string, CancellationToken)"/>
+        /// operation returns an async collection of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
@@ -1614,9 +1689,14 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
-            string prefix = default,
+            string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToAsyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: prefix,
+                traits: null,
+                includeExtendedInfo: null)
+            .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1644,6 +1724,12 @@ namespace Azure.Storage.Files.Shares
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareFileItem"/>.
+        /// </param>
+        /// <param name="includeExtendedInfo">
+        /// If extended info should be included in the <see cref="ShareFileItem"/>.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1663,6 +1749,8 @@ namespace Azure.Storage.Files.Shares
             string marker,
             string prefix,
             int? pageSizeHint,
+            ShareFileTraits? traits,
+            bool? includeExtendedInfo,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1688,6 +1776,8 @@ namespace Azure.Storage.Files.Shares
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits),
+                            includeExtendedInfo: includeExtendedInfo,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1697,6 +1787,8 @@ namespace Azure.Storage.Files.Shares
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits),
+                            includeExtendedInfo: includeExtendedInfo,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2228,6 +2320,200 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion ForceCloseHandles
+
+        #region Rename
+        /// <summary>
+        /// Renames a directory.
+        /// This API does not support renaming a directory from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the directory to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareDirectoryClient}"/> pointed at the newly renamed directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryClient> Rename(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames a directory.
+        /// This API does not support renaming a directory from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the directory to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareDirectoryClient}"/> pointed at the newly renamed directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryClient>> RenameAsync(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames a directory.
+        /// This API does not support renaming a directory from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the directory to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareDirectoryClient}"/> pointed at the newly renamed directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareDirectoryClient>> RenameInternal(
+            string destinationPath,
+            ShareFileRenameOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(destinationPath)}: {destinationPath}\n" +
+                    $"{nameof(options)}: {options}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(Rename)}");
+
+                try
+                {
+                    scope.Start();
+
+                    ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
+
+                    // Build destination URI
+                    ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
+
+                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
+                    // especially SAS, to be encoded.
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                    }
+                    else
+                    {
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                    }
+
+                    // Build destDirectoryClient
+                    ShareDirectoryClient destDirectoryClient = new ShareDirectoryClient(destUriBuilder.ToUri(), ClientConfiguration);
+
+                    ResponseWithHeaders<DirectoryRenameHeaders> response;
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        IgnoreReadOnly = options?.IgnoreReadOnly
+                    };
+
+                    if (async)
+                    {
+                        response = await destDirectoryClient.DirectoryRestClient.RenameAsync(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = destDirectoryClient.DirectoryRestClient.Rename(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        destDirectoryClient,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Rename
 
         #region CreateSubdirectory
         /// <summary>

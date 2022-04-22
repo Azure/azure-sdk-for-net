@@ -265,7 +265,7 @@ namespace Azure.Core.Tests
         public async Task RetryingEmitsEventSourceEvent()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
-            var listener = new TestEventListener();
+            using var listener = new TestEventListener();
             listener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Informational);
 
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 2);

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentPropertiesExtended DeserializeDeploymentPropertiesExtended(JsonElement element)
         {
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> duration = default;
             Optional<object> outputs = default;
-            Optional<IReadOnlyList<Provider>> providers = default;
+            Optional<IReadOnlyList<ProviderData>> providers = default;
             Optional<IReadOnlyList<Dependency>> dependencies = default;
             Optional<TemplateLink> templateLink = default;
             Optional<object> parameters = default;
@@ -30,14 +32,19 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DebugSetting> debugSetting = default;
             Optional<OnErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
-            Optional<IReadOnlyList<ResourceReference>> outputResources = default;
-            Optional<IReadOnlyList<ResourceReference>> validatedResources = default;
-            Optional<ErrorResponse> error = default;
+            Optional<IReadOnlyList<SubResource>> outputResources = default;
+            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    provisioningState = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("correlationId"))
@@ -77,10 +84,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Provider> array = new List<Provider>();
+                    List<ProviderData> array = new List<ProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Provider.DeserializeProvider(item));
+                        array.Add(JsonSerializer.Deserialize<ProviderData>(item.ToString()));
                     }
                     providers = array;
                     continue;
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToDeploymentMode();
+                    mode = new DeploymentMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("debugSetting"))
@@ -172,10 +179,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     outputResources = array;
                     continue;
@@ -187,10 +194,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     validatedResources = array;
                     continue;
@@ -202,11 +209,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
                     continue;
                 }
             }
-            return new DeploymentPropertiesExtended(provisioningState.Value, correlationId.Value, Optional.ToNullable(timestamp), duration.Value, outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value);
+            return new DeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), duration.Value, outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error);
         }
     }
 }

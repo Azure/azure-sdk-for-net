@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DatabaseLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseLicenseType(string value)
         {

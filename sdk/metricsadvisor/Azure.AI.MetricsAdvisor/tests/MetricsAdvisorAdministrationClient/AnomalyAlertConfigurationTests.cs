@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyAlertConfiguration(FakeGuid, default, default, default, new List<string>(), new List<string>(), new List<MetricAnomalyAlertConfiguration>());
+            var config = new AnomalyAlertConfiguration(FakeGuid, default, default, default, new List<string>(), new List<string>(), new List<MetricAlertConfiguration>());
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

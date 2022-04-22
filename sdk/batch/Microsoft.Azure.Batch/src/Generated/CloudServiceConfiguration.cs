@@ -65,6 +65,14 @@ namespace Microsoft.Azure.Batch
             this.OSVersion = osVersion;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudServiceConfiguration"/> class.
+        /// </summary>
+        protected CloudServiceConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal CloudServiceConfiguration(Models.CloudServiceConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

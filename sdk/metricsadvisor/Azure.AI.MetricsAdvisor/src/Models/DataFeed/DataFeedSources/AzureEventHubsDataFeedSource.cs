@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an Azure Event Hubs data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -22,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="consumerGroup"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="consumerGroup"/> is empty.</exception>
         public AzureEventHubsDataFeedSource(string connectionString, string consumerGroup)
-            : base(DataFeedSourceType.AzureEventHubs)
+            : base(DataFeedSourceKind.AzureEventHubs)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -32,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal AzureEventHubsDataFeedSource(AzureEventHubsParameter parameter)
-            : base(DataFeedSourceType.AzureEventHubs)
+            : base(DataFeedSourceKind.AzureEventHubs)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

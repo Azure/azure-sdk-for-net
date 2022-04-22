@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -52,6 +52,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                writer.WritePropertyName("networkAccessPolicy");
+                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                writer.WritePropertyName("diskAccessId");
+                writer.WriteStringValue(DiskAccessId);
+            }
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                writer.WritePropertyName("supportsHibernation");
+                writer.WriteBooleanValue(SupportsHibernation.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(SupportedCapabilities))
+            {
+                writer.WritePropertyName("supportedCapabilities");
+                writer.WriteObjectValue(SupportedCapabilities);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

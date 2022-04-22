@@ -62,6 +62,19 @@ namespace Azure.IoT.ModelsRepository
             return new Uri(repositoryUriBuilder.Uri, dtmiPath);
         }
 
+        internal static Uri GetMetadataUri(Uri repositoryUri)
+        {
+            var repositoryUriBuilder = new UriBuilder(repositoryUri);
+
+            // If the base URI (repositoryUri in this case) path segment does not end in slash
+            // that segment will be dropped and not properly anchored to by the intended relative URI.
+            if (!repositoryUriBuilder.Path.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                repositoryUriBuilder.Path += "/";
+            }
+            return new Uri(repositoryUriBuilder.Uri, ModelsRepositoryConstants.ModelsRepositoryMetadataFile);
+        }
+
         internal static string DtmiToPath(string dtmi) => IsValidDtmi(dtmi) ? $"{dtmi.ToLowerInvariant().Replace(":", "/").Replace(";", "-")}.json" : null;
     }
 }

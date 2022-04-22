@@ -100,6 +100,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
+        public void CanCreateSubscriptionRuntimePropertiesFromFactory()
+        {
+            var today = DateTimeOffset.Now;
+            var yesterday = today.Subtract(TimeSpan.FromDays(1));
+            var twoDaysAgo = today.Subtract(TimeSpan.FromDays(2));
+            var properties = ServiceBusModelFactory.SubscriptionRuntimeProperties(
+                "topicName",
+                "subscriptionName",
+                10,
+                1,
+                5,
+                2,
+                18,
+                twoDaysAgo,
+                yesterday,
+                today);
+            Assert.AreEqual("topicName", properties.TopicName);
+            Assert.AreEqual("subscriptionName", properties.SubscriptionName);
+            Assert.AreEqual(10, properties.ActiveMessageCount);
+            Assert.AreEqual(1, properties.DeadLetterMessageCount);
+            Assert.AreEqual(5, properties.TransferDeadLetterMessageCount);
+            Assert.AreEqual(2, properties.TransferMessageCount);
+            Assert.AreEqual(18, properties.TotalMessageCount);
+            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
+            Assert.AreEqual(yesterday, properties.UpdatedAt);
+            Assert.AreEqual(today, properties.AccessedAt);
+        }
+
+        [Test]
         public void CanCreateSubscriptionPropertiesFromOptions()
         {
             var options = new CreateSubscriptionOptions("topic", "subscription")

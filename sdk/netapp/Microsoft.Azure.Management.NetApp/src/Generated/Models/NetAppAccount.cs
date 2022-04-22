@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
@@ -45,11 +47,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="encryption">Encryption settings</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData))
+        public NetAppAccount(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
             Name = name;
+            Etag = etag;
             Type = type;
             Tags = tags;
             ProvisioningState = provisioningState;
@@ -81,6 +84,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets resource type

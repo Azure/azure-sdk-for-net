@@ -11,7 +11,9 @@ namespace Azure.Storage.Blobs.Models
     internal readonly partial struct PageRange
     {
 
+        /// <summary> Gets the start. </summary>
         public long Start { get; }
+        /// <summary> Gets the end. </summary>
         public long End { get; }
     }
 }

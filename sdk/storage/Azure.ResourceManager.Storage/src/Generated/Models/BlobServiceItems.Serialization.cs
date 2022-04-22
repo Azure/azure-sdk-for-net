@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobServiceItems DeserializeBlobServiceItems(JsonElement element)
         {
-            Optional<IReadOnlyList<BlobServiceProperties>> value = default;
+            Optional<IReadOnlyList<BlobServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BlobServiceProperties> array = new List<BlobServiceProperties>();
+                    List<BlobServiceData> array = new List<BlobServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobServiceProperties.DeserializeBlobServiceProperties(item));
+                        array.Add(BlobServiceData.DeserializeBlobServiceData(item));
                     }
                     value = array;
                     continue;

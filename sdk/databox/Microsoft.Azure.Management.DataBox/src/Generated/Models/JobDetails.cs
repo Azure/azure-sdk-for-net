@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Job details.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("JobDetails")]
     public partial class JobDetails
     {
         /// <summary>
@@ -54,10 +53,23 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// the chain of custody logs</param>
         /// <param name="keyEncryptionKey">Details about which key encryption
         /// type is being used.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// <param name="expectedDataSizeInTeraBytes">The expected size of the
         /// data, which needs to be transferred in this job, in
         /// terabytes.</param>
-        public JobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTerabytes = default(int?))
+        /// <param name="actions">Available actions on the job.</param>
+        /// <param name="lastMitigationActionOnJob">Last mitigation action
+        /// performed on the job.</param>
+        /// <param name="datacenterAddress">Datacenter address to ship to, for
+        /// the given sku and storage location.</param>
+        /// <param name="dataCenterCode">DataCenter code. Possible values
+        /// include: 'Invalid', 'BY2', 'BY1', 'ORK70', 'AM2', 'AMS20', 'BY21',
+        /// 'BY24', 'MWH01', 'AMS06', 'SSE90', 'SYD03', 'SYD23', 'CBR20',
+        /// 'YTO20', 'CWL20', 'LON24', 'BOM01', 'BL20', 'BL7', 'SEL20',
+        /// 'TYO01', 'BN1', 'SN5', 'CYS04', 'TYO22', 'YTO21', 'YQB20', 'FRA22',
+        /// 'MAA01', 'CPQ02', 'CPQ20', 'SIN20', 'HKG20', 'SG2', 'MEL23',
+        /// 'SEL21', 'OSA20', 'SHA03', 'BJB', 'JNB22', 'JNB21', 'MNZ21', 'SN8',
+        /// 'AUH20', 'ZRH20', 'PUS20', 'AdHoc', 'CH1', 'DSM05'</param>
+        public JobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTeraBytes = default(int?), IList<CustomerResolutionCode?> actions = default(IList<CustomerResolutionCode?>), LastMitigationActionOnJob lastMitigationActionOnJob = default(LastMitigationActionOnJob), DatacenterAddressResponse datacenterAddress = default(DatacenterAddressResponse), string dataCenterCode = default(string))
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -71,7 +83,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
             ReverseShipmentLabelSasKey = reverseShipmentLabelSasKey;
             ChainOfCustodySasKey = chainOfCustodySasKey;
             KeyEncryptionKey = keyEncryptionKey;
-            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
+            ExpectedDataSizeInTeraBytes = expectedDataSizeInTeraBytes;
+            Actions = actions;
+            LastMitigationActionOnJob = lastMitigationActionOnJob;
+            DatacenterAddress = datacenterAddress;
+            DataCenterCode = dataCenterCode;
             CustomInit();
         }
 
@@ -156,8 +172,40 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets or sets the expected size of the data, which needs to be
         /// transferred in this job, in terabytes.
         /// </summary>
-        [JsonProperty(PropertyName = "expectedDataSizeInTerabytes")]
-        public int? ExpectedDataSizeInTerabytes { get; set; }
+        [JsonProperty(PropertyName = "expectedDataSizeInTeraBytes")]
+        public int? ExpectedDataSizeInTeraBytes { get; set; }
+
+        /// <summary>
+        /// Gets available actions on the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "actions")]
+        public IList<CustomerResolutionCode?> Actions { get; private set; }
+
+        /// <summary>
+        /// Gets last mitigation action performed on the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastMitigationActionOnJob")]
+        public LastMitigationActionOnJob LastMitigationActionOnJob { get; private set; }
+
+        /// <summary>
+        /// Gets datacenter address to ship to, for the given sku and storage
+        /// location.
+        /// </summary>
+        [JsonProperty(PropertyName = "datacenterAddress")]
+        public DatacenterAddressResponse DatacenterAddress { get; private set; }
+
+        /// <summary>
+        /// Gets dataCenter code. Possible values include: 'Invalid', 'BY2',
+        /// 'BY1', 'ORK70', 'AM2', 'AMS20', 'BY21', 'BY24', 'MWH01', 'AMS06',
+        /// 'SSE90', 'SYD03', 'SYD23', 'CBR20', 'YTO20', 'CWL20', 'LON24',
+        /// 'BOM01', 'BL20', 'BL7', 'SEL20', 'TYO01', 'BN1', 'SN5', 'CYS04',
+        /// 'TYO22', 'YTO21', 'YQB20', 'FRA22', 'MAA01', 'CPQ02', 'CPQ20',
+        /// 'SIN20', 'HKG20', 'SG2', 'MEL23', 'SEL21', 'OSA20', 'SHA03', 'BJB',
+        /// 'JNB22', 'JNB21', 'MNZ21', 'SN8', 'AUH20', 'ZRH20', 'PUS20',
+        /// 'AdHoc', 'CH1', 'DSM05'
+        /// </summary>
+        [JsonProperty(PropertyName = "dataCenterCode")]
+        public string DataCenterCode { get; private set; }
 
         /// <summary>
         /// Validate the object.

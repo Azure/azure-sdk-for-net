@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
         internal VirtualRouterPeeringListResult()
         {
-            Value = new ChangeTrackingList<VirtualRouterPeering>();
+            Value = new ChangeTrackingList<VirtualRouterPeeringData>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
         /// <param name="value"> List of VirtualRouterPeerings in a VirtualRouter. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal VirtualRouterPeeringListResult(IReadOnlyList<VirtualRouterPeering> value, string nextLink)
+        internal VirtualRouterPeeringListResult(IReadOnlyList<VirtualRouterPeeringData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of VirtualRouterPeerings in a VirtualRouter. </summary>
-        public IReadOnlyList<VirtualRouterPeering> Value { get; }
+        public IReadOnlyList<VirtualRouterPeeringData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

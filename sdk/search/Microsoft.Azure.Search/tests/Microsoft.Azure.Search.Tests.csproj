@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
     <ProjectReference Include="..\src\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Management.Search\tests\Microsoft.Azure.Management.Search.Tests.csproj" />

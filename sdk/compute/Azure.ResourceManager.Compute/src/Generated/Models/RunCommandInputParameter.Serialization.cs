@@ -21,5 +21,25 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
+
+        internal static RunCommandInputParameter DeserializeRunCommandInputParameter(JsonElement element)
+        {
+            string name = default;
+            string value = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("value"))
+                {
+                    value = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new RunCommandInputParameter(name, value);
+        }
     }
 }

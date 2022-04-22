@@ -30,17 +30,8 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public PolicyCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
         {
-            if (instanceUrl == null)
-            {
-                throw new ArgumentNullException(nameof(instanceUrl));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.instanceUrl = instanceUrl;
-            this.apiVersion = apiVersion;
+            this.instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

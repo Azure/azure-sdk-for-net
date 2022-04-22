@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The replication state for the replication link. </summary>
+    /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
     public readonly partial struct ReplicationState : IEquatable<ReplicationState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReplicationState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationState(string value)
         {

@@ -56,5 +56,56 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         #endregion
+
+        [Test]
+        public void DocumentStatusResultConvertBinaryDataToJsonElement()
+        {
+            var errorJson = @"{
+                                ""code"": ""PartialError"",
+                                ""message"": ""There were some errors.""
+                           }";
+
+            var result = DocumentTranslationModelFactory.DocumentStatusResult(
+                "43534534",
+                new Uri("http://localhost"),
+                new BinaryData(errorJson),
+                default,
+                default,
+                DocumentTranslationStatus.Succeeded,
+                default,
+                default,
+                default);
+
+            Assert.AreEqual("43534534", result.Id);
+            Assert.AreEqual("PartialError", result.Error.Code);
+            Assert.AreEqual("There were some errors.", result.Error.Message);
+        }
+
+        [Test]
+        public void TranslationStatusResultConvertBinaryDataToJsonElement()
+        {
+            var errorJson = @"{
+                                ""code"": ""PartialError"",
+                                ""message"": ""There were some errors.""
+                           }";
+
+            var result = DocumentTranslationModelFactory.TranslationStatusResult(
+                "43534534",
+                default,
+                default,
+                DocumentTranslationStatus.Succeeded,
+                new BinaryData(errorJson),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default);
+
+            Assert.AreEqual("43534534", result.Id);
+            Assert.AreEqual("PartialError", result.Error.Code);
+            Assert.AreEqual("There were some errors.", result.Error.Message);
+        }
     }
 }

@@ -21,17 +21,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public const string Unattached = "Unattached";
         /// <summary>
-        /// The disk is currently mounted to a running VM.
+        /// The disk is currently attached to a running VM.
         /// </summary>
         public const string Attached = "Attached";
         /// <summary>
-        /// The disk is mounted to a stopped-deallocated VM
+        /// The disk is attached to a stopped-deallocated VM.
         /// </summary>
         public const string Reserved = "Reserved";
+        /// <summary>
+        /// The disk is attached to a VM which is in hibernated state.
+        /// </summary>
+        public const string Frozen = "Frozen";
         /// <summary>
         /// The disk currently has an Active SAS Uri associated with it.
         /// </summary>
         public const string ActiveSAS = "ActiveSAS";
+        /// <summary>
+        /// The disk is attached to a VM in hibernated state and has an active
+        /// SAS URI associated with it.
+        /// </summary>
+        public const string ActiveSASFrozen = "ActiveSASFrozen";
         /// <summary>
         /// A disk is ready to be created by upload by requesting a write
         /// token.

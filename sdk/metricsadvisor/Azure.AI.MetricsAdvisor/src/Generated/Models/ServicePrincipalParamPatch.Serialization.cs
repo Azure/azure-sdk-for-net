@@ -12,25 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ServicePrincipalParamPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId);
-            }
-            if (Optional.IsDefined(ClientSecret))
-            {
-                writer.WritePropertyName("clientSecret");
-                writer.WriteStringValue(ClientSecret);
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

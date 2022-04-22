@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Schedule based backup criteria
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("ScheduleBasedBackupCriteria")]
     public partial class ScheduleBasedBackupCriteria : BackupCriteria
     {
         /// <summary>

@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Event] = "EventData",
         };
 
-        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, Resource resource, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -34,17 +34,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             foreach (var activity in batchActivity)
             {
                 MonitorBase telemetryData = new MonitorBase();
-                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, instrumentationKey);
+                var monitorTags = EnumerateActivityTags(activity);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags);
+                telemetryItem.InstrumentationKey = instrumentationKey;
+                telemetryItem.SetResource(roleName, roleInstance);
 
                 switch (activity.GetTelemetryType())
                 {
                     case TelemetryType.Request:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Request];
-                        telemetryData.BaseData = TelemetryPartB.GetRequestData(activity);
+                        telemetryData.BaseData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                         break;
                     case TelemetryType.Dependency:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Dependency];
-                        telemetryData.BaseData = TelemetryPartB.GetRemoteDependencyData(activity);
+                        telemetryData.BaseData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                         break;
                 }
 
@@ -55,14 +58,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItems;
         }
 
-        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = TelemetryPartA.GetTelemetryItem(logRecord, instrumentationKey);
+                telemetryItem = new TelemetryItem(logRecord);
+                telemetryItem.InstrumentationKey = instrumentationKey;
+                telemetryItem.SetResource(roleName, roleInstance);
                 telemetryItem.Data = new MonitorBase
                 {
                     BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Message],
@@ -72,6 +77,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return telemetryItems;
+        }
+
+        internal static TagEnumerationState EnumerateActivityTags(Activity activity)
+        {
+            var monitorTags = new TagEnumerationState
+            {
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
+            };
+
+            monitorTags.ForEach(activity.TagObjects);
+            return monitorTags;
         }
     }
 }

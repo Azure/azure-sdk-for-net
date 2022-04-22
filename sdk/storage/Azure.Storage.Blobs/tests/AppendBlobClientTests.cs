@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -77,11 +79,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new AppendBlobClient(httpUri, GetOAuthCredential()),
+                () => new AppendBlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -223,10 +225,48 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(1, blobs.Count);
             Assert.AreEqual(blobName, blobs.First().Name);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    conditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Conditions = conditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.CreateAsync(
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -327,6 +367,130 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                EncryptionScope = TestConfigDefault.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(
+                new StorageSharedKeyCredential(
+                    TestConfigDefault.AccountName,
+                    TestConfigDefault.AccountKey));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeSAS_GenerateSasUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blobClient = InstrumentClient(
+                test.Container.GetAppendBlobClient(GetNewBlobName()).WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            Uri sasUri = blobClient.GenerateSasUri(
+                BlobSasPermissions.All,
+                Recording.UtcNow.AddDays(1));
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(sasUri, GetOptions()));
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeAccountSAS()
+        {
+            // Arrange
+            string containerName = GetNewContainerName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
+                permissions: AccountSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: AccountSasServices.All,
+                resourceTypes: AccountSasResourceTypes.All);
+            accountSasBuilder.EncryptionScope = TestConfigDefault.EncryptionScope;
+
+            Uri accountSasUri = blobServiceClient.GenerateAccountSasUri(accountSasBuilder);
+            blobServiceClient = InstrumentClient(new BlobServiceClient(accountSasUri, GetOptions()));
+            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(containerName));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeIdentitySAS()
+        {
+            // Arrange
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            string blobName = GetNewBlobName();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                EncryptionScope = TestConfigDefault.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, Tenants.TestConfigOAuth.AccountName)
+            };
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
         //TODO
         [Ignore("Not yet implemented")]
         [RecordedTest]
@@ -340,7 +504,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_Error()
         {
             // Arrange
-            BlobServiceClient blobService = GetServiceClient_SharedKey();
+            BlobServiceClient blobService = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient containerClient = InstrumentClient(blobService.GetBlobContainerClient(GetNewContainerName()));
             AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
@@ -526,7 +690,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateIfNotExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_SharedKey();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient containerClient = InstrumentClient(serviceClient.GetBlobContainerClient(GetNewContainerName()));
             AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
 
@@ -550,12 +714,18 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
 
             // Act
+            Response<BlobAppendInfo> response;
             using (var stream = new MemoryStream(data))
             {
-                await blob.AppendBlockAsync(stream);
+                response = await blob.AppendBlockAsync(stream);
             }
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Check if block was appeneded correctly by Downloading the block
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
@@ -956,9 +1126,63 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
+
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             }
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task AppendBlockFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions sourceConditions = new AppendBlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(AppendBlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    sourceConditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    sourceConditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.AppendBlockFromUriAsync(
+                    uri,
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"AppendBlockFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
         }
 
         [RecordedTest]
@@ -982,10 +1206,15 @@ namespace Azure.Storage.Blobs.Test
                 destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
                     sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB));
+                    options);
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
@@ -1012,10 +1241,15 @@ namespace Azure.Storage.Blobs.Test
                 destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
                     sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB));
+                    options);
 
                 Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
             }
@@ -1040,8 +1274,15 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(2 * Constants.KB, 2 * Constants.KB)
+                };
+
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(2 * Constants.KB, 2 * Constants.KB));
+                await destBlob.AppendBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    options: options);
 
                 // Assert
                 Response<BlobDownloadInfo> result = await destBlob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
@@ -1071,10 +1312,15 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(data)
+                };
+
                 // Act
                 await destBlob.AppendBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
-                    sourceContentHash: MD5.Create().ComputeHash(data));
+                    options: options);
             }
         }
 
@@ -1097,11 +1343,16 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.AppendBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
+                        options: options),
                     actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
                 );
             }
@@ -1154,11 +1405,16 @@ namespace Azure.Storage.Blobs.Test
                         appendPosAndMaxSize: true);
                     AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
+                    AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
+
                     // Act
                     await destBlob.AppendBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        conditions: accessConditions,
-                        sourceConditions: sourceAccessConditions);
+                        options: options);
                 }
             }
         }
@@ -1208,12 +1464,17 @@ namespace Azure.Storage.Blobs.Test
                         appendPosAndMaxSize: true);
                     AppendBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
+                    AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
+
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.AppendBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
-                            conditions: accessConditions,
-                            sourceConditions: sourceAccessConditions),
+                            options: options),
                         actualException => Assert.IsTrue(true)
                     );
                 }
@@ -1251,11 +1512,16 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                DestinationConditions = conditions,
+                SourceRange = new HttpRange(0, Constants.KB)
+            };
+
             // Act
             await destBlob.AppendBlockFromUriAsync(
-                sourceBlob.Uri,
-                new HttpRange(0, Constants.KB),
-                conditions: conditions);
+                sourceUri: sourceBlob.Uri,
+                options: options);
         }
 
         [RecordedTest]
@@ -1283,12 +1549,17 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                DestinationConditions = conditions,
+                SourceRange = new HttpRange(0, Constants.KB)
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.AppendBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB),
-                    conditions: conditions),
+                    sourceUri: sourceBlob.Uri,
+                    options: options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1311,9 +1582,88 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
+                await destBlob.AppendBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    options: options);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task AppendBlockFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync();
+            await sourceBlob.AppendBlockAsync(stream);
+
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            string sourceBearerToken = await GetAuthToken();
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                sourceBearerToken);
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task AppendBlockFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync();
+            await sourceBlob.AppendBlockAsync(stream);
+
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                "auth token");
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.AppendBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -1330,7 +1680,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.AppendBlockAsync(content: stream),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -1344,15 +1694,53 @@ namespace Azure.Storage.Blobs.Test
             await appendBlob.CreateAsync();
 
             // Act
-            await appendBlob.SealAsync();
+            Response<BlobInfo> response = await appendBlob.SealAsync();
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
             Response<BlobDownloadInfo> downloadResponse = await appendBlob.DownloadAsync();
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the blob is correctly sealed
             Assert.IsTrue(propertiesResponse.Value.IsSealed);
             Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
             Assert.IsTrue(blobs.First().Properties.IsSealed);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        public async Task SealAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.SealAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Seal does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1488,355 +1876,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_NewBlob()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-
-            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-            {
-                BufferSize = Constants.KB
-            };
-
-            Stream stream = await blob.OpenWriteAsync(
-                overwrite: false,
-                options);
-
-            byte[] data = GetRandomBuffer(16 * Constants.KB);
-
-            // Act
-            await stream.WriteAsync(data, 0, 512);
-            await stream.WriteAsync(data, 512, 1024);
-            await stream.WriteAsync(data, 1536, 2048);
-            await stream.WriteAsync(data, 3584, 77);
-            await stream.WriteAsync(data, 3661, 2066);
-            await stream.WriteAsync(data, 5727, 4096);
-            await stream.WriteAsync(data, 9823, 6561);
-            await stream.FlushAsync();
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
-            var dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(data.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_NewBlob_WithUsing()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-
-            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-            {
-                BufferSize = Constants.KB
-            };
-
-            byte[] data = GetRandomBuffer(16 * Constants.KB);
-
-            // Act
-            using (Stream stream = await blob.OpenWriteAsync(
-                overwrite: false,
-                options))
-            {
-                await stream.WriteAsync(data, 0, 512);
-                await stream.WriteAsync(data, 512, 1024);
-                await stream.WriteAsync(data, 1536, 2048);
-                await stream.WriteAsync(data, 3584, 77);
-                await stream.WriteAsync(data, 3661, 2066);
-                await stream.WriteAsync(data, 5727, 4096);
-                await stream.WriteAsync(data, 9823, 6561);
-            }
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
-            var dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(data.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_AppendExistingBlob()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
-
-            byte[] originalData = GetRandomBuffer(Constants.KB);
-            using Stream originalStream = new MemoryStream(originalData);
-
-            await blob.AppendBlockAsync(content: originalStream);
-
-            byte[] newData = GetRandomBuffer(Constants.KB);
-            using Stream newStream = new MemoryStream(newData);
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(overwrite: false);
-            await newStream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            byte[] expectedData = new byte[2 * Constants.KB];
-            Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
-            Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
-
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_AlternatingWriteAndFlush()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-
-            byte[] data0 = GetRandomBuffer(512);
-            byte[] data1 = GetRandomBuffer(512);
-            using Stream dataStream0 = new MemoryStream(data0);
-            using Stream dataStream1 = new MemoryStream(data1);
-            byte[] expectedData = new byte[Constants.KB];
-            Array.Copy(data0, expectedData, 512);
-            Array.Copy(data1, 0, expectedData, 512, 512);
-
-            // Act
-            Stream writeStream = await blob.OpenWriteAsync(overwrite: true);
-            await dataStream0.CopyToAsync(writeStream);
-            await writeStream.FlushAsync();
-            await dataStream1.CopyToAsync(writeStream);
-            await writeStream.FlushAsync();
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_Error()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            AppendBlobClient blob = InstrumentClient(container.GetAppendBlobClient(GetNewBlobName()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.OpenWriteAsync(overwrite: false),
-                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_ModifiedDuringWrite()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-
-            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-            {
-                BufferSize = Constants.KB
-            };
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(
-                overwrite: false,
-                options);
-
-            await stream.CopyToAsync(openWriteStream);
-            stream.Position = 0;
-
-            await blob.AppendBlockAsync(stream);
-            stream.Position = 0;
-
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                stream.CopyToAsync(openWriteStream),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_ProgressReporting()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-
-            TestProgress progress = new TestProgress();
-            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-            {
-                ProgressHandler = progress,
-                BufferSize = 256
-            };
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(
-                overwrite: false,
-                options);
-            await stream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
-        }
-
-        [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task OpenWriteAsync_OverwiteNewBlob(bool blobExists)
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            if (blobExists)
-            {
-                await blob.CreateAsync();
-            }
-
-            byte[] expectedData = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(expectedData);
-
-            // Act
-            Stream openWriteStream = await blob.OpenWriteAsync(overwrite: false);
-            await stream.CopyToAsync(openWriteStream);
-            await openWriteStream.FlushAsync();
-
-            // Assert
-            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
-            MemoryStream dataResult = new MemoryStream();
-            await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
-            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
-        }
-
-        [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task OpenWriteAsync_AccessConditions(bool overwrite)
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            AccessConditionParameters[] testCases = new[]
-            {
-                new AccessConditionParameters(),
-                new AccessConditionParameters { IfModifiedSince = OldDate },
-                new AccessConditionParameters { IfUnmodifiedSince = NewDate },
-                new AccessConditionParameters { Match = ReceivedETag },
-                new AccessConditionParameters { NoneMatch = GarbageETag },
-                new AccessConditionParameters { LeaseId = ReceivedLeaseId },
-                new AccessConditionParameters { AppendPosE = 0 },
-                new AccessConditionParameters { MaxSizeLTE = 100 }
-            };
-            foreach (AccessConditionParameters parameters in testCases)
-            {
-                // Arrange
-                await using DisposingContainer test = await GetTestContainerAsync();
-                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-
-                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
-                    parameters: parameters,
-                    lease: true,
-                    appendPosAndMaxSize: true);
-
-                byte[] data = GetRandomBuffer(7);
-                using Stream stream = new MemoryStream(data);
-
-                AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-                {
-                    OpenConditions = accessConditions
-                };
-
-                // Act
-                Stream openWriteStream = await blob.OpenWriteAsync(
-                    overwrite: overwrite,
-                    options);
-                await stream.CopyToAsync(openWriteStream);
-                await openWriteStream.FlushAsync();
-
-                // Assert
-                Response<BlobDownloadInfo> result = await blob.DownloadAsync();
-                MemoryStream dataResult = new MemoryStream();
-                await result.Value.Content.CopyToAsync(dataResult);
-                Assert.AreEqual(data.Length, dataResult.Length);
-                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
-            }
-        }
-
-        [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task OpenWriteAsync_AccessConditionsFail(bool overwite)
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            AccessConditionParameters[] testCases = new[]
-            {
-                new AccessConditionParameters { IfModifiedSince = NewDate },
-                new AccessConditionParameters { IfUnmodifiedSince = OldDate },
-                new AccessConditionParameters { Match = GarbageETag },
-                new AccessConditionParameters { NoneMatch = ReceivedETag },
-                new AccessConditionParameters { LeaseId = garbageLeaseId }
-            };
-            foreach (AccessConditionParameters parameters in testCases)
-            {
-                await using DisposingContainer test = await GetTestContainerAsync();
-                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                await blob.CreateAsync();
-                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
-                    parameters: parameters,
-                    lease: true,
-                    appendPosAndMaxSize: true);
-
-                byte[] data = GetRandomBuffer(7);
-                using Stream stream = new MemoryStream(data);
-
-                AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
-                {
-                    OpenConditions = accessConditions
-                };
-
-                // Act
-                await TestHelper.CatchAsync<Exception>(
-                    async () =>
-                    {
-                        Stream openWriteStream = await blob.OpenWriteAsync(
-                            overwrite: true,
-                            options);
-                        await stream.CopyToAsync(openWriteStream);
-                        await openWriteStream.FlushAsync();
-                    });
-            }
-        }
-
-        [RecordedTest]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange
@@ -1876,9 +1915,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<AppendBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<AppendBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<AppendBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         private AppendBlobRequestConditions BuildDestinationAccessConditions(

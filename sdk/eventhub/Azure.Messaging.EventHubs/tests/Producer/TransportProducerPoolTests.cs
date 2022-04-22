@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ["1"] = new TransportProducerPool.PoolItem("0", transportProducer),
                 ["2"] = new TransportProducerPool.PoolItem("0", transportProducer),
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
@@ -49,6 +49,121 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "PerformExpiration should close an expired producer.");
             Assert.That(startingPool.TryGetValue("1", out _), Is.True, "PerformExpiration should not remove valid producers.");
             Assert.That(startingPool.TryGetValue("2", out _), Is.True, "PerformExpiration should not remove valid producers.");
+        }
+
+        /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireRemovesTheRequestedItem()
+        {
+            var wasFactoryCalled = false;
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            Func<string, TransportProducer> producerFactory = partition =>
+            {
+                wasFactoryCalled = true;
+                return transportProducer;
+            };
+
+            var transportProducerPool = new TransportProducerPool(producerFactory, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(wasFactoryCalled, Is.False, "No producer should not have been created.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0");
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+            Assert.That(wasFactoryCalled, Is.False, "The requested partition should not have been created.");
+
+            // Request the producer again and validate a new producer is created.
+
+            Assert.That(transportProducerPool.GetPooledProducer("0"), Is.Not.Null, "The requested partition should be available.");
+            Assert.That(wasFactoryCalled, Is.True, "A new producer for the requested partition should have been created.");
+        }
+
+        /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireCoseNotCloseTheRemovedItemWhenInUse()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Request the producer and hold the reference to ensure that it is flagged as being in use.
+
+            await using var poolItem = transportProducerPool.GetPooledProducer("0");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: false);
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+        }
+
+        /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireClosesTheRemovedItemWhenForced()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Request the producer and hold the reference to ensure that it is flagged as being in use.
+
+            await using var poolItem = transportProducerPool.GetPooledProducer("0");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: true);
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
         }
 
         /// <summary>
@@ -68,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             // This call should refresh the timespan associated to the item
             _ = transportProducerPool.GetPooledProducer("0");
@@ -94,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             var connection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy));
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy));
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
 
             await using var pooledProducer = transportProducerPool.GetPooledProducer("0");
@@ -121,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             var pooledProducer = transportProducerPool.GetPooledProducer("0");
             startingPool.TryGetValue("0", out var poolItem);
@@ -148,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             var pooledProducer = transportProducerPool.GetPooledProducer("0", TimeSpan.FromMinutes(-1));
 
@@ -179,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer);
 
             var returnedProducer = transportProducerPool.GetPooledProducer(partitionId).TransportProducer as ObservableTransportProducerMock;
 
@@ -202,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
 
             transportProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
@@ -229,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
 
             partitionProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
@@ -302,12 +417,14 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override TransportProducer CreateTransportProducer(string partitionId,
+                                                                        string producerIdentifier,
                                                                         TransportProducerFeatures requestedFeatures,
-                                                                        PartitionPublishingOptions partitionOptions,
+                                                                        PartitionPublishingOptionsInternal partitionOptions,
                                                                         EventHubsRetryPolicy retryPolicy) => TransportProducerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
+                                                                    TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {
@@ -361,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
-            public override ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override ValueTask<PartitionPublishingPropertiesInternal> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
             public override Task CloseAsync(CancellationToken cancellationToken)
             {

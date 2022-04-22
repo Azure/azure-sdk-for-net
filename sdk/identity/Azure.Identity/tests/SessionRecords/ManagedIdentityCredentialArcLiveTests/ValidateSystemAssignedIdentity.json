@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "1f3904c8ba0d3ceee90da82434275f7d",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "U2FuaXRpemVk",
+      "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
         "Content-Length": "261",
@@ -73,7 +73,7 @@
         "x-ms-client-request-id": "1dd0d0a16a5ce00df3ef4006d940dff4",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "U2FuaXRpemVk",
+      "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "165",

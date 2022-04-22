@@ -103,6 +103,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
+        /// Gets the IServerParametersOperations.
+        /// </summary>
+        public virtual IServerParametersOperations ServerParameters { get; private set; }
+
+        /// <summary>
         /// Gets the ILogFilesOperations.
         /// </summary>
         public virtual ILogFilesOperations LogFiles { get; private set; }
@@ -111,6 +116,16 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets the IServerAdministratorsOperations.
         /// </summary>
         public virtual IServerAdministratorsOperations ServerAdministrators { get; private set; }
+
+        /// <summary>
+        /// Gets the IRecoverableServersOperations.
+        /// </summary>
+        public virtual IRecoverableServersOperations RecoverableServers { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerBasedPerformanceTierOperations.
+        /// </summary>
+        public virtual IServerBasedPerformanceTierOperations ServerBasedPerformanceTier { get; private set; }
 
         /// <summary>
         /// Gets the ILocationBasedPerformanceTierOperations.
@@ -394,8 +409,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
+            ServerParameters = new ServerParametersOperations(this);
             LogFiles = new LogFilesOperations(this);
             ServerAdministrators = new ServerAdministratorsOperations(this);
+            RecoverableServers = new RecoverableServersOperations(this);
+            ServerBasedPerformanceTier = new ServerBasedPerformanceTierOperations(this);
             LocationBasedPerformanceTier = new LocationBasedPerformanceTierOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
             Operations = new Operations(this);

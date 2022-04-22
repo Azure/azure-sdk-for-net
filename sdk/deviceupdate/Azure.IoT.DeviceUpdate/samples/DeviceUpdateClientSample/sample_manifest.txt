@@ -1,0 +1,4 @@
+{
+  "Scenario": "DeviceUpdateClientSample",
+  "Timestamp": "2021-06-14T17:48:33.1835430Z"
+}

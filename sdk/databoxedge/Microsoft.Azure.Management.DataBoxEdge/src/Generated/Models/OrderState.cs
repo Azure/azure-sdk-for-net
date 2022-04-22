@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
     public static class OrderState
     {
         public const string Untracked = "Untracked";
-        public const string AwaitingFulfilment = "AwaitingFulfilment";
+        public const string AwaitingFulfillment = "AwaitingFulfillment";
         public const string AwaitingPreparation = "AwaitingPreparation";
         public const string AwaitingShipment = "AwaitingShipment";
         public const string Shipped = "Shipped";
@@ -30,5 +30,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public const string AwaitingReturnShipment = "AwaitingReturnShipment";
         public const string ShippedBack = "ShippedBack";
         public const string CollectedAtMicrosoft = "CollectedAtMicrosoft";
+        public const string AwaitingPickup = "AwaitingPickup";
+        public const string PickupCompleted = "PickupCompleted";
+        public const string AwaitingDrop = "AwaitingDrop";
     }
 }

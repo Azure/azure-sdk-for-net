@@ -30,8 +30,7 @@ namespace Media.Tests.ScenarioTests
                     string assetDescription = "A test asset";
 
                     // Get asset, which should not exist
-                    Asset asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
-                    Assert.Null(asset);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.Assets.Get(ResourceGroup, AccountName, assetName)).Response.StatusCode);
 
                     // Create an asset
                     Asset input = new Asset(description: assetDescription);
@@ -44,7 +43,7 @@ namespace Media.Tests.ScenarioTests
                     ValidateAsset(assets.First(), assetName, assetDescription, null, AssetStorageEncryptionFormat.None);
 
                     // Get the newly created asset
-                    asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
+                    Asset asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
                     Assert.NotNull(asset);
                     ValidateAsset(asset, assetName, assetDescription, null, AssetStorageEncryptionFormat.None);
 
@@ -88,8 +87,7 @@ namespace Media.Tests.ScenarioTests
                     Assert.Empty(assets);
 
                     // Get the asset, which should not exist
-                    asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
-                    Assert.Null(asset);                    
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.Assets.Get(ResourceGroup, AccountName, assetName)).Response.StatusCode);
                 }
                 finally
                 {

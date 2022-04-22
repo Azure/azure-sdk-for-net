@@ -19,9 +19,9 @@ namespace Azure.AI.Translation.Document
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
-            TranslationStatus status = default;
+            DocumentTranslationStatus status = default;
             string to = default;
-            Optional<DocumentTranslationError> error = default;
+            Optional<JsonElement> error = default;
             float progress = default;
             string id = default;
             Optional<long> characterCharged = default;
@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TranslationStatus(property.Value.GetString());
+                    status = new DocumentTranslationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("to"))
@@ -64,12 +64,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = DocumentTranslationError.DeserializeDocumentTranslationError(property.Value);
+                    error = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("progress"))
@@ -93,7 +88,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
+            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
         }
     }
 }

@@ -72,13 +72,6 @@ namespace Azure.MixedReality.RemoteRendering
         public static bool operator !=(Azure.MixedReality.RemoteRendering.AssetConversionStatus left, Azure.MixedReality.RemoteRendering.AssetConversionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class MixedRealityRemoteRenderingModelFactory
-    {
-        public static Azure.MixedReality.RemoteRendering.AssetConversion AssetConversion(string conversionId = null, Azure.MixedReality.RemoteRendering.AssetConversionOptions options = null, Azure.MixedReality.RemoteRendering.AssetConversionOutput output = null, Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError error = null, Azure.MixedReality.RemoteRendering.AssetConversionStatus status = default(Azure.MixedReality.RemoteRendering.AssetConversionStatus), System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.MixedReality.RemoteRendering.AssetConversionOutput AssetConversionOutput(string outputAssetUri = null) { throw null; }
-        public static Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError RemoteRenderingServiceError(string code = null, string message = null, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError> details = null, string target = null, Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError innerError = null) { throw null; }
-        public static Azure.MixedReality.RemoteRendering.RenderingSession RenderingSession(string sessionId = null, int? arrInspectorPort = default(int?), int? handshakePort = default(int?), int? elapsedTimeMinutes = default(int?), string host = null, int? maxLeaseTimeMinutes = default(int?), Azure.MixedReality.RemoteRendering.RenderingServerSize size = default(Azure.MixedReality.RemoteRendering.RenderingServerSize), Azure.MixedReality.RemoteRendering.RenderingSessionStatus status = default(Azure.MixedReality.RemoteRendering.RenderingSessionStatus), float? teraflops = default(float?), Azure.MixedReality.RemoteRendering.RemoteRenderingServiceError error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-    }
     public partial class RemoteRenderingClient
     {
         protected RemoteRenderingClient() { }

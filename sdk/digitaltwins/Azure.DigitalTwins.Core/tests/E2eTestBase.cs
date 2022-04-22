@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Tests
         protected static readonly int MaxIdLength = 27;
 
         public E2eTestBase(bool isAsync)
-         : base(isAsync, TestSettings.Instance.TestMode)
+         : base(isAsync, TestSettings.Instance.TestMode, useLegacyTransport: true)
         {
             Sanitizer = new TestUrlSanitizer();
         }
@@ -38,7 +39,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             if (options == null)
             {
-                options = new DigitalTwinsClientOptions();
+                options = new DigitalTwinsClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}};
             }
 
             return InstrumentClient(
@@ -96,7 +97,7 @@ namespace Azure.DigitalTwins.Core.Tests
         // model and creating a digital twin that implements this model. The work around is to list the model(s) after
         // creating them in order to accommodate for that lag. Once service side investigates and comes up with a solution,
         // there is no need to list the models after creating them.
-        protected async Task CreateAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
+        protected static async Task CreateAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
         {
             await client.CreateModelsAsync(lists).ConfigureAwait(false);
 
@@ -105,6 +106,18 @@ namespace Azure.DigitalTwins.Core.Tests
             await foreach (DigitalTwinsModelData model in models)
             {
                 Console.WriteLine($"{model.Id}");
+            }
+        }
+
+        /// <summary>
+        /// Injects delay in the process when the test mode is live.
+        /// </summary>
+        /// <param name="delayDuration">Delay duration.</param>
+        protected async Task WaitIfLiveAsync(TimeSpan delayDuration)
+        {
+            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            {
+                await Task.Delay(delayDuration);
             }
         }
     }

@@ -105,11 +105,9 @@ namespace Azure
                 return string.Empty;
             }
 
-            var _needsQuoateWrap = !IsValidQuotedFormat(_value);
-
             return format switch
             {
-                HeaderFormat => _needsQuoateWrap ?  $"{QuoteString}{_value}{QuoteString}" : _value,
+                HeaderFormat => !IsValidQuotedFormat(_value) ?  $"{QuoteString}{_value}{QuoteString}" : _value,
                 DefaultFormat => _value,
                 _ => throw new ArgumentException("Invalid format string.")
             };

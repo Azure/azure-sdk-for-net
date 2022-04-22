@@ -1,7 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2022-01-24)
+### Features Added
+- Add support of Denmark (DK) and United Kingdom (GB) phone number acquisitions.
+
+## 1.0.2 (2021-10-05)
+- Dependency versions updated.
 
 ## 1.0.1 (2021-05-25)
 - Dependency versions updated.
@@ -38,5 +52,5 @@ Updated `Azure.Communication.PhoneNumbers` version.
 - PhoneNumberAdministrationClient has been replaced with PhoneNumbersClient, which has the same functionality but different APIs. To learn more about how PhoneNumbersClient works, refer to the [README.md][read_me]
 
 <!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md
 [documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp

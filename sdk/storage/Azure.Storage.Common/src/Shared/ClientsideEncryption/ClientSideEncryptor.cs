@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
@@ -21,6 +22,22 @@ namespace Azure.Storage.Cryptography
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
         }
 
+        private void ValidateMembers()
+        {
+            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
+            {
+                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
+            }
+        }
+
+        public static long ExpectedCiphertextLength(long plaintextLength)
+        {
+            const int aesBlockSizeBytes = 16;
+
+            // pkcs7 padding output length algorithm
+            return plaintextLength + (aesBlockSizeBytes - (plaintextLength % aesBlockSizeBytes));
+        }
+
         /// <summary>
         /// Wraps the given read-stream in a CryptoStream and provides the metadata used to create
         /// that stream.
@@ -34,10 +51,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
-            {
-                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
-            }
+            ValidateMembers();
 
             var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
@@ -45,13 +59,7 @@ namespace Azure.Storage.Cryptography
 
             using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
             {
-                encryptionData = await EncryptionData.CreateInternalV1_0(
-                    contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: _keyWrapAlgorithm,
-                    contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: _keyEncryptionKey,
-                    async: async,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
 
                 ciphertext = new CryptoStream(
                     plaintext,
@@ -75,10 +83,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
-            {
-                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
-            }
+            ValidateMembers();
 
             var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
@@ -87,13 +92,7 @@ namespace Azure.Storage.Cryptography
 
             using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
             {
-                encryptionData = await EncryptionData.CreateInternalV1_0(
-                    contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: _keyWrapAlgorithm,
-                    contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: _keyEncryptionKey,
-                    async: async,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
 
                 var transformStream = new CryptoStream(
                     ciphertext,
@@ -116,6 +115,63 @@ namespace Azure.Storage.Cryptography
 
             return (bufferedCiphertext, encryptionData);
         }
+
+        /// <summary>
+        /// Creates a crypto transform stream to write blob contents to.
+        /// </summary>
+        /// <param name="openWriteInternal">
+        /// OpenWrite function that applies <see cref="EncryptionAgent"/> to the operation.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        /// <returns>
+        /// Content transform write stream and encryption metadata.
+        /// </returns>
+        public async Task<Stream> EncryptedOpenWriteInternal(
+            Func<EncryptionData, bool, CancellationToken, Task<Stream>> openWriteInternal,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            ValidateMembers();
+
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            EncryptionData encryptionData = default;
+            Stream writeStream = default;
+
+            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+            {
+                encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
+
+                writeStream = new CryptoStream(
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    // analyzer struggles to recognize async pattern with a Func instead of a proper method.
+                    await openWriteInternal(encryptionData, async, cancellationToken).ConfigureAwait(false),
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    aesProvider.CreateEncryptor(),
+                    CryptoStreamMode.Write);
+            }
+
+            return writeStream;
+        }
+
+        /// <summary>
+        /// Creates <see cref="EncryptionData"/> from this instance data and a given AES provider.
+        /// </summary>
+        private async Task<EncryptionData> CreateEncryptionDataInternal(
+            AesCryptoServiceProvider aesProvider,
+            bool async,
+            CancellationToken cancellationToken)
+            => await EncryptionData.CreateInternalV1_0(
+                contentEncryptionIv: aesProvider.IV,
+                keyWrapAlgorithm: _keyWrapAlgorithm,
+                contentEncryptionKey: aesProvider.Key,
+                keyEncryptionKey: _keyEncryptionKey,
+                async: async,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Securely generate a key.

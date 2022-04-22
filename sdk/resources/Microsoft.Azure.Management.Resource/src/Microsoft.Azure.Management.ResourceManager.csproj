@@ -10,18 +10,12 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.14.0-preview</Version>
+		<Version>3.16.1-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;Azure Policy</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Resource Manager SDK. This release has below changes:
-					- Add a new value "NoEffect" to the enumeration PropertyChangeType
-          - Add a new value "Unsupported" to the enumeration ChangeType
-          - Add a new property UnsupportedReason to the model WhatIfChange
-          - Add new models: ExtendedLocation and ExtendedLocationType
-          - Add a new property ExtendedLocation to the model Resource
-          - Add a new API for Provider Permissions
-          - Add thirdPartyProviderConsent in provider register API request body
+          - Add new apis for PrivateLink for Resources
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

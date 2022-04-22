@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyListResult. </summary>
         internal WebApplicationFirewallPolicyListResult()
         {
-            Value = new ChangeTrackingList<WebApplicationFirewallPolicy>();
+            Value = new ChangeTrackingList<WebApplicationFirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyListResult. </summary>
         /// <param name="value"> List of WebApplicationFirewallPolicies within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
-        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicy> value, string nextLink)
+        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of WebApplicationFirewallPolicies within a resource group. </summary>
-        public IReadOnlyList<WebApplicationFirewallPolicy> Value { get; }
+        public IReadOnlyList<WebApplicationFirewallPolicyData> Value { get; }
         /// <summary> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </summary>
         public string NextLink { get; }
     }

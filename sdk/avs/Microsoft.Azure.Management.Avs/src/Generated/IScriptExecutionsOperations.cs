@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Avs
     public partial interface IScriptExecutionsOperations
     {
         /// <summary>
-        /// Get an script execution resource by name in a private cloud
+        /// List script executions in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<IPage<ScriptExecution>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get an script execution resource by name in a private cloud
+        /// Get an script execution by name in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<ScriptExecution>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a script execution resource in a private cloud
+        /// Create or update a script execution in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse<ScriptExecution>> GetExecutionLogsWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, IList<string> scriptOutputStreamType = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a script execution resource in a private cloud
+        /// Create or update a script execution in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Avs
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string scriptExecutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get an script execution resource by name in a private cloud
+        /// List script executions in a private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

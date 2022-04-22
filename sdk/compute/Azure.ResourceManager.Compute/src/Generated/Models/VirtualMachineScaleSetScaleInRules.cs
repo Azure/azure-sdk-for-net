@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRules"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleInRules"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineScaleSetScaleInRules(string value)
         {
@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string DefaultValue = "Default";
-        private const string OldestVMValue = "OldestVM";
-        private const string NewestVMValue = "NewestVM";
+        private const string OldestVmValue = "OldestVM";
+        private const string NewestVmValue = "NewestVM";
 
         /// <summary> Default. </summary>
         public static VirtualMachineScaleSetScaleInRules Default { get; } = new VirtualMachineScaleSetScaleInRules(DefaultValue);
         /// <summary> OldestVM. </summary>
-        public static VirtualMachineScaleSetScaleInRules OldestVM { get; } = new VirtualMachineScaleSetScaleInRules(OldestVMValue);
+        public static VirtualMachineScaleSetScaleInRules OldestVm { get; } = new VirtualMachineScaleSetScaleInRules(OldestVmValue);
         /// <summary> NewestVM. </summary>
-        public static VirtualMachineScaleSetScaleInRules NewestVM { get; } = new VirtualMachineScaleSetScaleInRules(NewestVMValue);
+        public static VirtualMachineScaleSetScaleInRules NewestVm { get; } = new VirtualMachineScaleSetScaleInRules(NewestVmValue);
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRules"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineScaleSetScaleInRules left, VirtualMachineScaleSetScaleInRules right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRules"/> values are not the same. </summary>

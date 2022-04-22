@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -61,8 +60,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -100,8 +98,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -121,8 +118,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -148,8 +144,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -172,8 +167,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -202,8 +196,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -223,8 +216,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -238,6 +230,198 @@ namespace Microsoft.Azure.Management.SecurityInsights
             public static async Task DeleteAsync(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a Microsoft team to investigate the incident by sharing information
+            /// and insights between participants.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='teamProperties'>
+            /// Team properties
+            /// </param>
+            public static TeamInformation CreateTeam(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, TeamProperties teamProperties)
+            {
+                return operations.CreateTeamAsync(resourceGroupName, workspaceName, incidentId, teamProperties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a Microsoft team to investigate the incident by sharing information
+            /// and insights between participants.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='teamProperties'>
+            /// Team properties
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TeamInformation> CreateTeamAsync(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, TeamProperties teamProperties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateTeamWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, teamProperties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all incident alerts.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            public static IncidentAlertList ListAlerts(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId)
+            {
+                return operations.ListAlertsAsync(resourceGroupName, workspaceName, incidentId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all incident alerts.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IncidentAlertList> ListAlertsAsync(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAlertsWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all incident bookmarks.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            public static IncidentBookmarkList ListBookmarks(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId)
+            {
+                return operations.ListBookmarksAsync(resourceGroupName, workspaceName, incidentId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all incident bookmarks.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IncidentBookmarkList> ListBookmarksAsync(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBookmarksWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all incident related entities.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            public static IncidentEntitiesResponse ListEntities(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId)
+            {
+                return operations.ListEntitiesAsync(resourceGroupName, workspaceName, incidentId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all incident related entities.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='incidentId'>
+            /// Incident ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IncidentEntitiesResponse> ListEntitiesAsync(this IIncidentsOperations operations, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListEntitiesWithHttpMessagesAsync(resourceGroupName, workspaceName, incidentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

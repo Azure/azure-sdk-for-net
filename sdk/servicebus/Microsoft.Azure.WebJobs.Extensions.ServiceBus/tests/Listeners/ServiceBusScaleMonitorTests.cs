@@ -71,6 +71,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, mockConcurrencyThrottleManager.Object);
+
             _listener = new ServiceBusListener(
                 _functionId,
                 ServiceBusEntityType.Queue,
@@ -83,7 +87,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _mockProvider.Object,
                 _loggerFactory,
                 false,
-                _mockClientFactory.Object);
+                _mockClientFactory.Object,
+                concurrencyManager);
 
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
@@ -191,6 +196,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
         private ServiceBusListener CreateListener()
         {
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, mockConcurrencyThrottleManager.Object);
+
             return new ServiceBusListener(
                 _functionId,
                 ServiceBusEntityType.Queue,
@@ -203,7 +212,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _mockProvider.Object,
                 _loggerFactory,
                 false,
-                _mockClientFactory.Object);
+                _mockClientFactory.Object,
+                concurrencyManager);
         }
 
         [Test]

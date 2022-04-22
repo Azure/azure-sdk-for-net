@@ -32,15 +32,20 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Initializes a new instance of the RegisteredServer class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="serverCertificate">Registered Server
         /// Certificate</param>
         /// <param name="agentVersion">Registered Server Agent Version</param>
+        /// <param name="agentVersionStatus">Registered Server Agent Version
+        /// Status. Possible values include: 'Ok', 'NearExpiry', 'Expired',
+        /// 'Blocked'</param>
+        /// <param name="agentVersionExpirationDate">Registered Server Agent
+        /// Version Expiration Date</param>
         /// <param name="serverOSVersion">Registered Server OS Version</param>
         /// <param name="serverManagementErrorCode">Registered Server
         /// Management Error Code</param>
@@ -67,11 +72,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="monitoringEndpointUri">Telemetry Endpoint Uri</param>
         /// <param name="monitoringConfiguration">Monitoring
         /// Configuration</param>
-        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string))
+        /// <param name="serverName">Server name</param>
+        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string agentVersionStatus = default(string), System.DateTime? agentVersionExpirationDate = default(System.DateTime?), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string), string serverName = default(string))
             : base(id, name, type)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
+            AgentVersionStatus = agentVersionStatus;
+            AgentVersionExpirationDate = agentVersionExpirationDate;
             ServerOSVersion = serverOSVersion;
             ServerManagementErrorCode = serverManagementErrorCode;
             LastHeartBeat = lastHeartBeat;
@@ -90,6 +98,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             ManagementEndpointUri = managementEndpointUri;
             MonitoringEndpointUri = monitoringEndpointUri;
             MonitoringConfiguration = monitoringConfiguration;
+            ServerName = serverName;
             CustomInit();
         }
 
@@ -109,6 +118,19 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.agentVersion")]
         public string AgentVersion { get; set; }
+
+        /// <summary>
+        /// Gets registered Server Agent Version Status. Possible values
+        /// include: 'Ok', 'NearExpiry', 'Expired', 'Blocked'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentVersionStatus")]
+        public string AgentVersionStatus { get; private set; }
+
+        /// <summary>
+        /// Gets registered Server Agent Version Expiration Date
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentVersionExpirationDate")]
+        public System.DateTime? AgentVersionExpirationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets registered Server OS Version
@@ -217,6 +239,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.monitoringConfiguration")]
         public string MonitoringConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets server name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serverName")]
+        public string ServerName { get; private set; }
 
     }
 }

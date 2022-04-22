@@ -22,6 +22,7 @@ namespace Azure.AI.AnomalyDetector.Models
             IReadOnlyList<bool> isAnomaly = default;
             IReadOnlyList<bool> isNegativeAnomaly = default;
             IReadOnlyList<bool> isPositiveAnomaly = default;
+            Optional<IReadOnlyList<float>> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"))
@@ -89,8 +90,23 @@ namespace Azure.AI.AnomalyDetector.Models
                     isPositiveAnomaly = array;
                     continue;
                 }
+                if (property.NameEquals("severity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<float> array = new List<float>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    severity = array;
+                    continue;
+                }
             }
-            return new EntireDetectResponse(period, expectedValues, upperMargins, lowerMargins, isAnomaly, isNegativeAnomaly, isPositiveAnomaly);
+            return new EntireDetectResponse(period, expectedValues, upperMargins, lowerMargins, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToList(severity));
         }
     }
 }

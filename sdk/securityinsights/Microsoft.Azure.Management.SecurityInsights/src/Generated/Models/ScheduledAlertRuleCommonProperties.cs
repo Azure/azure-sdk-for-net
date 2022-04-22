@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Schedule alert rule template property bag.
+    /// Scheduled alert rule template property bag.
     /// </summary>
     public partial class ScheduledAlertRuleCommonProperties
     {
@@ -31,28 +31,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the
         /// ScheduledAlertRuleCommonProperties class.
         /// </summary>
-        /// <param name="query">The query that creates alerts for this
-        /// rule.</param>
         /// <param name="queryFrequency">The frequency (in ISO 8601 duration
         /// format) for this alert rule to run.</param>
         /// <param name="queryPeriod">The period (in ISO 8601 duration format)
         /// that this alert rule looks at.</param>
-        /// <param name="severity">The severity for alerts created by this
-        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
         /// <param name="triggerOperator">The operation against the threshold
         /// that triggers alert rule. Possible values include: 'GreaterThan',
         /// 'LessThan', 'Equal', 'NotEqual'</param>
         /// <param name="triggerThreshold">The threshold triggers this alert
         /// rule.</param>
-        public ScheduledAlertRuleCommonProperties(string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?))
+        /// <param name="eventGroupingSettings">The event grouping
+        /// settings.</param>
+        public ScheduledAlertRuleCommonProperties(System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings))
         {
-            Query = query;
             QueryFrequency = queryFrequency;
             QueryPeriod = queryPeriod;
-            Severity = severity;
             TriggerOperator = triggerOperator;
             TriggerThreshold = triggerThreshold;
+            EventGroupingSettings = eventGroupingSettings;
             CustomInit();
         }
 
@@ -60,12 +56,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the query that creates alerts for this rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "query")]
-        public string Query { get; set; }
 
         /// <summary>
         /// Gets or sets the frequency (in ISO 8601 duration format) for this
@@ -82,13 +72,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public System.TimeSpan? QueryPeriod { get; set; }
 
         /// <summary>
-        /// Gets or sets the severity for alerts created by this alert rule.
-        /// Possible values include: 'High', 'Medium', 'Low', 'Informational'
-        /// </summary>
-        [JsonProperty(PropertyName = "severity")]
-        public string Severity { get; set; }
-
-        /// <summary>
         /// Gets or sets the operation against the threshold that triggers
         /// alert rule. Possible values include: 'GreaterThan', 'LessThan',
         /// 'Equal', 'NotEqual'
@@ -101,6 +84,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "triggerThreshold")]
         public int? TriggerThreshold { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event grouping settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "eventGroupingSettings")]
+        public EventGroupingSettings EventGroupingSettings { get; set; }
 
     }
 }

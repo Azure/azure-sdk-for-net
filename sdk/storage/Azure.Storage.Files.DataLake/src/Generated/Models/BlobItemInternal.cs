@@ -13,9 +13,9 @@ namespace Azure.Storage.Files.DataLake.Models
     internal partial class BlobItemInternal
     {
         /// <summary> Initializes a new instance of BlobItemInternal. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="deleted"> . </param>
-        /// <param name="snapshot"> . </param>
+        /// <param name="name"></param>
+        /// <param name="deleted"></param>
+        /// <param name="snapshot"></param>
         /// <param name="properties"> Properties of a blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/>, or <paramref name="properties"/> is null. </exception>
         internal BlobItemInternal(string name, bool deleted, string snapshot, BlobPropertiesInternal properties)
@@ -40,13 +40,13 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of BlobItemInternal. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="deleted"> . </param>
-        /// <param name="snapshot"> . </param>
-        /// <param name="versionId"> . </param>
-        /// <param name="isCurrentVersion"> . </param>
+        /// <param name="name"></param>
+        /// <param name="deleted"></param>
+        /// <param name="snapshot"></param>
+        /// <param name="versionId"></param>
+        /// <param name="isCurrentVersion"></param>
         /// <param name="properties"> Properties of a blob. </param>
-        /// <param name="deletionId"> . </param>
+        /// <param name="deletionId"></param>
         internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId)
         {
             Name = name;
@@ -58,13 +58,19 @@ namespace Azure.Storage.Files.DataLake.Models
             DeletionId = deletionId;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool Deleted { get; }
+        /// <summary> Gets the snapshot. </summary>
         public string Snapshot { get; }
+        /// <summary> Gets the version id. </summary>
         public string VersionId { get; }
+        /// <summary> Gets the is current version. </summary>
         public bool? IsCurrentVersion { get; }
         /// <summary> Properties of a blob. </summary>
         public BlobPropertiesInternal Properties { get; }
+        /// <summary> Gets the deletion id. </summary>
         public string DeletionId { get; }
     }
 }

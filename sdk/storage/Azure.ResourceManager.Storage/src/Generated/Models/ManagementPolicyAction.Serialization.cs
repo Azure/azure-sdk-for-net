@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("snapshot");
                 writer.WriteObjectValue(Snapshot);
             }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version");
+                writer.WriteObjectValue(Version);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<ManagementPolicyBaseBlob> baseBlob = default;
             Optional<ManagementPolicySnapShot> snapshot = default;
+            Optional<ManagementPolicyVersion> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseBlob"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.Storage.Models
                     snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
                     continue;
                 }
+                if (property.NameEquals("version"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);
+                    continue;
+                }
             }
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value);
+            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value);
         }
     }
 }

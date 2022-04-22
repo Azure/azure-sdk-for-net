@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="runEnd">The end time of a pipeline run in ISO8601
         /// format.</param>
         /// <param name="durationInMs">The duration of a pipeline run.</param>
-        /// <param name="status">The status of a pipeline run.</param>
+        /// <param name="status">The status of a pipeline run. Possible values:
+        /// Queued, InProgress, Succeeded, Failed, Canceling, Cancelled</param>
         /// <param name="message">The message from a pipeline run.</param>
         public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string runGroupId = default(string), bool? isLatest = default(bool?), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), IDictionary<string, string> runDimensions = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
         {
@@ -156,7 +157,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public int? DurationInMs { get; private set; }
 
         /// <summary>
-        /// Gets the status of a pipeline run.
+        /// Gets the status of a pipeline run. Possible values: Queued,
+        /// InProgress, Succeeded, Failed, Canceling, Cancelled
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }

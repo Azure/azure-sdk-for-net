@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
         internal SecurityRuleListResult()
         {
-            Value = new ChangeTrackingList<SecurityRule>();
+            Value = new ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
         /// <param name="value"> The security rules in a network security group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SecurityRuleListResult(IReadOnlyList<SecurityRule> value, string nextLink)
+        internal SecurityRuleListResult(IReadOnlyList<SecurityRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The security rules in a network security group. </summary>
-        public IReadOnlyList<SecurityRule> Value { get; }
+        public IReadOnlyList<SecurityRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

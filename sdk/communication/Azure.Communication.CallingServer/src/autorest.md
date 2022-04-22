@@ -8,20 +8,53 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev.
 
-## General settings
-> see https://aka.ms/autorest 
-
-## Configuration 
-The following are the settings for generating this API with AutoRest.
+### AutoRest Configuration
+> see https://aka.ms/autorest
 
 ```yaml
-tag: beta
-input-file: https://github.com/Azure/azure-rest-api-specs/raw/9550e58c98dc0af9474d896493335bf0543b2b4d/specification/communication/data-plane/CallingServer/preview/2021-04-15-preview1/communicationservicescallingserver.json
+title: Calling server
+model-namespace: false
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3893616381e816729ef9cdd768e87fb2845e189d/specification/communication/data-plane/CallingServer/readme.md
 payload-flattening-threshold: 10
 clear-output-folder: true
+```
+
+### Fixing RecordingChannel 
+``` yaml
 directive:
-  from: swagger-document
-  where: $.definitions.*
+- from: swagger-document
+  where: $.definitions
   transform: >
-    $["x-namespace"] = "Azure.Communication.CallingServer"
+    delete $.RecordingChannelType["x-ms-enum"];
+    $.RecordingChannelType["x-ms-enum"] = {
+        "name": "RecordingChannel",
+        "modelAsString": false
+    };
+```
+
+### Fixing RecordingContent
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RecordingContentType["x-ms-enum"];
+    $.RecordingContentType["x-ms-enum"] = {
+        "name": "RecordingContent",
+        "modelAsString": false
+    };
+```
+    
+### Fixing RecordingFormat
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RecordingFormatType["x-ms-enum"];
+    $.RecordingFormatType["x-ms-enum"] = {
+        "name": "RecordingFormat",
+        "modelAsString": false
+    };
 ```

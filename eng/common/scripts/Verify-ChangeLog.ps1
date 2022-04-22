@@ -1,4 +1,5 @@
 # Wrapper Script for ChangeLog Verification
+[CmdletBinding()]
 param (
   [String]$ChangeLogLocation,
   [String]$VersionString,

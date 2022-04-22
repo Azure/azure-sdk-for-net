@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes a Log Analytics data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -19,30 +20,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="workspaceId">The workspace ID of the Log Analytics resource.</param>
         /// <param name="query">The query to retrieve the data to be ingested.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="workspaceId"/> or <paramref name="query"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="workspaceId"/> or <paramref name="query"/> is empty.</exception>
-        public LogAnalyticsDataFeedSource(string workspaceId, string query)
-            : base(DataFeedSourceType.LogAnalytics)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(query, nameof(query));
-
-            WorkspaceId = workspaceId;
-            Query = query;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LogAnalyticsDataFeedSource"/> class.
-        /// </summary>
-        /// <param name="workspaceId">The workspace ID of the Log Analytics resource.</param>
-        /// <param name="query">The query to retrieve the data to be ingested.</param>
         /// <param name="clientId">The client ID used for AAD authentication.</param>
         /// <param name="clientSecret">The client secret used for AAD authentication.</param>
         /// <param name="tenantId">The tenant ID used for AAD authentication.</param>
         /// <exception cref="ArgumentNullException"><paramref name="workspaceId"/>, <paramref name="query"/>, <paramref name="clientId"/>, <paramref name="clientSecret"/>, or <paramref name="tenantId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="workspaceId"/>, <paramref name="query"/>, <paramref name="clientId"/>, <paramref name="clientSecret"/>, or <paramref name="tenantId"/> is empty.</exception>
         public LogAnalyticsDataFeedSource(string workspaceId, string query, string clientId, string clientSecret, string tenantId)
-            : base(DataFeedSourceType.LogAnalytics)
+            : base(DataFeedSourceKind.LogAnalytics)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -58,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal LogAnalyticsDataFeedSource(AzureLogAnalyticsParameter parameter)
-            : base(DataFeedSourceType.LogAnalytics)
+            : base(DataFeedSourceKind.LogAnalytics)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,7 +12,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -21,6 +19,7 @@ pr:
   paths:
     include:
     - sdk/webpubsub/
+    - sdk/resourcemanager/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -30,3 +29,11 @@ extends:
     Artifacts:
     - name: Azure.Messaging.WebPubSub
       safeName: AzureMessagingWebPubSub
+    - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
+      safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
+    - name: Microsoft.Azure.WebPubSub.AspNetCore
+      safeName: MicrosoftAzureWebPubSubAspNetCore
+    - name: Microsoft.Azure.WebPubSub.Common
+      safeName: MicrosoftAzureWebPubSubCommon
+    - name: Azure.ResourceManager.WebPubSub
+      safeName: AzureResourceManagerWebPubSub

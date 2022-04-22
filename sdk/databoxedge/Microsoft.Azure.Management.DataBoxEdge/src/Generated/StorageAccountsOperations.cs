@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         public DataBoxEdgeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+        /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
         /// </summary>
         /// <param name='deviceName'>
         /// The device name.
@@ -556,6 +556,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "storageAccount");
             }
+            if (storageAccount != null)
+            {
+                storageAccount.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -910,7 +914,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         }
 
         /// <summary>
-        /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+        /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

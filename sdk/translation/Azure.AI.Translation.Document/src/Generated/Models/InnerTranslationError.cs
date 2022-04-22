@@ -11,7 +11,6 @@ namespace Azure.AI.Translation.Document.Models
 {
     /// <summary>
     /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
-    /// 
     /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
     /// </summary>
     internal partial class InnerTranslationError
@@ -39,13 +38,11 @@ namespace Azure.AI.Translation.Document.Models
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
-        /// Gets the source of the error.
-        /// 
+        /// Gets the source of the error. 
         /// For example it would be &quot;documents&quot; or &quot;document id&quot; in case of invalid document.
         /// </param>
         /// <param name="innerError">
         /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
-        /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </param>
         internal InnerTranslationError(string code, string message, string target, InnerTranslationError innerError)
@@ -61,14 +58,12 @@ namespace Azure.AI.Translation.Document.Models
         /// <summary> Gets high level error message. </summary>
         public string Message { get; }
         /// <summary>
-        /// Gets the source of the error.
-        /// 
+        /// Gets the source of the error. 
         /// For example it would be &quot;documents&quot; or &quot;document id&quot; in case of invalid document.
         /// </summary>
         public string Target { get; }
         /// <summary>
         /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
-        /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </summary>
         public InnerTranslationError InnerError { get; }

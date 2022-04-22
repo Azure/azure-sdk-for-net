@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.Automation
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Automation Client
@@ -280,6 +284,31 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the IWebhookOperations.
         /// </summary>
         IWebhookOperations Webhook { get; }
+
+        /// <summary>
+        /// Gets the IHybridRunbookWorkersOperations.
+        /// </summary>
+        IHybridRunbookWorkersOperations HybridRunbookWorkers { get; }
+
+        /// <summary>
+        /// Post operation to serialize or deserialize GraphRunbookContent
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='parameters'>
+        /// Input data describing the graphical runbook.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<GraphicalRunbookContent>> ConvertGraphRunbookContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, GraphicalRunbookContent parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

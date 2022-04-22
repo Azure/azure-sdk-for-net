@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -39,6 +44,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(SasPolicy))
+            {
+                writer.WritePropertyName("sasPolicy");
+                writer.WriteObjectValue(SasPolicy);
+            }
+            if (Optional.IsDefined(KeyPolicy))
+            {
+                writer.WritePropertyName("keyPolicy");
+                writer.WriteObjectValue(KeyPolicy);
+            }
             if (Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain");
@@ -83,6 +98,31 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("routingPreference");
                 writer.WriteObjectValue(RoutingPreference);
+            }
+            if (Optional.IsDefined(AllowBlobPublicAccess))
+            {
+                writer.WritePropertyName("allowBlobPublicAccess");
+                writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
+            }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion");
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(AllowSharedKeyAccess))
+            {
+                writer.WritePropertyName("allowSharedKeyAccess");
+                writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
+            }
+            if (Optional.IsDefined(EnableNfsV3))
+            {
+                writer.WritePropertyName("isNfsV3Enabled");
+                writer.WriteBooleanValue(EnableNfsV3.Value);
+            }
+            if (Optional.IsDefined(AllowCrossTenantReplication))
+            {
+                writer.WritePropertyName("allowCrossTenantReplication");
+                writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

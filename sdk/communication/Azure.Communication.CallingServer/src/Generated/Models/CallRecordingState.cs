@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The recording state of the recording. </summary>
+    /// <summary> The state of the recording. </summary>
     public readonly partial struct CallRecordingState : IEquatable<CallRecordingState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CallRecordingState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CallRecordingState(string value)
         {

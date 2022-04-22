@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// </summary>
         /// <param name="name">Name of the type.</param>
         /// <param name="count">Total number of items of type.</param>
-        public SmartGroupAggregatedProperty(string name = default(string), int? count = default(int?))
+        public SmartGroupAggregatedProperty(string name = default(string), long? count = default(long?))
         {
             Name = name;
             Count = count;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Gets or sets total number of items of type.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
+        public long? Count { get; set; }
 
     }
 }

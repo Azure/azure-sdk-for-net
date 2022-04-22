@@ -24,12 +24,12 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateSecretClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new SecretClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new secret using the secret client.
             KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -25,7 +24,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class MigrationGuideSnippetsLiveTests
     {
         /// <summary>
@@ -39,20 +37,22 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Migrate_Checkpoints
 
+#if SNIPPET
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = "fake-hub";
-            /*@@*/ consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER  >>";
             var legacyBlobContainerName = "<< NAME OF THE BLOB CONTAINER THAT CONTAINS THE LEGACY DATA>>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
+#else
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = "fake-hub";
+            var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+#endif
 
             using var cancellationSource = new CancellationTokenSource();
 
@@ -61,13 +61,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             //
             // Note: The ReadLegacyCheckpoints method will be defined in another snippet.
 
-            /*@@*/ var legacyCheckpoints = ReadFakeLegacyCheckpoints(legacyBlobContainerName);
-            /*@@*/
-            //@@var legacyCheckpoints = await ReadLegacyCheckpoints(
-                //@@storageConnectionString,
-                //@@legacyBlobContainerName,
-                //@@consumerGroup,
-                //@@cancellationSource.Token);
+#if SNIPPET
+            var legacyCheckpoints = await ReadLegacyCheckpoints(
+                storageConnectionString,
+                legacyBlobContainerName,
+                consumerGroup,
+                cancellationSource.Token);
+#else
+            var legacyCheckpoints = ReadFakeLegacyCheckpoints("fake");
+#endif
 
             // The member names of MigrationCheckpoint match the names of the checkpoint
             // names of the checkpoint metadata keys.

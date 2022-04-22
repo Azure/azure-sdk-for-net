@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Spark
     /// <summary> Client options for SparkClient. </summary>
     public partial class SparkClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2019_11_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2020_12_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2019-11-01-preview". </summary>
-            V2019_11_01_preview = 1,
+            /// <summary> Service version "2020-12-01". </summary>
+            V2020_12_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Spark
         {
             Version = version switch
             {
-                ServiceVersion.V2019_11_01_preview => "2019-11-01-preview",
+                ServiceVersion.V2020_12_01 => "2020-12-01",
                 _ => throw new NotSupportedException()
             };
         }

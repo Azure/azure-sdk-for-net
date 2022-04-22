@@ -3,17 +3,19 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample3_BackRestoreResume : BackupRestoreTestBase
     {
-        public Sample3_BackRestoreResume(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample3_BackRestoreResume(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task ResumeBackupRestore()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
@@ -34,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:ResumeBackupAsync
 #if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 #endif
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
@@ -62,7 +64,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:ResumeRestoreAsync
 #if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 #endif
 
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
-using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -19,7 +17,7 @@ using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Microsoft.Azure.WebJobs.EventHubs
+namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
     internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
     {
@@ -28,9 +26,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly bool _singleDispatch;
         private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
-        private readonly ILogger _logger;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _logger;
+        private string _details;
 
         public EventHubListener(
             string functionId,
@@ -40,21 +40,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             IEventHubConsumerClient consumerClient,
             BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
-            ILogger logger)
+            ILoggerFactory loggerFactory)
         {
-            _logger = logger;
+            _loggerFactory = loggerFactory;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
             _checkpointStore = checkpointStore;
             _options = options;
+            _logger = _loggerFactory.CreateLogger<EventHubListener>();
 
             _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
                 () => new EventHubsScaleMonitor(
                     functionId,
                     consumerClient,
                     checkpointStore,
-                    _logger));
+                    _loggerFactory.CreateLogger<EventHubsScaleMonitor>()));
+
+            _details = $"'namespace='{eventProcessorHost?.FullyQualifiedNamespace}', eventHub='{eventProcessorHost?.EventHubName}', " +
+                $"consumerGroup='{eventProcessorHost?.ConsumerGroup}', functionId='{functionId}', singleDispatch='{singleDispatch}'";
         }
 
         /// <summary>
@@ -73,16 +77,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             await _checkpointStore.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
             await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
+
+            _logger.LogDebug($"EventHub listener started ({_details})");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+
+            _logger.LogDebug($"EventHub listener stopped ({_details})");
         }
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()
         {
-            return new EventProcessor(_options, _executor, _logger, _singleDispatch);
+            return new EventProcessor(_options, _executor, _loggerFactory.CreateLogger<EventProcessor>(), _singleDispatch);
         }
 
         public IScaleMonitor GetMonitor()
@@ -91,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         // We get a new instance each time Start() is called.
-        // We'll get a listener per partition - so they can potentialy run in parallel even on a single machine.
+        // We'll get a listener per partition - so they can potentially run in parallel even on a single machine.
         internal class EventProcessor : IEventProcessor, IDisposable
         {
             private readonly ITriggeredFunctionExecutor _executor;

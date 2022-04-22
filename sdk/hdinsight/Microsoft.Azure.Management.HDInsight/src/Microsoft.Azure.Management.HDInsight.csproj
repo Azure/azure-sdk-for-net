@@ -7,27 +7,21 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>7.0.0</Version>
+		<Version>8.0.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release contains the bellow change:
+This version is based the HDInsight API version 2021-06-01 and contains breaking change. The details are as bellow:
 Support new features:
-- Support the API UpdateIdentityCertificate under Cluster Operation
-- Support EnableAzureMonitor, DisableAzureMonitor, GetAzureMonitorStatus under Extension Operation
-- Support CheckNameAvailability, ValidateClusterCreateRequest under Location Operation
+- Support creating cluster with availability zones
+- Support creating private link cluster with private link configuration
+- Support creating application with private link configuration
+- Support get the private endpoint connections
+- Support get private link resources
 
-Add properties:
-- Add property PrivateIPAddress in ApplicationGetHttpsEndpoint.cs
-- Add property ConfigurationOverride in KafkaRestProperties.cs
-- Add property VMGroupName in Role.cs
-- Add properties Saskey and Fileshare in StorageAccount.cs
-- Add properties OsType, ESPApplied and ComputeIsolationSupported in VmSizeCompatibilityFilter.cs
+Breaking Change:
+- Remove the property "Vmsizes" and "VmsizeFilters" from the class CapabilitiesResult. Customer need to call ListBillingSpec to get these two properties
 
-Properties change:
-- Change property VmSizes to Vmsizes, VmSizeFilters to VmsizeFilters in CapabilitiesResult.cs 
-- Change property CurrentValue and Limit from type int? to long? in Usage.cs
-- Change property IsDefault from type string to bool? in VersionSpec.cs
       ]]>
 		</PackageReleaseNotes>
     

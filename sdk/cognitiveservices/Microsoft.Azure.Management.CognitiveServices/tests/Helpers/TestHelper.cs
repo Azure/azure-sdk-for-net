@@ -91,8 +91,6 @@ namespace CognitiveServices.Tests.Helpers
             Assert.Equal(ProvisioningState.Succeeded, account.Properties.ProvisioningState);
             Assert.NotNull(account.Properties.Endpoints);
             Assert.True(account.Properties.Endpoints.Count > 0);
-            Assert.NotNull(account.Properties.CallRateLimit);
-            Assert.True(string.IsNullOrEmpty(account.Properties.InternalId));
 
             if (useDefaults)
             {

@@ -30,10 +30,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Possible values include: 'SystemKey', 'CustomerKey'</param>
         /// <param name="keyVaultProperties">The properties of the key used to
         /// encrypt the account.</param>
-        public AccountEncryption(AccountEncryptionKeyType type, KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
+        /// <param name="identity">The Key Vault identity.</param>
+        /// <param name="status">The current status of the Key Vault
+        /// mapping.</param>
+        public AccountEncryption(AccountEncryptionKeyType type, KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), ResourceIdentity identity = default(ResourceIdentity), string status = default(string))
         {
             Type = type;
             KeyVaultProperties = keyVaultProperties;
+            Identity = identity;
+            Status = status;
             CustomInit();
         }
 
@@ -56,6 +61,18 @@ namespace Microsoft.Azure.Management.Media.Models
         public KeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets the Key Vault identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the current status of the Key Vault mapping.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -63,6 +80,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
         }
     }
 }

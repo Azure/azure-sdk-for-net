@@ -5,20 +5,20 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Keys;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class FullBackupClientLiveTests : BackupRestoreTestBase
     {
-        public FullBackupClientLiveTests(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public FullBackupClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         public TimeSpan Timeout => TimeSpan.FromMinutes(5);
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestore()
         {
             var source = new CancellationTokenSource(Timeout);
@@ -53,6 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [LiveOnly]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreMultiPartFolderName()
         {
             var source = new CancellationTokenSource(Timeout);

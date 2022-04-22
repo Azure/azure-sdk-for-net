@@ -39,8 +39,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="dataSourceLocation">Location of the DataSource</param>
         /// <param name="dataSourceName">User Friendly Name of the
         /// DataSource</param>
-        /// <param name="dataSourceSetName">Data Source Set Name of the
-        /// DataSource</param>
         /// <param name="dataSourceType">Type of DataSource</param>
         /// <param name="isUserTriggered">Indicated that whether the job is
         /// adhoc(true) or scheduled(false)</param>
@@ -64,6 +62,8 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="vaultName">Name of the vault</param>
         /// <param name="backupInstanceId">ARM ID of the Backup
         /// Instance</param>
+        /// <param name="dataSourceSetName">Data Source Set Name of the
+        /// DataSource</param>
         /// <param name="duration">Total run time of the job. ISO 8601
         /// format.</param>
         /// <param name="endTime">EndTime of the job(in UTC)</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="progressUrl">Url which contains job's progress</param>
         /// <param name="restoreType">It indicates the sub type of operation
         /// i.e. in case of Restore it can be ALR/OLR</param>
-        public AzureBackupJob(string activityID, string backupInstanceFriendlyName, string dataSourceId, string dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool progressEnabled, string sourceResourceGroup, string sourceSubscriptionID, System.DateTime startTime, string status, string subscriptionId, IList<string> supportedActions, string vaultName, string backupInstanceId = default(string), string duration = default(string), System.DateTime? endTime = default(System.DateTime?), IList<UserFacingError> errorDetails = default(IList<UserFacingError>), JobExtendedInfo extendedInfo = default(JobExtendedInfo), string policyId = default(string), string policyName = default(string), string progressUrl = default(string), string restoreType = default(string), string etag = default(string), string sourceDataStoreName = default(string), string destinationDataStoreName = default(string))
+        public AzureBackupJob(string activityID, string backupInstanceFriendlyName, string dataSourceId, string dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool progressEnabled, string sourceResourceGroup, string sourceSubscriptionID, System.DateTime startTime, string status, string subscriptionId, IList<string> supportedActions, string vaultName, string backupInstanceId = default(string), string dataSourceSetName = default(string), string duration = default(string), System.DateTime? endTime = default(System.DateTime?), IList<UserFacingError> errorDetails = default(IList<UserFacingError>), JobExtendedInfo extendedInfo = default(JobExtendedInfo), string policyId = default(string), string policyName = default(string), string progressUrl = default(string), string restoreType = default(string), string etag = default(string), string sourceDataStoreName = default(string), string destinationDataStoreName = default(string))
         {
             ActivityID = activityID;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -326,10 +326,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
             if (DataSourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DataSourceName");
-            }
-            if (DataSourceSetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataSourceSetName");
             }
             if (DataSourceType == null)
             {

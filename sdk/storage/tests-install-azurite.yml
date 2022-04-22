@@ -12,12 +12,13 @@ steps:
       key: storageazurite | "$(Agent.OS)" | "${{ parameters.AzuriteVersion }}"
       path: ${{ parameters.AzuriteLocation }}
       cacheHitVar: STORAGE_AZURITE_CACHE_RESTORED
-    displayName: Cache Azurite instalation
+    displayName: Cache Azurite installation
+    continueOnError: true
   - task: Npm@1
     inputs:
       command: custom
       customCommand: install --prefix ${{ parameters.AzuriteLocation }} azurite@${{ parameters.AzuriteVersion }}
-    condition: ne(variables.STORAGE_AZURITE_CACHE_RESTORED, 'true')
+    condition: and(succeeded(), ne(variables.STORAGE_AZURITE_CACHE_RESTORED, 'true'))
     displayName: Install Azurite
   - task: PowerShell@2
     displayName: Add Azurite location as environment variable

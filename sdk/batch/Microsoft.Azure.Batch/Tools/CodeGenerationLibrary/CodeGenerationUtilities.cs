@@ -138,7 +138,8 @@
                             typeString.Equals("TimeSpan") ||
                             typeString.Equals("TimeSpan?") ||
                             typeString.Equals("DateTime") ||
-                            typeString.Equals("DateTime?"));
+                            typeString.Equals("DateTime?") ||
+                            typeString.Equals("object"));
 
             return result;
         }

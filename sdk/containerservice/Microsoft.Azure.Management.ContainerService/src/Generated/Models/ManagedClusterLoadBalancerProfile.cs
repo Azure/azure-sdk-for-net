@@ -42,12 +42,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// cluster load balancer.</param>
         /// <param name="effectiveOutboundIPs">The effective outbound IP
         /// resources of the cluster load balancer.</param>
-        /// <param name="allocatedOutboundPorts">Desired number of allocated
-        /// SNAT ports per VM. Allowed values must be in the range of 0 to
-        /// 64000 (inclusive). The default value is 0 which results in Azure
+        /// <param name="allocatedOutboundPorts">The desired number of
+        /// allocated SNAT ports per VM. Allowed values are in the range of 0
+        /// to 64000 (inclusive). The default value is 0 which results in Azure
         /// dynamically allocating ports.</param>
         /// <param name="idleTimeoutInMinutes">Desired outbound flow idle
-        /// timeout in minutes. Allowed values must be in the range of 4 to 120
+        /// timeout in minutes. Allowed values are in the range of 4 to 120
         /// (inclusive). The default value is 30 minutes.</param>
         public ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default(ManagedClusterLoadBalancerProfileManagedOutboundIPs), ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default(ManagedClusterLoadBalancerProfileOutboundIPPrefixes), ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default(ManagedClusterLoadBalancerProfileOutboundIPs), IList<ResourceReference> effectiveOutboundIPs = default(IList<ResourceReference>), int? allocatedOutboundPorts = default(int?), int? idleTimeoutInMinutes = default(int?))
         {
@@ -94,17 +94,18 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public IList<ResourceReference> EffectiveOutboundIPs { get; set; }
 
         /// <summary>
-        /// Gets or sets desired number of allocated SNAT ports per VM. Allowed
-        /// values must be in the range of 0 to 64000 (inclusive). The default
-        /// value is 0 which results in Azure dynamically allocating ports.
+        /// Gets or sets the desired number of allocated SNAT ports per VM.
+        /// Allowed values are in the range of 0 to 64000 (inclusive). The
+        /// default value is 0 which results in Azure dynamically allocating
+        /// ports.
         /// </summary>
         [JsonProperty(PropertyName = "allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }
 
         /// <summary>
         /// Gets or sets desired outbound flow idle timeout in minutes. Allowed
-        /// values must be in the range of 4 to 120 (inclusive). The default
-        /// value is 30 minutes.
+        /// values are in the range of 4 to 120 (inclusive). The default value
+        /// is 30 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }

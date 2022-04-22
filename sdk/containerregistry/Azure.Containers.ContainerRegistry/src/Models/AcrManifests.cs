@@ -39,9 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.CanDelete,
                 attributesBase.CanWrite,
                 attributesBase.CanList,
-                attributesBase.CanRead,
-                attributesBase.QuarantineState,
-                attributesBase.QuarantineDetails);
+                attributesBase.CanRead);
         }
     }
 }

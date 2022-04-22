@@ -54,12 +54,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("clientCustomerID");
-            writer.WriteObjectValue(ClientCustomerID);
-            writer.WritePropertyName("developerToken");
-            writer.WriteObjectValue(DeveloperToken);
-            writer.WritePropertyName("authenticationType");
-            writer.WriteStringValue(AuthenticationType.ToString());
+            if (Optional.IsDefined(ConnectionProperties))
+            {
+                writer.WritePropertyName("connectionProperties");
+                writer.WriteObjectValue(ConnectionProperties);
+            }
+            if (Optional.IsDefined(ClientCustomerID))
+            {
+                writer.WritePropertyName("clientCustomerID");
+                writer.WriteObjectValue(ClientCustomerID);
+            }
+            if (Optional.IsDefined(DeveloperToken))
+            {
+                writer.WritePropertyName("developerToken");
+                writer.WriteObjectValue(DeveloperToken);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType");
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken");
@@ -116,9 +130,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
-            object clientCustomerID = default;
-            SecretBase developerToken = default;
-            GoogleAdWordsAuthenticationType authenticationType = default;
+            Optional<object> connectionProperties = default;
+            Optional<object> clientCustomerID = default;
+            Optional<SecretBase> developerToken = default;
+            Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
             Optional<SecretBase> refreshToken = default;
             Optional<object> clientId = default;
             Optional<SecretBase> clientSecret = default;
@@ -190,18 +205,43 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("connectionProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            connectionProperties = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("clientCustomerID"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             clientCustomerID = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("developerToken"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             developerToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             authenticationType = new GoogleAdWordsAuthenticationType(property0.Value.GetString());
                             continue;
                         }
@@ -291,7 +331,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clientCustomerID, developerToken, authenticationType, refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
+            return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientCustomerID.Value, developerToken.Value, Optional.ToNullable(authenticationType), refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);
         }
 
         internal partial class GoogleAdWordsLinkedServiceConverter : JsonConverter<GoogleAdWordsLinkedService>

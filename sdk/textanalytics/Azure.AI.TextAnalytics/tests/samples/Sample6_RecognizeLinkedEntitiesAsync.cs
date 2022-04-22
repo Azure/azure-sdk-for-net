@@ -3,12 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -17,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
                                 Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped

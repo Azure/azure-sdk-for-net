@@ -103,5 +103,30 @@ namespace Azure.AI.MetricsAdvisor.Samples
             }
             #endregion
         }
+
+        [Test]
+
+        public void SettingAuthentication()
+        {
+            #region Snippet:SettingAuthentication
+            var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+            {
+                Authentication = SqlServerDataFeedSource.AuthenticationType.ManagedIdentity
+            };
+            #endregion
+        }
+
+        [Test]
+
+        public void SettingCredentialAuthentication()
+        {
+            #region Snippet:SettingCredentialAuthentication
+            var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+            {
+                Authentication = SqlServerDataFeedSource.AuthenticationType.ServicePrincipal,
+                DataSourceCredentialId = "<credentialId>"
+            };
+            #endregion
+        }
     }
 }

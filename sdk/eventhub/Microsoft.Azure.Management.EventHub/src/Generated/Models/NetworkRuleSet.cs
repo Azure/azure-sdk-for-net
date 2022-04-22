@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Description of topic resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NetworkRuleSet : Resource
+    public partial class NetworkRuleSet : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkRuleSet class.
@@ -34,22 +34,34 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="trustedServiceAccessEnabled">Value that indicates
         /// whether Trusted Service Access is Enabled or not.</param>
         /// <param name="defaultAction">Default Action for Network Rule Set.
         /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="virtualNetworkRules">List VirtualNetwork Rules</param>
         /// <param name="ipRules">List of IpRules</param>
-        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>))
-            : base(id, name, type)
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>), string publicNetworkAccess = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
             IpRules = ipRules;
+            PublicNetworkAccess = publicNetworkAccess;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -83,6 +95,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipRules")]
         public IList<NWRuleSetIpRules> IpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

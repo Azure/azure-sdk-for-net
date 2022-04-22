@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Tests", "tests\Azure.Data.AppConfiguration.Tests.csproj", "{AAA761F4-D037-46AC-BF7A-496C15310F66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{019A28FC-EFEA-4431-872C-AB8F9C0049BF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Performance", "tests\Performance\Azure.Data.AppConfiguration.Performance.csproj", "{2F3CC223-2357-4D24-BCE7-92835C62A201}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\..\identity\Azure.Identity\src\Azure.Identity.csproj", "{042736B0-D082-4366-BD2B-02D49FEC6073}"

@@ -7,9 +7,10 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     public partial class MetricPeriodFeedback : IUtf8JsonSerializable
     {
@@ -19,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -30,12 +31,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static MetricPeriodFeedback DeserializeMetricPeriodFeedback(JsonElement element)
         {
             PeriodFeedbackValue value = default;
-            FeedbackType feedbackType = default;
+            MetricFeedbackKind feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackDimensionFilter dimensionFilter = default;
+            FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -45,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("feedbackType"))
                 {
-                    feedbackType = new FeedbackType(property.Value.GetString());
+                    feedbackType = new MetricFeedbackKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("feedbackId"))
@@ -75,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
             }

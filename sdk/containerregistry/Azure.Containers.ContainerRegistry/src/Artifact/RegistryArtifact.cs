@@ -9,7 +9,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> A helper class that groups information and operations about an image or artifact in this container registry. </summary>
+    /// <summary> `Artifact` is the general term for items stored in a container registry,
+    /// and can include Docker images or other Open Container Initiative (OCI) artifact types.
+    /// <para>
+    /// The <see cref="RegistryArtifact"/> class is a helper class that groups information and operations about an image or artifact in this container registry.
+    /// </para>
+    /// </summary>
     public partial class RegistryArtifact
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -57,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry
 
         #region Registry Artifact/Manifest methods
 
-        /// <summary> Get registry artifact properties by tag or digest. </summary>
+        /// <summary> Get the properties of the manifest that uniquely identifies this artifact. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ArtifactManifestProperties>> GetManifestPropertiesAsync(CancellationToken cancellationToken = default)
@@ -77,7 +82,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Get registry artifact properties by tag or digest. </summary>
+        /// <summary> Get the properties of the manifest that uniquely identifies this artifact. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ArtifactManifestProperties> GetManifestProperties(CancellationToken cancellationToken = default)
@@ -118,8 +123,8 @@ namespace Azure.Containers.ContainerRegistry
             return tagOrDigest.Contains(":");
         }
 
-        /// <summary> Update manifest attributes. </summary>
-        /// <param name="value"> Manifest properties value. </param>
+        /// <summary> Update the properties of the artifact's manifest. </summary>
+        /// <param name="value"> Manifest properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -141,8 +146,8 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update manifest attributes. </summary>
-        /// <param name="value"> Manifest properties value. </param>
+        /// <summary> Update the properties of the artifact's manifest. </summary>
+        /// <param name="value"> Manifest properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -177,7 +182,7 @@ namespace Azure.Containers.ContainerRegistry
             };
         }
 
-        /// <summary> Delete registry artifact. </summary>
+        /// <summary> Delete registry artifact by deleting its manifest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
@@ -196,7 +201,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete registry artifact. </summary>
+        /// <summary> Delete registry artifact by deleting its manifest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response Delete(CancellationToken cancellationToken = default)
@@ -218,20 +223,20 @@ namespace Azure.Containers.ContainerRegistry
         #endregion
 
         #region Tag methods
-        /// <summary> Get the collection of tags for a repository. </summary>
-        /// <param name="orderBy"> Requested order of tags in the collection. </param>
+        /// <summary> List the tags that uniquely identify this artifact and the properties of each. </summary>
+        /// <param name="tagOrder"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactTagProperties> GetTagPropertiesCollectionAsync(ArtifactTagOrderBy orderBy = ArtifactTagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactTagProperties> GetAllTagPropertiesAsync(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                    string order = orderBy == ArtifactTagOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = tagOrder == ArtifactTagOrder.None ? null : tagOrder.ToSerialString();
                     var response = await _restClient.GetTagsAsync(_repositoryName, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
@@ -244,12 +249,12 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<ArtifactTagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                    string order = orderBy == ArtifactTagOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = tagOrder == ArtifactTagOrder.None ? null : tagOrder.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = await _restClient.GetTagsNextPageAsync(uriReference, _repositoryName, last: null, n: null, orderby: order, digest: digest, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
@@ -264,20 +269,20 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get the collection of tags for a repository, including their full metadata. </summary>
-        /// <param name="orderBy"> Requested order of tags in the collection. </param>
+        /// <summary> List the tags that uniquely identify this artifact and the properties of each. </summary>
+        /// <param name="tagOrder"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactTagProperties> GetTagPropertiesCollection(ArtifactTagOrderBy orderBy = ArtifactTagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactTagProperties> GetAllTagProperties(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
                     string digest = GetDigest(cancellationToken);
-                    string order = orderBy == ArtifactTagOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = tagOrder == ArtifactTagOrder.None ? null : tagOrder.ToSerialString();
                     var response = _restClient.GetTags(_repositoryName, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
@@ -290,12 +295,12 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<ArtifactTagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
                     string digest = GetDigest(cancellationToken);
-                    string order = orderBy == ArtifactTagOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = tagOrder == ArtifactTagOrder.None ? null : tagOrder.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = _restClient.GetTagsNextPage(uriReference, _repositoryName, last: null, n: null, orderby: order, digest: digest, cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
@@ -310,7 +315,7 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get tag properties by tag. </summary>
+        /// <summary> Get the properties of the specified tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
@@ -331,7 +336,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Get tag attributes by tag. </summary>
+        /// <summary> Get the properties of the specified tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
@@ -354,9 +359,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update tag attributes. </summary>
-        /// <param name="tag"> Tag name. </param>
-        /// <param name="value"> Tag property value. </param>
+        /// <summary> Update the properties of a given tag. </summary>
+        /// <param name="tag"> Name of the tag to update properties on. </param>
+        /// <param name="value"> Tag properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
@@ -391,9 +396,9 @@ namespace Azure.Containers.ContainerRegistry
             };
         }
 
-        /// <summary> Update tag attributes. </summary>
-        /// <param name="tag"> Tag name. </param>
-        /// <param name="value"> Tag property value. </param>
+        /// <summary> Update the properties of a given tag. </summary>
+        /// <param name="tag"> Name of the tag to update properties on. </param>
+        /// <param name="value"> Tag properties object containing values to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
@@ -418,7 +423,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
-        /// <param name="tag"> Name of tag to delete. </param>
+        /// <param name="tag"> The name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
@@ -441,7 +446,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
-        /// <param name="tag"> Name of tag to delete. </param>
+        /// <param name="tag"> The name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>

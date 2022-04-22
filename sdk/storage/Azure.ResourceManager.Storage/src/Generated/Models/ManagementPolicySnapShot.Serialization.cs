@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(TierToCool))
+            {
+                writer.WritePropertyName("tierToCool");
+                writer.WriteObjectValue(TierToCool);
+            }
+            if (Optional.IsDefined(TierToArchive))
+            {
+                writer.WritePropertyName("tierToArchive");
+                writer.WriteObjectValue(TierToArchive);
+            }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete");
@@ -25,9 +35,31 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element)
         {
+            Optional<DateAfterCreation> tierToCool = default;
+            Optional<DateAfterCreation> tierToArchive = default;
             Optional<DateAfterCreation> delete = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tierToCool"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tierToArchive"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("delete"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -39,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicySnapShot(delete.Value);
+            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, delete.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="name"> anomaly detection configuration name. </param>
         /// <param name="description"> anomaly detection configuration description. </param>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="wholeSeriesDetectionConditions"> . </param>
+        /// <param name="wholeSeriesDetectionConditions"></param>
         /// <param name="seriesGroupDetectionConditions"> detection configuration for series group. </param>
         /// <param name="seriesDetectionConditions"> detection configuration for specific series. </param>
         internal AnomalyDetectionConfiguration(string id, string name, string description, string metricId, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions, IList<MetricSeriesGroupDetectionCondition> seriesGroupDetectionConditions, IList<MetricSingleSeriesDetectionCondition> seriesDetectionConditions)

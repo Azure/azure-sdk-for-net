@@ -1,31 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/providerStatus",
+      "RequestUri": "https://eastus.quantum.azure.com/v1.0/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.Quantum/workspaces/myworkspace/providerStatus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210326.1",
-          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "9854066cded2a35e8596fd5b3217bf1f",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20220118.1 (.NET Core 3.1.21; Darwin 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:28:54 PST 2021; root:xnu-8019.61.5~1/RELEASE_X86_64)",
+        "x-ms-client-request-id": "90720034c627f41857e886c9cab5fa57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1140",
+        "Content-Length": "3416",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 07:22:30 GMT",
+        "Date": "Wed, 19 Jan 2022 01:58:53 GMT",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
         "Set-Cookie": [
-          "ARRAffinity=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;Secure;Domain=westus.quantum.azure.com",
-          "ARRAffinitySameSite=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;SameSite=None;Secure;Domain=westus.quantum.azure.com"
+          "ARRAffinity=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;Secure;Domain=westus2.quantum.azure.com",
+          "ARRAffinitySameSite=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;SameSite=None;Secure;Domain=westus2.quantum.azure.com"
         ],
         "Strict-Transport-Security": "max-age=2592000",
+        "x-ms-request-id": "628ac1e4d2278d42",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -34,18 +32,6 @@
             "id": "Microsoft",
             "currentAvailability": "Available",
             "targets": [
-              {
-                "id": "microsoft.simulatedannealing.fpga",
-                "currentAvailability": "Available",
-                "averageQueueTime": 0,
-                "statusPage": null
-              },
-              {
-                "id": "microsoft.simulatedannealing-parameterfree.fpga",
-                "currentAvailability": "Available",
-                "averageQueueTime": 0,
-                "statusPage": null
-              },
               {
                 "id": "microsoft.paralleltempering-parameterfree.cpu",
                 "currentAvailability": "Available",
@@ -87,6 +73,138 @@
                 "currentAvailability": "Available",
                 "averageQueueTime": 0,
                 "statusPage": null
+              },
+              {
+                "id": "microsoft.populationannealing.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.populationannealing-parameterfree.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.substochasticmontecarlo.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.substochasticmontecarlo-parameterfree.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              }
+            ]
+          },
+          {
+            "id": "ionq",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "ionq.qpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 226,
+                "statusPage": "https://status.ionq.co"
+              },
+              {
+                "id": "ionq.simulator",
+                "currentAvailability": "Available",
+                "averageQueueTime": 4,
+                "statusPage": "https://status.ionq.co"
+              }
+            ]
+          },
+          {
+            "id": "toshiba",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "toshiba.sbm.ising",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              }
+            ]
+          },
+          {
+            "id": "honeywell",
+            "currentAvailability": "Degraded",
+            "targets": [
+              {
+                "id": "honeywell.hqs-lt-s1",
+                "currentAvailability": "Unavailable",
+                "averageQueueTime": 0,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              },
+              {
+                "id": "honeywell.hqs-lt-s1-apival",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              },
+              {
+                "id": "honeywell.hqs-lt-s2",
+                "currentAvailability": "Available",
+                "averageQueueTime": 8474,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              },
+              {
+                "id": "honeywell.hqs-lt-s2-apival",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              },
+              {
+                "id": "honeywell.hqs-lt-s1-sim",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              },
+              {
+                "id": "honeywell.hqs-lt",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "https://www.honeywell.com/en-us/company/quantum"
+              }
+            ]
+          },
+          {
+            "id": "Microsoft.Simulator",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "microsoft.simulator.fullstate",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              }
+            ]
+          },
+          {
+            "id": "1qbit",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "1qbit.tabu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "http://status.1qbit.com/"
+              },
+              {
+                "id": "1qbit.pathrelinking",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "http://status.1qbit.com/"
+              },
+              {
+                "id": "1qbit.pticm",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "http://status.1qbit.com/"
               }
             ]
           }
@@ -96,10 +214,6 @@
     }
   ],
   "Variables": {
-    "LOCATION": "westus",
-    "RandomSeed": "1583537271",
-    "RESOURCE_GROUP": "sdk-review-rg",
-    "SUBSCRIPTION_ID": "677fc922-91d0-4bf6-9b06-4274d319a0fa",
-    "WORKSPACE_NAME": "workspace-ms"
+    "RandomSeed": "1658317020"
   }
 }

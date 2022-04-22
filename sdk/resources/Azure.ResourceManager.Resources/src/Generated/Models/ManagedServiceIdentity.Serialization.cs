@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
             Optional<ManagedServiceIdentityType> type = default;
+            Optional<string> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,6 +52,11 @@ namespace Azure.ResourceManager.Resources.Models
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tenantId"))
+                {
+                    tenantId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -61,13 +67,13 @@ namespace Azure.ResourceManager.Resources.Models
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value));
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.ToString()));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new ManagedServiceIdentity(Optional.ToNullable(type), tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

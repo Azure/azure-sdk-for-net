@@ -81,9 +81,9 @@ namespace Azure.IoT.Hub.Service
         /// </param>
         /// <seealso cref="IotHubServiceClient(Uri, IotHubSasCredential, IotHubServiceClientOptions)">
         /// This other constructor provides an opportunity to override default behavior, including setting the sas token time to live, specifying the service API version,
-        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
-        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
-        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
         public IotHubServiceClient(string connectionString)
             : this(connectionString, new IotHubServiceClientOptions())
@@ -102,9 +102,9 @@ namespace Azure.IoT.Hub.Service
         /// </param>
         /// <seealso cref="IotHubServiceClient(Uri, IotHubSasCredential, IotHubServiceClientOptions)">
         /// This other constructor provides an opportunity to override default behavior, including setting the sas token time to live, specifying the service API version,
-        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
-        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
-        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
         public IotHubServiceClient(string connectionString, IotHubServiceClientOptions options)
             : this(new IotHubSasCredential(connectionString), options)
@@ -123,7 +123,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="options">
         /// (optional) Options that allow configuration of requests sent to the IoT Hub service.
         /// </param>
-        /// <code snippet="Snippet:IotHubServiceClientInitializeWithIotHubSasCredential">
+        /// <code snippet="Snippet:IotHubServiceClientInitializeWithIotHubSasCredential" language="csharp">
         /// // Create an IotHubSasCredential type to use sas tokens to authenticate against your IoT Hub instance.
         /// // The default lifespan of the sas token is 30 minutes, and it is set to be renewed when at 15% or less of its lifespan.
         /// var credential = new IotHubSasCredential(options.IotHubSharedAccessPolicy, options.IotHubSharedAccessKey);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +22,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
+        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
+        /// <param name="recordingChannelType"> The recording  channel type - Mixed, Unmixed. </param>
+        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, string sessionEndReason)
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType, string sessionEndReason)
         {
             RecordingStorageInfo = recordingStorageInfo;
             RecordingStartTime = recordingStartTime;
             RecordingDurationMs = recordingDurationMs;
+            RecordingContentType = recordingContentType;
+            RecordingChannelType = recordingChannelType;
+            RecordingFormatType = recordingFormatType;
             SessionEndReason = sessionEndReason;
         }
 
@@ -36,6 +43,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public DateTimeOffset? RecordingStartTime { get; }
         /// <summary> The recording duration in milliseconds. </summary>
         public long? RecordingDurationMs { get; }
+        /// <summary> The recording content type- AudioVideo, or Audio. </summary>
+        public RecordingContentType? RecordingContentType { get; }
+        /// <summary> The recording  channel type - Mixed, Unmixed. </summary>
+        public RecordingChannelType? RecordingChannelType { get; }
+        /// <summary> The recording format type - Mp4, Mp3, Wav. </summary>
+        public RecordingFormatType? RecordingFormatType { get; }
         /// <summary> The reason for ending recording session. </summary>
         public string SessionEndReason { get; }
     }

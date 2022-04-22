@@ -21,6 +21,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
+        ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
+        ///   identifier.
+        /// </summary>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
         ///
@@ -88,6 +95,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal EventHubConsumerClientOptions Clone() =>
             new EventHubConsumerClientOptions
             {
+                Identifier = Identifier,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()
             };

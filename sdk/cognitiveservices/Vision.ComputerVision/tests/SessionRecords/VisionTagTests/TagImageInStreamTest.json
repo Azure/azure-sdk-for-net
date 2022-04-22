@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,28 +27,28 @@
           "CognitiveServices.ComputerVision.Tags=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "2683"
+          "140"
         ],
         "apim-request-id": [
-          "a47f07da-9df4-425f-b516-fd53a02c533a"
+          "380593b4-b8d3-4271-b08d-eb1ec668c980"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:15 GMT"
+          "Thu, 04 Nov 2021 04:51:38 GMT"
         ],
         "Content-Length": [
-          "1348"
+          "1350"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"草\",\r\n      \"confidence\": 0.99688816070556641\r\n    },\r\n    {\r\n      \"name\": \"户外\",\r\n      \"confidence\": 0.99628782272338867\r\n    },\r\n    {\r\n      \"name\": \"建筑\",\r\n      \"confidence\": 0.98478734493255615\r\n    },\r\n    {\r\n      \"name\": \"植物\",\r\n      \"confidence\": 0.98159998655319214\r\n    },\r\n    {\r\n      \"name\": \"财产\",\r\n      \"confidence\": 0.97830420732498169\r\n    },\r\n    {\r\n      \"name\": \"家\",\r\n      \"confidence\": 0.9670950174331665\r\n    },\r\n    {\r\n      \"name\": \"屋子\",\r\n      \"confidence\": 0.96516358852386475\r\n    },\r\n    {\r\n      \"name\": \"不动产\",\r\n      \"confidence\": 0.964593768119812\r\n    },\r\n    {\r\n      \"name\": \"天空\",\r\n      \"confidence\": 0.96457135677337646\r\n    },\r\n    {\r\n      \"name\": \"护墙板\",\r\n      \"confidence\": 0.9455188512802124\r\n    },\r\n    {\r\n      \"name\": \"门廊\",\r\n      \"confidence\": 0.9431384801864624\r\n    },\r\n    {\r\n      \"name\": \"院子\",\r\n      \"confidence\": 0.941170334815979\r\n    },\r\n    {\r\n      \"name\": \"小别墅\",\r\n      \"confidence\": 0.90947520732879639\r\n    },\r\n    {\r\n      \"name\": \"花园建筑\",\r\n      \"confidence\": 0.89480429887771606\r\n    },\r\n    {\r\n      \"name\": \"门\",\r\n      \"confidence\": 0.893147349357605\r\n    },\r\n    {\r\n      \"name\": \"草坪\",\r\n      \"confidence\": 0.889878511428833\r\n    },\r\n    {\r\n      \"name\": \"窗户/车窗\",\r\n      \"confidence\": 0.889106035232544\r\n    },\r\n    {\r\n      \"name\": \"农舍\",\r\n      \"confidence\": 0.88872992992401123\r\n    },\r\n    {\r\n      \"name\": \"树\",\r\n      \"confidence\": 0.88284313678741455\r\n    },\r\n    {\r\n      \"name\": \"后院\",\r\n      \"confidence\": 0.87526524066925049\r\n    },\r\n    {\r\n      \"name\": \"车道\",\r\n      \"confidence\": 0.85069841146469116\r\n    },\r\n    {\r\n      \"name\": \"小屋\",\r\n      \"confidence\": 0.85023629665374756\r\n    },\r\n    {\r\n      \"name\": \"屋顶\",\r\n      \"confidence\": 0.84931045770645142\r\n    },\r\n    {\r\n      \"name\": \"地段\",\r\n      \"confidence\": 0.84485441446304321\r\n    }\r\n  ],\r\n  \"requestId\": \"a47f07da-9df4-425f-b516-fd53a02c533a\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"草\",\r\n      \"confidence\": 0.9968881607055664\r\n    },\r\n    {\r\n      \"name\": \"户外\",\r\n      \"confidence\": 0.9962877631187439\r\n    },\r\n    {\r\n      \"name\": \"建筑\",\r\n      \"confidence\": 0.9847874045372009\r\n    },\r\n    {\r\n      \"name\": \"植物\",\r\n      \"confidence\": 0.9815999269485474\r\n    },\r\n    {\r\n      \"name\": \"财产\",\r\n      \"confidence\": 0.9783041477203369\r\n    },\r\n    {\r\n      \"name\": \"家\",\r\n      \"confidence\": 0.967095136642456\r\n    },\r\n    {\r\n      \"name\": \"屋子\",\r\n      \"confidence\": 0.9651638269424438\r\n    },\r\n    {\r\n      \"name\": \"不动产\",\r\n      \"confidence\": 0.9645938873291016\r\n    },\r\n    {\r\n      \"name\": \"天空\",\r\n      \"confidence\": 0.9645713567733765\r\n    },\r\n    {\r\n      \"name\": \"护墙板\",\r\n      \"confidence\": 0.945518970489502\r\n    },\r\n    {\r\n      \"name\": \"门廊\",\r\n      \"confidence\": 0.943138599395752\r\n    },\r\n    {\r\n      \"name\": \"院子\",\r\n      \"confidence\": 0.9411703944206238\r\n    },\r\n    {\r\n      \"name\": \"小别墅\",\r\n      \"confidence\": 0.9094752073287964\r\n    },\r\n    {\r\n      \"name\": \"花园建筑\",\r\n      \"confidence\": 0.8948042392730713\r\n    },\r\n    {\r\n      \"name\": \"门\",\r\n      \"confidence\": 0.8931467533111572\r\n    },\r\n    {\r\n      \"name\": \"草坪\",\r\n      \"confidence\": 0.8898786306381226\r\n    },\r\n    {\r\n      \"name\": \"窗户/车窗\",\r\n      \"confidence\": 0.8891065120697021\r\n    },\r\n    {\r\n      \"name\": \"农舍\",\r\n      \"confidence\": 0.8887302279472351\r\n    },\r\n    {\r\n      \"name\": \"树\",\r\n      \"confidence\": 0.8828421831130981\r\n    },\r\n    {\r\n      \"name\": \"后院\",\r\n      \"confidence\": 0.8752654790878296\r\n    },\r\n    {\r\n      \"name\": \"车道\",\r\n      \"confidence\": 0.8506985902786255\r\n    },\r\n    {\r\n      \"name\": \"小屋\",\r\n      \"confidence\": 0.8502359390258789\r\n    },\r\n    {\r\n      \"name\": \"屋顶\",\r\n      \"confidence\": 0.8493107557296753\r\n    },\r\n    {\r\n      \"name\": \"地段\",\r\n      \"confidence\": 0.8448545932769775\r\n    }\r\n  ],\r\n  \"requestId\": \"380593b4-b8d3-4271-b08d-eb1ec668c980\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

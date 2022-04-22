@@ -27,6 +27,7 @@ namespace DataFactory.Tests.Utils
         private const string eventTriggerName = "exampleEventTrigger";
         private const string datasetName = "exampleDataset";
         private const string dataFlowName = "exampleDataFlow";
+        private const string powerQueryName = "examplePowerQuery";
         private const string pipelineName = "examplePipeline";
         private const string parentPipeline1Name = "parentPipeline1";
         private const string parentPipeline2Name = "parentPipeline2";
@@ -115,6 +116,12 @@ namespace DataFactory.Tests.Utils
                 CaptureDataFlows_Update(); // 200
                 CaptureDataFlows_Get(); // 200
                 CaptureDataFlows_ListByFactory(); // 200
+
+                // Start  PowerQueries operations, leaving dataset available
+                CapturePowerQueries_Create(); // 200
+                CapturePowerQueries_Update(); // 200
+                CapturePowerQueries_Get(); // 200
+                CapturePowerQueries_ListByFactory(); // 200
 
                 // All Pipelines and PipelineRuns operations, creating/running/monitoring/deleting pipeline
                 CapturePipelines_Create(); // 200
@@ -738,6 +745,35 @@ namespace DataFactory.Tests.Utils
             return resource;
         }
 
+        private DataFlowResource GetPowerQueryResource(string description)
+        {
+            DataFlowResource resource = new DataFlowResource
+            {
+                Properties = new WranglingDataFlow
+                {
+                    Description = description,
+                    Sources = new List<PowerQuerySource>() {
+                        new PowerQuerySource()
+                        {
+                            Name = "source",
+                            Description = "source 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = "dataset",
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Script = "sample script;"
+                }
+            };
+
+            return resource;
+        }
+
         private void CaptureDataFlows_Create()
         {
             interceptor.CurrentExampleName = "DataFlows_Create";
@@ -768,6 +804,38 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "DataFlows_Delete";
             client.DataFlows.Delete(secrets.ResourceGroupName, secrets.FactoryName, dataFlowName);
+        }
+
+        private void CapturePowerQueries_Create()
+        {
+            interceptor.CurrentExampleName = "PowerQueries_Create";
+            DataFlowResource resourceIn = GetPowerQueryResource(null);
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, powerQueryName, resourceIn);
+        }
+
+        private void CapturePowerQueries_Update()
+        {
+            interceptor.CurrentExampleName = "PowerQueries_Update";
+            DataFlowResource resourceIn = GetPowerQueryResource("Example description");
+            DataFlowResource resource = client.DataFlows.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, powerQueryName, resourceIn);
+        }
+
+        private void CapturePowerQueries_Get()
+        {
+            interceptor.CurrentExampleName = "PowerQueries_Get";
+            DataFlowResource resource = client.DataFlows.Get(secrets.ResourceGroupName, secrets.FactoryName, powerQueryName);
+        }
+
+        private void CapturePowerQueries_ListByFactory()
+        {
+            interceptor.CurrentExampleName = "PowerQueries_ListByFactory";
+            IPage<DataFlowResource> resources = client.DataFlows.ListByFactory(secrets.ResourceGroupName, secrets.FactoryName);
+        }
+
+        private void CapturePowerQueries_Delete()
+        {
+            interceptor.CurrentExampleName = "PowerQueries_Delete";
+            client.DataFlows.Delete(secrets.ResourceGroupName, secrets.FactoryName, powerQueryName);
         }
 
         private PipelineResource GetPipelineResource(string description)

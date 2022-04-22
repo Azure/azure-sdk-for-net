@@ -41,7 +41,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// (SID).</param>
         /// <param name="azureStorageSid">Specifies the security identifier
         /// (SID) for Azure Storage.</param>
-        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
+        /// <param name="samAccountName">Specifies the Active Directory
+        /// SAMAccountName for Azure Storage.</param>
+        /// <param name="accountType">Specifies the Active Directory account
+        /// type for Azure Storage. Possible values include: 'User',
+        /// 'Computer'</param>
+        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid, string samAccountName = default(string), string accountType = default(string))
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -49,6 +54,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             DomainGuid = domainGuid;
             DomainSid = domainSid;
             AzureStorageSid = azureStorageSid;
+            SamAccountName = samAccountName;
+            AccountType = accountType;
             CustomInit();
         }
 
@@ -94,6 +101,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "azureStorageSid")]
         public string AzureStorageSid { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Active Directory SAMAccountName for
+        /// Azure Storage.
+        /// </summary>
+        [JsonProperty(PropertyName = "samAccountName")]
+        public string SamAccountName { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Active Directory account type for Azure
+        /// Storage. Possible values include: 'User', 'Computer'
+        /// </summary>
+        [JsonProperty(PropertyName = "accountType")]
+        public string AccountType { get; set; }
 
         /// <summary>
         /// Validate the object.

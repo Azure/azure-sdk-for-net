@@ -28,5 +28,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string Exfiltration = "Exfiltration";
         public const string CommandAndControl = "CommandAndControl";
         public const string Impact = "Impact";
+        public const string PreAttack = "PreAttack";
     }
 }

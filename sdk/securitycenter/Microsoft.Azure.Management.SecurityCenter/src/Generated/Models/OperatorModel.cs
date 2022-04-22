@@ -16,14 +16,41 @@ namespace Microsoft.Azure.Management.Security.Models
     /// </summary>
     public static class OperatorModel
     {
+        /// <summary>
+        /// Applies for decimal and non-decimal operands
+        /// </summary>
         public const string Equals = "Equals";
+        /// <summary>
+        /// Applies only for decimal operands
+        /// </summary>
         public const string GreaterThan = "GreaterThan";
+        /// <summary>
+        /// Applies only for decimal operands
+        /// </summary>
         public const string GreaterThanOrEqualTo = "GreaterThanOrEqualTo";
+        /// <summary>
+        /// Applies only for decimal operands
+        /// </summary>
         public const string LesserThan = "LesserThan";
+        /// <summary>
+        /// Applies only for decimal operands
+        /// </summary>
         public const string LesserThanOrEqualTo = "LesserThanOrEqualTo";
+        /// <summary>
+        /// Applies  for decimal and non-decimal operands
+        /// </summary>
         public const string NotEquals = "NotEquals";
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// </summary>
         public const string Contains = "Contains";
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// </summary>
         public const string StartsWith = "StartsWith";
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// </summary>
         public const string EndsWith = "EndsWith";
     }
 }

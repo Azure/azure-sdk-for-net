@@ -51,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private bool _foundMessageSinceLastDelay;
         private bool _disposed;
         private TaskCompletionSource<object> _stopWaitingTaskSource;
+        private ConcurrencyManager _concurrencyManager;
 
         // for mock testing only
         internal QueueListener()
@@ -66,6 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             QueuesOptions queueOptions,
             QueueProcessor queueProcessor,
             FunctionDescriptor functionDescriptor,
+            ConcurrencyManager concurrencyManager = null,
             string functionId = null,
             TimeSpan? maxPollingInterval = null)
         {
@@ -128,6 +130,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();
+
+            _concurrencyManager = concurrencyManager;
         }
 
         // for testing
@@ -199,9 +203,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
                     if (_queueExists.Value)
                     {
-                        sw = Stopwatch.StartNew();
+                        int numMessagesToReceive = GetMessageReceiveCount();
+                        if (numMessagesToReceive == 0)
+                        {
+                            // We want the next invocation to run right away to ensure we
+                            // quickly fetch to our max degree of concurrency.
+                            return CreateDelayResult(TimeSpan.Zero);
+                        }
 
-                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.QueuesOptions.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                        sw = Stopwatch.StartNew();
+                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(numMessagesToReceive, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
                         batch = response.Value;
 
                         int count = batch?.Length ?? -1;
@@ -281,6 +292,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
         }
 
+        internal int GetMessageReceiveCount()
+        {
+            int numMessagesToReceive = _queueProcessor.QueuesOptions.BatchSize;
+
+            if (_concurrencyManager != null && _concurrencyManager.Enabled)
+            {
+                // When not using DC, WaitForNewBatchThreshold cleans up tasks as they complete.
+                // When using DC we need to also do cleanup of completed tasks, particularly
+                // before we use the count of pending tasks in the calculation below.
+                var completedTasks = _processing.Where(p => p.IsCompleted).ToArray();
+                foreach (var completedTask in completedTasks)
+                {
+                    _processing.Remove(completedTask);
+                }
+
+                // When DynamicConcurrency is enabled, we determine the number of messages to pull
+                // based on the current degree of parallelism for this function and our pending invocation count.
+                var concurrencyStatus = _concurrencyManager.GetStatus(_functionId);
+                int availableInvocationCount = concurrencyStatus.GetAvailableInvocationCount(_processing.Count);
+                numMessagesToReceive = Math.Min(availableInvocationCount, QueuesOptions.MaxBatchSize);
+            }
+
+            return numMessagesToReceive;
+        }
+
         private Task CreateDelayWithNotificationTask()
         {
             TimeSpan nextDelay = _delayStrategy.GetNextDelay(executionSucceeded: _foundMessageSinceLastDelay);
@@ -297,10 +333,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             return new TaskSeriesCommandResult(wait: CreateDelayWithNotificationTask());
         }
 
+        private TaskSeriesCommandResult CreateDelayResult(TimeSpan delay)
+        {
+            Task aggregateTask = Task.WhenAny(_stopWaitingTaskSource.Task, Task.Delay(delay));
+
+            return new TaskSeriesCommandResult(wait: aggregateTask);
+        }
+
         private TaskSeriesCommandResult CreateSucceededResult()
         {
-            Task wait = WaitForNewBatchThreshold();
-            return new TaskSeriesCommandResult(wait);
+            if (_concurrencyManager != null && _concurrencyManager.Enabled)
+            {
+                // We want the next invocation to run right away to ensure we
+                // quickly fetch to our max degree of concurrency.
+                return CreateDelayResult(TimeSpan.Zero);
+            }
+            else
+            {
+                Task wait = WaitForNewBatchThreshold();
+                return new TaskSeriesCommandResult(wait);
+            }
         }
 
         private async Task WaitForNewBatchThreshold()
@@ -380,11 +432,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             if (sharedWatcher != null)
             {
-                EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (object sender, PoisonMessageEventArgs e) =>
+                queueProcessor.MessageAddedToPoisonQueueAsync += (queueProcessor, e) =>
                 {
                     sharedWatcher.Notify(e.PoisonQueue.Name);
+                    return Task.CompletedTask;
                 };
-                queueProcessor.MessageAddedToPoisonQueue += poisonMessageEventHandler;
             }
         }
 

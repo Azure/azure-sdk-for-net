@@ -12,35 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ChangeThresholdConditionPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ChangePercentage))
-            {
-                writer.WritePropertyName("changePercentage");
-                writer.WriteNumberValue(ChangePercentage.Value);
-            }
-            if (Optional.IsDefined(ShiftPoint))
-            {
-                writer.WritePropertyName("shiftPoint");
-                writer.WriteNumberValue(ShiftPoint.Value);
-            }
-            if (Optional.IsDefined(WithinRange))
-            {
-                writer.WritePropertyName("withinRange");
-                writer.WriteBooleanValue(WithinRange.Value);
-            }
-            if (Optional.IsDefined(AnomalyDetectorDirection))
-            {
-                writer.WritePropertyName("anomalyDetectorDirection");
-                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
-            }
-            if (Optional.IsDefined(SuppressCondition))
-            {
-                writer.WritePropertyName("suppressCondition");
-                writer.WriteObjectValue(SuppressCondition);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// condition to trigger an action rule
+    /// Condition to trigger an alert processing rule.
     /// </summary>
     public partial class Condition
     {
@@ -31,13 +31,19 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <summary>
         /// Initializes a new instance of the Condition class.
         /// </summary>
-        /// <param name="operatorProperty">operator for a given condition.
+        /// <param name="field">Field for a given condition. Possible values
+        /// include: 'Severity', 'MonitorService', 'MonitorCondition',
+        /// 'SignalType', 'TargetResourceType', 'TargetResource',
+        /// 'TargetResourceGroup', 'AlertRuleId', 'AlertRuleName',
+        /// 'Description', 'AlertContext'</param>
+        /// <param name="operatorProperty">Operator for a given condition.
         /// Possible values include: 'Equals', 'NotEquals', 'Contains',
         /// 'DoesNotContain'</param>
-        /// <param name="values">list of values to match for a given
+        /// <param name="values">List of values to match for a given
         /// condition.</param>
-        public Condition(string operatorProperty = default(string), IList<string> values = default(IList<string>))
+        public Condition(string field = default(string), string operatorProperty = default(string), IList<string> values = default(IList<string>))
         {
+            Field = field;
             OperatorProperty = operatorProperty;
             Values = values;
             CustomInit();
@@ -47,6 +53,15 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets field for a given condition. Possible values include:
+        /// 'Severity', 'MonitorService', 'MonitorCondition', 'SignalType',
+        /// 'TargetResourceType', 'TargetResource', 'TargetResourceGroup',
+        /// 'AlertRuleId', 'AlertRuleName', 'Description', 'AlertContext'
+        /// </summary>
+        [JsonProperty(PropertyName = "field")]
+        public string Field { get; set; }
 
         /// <summary>
         /// Gets or sets operator for a given condition. Possible values

@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.4300.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.19042.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -27,19 +27,19 @@
           "CognitiveServices.ComputerVision.OCR=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "38"
+          "35"
         ],
         "apim-request-id": [
-          "2a4588ac-a7ed-4339-8057-6a48dc8e0ae2"
+          "786229e7-4f40-4996-8ea0-afe8207e513f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 24 Mar 2021 06:44:35 GMT"
+          "Thu, 04 Nov 2021 04:51:37 GMT"
         ],
         "Content-Length": [
           "411"
@@ -48,7 +48,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"language\": \"en\",\r\n  \"textAngle\": -0.050614548307834933,\r\n  \"orientation\": \"Up\",\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"60,33,141,103\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"119,33,78,21\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"119,33,78,21\",\r\n              \"text\": \"WEST\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": \"65,45,33,17\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"65,45,33,17\",\r\n              \"text\": \"520\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": \"60,107,141,29\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"60,107,141,29\",\r\n              \"text\": \"Seattle\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
+      "ResponseBody": "{\r\n  \"language\": \"en\",\r\n  \"textAngle\": -0.05061454830783493,\r\n  \"orientation\": \"Up\",\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"60,33,141,103\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"119,33,78,21\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"119,33,78,21\",\r\n              \"text\": \"WEST\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": \"65,45,33,17\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"65,45,33,17\",\r\n              \"text\": \"520\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": \"60,107,141,29\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"60,107,141,29\",\r\n              \"text\": \"Seattle\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

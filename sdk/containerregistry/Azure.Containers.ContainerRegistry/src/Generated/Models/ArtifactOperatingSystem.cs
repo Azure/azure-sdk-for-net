@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ArtifactOperatingSystem"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactOperatingSystem"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArtifactOperatingSystem(string value)
         {

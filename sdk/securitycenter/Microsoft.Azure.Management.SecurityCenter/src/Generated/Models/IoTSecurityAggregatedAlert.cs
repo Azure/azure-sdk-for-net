@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// list of affected devices/alerts.</param>
         /// <param name="topDevicesList">10 devices with the highest number of
         /// occurrences of this alert type, on this day.</param>
-        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), int? count = default(int?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string), IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default(IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>))
+        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), long? count = default(long?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string), IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default(IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>))
         {
             Id = id;
             Name = name;
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// window.
         /// </summary>
         [JsonProperty(PropertyName = "properties.count")]
-        public int? Count { get; private set; }
+        public long? Count { get; private set; }
 
         /// <summary>
         /// Gets azure resource ID of the resource that received the alerts.

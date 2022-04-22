@@ -628,6 +628,21 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
         }
 
+        [Test]
+        public void DisposeCanBeCalledMultipleTimes()
+        {
+            // Arrange
+            var client = new Mock<SecretClient>();
+
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            {
+                provider.Dispose();
+
+                // Act & Assert
+                Assert.DoesNotThrow(() => provider.Dispose());
+            }
+        }
+
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override bool Load(SecretProperties secret)

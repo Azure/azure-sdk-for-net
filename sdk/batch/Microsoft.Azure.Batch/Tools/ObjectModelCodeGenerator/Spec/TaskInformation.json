@@ -2,7 +2,7 @@
       "Name": "TaskInformation",
       "ProtocolName": "Models.TaskInformation",
       "SummaryComment": "The compute node's task info class.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "IsUsedInCollections": true,
       "Properties": [
         {

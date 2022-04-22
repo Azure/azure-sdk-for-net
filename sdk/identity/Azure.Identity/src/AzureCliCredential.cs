@@ -22,10 +22,12 @@ namespace Azure.Identity
     {
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
-        private const string WinAzureCLIError = "'az' is not recognized";
-        private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
+        internal const string WinAzureCLIError = "'az' is not recognized";
+        internal const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
+        internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         private const int CliProcessTimeoutMs = 13000;
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
@@ -43,6 +45,8 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
+        private readonly string _tenantId;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -51,11 +55,21 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
-        internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService)
+        /// <summary>
+        /// Create an instance of CliCredential class.
+        /// </summary>
+        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        public AzureCliCredential(AzureCliCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(null), default, options)
+        { }
+
+        internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
+            _tenantId = options?.TenantId;
         }
 
         /// <summary>
@@ -86,7 +100,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = await RequestCliAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                AccessToken token = await RequestCliAccessTokenAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
             catch (Exception e)
@@ -95,15 +109,16 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, string[] scopes, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            string resource = ScopeUtilities.ScopesToResource(scopes);
+            string resource = ScopeUtilities.ScopesToResource(context.Scopes);
+            string tenantId = TenantIdResolver.Resolve(_tenantId, context);
 
             ScopeUtilities.ValidateScope(resource);
 
-            GetFileNameAndArguments(resource, out string fileName, out string argument);
+            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), _logPII, cancellationToken);
 
             string output;
             try
@@ -125,21 +140,24 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzureCLINotInstalled);
                 }
 
-                bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                    exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError)
                 {
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
 
-                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 && exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1;
+                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
+                                                 exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                                 exception.Message.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isRefreshTokenFailedError)
                 {
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
+                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             return DeserializeOutput(output);
@@ -157,9 +175,13 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-        private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
         {
-            string command = $"az account get-access-token --output json --resource {resource}";
+            string command = tenantId switch
+            {
+                null => $"az account get-access-token --output json --resource {resource}",
+                _ => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}"
+            };
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

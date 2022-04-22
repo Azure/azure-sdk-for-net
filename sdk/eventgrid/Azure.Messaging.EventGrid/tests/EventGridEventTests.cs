@@ -140,7 +140,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
         private static List<EventGridEvent> DeserializeRequest(Request request)
         {
-            var content = request.Content as Utf8JsonRequestContent;
+            var content = request.Content;
             var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;

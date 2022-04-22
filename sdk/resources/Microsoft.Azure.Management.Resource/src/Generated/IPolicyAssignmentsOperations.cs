@@ -141,6 +141,47 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<PolicyAssignment>> GetWithHttpMessagesAsync(string scope, string policyAssignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a policy assignment.
+        /// </summary>
+        /// <remarks>
+        /// This operation updates a policy assignment with the given scope and
+        /// name. Policy assignments apply to all resources contained within
+        /// their scope. For example, when you assign a policy at resource
+        /// group scope, that policy applies to all resources in the group.
+        /// </remarks>
+        /// <param name='scope'>
+        /// The scope of the policy assignment. Valid scopes are: management
+        /// group (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource
+        /// group (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}',
+        /// or resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+        /// </param>
+        /// <param name='policyAssignmentName'>
+        /// The name of the policy assignment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for policy assignment patch request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PolicyAssignment>> UpdateWithHttpMessagesAsync(string scope, string policyAssignmentName, PolicyAssignmentUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves all policy assignments that apply to a resource group.
         /// </summary>
         /// <remarks>
@@ -478,6 +519,47 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<PolicyAssignment>> GetByIdWithHttpMessagesAsync(string policyAssignmentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a policy assignment.
+        /// </summary>
+        /// <remarks>
+        /// This operation updates the policy assignment with the given ID.
+        /// Policy assignments made on a scope apply to all resources contained
+        /// in that scope. For example, when you assign a policy to a resource
+        /// group that policy applies to all resources in the group. Policy
+        /// assignment IDs have this format:
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// Valid scopes are: management group (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource
+        /// group (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}',
+        /// or resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
+        /// </remarks>
+        /// <param name='policyAssignmentId'>
+        /// The ID of the policy assignment to update. Use the format
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for policy assignment patch request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PolicyAssignment>> UpdateByIdWithHttpMessagesAsync(string policyAssignmentId, PolicyAssignmentUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves all policy assignments that apply to a resource group.
         /// </summary>

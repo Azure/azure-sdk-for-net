@@ -1,86 +1,68 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/workspace?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/workspace?api-version=2020-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d22f5a90b0cee644926c241b37998ae5-f8f2ece8839e574c-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210122.1",
-          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
-        ],
+        "traceparent": "00-ea9b38e34630d34eb1e7e07c2772bcd6-29f1a1a481c91a40-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210929.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f909fc9fd262534a7820d7611f502237",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1917",
+        "Content-Length": "1259",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jan 2021 20:45:46 GMT",
+        "Date": "Thu, 30 Sep 2021 06:23:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "f909fc9fd262534a7820d7611f502237",
-        "x-ms-request-id": "9616e59c-cb35-467f-8d49-55a6b2fced39"
+        "x-ms-request-id": "d788694d-634d-4848-870b-e32471875c60"
       },
       "ResponseBody": {
-        "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-chhamosynapse/providers/Microsoft.Synapse/workspaces/workspacechhamosynapse",
-        "location": "westus2",
-        "name": "workspacechhamosynapse",
         "type": "Microsoft.Synapse/workspaces",
-        "identity": {
-          "type": "SystemAssigned",
-          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-          "principalId": "412137cd-bce6-42cd-952a-92a3ce9130ee"
-        },
-        "tags": {},
         "properties": {
-          "managedVirtualNetwork": "default",
-          "connectivityEndpoints": {
-            "web": "https://web.azuresynapse.net?workspace=%2fsubscriptions%2ffaa080af-c1d8-40ad-9cce-e1a450ca5b57%2fresourceGroups%2frg-chhamosynapse%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fworkspacechhamosynapse",
-            "dev": "https://workspacechhamosynapse.dev.azuresynapse.net",
-            "sqlOnDemand": "workspacechhamosynapse-ondemand.sql.azuresynapse.net",
-            "sql": "workspacechhamosynapse.sql.azuresynapse.net"
-          },
-          "managedResourceGroupName": "synapseworkspace-managedrg-a037d34a-c198-49cf-8066-63c05b3777d8",
-          "defaultDataLakeStorage": {
-            "accountUrl": "https://storagechhamosynapse.dfs.core.windows.net",
-            "filesystem": "filesystemchhamosynapse"
-          },
-          "sqlAdministratorLogin": "sqladminuser",
-          "privateEndpointConnections": [
-            {
-              "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-chhamosynapse/providers/Microsoft.Synapse/workspaces/workspacechhamosynapse/privateEndpointConnections/chamonsprivateend-5c717008-8f4c-4312-bd11-17a987cdcb90",
-              "properties": {
-                "privateEndpoint": {
-                  "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-chhamosynapse/providers/Microsoft.Network/privateEndpoints/chamonsprivateend"
-                },
-                "privateLinkServiceConnectionState": {
-                  "status": "Approved"
-                }
-              }
-            }
-          ],
-          "workspaceUID": "a1a14f2e-bdd9-46f2-b0fd-d6367a393cd2",
-          "extraProperties": {
-            "WorkspaceType": "Normal"
-          },
-          "managedVirtualNetworkSettings": {
-            "preventDataExfiltration": false,
-            "allowedAadTenantIdsForLinking": []
-          },
           "encryption": {
             "doubleEncryptionEnabled": false
           },
-          "provisioningState": "Succeeded"
+          "defaultDataLakeStorage": {
+            "accountUrl": "https://newzzyadlsgen2.dfs.core.windows.net",
+            "filesystem": "testfilesystem"
+          },
+          "provisioningState": "Succeeded",
+          "connectivityEndpoints": {
+            "web": "https://web.azuresynapse.net?workspace=%2fsubscriptions%2f051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3%2fresourceGroups%2fzzy-test-rg%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2ftestsynapseworkspace",
+            "dev": "https://testsynapseworkspace.dev.azuresynapse.net",
+            "sqlOnDemand": "testsynapseworkspace-ondemand.sql.azuresynapse.net",
+            "sql": "testsynapseworkspace.sql.azuresynapse.net"
+          },
+          "managedResourceGroupName": "workspacemanagedrg-cf1e0457-375a-4c2d-a9b4-51676e4fce7c",
+          "sqlAdministratorLogin": "zzy",
+          "privateEndpointConnections": [],
+          "workspaceUID": "55b6dcb5-2507-4063-ae78-9dfe279b4f89",
+          "extraProperties": {
+            "WorkspaceType": "Normal"
+          }
+        },
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace",
+        "location": "eastus",
+        "name": "testsynapseworkspace",
+        "identity": {
+          "type": "SystemAssigned",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "principalId": "5c40eee1-1044-4ec5-9d56-bbbd73b93df0"
+        },
+        "tags": {
+          "key1": "value2"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspacechhamosynapse.dev.azuresynapse.net",
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
     "RandomSeed": "1981318222"
   }
 }
