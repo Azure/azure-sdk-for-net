@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The type of the Secret to create. </summary>
-    public readonly partial struct SecretType : IEquatable<SecretType>
+    /// <summary> The type of the secret resource. </summary>
+    internal readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
 
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UrlSigningKeyValue = "UrlSigningKey";
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
+        private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
         /// <summary> UrlSigningKey. </summary>
         public static SecretType UrlSigningKey { get; } = new SecretType(UrlSigningKeyValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
         /// <summary> ManagedCertificate. </summary>
         public static SecretType ManagedCertificate { get; } = new SecretType(ManagedCertificateValue);
+        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+        public static SecretType AzureFirstPartyManagedCertificate { get; } = new SecretType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretType"/> values are not the same. </summary>

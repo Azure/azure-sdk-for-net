@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,10 +22,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="allow"> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id, string name, ResourceType type, string kind, bool? allow) : base(id, name, type, kind)
+        internal CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? allow) : base(id, name, resourceType, systemData, kind)
         {
             Allow = allow;
         }

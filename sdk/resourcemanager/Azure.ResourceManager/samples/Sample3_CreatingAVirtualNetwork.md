@@ -6,26 +6,27 @@ In this example, we'll create a virtual network. Since the SDK follows the resou
 ## Import the namespaces
 These are the namespaces needed for this project:
 ```C#
+using System;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
-using System;
-using System.Threading.Tasks;
 ```
 
 ## Create a Resource Group
 Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
-string rgName = "myResourceGroup";
-ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
-ResourceGroup resourceGroup = operation.Value;
+string resourceGroupName = "myResourceGroup";
+ResourceGroupData resourceGroupData = new ResourceGroupData(AzureLocation.WestUS2);
+ArmOperation<ResourceGroupResource> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network
 Now that we have a resource group, we'll create our virtual network. To do this, we will create a `VirtualNetworkData` object for the parameters that we want our Virtual Network to have, then we will get the Virtual Network collection and from there we call `CreateOrUpdateAsync()`.

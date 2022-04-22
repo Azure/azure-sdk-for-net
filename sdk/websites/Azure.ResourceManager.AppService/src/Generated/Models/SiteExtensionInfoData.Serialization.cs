@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -55,30 +56,30 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(ExtensionUrl))
+            if (Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url");
-                writer.WriteStringValue(ExtensionUrl);
+                writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ProjectUrl))
+            if (Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url");
-                writer.WriteStringValue(ProjectUrl);
+                writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IconUrl))
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url");
-                writer.WriteStringValue(IconUrl);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LicenseUrl))
+            if (Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url");
-                writer.WriteStringValue(LicenseUrl);
+                writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FeedUrl))
+            if (Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url");
-                writer.WriteStringValue(FeedUrl);
+                writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("installer_command_line_params");
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
-            if (Optional.IsDefined(PublishedDateTime))
+            if (Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("published_date_time");
-                writer.WriteStringValue(PublishedDateTime.Value, "O");
+                writer.WriteStringValue(PublishedOn.Value, "O");
             }
             if (Optional.IsDefined(DownloadCount))
             {
@@ -115,10 +116,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("local_path");
                 writer.WriteStringValue(LocalPath);
             }
-            if (Optional.IsDefined(InstalledDateTime))
+            if (Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installed_date_time");
-                writer.WriteStringValue(InstalledDateTime.Value, "O");
+                writer.WriteStringValue(InstalledOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -140,17 +141,18 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> extensionId = default;
             Optional<string> title = default;
             Optional<SiteExtensionType> extensionType = default;
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<string> version = default;
-            Optional<string> extensionUrl = default;
-            Optional<string> projectUrl = default;
-            Optional<string> iconUrl = default;
-            Optional<string> licenseUrl = default;
-            Optional<string> feedUrl = default;
+            Optional<Uri> extensionUrl = default;
+            Optional<Uri> projectUrl = default;
+            Optional<Uri> iconUrl = default;
+            Optional<Uri> licenseUrl = default;
+            Optional<Uri> feedUrl = default;
             Optional<IList<string>> authors = default;
             Optional<string> installerCommandLineParams = default;
             Optional<DateTimeOffset> publishedDateTime = default;
@@ -180,6 +182,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -228,27 +235,52 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("extension_url"))
                         {
-                            extensionUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extensionUrl = null;
+                                continue;
+                            }
+                            extensionUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("project_url"))
                         {
-                            projectUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                projectUrl = null;
+                                continue;
+                            }
+                            projectUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("icon_url"))
                         {
-                            iconUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                iconUrl = null;
+                                continue;
+                            }
+                            iconUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("license_url"))
                         {
-                            licenseUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                licenseUrl = null;
+                                continue;
+                            }
+                            licenseUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("feed_url"))
                         {
-                            feedUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                feedUrl = null;
+                                continue;
+                            }
+                            feedUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authors"))
@@ -330,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteExtensionInfoData(id, name, type, kind.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value);
+            return new SiteExtensionInfoData(id, name, type, systemData, kind.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value);
         }
     }
 }

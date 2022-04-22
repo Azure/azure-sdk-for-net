@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("sourcePattern");
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination");
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlRewriteActionParameters DeserializeUrlRewriteActionParameters(JsonElement element)
         {
-            UrlRewriteActionParametersOdataType odataType = default;
+            UrlRewriteActionParametersTypeName typeName = default;
             string sourcePattern = default;
             string destination = default;
             Optional<bool> preserveUnmatchedPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new UrlRewriteActionParametersOdataType(property.Value.GetString());
+                    typeName = new UrlRewriteActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourcePattern"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UrlRewriteActionParameters(odataType, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath));
+            return new UrlRewriteActionParameters(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath));
         }
     }
 }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
+        private async Task<VirtualMachineScaleSetResource> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
             var collection = await GetVirtualMachineScaleSetCollectionAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            var lro = await collection.CreateOrUpdateAsync(true, vmssName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             return lro.Value;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
-            await vmss.DeleteAsync(true);
+            await vmss.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
-            VirtualMachineScaleSet vmss2 = await vmss.GetAsync();
+            VirtualMachineScaleSetResource vmss2 = await vmss.GetAsync();
 
             ResourceDataHelper.AssertVirtualMachineScaleSet(vmss.Data, vmss2.Data);
         }
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Compute.Tests
             // Create a PPG here and add this PPG to this virtual machine using Update
             var ppgName = Recording.GenerateAssetName("testPPG-");
             var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
-            var ppgLro = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(true, ppgName, ppgData);
-            ProximityPlacementGroup ppg = ppgLro.Value;
+            var ppgLro = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, ppgName, ppgData);
+            ProximityPlacementGroupResource ppg = ppgLro.Value;
             // update PPG requires the VM to be deallocated
-            await vmss.DeallocateAsync(true);
-            var update = new VirtualMachineScaleSetUpdate()
+            await vmss.DeallocateAsync(WaitUntil.Completed);
+            var update = new VirtualMachineScaleSetPatch()
             {
                 ProximityPlacementGroup = new WritableSubResource()
                 {
                     Id = ppg.Id
                 }
             };
-            var lro = await vmss.UpdateAsync(true, update);
-            VirtualMachineScaleSet updatedVM = lro.Value;
+            var lro = await vmss.UpdateAsync(WaitUntil.Completed, update);
+            VirtualMachineScaleSetResource updatedVM = lro.Value;
 
             Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
-            await vmss.PowerOffAsync(true);
+            await vmss.PowerOffAsync(WaitUntil.Completed);
         }
     }
 }

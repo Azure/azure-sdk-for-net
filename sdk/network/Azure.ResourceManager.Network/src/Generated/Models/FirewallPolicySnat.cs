@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-    public partial class FirewallPolicySnat
+    internal partial class FirewallPolicySnat
     {
         /// <summary> Initializes a new instance of FirewallPolicySnat. </summary>
         public FirewallPolicySnat()

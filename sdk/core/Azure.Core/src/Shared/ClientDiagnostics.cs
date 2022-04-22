@@ -30,8 +30,10 @@ namespace Azure.Core.Pipeline
         }
 
         public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, false)
         {
+            // TODO: use DiagnosticsOptions.SuppressNestedClientSpans  here after new Azure.Core ships:
+            // ClientDiagnostics class is shared as a source code and used in client libraries.
             _sanitizer = CreateMessageSanitizer(diagnosticsOptions);
         }
 

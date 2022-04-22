@@ -15,13 +15,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of AfdOrigin and their operations over its parent. </summary>
-    public partial class AfdOriginCollection : ArmCollection, IEnumerable<AfdOrigin>, IAsyncEnumerable<AfdOrigin>
+    /// <summary>
+    /// A class representing a collection of <see cref="AfdOriginResource" /> and their operations.
+    /// Each <see cref="AfdOriginResource" /> in the collection will belong to the same instance of <see cref="AfdOriginGroupResource" />.
+    /// To get an <see cref="AfdOriginCollection" /> instance call the GetAfdOrigins method from an instance of <see cref="AfdOriginGroupResource" />.
+    /// </summary>
+    public partial class AfdOriginCollection : ArmCollection, IEnumerable<AfdOriginResource>, IAsyncEnumerable<AfdOriginResource>
     {
         private readonly ClientDiagnostics _afdOriginClientDiagnostics;
         private readonly AfdOriginsRestOperations _afdOriginRestClient;
@@ -32,12 +35,13 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdOriginCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AfdOriginCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AfdOriginCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _afdOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOrigin.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(AfdOrigin.ResourceType, out string afdOriginApiVersion);
-            _afdOriginRestClient = new AfdOriginsRestOperations(_afdOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginApiVersion);
+            _afdOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOriginResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AfdOriginResource.ResourceType, out string afdOriginApiVersion);
+            _afdOriginRestClient = new AfdOriginsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, afdOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -45,66 +49,33 @@ namespace Azure.ResourceManager.Cdn
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AfdOriginGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AfdOriginGroup.ResourceType), nameof(id));
+            if (id.ResourceType != AfdOriginGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AfdOriginGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a new origin within the specified origin group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a new origin within the specified origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
-        /// <param name="origin"> Origin properties. </param>
+        /// <param name="data"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public virtual AfdOriginCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AfdOriginResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string originName, AfdOriginData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
-            if (origin == null)
-            {
-                throw new ArgumentNullException(nameof(origin));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _afdOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
-                var operation = new AfdOriginCreateOrUpdateOperation(ArmClient, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new origin within the specified origin group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="originName"> Name of the origin that is unique within the profile. </param>
-        /// <param name="origin"> Origin properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public async virtual Task<AfdOriginCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
-            if (origin == null)
-            {
-                throw new ArgumentNullException(nameof(origin));
-            }
-
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _afdOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdOriginCreateOrUpdateOperation(ArmClient, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
-                if (waitForCompletion)
+                var response = await _afdOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<AfdOriginResource>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -115,23 +86,31 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing origin within an origin group. </summary>
-        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
+        /// <summary>
+        /// Creates a new origin within the specified origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="originName"> Name of the origin that is unique within the profile. </param>
+        /// <param name="data"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual Response<AfdOrigin> Get(string originName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AfdOriginResource> CreateOrUpdate(WaitUntil waitUntil, string originName, AfdOriginData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Get");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
-                if (response.Value == null)
-                    throw _afdOriginClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
+                var response = _afdOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, data, cancellationToken);
+                var operation = new CdnArmOperation<AfdOriginResource>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,12 +119,16 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing origin within an origin group. </summary>
+        /// <summary>
+        /// Gets an existing origin within an origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Get
+        /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<AfdOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AfdOriginResource>> GetAsync(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
@@ -155,8 +138,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _afdOriginClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdOriginResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +148,27 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets an existing origin within an origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Get
+        /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual Response<AfdOrigin> GetIfExists(string originName, CancellationToken cancellationToken = default)
+        public virtual Response<AfdOriginResource> Get(string originName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Get");
             scope.Start();
             try
             {
-                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
+                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdOriginResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,128 +177,23 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
+        /// <summary>
+        /// Lists all of the existing origins within an origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins
+        /// Operation Id: AfdOrigins_ListByOriginGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<AfdOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AfdOriginResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AfdOriginResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
-
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual Response<bool> Exists(string originName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
-
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(originName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
-
-            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(originName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all of the existing origins within an origin group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AfdOrigin" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AfdOrigin> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<AfdOrigin> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdOriginRestClient.ListByOriginGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AfdOrigin> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _afdOriginRestClient.ListByOriginGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists all of the existing origins within an origin group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AfdOrigin" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AfdOrigin> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AfdOrigin>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AfdOriginResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _afdOriginRestClient.ListByOriginGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -319,14 +201,14 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<AfdOrigin>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AfdOriginResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _afdOriginRestClient.ListByOriginGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +219,103 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<AfdOrigin> IEnumerable<AfdOrigin>.GetEnumerator()
+        /// <summary>
+        /// Lists all of the existing origins within an origin group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins
+        /// Operation Id: AfdOrigins_ListByOriginGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AfdOriginResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AfdOriginResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<AfdOriginResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdOriginRestClient.ListByOriginGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AfdOriginResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _afdOriginRestClient.ListByOriginGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Get
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
+
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}
+        /// Operation Id: AfdOrigins_Get
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        public virtual Response<bool> Exists(string originName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
+
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<AfdOriginResource> IEnumerable<AfdOriginResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -347,7 +325,7 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AfdOrigin> IAsyncEnumerable<AfdOrigin>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AfdOriginResource> IAsyncEnumerable<AfdOriginResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

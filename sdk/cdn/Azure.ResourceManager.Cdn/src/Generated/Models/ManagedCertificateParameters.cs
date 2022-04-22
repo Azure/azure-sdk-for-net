@@ -8,19 +8,28 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Managed Certificate used for https. </summary>
-    public partial class ManagedCertificateParameters : SecretParameters
+    internal partial class ManagedCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
         public ManagedCertificateParameters()
         {
-            Type = SecretType.ManagedCertificate;
+            SecretType = SecretType.ManagedCertificate;
         }
 
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
-        /// <param name="type"> The type of the Secret to create. </param>
-        internal ManagedCertificateParameters(SecretType type) : base(type)
+        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="subject"> Subject name in the certificate. </param>
+        /// <param name="expirationDate"> Certificate expiration date. </param>
+        internal ManagedCertificateParameters(SecretType secretType, string subject, string expirationDate) : base(secretType)
         {
-            Type = type;
+            Subject = subject;
+            ExpirationDate = expirationDate;
+            SecretType = secretType;
         }
+
+        /// <summary> Subject name in the certificate. </summary>
+        public string Subject { get; }
+        /// <summary> Certificate expiration date. </summary>
+        public string ExpirationDate { get; }
     }
 }

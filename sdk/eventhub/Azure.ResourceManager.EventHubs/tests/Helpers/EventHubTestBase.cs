@@ -9,7 +9,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
-using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
@@ -19,16 +18,14 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        protected Subscription DefaultSubscription;
+        protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new EventHubRecordedTestSanitizer();
-        }
 
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new EventHubRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+            JsonPathSanitizers.Add("$..keyName");
         }
 
         [SetUp]
@@ -37,11 +34,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
-        public async Task<ResourceGroup> CreateResourceGroupAsync()
+        public async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
-            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true,
+            ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -59,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNameAvailabilityNamespaceAsync(new CheckNameAvailabilityOptions(namespaceName));
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckEventHubNameAvailabilityAsync(new CheckNameAvailabilityOptions(namespaceName));
                 if (res.NameAvailable==true)
                 {
                     return namespaceName;
@@ -68,19 +65,19 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             return namespaceName;
         }
 
-        public static void VerifyNamespaceProperties(EventHubNamespace eventHubNamespace, bool useDefaults)
+        public static void VerifyNamespaceProperties(EventHubNamespaceResource eventHubNamespace, bool useDefaults)
         {
             Assert.NotNull(eventHubNamespace);
             Assert.NotNull(eventHubNamespace.Id);
             Assert.NotNull(eventHubNamespace.Id.Name);
             Assert.NotNull(eventHubNamespace.Data);
             Assert.NotNull(eventHubNamespace.Data.Location);
-            Assert.NotNull(eventHubNamespace.Data.CreatedAt);
+            Assert.NotNull(eventHubNamespace.Data.CreatedOn);
             Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {
                 Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
-                Assert.AreEqual(SkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
+                Assert.AreEqual(EventHubsSkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
             }
         }
     }

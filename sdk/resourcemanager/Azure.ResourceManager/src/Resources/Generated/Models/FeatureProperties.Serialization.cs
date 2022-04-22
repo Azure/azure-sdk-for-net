@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class FeatureProperties
+    internal partial class FeatureProperties
     {
         internal static FeatureProperties DeserializeFeatureProperties(JsonElement element)
         {

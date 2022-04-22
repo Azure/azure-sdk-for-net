@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties to secure a domain. </summary>
@@ -33,6 +35,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> TLS protocol version that will be used for Https. </summary>
         public AfdMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        public AfdCustomDomainHttpsParametersSecret Secret { get; set; }
+        internal AfdCustomDomainHttpsParametersSecret Secret { get; set; }
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SecretId
+        {
+            get => Secret is null ? default : Secret.Id;
+            set
+            {
+                if (Secret is null)
+                    Secret = new AfdCustomDomainHttpsParametersSecret();
+                Secret.Id = value;
+            }
+        }
     }
 }

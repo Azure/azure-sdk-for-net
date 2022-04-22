@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlRewriteActionParameters
     {
         /// <summary> Initializes a new instance of UrlRewriteActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
-        public UrlRewriteActionParameters(UrlRewriteActionParametersOdataType odataType, string sourcePattern, string destination)
+        public UrlRewriteActionParameters(UrlRewriteActionParametersTypeName typeName, string sourcePattern, string destination)
         {
             if (sourcePattern == null)
             {
@@ -28,26 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            OdataType = odataType;
+            TypeName = typeName;
             SourcePattern = sourcePattern;
             Destination = destination;
         }
 
         /// <summary> Initializes a new instance of UrlRewriteActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <param name="preserveUnmatchedPath"> Whether to preserve unmatched path. Default value is true. </param>
-        internal UrlRewriteActionParameters(UrlRewriteActionParametersOdataType odataType, string sourcePattern, string destination, bool? preserveUnmatchedPath)
+        internal UrlRewriteActionParameters(UrlRewriteActionParametersTypeName typeName, string sourcePattern, string destination, bool? preserveUnmatchedPath)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             SourcePattern = sourcePattern;
             Destination = destination;
             PreserveUnmatchedPath = preserveUnmatchedPath;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public UrlRewriteActionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public UrlRewriteActionParametersTypeName TypeName { get; set; }
         /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
         public string SourcePattern { get; set; }
         /// <summary> Define the relative URL to which the above requests will be rewritten by. </summary>

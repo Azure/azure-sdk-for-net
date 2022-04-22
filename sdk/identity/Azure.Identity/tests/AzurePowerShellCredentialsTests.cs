@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.CodeAnalysis.Operations;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -23,6 +21,18 @@ namespace Azure.Identity.Tests
 
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var pwshOptions = new AzurePowerShellCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            return  InstrumentClient(
+                new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+        }
 
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential(
@@ -61,16 +71,27 @@ namespace Azure.Identity.Tests
             }
         }
 
+        private static IEnumerable<object[]> ErrorScenarios()
+        {
+            yield return new object[] { "'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError };
+            yield return new object[] { "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+        }
+
         [Test]
-        public void AuthenticateWithAzurePowerShellCredential_PwshNotInstalled(
-            [Values("'pwsh' is not recognized", "pwsh: command not found", "pwsh: not found")]
-            string errorMessage)
+        [TestCaseSource(nameof(ErrorScenarios))]
+        public void AuthenticateWithAzurePowerShellCredential_ErrorScenarios(string errorMessage, string expectedError)
         {
             var testProcess = new TestProcess { Error = errorMessage };
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.PowerShellNotInstalledError, ex.Message);
+            Assert.AreEqual(expectedError, ex.Message);
         }
 
         [Test]
@@ -82,10 +103,7 @@ namespace Azure.Identity.Tests
             {
                 var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
                 TestContext.WriteLine(processOutput);
-                var testProcess = new TestProcess
-                {
-                    Output = processOutput,
-                };
+                var testProcess = new TestProcess { Output = processOutput, };
                 AzurePowerShellCredential credential = InstrumentClient(
                     new AzurePowerShellCredential(
                         new AzurePowerShellCredentialOptions(),
@@ -136,28 +154,6 @@ namespace Azure.Identity.Tests
                 new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzurePowerShellCredential.PowerShellNotInstalledError, ex.Message);
-        }
-
-        [Test]
-        public void AuthenticateWithAzurePowerShellCredential_RunConnectAzAccount(
-            [Values("Run Connect-AzAccount to login")]
-            string errorMessage)
-        {
-            var testProcess = new TestProcess { Error = errorMessage };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellNotLogInError, ex.Message);
-        }
-
-        [Test]
-        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellModuleNotInstalled([Values("NoAzAccountModule")] string message)
-        {
-            var testProcess = new TestProcess { Output = message };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError, ex.Message);
         }
 
         [Test]

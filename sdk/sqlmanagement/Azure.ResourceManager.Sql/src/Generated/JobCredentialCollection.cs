@@ -15,13 +15,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobCredential and their operations over its parent. </summary>
-    public partial class JobCredentialCollection : ArmCollection, IEnumerable<JobCredential>, IAsyncEnumerable<JobCredential>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobCredentialResource" /> and their operations.
+    /// Each <see cref="JobCredentialResource" /> in the collection will belong to the same instance of <see cref="JobAgentResource" />.
+    /// To get a <see cref="JobCredentialCollection" /> instance call the GetJobCredentials method from an instance of <see cref="JobAgentResource" />.
+    /// </summary>
+    public partial class JobCredentialCollection : ArmCollection, IEnumerable<JobCredentialResource>, IAsyncEnumerable<JobCredentialResource>
     {
         private readonly ClientDiagnostics _jobCredentialClientDiagnostics;
         private readonly JobCredentialsRestOperations _jobCredentialRestClient;
@@ -32,12 +35,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="JobCredentialCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal JobCredentialCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal JobCredentialCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobCredential.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(JobCredential.ResourceType, out string jobCredentialApiVersion);
-            _jobCredentialRestClient = new JobCredentialsRestOperations(_jobCredentialClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobCredentialApiVersion);
+            _jobCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobCredentialResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(JobCredentialResource.ResourceType, out string jobCredentialApiVersion);
+            _jobCredentialRestClient = new JobCredentialsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobCredentialApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -45,72 +49,33 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != JobAgent.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgent.ResourceType), nameof(id));
+            if (id.ResourceType != JobAgentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgentResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_CreateOrUpdate
-        /// <summary> Creates or updates a job credential. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a job credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="credentialName"> The name of the credential. </param>
-        /// <param name="parameters"> The requested job credential state. </param>
+        /// <param name="data"> The requested job credential state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobCredentialCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<JobCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialName, JobCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, parameters, cancellationToken);
-                var operation = new JobCredentialCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_CreateOrUpdate
-        /// <summary> Creates or updates a job credential. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="credentialName"> The name of the credential. </param>
-        /// <param name="parameters"> The requested job credential state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobCredentialCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _jobCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new JobCredentialCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
+                var response = await _jobCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<JobCredentialResource>(Response.FromValue(new JobCredentialResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -121,26 +86,31 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_Get
-        /// <summary> Gets a jobs credential. </summary>
+        /// <summary>
+        /// Creates or updates a job credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="credentialName"> The name of the credential. </param>
+        /// <param name="data"> The requested job credential state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual Response<JobCredential> Get(string credentialName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<JobCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string credentialName, JobCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Get");
+            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken);
-                if (response.Value == null)
-                    throw _jobCredentialClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobCredential(ArmClient, response.Value), response.GetRawResponse());
+                var response = _jobCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken);
+                var operation = new SqlArmOperation<JobCredentialResource>(Response.FromValue(new JobCredentialResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,15 +119,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_Get
-        /// <summary> Gets a jobs credential. </summary>
+        /// <summary>
+        /// Gets a jobs credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_Get
+        /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public async virtual Task<Response<JobCredential>> GetAsync(string credentialName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobCredentialResource>> GetAsync(string credentialName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
@@ -167,8 +138,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _jobCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jobCredentialClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobCredential(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +148,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a jobs credential.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_Get
+        /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual Response<JobCredential> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
+        public virtual Response<JobCredentialResource> Get(string credentialName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
+            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken);
+                var response = _jobCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<JobCredential>(null, response.GetRawResponse());
-                return Response.FromValue(new JobCredential(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,134 +177,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="credentialName"> The name of the credential. </param>
+        /// <summary>
+        /// Gets a list of jobs credentials.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials
+        /// Operation Id: JobCredentials_ListByAgent
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public async virtual Task<Response<JobCredential>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JobCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _jobCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<JobCredential>(null, response.GetRawResponse());
-                return Response.FromValue(new JobCredential(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="credentialName"> The name of the credential. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(credentialName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="credentialName"> The name of the credential. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
-            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_ListByAgent
-        /// <summary> Gets a list of jobs credentials. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobCredential" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobCredential> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<JobCredential> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobCredentialRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobCredential(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<JobCredential> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobCredentialRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobCredential(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobCredentials_ListByAgent
-        /// <summary> Gets a list of jobs credentials. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobCredential" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobCredential> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<JobCredential>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<JobCredentialResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _jobCredentialRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobCredential(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,14 +201,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<JobCredential>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<JobCredentialResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _jobCredentialRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobCredential(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,7 +219,103 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<JobCredential> IEnumerable<JobCredential>.GetEnumerator()
+        /// <summary>
+        /// Gets a list of jobs credentials.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials
+        /// Operation Id: JobCredentials_ListByAgent
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JobCredentialResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<JobCredentialResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobCredentialRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<JobCredentialResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobCredentialRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_Get
+        /// </summary>
+        /// <param name="credentialName"> The name of the credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _jobCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}
+        /// Operation Id: JobCredentials_Get
+        /// </summary>
+        /// <param name="credentialName"> The name of the credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _jobCredentialClientDiagnostics.CreateScope("JobCredentialCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _jobCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<JobCredentialResource> IEnumerable<JobCredentialResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -365,7 +325,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<JobCredential> IAsyncEnumerable<JobCredential>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<JobCredentialResource> IAsyncEnumerable<JobCredentialResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

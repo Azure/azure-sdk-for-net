@@ -13,15 +13,18 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly LazyLoadingBlobStreamFactory _lazyLoadingBlobStreamFactory;
         private readonly AvroReaderFactory _avroReaderFactory;
         private readonly BlobContainerClient _containerClient;
+        private readonly long? _maxTransferSize;
 
         public ChunkFactory(
             BlobContainerClient containerClient,
             LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
-            AvroReaderFactory avroReaderFactory)
+            AvroReaderFactory avroReaderFactory,
+            long? maxTransferSize)
         {
             _containerClient = containerClient;
             _lazyLoadingBlobStreamFactory = lazyLoadingBlobStreamFactory;
             _avroReaderFactory = avroReaderFactory;
+            _maxTransferSize = maxTransferSize;
         }
 
         internal async virtual Task<Chunk> BuildChunk(
@@ -37,7 +40,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             Stream dataStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                 blobClient,
                 offset: blockOffset,
-                blockSize: Constants.ChangeFeed.ChunkBlockDownloadSize);
+                blockSize: _maxTransferSize ?? Constants.ChangeFeed.ChunkBlockDownloadSize);
 
             // We aren't starting from the beginning of the Chunk
             if (blockOffset != 0)

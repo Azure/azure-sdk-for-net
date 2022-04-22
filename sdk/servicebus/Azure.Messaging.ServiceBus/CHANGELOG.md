@@ -1,14 +1,87 @@
 # Release History
 
-## 7.6.0-beta.1 (Unreleased)
+## 7.8.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.8.0-beta.2 (2022-04-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
+
+### Bugs Fixed
+
+- Relaxed `ServiceBusMessage` validation to allow the `SessionId` property to be changed after the `PartitionKey` property is already set.
+
+### Other Changes
+
+- Removed allocations and boxing from `EventSource` logging. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.8.0-beta.1 (2022-03-10)
+
+### Features Added
+
+- Added the `ServiceBusRuleManager` which allows managing rules for subscriptions.
+
+## 7.7.0 (2022-03-09)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Add the ability to manually renew message and session locks when using the processor.
+
+### Bugs Fixed
+
+- Fixed name of ServiceBusAdministrationClient extension method.
+- Fixed entity name validation when passing in a subscription entity path into the 
+  CreateReceiver method.
+
+### Other Changes
+
+- Removed LINQ allocations when sending messages. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.6.0 (2022-02-08)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Max Hamulyak _([GitHub](https://github.com/kaylumah))_
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+- Remove array allocation when creating linked token sources from the ServiceBusProcessor
+
+### Features Added
+
+- The `State` property has been added to `ServiceBusReceivedMessage` which indicates whether a message is `Active`, `Scheduled`, or `Deferred`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Extension methods have been added for registering the `ServiceBusAdministrationClient` via dependency injection for use in ASP.NET Core applications. _(A community contribution, courtesy of [kaylumah](https://github.com/kaylumah))_
+
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
+## 7.5.1 (2021-12-07)
 
 ### Bugs Fixed
 
 - Add a delay when retrying if we are being throttled by the service.
-
-### Features Added
-
-- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
 
 ## 7.5.0 (2021-11-10)
 

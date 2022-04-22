@@ -1,88 +1,86 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels:authorizeCopy?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels:authorizeCopy?api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "24",
+        "Content-Length": "23",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-58205008950a324e99f7b9c14d53fc19-ddf06e9e007ac648-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210924.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "8401da982ca509d14b865343903b9b26",
+        "traceparent": "00-cbc6c4140480e690e95fdb6bf8343ea1-2e6d6178dc8e86c5-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d43c612ccde544f91648ce836b6f3e3b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "1645560502"
+        "modelId": "312621347"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "77b207ed-976c-4e1d-80d0-912deaf8bff1",
+        "apim-request-id": "7f80c1f4-47ee-409c-9b06-9cdb0c333ef6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 24 Sep 2021 19:37:11 GMT",
+        "Date": "Tue, 25 Jan 2022 22:27:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "214"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "154"
       },
       "ResponseBody": {
-        "targetResourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/mariari-group/providers/Microsoft.CognitiveServices/accounts/mariari-centraluseuap",
-        "targetResourceRegion": "centraluseuap",
-        "targetModelId": "1645560502",
-        "targetModelLocation": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1645560502?api-version=2021-09-30-preview",
+        "targetResourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/camaiaor-rg/providers/Microsoft.CognitiveServices/accounts/camaiaor-formrec-eastus",
+        "targetResourceRegion": "eastus",
+        "targetModelId": "312621347",
+        "targetModelLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/312621347?api-version=2022-01-30-preview",
         "accessToken": "Sanitized",
-        "expirationDateTime": "2021-09-24T20:37:12Z"
+        "expirationDateTime": "2022-01-25T23:28:00Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1645560502:copyTo?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/312621347:copyTo?api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "472",
+        "Content-Length": "465",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-dde90013ae9e2d418d62b84e05ab600a-a8043be33a72ac40-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210924.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "6e9869b6393989ca0357b0514173e6b5",
+        "traceparent": "00-1cf8806d3d2c7c0a6bf45cc55485e1f1-91e56f5afe6ab987-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7563daaa2e973d9be45589316c42e344",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "targetResourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/mariari-group/providers/Microsoft.CognitiveServices/accounts/mariari-centraluseuap",
-        "targetResourceRegion": "centraluseuap",
-        "targetModelId": "1645560502",
-        "targetModelLocation": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1645560502?api-version=2021-09-30-preview",
+        "targetResourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/camaiaor-rg/providers/Microsoft.CognitiveServices/accounts/camaiaor-formrec-eastus",
+        "targetResourceRegion": "eastus",
+        "targetModelId": "312621347",
+        "targetModelLocation": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/312621347?api-version=2022-01-30-preview",
         "accessToken": "Sanitized",
-        "expirationDateTime": "2021-09-24T20:37:12.0000000Z"
+        "expirationDateTime": "2022-01-25T23:28:00.0000000Z"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "d5357878-e2cf-43e7-8ccd-f99984f3d535",
+        "apim-request-id": "b09becf3-77b5-4f11-8186-6db3aa6f4a45",
         "Content-Type": "application/json",
-        "Date": "Fri, 24 Sep 2021 19:37:12 GMT",
+        "Date": "Tue, 25 Jan 2022 22:28:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "104"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "48"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022InvalidRequest\u0022,\n",
-        "    \u0022message\u0022: \u0022Invalid request.\u0022,\n",
-        "    \u0022innererror\u0022: {\n",
-        "      \u0022code\u0022: \u0022ModelNotReady\u0022,\n",
-        "      \u0022message\u0022: \u0022Model is not ready for the requested operation. Wait for training to complete or check for operation errors.\u0022\n",
-        "    }\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidRequest",
+          "message": "Invalid request.",
+          "innererror": {
+            "code": "ModelNotReady",
+            "message": "Model is not ready for the requested operation. Wait for training to complete or check for operation errors."
+          }
+        }
+      }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
-    "RandomSeed": "1391147512"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
+    "RandomSeed": "1318522950"
   }
 }

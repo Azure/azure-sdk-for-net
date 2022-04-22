@@ -8,6 +8,7 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,18 +23,19 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SourceControlData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="token"> OAuth access token. </param>
         /// <param name="tokenSecret"> OAuth access token secret. </param>
         /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expirationTime"> OAuth token expiration. </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType type, string kind, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationTime) : base(id, name, type, kind)
+        /// <param name="expirationOn"> OAuth token expiration. </param>
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationOn) : base(id, name, resourceType, systemData, kind)
         {
             Token = token;
             TokenSecret = tokenSecret;
             RefreshToken = refreshToken;
-            ExpirationTime = expirationTime;
+            ExpirationOn = expirationOn;
         }
 
         /// <summary> OAuth access token. </summary>
@@ -43,6 +45,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> OAuth refresh token. </summary>
         public string RefreshToken { get; set; }
         /// <summary> OAuth token expiration. </summary>
-        public DateTimeOffset? ExpirationTime { get; set; }
+        public DateTimeOffset? ExpirationOn { get; set; }
     }
 }

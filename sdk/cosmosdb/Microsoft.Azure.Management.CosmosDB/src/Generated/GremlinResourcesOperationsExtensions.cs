@@ -834,6 +834,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Retrieves continuous backup information for a gremlin graph.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation RetrieveContinuousBackupInformation(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.RetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, graphName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a gremlin graph.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> RetrieveContinuousBackupInformationAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB Gremlin database
             /// </summary>
             /// <param name='operations'>
@@ -1348,6 +1406,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginMigrateGremlinGraphToManualThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a gremlin graph.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation BeginRetrieveContinuousBackupInformation(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.BeginRetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, graphName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a gremlin graph.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> BeginRetrieveContinuousBackupInformationAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

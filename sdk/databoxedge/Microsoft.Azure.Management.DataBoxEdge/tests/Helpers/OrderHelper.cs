@@ -27,7 +27,7 @@ namespace DataBoxEdge.Tests
                     postalCode: "560103",
                     country: "India"
                 );
-            Order order = new Order(contactDetails, shippingAddress: shippingAddress);
+            Order order = new Order(contactInformation: contactDetails, shippingAddress: shippingAddress);
             return order;
         }
 

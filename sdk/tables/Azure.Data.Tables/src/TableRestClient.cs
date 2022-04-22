@@ -18,11 +18,10 @@ namespace Azure.Data.Tables
     {
         internal string endpoint
         {
-            get { return url; }
-            set { url = value; }
+            get { return _url; }
         }
 
-        internal string clientVersion => version;
+        internal string clientVersion => _version;
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
         {
@@ -30,10 +29,10 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/$batch", false);
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (requestId != null)
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
@@ -86,13 +85,13 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+                        RequestFailedException rfex = await ClientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
 
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -126,12 +125,12 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        RequestFailedException rfex = ClientDiagnostics.CreateRequestFailedException(responses[0]);
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

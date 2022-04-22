@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        result = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = KnowledgeBaseAnswers.DeserializeKnowledgeBaseAnswers(property.Value);

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB MongoDB collection index key. </summary>
@@ -25,7 +27,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB MongoDB collection index keys. </summary>
-        public MongoIndexKeys Key { get; set; }
+        internal MongoIndexKeys Key { get; set; }
+        /// <summary> List of keys for each MongoDB collection in the Azure Cosmos DB service. </summary>
+        public IList<string> Keys
+        {
+            get
+            {
+                if (Key is null)
+                    Key = new MongoIndexKeys();
+                return Key.Keys;
+            }
+        }
+
         /// <summary> Cosmos DB MongoDB collection index key options. </summary>
         public MongoIndexOptions Options { get; set; }
     }

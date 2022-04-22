@@ -81,20 +81,20 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("ddosSettings");
                 writer.WriteObjectValue(DdosSettings);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags");
                 writer.WriteStartArray();
-                foreach (var item in IpTags)
+                foreach (var item in IPTags)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(PublicIPPrefix))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
             Optional<IPConfiguration> ipConfiguration = default;
             Optional<PublicIPAddressDnsSettings> dnsSettings = default;
             Optional<DdosSettings> ddosSettings = default;
-            Optional<IList<IpTag>> ipTags = default;
+            Optional<IList<IPTag>> ipTags = default;
             Optional<string> ipAddress = default;
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<int> idleTimeoutInMinutes = default;
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpTag> array = new List<IpTag>();
+                            List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpTag.DeserializeIpTag(item));
+                                array.Add(IPTag.DeserializeIPTag(item));
                             }
                             ipTags = array;
                             continue;

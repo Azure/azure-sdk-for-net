@@ -16,6 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static DocTypeInfo DeserializeDocTypeInfo(JsonElement element)
         {
             Optional<string> description = default;
+            Optional<DocumentBuildMode> buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
             Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
             foreach (var property in element.EnumerateObject())
@@ -23,6 +24,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 if (property.NameEquals("description"))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("buildMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    buildMode = new DocumentBuildMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fieldSchema"))
@@ -51,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocTypeInfo(description.Value, fieldSchema, Optional.ToDictionary(fieldConfidence));
+            return new DocTypeInfo(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
         }
     }
 }

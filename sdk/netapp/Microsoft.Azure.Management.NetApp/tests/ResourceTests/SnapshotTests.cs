@@ -231,6 +231,42 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
+        [Fact]
+        public void RestoreFilesFromSnapshotFileDoesNotExist()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // create the snapshot
+                var snapshot = ResourceUtils.CreateSnapshot(netAppMgmtClient);
+
+                // check snapshot exists
+                var snapshotsBefore = netAppMgmtClient.Snapshots.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                Assert.Single(snapshotsBefore);
+                // check date created has been set to something
+                // can't check exact times becausefails in playback mode
+                Assert.True(true);
+                Assert.NotNull(snapshotsBefore.First().Created);
+                
+                SnapshotRestoreFiles restoreBody = new SnapshotRestoreFiles() { FilePaths = new List<string> {"/dir1/file1" }, DestinationPath = "/dataStore"};
+                var assertException = Assert.Throws<CloudException>(()=>netAppMgmtClient.Snapshots.RestoreFiles(restoreBody, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1));
+                string exceptionCode = "SingleFileSnapshotRestoreInvalidStatusForOperation";
+                Assert.Equal(exceptionCode, assertException.Body.Details[0]?.Code);
+                
+                // delete the snapshot and check again
+                netAppMgmtClient.Snapshots.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1);
+                var snapshotsAfter = netAppMgmtClient.Snapshots.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                Assert.Empty(snapshotsAfter);
+
+                // cleanup - remove the resources
+                ResourceUtils.DeleteVolume(netAppMgmtClient);
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.SnapshotTests).GetTypeInfo().Assembly.Location;

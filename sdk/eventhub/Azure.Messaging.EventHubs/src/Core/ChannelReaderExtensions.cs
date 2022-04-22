@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Core
                                 if ((waitSource == null) || (waitSource.IsCancellationRequested))
                                 {
                                     waitSource?.Dispose();
-                                    waitSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                                    waitSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
                                 }
 
                                 waitSource.CancelAfter(maximumWaitTime.Value);

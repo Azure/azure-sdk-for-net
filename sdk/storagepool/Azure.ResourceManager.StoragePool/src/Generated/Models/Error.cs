@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
+using Azure;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         /// <summary> Initializes a new instance of Error. </summary>
         /// <param name="errorValue"> RP error response. </param>
-        internal Error(ErrorDetail errorValue)
+        internal Error(ResponseError errorValue)
         {
             ErrorValue = errorValue;
         }
 
         /// <summary> RP error response. </summary>
-        public ErrorDetail ErrorValue { get; }
+        public ResponseError ErrorValue { get; }
     }
 }

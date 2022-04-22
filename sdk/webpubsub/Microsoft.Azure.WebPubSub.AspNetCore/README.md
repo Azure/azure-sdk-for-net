@@ -6,12 +6,12 @@ Any scenario that requires real-time publish-subscribe messaging between server 
 
 This library can be used to do the following actions. Details about the terms used here are described in [Key concepts](#key-concepts) section.
 
-- Parse upstream request under CloudNative CloudEvents
+- Parse upstream requests under CloudNative CloudEvents
 - Add validation options for upstream request
 - API to add user defined functionality to handle different upstream events
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/src) |
-Package |
+[Package][package_ref] |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples][sample_ref] |
@@ -20,7 +20,7 @@ Package |
 
 ### Install the package
 
-Install the client library from [NuGet](https://www.nuget.org/):
+Install the client library from [NuGet][package_ref]
 
 ```PowerShell
 dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
@@ -33,13 +33,30 @@ dotnet add package Microsoft.Azure.WebPubSub.AspNetCore --prerelease
 
 ### Authenticate the client
 
-In order to interact with the service, you'll need to create an instance of the WebPubSubServiceClient class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
+In order to interact with the service, you'll need to provide the Web PubSub service with a valid credential. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal. Besides, if you want to invoke service REST API, you can call `AddWebPubSubServiceClient<THub>()` where `THub` is user implemented [`WebPubSubHub`](#webpubsubhub) listening to important events.
 
-### Create a `WebPubSubServiceClient`
+### Configure Web PubSub service options
 
-```C# Snippet:WebPubSubAuthenticate
-// Create a WebPubSubServiceClient that will authenticate using a key credential.
-var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+```C# Snippet:WebPubSubDependencyInjection
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddWebPubSub(o =>
+    {
+        o.ServiceEndpoint = new("<connection-string>");
+    }).AddWebPubSubServiceClient<SampleHub>();
+}
+```
+
+### Map `WebPubSubHub` to endpoint routing
+
+```C# Snippet:WebPubSubMapHub
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
+    });
+}
 ```
 
 ## Key concepts
@@ -56,42 +73,27 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ## Examples
 
-### Add Web PubSub service with options
+### Handle upstream `Connect` event
 
-```C#
-public void ConfigureServices(IServiceCollection services)
+```C# Snippet:WebPubSubHubMethods
+private sealed class SampleHub : WebPubSubHub
 {
-    services.AddWebPubSub(o =>
+    internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+    // Need to ensure service client is injected by call `AddServiceHub<SampleHub>` in ConfigureServices.
+    public SampleHub(WebPubSubServiceClient<SampleHub> serviceClient)
     {
-        o.ValidationOptions.Add("<connection-string>");
-    });
-}
-```
+        _serviceClient = serviceClient;
+    }
 
-### Map `WebPubSubHub` to endpoint routing
-
-The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
-
-```C#
-public void Configure(IApplicationBuilder app)
-{
-    app.UseEndpoints(endpoint =>
+    public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
     {
-        endpoint.MapWebPubSubHub<SampleHub>("/eventhander");
-    });
-}
-```
-
-### Handle Upstream event
-
-```C#
-public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
-{
-    var response = new ConnectEventResponse
-    {
-        UserId = request.ConnectionContext.UserId
-    };
-    return new ValueTask<ConnectEventResponse>(response);
+        var response = new ConnectEventResponse
+        {
+            UserId = request.ConnectionContext.UserId
+        };
+        return new ValueTask<ConnectEventResponse>(response);
+    }
 }
 ```
 
@@ -103,9 +105,7 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 
 ## Next steps
 
-Please take a look at the
-[samples][samples_ref]
-directory for detailed examples on how to use this library.
+Please take a look at the [Samples][sample_ref] directory for detailed examples on how to use this library.
 
 ## Contributing
 
@@ -124,3 +124,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples/
+[package_ref]: https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore/

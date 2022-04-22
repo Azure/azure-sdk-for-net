@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetCertificatesCollectionAsync();
             var name = Recording.GenerateAssetName("testCertificate");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var certificate = lro.Value;
             Assert.AreEqual(name, certificate.Data.Name);
         }
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetCertificatesCollectionAsync();
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(true, certificateName, input);
-            Certificate certificate1 = lro.Value;
-            Certificate certificate2 = await container.GetAsync(certificateName);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
+            CertificateResource certificate1 = lro.Value;
+            CertificateResource certificate2 = await container.GetAsync(certificateName);
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
         }
 
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var container = await GetCertificatesCollectionAsync();
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
-            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testCertificate-"), input);
-            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testCertificate-"), input);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testCertificate-"), input);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testCertificate-"), input);
             int count = 0;
             await foreach (var certificate in container.GetAllAsync())
             {
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetCertificatesCollectionAsync();
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(true, certificateName, input);
-            Certificate certificate = lro.Value;
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
+            CertificateResource certificate = lro.Value;
             Assert.IsTrue(await container.ExistsAsync(certificateName));
             Assert.IsFalse(await container.ExistsAsync(certificateName + "1"));
 

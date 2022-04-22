@@ -9,9 +9,12 @@
     <Import_RootNamespace>Azure.Security.KeyVault.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AttestationMayFailAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IgnoreServiceErrorAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEnvironment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PartiallyDeployedAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PremiumOnlyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestExtensions.cs" />
   </ItemGroup>

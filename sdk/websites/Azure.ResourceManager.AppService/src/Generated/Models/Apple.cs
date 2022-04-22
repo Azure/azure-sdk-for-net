@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Apple provider. </summary>
@@ -31,6 +33,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings of the Apple registration. </summary>
         public AppleRegistration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>
-        public LoginScopes Login { get; set; }
+        internal LoginScopes Login { get; set; }
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        public IList<string> LoginScopes
+        {
+            get
+            {
+                if (Login is null)
+                    Login = new LoginScopes();
+                return Login.Scopes;
+            }
+        }
     }
 }

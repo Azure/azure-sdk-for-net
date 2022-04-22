@@ -16,7 +16,7 @@ using Azure.ResourceManager.StoragePool.Models;
 namespace Azure.ResourceManager.StoragePool
 {
     /// <summary> A class representing the DiskPool data model. </summary>
-    public partial class DiskPoolData : TrackedResource
+    public partial class DiskPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
         /// <param name="location"> The location. </param>
@@ -48,25 +48,24 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Determines the SKU of the Disk pool. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
-        /// <param name="systemData"> Resource metadata required by ARM RPC. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
-        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string managedBy, IReadOnlyList<string> managedByExtended, SystemData systemData, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, type, tags, location)
+        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             AvailabilityZones = availabilityZones;
             Status = status;
@@ -76,13 +75,11 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         /// <summary> Determines the SKU of the Disk pool. </summary>
-        public Models.Sku Sku { get; set; }
+        public StoragePoolSku Sku { get; set; }
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>
         public string ManagedBy { get; }
         /// <summary> List of Azure resource ids that manage this resource. </summary>
         public IReadOnlyList<string> ManagedByExtended { get; }
-        /// <summary> Resource metadata required by ARM RPC. </summary>
-        public SystemData SystemData { get; }
         /// <summary> State of the operation on the resource. </summary>
         public ProvisioningStates ProvisioningState { get; }
         /// <summary> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </summary>

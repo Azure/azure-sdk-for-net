@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("userAssignedIdentity");
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
+            if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
+            {
+                writer.WritePropertyName("federatedIdentityClientId");
+                writer.WriteStringValue(EncryptionFederatedIdentityClientId);
+            }
             writer.WriteEndObject();
         }
 
         internal static EncryptionIdentity DeserializeEncryptionIdentity(JsonElement element)
         {
             Optional<string> userAssignedIdentity = default;
+            Optional<string> federatedIdentityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"))
@@ -33,8 +39,13 @@ namespace Azure.ResourceManager.Storage.Models
                     userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("federatedIdentityClientId"))
+                {
+                    federatedIdentityClientId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new EncryptionIdentity(userAssignedIdentity.Value);
+            return new EncryptionIdentity(userAssignedIdentity.Value, federatedIdentityClientId.Value);
         }
     }
 }

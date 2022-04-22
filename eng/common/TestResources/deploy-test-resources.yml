@@ -48,7 +48,6 @@ steps:
       # pass those in via the ArmTemplateParameters flag, and handle any
       # additional parameters from the pipelines via AdditionalParameters
       eng/common/TestResources/New-TestResources.ps1 `
-        -BaseName 'Generated' `
         -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
         -Location '${{ parameters.Location }}' `
         -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `

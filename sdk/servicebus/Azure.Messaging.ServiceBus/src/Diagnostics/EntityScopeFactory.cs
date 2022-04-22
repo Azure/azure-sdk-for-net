@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   The client diagnostics instance responsible for managing scope.
         /// </summary>
         ///
-        private static DiagnosticScopeFactory _scopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, _resourceProviderNamespace, true);
+        private static DiagnosticScopeFactory _scopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, _resourceProviderNamespace, true, false);
 
         public EntityScopeFactory(
             string entityPath,
@@ -34,6 +34,28 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             _entityPath = entityPath;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
+        }
+
+        /// <summary>
+        ///   Extracts a diagnostic id from a message's properties.
+        /// </summary>
+        ///
+        /// <param name="properties">The properties holding the diagnostic id.</param>
+        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
+        ///
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryExtractDiagnosticId(IReadOnlyDictionary<string, object> properties, out string id)
+        {
+            id = null;
+
+            if (properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            {
+                id = stringId;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

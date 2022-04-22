@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<PrivateEndpointProperty> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> groupId = default;
@@ -66,6 +68,11 @@ namespace Azure.ResourceManager.CosmosDB
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionData(id, name, type, privateEndpoint.Value, privateLinkServiceConnectionState.Value, groupId.Value, provisioningState.Value);
+            return new PrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint.Value, privateLinkServiceConnectionState.Value, groupId.Value, provisioningState.Value);
         }
     }
 }

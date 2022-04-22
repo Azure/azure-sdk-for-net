@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of VirtualMachineInventoryItem. </summary>
         internal VirtualMachineInventoryItem()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
             InventoryType = InventoryType.VirtualMachine;
         }
 
         /// <summary> Gets or sets the type of the os. </summary>
-        public OSType? OsType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets or sets os name. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
         /// <summary> Gets or sets the nic ip addresses. </summary>
-        public IReadOnlyList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
         /// <summary> Gets or sets the folder path of the vm. </summary>
         public string FolderPath { get; }
         /// <summary> Host inventory resource details. </summary>

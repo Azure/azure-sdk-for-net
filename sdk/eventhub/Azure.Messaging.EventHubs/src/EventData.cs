@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : MessageWithMetadata
+    public class EventData : MessageContent
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public override string ContentType
+        public new string ContentType
         {
             get
             {
@@ -97,8 +97,21 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///    This member is intended to allow the string-based <see cref="ContentType" /> in this class to be
+        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="MessageContent" />
+        ///    base class.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ContentType? ContentTypeCore
+        {
+            get => new ContentType(ContentType);
+            set => ContentType = value.ToString();
+        }
+
+        /// <summary>
         ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
-        ///   in order to inherit from <see cref="MessageWithMetadata"/>.
+        ///   in order to inherit from <see cref="MessageContent"/>.
         /// </summary>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -110,7 +123,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
-        ///   the <see cref="MessageWithMetadata"/> abstraction.
+        ///   the <see cref="MessageContent"/> abstraction.
         /// </summary>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]

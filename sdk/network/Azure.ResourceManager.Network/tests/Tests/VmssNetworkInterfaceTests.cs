@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Network.Tests
             await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
 
             string virtualMachineScaleSetName = "vmssip";
-            AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
-            List<PublicIPAddress> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
-            List<PublicIPAddress> vmssListAllResult = vmssListAllPageResult.ToList();
-            PublicIPAddress firstResult = vmssListAllResult.First();
+            AsyncPageable<PublicIPAddressResource> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
+            List<PublicIPAddressResource> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
+            List<PublicIPAddressResource> vmssListAllResult = vmssListAllPageResult.ToList();
+            PublicIPAddressResource firstResult = vmssListAllResult.First();
 
             Assert.NotNull(vmssListAllResult);
             Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
@@ -64,33 +64,33 @@ namespace Azure.ResourceManager.Network.Tests
             string nicName = GetNameById(idItem, "networkInterfaces");
 
             // Verify that NICs contain refernce to publicip, nsg and dns settings
-            AsyncPageable<NetworkInterface> listNicPerVmssAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName);
-            List<NetworkInterface> listNicPerVmss = await listNicPerVmssAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterfaceResource> listNicPerVmssAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName);
+            List<NetworkInterfaceResource> listNicPerVmss = await listNicPerVmssAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVmss);
 
-            foreach (NetworkInterface nic in listNicPerVmss)
+            foreach (NetworkInterfaceResource nic in listNicPerVmss)
             {
                 VerifyVmssNicProperties(nic);
             }
 
             // Verify nics on a vm level
-            AsyncPageable<NetworkInterface> listNicPerVmAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            List<NetworkInterface> listNicPerVm = await listNicPerVmAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterfaceResource> listNicPerVmAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex);
+            List<NetworkInterfaceResource> listNicPerVm = await listNicPerVmAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVm);
             Has.One.EqualTo(listNicPerVm);
 
-            foreach (NetworkInterface nic in listNicPerVm)
+            foreach (NetworkInterfaceResource nic in listNicPerVm)
             {
                 VerifyVmssNicProperties(nic);
             }
 
             // Verify getting individual nic
-            Response<NetworkInterface> getNic = await NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName);
+            Response<NetworkInterfaceResource> getNic = await NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName);
             Assert.NotNull(getNic);
             VerifyVmssNicProperties(getNic);
         }
 
-        private void VerifyVmssNicProperties(NetworkInterface nic)
+        private void VerifyVmssNicProperties(NetworkInterfaceResource nic)
         {
             Assert.NotNull(nic.NetworkSecurityGroup);
             Assert.False(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id));

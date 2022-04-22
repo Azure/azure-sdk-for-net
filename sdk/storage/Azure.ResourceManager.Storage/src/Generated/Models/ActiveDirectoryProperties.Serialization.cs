@@ -27,6 +27,16 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(DomainSid);
             writer.WritePropertyName("azureStorageSid");
             writer.WriteStringValue(AzureStorageSid);
+            if (Optional.IsDefined(SamAccountName))
+            {
+                writer.WritePropertyName("samAccountName");
+                writer.WriteStringValue(SamAccountName);
+            }
+            if (Optional.IsDefined(AccountType))
+            {
+                writer.WritePropertyName("accountType");
+                writer.WriteStringValue(AccountType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +48,8 @@ namespace Azure.ResourceManager.Storage.Models
             string domainGuid = default;
             string domainSid = default;
             string azureStorageSid = default;
+            Optional<string> samAccountName = default;
+            Optional<ActiveDirectoryPropertiesAccountType> accountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"))
@@ -70,8 +82,23 @@ namespace Azure.ResourceManager.Storage.Models
                     azureStorageSid = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("samAccountName"))
+                {
+                    samAccountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    accountType = new ActiveDirectoryPropertiesAccountType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ActiveDirectoryProperties(domainName, netBiosDomainName, forestName, domainGuid, domainSid, azureStorageSid);
+            return new ActiveDirectoryProperties(domainName, netBiosDomainName, forestName, domainGuid, domainSid, azureStorageSid, samAccountName.Value, Optional.ToNullable(accountType));
         }
     }
 }

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     internal class StubException : Exception
     {

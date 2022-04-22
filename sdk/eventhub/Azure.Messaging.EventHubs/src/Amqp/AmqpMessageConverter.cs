@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
@@ -80,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source,
+        public virtual AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source,
                                                          string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -101,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source,
+        public virtual AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                            string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -255,6 +254,34 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///   Conditionally applies the set of properties associated with message
+        ///   publishing, if values were provided.
+        /// </summary>
+        ///
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        /// <param name="sequenceNumber">The sequence number to consider and apply.</param>
+        /// <param name="groupId">The group identifier to consider and apply.</param>
+        /// <param name="ownerLevel">The owner level to consider and apply.</param>
+        ///
+        public virtual void ApplyPublisherPropertiesToAmqpMessage(AmqpMessage message,
+                                                                  int? sequenceNumber,
+                                                                  long? groupId,
+                                                                  short? ownerLevel) => SetPublisherProperties(message, sequenceNumber, groupId, ownerLevel);
+
+        /// <summary>
+        ///   Removes the set of properties associated with message publishing.
+        /// </summary>
+        ///
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        ///
+        public virtual void RemovePublishingPropertiesFromAmqpMessage(AmqpMessage message)
+        {
+            message.MessageAnnotations.Map.TryRemoveValue<int?>(AmqpProperty.ProducerSequenceNumber, out var _);
+            message.MessageAnnotations.Map.TryRemoveValue<long?>(AmqpProperty.ProducerGroupId, out var _);
+            message.MessageAnnotations.Map.TryRemoveValue<short?>(AmqpProperty.ProducerOwnerLevel, out var _);
+        }
+
+        /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="EventData" />
         ///   optionally propagating the custom properties.
         /// </summary>
@@ -264,11 +291,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source events.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromEvents(IEnumerable<EventData> source,
-                                                            string partitionKey) =>
-            BuildAmqpBatchFromMessages(
-                source.Select(eventData => BuildAmqpMessageFromEvent(eventData, partitionKey)),
-                partitionKey);
+        private static AmqpMessage BuildAmqpBatchFromEvents(IReadOnlyCollection<EventData> source,
+                                                            string partitionKey)
+        {
+            var messages = new List<AmqpMessage>(source.Count);
+
+            foreach (var eventData in source)
+            {
+                messages.Add(BuildAmqpMessageFromEvent(eventData, partitionKey));
+            }
+
+            return BuildAmqpBatchFromMessages(messages, partitionKey);
+        }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
@@ -284,26 +318,52 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source,
+        private static AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                               string partitionKey)
         {
             AmqpMessage batchEnvelope;
 
-            var batchMessages = source.ToList();
+            // If there is a single message, then it will be used as the
+            // envelope.  To avoid mutating the instance and polluting it with
+            // delivery state which prevents it from being sent during retries,
+            // clone it.
 
-            if (batchMessages.Count == 1)
+            if (source.Count == 1)
             {
-                batchEnvelope = batchMessages[0];
+                switch (source)
+                {
+                    case List<AmqpMessage> messageList:
+                        batchEnvelope = messageList[0].Clone();
+                        break;
+
+                    case AmqpMessage[] messageArray:
+                        batchEnvelope = messageArray[0].Clone();
+                        break;
+
+                    default:
+                        var enumerator = source.GetEnumerator();
+                        enumerator.MoveNext();
+
+                        batchEnvelope = enumerator.Current;
+                        break;
+                }
             }
             else
             {
-                batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
+                var messageData = new Data[source.Count];
+                var count = 0;
+
+                foreach (var message in source)
                 {
                     message.Batchable = true;
-                    using var messageStream = message.ToStream();
-                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
-                }));
 
+                    using var messageStream = message.ToStream();
+                    messageData[count] = new Data { Value = ReadStreamToArraySegment(messageStream) };
+
+                    ++count;
+                }
+
+                batchEnvelope = AmqpMessage.Create(messageData);
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 
@@ -527,21 +587,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 message.MessageAnnotations.Map[AmqpProperty.PartitionKey] = partitionKey;
             }
 
-            if (source.PendingPublishSequenceNumber.HasValue)
-            {
-                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = source.PendingPublishSequenceNumber;
-            }
-
-            if (source.PendingProducerGroupId.HasValue)
-            {
-                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = source.PendingProducerGroupId;
-            }
-
-            if (source.PendingProducerOwnerLevel.HasValue)
-            {
-                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = source.PendingProducerOwnerLevel;
-            }
-
+            SetPublisherProperties(message, source.PendingPublishSequenceNumber, source.PendingProducerGroupId, source.PendingProducerOwnerLevel);
             return message;
         }
 
@@ -760,6 +806,37 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///   Conditionally applies the set of properties associated with message
+        ///   publishing, if values were provided.
+        /// </summary>
+        ///
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        /// <param name="sequenceNumber">The sequence number to consider and apply.</param>
+        /// <param name="groupId">The group identifier to consider and apply.</param>
+        /// <param name="ownerLevel">The owner level to consider and apply.</param>
+        ///
+        private static void SetPublisherProperties(AmqpMessage message,
+                                                   int? sequenceNumber,
+                                                   long? groupId,
+                                                   short? ownerLevel)
+        {
+            if (sequenceNumber.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = sequenceNumber;
+            }
+
+            if (groupId.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = groupId;
+            }
+
+            if (ownerLevel.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = ownerLevel;
+            }
+        }
+
+        /// <summary>
         ///   Translates the data body segments into the corresponding set of
         ///   <see cref="Data" /> instances.
         /// </summary>
@@ -858,7 +935,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return false;
             }
 
-            sequenceBody = AmqpMessageBody.FromSequence(source.SequenceBody.Select(item => (IList<object>)item.List).ToArray());
+            var bodyContent = new List<IList<object>>();
+
+            foreach (var item in source.SequenceBody)
+            {
+                bodyContent.Add((IList<object>)item.List);
+            }
+
+            sequenceBody = AmqpMessageBody.FromSequence(bodyContent);
             return true;
         }
 

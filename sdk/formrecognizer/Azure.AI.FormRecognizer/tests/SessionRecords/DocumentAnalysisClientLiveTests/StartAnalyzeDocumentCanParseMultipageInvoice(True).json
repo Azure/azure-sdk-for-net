@@ -1,169 +1,142 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "711607",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b4468c3609135a48acd8516a4df79d81-3385f95dc2c59446-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-5611080c5b0d004f90502e7be2c8b541-8115f04b729bb549-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "79071acb2e6cc1e14415d23c254c4b41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "8dce47d5-6c1e-41b0-85f1-81942c4e6175",
+        "apim-request-id": "c9cce3b2-31d5-4e37-9766-1b28f18e633e",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 14:21:41 GMT",
-        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
+        "Date": "Wed, 26 Jan 2022 00:17:38 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/c9cce3b2-31d5-4e37-9766-1b28f18e633e?api-version=2022-01-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "572"
+        "x-envoy-upstream-service-time": "330"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/c9cce3b2-31d5-4e37-9766-1b28f18e633e?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "806106bb1a4cf3204aa42a02b6c281ba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c4b039ce-152f-4aba-81f8-cbae43f80b23",
+        "apim-request-id": "61baccd8-0708-4884-a9d0-184d58890eba",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:21:41 GMT",
+        "Date": "Wed, 26 Jan 2022 00:17:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:21:41Z",
-        "lastUpdatedDateTime": "2021-09-28T14:21:41Z"
+        "createdDateTime": "2022-01-26T00:17:38Z",
+        "lastUpdatedDateTime": "2022-01-26T00:17:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/c9cce3b2-31d5-4e37-9766-1b28f18e633e?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "7c4e7c2d580ea288e46db9d272bb623a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8e22db36-a41a-488b-93b7-23acab256ad7",
+        "apim-request-id": "e1775fbb-da17-4024-ba66-0fc113c9a428",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:21:43 GMT",
+        "Date": "Wed, 26 Jan 2022 00:17:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "85"
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:21:41Z",
-        "lastUpdatedDateTime": "2021-09-28T14:21:41Z"
+        "createdDateTime": "2022-01-26T00:17:38Z",
+        "lastUpdatedDateTime": "2022-01-26T00:17:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/c9cce3b2-31d5-4e37-9766-1b28f18e633e?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "06eff80e06d9b0f3fa142ec704df0b82",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3f0291d0-4200-4b22-a7b2-d24bbdfef8bd",
+        "apim-request-id": "2c29b68b-aeb9-421d-8656-13476a341012",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:21:44 GMT",
+        "Date": "Wed, 26 Jan 2022 00:17:41 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "x-envoy-upstream-service-time": "23"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:21:41Z",
-        "lastUpdatedDateTime": "2021-09-28T14:21:41Z"
+        "createdDateTime": "2022-01-26T00:17:38Z",
+        "lastUpdatedDateTime": "2022-01-26T00:17:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/c9cce3b2-31d5-4e37-9766-1b28f18e633e?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "a80f1893cffe62337ebe9bde614d818f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a01004b2-831f-4f84-871c-13a8408a2757",
+        "apim-request-id": "de51ebbf-82e0-4b81-8fe6-42d28844c0d5",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:21:45 GMT",
+        "Date": "Wed, 26 Jan 2022 00:17:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2021-09-28T14:21:41Z",
-        "lastUpdatedDateTime": "2021-09-28T14:21:41Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/8dce47d5-6c1e-41b0-85f1-81942c4e6175?api-version=2021-09-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "bef3f0427ad326e0899d81f929c09e05",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "67aefcb6-b5fa-44e3-8453-c46a5c901221",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:21:46 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "353"
+        "x-envoy-upstream-service-time": "198"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T14:21:41Z",
-        "lastUpdatedDateTime": "2021-09-28T14:21:45Z",
+        "createdDateTime": "2022-01-26T00:17:38Z",
+        "lastUpdatedDateTime": "2022-01-26T00:17:42Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
+          "apiVersion": "2022-01-30-preview",
           "modelId": "prebuilt-invoice",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\nMaple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\nwaitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\nbelow, and attach a check made out to:\nContoso Ltd.\n2345 Dogwood Lane\nBirch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\n$1,500\nPre-keynote thank you\nLogo on poster\nFull page ad in program guide\nSilver Sponsor\nFull booth\n$1,200\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\nBronze Sponsor\nFull booth\n$1,000\nLogo on poster\n50% discount on program guide\nadvertisements\nFull Booth\nFull booth\n$600\n50% discount on program guide\nadvertisements\nHalf Booth\nFull booth\n$350\n25% discount on program guide\nadvertisements\n:unselected:\nVendor #:121\nVendor Details:\nCompany Name: Southridge Video\nContact: Jamie@southridgevideo.com\nPreferred Package: Gold\nSpecial Requests: N/a",
+          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\nMaple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\nwaitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\nbelow, and attach a check made out to:\nContoso Ltd.\n2345 Dogwood Lane\nBirch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\nPre-keynote thank you\nLogo on poster\nFull page ad in program guide\n$1,500\nSilver Sponsor\nFull booth\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\n$1,200\nBronze Sponsor\n\u00B7\nFull booth\nLogo on poster\n50% discount on program guide\nadvertisements\n$1,000\nFull Booth\nFull booth\n50% discount on program guide\nadvertisements\n$600\nHalf Booth\nFull booth\n25% discount on program guide\nadvertisements\n$350\nVendor #:121\nVendor Details:\nCompany Name: Southridge Video\nContact: Jamie@southridgevideo.com\nPreferred Package: Gold\nSpecial Requests: N/a",
           "pages": [
             {
               "pageNumber": 1,
@@ -1523,24 +1496,6 @@
                   }
                 },
                 {
-                  "content": "$1,500",
-                  "boundingBox": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 455,
-                    "length": 6
-                  }
-                },
-                {
                   "content": "Pre-keynote",
                   "boundingBox": [
                     3.214,
@@ -1554,7 +1509,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 462,
+                    "offset": 455,
                     "length": 11
                   }
                 },
@@ -1572,7 +1527,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 474,
+                    "offset": 467,
                     "length": 5
                   }
                 },
@@ -1590,7 +1545,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 480,
+                    "offset": 473,
                     "length": 3
                   }
                 },
@@ -1608,7 +1563,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 484,
+                    "offset": 477,
                     "length": 4
                   }
                 },
@@ -1626,7 +1581,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 489,
+                    "offset": 482,
                     "length": 2
                   }
                 },
@@ -1644,7 +1599,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 492,
+                    "offset": 485,
                     "length": 6
                   }
                 },
@@ -1662,7 +1617,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 499,
+                    "offset": 492,
                     "length": 4
                   }
                 },
@@ -1680,7 +1635,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 504,
+                    "offset": 497,
                     "length": 4
                   }
                 },
@@ -1698,7 +1653,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 509,
+                    "offset": 502,
                     "length": 2
                   }
                 },
@@ -1716,7 +1671,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 512,
+                    "offset": 505,
                     "length": 2
                   }
                 },
@@ -1734,7 +1689,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 515,
+                    "offset": 508,
                     "length": 7
                   }
                 },
@@ -1752,8 +1707,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 523,
+                    "offset": 516,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$1,500",
+                  "boundingBox": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 522,
+                    "length": 6
                   }
                 },
                 {
@@ -1829,24 +1802,6 @@
                   }
                 },
                 {
-                  "content": "$1,200",
-                  "boundingBox": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 555,
-                    "length": 6
-                  }
-                },
-                {
                   "content": "Post-keynote",
                   "boundingBox": [
                     3.214,
@@ -1860,7 +1815,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 562,
+                    "offset": 555,
                     "length": 12
                   }
                 },
@@ -1878,7 +1833,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 575,
+                    "offset": 568,
                     "length": 5
                   }
                 },
@@ -1896,7 +1851,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 581,
+                    "offset": 574,
                     "length": 3
                   }
                 },
@@ -1914,7 +1869,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 585,
+                    "offset": 578,
                     "length": 4
                   }
                 },
@@ -1932,7 +1887,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 590,
+                    "offset": 583,
                     "length": 2
                   }
                 },
@@ -1950,7 +1905,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 593,
+                    "offset": 586,
                     "length": 6
                   }
                 },
@@ -1968,7 +1923,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 600,
+                    "offset": 593,
                     "length": 4
                   }
                 },
@@ -1986,7 +1941,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 605,
+                    "offset": 598,
                     "length": 4
                   }
                 },
@@ -2004,7 +1959,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 610,
+                    "offset": 603,
                     "length": 2
                   }
                 },
@@ -2022,7 +1977,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 613,
+                    "offset": 606,
                     "length": 2
                   }
                 },
@@ -2040,7 +1995,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 616,
+                    "offset": 609,
                     "length": 7
                   }
                 },
@@ -2058,8 +2013,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 624,
+                    "offset": 617,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$1,200",
+                  "boundingBox": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 623,
+                    "length": 6
                   }
                 },
                 {
@@ -2099,6 +2072,24 @@
                   }
                 },
                 {
+                  "content": "\u00B7",
+                  "boundingBox": [
+                    2.9463,
+                    6.8655,
+                    3.0132,
+                    6.8655,
+                    3.0132,
+                    6.98,
+                    2.9511,
+                    6.98
+                  ],
+                  "confidence": 0.232,
+                  "span": {
+                    "offset": 645,
+                    "length": 1
+                  }
+                },
+                {
                   "content": "Full",
                   "boundingBox": [
                     3.214,
@@ -2112,7 +2103,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 645,
+                    "offset": 647,
                     "length": 4
                   }
                 },
@@ -2130,26 +2121,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 650,
+                    "offset": 652,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$1,000",
-                  "boundingBox": [
-                    5.8328,
-                    6.8227,
-                    6.2829,
-                    6.8227,
-                    6.2829,
-                    6.9718,
-                    5.8328,
-                    6.9718
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 656,
-                    "length": 6
                   }
                 },
                 {
@@ -2166,7 +2139,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 663,
+                    "offset": 658,
                     "length": 4
                   }
                 },
@@ -2184,7 +2157,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 668,
+                    "offset": 663,
                     "length": 2
                   }
                 },
@@ -2202,7 +2175,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 671,
+                    "offset": 666,
                     "length": 6
                   }
                 },
@@ -2220,7 +2193,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 678,
+                    "offset": 673,
                     "length": 3
                   }
                 },
@@ -2238,7 +2211,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 682,
+                    "offset": 677,
                     "length": 8
                   }
                 },
@@ -2256,7 +2229,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 691,
+                    "offset": 686,
                     "length": 2
                   }
                 },
@@ -2274,7 +2247,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 694,
+                    "offset": 689,
                     "length": 7
                   }
                 },
@@ -2292,7 +2265,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 702,
+                    "offset": 697,
                     "length": 5
                   }
                 },
@@ -2310,8 +2283,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 708,
+                    "offset": 703,
                     "length": 14
+                  }
+                },
+                {
+                  "content": "$1,000",
+                  "boundingBox": [
+                    5.8328,
+                    6.8227,
+                    6.2829,
+                    6.8227,
+                    6.2829,
+                    6.9718,
+                    5.8328,
+                    6.9718
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 718,
+                    "length": 6
                   }
                 },
                 {
@@ -2328,7 +2319,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 723,
+                    "offset": 725,
                     "length": 4
                   }
                 },
@@ -2346,7 +2337,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 728,
+                    "offset": 730,
                     "length": 5
                   }
                 },
@@ -2364,7 +2355,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 734,
+                    "offset": 736,
                     "length": 4
                   }
                 },
@@ -2382,26 +2373,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 739,
+                    "offset": 741,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$600",
-                  "boundingBox": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 745,
-                    "length": 4
                   }
                 },
                 {
@@ -2418,7 +2391,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 750,
+                    "offset": 747,
                     "length": 3
                   }
                 },
@@ -2436,7 +2409,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 754,
+                    "offset": 751,
                     "length": 8
                   }
                 },
@@ -2454,7 +2427,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 763,
+                    "offset": 760,
                     "length": 2
                   }
                 },
@@ -2472,7 +2445,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 766,
+                    "offset": 763,
                     "length": 7
                   }
                 },
@@ -2490,7 +2463,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 774,
+                    "offset": 771,
                     "length": 5
                   }
                 },
@@ -2508,8 +2481,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 780,
+                    "offset": 777,
                     "length": 14
+                  }
+                },
+                {
+                  "content": "$600",
+                  "boundingBox": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 792,
+                    "length": 4
                   }
                 },
                 {
@@ -2526,7 +2517,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 795,
+                    "offset": 797,
                     "length": 4
                   }
                 },
@@ -2544,7 +2535,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 800,
+                    "offset": 802,
                     "length": 5
                   }
                 },
@@ -2562,7 +2553,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 806,
+                    "offset": 808,
                     "length": 4
                   }
                 },
@@ -2580,26 +2571,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 811,
+                    "offset": 813,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$350",
-                  "boundingBox": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 817,
-                    "length": 4
                   }
                 },
                 {
@@ -2616,7 +2589,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 822,
+                    "offset": 819,
                     "length": 3
                   }
                 },
@@ -2634,7 +2607,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 826,
+                    "offset": 823,
                     "length": 8
                   }
                 },
@@ -2652,7 +2625,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 835,
+                    "offset": 832,
                     "length": 2
                   }
                 },
@@ -2670,7 +2643,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 838,
+                    "offset": 835,
                     "length": 7
                   }
                 },
@@ -2688,7 +2661,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 846,
+                    "offset": 843,
                     "length": 5
                   }
                 },
@@ -2706,31 +2679,30 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 852,
+                    "offset": 849,
                     "length": 14
                   }
-                }
-              ],
-              "selectionMarks": [
+                },
                 {
-                  "state": "unselected",
+                  "content": "$350",
                   "boundingBox": [
-                    2.9426,
-                    6.645,
-                    3.0304,
-                    6.645,
-                    3.0304,
-                    6.7283,
-                    2.9426,
-                    6.7283
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
                   ],
-                  "confidence": 0.223,
+                  "confidence": 1,
                   "span": {
-                    "offset": 867,
-                    "length": 12
+                    "offset": 864,
+                    "length": 4
                   }
                 }
               ],
+              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Vendor #:121",
@@ -3018,25 +2990,6 @@
                   ]
                 },
                 {
-                  "content": "$1,500",
-                  "boundingBox": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
-                  ],
-                  "spans": [
-                    {
-                      "offset": 455,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
                   "content": "Pre-keynote thank you",
                   "boundingBox": [
                     3.214,
@@ -3050,7 +3003,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 462,
+                      "offset": 455,
                       "length": 21
                     }
                   ]
@@ -3069,7 +3022,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 484,
+                      "offset": 477,
                       "length": 14
                     }
                   ]
@@ -3088,8 +3041,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 499,
+                      "offset": 492,
                       "length": 29
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,500",
+                  "boundingBox": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "spans": [
+                    {
+                      "offset": 522,
+                      "length": 6
                     }
                   ]
                 },
@@ -3132,25 +3104,6 @@
                   ]
                 },
                 {
-                  "content": "$1,200",
-                  "boundingBox": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "spans": [
-                    {
-                      "offset": 555,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
                   "content": "Post-keynote thank you",
                   "boundingBox": [
                     3.214,
@@ -3164,7 +3117,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 562,
+                      "offset": 555,
                       "length": 22
                     }
                   ]
@@ -3183,7 +3136,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 585,
+                      "offset": 578,
                       "length": 14
                     }
                   ]
@@ -3202,8 +3155,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 600,
+                      "offset": 593,
                       "length": 29
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,200",
+                  "boundingBox": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "spans": [
+                    {
+                      "offset": 623,
+                      "length": 6
                     }
                   ]
                 },
@@ -3227,6 +3199,25 @@
                   ]
                 },
                 {
+                  "content": "\u00B7",
+                  "boundingBox": [
+                    2.9463,
+                    6.8655,
+                    3.0275,
+                    6.8655,
+                    3.0371,
+                    6.9753,
+                    2.9559,
+                    6.98
+                  ],
+                  "spans": [
+                    {
+                      "offset": 645,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
                   "content": "Full booth",
                   "boundingBox": [
                     3.214,
@@ -3240,27 +3231,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 645,
+                      "offset": 647,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$1,000",
-                  "boundingBox": [
-                    5.8328,
-                    6.8227,
-                    6.2829,
-                    6.8227,
-                    6.2829,
-                    6.9718,
-                    5.8328,
-                    6.9718
-                  ],
-                  "spans": [
-                    {
-                      "offset": 656,
-                      "length": 6
                     }
                   ]
                 },
@@ -3278,7 +3250,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 663,
+                      "offset": 658,
                       "length": 14
                     }
                   ]
@@ -3297,7 +3269,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 678,
+                      "offset": 673,
                       "length": 29
                     }
                   ]
@@ -3316,8 +3288,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 708,
+                      "offset": 703,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,000",
+                  "boundingBox": [
+                    5.8328,
+                    6.8227,
+                    6.2829,
+                    6.8227,
+                    6.2829,
+                    6.9718,
+                    5.8328,
+                    6.9718
+                  ],
+                  "spans": [
+                    {
+                      "offset": 718,
+                      "length": 6
                     }
                   ]
                 },
@@ -3335,7 +3326,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 725,
                       "length": 10
                     }
                   ]
@@ -3354,27 +3345,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 734,
+                      "offset": 736,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$600",
-                  "boundingBox": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "spans": [
-                    {
-                      "offset": 745,
-                      "length": 4
                     }
                   ]
                 },
@@ -3392,7 +3364,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 750,
+                      "offset": 747,
                       "length": 29
                     }
                   ]
@@ -3411,8 +3383,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 780,
+                      "offset": 777,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$600",
+                  "boundingBox": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "spans": [
+                    {
+                      "offset": 792,
+                      "length": 4
                     }
                   ]
                 },
@@ -3430,7 +3421,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 797,
                       "length": 10
                     }
                   ]
@@ -3449,27 +3440,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 806,
+                      "offset": 808,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$350",
-                  "boundingBox": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "spans": [
-                    {
-                      "offset": 817,
-                      "length": 4
                     }
                   ]
                 },
@@ -3487,7 +3459,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 822,
+                      "offset": 819,
                       "length": 29
                     }
                   ]
@@ -3506,8 +3478,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 852,
+                      "offset": 849,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$350",
+                  "boundingBox": [
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
+                  ],
+                  "spans": [
+                    {
+                      "offset": 864,
+                      "length": 4
                     }
                   ]
                 }
@@ -3515,7 +3506,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 879
+                  "length": 868
                 }
               ]
             },
@@ -3540,7 +3531,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 880,
+                    "offset": 869,
                     "length": 6
                   }
                 },
@@ -3558,7 +3549,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 887,
+                    "offset": 876,
                     "length": 5
                   }
                 },
@@ -3576,7 +3567,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 893,
+                    "offset": 882,
                     "length": 6
                   }
                 },
@@ -3594,7 +3585,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 900,
+                    "offset": 889,
                     "length": 8
                   }
                 },
@@ -3612,7 +3603,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 909,
+                    "offset": 898,
                     "length": 7
                   }
                 },
@@ -3630,7 +3621,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 917,
+                    "offset": 906,
                     "length": 5
                   }
                 },
@@ -3648,7 +3639,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 923,
+                    "offset": 912,
                     "length": 10
                   }
                 },
@@ -3666,7 +3657,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 934,
+                    "offset": 923,
                     "length": 5
                   }
                 },
@@ -3684,7 +3675,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 940,
+                    "offset": 929,
                     "length": 8
                   }
                 },
@@ -3702,7 +3693,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 949,
+                    "offset": 938,
                     "length": 25
                   }
                 },
@@ -3720,7 +3711,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 975,
+                    "offset": 964,
                     "length": 9
                   }
                 },
@@ -3738,7 +3729,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 985,
+                    "offset": 974,
                     "length": 8
                   }
                 },
@@ -3756,7 +3747,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 994,
+                    "offset": 983,
                     "length": 4
                   }
                 },
@@ -3774,7 +3765,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 999,
+                    "offset": 988,
                     "length": 7
                   }
                 },
@@ -3792,7 +3783,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1007,
+                    "offset": 996,
                     "length": 9
                   }
                 },
@@ -3810,7 +3801,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1017,
+                    "offset": 1006,
                     "length": 3
                   }
                 }
@@ -3831,7 +3822,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 880,
+                      "offset": 869,
                       "length": 12
                     }
                   ]
@@ -3850,7 +3841,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 893,
+                      "offset": 882,
                       "length": 15
                     }
                   ]
@@ -3869,7 +3860,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 909,
+                      "offset": 898,
                       "length": 30
                     }
                   ]
@@ -3888,7 +3879,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 940,
+                      "offset": 929,
                       "length": 34
                     }
                   ]
@@ -3907,7 +3898,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 975,
+                      "offset": 964,
                       "length": 23
                     }
                   ]
@@ -3926,7 +3917,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 999,
+                      "offset": 988,
                       "length": 21
                     }
                   ]
@@ -3934,7 +3925,7 @@
               ],
               "spans": [
                 {
-                  "offset": 879,
+                  "offset": 868,
                   "length": 141
                 }
               ]
@@ -3942,7 +3933,7 @@
           ],
           "tables": [
             {
-              "rowCount": 14,
+              "rowCount": 6,
               "columnCount": 3,
               "cells": [
                 {
@@ -3956,14 +3947,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        4.643,
-                        2.6225,
-                        4.643,
-                        2.6225,
-                        4.858,
-                        0.9997,
-                        4.8515
+                        0.9996,
+                        4.646,
+                        2.6212,
+                        4.646,
+                        2.6212,
+                        4.8546,
+                        0.9996,
+                        4.8546
                       ]
                     }
                   ],
@@ -3985,14 +3976,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        4.643,
-                        5.7478,
-                        4.643,
-                        5.7478,
-                        4.858,
-                        2.6225,
-                        4.858
+                        2.6212,
+                        4.646,
+                        5.7443,
+                        4.646,
+                        5.7443,
+                        4.8546,
+                        2.6212,
+                        4.8546
                       ]
                     }
                   ],
@@ -4014,14 +4005,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        4.643,
-                        7.4907,
-                        4.6495,
-                        7.4907,
-                        4.858,
-                        5.7478,
-                        4.858
+                        5.7443,
+                        4.646,
+                        7.486,
+                        4.646,
+                        7.486,
+                        4.8546,
+                        5.7443,
+                        4.8546
                       ]
                     }
                   ],
@@ -4042,14 +4033,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        4.8515,
-                        2.6225,
-                        4.858,
-                        2.6225,
-                        5.0927,
-                        0.9997,
-                        5.0861
+                        0.9996,
+                        4.8546,
+                        2.6212,
+                        4.8546,
+                        2.6212,
+                        5.9234,
+                        0.9996,
+                        5.9234
                       ]
                     }
                   ],
@@ -4065,26 +4056,26 @@
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "Full booth Pre-keynote thank you Logo on poster Full page ad in program guide",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        4.858,
-                        5.7478,
-                        4.858,
-                        5.7478,
-                        5.0927,
-                        2.6225,
-                        5.0927
+                        2.6212,
+                        4.8546,
+                        5.7443,
+                        4.8546,
+                        5.7443,
+                        5.9299,
+                        2.6212,
+                        5.9234
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 444,
-                      "length": 10
+                      "length": 77
                     }
                   ]
                 },
@@ -4098,20 +4089,20 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        4.858,
-                        7.4907,
-                        4.858,
-                        7.4907,
-                        5.0861,
-                        5.7478,
-                        5.0927
+                        5.7443,
+                        4.8546,
+                        7.486,
+                        4.8546,
+                        7.486,
+                        5.9299,
+                        5.7443,
+                        5.9299
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 455,
+                      "offset": 522,
                       "length": 6
                     }
                   ]
@@ -4119,118 +4110,21 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 0,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        0.9997,
-                        5.0861,
-                        2.6225,
-                        5.0927,
-                        2.6225,
-                        5.9269,
-                        0.9997,
-                        5.9203
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 2,
-                  "columnIndex": 1,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "Pre-keynote thank you Logo on poster Full page ad in program guide",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        5.0927,
-                        5.7478,
-                        5.0927,
-                        5.7478,
-                        5.9269,
-                        2.6225,
-                        5.9269
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 462,
-                      "length": 66
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 2,
-                  "columnIndex": 2,
                   "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        5.0927,
-                        7.4907,
-                        5.0861,
-                        7.4907,
-                        5.7574,
-                        5.7478,
-                        5.7509
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 3,
-                  "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        5.7509,
-                        7.4907,
-                        5.7574,
-                        7.4907,
-                        5.9269,
-                        5.7478,
-                        5.9269
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 4,
-                  "columnIndex": 0,
-                  "rowSpan": 3,
                   "columnSpan": 1,
                   "content": "Silver Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        5.9203,
-                        2.6225,
-                        5.9269,
-                        2.6225,
-                        6.7806,
-                        0.9997,
-                        6.7806
+                        0.9996,
+                        5.9234,
+                        2.6212,
+                        5.9234,
+                        2.6212,
+                        6.7836,
+                        0.9996,
+                        6.7836
                       ]
                     }
                   ],
@@ -4242,162 +4136,79 @@
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 2,
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "Full booth Post-keynote thank you Logo on poster Half page ad in program guide",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        5.9269,
-                        5.7478,
-                        5.9269,
-                        5.7478,
-                        6.1615,
-                        2.6225,
-                        6.1615
+                        2.6212,
+                        5.9234,
+                        5.7443,
+                        5.9299,
+                        5.7443,
+                        6.7836,
+                        2.6212,
+                        6.7836
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 544,
-                      "length": 10
+                      "length": 78
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 2,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$1,200",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        5.9269,
-                        7.4907,
-                        5.9269,
-                        7.4907,
-                        6.3831,
-                        5.7478,
-                        6.3765
+                        5.7443,
+                        5.9299,
+                        7.486,
+                        5.9299,
+                        7.486,
+                        6.7771,
+                        5.7443,
+                        6.7836
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 555,
+                      "offset": 623,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 5,
-                  "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Post-keynote thank you",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        6.1615,
-                        5.7478,
-                        6.1615,
-                        5.7478,
-                        6.3765,
-                        2.6225,
-                        6.3765
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 562,
-                      "length": 22
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 6,
-                  "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Logo on poster\nHalf page ad in program guide :unselected:",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        6.3765,
-                        5.7478,
-                        6.3765,
-                        5.7478,
-                        6.7806,
-                        2.6225,
-                        6.7806
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 585,
-                      "length": 44
-                    },
-                    {
-                      "offset": 867,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 6,
-                  "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        6.3765,
-                        7.4907,
-                        6.3831,
-                        7.4907,
-                        6.7806,
-                        5.7478,
-                        6.7806
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 0,
-                  "rowSpan": 3,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Bronze Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        6.7806,
-                        2.6225,
-                        6.7806,
-                        2.6225,
-                        7.6279,
-                        0.9997,
-                        7.6279
+                        0.9996,
+                        6.7836,
+                        2.6212,
+                        6.7836,
+                        2.6212,
+                        7.6309,
+                        0.9996,
+                        7.6309
                       ]
                     }
                   ],
@@ -4409,261 +4220,225 @@
                   ]
                 },
                 {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        6.7806,
-                        5.7478,
-                        6.7806,
-                        5.7478,
-                        7.0152,
-                        2.6225,
-                        7.0152
+                        2.6212,
+                        6.7836,
+                        5.7443,
+                        6.7836,
+                        5.7443,
+                        7.6309,
+                        2.6212,
+                        7.6309
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 645,
-                      "length": 10
+                      "length": 72
                     }
                   ]
                 },
                 {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 2,
-                  "rowSpan": 3,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$1,000",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        6.7806,
-                        7.4907,
-                        6.7806,
-                        7.4907,
-                        7.6344,
-                        5.7478,
-                        7.6279
+                        5.7443,
+                        6.7836,
+                        7.486,
+                        6.7771,
+                        7.486,
+                        7.6309,
+                        5.7443,
+                        7.6309
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 656,
+                      "offset": 718,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 8,
-                  "columnIndex": 1,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "Logo on poster 50% discount on program guide advertisements",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        7.0152,
-                        5.7478,
-                        7.0152,
-                        5.7478,
-                        7.6279,
-                        2.6225,
-                        7.6279
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 663,
-                      "length": 59
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 0,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full Booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        7.6279,
-                        2.6225,
-                        7.6279,
-                        2.6225,
-                        8.2665,
-                        0.9997,
-                        8.2665
+                        0.9996,
+                        7.6309,
+                        2.6212,
+                        7.6309,
+                        2.6212,
+                        8.2696,
+                        0.9996,
+                        8.263
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 725,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 1,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full booth 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        7.6279,
-                        5.7478,
-                        7.6279,
-                        5.7478,
-                        8.2665,
-                        2.6225,
-                        8.2665
+                        2.6212,
+                        7.6309,
+                        5.7443,
+                        7.6309,
+                        5.7443,
+                        8.2696,
+                        2.6212,
+                        8.2696
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 734,
-                      "length": 10
-                    },
-                    {
-                      "offset": 750,
-                      "length": 44
+                      "offset": 736,
+                      "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$600",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        7.6279,
-                        7.4907,
-                        7.6344,
-                        7.4907,
-                        8.2665,
-                        5.7478,
-                        8.2665
+                        5.7443,
+                        7.6309,
+                        7.486,
+                        7.6309,
+                        7.486,
+                        8.263,
+                        5.7443,
+                        8.2696
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 745,
+                      "offset": 792,
                       "length": 4
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 0,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Half Booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        8.2665,
-                        2.6225,
-                        8.2665,
-                        2.6225,
-                        8.8987,
-                        0.9997,
-                        8.8987
+                        0.9996,
+                        8.263,
+                        2.6212,
+                        8.2696,
+                        2.6212,
+                        8.9017,
+                        0.9996,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 797,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 1,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full booth 25% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        8.2665,
-                        5.7478,
-                        8.2665,
-                        5.7478,
-                        8.8987,
-                        2.6225,
-                        8.8987
+                        2.6212,
+                        8.2696,
+                        5.7443,
+                        8.2696,
+                        5.7443,
+                        8.9017,
+                        2.6212,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 806,
-                      "length": 10
-                    },
-                    {
-                      "offset": 822,
-                      "length": 44
+                      "offset": 808,
+                      "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$350",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        8.2665,
-                        7.4907,
-                        8.2665,
-                        7.4907,
-                        8.9052,
-                        5.7478,
-                        8.8987
+                        5.7443,
+                        8.2696,
+                        7.486,
+                        8.263,
+                        7.486,
+                        8.9017,
+                        5.7443,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 817,
+                      "offset": 864,
                       "length": 4
                     }
                   ]
@@ -4673,28 +4448,29 @@
                 {
                   "pageNumber": 1,
                   "boundingBox": [
-                    0.993,
-                    4.6286,
-                    7.5046,
-                    4.6277,
-                    7.506,
-                    8.9112,
-                    0.9934,
-                    8.9116
+                    0.992,
+                    4.6405,
+                    7.4968,
+                    4.6393,
+                    7.4975,
+                    8.9168,
+                    0.9924,
+                    8.9192
                   ]
                 }
               ],
               "spans": [
                 {
                   "offset": 408,
-                  "length": 471
+                  "length": 460
                 }
               ]
             }
           ],
+          "styles": [],
           "documents": [
             {
-              "docType": "prebuilt:invoice",
+              "docType": "invoice",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
@@ -4731,8 +4507,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1500,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1500.0
+                          },
                           "content": "$1,500",
                           "boundingRegions": [
                             {
@@ -4749,10 +4528,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.778,
+                          "confidence": 0.961,
                           "spans": [
                             {
-                              "offset": 455,
+                              "offset": 522,
                               "length": 6
                             }
                           ]
@@ -4776,20 +4555,16 @@
                               ]
                             }
                           ],
-                          "confidence": 0.771,
+                          "confidence": 0.859,
                           "spans": [
                             {
                               "offset": 444,
-                              "length": 10
-                            },
-                            {
-                              "offset": 462,
-                              "length": 66
+                              "length": 77
                             }
                           ]
                         }
                       },
-                      "content": "Gold Sponsor Full booth $1,500 Pre-keynote thank you Logo on poster Full page ad in program guide",
+                      "content": "Gold Sponsor Full booth Pre-keynote thank you Logo on poster Full page ad in program guide $1,500",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -4805,7 +4580,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.937,
+                      "confidence": 0.915,
                       "spans": [
                         {
                           "offset": 431,
@@ -4817,8 +4592,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1200,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1200.0
+                          },
                           "content": "$1,200",
                           "boundingRegions": [
                             {
@@ -4835,10 +4613,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.731,
+                          "confidence": 0.963,
                           "spans": [
                             {
-                              "offset": 555,
+                              "offset": 623,
                               "length": 6
                             }
                           ]
@@ -4862,47 +4640,16 @@
                               ]
                             }
                           ],
-                          "confidence": 0.698,
+                          "confidence": 0.858,
                           "spans": [
                             {
                               "offset": 544,
-                              "length": 10
-                            },
-                            {
-                              "offset": 562,
-                              "length": 67
-                            }
-                          ]
-                        },
-                        "ProductCode": {
-                          "type": "string",
-                          "valueString": "Silver Sponsor",
-                          "content": "Silver Sponsor",
-                          "boundingRegions": [
-                            {
-                              "pageNumber": 1,
-                              "boundingBox": [
-                                1.0842,
-                                5.9786,
-                                2.0339,
-                                5.9786,
-                                2.0339,
-                                6.1228,
-                                1.0842,
-                                6.1228
-                              ]
-                            }
-                          ],
-                          "confidence": 0,
-                          "spans": [
-                            {
-                              "offset": 529,
-                              "length": 14
+                              "length": 78
                             }
                           ]
                         }
                       },
-                      "content": "Silver Sponsor Full booth $1,200 Post-keynote thank you Logo on poster Half page ad in program guide",
+                      "content": "Silver Sponsor Full booth Post-keynote thank you Logo on poster Half page ad in program guide $1,200",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -4918,7 +4665,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.94,
+                      "confidence": 0.923,
                       "spans": [
                         {
                           "offset": 529,
@@ -4930,8 +4677,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1000,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1000.0
+                          },
                           "content": "$1,000",
                           "boundingRegions": [
                             {
@@ -4948,47 +4698,43 @@
                               ]
                             }
                           ],
-                          "confidence": 0.698,
+                          "confidence": 0.96,
                           "spans": [
                             {
-                              "offset": 656,
+                              "offset": 718,
                               "length": 6
                             }
                           ]
                         },
                         "Description": {
                           "type": "string",
-                          "valueString": "Full booth Logo on poster 50% discount on program guide advertisements",
-                          "content": "Full booth Logo on poster 50% discount on program guide advertisements",
+                          "valueString": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
+                          "content": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                3.2075,
+                                2.9463,
                                 6.8419,
                                 5.3419,
                                 6.8419,
                                 5.3419,
                                 7.5863,
-                                3.2075,
+                                2.9463,
                                 7.5863
                               ]
                             }
                           ],
-                          "confidence": 0.669,
+                          "confidence": 0.355,
                           "spans": [
                             {
                               "offset": 645,
-                              "length": 10
-                            },
-                            {
-                              "offset": 663,
-                              "length": 59
+                              "length": 72
                             }
                           ]
                         }
                       },
-                      "content": "Bronze Sponsor Full booth $1,000 Logo on poster 50% discount on program guide advertisements",
+                      "content": "Bronze Sponsor \u00B7 Full booth Logo on poster 50% discount on program guide advertisements $1,000",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -5004,11 +4750,11 @@
                           ]
                         }
                       ],
-                      "confidence": 0.903,
+                      "confidence": 0.908,
                       "spans": [
                         {
                           "offset": 630,
-                          "length": 92
+                          "length": 94
                         }
                       ]
                     },
@@ -5016,8 +4762,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 600,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 600.0
+                          },
                           "content": "$600",
                           "boundingRegions": [
                             {
@@ -5034,10 +4783,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.568,
+                          "confidence": 0.958,
                           "spans": [
                             {
-                              "offset": 745,
+                              "offset": 792,
                               "length": 4
                             }
                           ]
@@ -5061,15 +4810,11 @@
                               ]
                             }
                           ],
-                          "confidence": 0.662,
+                          "confidence": 0.616,
                           "spans": [
                             {
-                              "offset": 734,
-                              "length": 10
-                            },
-                            {
-                              "offset": 750,
-                              "length": 44
+                              "offset": 736,
+                              "length": 55
                             }
                           ]
                         }
@@ -5090,10 +4835,10 @@
                           ]
                         }
                       ],
-                      "confidence": 0.765,
+                      "confidence": 0.96,
                       "spans": [
                         {
-                          "offset": 723,
+                          "offset": 725,
                           "length": 71
                         }
                       ]
@@ -5102,8 +4847,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 350,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 350.0
+                          },
                           "content": "$350",
                           "boundingRegions": [
                             {
@@ -5120,10 +4868,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.696,
+                          "confidence": 0.958,
                           "spans": [
                             {
-                              "offset": 817,
+                              "offset": 864,
                               "length": 4
                             }
                           ]
@@ -5147,42 +4895,11 @@
                               ]
                             }
                           ],
-                          "confidence": 0.773,
+                          "confidence": 0.578,
                           "spans": [
                             {
-                              "offset": 806,
-                              "length": 10
-                            },
-                            {
-                              "offset": 822,
-                              "length": 44
-                            }
-                          ]
-                        },
-                        "ProductCode": {
-                          "type": "string",
-                          "valueString": "Half",
-                          "content": "Half",
-                          "boundingRegions": [
-                            {
-                              "pageNumber": 1,
-                              "boundingBox": [
-                                1.0923,
-                                8.3162,
-                                1.3522,
-                                8.3162,
-                                1.3522,
-                                8.433,
-                                1.0923,
-                                8.433
-                              ]
-                            }
-                          ],
-                          "confidence": 0.305,
-                          "spans": [
-                            {
-                              "offset": 795,
-                              "length": 4
+                              "offset": 808,
+                              "length": 55
                             }
                           ]
                         }
@@ -5203,20 +4920,15 @@
                           ]
                         }
                       ],
-                      "confidence": 0.931,
+                      "confidence": 0.96,
                       "spans": [
                         {
-                          "offset": 795,
+                          "offset": 797,
                           "length": 71
                         }
                       ]
                     }
                   ]
-                },
-                "Locale": {
-                  "type": "string",
-                  "valueString": "en-US",
-                  "confidence": 1
                 },
                 "RemittanceAddress": {
                   "type": "string",
@@ -5237,7 +4949,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.868,
+                  "confidence": 0.756,
                   "spans": [
                     {
                       "offset": 363,
@@ -5264,64 +4976,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.946,
+                  "confidence": 0.718,
                   "spans": [
                     {
                       "offset": 350,
-                      "length": 12
-                    }
-                  ]
-                },
-                "VendorAddress": {
-                  "type": "string",
-                  "valueString": "Elm Conference Center in",
-                  "content": "Elm Conference Center in",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.3787,
-                        2.5846,
-                        7.0776,
-                        2.5846,
-                        7.0776,
-                        2.7013,
-                        5.3787,
-                        2.7013
-                      ]
-                    }
-                  ],
-                  "confidence": 0.524,
-                  "spans": [
-                    {
-                      "offset": 96,
-                      "length": 24
-                    }
-                  ]
-                },
-                "VendorAddressRecipient": {
-                  "type": "string",
-                  "valueString": "Contoso Ltd.",
-                  "content": "Contoso Ltd.",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        1.0078,
-                        2.5856,
-                        1.843,
-                        2.5856,
-                        1.843,
-                        2.7013,
-                        1.0078,
-                        2.7013
-                      ]
-                    }
-                  ],
-                  "confidence": 0.513,
-                  "spans": [
-                    {
-                      "offset": 33,
                       "length": 12
                     }
                   ]
@@ -5345,10 +5003,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.951,
+                  "confidence": 0.843,
                   "spans": [
                     {
-                      "offset": 923,
+                      "offset": 912,
                       "length": 16
                     }
                   ]
@@ -5358,7 +5016,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 1020
+                  "length": 1009
                 }
               ]
             }
@@ -5369,7 +5027,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
     "RandomSeed": "2033294997"
   }
 }

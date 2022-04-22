@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
-    public partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
+    internal partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmNetworkProfileConfiguration. </summary>
         public VirtualMachineScaleSetVmNetworkProfileConfiguration()

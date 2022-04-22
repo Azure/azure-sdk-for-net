@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
 {
     public class Sample1_ManagingWebPubSub
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
         {
             #region Snippet:Managing_Resource_Groups_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Managing_Resource_Groups_GetResourceGroupCollection
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             // With the Colletion, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true,rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
-            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
+            WebPubSubResource webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_ListAllWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            AsyncPageable<WebPubSub> response = WebPubSubColletion.GetAllAsync();
-            await foreach (WebPubSub WebPubSub in response)
+            AsyncPageable<WebPubSubResource> response = WebPubSubColletion.GetAllAsync();
+            await foreach (WebPubSubResource WebPubSub in response)
             {
                 Console.WriteLine(WebPubSub.Data.Name);
             }
@@ -96,28 +96,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_GetWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+            WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             Console.WriteLine(webPubSub.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
-            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
-
-            WebPubSub webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
-            if (webPubSub != null)
-            {
-                Console.WriteLine(webPubSub.Data.Name);
-            }
-
-            if (await WebPubSubColletion.ExistsAsync("bar"))
-            {
-                Console.WriteLine("WebPubSub 'bar' exists.");
-            }
             #endregion
         }
 
@@ -128,8 +108,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_DeleteWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-            await webPubSub.DeleteAsync(true);
+            WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+            await webPubSub.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
     }

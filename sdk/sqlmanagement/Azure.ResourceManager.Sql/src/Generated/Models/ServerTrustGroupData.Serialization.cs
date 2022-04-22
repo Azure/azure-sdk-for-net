@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IList<ServerInfo>> groupMembers = default;
             Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
             foreach (var property in element.EnumerateObject())
@@ -65,6 +67,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -110,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerTrustGroupData(id, name, type, Optional.ToList(groupMembers), Optional.ToList(trustScopes));
+            return new ServerTrustGroupData(id, name, type, systemData, Optional.ToList(groupMembers), Optional.ToList(trustScopes));
         }
     }
 }

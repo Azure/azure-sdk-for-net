@@ -8,18 +8,11 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The validation token. </summary>
-    public partial class ValidationToken
+    internal partial class ValidationToken
     {
         /// <summary> Initializes a new instance of ValidationToken. </summary>
         internal ValidationToken()
         {
-        }
-
-        /// <summary> Initializes a new instance of ValidationToken. </summary>
-        /// <param name="token"></param>
-        internal ValidationToken(string token)
-        {
-            Token = token;
         }
 
         /// <summary> Gets the token. </summary>

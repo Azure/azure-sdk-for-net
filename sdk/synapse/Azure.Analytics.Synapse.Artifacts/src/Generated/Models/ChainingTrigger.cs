@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/>, or <paramref name="runDimension"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
         public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<PipelineReference> dependsOn, string runDimension)
         {
             if (pipeline == null)

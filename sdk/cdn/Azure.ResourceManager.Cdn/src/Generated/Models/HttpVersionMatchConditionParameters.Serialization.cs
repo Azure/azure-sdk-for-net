@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -35,20 +35,31 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Transforms))
+            {
+                writer.WritePropertyName("transforms");
+                writer.WriteStartArray();
+                foreach (var item in Transforms)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static HttpVersionMatchConditionParameters DeserializeHttpVersionMatchConditionParameters(JsonElement element)
         {
-            HttpVersionMatchConditionParametersOdataType odataType = default;
+            HttpVersionMatchConditionParametersTypeName typeName = default;
             HttpVersionOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<string>> matchValues = default;
+            Optional<IList<TransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new HttpVersionMatchConditionParametersOdataType(property.Value.GetString());
+                    typeName = new HttpVersionMatchConditionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
@@ -81,8 +92,23 @@ namespace Azure.ResourceManager.Cdn.Models
                     matchValues = array;
                     continue;
                 }
+                if (property.NameEquals("transforms"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TransformCategory> array = new List<TransformCategory>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new TransformCategory(item.GetString()));
+                    }
+                    transforms = array;
+                    continue;
+                }
             }
-            return new HttpVersionMatchConditionParameters(odataType, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues));
+            return new HttpVersionMatchConditionParameters(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

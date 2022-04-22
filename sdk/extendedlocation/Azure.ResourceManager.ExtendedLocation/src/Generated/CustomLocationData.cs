@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ExtendedLocation
 {
     /// <summary> A class representing the CustomLocation data model. </summary>
-    public partial class CustomLocationData : TrackedResource
+    public partial class CustomLocationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CustomLocationData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <summary> Initializes a new instance of CustomLocationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
         /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
         /// <param name="displayName"> Display name for the Custom Locations location. </param>
@@ -37,10 +37,9 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
-        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, LocationIdentity identity, SystemData systemData, CustomLocationPropertiesAuthentication authentication, IList<string> clusterExtensionIds, string displayName, string hostResourceId, HostType? hostType, string @namespace, string provisioningState) : base(id, name, type, tags, location)
+        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemAssignedServiceIdentity identity, CustomLocationPropertiesAuthentication authentication, IList<string> clusterExtensionIds, string displayName, string hostResourceId, HostType? hostType, string @namespace, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            SystemData = systemData;
             Authentication = authentication;
             ClusterExtensionIds = clusterExtensionIds;
             DisplayName = displayName;
@@ -51,9 +50,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary> Identity for the resource. </summary>
-        public LocationIdentity Identity { get; set; }
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
+        public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
         public CustomLocationPropertiesAuthentication Authentication { get; set; }
         /// <summary> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </summary>

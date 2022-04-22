@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -77,12 +79,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri");
-                writer.WriteStringValue(OutputBlobUri);
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri");
-                writer.WriteStringValue(ErrorBlobUri);
+                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -95,6 +97,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<VirtualMachineRunCommandScriptSource> source = default;
             Optional<IList<RunCommandInputParameter>> parameters = default;
             Optional<IList<RunCommandInputParameter>> protectedParameters = default;
@@ -102,8 +105,8 @@ namespace Azure.ResourceManager.Compute
             Optional<string> runAsUser = default;
             Optional<string> runAsPassword = default;
             Optional<int> timeoutInSeconds = default;
-            Optional<string> outputBlobUri = default;
-            Optional<string> errorBlobUri = default;
+            Optional<Uri> outputBlobUri = default;
+            Optional<Uri> errorBlobUri = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
@@ -136,6 +139,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -219,12 +227,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("outputBlobUri"))
                         {
-                            outputBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                outputBlobUri = null;
+                                continue;
+                            }
+                            outputBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("errorBlobUri"))
                         {
-                            errorBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                errorBlobUri = null;
+                                continue;
+                            }
+                            errorBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -246,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandData(id, name, type, tags, location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, provisioningState.Value, instanceView.Value);
+            return new VirtualMachineRunCommandData(id, name, type, systemData, tags, location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, provisioningState.Value, instanceView.Value);
         }
     }
 }

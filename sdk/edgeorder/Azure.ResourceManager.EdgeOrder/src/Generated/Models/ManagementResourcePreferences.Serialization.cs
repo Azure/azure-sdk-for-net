@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ManagementResourcePreferences : IUtf8JsonSerializable
+    internal partial class ManagementResourcePreferences : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

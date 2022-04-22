@@ -1,6 +1,29 @@
 # Release History
 
-## 12.9.0-beta.3 (Unreleased)
+## 12.10.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.10.0-beta.1 (2022-04-12)
+- Added support for service version 2021-06-08.
+- Added ability to maintain a file's current LastWrittenOn time when calling ShareFileClient.PutRange(), .PutRangeAsync(), .PutRangeFromUri(), and .PutRangeFromUriAsync().
+- Added ability to specify a file or directory's ChangedOn time when calling ShareFileClient/ShareDirectoryClient.Create(), .CreateAsync(), .SetProperties(), .SetPropertiesAsync(), .Rename(), and .RenameAsync().
+- Added ability to specify Content-Type on a file when calling ShareFileClient.Rename(), .RenameAsync().
+
+## 12.9.0 (2022-03-10)
+- Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
+- Added new overload of ShareFileClient.StartCopy() and .StartCopyAsync(), added new parameters allowing the copying of the source file's CreatedOn, LastWrittenOn, and FileAttributes properties.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareUriBuilder was case sensitive for parameter names.
+
+## 12.9.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
 - Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
 - Fixed a memory leak in ShareFileClient.UploadAsync().

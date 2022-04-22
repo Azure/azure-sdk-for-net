@@ -17,117 +17,97 @@ namespace Azure.AI.Language.Conversations
 {
     internal partial class ConversationAnalysisRestClient
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ConversationAnalysisRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ConversationAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-11-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ConversationAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2022-03-01-preview")
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateAnalyzeConversationRequest(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions)
+        internal HttpMessage CreateAnalyzeConversationRequest(AnalyzeConversationTask body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
-            uri.AppendQuery("projectName", projectName, true);
-            uri.AppendQuery("deploymentName", deploymentName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(conversationAnalysisOptions);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="conversationAnalysisOptions"> Post body of the request. </param>
+        /// <param name="body"> A single conversational task to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisOptions"/> is null. </exception>
-        public async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(AnalyzeConversationTask body, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (conversationAnalysisOptions == null)
-            {
-                throw new ArgumentNullException(nameof(conversationAnalysisOptions));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAnalyzeConversationRequest(projectName, deploymentName, conversationAnalysisOptions);
+            using var message = CreateAnalyzeConversationRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AnalyzeConversationResult value = default;
+                        AnalyzeConversationTaskResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(document.RootElement);
+                        value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="conversationAnalysisOptions"> Post body of the request. </param>
+        /// <param name="body"> A single conversational task to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisOptions"/> is null. </exception>
-        public Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public Response<AnalyzeConversationTaskResult> AnalyzeConversation(AnalyzeConversationTask body, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (conversationAnalysisOptions == null)
-            {
-                throw new ArgumentNullException(nameof(conversationAnalysisOptions));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAnalyzeConversationRequest(projectName, deploymentName, conversationAnalysisOptions);
+            using var message = CreateAnalyzeConversationRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AnalyzeConversationResult value = default;
+                        AnalyzeConversationTaskResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(document.RootElement);
+                        value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

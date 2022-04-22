@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ProviderPermission DeserializeProviderPermission(JsonElement element)
         {
             Optional<string> applicationId = default;
-            Optional<RoleDefinition> roleDefinition = default;
-            Optional<RoleDefinition> managedByRoleDefinition = default;
+            Optional<AzureRoleDefinition> roleDefinition = default;
+            Optional<AzureRoleDefinition> managedByRoleDefinition = default;
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    roleDefinition = RoleDefinition.DeserializeRoleDefinition(property.Value);
+                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedByRoleDefinition"))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    managedByRoleDefinition = RoleDefinition.DeserializeRoleDefinition(property.Value);
+                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizationConsentState"))

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> status = default;
             Optional<string> currentRestoringFileName = default;
             Optional<string> lastRestoredFileName = default;
@@ -53,6 +55,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -148,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseRestoreDetailsResultData(id, name, type, status.Value, currentRestoringFileName.Value, lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToList(unrestorableFiles), Optional.ToNullable(numberOfFilesDetected), lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), blockReason.Value);
+            return new ManagedDatabaseRestoreDetailsResultData(id, name, type, systemData, status.Value, currentRestoringFileName.Value, lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToList(unrestorableFiles), Optional.ToNullable(numberOfFilesDetected), lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), blockReason.Value);
         }
     }
 }

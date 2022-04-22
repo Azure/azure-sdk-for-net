@@ -21,12 +21,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal string BlobContainerNameMultiPart = "backup/some/folder/name";
 
         public BackupRestoreTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, serviceVersion, mode, useLegacyTransport: true)
+            : base(isAsync, serviceVersion, mode)
         {
-            Sanitizer = new BackupRestoreRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..token");
+            SanitizedQueryParameters.Add("sig");
         }
 
-        internal KeyVaultBackupClient GetClient(bool isInstrumented = true)
+        internal KeyVaultBackupClient GetClient()
         {
             var client = new KeyVaultBackupClient(
                 Uri,
@@ -41,7 +42,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
                             },
                         },
                 }));
-            return isInstrumented ? InstrumentClient(client) : client;
+
+            return InstrumentClient(client);
         }
 
         protected override void Start()
@@ -59,7 +61,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return RecordedTestSanitizer.SanitizeValue;
+                return SanitizeValue;
             }
             // Create a service level SAS that only allows reading from service
             // level APIs

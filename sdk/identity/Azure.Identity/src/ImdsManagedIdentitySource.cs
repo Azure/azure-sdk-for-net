@@ -27,6 +27,7 @@ namespace Azure.Identity
         internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
 
         private readonly string _clientId;
+        private readonly string _resourceId;
         private readonly Uri _imdsEndpoint;
 
         private TimeSpan? _imdsNetworkTimeout;
@@ -34,6 +35,7 @@ namespace Azure.Identity
         internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _clientId = options.ClientId;
+            _resourceId = options.ResourceIdentifier?.ToString();
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
@@ -63,7 +65,11 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(_clientId))
             {
-                request.Uri.AppendQuery("client_id", _clientId);
+                request.Uri.AppendQuery(Constants.ManagedIdentityClientId, _clientId);
+            }
+            if (!string.IsNullOrEmpty(_resourceId))
+            {
+                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
             }
 
             return request;

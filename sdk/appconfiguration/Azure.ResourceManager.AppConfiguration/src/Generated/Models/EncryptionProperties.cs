@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The encryption settings for a configuration store. </summary>
-    public partial class EncryptionProperties
+    internal partial class EncryptionProperties
     {
         /// <summary> Initializes a new instance of EncryptionProperties. </summary>
         public EncryptionProperties()

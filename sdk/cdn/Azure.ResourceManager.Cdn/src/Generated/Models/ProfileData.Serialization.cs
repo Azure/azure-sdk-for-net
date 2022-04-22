@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -19,56 +21,62 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            {
+                if (OriginResponseTimeoutSeconds != null)
+                {
+                    writer.WritePropertyName("originResponseTimeoutSeconds");
+                    writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("originResponseTimeoutSeconds");
+                }
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
-            Sku sku = default;
-            string location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
+            CdnSku sku = default;
+            Optional<string> kind = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
             Optional<string> provisioningState = default;
-            Optional<string> frontdoorId = default;
+            Optional<Guid> frontDoorId = default;
+            Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("kind"))
                 {
-                    location = property.Value.GetString();
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -77,14 +85,9 @@ namespace Azure.ResourceManager.Cdn
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -100,6 +103,11 @@ namespace Azure.ResourceManager.Cdn
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -126,16 +134,31 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("frontdoorId"))
+                        if (property0.NameEquals("frontDoorId"))
                         {
-                            frontdoorId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frontDoorId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("originResponseTimeoutSeconds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                originResponseTimeoutSeconds = null;
+                                continue;
+                            }
+                            originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), sku, Optional.ToNullable(resourceState), provisioningState.Value, frontdoorId.Value);
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

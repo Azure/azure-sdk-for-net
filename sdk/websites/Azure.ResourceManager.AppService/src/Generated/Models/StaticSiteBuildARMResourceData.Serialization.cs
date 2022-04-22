@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> buildId = default;
             Optional<string> sourceBranch = default;
             Optional<string> pullRequestTitle = default;
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> createdTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
             Optional<BuildStatus> status = default;
-            Optional<IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -63,6 +65,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -131,10 +138,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.StaticSiteUserProvidedFunctionApp> array = new List<Models.StaticSiteUserProvidedFunctionApp>();
+                            List<StaticSiteUserProvidedFunctionApp> array = new List<StaticSiteUserProvidedFunctionApp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
+                                array.Add(StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -143,7 +150,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteBuildARMResourceData(id, name, type, kind.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps));
+            return new StaticSiteBuildARMResourceData(id, name, type, systemData, kind.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps));
         }
     }
 }

@@ -828,6 +828,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Throws(expectedException);
 
             mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            mockProcessor
                .Protected()
                .Setup<Task>("OnProcessingErrorAsync", expectedException, ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<string>(), ItExpr.IsAny<CancellationToken>())
                .Callback(() => completionSource.TrySetResult(true))
@@ -1867,6 +1874,80 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.Object.ConsumerGroup,
                     expectedException.Message),
                  Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreatePartitionProcessorProcessingLogsWarningForTokenCancellationErrors()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var firstCall = true;
+            var partition = new EventProcessorPartition { PartitionId = "omgno" };
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) } };
+            var handlerCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            mockConsumer
+                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                 .Returns(() => firstCall switch
+                 {
+                     true => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData> { new EventData("Test") }),
+                     false => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData>())
+                 });
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                 .Setup(processor => processor.ProcessEventBatchAsync(It.IsAny<EventProcessorPartition>(), It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                 .Callback<EventProcessorPartition, IReadOnlyList<EventData>, bool, CancellationToken>((partition, events, dispatchEmpties, cancellationToken) =>
+                 {
+                     if (firstCall)
+                     {
+                         cancellationToken.Register(() => throw new DivideByZeroException());
+                         handlerCompletion.TrySetResult(true);
+                         firstCall = false;
+                     }
+                 })
+                 .Returns(Task.CompletedTask);
+
+            using var processorCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationSource.Token, CancellationToken.None);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, processorCancellationSource, EventPosition.Earliest);
+
+            Assert.That(() => GetActivePartitionProcessors(mockProcessor.Object).TryAdd(partition.PartitionId, partitionProcessor), Is.True, "The partition processor should have been registered for tracking.");
+
+            await Task.WhenAny(handlerCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(async () => await InvokeTryStopProcessingPartitionAsync(mockProcessor.Object, partition.PartitionId, Processor.ProcessingStoppedReason.OwnershipLost, cancellationSource.Token), Is.True, "Processing should have been stopped.");
+            Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.InstanceOf<TaskCanceledException>(), "The partition processor should have been canceled.");
+
+            mockLogger
+                .Verify(log => log.PartitionProcessorStoppingCancellationWarning(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<string>()),
+                Times.Once);
+
+            cancellationSource.Cancel();
         }
     }
 }

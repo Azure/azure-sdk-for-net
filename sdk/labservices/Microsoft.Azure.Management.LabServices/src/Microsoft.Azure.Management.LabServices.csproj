@@ -9,7 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.LabServices</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.LabServices</PackageId>
 		<PackageTags>LabServices;ManagedLabs;</PackageTags>
-		<PackageReleaseNotes>Release api version 2021-10-01-preview.</PackageReleaseNotes>
+		<PackageReleaseNotes>Release api version 2021-11-15-preview.</PackageReleaseNotes>
         <ProjectGuid>{B2143F8C-A1B8-4042-ACAB-CB7797E24C9F}</ProjectGuid>
 	</PropertyGroup>
 	<PropertyGroup>

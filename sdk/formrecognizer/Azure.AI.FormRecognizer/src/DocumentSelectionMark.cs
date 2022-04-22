@@ -11,6 +11,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentSelectionMark
     {
         /// <summary>
+        /// Initializes a new instance of DocumentSelectionMark. Used by the <see cref="DocumentAnalysisModelFactory"/>.
+        /// </summary>
+        internal DocumentSelectionMark(SelectionMarkState state, BoundingBox boundingBox, DocumentSpan span, float confidence)
+        {
+            State = state;
+            BoundingBox = boundingBox;
+            Span = span;
+            Confidence = confidence;
+        }
+
+        /// <summary>
         /// The quadrilateral bounding box that outlines this selection mark. Units are in pixels for
         /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
         /// at <see cref="DocumentPage.Unit"/>.

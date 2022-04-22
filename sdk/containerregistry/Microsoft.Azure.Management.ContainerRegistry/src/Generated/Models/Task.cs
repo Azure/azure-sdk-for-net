@@ -37,13 +37,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="location">The location of the resource. This cannot be
         /// changed after the resource is created.</param>
-        /// <param name="platform">The platform properties against which the
-        /// run has to happen.</param>
-        /// <param name="step">The properties of a task step.</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="identity">Identity for the resource.</param>
         /// <param name="provisioningState">The provisioning state of the task.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
@@ -51,17 +50,24 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="creationDate">The creation date of task.</param>
         /// <param name="status">The current status of task. Possible values
         /// include: 'Disabled', 'Enabled'</param>
+        /// <param name="platform">The platform properties against which the
+        /// run has to happen.</param>
         /// <param name="agentConfiguration">The machine configuration of the
         /// run agent.</param>
         /// <param name="agentPoolName">The dedicated agent pool for the
         /// task.</param>
         /// <param name="timeout">Run timeout in seconds.</param>
+        /// <param name="step">The properties of a task step.</param>
         /// <param name="trigger">The properties that describe all triggers for
         /// the task.</param>
         /// <param name="credentials">The properties that describes a set of
         /// credentials that will be used when this run is invoked.</param>
-        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
-            : base(location, id, name, type, tags)
+        /// <param name="logTemplate">The template that describes the
+        /// repository and tag information for run log artifact.</param>
+        /// <param name="isSystemTask">The value of this property indicates
+        /// whether the task resource is system task or not.</param>
+        public Task(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TaskStepProperties step = default(TaskStepProperties), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials), string logTemplate = default(string), bool? isSystemTask = default(bool?))
+            : base(location, id, name, type, tags, systemData)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -74,6 +80,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Step = step;
             Trigger = trigger;
             Credentials = credentials;
+            LogTemplate = logTemplate;
+            IsSystemTask = isSystemTask;
             CustomInit();
         }
 
@@ -155,6 +163,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public Credentials Credentials { get; set; }
 
         /// <summary>
+        /// Gets or sets the template that describes the repository and tag
+        /// information for run log artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logTemplate")]
+        public string LogTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of this property indicates whether the task
+        /// resource is system task or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isSystemTask")]
+        public bool? IsSystemTask { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -163,14 +185,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public override void Validate()
         {
             base.Validate();
-            if (Platform == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Platform");
-            }
-            if (Step == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Step");
-            }
             if (Platform != null)
             {
                 Platform.Validate();

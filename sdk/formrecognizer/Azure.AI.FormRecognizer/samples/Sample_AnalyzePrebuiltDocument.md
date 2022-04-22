@@ -22,7 +22,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
 
@@ -34,7 +34,7 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }
@@ -125,7 +125,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
-string filePath = "filePath";
+string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
@@ -138,7 +138,7 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }

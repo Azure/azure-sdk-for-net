@@ -9,26 +9,24 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.15.0</Version>
+    <Version>1.16.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.15.0 relates to NetApp Files (ANF) 2021-08-01.          
-          - Added EncryptDCConnections to ActiveDirectory
-          - Added LogSpecifications to ServiceSpecification
-          - Added SubscriptionQuotaItemName to SubscriptionQuotaItem
-          - Added Support for VolumeGroups: VolumeGroupsOperations, VolumeGroup VolumeGroupDetails, VolumeGroupMetaData and VolumeGroupVolumeProperties					
-          - Added VolumeGroupName to Volume
-          - Added CapacityPoolResourceId to Volume
-          - Added ProximityPlacementGroup to Volume
-          - Added T2Network to Volume
-          - Added VolumeSpecName to Volume
-          - Added PlacementRules to Volume
+        Version 1.16.0.0 relates to NetApp Files (ANF) 2021-10-01.
+          - Added support for Subvolumes
+		  - Added support for Volume Groups https://docs.microsoft.com/en-us/azure/azure-netapp-files/application-volume-group-introduction				
+          - Added RestoreFiles operation to Snapshots, To restore the specified files from the specified snapshot to the active filesystem
+		  - Added LdapSearchScope to ActiveDirectory
+          - Added SystemData to BackupPolicy, CapacityPool, Volumes and SnapshotPolicy
+          - Added RestoreFiles operation to Snapshots for Single File Snapshot Restore
+		  - Added MaximumNumberOfFiles and EnableSubvolumes to Volume
+		  - Added UnixPermissions to volumePatch
+		  - Added forceDelete flag to volume delete, An option to force delete the volume in case of failed replication for example. Will cleanup resources connected to the particular volume  	
           					
-        Breakning changes:
-          - Removed extra Name1 property from BackupPolicy, BackupPolicyPatch and BackupPolicyDetails
-          - Fixed type of Value in SnapshotPolicyVolumeList changed to IList<Volume> rather than IList<object>
-          - Removed SubscriptionQuotaItemName from SubscriptionQuotaItem                              
+        Breaking changes:
+          - Minimum and maximum size for capacity pool has changed to allow for smaller capacitypools
+		  - Snapshots operation signagure has changed in line with Azure SDK conventions.
             
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.

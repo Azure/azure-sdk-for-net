@@ -10,17 +10,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class StorageHelper
     {
-        private static string defaultStorageDirectory;
-        private const string nonWindowsVarTmp = "/var/tmp/";
+        private static string s_defaultStorageDirectory;
+        private const string NonWindowsVarTmp = "/var/tmp/";
 
         // TODO: investigate if /tmp/ should be used.
-        private const string nonWindowsTmp = "/tmp/";
+        private const string NonWindowsTmp = "/tmp/";
 
         internal static string GetDefaultStorageDirectory()
         {
-            if (defaultStorageDirectory != null)
+            if (s_defaultStorageDirectory != null)
             {
-                return defaultStorageDirectory;
+                return s_defaultStorageDirectory;
             }
             else
             {
@@ -29,57 +29,57 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (IsWindowsOS())
                 {
-                    string localAppData = environmentVars["LOCALAPPDATA"].ToString();
+                    string localAppData = environmentVars["LOCALAPPDATA"]?.ToString();
                     if (localAppData != null)
                     {
                         dirPath = CreateTelemetryDirectory(localAppData);
                         if (dirPath != null)
                         {
-                            defaultStorageDirectory = dirPath;
-                            return defaultStorageDirectory;
+                            s_defaultStorageDirectory = dirPath;
+                            return s_defaultStorageDirectory;
                         }
 
-                        string temp = environmentVars["TEMP"].ToString();
+                        string temp = environmentVars["TEMP"]?.ToString();
                         if (temp != null)
                         {
                             dirPath = CreateTelemetryDirectory(temp);
                             if (dirPath != null)
                             {
-                                defaultStorageDirectory = dirPath;
-                                return defaultStorageDirectory;
+                                s_defaultStorageDirectory = dirPath;
+                                return s_defaultStorageDirectory;
                             }
                         }
                     }
                 }
                 else
                 {
-                    string tmpdir = environmentVars["TMPDIR"].ToString();
+                    string tmpdir = environmentVars["TMPDIR"]?.ToString();
                     if (tmpdir != null)
                     {
                         dirPath = CreateTelemetryDirectory(tmpdir);
                         if (dirPath != null)
                         {
-                            defaultStorageDirectory = dirPath;
-                            return defaultStorageDirectory;
+                            s_defaultStorageDirectory = dirPath;
+                            return s_defaultStorageDirectory;
                         }
                     }
 
-                    dirPath = CreateTelemetryDirectory(nonWindowsVarTmp);
+                    dirPath = CreateTelemetryDirectory(NonWindowsVarTmp);
                     if (dirPath != null)
                     {
-                        defaultStorageDirectory = dirPath;
-                        return defaultStorageDirectory;
+                        s_defaultStorageDirectory = dirPath;
+                        return s_defaultStorageDirectory;
                     }
 
-                    dirPath = CreateTelemetryDirectory(nonWindowsTmp);
+                    dirPath = CreateTelemetryDirectory(NonWindowsTmp);
                     if (dirPath != null)
                     {
-                        defaultStorageDirectory = dirPath;
-                        return defaultStorageDirectory;
+                        s_defaultStorageDirectory = dirPath;
+                        return s_defaultStorageDirectory;
                     }
                 }
 
-                return defaultStorageDirectory;
+                return s_defaultStorageDirectory;
             }
         }
 

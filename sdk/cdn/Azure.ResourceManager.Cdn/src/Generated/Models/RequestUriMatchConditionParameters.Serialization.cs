@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestUriMatchConditionParameters DeserializeRequestUriMatchConditionParameters(JsonElement element)
         {
-            RequestUriMatchConditionParametersOdataType odataType = default;
+            RequestUriMatchConditionParametersTypeName typeName = default;
             RequestUriOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<string>> matchValues = default;
             Optional<IList<TransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new RequestUriMatchConditionParametersOdataType(property.Value.GetString());
+                    typeName = new RequestUriMatchConditionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RequestUriMatchConditionParameters(odataType, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new RequestUriMatchConditionParameters(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

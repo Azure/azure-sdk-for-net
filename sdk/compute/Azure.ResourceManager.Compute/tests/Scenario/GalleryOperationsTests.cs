@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryOperationsTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
         public GalleryOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<Gallery> CreateGalleryAsync(string name)
+        private async Task<GalleryResource> CreateGalleryAsync(string name)
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var collection = _resourceGroup.GetGalleries();
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(true, name, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             return lro.Value;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
-            await gallery.DeleteAsync(true);
+            await gallery.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
-            Gallery gallery2 = await gallery.GetAsync();
+            GalleryResource gallery2 = await gallery.GetAsync();
 
             ResourceDataHelper.AssertGallery(gallery.Data, gallery2.Data);
         }
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var description = "This is a gallery for test";
-            var update = new GalleryUpdate()
+            var update = new GalleryPatch()
             {
                 Description = description
             };
-            var lro = await gallery.UpdateAsync(true, update);
-            Gallery updatedGallery = lro.Value;
+            var lro = await gallery.UpdateAsync(WaitUntil.Completed, update);
+            GalleryResource updatedGallery = lro.Value;
 
             Assert.AreEqual(description, updatedGallery.Data.Description);
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             };
-            Gallery updatedGallery = await gallery.SetTagsAsync(tags);
+            GalleryResource updatedGallery = await gallery.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedGallery.Data.Tags);
         }

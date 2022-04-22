@@ -41,8 +41,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             UseCosmos = useCosmos;
             _createTable = createTable;
-            // https://github.com/Azure/azure-sdk-tools/issues/2448
-            Sanitizer.BodyRegexSanitizers.Add(new BodyRegexSanitizer("(batch|changeset)_[\\w\\d-]+", "multipart_boundary"));
         }
 
         public override async Task StartTestRecordingAsync()
@@ -135,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     }
                 }
 
-                builder.AddAzureTables();
+                builder.AddTables();
             }, programType);
 
             (configure ?? DefaultConfigure).Invoke(hostBuilder);
@@ -197,6 +195,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             {
                 return _recording.InstrumentClientOptions(base.CreateClientOptions(configuration));
             }
+
+            public override TableServiceClient Get(string name)
+            {
+                var serviceClient = base.Get(name);
+                return new InstrumentedTableServiceClient(serviceClient, _recording.Recording);
+            }
+        }
+
+        private class InstrumentedTableServiceClient : TableServiceClient
+        {
+            private readonly TableServiceClient _client;
+            private readonly TestRecording _recording;
+
+            public InstrumentedTableServiceClient(TableServiceClient serviceClient, TestRecording recording)
+            {
+                _client = serviceClient;
+                _recording = recording;
+            }
+
+            public override TableClient GetTableClient(string tableName)
+            {
+                var client = _client.GetTableClient(tableName);
+                client.SetBatchGuids(_recording.Random.NewGuid(), _recording.Random.NewGuid());
+                return client;
+            }
+
+            public override string AccountName => _client.AccountName;
         }
     }
 }

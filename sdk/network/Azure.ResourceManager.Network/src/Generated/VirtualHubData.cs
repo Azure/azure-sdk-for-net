@@ -13,21 +13,21 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualHub data model. </summary>
-    public partial class VirtualHubData : Resource
+    public partial class VirtualHubData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
         public VirtualHubData()
         {
             VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
-            IpConfigurations = new ChangeTrackingList<WritableSubResource>();
-            VirtualRouterIps = new ChangeTrackingList<string>();
+            IPConfigurations = new ChangeTrackingList<WritableSubResource>();
+            VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpConnections"> List of references to Bgp Connections. </param>
         /// <param name="ipConfigurations"> List of references to IpConfigurations. </param>
         /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
+        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        internal VirtualHubData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, type, location, tags)
+        internal VirtualHubData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2SVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, ProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             VirtualWan = virtualWan;
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Network
             Sku = sku;
             RoutingState = routingState;
             BgpConnections = bgpConnections;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIps = virtualRouterIps;
+            VirtualRouterIPs = virtualRouterIPs;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             PreferredRoutingGateway = preferredRoutingGateway;
         }
@@ -77,21 +77,104 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualWAN to which the VirtualHub belongs. </summary>
-        public WritableSubResource VirtualWan { get; set; }
+        internal WritableSubResource VirtualWan { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualWanId
+        {
+            get => VirtualWan is null ? default : VirtualWan.Id;
+            set
+            {
+                if (VirtualWan is null)
+                    VirtualWan = new WritableSubResource();
+                VirtualWan.Id = value;
+            }
+        }
+
         /// <summary> The VpnGateway associated with this VirtualHub. </summary>
-        public WritableSubResource VpnGateway { get; set; }
+        internal WritableSubResource VpnGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VpnGatewayId
+        {
+            get => VpnGateway is null ? default : VpnGateway.Id;
+            set
+            {
+                if (VpnGateway is null)
+                    VpnGateway = new WritableSubResource();
+                VpnGateway.Id = value;
+            }
+        }
+
         /// <summary> The P2SVpnGateway associated with this VirtualHub. </summary>
-        public WritableSubResource P2SVpnGateway { get; set; }
+        internal WritableSubResource P2SVpnGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier P2SVpnGatewayId
+        {
+            get => P2SVpnGateway is null ? default : P2SVpnGateway.Id;
+            set
+            {
+                if (P2SVpnGateway is null)
+                    P2SVpnGateway = new WritableSubResource();
+                P2SVpnGateway.Id = value;
+            }
+        }
+
         /// <summary> The expressRouteGateway associated with this VirtualHub. </summary>
-        public WritableSubResource ExpressRouteGateway { get; set; }
+        internal WritableSubResource ExpressRouteGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ExpressRouteGatewayId
+        {
+            get => ExpressRouteGateway is null ? default : ExpressRouteGateway.Id;
+            set
+            {
+                if (ExpressRouteGateway is null)
+                    ExpressRouteGateway = new WritableSubResource();
+                ExpressRouteGateway.Id = value;
+            }
+        }
+
         /// <summary> The azureFirewall associated with this VirtualHub. </summary>
-        public WritableSubResource AzureFirewall { get; set; }
+        internal WritableSubResource AzureFirewall { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureFirewallId
+        {
+            get => AzureFirewall is null ? default : AzureFirewall.Id;
+            set
+            {
+                if (AzureFirewall is null)
+                    AzureFirewall = new WritableSubResource();
+                AzureFirewall.Id = value;
+            }
+        }
+
         /// <summary> The securityPartnerProvider associated with this VirtualHub. </summary>
-        public WritableSubResource SecurityPartnerProvider { get; set; }
+        internal WritableSubResource SecurityPartnerProvider { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecurityPartnerProviderId
+        {
+            get => SecurityPartnerProvider is null ? default : SecurityPartnerProvider.Id;
+            set
+            {
+                if (SecurityPartnerProvider is null)
+                    SecurityPartnerProvider = new WritableSubResource();
+                SecurityPartnerProvider.Id = value;
+            }
+        }
+
         /// <summary> Address-prefix for this VirtualHub. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The routeTable associated with this virtual hub. </summary>
-        public VirtualHubRouteTable RouteTable { get; set; }
+        internal VirtualHubRouteTable RouteTable { get; set; }
+        /// <summary> List of all routes. </summary>
+        public IList<VirtualHubRoute> Routes
+        {
+            get
+            {
+                if (RouteTable is null)
+                    RouteTable = new VirtualHubRouteTable();
+                return RouteTable.Routes;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual hub resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The Security Provider name. </summary>
@@ -105,11 +188,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of references to Bgp Connections. </summary>
         public IReadOnlyList<WritableSubResource> BgpConnections { get; }
         /// <summary> List of references to IpConfigurations. </summary>
-        public IReadOnlyList<WritableSubResource> IpConfigurations { get; }
+        public IReadOnlyList<WritableSubResource> IPConfigurations { get; }
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
-        public IList<string> VirtualRouterIps { get; }
+        public IList<string> VirtualRouterIPs { get; }
         /// <summary> Flag to control transit for VirtualRouter hub. </summary>
         public bool? AllowBranchToBranchTraffic { get; set; }
         /// <summary> The preferred gateway to route on-prem traffic. </summary>

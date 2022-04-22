@@ -212,5 +212,26 @@ namespace Azure.Core
             AssertNotNullOrEmpty(value, name);
             return value;
         }
+
+        /// <summary>
+        /// Throws if <paramref name="value"/> is not null.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="message">The error message.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
+#if AZURE_NULLABLE
+        public static void AssertNull<T>([AllowNull] T value, string name, [AllowNull] string message = null)
+#else
+#nullable enable
+        public static void AssertNull<T>(T value, string name, string? message = null)
+#nullable disable
+#endif
+        {
+            if (value is not null)
+            {
+                throw new ArgumentException(message ?? "Value must be null.", name);
+            }
+        }
     }
 }

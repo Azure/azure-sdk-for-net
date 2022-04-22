@@ -20,16 +20,28 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionImages. </summary>
-        /// <param name="oSDiskImage"> Contains encryption settings for an OS disk image. </param>
+        /// <param name="osDiskImage"> Contains encryption settings for an OS disk image. </param>
         /// <param name="dataDiskImages"> A list of encryption specifications for data disk images. </param>
-        internal EncryptionImages(OSDiskImageEncryption oSDiskImage, IList<DataDiskImageEncryption> dataDiskImages)
+        internal EncryptionImages(OSDiskImageEncryption osDiskImage, IList<DataDiskImageEncryption> dataDiskImages)
         {
-            OSDiskImage = oSDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
         }
 
         /// <summary> Contains encryption settings for an OS disk image. </summary>
-        public OSDiskImageEncryption OSDiskImage { get; set; }
+        internal OSDiskImageEncryption OSDiskImage { get; set; }
+        /// <summary> A relative URI containing the resource ID of the disk encryption set. </summary>
+        public string DiskEncryptionSetId
+        {
+            get => OSDiskImage is null ? default : OSDiskImage.DiskEncryptionSetId;
+            set
+            {
+                if (OSDiskImage is null)
+                    OSDiskImage = new OSDiskImageEncryption();
+                OSDiskImage.DiskEncryptionSetId = value;
+            }
+        }
+
         /// <summary> A list of encryption specifications for data disk images. </summary>
         public IList<DataDiskImageEncryption> DataDiskImages { get; }
     }

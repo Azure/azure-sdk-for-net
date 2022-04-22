@@ -32,9 +32,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TokenCredentialsProperties class.
         /// </summary>
-        public TokenCredentialsProperties(ActiveDirectoryObject activeDirectoryObject = default(ActiveDirectoryObject), IList<TokenCertificate> certificates = default(IList<TokenCertificate>), IList<TokenPassword> passwords = default(IList<TokenPassword>))
+        public TokenCredentialsProperties(IList<TokenCertificate> certificates = default(IList<TokenCertificate>), IList<TokenPassword> passwords = default(IList<TokenPassword>))
         {
-            ActiveDirectoryObject = activeDirectoryObject;
             Certificates = certificates;
             Passwords = passwords;
             CustomInit();
@@ -44,11 +43,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "activeDirectoryObject")]
-        public ActiveDirectoryObject ActiveDirectoryObject { get; set; }
 
         /// <summary>
         /// </summary>

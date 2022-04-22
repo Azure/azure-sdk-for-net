@@ -18,9 +18,9 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
-        internal CommunicationIceServer(IEnumerable<string> urls, string username, string credential, RouteType routeType)
+        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. &quot;any&quot; will have higher reliability while &quot;nearest&quot; will have lower latency. It is recommended to default to use the &quot;any&quot; routing method unless there are specific scenarios which minimizing latency is critical. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/> or <paramref name="credential"/> is null. </exception>
+        public CommunicationIceServer(IEnumerable<string> urls, string username, string credential, RouteType routeType)
         {
             if (urls == null)
             {
@@ -45,8 +45,8 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
-        internal CommunicationIceServer(IReadOnlyList<string> urls, string username, string credential, RouteType routeType)
+        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. &quot;any&quot; will have higher reliability while &quot;nearest&quot; will have lower latency. It is recommended to default to use the &quot;any&quot; routing method unless there are specific scenarios which minimizing latency is critical. </param>
+        internal CommunicationIceServer(IList<string> urls, string username, string credential, RouteType routeType)
         {
             Urls = urls;
             Username = username;
@@ -55,12 +55,12 @@ namespace Azure.Communication.NetworkTraversal
         }
 
         /// <summary> List of STUN/TURN server URLs. </summary>
-        public IReadOnlyList<string> Urls { get; }
+        public IList<string> Urls { get; }
         /// <summary> User account name which uniquely identifies the credentials. </summary>
-        public string Username { get; }
+        public string Username { get; set; }
         /// <summary> Credential for the server. </summary>
-        public string Credential { get; }
-        /// <summary> The routing methodology to where the ICE server will be located from the client. </summary>
-        public RouteType RouteType { get; }
+        public string Credential { get; set; }
+        /// <summary> The routing methodology to where the ICE server will be located from the client. &quot;any&quot; will have higher reliability while &quot;nearest&quot; will have lower latency. It is recommended to default to use the &quot;any&quot; routing method unless there are specific scenarios which minimizing latency is critical. </summary>
+        public RouteType RouteType { get; set; }
     }
 }

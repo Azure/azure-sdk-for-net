@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             var failedAttemptCount = 0;
             var retryDelay = default(TimeSpan?);
-
+            var link = default(RequestResponseAmqpLink);
             var stopWatch = ValueStopwatch.StartNew();
 
             try
@@ -244,7 +244,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                         var token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
 
-                        RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        if (!ManagementLink.TryGetOpenedObject(out link))
+                        {
+                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        }
+
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         // Send the request and process the response.
@@ -340,7 +344,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                         token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
 
-                        link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        if (!ManagementLink.TryGetOpenedObject(out link))
+                        {
+                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        }
+
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         // Send the request and process the response.
@@ -411,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override TransportProducer CreateProducer(string partitionId,
                                                          string producerIdentifier,
                                                          TransportProducerFeatures requestedFeatures,
-                                                         PartitionPublishingOptionsInternal partitionOptions,
+                                                         PartitionPublishingOptions partitionOptions,
                                                          EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));

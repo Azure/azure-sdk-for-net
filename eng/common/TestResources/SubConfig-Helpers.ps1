@@ -1,4 +1,27 @@
-function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, [string]$value, [array]$allowedValues = @())
+function BuildServiceDirectoryPrefix([string]$serviceName) {
+    return $serviceName.ToUpperInvariant() + "_"
+}
+
+# If the ServiceDirectory has multiple segments use the last directory name
+# e.g. D:\foo\bar -> bar or foo/bar -> bar
+function GetServiceLeafDirectoryName([string]$serviceDirectory) {
+    return $serviceDirectory ? (Split-Path -Leaf $serviceDirectory) : ""
+}
+
+function GetUserName() {
+    $UserName = $env:USER ?? $env:USERNAME
+    # Remove spaces, etc. that may be in $UserName
+    $UserName = $UserName -replace '\W'
+    return $UserName
+}
+
+function GetBaseName([string]$user, [string]$serviceDirectoryName) {
+    # Handle service directories in nested directories, e.g. `data/aztables`
+    $serviceDirectorySafeName = $serviceDirectoryName -replace '[/\\]', ''
+    return "$user$serviceDirectorySafeName"
+}
+
+function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(
         # Environment Variables
@@ -14,6 +37,7 @@ function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, 
         "RESOURCE_MANAGER_URL",
         "SERVICE_MANAGEMENT_URL",
         "ENDPOINT_SUFFIX",
+        "SERVICE_DIRECTORY",
         # This is used in many places and is harder to extract from the base subscription config, so hardcode it for now.
         "STORAGE_ENDPOINT_SUFFIX",
         # Parameters
@@ -24,6 +48,8 @@ function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, 
         "TestApplicationOid",
         "ProvisionerApplicationId"
     )
+
+    $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
 
     $suffix1 = $key -replace $serviceDirectoryPrefix, ""
     $suffix2 = $key -replace "AZURE_", ""

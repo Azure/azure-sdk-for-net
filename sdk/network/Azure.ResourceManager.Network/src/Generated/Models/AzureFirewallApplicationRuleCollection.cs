@@ -44,7 +44,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the application rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a rule collection. </summary>
-        public AzureFirewallRCAction Action { get; set; }
+        internal AzureFirewallRCAction Action { get; set; }
+        /// <summary> The type of action. </summary>
+        public AzureFirewallRCActionType? ActionType
+        {
+            get => Action is null ? default : Action.ActionType;
+            set
+            {
+                if (Action is null)
+                    Action = new AzureFirewallRCAction();
+                Action.ActionType = value;
+            }
+        }
+
         /// <summary> Collection of rules used by a application rule collection. </summary>
         public IList<AzureFirewallApplicationRule> Rules { get; }
         /// <summary> The provisioning state of the application rule collection resource. </summary>

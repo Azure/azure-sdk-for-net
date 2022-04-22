@@ -5,6 +5,11 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.PhoneNumbers
+    MatrixConfigs:
+      - Name: PhoneNumbers_NET_matrix
+        Path: sdk/communication/Azure.Communication.PhoneNumbers/phone-numbers-livetest-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     CloudConfig:
       Public:
         SubscriptionConfigurations:
@@ -15,6 +20,8 @@ extends:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
+        MatrixReplace: 
+          - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
     Clouds: Public,Int
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
