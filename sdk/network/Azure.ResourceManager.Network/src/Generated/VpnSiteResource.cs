@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -217,6 +218,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates VpnSite tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}
+        /// Operation Id: VpnSites_UpdateTags
+        /// </summary>
+        /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
+        public virtual async Task<Response<VpnSiteResource>> UpdateAsync(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
+
+            using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _vpnSiteRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VpnSiteResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates VpnSite tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}
+        /// Operation Id: VpnSites_UpdateTags
+        /// </summary>
+        /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
+        public virtual Response<VpnSiteResource> Update(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
+
+            using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _vpnSiteRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteParameters, cancellationToken);
+                return Response.FromValue(new VpnSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -8,8 +8,7 @@ flowchart LR;
     A(Environment):::deployed ==> B(Managed Identity):::deployed ==> C(Visual Studio):::developer ==> D(VS Code):::developer ==> E(Azure CLI):::developer ==> F(Azure PowerShell):::developer ==> G(Interactive browser):::interactive;
 
     subgraph CREDENTIAL TYPES;
-        %%direction LR;
-        direction TB;
+        direction LR;
         Deployed(Deployed service):::deployed ==> Developer(Developer):::developer ==> Interactive(Interactive developer):::interactive;
 
         %% Hide links between boxes in the legend by setting width to 0. The integers after "linkStyle" represent link indices.
@@ -18,9 +17,9 @@ flowchart LR;
     end;
 
     %% Define styles for credential type boxes
-    classDef deployed fill:#71AD4C, stroke:#71AD4C;
-    classDef developer fill:#EB7C39, stroke:#EB7C39;
-    classDef interactive fill:#A6A6A6, stroke:#A6A6A6;
+    classDef deployed fill:#95C37E, stroke:#71AD4C;
+    classDef developer fill:#F5AF6F, stroke:#EB7C39;
+    classDef interactive fill:#A5A5A5, stroke:#828282;
 
     %% Add API ref links to credential type boxes
     click A "https://docs.microsoft.com/dotnet/api/azure.identity.environmentcredential?view=azure-dotnet" _blank;

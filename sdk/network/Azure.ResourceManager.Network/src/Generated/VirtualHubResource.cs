@@ -375,6 +375,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates VirtualHub tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_UpdateTags
+        /// </summary>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualHubResource>> UpdateAsync(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
+
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualHubRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates VirtualHub tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_UpdateTags
+        /// </summary>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
+        public virtual Response<VirtualHubResource> Update(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
+
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualHubRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
+                return Response.FromValue(new VirtualHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the effective routes configured for the Virtual Hub resource or the specified resource .
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/effectiveRoutes
         /// Operation Id: VirtualHubs_GetEffectiveVirtualHubRoutes

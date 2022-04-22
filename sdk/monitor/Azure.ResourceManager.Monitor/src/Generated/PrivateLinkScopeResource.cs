@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -291,6 +292,58 @@ namespace Azure.ResourceManager.Monitor
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_UpdateTags
+        /// </summary>
+        /// <param name="patch"> Updated tag information to set into the PrivateLinkScope instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PrivateLinkScopeResource>> UpdateAsync(PrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _privateLinkScopeRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// Operation Id: PrivateLinkScopes_UpdateTags
+        /// </summary>
+        /// <param name="patch"> Updated tag information to set into the PrivateLinkScope instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PrivateLinkScopeResource> Update(PrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _privateLinkScopeRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

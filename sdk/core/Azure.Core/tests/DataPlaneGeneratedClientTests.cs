@@ -12,9 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class LowLevelClientTests : ClientTestBase
+    public class DataPlaneGeneratedClientTests : ClientTestBase
     {
-        public LowLevelClientTests(bool isAsync) : base(isAsync)
+        public DataPlaneGeneratedClientTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
         //    ResponseClassifier, which will become the only path after resolution of #24031
         //
         // Importantly, having these two tests validates our premise:
-        //   ** The Grow-Up Story/HLC Helper approach has the same semantics
+        //   ** The Grow-Up Story/(Gen 1) Convenience Client Helper approach has the same semantics
 
         [Test]
         public async Task GetRequestFailedException_StatusOptionDefault()

@@ -106,7 +106,7 @@ validationPathsPattern=specification/$rpName/resource-manager/**/*.json"
     }
 
     $mainApp = Join-Path "node_modules" "@azure-tools" "mock-service-host" "dist" "src" "main.js"
-    node $mainApp
+    node --max_old_space_size=8192 $mainApp
 }
 
 function Test-Administrator  
