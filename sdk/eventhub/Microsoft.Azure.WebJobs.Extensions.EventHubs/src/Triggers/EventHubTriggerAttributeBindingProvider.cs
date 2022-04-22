@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
                                                 factoryContext.Executor,
-                                                _clientFactory.GetEventProcessorHost(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
+                                                _clientFactory.GetEventProcessorHost(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup, singleDispatch),
                                                 singleDispatch,
                                                 _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
