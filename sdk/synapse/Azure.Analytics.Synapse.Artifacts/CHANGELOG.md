@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.16 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.15 (2022-04-07)
 - Added LinkConnectionOperations.
 
