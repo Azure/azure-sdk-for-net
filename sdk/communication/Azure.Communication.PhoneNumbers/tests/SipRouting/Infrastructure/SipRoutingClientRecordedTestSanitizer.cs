@@ -5,5 +5,7 @@ namespace Azure.Communication.Pipeline
 {
     public class SipRoutingClientRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
+        public SipRoutingClientRecordedTestSanitizer()
+            => AddJsonPathSanitizer("$..credential");
     }
 }

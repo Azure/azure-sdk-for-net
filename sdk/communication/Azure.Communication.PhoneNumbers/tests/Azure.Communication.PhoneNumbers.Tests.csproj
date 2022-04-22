@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Moq" />
@@ -25,9 +25,5 @@
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />
     <None Include="..\samples\Sample_PhoneNumbersClientAsync.md" Link="samples\Sample_PhoneNumbersClientAsync.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\Sample_SipRoutingClient\" />
-    <Folder Include="SessionRecords\SipRoutingClientLiveTests\" />
   </ItemGroup>
 </Project>
