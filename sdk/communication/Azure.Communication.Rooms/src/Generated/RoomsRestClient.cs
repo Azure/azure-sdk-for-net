@@ -39,7 +39,7 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRoomRequest(CreateRoomRequest createRoomRequest)
+        internal HttpMessage CreateCreateRoomRequest(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,31 +49,44 @@ namespace Azure.Communication.Rooms
             uri.AppendPath("/rooms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            if (createRoomRequest != null)
+            if (repeatabilityRequestID != null)
             {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(createRoomRequest);
-                request.Content = content;
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
             }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "O");
+            }
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(createRoomRequest);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Creates a new room. </summary>
         /// <param name="createRoomRequest"> The create room request body. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CreateRoomResponse>> CreateRoomAsync(CreateRoomRequest createRoomRequest = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createRoomRequest"/> is null. </exception>
+        public async Task<Response<RoomModel>> CreateRoomAsync(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRoomRequest(createRoomRequest);
+            if (createRoomRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createRoomRequest));
+            }
+
+            using var message = CreateCreateRoomRequest(createRoomRequest, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        CreateRoomResponse value = default;
+                        RoomModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateRoomResponse.DeserializeCreateRoomResponse(document.RootElement);
+                        value = RoomModel.DeserializeRoomModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -83,18 +96,26 @@ namespace Azure.Communication.Rooms
 
         /// <summary> Creates a new room. </summary>
         /// <param name="createRoomRequest"> The create room request body. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CreateRoomResponse> CreateRoom(CreateRoomRequest createRoomRequest = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createRoomRequest"/> is null. </exception>
+        public Response<RoomModel> CreateRoom(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRoomRequest(createRoomRequest);
+            if (createRoomRequest == null)
+            {
+                throw new ArgumentNullException(nameof(createRoomRequest));
+            }
+
+            using var message = CreateCreateRoomRequest(createRoomRequest, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        CreateRoomResponse value = default;
+                        RoomModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateRoomResponse.DeserializeCreateRoomResponse(document.RootElement);
+                        value = RoomModel.DeserializeRoomModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,7 +219,7 @@ namespace Azure.Communication.Rooms
         /// <param name="patchRoomRequest"> The UpdateRoomRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public async Task<Response<UpdateRoomResponse>> UpdateRoomAsync(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoomModel>> UpdateRoomAsync(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
@@ -211,9 +232,9 @@ namespace Azure.Communication.Rooms
             {
                 case 200:
                     {
-                        UpdateRoomResponse value = default;
+                        RoomModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRoomResponse.DeserializeUpdateRoomResponse(document.RootElement);
+                        value = RoomModel.DeserializeRoomModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +247,7 @@ namespace Azure.Communication.Rooms
         /// <param name="patchRoomRequest"> The UpdateRoomRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public Response<UpdateRoomResponse> UpdateRoom(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
+        public Response<RoomModel> UpdateRoom(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
@@ -239,9 +260,9 @@ namespace Azure.Communication.Rooms
             {
                 case 200:
                     {
-                        UpdateRoomResponse value = default;
+                        RoomModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRoomResponse.DeserializeUpdateRoomResponse(document.RootElement);
+                        value = RoomModel.DeserializeRoomModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

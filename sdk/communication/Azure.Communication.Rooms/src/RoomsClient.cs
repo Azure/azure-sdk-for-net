@@ -117,8 +117,10 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<CreateRoomResponse> createRoomResponse =
-                    await RoomsServiceClient.CreateRoomAsync(_createRoomRequest(participants, validFrom, validUntil), cancellationToken).ConfigureAwait(false);
+                Guid repeatabilityRequestId = Guid.NewGuid();
+                DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
+                Response<RoomModel> createRoomResponse =
+                    await RoomsServiceClient.CreateRoomAsync(_createRoomRequest(participants, validFrom, validUntil), repeatabilityRequestId, repeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(createRoomResponse), createRoomResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -141,8 +143,10 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<CreateRoomResponse> createRoomResponse =
-                     RoomsServiceClient.CreateRoom(_createRoomRequest(participants, validFrom, validUntil), cancellationToken);
+                Guid repeatabilityRequestId = Guid.NewGuid();
+                DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
+                Response<RoomModel> createRoomResponse =
+                     RoomsServiceClient.CreateRoom(_createRoomRequest(participants, validFrom, validUntil), repeatabilityRequestId, repeatabilityFirstSent, cancellationToken);
                 return Response.FromValue(new CommunicationRoom(createRoomResponse), createRoomResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -166,7 +170,7 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     await RoomsServiceClient.UpdateRoomAsync(roomId, _updateRoomRequest(default, validFrom, validUntil), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -191,7 +195,7 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     RoomsServiceClient.UpdateRoom(roomId, _updateRoomRequest(default, validFrom, validUntil), cancellationToken);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -309,7 +313,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     RoomsServiceClient.UpdateRoom(roomId, request, cancellationToken);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -338,7 +342,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     await RoomsServiceClient.UpdateRoomAsync(roomId, request, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -367,7 +371,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     RoomsServiceClient.UpdateRoom(roomId, request, cancellationToken);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -396,7 +400,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     await RoomsServiceClient.UpdateRoomAsync(roomId, request, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -425,7 +429,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(communicationUser, null);
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     RoomsServiceClient.UpdateRoom(roomId, request, cancellationToken);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
@@ -454,7 +458,7 @@ namespace Azure.Communication.Rooms
                     request.Participants.Add(communicationUser, null);
                 }
 
-                Response<UpdateRoomResponse> updateRoomResponse =
+                Response<RoomModel> updateRoomResponse =
                     await RoomsServiceClient.UpdateRoomAsync(roomId, request, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }

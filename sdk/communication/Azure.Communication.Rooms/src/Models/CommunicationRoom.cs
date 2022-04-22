@@ -30,24 +30,6 @@ namespace Azure.Communication.Rooms.Models
             Participants = participants;
         }
 
-        internal CommunicationRoom(CreateRoomResponse createRoomResponse)
-        {
-            Id = createRoomResponse.Room.Id;
-            CreatedDateTime = createRoomResponse.Room.CreatedDateTime;
-            ValidFrom = createRoomResponse.Room.ValidFrom;
-            ValidUntil = createRoomResponse.Room.ValidUntil;
-            Participants = translateFromDictionary(createRoomResponse.Room.Participants);
-        }
-
-        internal CommunicationRoom(UpdateRoomResponse updateRoomResponse)
-        {
-            Id = updateRoomResponse.Room.Id;
-            CreatedDateTime = updateRoomResponse.Room.CreatedDateTime;
-            ValidFrom = updateRoomResponse.Room.ValidFrom;
-            ValidUntil = updateRoomResponse.Room.ValidUntil;
-            Participants = translateFromDictionary(updateRoomResponse.Room.Participants);
-        }
-
         internal CommunicationRoom(RoomModel roomModel)
         {
             Id = roomModel.Id;

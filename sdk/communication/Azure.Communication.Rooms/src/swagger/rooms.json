@@ -26,20 +26,42 @@
                         "$ref": "#/parameters/ApiVersionParameter"
                     },
                     {
+                        "in": "header",
+                        "name": "Repeatability-Request-ID",
+                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "in": "header",
+                        "name": "Repeatability-First-Sent",
+                        "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
                         "in": "body",
                         "name": "createRoomRequest",
                         "description": "The create room request body.",
                         "schema": {
                             "$ref": "#/definitions/CreateRoomRequest"
-                        }
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Request successful. The action returns a new `Room`.",
                         "schema": {
-                            "$ref": "#/definitions/CreateRoomResponse"
+                            "$ref": "#/definitions/RoomModel"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -55,8 +77,22 @@
                         },
                         "x-ms-error-response": true
                     },
+                    "412": {
+                        "description": "Precondition Failed",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
                     "500": {
                         "description": "InternalServerError",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "501": {
+                        "description": "Not Implemented",
                         "schema": {
                             "$ref": "#/definitions/CommunicationErrorResponse"
                         },
@@ -100,6 +136,13 @@
                         "schema": {
                             "$ref": "#/definitions/RoomModel"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -166,8 +209,15 @@
                     "200": {
                         "description": "Request successful. The action returns a updated `Room`.",
                         "schema": {
-                            "$ref": "#/definitions/UpdateRoomResponse"
+                            "$ref": "#/definitions/RoomModel"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -221,6 +271,13 @@
                 "responses": {
                     "204": {
                         "description": "Request successful."
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        },
+                        "x-ms-error-response": true
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -322,25 +379,6 @@
                 }
             }
         },
-        "CreateRoomResponse": {
-            "description": "Response payload for create room operation.",
-            "required": [
-                "room"
-            ],
-            "type": "object",
-            "properties": {
-                "room": {
-                    "$ref": "#/definitions/RoomModel"
-                },
-                "invalidParticipants": {
-                    "description": "Collection of participants failed to be added to the room",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/RoomParticipantInternal"
-                    }
-                }
-            }
-        },
         "RoomParticipantInternal": {
             "description": "A participant of the room.",
             "type": "object",
@@ -405,25 +443,6 @@
                 },
                 "participants": {
                     "description": "(Optional) Collection of identities invited to the room.",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/RoomParticipantInternal"
-                    }
-                }
-            }
-        },
-        "UpdateRoomResponse": {
-            "description": "Response payload for update room operation.",
-            "required": [
-                "room"
-            ],
-            "type": "object",
-            "properties": {
-                "room": {
-                    "$ref": "#/definitions/RoomModel"
-                },
-                "invalidParticipants": {
-                    "description": "Collection of participants failed to be added to the room",
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "#/definitions/RoomParticipantInternal"
