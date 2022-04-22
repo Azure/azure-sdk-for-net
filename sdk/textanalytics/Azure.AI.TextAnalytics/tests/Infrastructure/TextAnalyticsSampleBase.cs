@@ -10,7 +10,8 @@ namespace Azure.AI.TextAnalytics.Samples
     {
         public TextAnalyticsClientOptions CreateSampleOptions()
         {
-            var options = new TextAnalyticsClientOptions();
+            // Until we have new code working, make sure that samples keep working by targeting legacy path
+            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2);
             options.Retry.MaxRetries = TextAnalyticsClientLiveTestBase.MaxRetriesCount;
 
             return options;
