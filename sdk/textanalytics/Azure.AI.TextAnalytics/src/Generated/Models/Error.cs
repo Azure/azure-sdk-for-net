@@ -28,6 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<Error>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>
@@ -36,13 +37,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(ErrorCode code, string message, string target, IList<Error> details, InnerErrorModel innererror)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal Error(ErrorCode code, string message, string target, IList<Error> details, InnerErrorModel innererror, IDictionary<string, object> additionalProperties)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
@@ -55,5 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
         public IList<Error> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; set; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

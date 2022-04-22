@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AnalyzeTextRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-02-01-preview")
+        public AnalyzeTextRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-03-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -175,6 +175,56 @@ namespace Azure.AI.TextAnalytics
                         value = AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelJobRequest(Guid jobId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<AnalyzeTextCancelJobHeaders>> CancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateCancelJobRequest(jobId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new AnalyzeTextCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<AnalyzeTextCancelJobHeaders> CancelJob(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateCancelJobRequest(jobId);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new AnalyzeTextCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

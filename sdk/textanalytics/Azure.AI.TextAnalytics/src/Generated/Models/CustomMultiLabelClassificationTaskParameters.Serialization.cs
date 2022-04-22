@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationTaskParameters : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiClassificationTaskParameters DeserializeCustomMultiClassificationTaskParameters(JsonElement element)
+        internal static CustomMultiLabelClassificationTaskParameters DeserializeCustomMultiLabelClassificationTaskParameters(JsonElement element)
         {
             string projectName = default;
             string deploymentName = default;
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            return new CustomMultiLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
         }
     }
 }

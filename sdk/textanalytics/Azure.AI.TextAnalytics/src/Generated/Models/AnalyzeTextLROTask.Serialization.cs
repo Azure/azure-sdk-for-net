@@ -32,8 +32,8 @@ namespace Azure.AI.TextAnalytics.Models
                 switch (discriminator.GetString())
                 {
                     case "CustomEntityRecognition": return CustomEntitiesLROTask.DeserializeCustomEntitiesLROTask(element);
-                    case "CustomMultiClassification": return CustomMultiClassificationLROTask.DeserializeCustomMultiClassificationLROTask(element);
-                    case "CustomSingleClassification": return CustomSingleClassificationLROTask.DeserializeCustomSingleClassificationLROTask(element);
+                    case "CustomMultiLabelClassification": return CustomMultiLabelClassificationLROTask.DeserializeCustomMultiLabelClassificationLROTask(element);
+                    case "CustomSingleLabelClassification": return CustomSingleLabelClassificationLROTask.DeserializeCustomSingleLabelClassificationLROTask(element);
                     case "EntityLinking": return EntityLinkingLROTask.DeserializeEntityLinkingLROTask(element);
                     case "EntityRecognition": return EntitiesLROTask.DeserializeEntitiesLROTask(element);
                     case "ExtractiveSummarization": return ExtractiveSummarizationLROTask.DeserializeExtractiveSummarizationLROTask(element);

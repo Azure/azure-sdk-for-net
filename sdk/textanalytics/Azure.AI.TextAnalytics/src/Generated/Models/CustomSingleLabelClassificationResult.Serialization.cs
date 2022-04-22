@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleClassificationResult : IUtf8JsonSerializable
+    internal partial class CustomSingleLabelClassificationResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,9 +43,9 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomSingleClassificationResult DeserializeCustomSingleClassificationResult(JsonElement element)
+        internal static CustomSingleLabelClassificationResult DeserializeCustomSingleLabelClassificationResult(JsonElement element)
         {
-            IList<CustomSingleClassificationResultDocumentsItem> documents = default;
+            IList<CustomSingleLabelClassificationResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
@@ -54,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<CustomSingleClassificationResultDocumentsItem> array = new List<CustomSingleClassificationResultDocumentsItem>();
+                    List<CustomSingleLabelClassificationResultDocumentsItem> array = new List<CustomSingleLabelClassificationResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSingleClassificationResultDocumentsItem.DeserializeCustomSingleClassificationResultDocumentsItem(item));
+                        array.Add(CustomSingleLabelClassificationResultDocumentsItem.DeserializeCustomSingleLabelClassificationResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -93,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomSingleClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
+            return new CustomSingleLabelClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
         }
     }
 }

@@ -12,18 +12,13 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomSingleLabelClassificationResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("classifications");
-            writer.WriteStartArray();
-            foreach (var item in Classifications)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("class");
+            writer.WriteObjectValue(Class);
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings");
@@ -41,22 +36,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiClassificationResultDocumentsItem DeserializeCustomMultiClassificationResultDocumentsItem(JsonElement element)
+        internal static CustomSingleLabelClassificationResultDocumentsItem DeserializeCustomSingleLabelClassificationResultDocumentsItem(JsonElement element)
         {
-            IList<ClassificationResult> classifications = default;
+            ClassificationResult @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classifications"))
+                if (property.NameEquals("class"))
                 {
-                    List<ClassificationResult> array = new List<ClassificationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ClassificationResult.DeserializeClassificationResult(item));
-                    }
-                    classifications = array;
+                    @class = ClassificationResult.DeserializeClassificationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -85,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), classifications);
+            return new CustomSingleLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
         }
     }
 }

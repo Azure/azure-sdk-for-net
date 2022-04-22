@@ -15,17 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
-            Optional<PiiEntitiesResult> results = default;
+            PiiEntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = PiiEntitiesResult.DeserializePiiEntitiesResult(property.Value);
                     continue;
                 }
@@ -35,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiTaskResult(kind, results.Value);
+            return new PiiTaskResult(kind, results);
         }
     }
 }

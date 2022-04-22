@@ -5,14 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The LanguageDetectionTaskResult. </summary>
     internal partial class LanguageDetectionTaskResult : AnalyzeTextTaskResult
     {
         /// <summary> Initializes a new instance of LanguageDetectionTaskResult. </summary>
-        internal LanguageDetectionTaskResult()
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal LanguageDetectionTaskResult(LanguageDetectionResult results)
         {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results;
             Kind = AnalyzeTextTaskResultsKind.LanguageDetectionResults;
         }
 
