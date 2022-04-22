@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7e3834d3-5082-40bf-8528-aaaf4a3b5975"
+          "1ea467b3-bee3-4f8a-840c-cb685a925551"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.11601",
+          "FxVersion/4.700.22.16002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/54.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,10 +30,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "f409cccf-f8d5-4387-82a6-57ba86b3a582_132902163873453225"
+          "f409cccf-f8d5-4387-82a6-57ba86b3a582_132947811814696538"
         ],
         "x-ms-request-id": [
-          "cb02d3ed-0ebb-4193-9afd-456e232984ae"
+          "b6f0810a-f9cb-4bec-b96b-7bef8eea9731"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,19 +43,19 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "b7b18794-b38f-40ab-914d-e128fe8a6977"
+          "bfc03955-bafd-4287-871e-4045180a6dbf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220309T064000Z:b7b18794-b38f-40ab-914d-e128fe8a6977"
+          "WESTCENTRALUS:20220422T234553Z:bfc03955-bafd-4287-871e-4045180a6dbf"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 09 Mar 2022 06:39:59 GMT"
+          "Fri, 22 Apr 2022 23:45:53 GMT"
         ],
         "Content-Length": [
-          "490"
+          "584"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,7 +64,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf/Images/communitygallerylrwah\"\r\n  },\r\n  \"properties\": {\r\n    \"osType\": \"Linux\",\r\n    \"osState\": \"Generalized\",\r\n    \"identifier\": {\r\n      \"publisher\": \"GalleryPub\",\r\n      \"offer\": \"GalleryOffer\",\r\n      \"sku\": \"GallerySku\"\r\n    },\r\n    \"recommended\": {},\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\"\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"communitygallerylrwah\"\r\n}",
+      "ResponseBody": "{\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf/Images/communitygallerylrwah\"\r\n  },\r\n  \"properties\": {\r\n    \"osType\": \"Linux\",\r\n    \"osState\": \"Generalized\",\r\n    \"identifier\": {\r\n      \"publisher\": \"GalleryPub\",\r\n      \"offer\": \"GalleryOffer\",\r\n      \"sku\": \"GallerySku\"\r\n    },\r\n    \"recommended\": {},\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"privacyStatementUri\": \"https://www.microsoft.com\",\r\n    \"eula\": \"Use on your own risk\"\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"communitygallerylrwah\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -74,16 +74,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "76fb9de9-9e50-40da-b22f-6656a7ae0766"
+          "3d9c311f-ab72-4396-88ae-51a66c42ecc8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.11601",
+          "FxVersion/4.700.22.16002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/54.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -97,10 +97,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "f409cccf-f8d5-4387-82a6-57ba86b3a582_132902163873453225"
+          "f409cccf-f8d5-4387-82a6-57ba86b3a582_132947811814696538"
         ],
         "x-ms-request-id": [
-          "ec962a12-9b3b-47d7-9cbe-22346ef026ce"
+          "74adeedb-f74b-4b59-8888-a238ea50d678"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -110,19 +110,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "fd64f852-ad67-4a14-ac41-dab0629b12c5"
+          "e151100a-8756-4bb6-a574-949b6d1e7b7f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220309T064000Z:fd64f852-ad67-4a14-ac41-dab0629b12c5"
+          "WESTCENTRALUS:20220422T234553Z:e151100a-8756-4bb6-a574-949b6d1e7b7f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 09 Mar 2022 06:40:00 GMT"
+          "Fri, 22 Apr 2022 23:45:53 GMT"
         ],
         "Content-Length": [
-          "591"
+          "693"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -131,7 +131,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf/Images/communitygallerylrwah\"\r\n      },\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        },\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\"\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"communitygallerylrwah\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf/Images/communitygallerylrwah\"\r\n      },\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        },\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\",\r\n        \"privacyStatementUri\": \"https://www.microsoft.com\",\r\n        \"eula\": \"Use on your own risk\"\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"communitygallerylrwah\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

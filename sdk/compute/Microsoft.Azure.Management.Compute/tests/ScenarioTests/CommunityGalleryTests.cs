@@ -105,6 +105,8 @@ namespace Compute.Tests
         {
             string expectedId = "/CommunityGalleries/" + PublicGalleryName + "/Images/" + GalleryImageName;
             Assert.Equal(expectedId, communityGalleryImage.UniqueId);
+            Assert.NotNull(communityGalleryImage.Eula);
+            Assert.NotNull(communityGalleryImage.PrivacyStatementUri);
         }
 
         private void ValidateCommunityGalleryImageVersion(CommunityGalleryImageVersion communityGalleryImageVersion)
