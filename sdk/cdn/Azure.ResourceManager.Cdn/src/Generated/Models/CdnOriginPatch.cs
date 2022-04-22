@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Origin properties needed for origin update. </summary>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </summary>
         public string PrivateLinkAlias { get; set; }
         /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </summary>
         public string PrivateLinkLocation { get; set; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>

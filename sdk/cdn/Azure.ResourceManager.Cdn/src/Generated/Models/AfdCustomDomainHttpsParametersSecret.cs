@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of AfdCustomDomainHttpsParametersSecret. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal AfdCustomDomainHttpsParametersSecret(string id)
+        internal AfdCustomDomainHttpsParametersSecret(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }
