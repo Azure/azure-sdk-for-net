@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    /// <summary> The body of an error message. </summary>
+    /// <summary> An error response from the service. </summary>
     internal partial class CloudErrorBody
     {
         /// <summary> Initializes a new instance of CloudErrorBody. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of CloudErrorBody. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> A description of what caused the error. </param>
-        /// <param name="target"> The target resource of the error message. </param>
-        /// <param name="details"> Extra error information. </param>
+        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
+        /// <param name="target"> The target of the particular error. For example, the name of the property in error. </param>
+        /// <param name="details"> A list of additional details about the error. </param>
         internal CloudErrorBody(string code, string message, string target, IReadOnlyList<CloudErrorBody> details)
         {
             Code = code;
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Dns.Models
             Details = details;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>
         public string Code { get; }
-        /// <summary> A description of what caused the error. </summary>
+        /// <summary> A message describing the error, intended to be suitable for display in a user interface. </summary>
         public string Message { get; }
-        /// <summary> The target resource of the error message. </summary>
+        /// <summary> The target of the particular error. For example, the name of the property in error. </summary>
         public string Target { get; }
-        /// <summary> Extra error information. </summary>
+        /// <summary> A list of additional details about the error. </summary>
         public IReadOnlyList<CloudErrorBody> Details { get; }
     }
 }

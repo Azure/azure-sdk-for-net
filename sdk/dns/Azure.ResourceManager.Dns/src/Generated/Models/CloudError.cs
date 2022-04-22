@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    /// <summary> An error message. </summary>
+    /// <summary> An error response from the service. </summary>
     internal partial class CloudError
     {
         /// <summary> Initializes a new instance of CloudError. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of CloudError. </summary>
-        /// <param name="error"> The error message body. </param>
+        /// <param name="error"> Cloud error body. </param>
         internal CloudError(CloudErrorBody error)
         {
             Error = error;
         }
 
-        /// <summary> The error message body. </summary>
+        /// <summary> Cloud error body. </summary>
         public CloudErrorBody Error { get; }
     }
 }
