@@ -11,6 +11,23 @@ input-file:
 generation1-convenience-client: true
 ```
 
+### Modify operationId names
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $["paths"]["/:analyze-text"]["post"]
+  transform: $.operationId = "Analyze";
+- from: swagger-document
+  where: $.paths.*
+  transform: >
+    for (var op of Object.values($)) {
+      if (op["operationId"] && op["operationId"].includes("AnalyzeText_")) {
+        op["operationId"] = op["operationId"].replace("AnalyzeText_", "AnalyzeBatch");
+      }
+    }
+```
+
 ### Make generated models internal by default
 
 ``` yaml
