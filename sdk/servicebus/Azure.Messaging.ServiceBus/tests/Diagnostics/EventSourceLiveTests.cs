@@ -487,5 +487,49 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusEventSource.PartitionKeyValueOverwritten,
                 e => e.Payload.Contains("sessionId1") && e.Payload.Contains("sessionId2") && e.Payload.Contains("messageId"));
         }
+
+        [Test]
+        public async Task ClosingSendLinkDoesNotCloseSessionWithCrossEntityTransactionEnabled()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
+                    new ServiceBusClientOptions { EnableCrossEntityTransactions = true });
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                var message = await receiver.ReceiveMessageAsync();
+                Assert.IsNotNull(message);
+                await sender.CloseAsync();
+
+                // link closed event is fired asynchronously, so add a small delay
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                _listener.SingleEventById(ServiceBusEventSource.SendLinkClosedEvent);
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ReceiveLinkClosedEvent).Any());
+            }
+        }
+
+        [Test]
+        public async Task ClosingReceiveLinkDoesNotCloseSessionWithCrossEntityTransactionEnabled()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
+                    new ServiceBusClientOptions { EnableCrossEntityTransactions = true });
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                var message = await receiver.ReceiveMessageAsync();
+                Assert.IsNotNull(message);
+                await receiver.CloseAsync();
+
+                // link closed event is fired asynchronously, so add a small delay
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent);
+                Assert.False(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any());
+            }
+        }
     }
 }
