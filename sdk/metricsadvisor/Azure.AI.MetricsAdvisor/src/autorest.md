@@ -63,16 +63,6 @@ directive:
       }
 ```
 
-# Rename DPG Method name listDataFeeds -> listDataFeedsValues
-
-```yaml
-directive:
-  - from: swagger-document
-    where: $..[?(@.operationId === "MetricsAdvisorAdministration_listDataFeeds")]
-    transform: >
-        $.operationId = "MetricsAdvisorAdministration_listDataFeedsRaw";
-```
-
 ### Make Endpoint type as Uri
 
 ``` yaml

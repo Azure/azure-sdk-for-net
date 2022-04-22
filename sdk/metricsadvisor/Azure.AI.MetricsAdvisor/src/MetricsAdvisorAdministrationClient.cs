@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
@@ -163,7 +164,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 int? skip = options?.Skip;
                 int? maxPageSize = options?.MaxPageSize;
 
-                AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsRawsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)
@@ -203,13 +204,189 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 int? skip = options?.Skip;
                 int? maxPageSize = options?.MaxPageSize;
 
-                Pageable<BinaryData> pageableBinaryData = GetDataFeedsRaws(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                Pageable<BinaryData> pageableBinaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        /// <summary> List all data feeds. </summary>
+        /// <param name="dataFeedName"> filter data feed by its name. </param>
+        /// <param name="dataSourceType"> filter data feed by its source type. Allowed values: &quot;AzureApplicationInsights&quot; | &quot;AzureBlob&quot; | &quot;AzureCosmosDB&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureDataLakeStorageGen2&quot; | &quot;AzureEventHubs&quot; | &quot;AzureLogAnalytics&quot; | &quot;AzureTable&quot; | &quot;InfluxDB&quot; | &quot;MongoDB&quot; | &quot;MySql&quot; | &quot;PostgreSql&quot; | &quot;SqlServer&quot;. </param>
+        /// <param name="granularityName"> filter data feed by its granularity. Allowed values: &quot;Yearly&quot; | &quot;Monthly&quot; | &quot;Weekly&quot; | &quot;Daily&quot; | &quot;Hourly&quot; | &quot;Minutely&quot; | &quot;Custom&quot;. </param>
+        /// <param name="status"> filter data feed by its status. Allowed values: &quot;Active&quot; | &quot;Paused&quot;. </param>
+        /// <param name="creator"> filter data feed by its creator. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @nextLink: string,
+        ///   value: [
+        ///     {
+        ///       dataSourceType: &quot;AzureApplicationInsights&quot; | &quot;AzureBlob&quot; | &quot;AzureCosmosDB&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureDataLakeStorageGen2&quot; | &quot;AzureEventHubs&quot; | &quot;AzureLogAnalytics&quot; | &quot;AzureTable&quot; | &quot;InfluxDB&quot; | &quot;MongoDB&quot; | &quot;MySql&quot; | &quot;PostgreSql&quot; | &quot;SqlServer&quot;,
+        ///       dataFeedId: DataFeedDetailDataFeedId,
+        ///       dataFeedName: string,
+        ///       dataFeedDescription: string,
+        ///       granularityName: &quot;Yearly&quot; | &quot;Monthly&quot; | &quot;Weekly&quot; | &quot;Daily&quot; | &quot;Hourly&quot; | &quot;Minutely&quot; | &quot;Custom&quot;,
+        ///       granularityAmount: number,
+        ///       metrics: [
+        ///         {
+        ///           metricId: MetricId,
+        ///           metricName: string,
+        ///           metricDisplayName: string,
+        ///           metricDescription: string
+        ///         }
+        ///       ],
+        ///       dimension: [
+        ///         {
+        ///           dimensionName: string,
+        ///           dimensionDisplayName: string
+        ///         }
+        ///       ],
+        ///       timestampColumn: string,
+        ///       dataStartFrom: string (ISO 8601 Format),
+        ///       startOffsetInSeconds: number,
+        ///       maxConcurrency: number,
+        ///       minRetryIntervalInSeconds: number,
+        ///       stopRetryAfterInSeconds: number,
+        ///       needRollup: &quot;NoRollup&quot; | &quot;NeedRollup&quot; | &quot;AlreadyRollup&quot;,
+        ///       rollUpMethod: &quot;None&quot; | &quot;Sum&quot; | &quot;Max&quot; | &quot;Min&quot; | &quot;Avg&quot; | &quot;Count&quot;,
+        ///       rollUpColumns: [string],
+        ///       allUpIdentification: string,
+        ///       fillMissingPointType: &quot;SmartFilling&quot; | &quot;PreviousValue&quot; | &quot;CustomValue&quot; | &quot;NoFilling&quot;,
+        ///       fillMissingPointValue: number,
+        ///       viewMode: &quot;Private&quot; | &quot;Public&quot;,
+        ///       admins: [string],
+        ///       viewers: [string],
+        ///       isAdmin: boolean,
+        ///       creator: string,
+        ///       status: &quot;Active&quot; | &quot;Paused&quot;,
+        ///       createdTime: string (ISO 8601 Format),
+        ///       actionLinkTemplate: string,
+        ///       authenticationType: &quot;Basic&quot; | &quot;ManagedIdentity&quot; | &quot;AzureSQLConnectionString&quot; | &quot;DataLakeGen2SharedKey&quot; | &quot;ServicePrincipal&quot; | &quot;ServicePrincipalInKV&quot;,
+        ///       credentialId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   message: string,
+        ///   code: string
+        /// }
+        /// </code>
+        ///
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual AsyncPageable<BinaryData> GetDataFeedsAsync(string dataFeedName, string dataSourceType, string granularityName, string status, string creator , int? skip, int? maxpagesize, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
+                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "@nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> List all data feeds. </summary>
+        /// <param name="dataFeedName"> filter data feed by its name. </param>
+        /// <param name="dataSourceType"> filter data feed by its source type. Allowed values: &quot;AzureApplicationInsights&quot; | &quot;AzureBlob&quot; | &quot;AzureCosmosDB&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureDataLakeStorageGen2&quot; | &quot;AzureEventHubs&quot; | &quot;AzureLogAnalytics&quot; | &quot;AzureTable&quot; | &quot;InfluxDB&quot; | &quot;MongoDB&quot; | &quot;MySql&quot; | &quot;PostgreSql&quot; | &quot;SqlServer&quot;. </param>
+        /// <param name="granularityName"> filter data feed by its granularity. Allowed values: &quot;Yearly&quot; | &quot;Monthly&quot; | &quot;Weekly&quot; | &quot;Daily&quot; | &quot;Hourly&quot; | &quot;Minutely&quot; | &quot;Custom&quot;. </param>
+        /// <param name="status"> filter data feed by its status. Allowed values: &quot;Active&quot; | &quot;Paused&quot;. </param>
+        /// <param name="creator"> filter data feed by its creator. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   @nextLink: string,
+        ///   value: [
+        ///     {
+        ///       dataSourceType: &quot;AzureApplicationInsights&quot; | &quot;AzureBlob&quot; | &quot;AzureCosmosDB&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureDataLakeStorageGen2&quot; | &quot;AzureEventHubs&quot; | &quot;AzureLogAnalytics&quot; | &quot;AzureTable&quot; | &quot;InfluxDB&quot; | &quot;MongoDB&quot; | &quot;MySql&quot; | &quot;PostgreSql&quot; | &quot;SqlServer&quot;,
+        ///       dataFeedId: DataFeedDetailDataFeedId,
+        ///       dataFeedName: string,
+        ///       dataFeedDescription: string,
+        ///       granularityName: &quot;Yearly&quot; | &quot;Monthly&quot; | &quot;Weekly&quot; | &quot;Daily&quot; | &quot;Hourly&quot; | &quot;Minutely&quot; | &quot;Custom&quot;,
+        ///       granularityAmount: number,
+        ///       metrics: [
+        ///         {
+        ///           metricId: MetricId,
+        ///           metricName: string,
+        ///           metricDisplayName: string,
+        ///           metricDescription: string
+        ///         }
+        ///       ],
+        ///       dimension: [
+        ///         {
+        ///           dimensionName: string,
+        ///           dimensionDisplayName: string
+        ///         }
+        ///       ],
+        ///       timestampColumn: string,
+        ///       dataStartFrom: string (ISO 8601 Format),
+        ///       startOffsetInSeconds: number,
+        ///       maxConcurrency: number,
+        ///       minRetryIntervalInSeconds: number,
+        ///       stopRetryAfterInSeconds: number,
+        ///       needRollup: &quot;NoRollup&quot; | &quot;NeedRollup&quot; | &quot;AlreadyRollup&quot;,
+        ///       rollUpMethod: &quot;None&quot; | &quot;Sum&quot; | &quot;Max&quot; | &quot;Min&quot; | &quot;Avg&quot; | &quot;Count&quot;,
+        ///       rollUpColumns: [string],
+        ///       allUpIdentification: string,
+        ///       fillMissingPointType: &quot;SmartFilling&quot; | &quot;PreviousValue&quot; | &quot;CustomValue&quot; | &quot;NoFilling&quot;,
+        ///       fillMissingPointValue: number,
+        ///       viewMode: &quot;Private&quot; | &quot;Public&quot;,
+        ///       admins: [string],
+        ///       viewers: [string],
+        ///       isAdmin: boolean,
+        ///       creator: string,
+        ///       status: &quot;Active&quot; | &quot;Paused&quot;,
+        ///       createdTime: string (ISO 8601 Format),
+        ///       actionLinkTemplate: string,
+        ///       authenticationType: &quot;Basic&quot; | &quot;ManagedIdentity&quot; | &quot;AzureSQLConnectionString&quot; | &quot;DataLakeGen2SharedKey&quot; | &quot;ServicePrincipal&quot; | &quot;ServicePrincipalInKV&quot;,
+        ///       credentialId: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   message: string,
+        ///   code: string
+        /// }
+        /// </code>
+        ///
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Pageable<BinaryData> GetDataFeeds(string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
+                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "@nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
