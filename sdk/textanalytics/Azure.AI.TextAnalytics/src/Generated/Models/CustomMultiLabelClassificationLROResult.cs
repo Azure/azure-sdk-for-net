@@ -10,15 +10,15 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomSingleClassificationLROResult. </summary>
-    internal partial class CustomSingleClassificationLROResult : AnalyzeTextLROResult
+    /// <summary> The CustomMultiLabelClassificationLROResult. </summary>
+    internal partial class CustomMultiLabelClassificationLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of CustomSingleClassificationLROResult. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROResult. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        public CustomSingleClassificationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, CustomSingleClassificationResult results) : base(lastUpdateDateTime, status)
+        public CustomMultiLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, CustomMultiLabelClassificationResult results) : base(lastUpdateDateTime, status)
         {
             if (results == null)
             {
@@ -26,22 +26,22 @@ namespace Azure.AI.TextAnalytics.Models
             }
 
             Results = results;
-            Kind = AnalyzeTextLROResultsKind.CustomSingleClassificationLROResults;
+            Kind = AnalyzeTextLROResultsKind.CustomMultiLabelClassificationLROResults;
         }
 
-        /// <summary> Initializes a new instance of CustomSingleClassificationLROResult. </summary>
+        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROResult. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"></param>
-        internal CustomSingleClassificationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName, CustomSingleClassificationResult results) : base(lastUpdateDateTime, status, kind, taskName)
+        internal CustomMultiLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName, CustomMultiLabelClassificationResult results) : base(lastUpdateDateTime, status, kind, taskName)
         {
             Results = results;
             Kind = kind;
         }
 
         /// <summary> Gets or sets the results. </summary>
-        public CustomSingleClassificationResult Results { get; set; }
+        public CustomMultiLabelClassificationResult Results { get; set; }
     }
 }

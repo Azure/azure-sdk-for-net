@@ -14,17 +14,12 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
         {
-            Optional<EntitiesResult> results = default;
+            EntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
@@ -34,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesTaskResult(kind, results.Value);
+            return new EntitiesTaskResult(kind, results);
         }
     }
 }

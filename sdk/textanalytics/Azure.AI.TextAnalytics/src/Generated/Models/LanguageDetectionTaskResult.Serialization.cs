@@ -14,17 +14,12 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static LanguageDetectionTaskResult DeserializeLanguageDetectionTaskResult(JsonElement element)
         {
-            Optional<LanguageDetectionResult> results = default;
+            LanguageDetectionResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = LanguageDetectionResult.DeserializeLanguageDetectionResult(property.Value);
                     continue;
                 }
@@ -34,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageDetectionTaskResult(kind, results.Value);
+            return new LanguageDetectionTaskResult(kind, results);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationResult : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,9 +43,9 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiClassificationResult DeserializeCustomMultiClassificationResult(JsonElement element)
+        internal static CustomMultiLabelClassificationResult DeserializeCustomMultiLabelClassificationResult(JsonElement element)
         {
-            IList<CustomMultiClassificationResultDocumentsItem> documents = default;
+            IList<CustomMultiLabelClassificationResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
@@ -54,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<CustomMultiClassificationResultDocumentsItem> array = new List<CustomMultiClassificationResultDocumentsItem>();
+                    List<CustomMultiLabelClassificationResultDocumentsItem> array = new List<CustomMultiLabelClassificationResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomMultiClassificationResultDocumentsItem.DeserializeCustomMultiClassificationResultDocumentsItem(item));
+                        array.Add(CustomMultiLabelClassificationResultDocumentsItem.DeserializeCustomMultiLabelClassificationResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -93,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
+            return new CustomMultiLabelClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
         }
     }
 }

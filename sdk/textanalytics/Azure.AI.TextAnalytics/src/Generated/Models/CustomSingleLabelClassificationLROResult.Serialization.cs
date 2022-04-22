@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleClassificationLROResult : IUtf8JsonSerializable
+    internal partial class CustomSingleLabelClassificationLROResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomSingleClassificationLROResult DeserializeCustomSingleClassificationLROResult(JsonElement element)
+        internal static CustomSingleLabelClassificationLROResult DeserializeCustomSingleLabelClassificationLROResult(JsonElement element)
         {
-            CustomSingleClassificationResult results = default;
+            CustomSingleLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"))
                 {
-                    results = CustomSingleClassificationResult.DeserializeCustomSingleClassificationResult(property.Value);
+                    results = CustomSingleLabelClassificationResult.DeserializeCustomSingleLabelClassificationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomSingleClassificationLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new CustomSingleLabelClassificationLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
         }
     }
 }

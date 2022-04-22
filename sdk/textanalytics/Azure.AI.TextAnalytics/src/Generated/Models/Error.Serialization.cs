@@ -40,6 +40,11 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("innererror");
                 writer.WriteObjectValue(Innererror);
             }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -50,6 +55,8 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> target = default;
             Optional<IList<Error>> details = default;
             Optional<InnerErrorModel> innererror = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -92,8 +99,10 @@ namespace Azure.AI.TextAnalytics.Models
                     innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value);
                     continue;
                 }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            additionalProperties = additionalPropertiesDictionary;
+            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
         }
     }
 }

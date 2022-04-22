@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationLROTask : IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationLROTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomMultiClassificationLROTask DeserializeCustomMultiClassificationLROTask(JsonElement element)
+        internal static CustomMultiLabelClassificationLROTask DeserializeCustomMultiLabelClassificationLROTask(JsonElement element)
         {
-            Optional<CustomMultiClassificationTaskParameters> parameters = default;
+            Optional<CustomMultiLabelClassificationTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parameters = CustomMultiClassificationTaskParameters.DeserializeCustomMultiClassificationTaskParameters(property.Value);
+                    parameters = CustomMultiLabelClassificationTaskParameters.DeserializeCustomMultiLabelClassificationTaskParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationLROTask(taskName.Value, kind, parameters.Value);
+            return new CustomMultiLabelClassificationLROTask(taskName.Value, kind, parameters.Value);
         }
     }
 }

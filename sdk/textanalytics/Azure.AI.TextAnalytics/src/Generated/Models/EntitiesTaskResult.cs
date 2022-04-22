@@ -5,14 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesTaskResult. </summary>
     internal partial class EntitiesTaskResult : AnalyzeTextTaskResult
     {
         /// <summary> Initializes a new instance of EntitiesTaskResult. </summary>
-        internal EntitiesTaskResult()
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal EntitiesTaskResult(EntitiesResult results)
         {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results;
             Kind = AnalyzeTextTaskResultsKind.EntityRecognitionResults;
         }
 
