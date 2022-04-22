@@ -258,5 +258,55 @@ namespace Azure.AI.TextAnalytics
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateAnalyzeBatchCancelJobRequest(Guid jobId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders>> AnalyzeBatchCancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders> AnalyzeBatchCancelJob(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }
