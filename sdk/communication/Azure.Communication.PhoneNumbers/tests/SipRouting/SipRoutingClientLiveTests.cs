@@ -4,11 +4,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.PhoneNumbers.SipRouting;
-using Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure;
 using NUnit.Framework;
 
-namespace Azure.Communication.SipRouting.Tests
+namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTests : SipRoutingClientLiveTestBase
     {

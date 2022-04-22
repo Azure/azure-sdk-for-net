@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using Azure.Communication.SipRouting;
 
-namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
+namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     internal static class TestData
     {

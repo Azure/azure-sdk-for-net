@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.PhoneNumbers.SipRouting;
-using Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure;
+using Azure.Communication.PhoneNumbers.SipRouting.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

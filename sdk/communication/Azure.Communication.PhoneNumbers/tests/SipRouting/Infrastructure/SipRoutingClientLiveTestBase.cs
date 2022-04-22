@@ -3,12 +3,11 @@
 
 using System;
 using Azure.Communication.Pipeline;
-using Azure.Communication.SipRouting;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
-namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
+namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
