@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new TextAnalyticsClientOptions
+            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
             {
                 Transport = transport
             };

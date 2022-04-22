@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -10,11 +9,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientTests : ClientTestBase
     {
-        public TextAnalyticsClientTests(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync)
         {
-            TextAnalyticsClientOptions options = new TextAnalyticsClientOptions
+            TextAnalyticsClientOptions options = new TextAnalyticsClientOptions(serviceVersion)
             {
                 Transport = new MockTransport(),
             };
