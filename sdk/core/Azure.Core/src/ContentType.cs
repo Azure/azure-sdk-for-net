@@ -81,10 +81,7 @@ namespace Azure.Core
         public static bool operator !=(ContentType left, ContentType right)
             => !left.Equals(right);
 
-        /// <summary>
-        /// Returns value of <see cref="ContentType"/>.
-        /// </summary>
-        /// <returns>Value of content type <see cref="ContentType"/>.</returns>
+        /// <inheritdoc />
         public override string ToString() => _contentType ?? "";
     }
 }
