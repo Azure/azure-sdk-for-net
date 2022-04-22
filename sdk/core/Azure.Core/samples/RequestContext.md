@@ -37,7 +37,7 @@ context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPip
 
 ## Customize Category Of Response By Status Code
 
-You can change the category of response by the returned status code.
+You can change the category of response by the returned status code. This can be used to treat error responses as success responses in logging and distributed tracing.
 
 ```C# Snippet:Change404Category
 var context = new RequestContext();
