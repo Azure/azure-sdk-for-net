@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateAnalyzeTextRequest(AnalyzeTextTask body, bool? showStats)
+        internal HttpMessage CreateAnalyzeRequest(AnalyzeTextTask body, bool? showStats)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,14 +67,14 @@ namespace Azure.AI.TextAnalytics
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<AnalyzeTextTaskResult>> AnalyzeTextAsync(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeTextTaskResult>> AnalyzeAsync(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAnalyzeTextRequest(body, showStats);
+            using var message = CreateAnalyzeRequest(body, showStats);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,14 +95,14 @@ namespace Azure.AI.TextAnalytics
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<AnalyzeTextTaskResult> AnalyzeText(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<AnalyzeTextTaskResult> Analyze(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAnalyzeTextRequest(body, showStats);
+            using var message = CreateAnalyzeRequest(body, showStats);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -113,6 +113,197 @@ namespace Azure.AI.TextAnalytics
                         value = AnalyzeTextTaskResult.DeserializeAnalyzeTextTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeBatchSubmitJobRequest(AnalyzeTextJobsInput body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
+        /// <param name="body"> Collection of documents to analyze and one or more tasks to execute. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders>> AnalyzeBatchSubmitJobAsync(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateAnalyzeBatchSubmitJobRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
+        /// <param name="body"> Collection of documents to analyze and one or more tasks to execute. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders> AnalyzeBatchSubmitJob(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateAnalyzeBatchSubmitJobRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeBatchJobStatusRequest(Guid jobId, bool? showStats, int? top, int? skip)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<AnalyzeTextJobState>> AnalyzeBatchJobStatusAsync(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchJobStatusRequest(jobId, showStats, top, skip);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeTextJobState value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<AnalyzeTextJobState> AnalyzeBatchJobStatus(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchJobStatusRequest(jobId, showStats, top, skip);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeTextJobState value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeBatchCancelJobRequest(Guid jobId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders>> AnalyzeBatchCancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel a long-running Text Analysis job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders> AnalyzeBatchCancelJob(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new MicrosoftCognitiveLanguageServiceAnalyzeBatchCancelJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
