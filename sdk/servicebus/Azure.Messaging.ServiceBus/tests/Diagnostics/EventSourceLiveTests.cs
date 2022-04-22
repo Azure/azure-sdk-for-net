@@ -505,8 +505,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 // link closed event is fired asynchronously, so add a small delay
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
-                _listener.SingleEventById(ServiceBusEventSource.SendLinkClosedEvent);
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ReceiveLinkClosedEvent).Any());
+                _listener.SingleEventById(ServiceBusEventSource.SendLinkClosedEvent, e => e.Payload.Contains(sender.Identifier));
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ReceiveLinkClosedEvent).Any(e => e.Payload.Contains(receiver.Identifier)));
             }
         }
 
@@ -527,8 +527,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 // link closed event is fired asynchronously, so add a small delay
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
-                _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent);
-                Assert.False(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any());
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
+                Assert.False(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any(e => e.Payload.Contains(sender.Identifier)));
             }
         }
     }
