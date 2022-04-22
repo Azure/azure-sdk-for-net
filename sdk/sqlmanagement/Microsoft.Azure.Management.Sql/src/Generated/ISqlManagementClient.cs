@@ -98,6 +98,11 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        IReplicationLinksOperations ReplicationLinks { get; }
+
+        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
@@ -651,11 +656,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IEndpointCertificatesOperations.
         /// </summary>
         IEndpointCertificatesOperations EndpointCertificates { get; }
-
-        /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        IReplicationLinksOperations ReplicationLinks { get; }
 
         /// <summary>
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
