@@ -12,16 +12,16 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomSingleClassificationResult. </summary>
-    internal partial class CustomSingleClassificationResult : CustomResult
+    /// <summary> The CustomSingleLabelClassificationResult. </summary>
+    internal partial class CustomSingleLabelClassificationResult : CustomResult
     {
-        /// <summary> Initializes a new instance of CustomSingleClassificationResult. </summary>
+        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResult. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        public CustomSingleClassificationResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomSingleClassificationResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
+        public CustomSingleLabelClassificationResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomSingleLabelClassificationResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
         {
             if (errors == null)
             {
@@ -43,18 +43,18 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of CustomSingleClassificationResult. </summary>
+        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResult. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        internal CustomSingleClassificationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomSingleClassificationResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
+        internal CustomSingleLabelClassificationResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomSingleLabelClassificationResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<CustomSingleClassificationResultDocumentsItem> Documents { get; }
+        public IList<CustomSingleLabelClassificationResultDocumentsItem> Documents { get; }
     }
 }
