@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        private const string ObjectIdKey = "ObjectId";
+        protected const string ObjectIdKey = "ObjectId";
+        protected const int DefSoftDeleteRetentionInDays = 7;
+
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
         public string ObjectId { get; set; }
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
+        public string MHSMName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
         public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            Location = Azure.Core.AzureLocation.CanadaCentral;
+            Location = AzureLocation.CanadaCentral;
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedVaults();
@@ -63,8 +66,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
+                ServicePrincipalsOperations spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
+                List<Graph.Rbac.Models.ServicePrincipal> servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
                 foreach (var servicePrincipal in servicePrincipalList)
                 {
                     this.ObjectId = servicePrincipal.ObjectId;
@@ -74,15 +77,16 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ArmOperation<ResourceGroupResource> rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroupResource = rgResponse.Value;
 
             VaultCollection = ResourceGroupResource.GetVaults();
             VaultName = Recording.GenerateAssetName("sdktest-vault-");
+            MHSMName = Recording.GenerateAssetName("sdktest-mhsm-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new AccessPermissions
+            AccessPermissions permissions = new AccessPermissions
             {
                 Keys = { new KeyPermission("all") },
                 Secrets = { new SecretPermission("all") },
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
-            VaultProperties.SoftDeleteRetentionInDays = 7;
+            VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
             VaultProperties.NetworkAcls = new NetworkRuleSet() {
                 Bypass = "AzureServices",
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
             ManagedHsmProperties.CreateMode = CreateMode.Default;
             ManagedHsmProperties.EnableSoftDelete = true;
-            VaultProperties.SoftDeleteRetentionInDays = 7;
+            ManagedHsmProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             ManagedHsmProperties.EnablePurgeProtection = false;
             ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
             {
@@ -123,7 +127,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
             };
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
-            ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
             ManagedHsmProperties.TenantId = TenantIdGuid;
         }
     }

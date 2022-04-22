@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Network;
