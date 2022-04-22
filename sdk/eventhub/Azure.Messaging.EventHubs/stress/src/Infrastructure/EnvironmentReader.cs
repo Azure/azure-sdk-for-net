@@ -64,6 +64,7 @@ internal static class EnvironmentReader
             {
                 var parsedKey = line.Slice(firstCharacterPos, separator).Trim().ToString();
                 var parsedValue = line.Slice(separator + 1).Trim().ToString();
+
                 if (environment.ContainsKey(parsedKey))
                 {
                     environment[parsedKey] = parsedValue;
