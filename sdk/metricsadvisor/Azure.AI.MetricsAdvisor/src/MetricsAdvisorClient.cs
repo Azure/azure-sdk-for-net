@@ -85,20 +85,9 @@ namespace Azure.AI.MetricsAdvisor
                 CancellationToken = cancellationToken,
             };
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-                AsyncPageable<BinaryData> pageableBinaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBinaryData, response => MetricDimensionList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
+            AsyncPageable<BinaryData> pageableBinaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBinaryData, response => MetricDimensionList.FromResponse(response).Value);
         }
 
         /// <summary>
@@ -128,20 +117,9 @@ namespace Azure.AI.MetricsAdvisor
                 CancellationToken = cancellationToken,
             };
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-                Pageable<BinaryData> pageableBindaryData = GetMetricDimension(metricGuid, content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
+            Pageable<BinaryData> pageableBindaryData = GetMetricDimension(metricGuid, content, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
         }
 
         #endregion TimeSeries
@@ -185,20 +163,9 @@ namespace Azure.AI.MetricsAdvisor
                 CancellationToken = cancellationToken,
             };
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAllFeedback)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricFeedbackFilter.ToRequestContent(queryOptions);
-                AsyncPageable<BinaryData> pageableBindaryData = GetMetricFeedbacksAsync(content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricFeedbackList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContent content = MetricFeedbackFilter.ToRequestContent(queryOptions);
+            AsyncPageable<BinaryData> pageableBindaryData = GetMetricFeedbacksAsync(content, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBindaryData, response => MetricFeedbackList.FromResponse(response).Value);
         }
 
         /// <summary>
@@ -239,20 +206,9 @@ namespace Azure.AI.MetricsAdvisor
                 CancellationToken = cancellationToken,
             };
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetAllFeedback)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricFeedbackFilter.ToRequestContent(queryOptions);
-                Pageable<BinaryData> pageableBindaryData = GetMetricFeedbacks(content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricFeedbackList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContent content = MetricFeedbackFilter.ToRequestContent(queryOptions);
+            Pageable<BinaryData> pageableBindaryData = GetMetricFeedbacks(content, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBindaryData, response => MetricFeedbackList.FromResponse(response).Value);
         }
 
         /// <summary>
