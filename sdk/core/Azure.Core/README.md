@@ -186,7 +186,7 @@ More on long-running operations in [long-running operation samples](https://gith
 
 ### Customzing Request Using `RequestContext`
 
-Besides general configuration of _serice clients_ through `ClientOptions`, it is possible to customize the requests sent by _service clients_
+Besides general configuration of _service clients_ through `ClientOptions`, it is possible to customize the requests sent by _service clients_
 using protocol methods or convenience APIs that expose `RequestContext` as a parameter.
 
 ```C# Snippet:SetRequestContext
