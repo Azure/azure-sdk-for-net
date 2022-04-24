@@ -336,6 +336,45 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         }
 
         [Test]
+        public async Task LogsSessionProcessorExceptionEvent()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    throw new Exception();
+                }
+
+                Task ExceptionHandler(ProcessErrorEventArgs args)
+                {
+                    if (args.ErrorSource == ServiceBusErrorSource.ProcessMessageCallback)
+                    {
+                        throw new Exception();
+                    }
+
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent, args => args.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent, args => args.Payload.Contains(processor.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent, args => args.Payload.Contains(processor.Identifier));
+            }
+        }
+
+        [Test]
         public async Task LogsProcessorClientClosedExceptionEvent()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -398,7 +437,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(ContainsEntityPath));
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(ContainsEntityPath));
                 Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose && ContainsEntityPath(e)));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionVerboseEvent).Any(e => e.Level == EventLevel.Verbose && ContainsEntityPath(e)));
+                Assert.True(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionVerboseEvent).Any(e => e.Level == EventLevel.Verbose));
                 Assert.False(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionEvent).Any(ContainsEntityPath));
             }
         }

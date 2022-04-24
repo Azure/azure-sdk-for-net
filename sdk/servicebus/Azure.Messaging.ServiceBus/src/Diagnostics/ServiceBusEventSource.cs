@@ -846,12 +846,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorErrorHandlerThrewExceptionEvent, Level = EventLevel.Error, Message = "ExceptionReceivedHandler threw exception. Exception:{0}")]
-        public void ProcessorErrorHandlerThrewException(string exception)
+        [Event(ProcessorErrorHandlerThrewExceptionEvent, Level = EventLevel.Error, Message = "{1}: ExceptionReceivedHandler threw exception. Exception:{0}")]
+        public void ProcessorErrorHandlerThrewException(string exception, string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception);
+                WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception, identifier);
             }
         }
 
