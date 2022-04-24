@@ -85,12 +85,6 @@ namespace Azure.AI.TextAnalytics
 
         #region DetectLanguage
 
-        //internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage) //TODO: CHANGED
-        //{
-        //    return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
-        //}
-
-        // CHANGED: added overload for New Swagger
         internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage)
         {
             List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
@@ -101,28 +95,6 @@ namespace Azure.AI.TextAnalytics
             return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
-        //internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
-        //{
-        //    var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
-
-        //    //Read errors
-        //    foreach (DocumentError error in results.Errors)
-        //    {
-        //        detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
-        //    }
-
-        //    //Read languages
-        //    foreach (DocumentLanguage language in results.Documents)
-        //    {
-        //        detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
-        //    }
-
-        //    detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
-
-        //    return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
-        //}
-
-        // CHANGED: added overload for New Swagger
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionTaskResult results, IDictionary<string, int> idToIndexMap)
         {
             var detectedLanguages = new List<DetectLanguageResult>(results.Results.Errors.Count);
