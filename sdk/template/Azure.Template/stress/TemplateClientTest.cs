@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Test.Stress;
 using CommandLine;
+using Azure.Template.Models;
 
 namespace Azure.Template.Stress
 {
@@ -18,8 +19,8 @@ namespace Azure.Template.Stress
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-            var client = new TemplateClient(keyVaultUri, new DefaultAzureCredential());
+            string keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
+            TemplateClient client = new TemplateClient(keyVaultUri, new DefaultAzureCredential());
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -28,7 +29,7 @@ namespace Azure.Template.Stress
                     // Throttle requests to avoid exceeding service limits
                     await Task.Delay(TimeSpan.FromMilliseconds(Options.Delay), cancellationToken);
 
-                    var secret = await client.GetSecretValueAsync(Options.SecretName, cancellationToken);
+                    Response<SecretBundle> secret = await client.GetSecretValueAsync(Options.SecretName, cancellationToken);
                     Interlocked.Increment(ref Metrics.SecretsReceived);
 
                     if (secret.Value.Value == "TestValue")

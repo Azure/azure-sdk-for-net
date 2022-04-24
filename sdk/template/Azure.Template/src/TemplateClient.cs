@@ -21,7 +21,7 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecretBundle>> GetSecretValueAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
             scope.Start();
 
             try
@@ -46,7 +46,7 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecretBundle> GetSecretValue(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
             scope.Start();
 
             try

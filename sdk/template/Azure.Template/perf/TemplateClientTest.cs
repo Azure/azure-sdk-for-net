@@ -16,7 +16,7 @@ namespace Azure.Template.Perf
 
         public TemplateClientTest(TemplateClientPerfOptions options) : base(options)
         {
-            var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
+            string keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
             _templateClient = new TemplateClient(keyVaultUri, new DefaultAzureCredential());
         }
 
