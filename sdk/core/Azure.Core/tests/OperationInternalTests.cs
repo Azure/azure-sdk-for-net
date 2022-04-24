@@ -100,15 +100,9 @@ namespace Azure.Core.Tests
         [Test]
         public void SetStateSucceeds()
         {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Success(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Success(mockResponse, 1));
-            }
+            OperationInternalBase operationInternal = isOfT
+                ? OperationInternal<int>.Succeeded(mockResponse, 1)
+                : OperationInternal.Success(mockResponse);
 
             Assert.IsTrue(operationInternal.HasCompleted);
             if (operationInternal is OperationInternal<int> oit2)
@@ -119,37 +113,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void SetStateIsPending()
-        {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Pending(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Pending(mockResponse));
-            }
-
-            Assert.IsFalse(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
-            {
-                Assert.IsFalse(oit2.HasValue);
-            }
-        }
-
-        [Test]
         public void SetStateFails()
         {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Failure(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Failure(mockResponse));
-            }
+            OperationInternalBase operationInternal = isOfT
+                ? OperationInternal<int>.Failed(mockResponse, new RequestFailedException(mockResponse))
+                : OperationInternal.Failed(mockResponse, new RequestFailedException(mockResponse));
 
             Assert.IsTrue(operationInternal.HasCompleted);
             if (operationInternal is OperationInternal<int> oit2)

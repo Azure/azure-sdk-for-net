@@ -61,8 +61,6 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
-            _operationInternal.RawResponse = statusResponse;
-
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
                 var error = new ResponseError(null, exceptionMessage);

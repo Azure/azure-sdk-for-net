@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -44,6 +43,21 @@ namespace Azure.Core
     internal class OperationInternal : OperationInternalBase
     {
         private readonly IOperation _operation;
+        private readonly AsyncLockWithValue<OperationState> _stateLock;
+        private Response _rawResponse;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
+        /// </summary>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        public static OperationInternal Success(Response rawResponse) => new(OperationState.Success(rawResponse));
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
+        /// </summary>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException) => new(OperationState.Failure(rawResponse, operationFailedException));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -75,24 +89,72 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
+            _rawResponse = rawResponse;
+            _stateLock = new AsyncLockWithValue<OperationState>();
         }
 
-        /// <summary>
-        /// Sets the <see cref="OperationInternal"/> state immediately.
-        /// </summary>
-        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
-        public void SetState(OperationState state)
+        private OperationInternal(OperationState finalState)
+            :base(finalState.RawResponse)
         {
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
+            _operation = new FinalOperation();
+            _rawResponse = finalState.RawResponse;
+            _stateLock = new AsyncLockWithValue<OperationState>(finalState);
         }
 
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
+
+        public override bool HasCompleted => _stateLock.HasValue;
+
+        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            OperationState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+            using var asyncLock = await _stateLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
+            {
+                return GetResponseFromState(asyncLock.Value);
+            }
+
+            using var scope = CreateScope();
+            try
+            {
+                var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+                if (!state.HasCompleted)
+                {
+                    Interlocked.Exchange(ref _rawResponse, state.RawResponse);
+                    return state.RawResponse;
+                }
+
+                if (!state.HasSucceeded && state.OperationFailedException == null)
+                {
+                    state = OperationState.Failure(state.RawResponse, await CreateException(async, state.RawResponse).ConfigureAwait(false));
+                }
+
+                asyncLock.SetValue(state);
+                return GetResponseFromState(state);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static Response GetResponseFromState(OperationState state)
+        {
+            if (state.HasSucceeded)
+            {
+                return state.RawResponse;
+            }
+
+            throw state.OperationFailedException!;
+        }
+
+        private class FinalOperation : IOperation
+        {
+            public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+                => throw new NotSupportedException("Type is in final state");
         }
     }
 
@@ -169,7 +231,6 @@ namespace Azure.Core
         public static OperationState Success(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-
             return new OperationState(rawResponse, true, true, default);
         }
 
