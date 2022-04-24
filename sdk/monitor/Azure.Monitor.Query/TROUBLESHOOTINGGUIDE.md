@@ -21,13 +21,13 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 ## General troubleshooting
 
-The library raises the exceptions described in [Azure Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md).
+The library raises the exceptions described in [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md).
 
 ### Enable client logging
 
 To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the INFO level. The following code snippet will log to the console.
+This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level. The following code snippet will log to the console:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -101,7 +101,7 @@ Inner error: {
 
 The following code shows an example of setting the server timeout. By setting this server timeout, the Azure Monitor Query library will automatically extend the client timeout to wait for 10 minutes for the server to respond. You don't need to configure your HTTP client to extend the response timeout, as shown in the previous section.
 
-```C# Snippet:QueryLogsWithStatistics
+```C# Snippet:QueryLogsWithTimeout
 var client = new LogsQueryClient(new DefaultAzureCredential());
 ```
 
