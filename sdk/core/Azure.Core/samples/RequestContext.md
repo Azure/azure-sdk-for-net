@@ -16,6 +16,8 @@ You can add various types of policies for one request.
 
 ### Add Policy Per Call
 
+Add a policy to set the request header once per pipeline invocation (service call).
+
 ```C# Snippet:AddPolicyPerCall
 var context = new RequestContext();
 context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
@@ -23,12 +25,16 @@ context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePos
 
 ### Add Policy Per Retry
 
+Add a policy to set the request header every time request is retried.
+
 ```C# Snippet:AddPolicyPerRetry
 var context = new RequestContext();
 context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
 ```
 
 ### Add Policy Before Transport
+
+Add a policy to set the request header before the request is sent by the transport.
 
 ```C# Snippet:AddPolicyBeforeTransport
 var context = new RequestContext();
