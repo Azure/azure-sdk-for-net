@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    internal partial class AnalyzeConversationSubmitJobHeaders
+    internal partial class ConversationAnalysisSubmitJobHeaders
     {
         private readonly Response _response;
-        public AnalyzeConversationSubmitJobHeaders(Response response)
+        public ConversationAnalysisSubmitJobHeaders(Response response)
         {
             _response = response;
         }

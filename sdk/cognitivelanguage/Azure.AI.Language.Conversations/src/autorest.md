@@ -56,3 +56,19 @@ directive:
   where: $.parameters.Endpoint
   transform: $["format"] = "url"
 ```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["paths"]["/analyze-conversations/jobs"]["post"]
+      transform: >
+          $["operationId"] = "ConversationAnalysis_SubmitJob";
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["paths"]["/analyze-conversations/jobs/{jobId}"]["get"]
+      transform: >
+          $["operationId"] = "ConversationAnalysis_JobStatus";
+```
