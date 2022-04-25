@@ -42,9 +42,7 @@ namespace Azure.Core
     /// </summary>
     internal class OperationInternal : OperationInternalBase
     {
-        private readonly IOperation _operation;
-        private readonly AsyncLockWithValue<OperationState> _stateLock;
-        private Response _rawResponse;
+        private readonly OperationInternal<VoidValue> _internalOperation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
@@ -91,70 +89,44 @@ namespace Azure.Core
             DelayStrategy? fallbackStrategy = null)
             :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _operation = operation;
-            _rawResponse = rawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState>();
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationWrapper(operation), rawResponse, operationTypeName, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState)
             :base(finalState.RawResponse)
         {
-            _operation = new FinalOperation();
-            _rawResponse = finalState.RawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState>(finalState);
+            _internalOperation = finalState.HasSucceeded
+                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
+                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
         }
 
-        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
+        public override Response RawResponse => _internalOperation.RawResponse;
 
-        public override bool HasCompleted => _stateLock.HasValue;
+        public override bool HasCompleted => _internalOperation.HasCompleted;
 
-        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
+            async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
+
+        private readonly struct VoidValue { }
+
+        private readonly struct OperationWrapper : IOperation<VoidValue>
         {
-            using var asyncLock = await _stateLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
-            if (asyncLock.HasValue)
+            private readonly IOperation _operation;
+
+            public OperationWrapper(IOperation operation)
             {
-                return GetResponseFromState(asyncLock.Value);
+                _operation = operation;
             }
 
-            using var scope = CreateScope();
-            try
+            public async ValueTask<OperationState<VoidValue>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-                if (!state.HasCompleted)
-                {
-                    Interlocked.Exchange(ref _rawResponse, state.RawResponse);
-                    return state.RawResponse;
-                }
-
-                if (!state.HasSucceeded && state.OperationFailedException == null)
-                {
-                    state = OperationState.Failure(state.RawResponse, await CreateException(async, state.RawResponse).ConfigureAwait(false));
-                }
-
-                asyncLock.SetValue(state);
-                return GetResponseFromState(state);
+                return state.HasSucceeded
+                    ? state.HasSucceeded
+                        ? OperationState<VoidValue>.Success(state.RawResponse, new VoidValue())
+                        : OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException)
+                    : OperationState<VoidValue>.Pending(state.RawResponse);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private static Response GetResponseFromState(OperationState state)
-        {
-            if (state.HasSucceeded)
-            {
-                return state.RawResponse;
-            }
-
-            throw state.OperationFailedException!;
-        }
-
-        private class FinalOperation : IOperation
-        {
-            public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
-                => throw new NotSupportedException("Type is in final state");
         }
     }
 
