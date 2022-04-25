@@ -159,7 +159,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="result"></param>
         /// <param name="scheduler"></param>
         /// <param name="plugin"></param>
-        /// <param name="errors"></param>
+        /// <param name="errors"> The error information. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="id"></param>
         /// <param name="appId"></param>

@@ -53,6 +53,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
@@ -106,7 +107,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -114,7 +115,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -126,6 +127,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
@@ -179,7 +181,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CheckPrincipalAccess(RequestContent content, RequestContext context = null)
+        public virtual Response CheckPrincipalAccess(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -187,7 +189,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -310,6 +312,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -349,7 +352,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
@@ -358,7 +361,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -371,6 +374,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -410,7 +414,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
@@ -419,7 +423,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -617,7 +621,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -628,7 +632,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -663,7 +667,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -675,7 +679,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }

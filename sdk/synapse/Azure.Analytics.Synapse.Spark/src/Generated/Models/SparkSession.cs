@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="result"></param>
         /// <param name="scheduler"></param>
         /// <param name="plugin"></param>
-        /// <param name="errors"></param>
+        /// <param name="errors"> The error information. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="id"></param>
         /// <param name="appId"></param>
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public SparkScheduler Scheduler { get; }
         /// <summary> Gets the plugin. </summary>
         public SparkServicePlugin Plugin { get; }
-        /// <summary> Gets the errors. </summary>
+        /// <summary> The error information. </summary>
         public IReadOnlyList<SparkServiceError> Errors { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
