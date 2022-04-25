@@ -18,23 +18,9 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 
-        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
-        {
-            var options =
-                new ServiceBusClientOptions
-                {
-                    RetryOptions = new ServiceBusRetryOptions
-                    {
-                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
-                        MaxRetries = 0
-                    }
-                };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
-        }
+        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout) => CreateClient(tryTimeout, 0);
 
-        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout)
+        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout, int maxRetries = 3)
         {
             var options =
                 new ServiceBusClientOptions
@@ -42,6 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     RetryOptions = new ServiceBusRetryOptions
                     {
                         TryTimeout = TimeSpan.FromSeconds(tryTimeout),
+                        MaxRetries = maxRetries
                     }
                 };
             return new ServiceBusClient(
