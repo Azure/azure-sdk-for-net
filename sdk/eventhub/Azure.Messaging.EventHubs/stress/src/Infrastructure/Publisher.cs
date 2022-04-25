@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Stress
                     backgroundCancellationSource.Cancel();
                     await Task.WhenAll(sendTasks).ConfigureAwait(false);
 
-                    metrics.Client.GetMetric(Metrics.EventProducerRestarted).TrackValue(1);
+                    metrics.Client.GetMetric(metrics.EventProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
                 }
             }
