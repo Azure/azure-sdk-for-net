@@ -46,13 +46,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result as KnowledgeBaseAnswer;
 
                 Console.WriteLine("Answers: \n");
-                foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
+                /* foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
                 {
                     Console.WriteLine($"Answer: {answer.Answer}");
                     Console.WriteLine($"Confidence: {answer.Confidence}");
                     Console.WriteLine($"Source: {answer.Source}");
                     Console.WriteLine();
-                }
+                } */
             }
             #endregion
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetProjectKind.QuestionAnswering));
@@ -178,7 +178,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-                KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result;
+                /*KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result;
 
                 Console.WriteLine("Answers: \n");
                 foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine($"Confidence: {answer.Confidence}");
                     Console.WriteLine($"Source: {answer.Source}");
                     Console.WriteLine();
-                }
+                } */
             }
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetProjectKind.QuestionAnswering));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("ChitChat-QnA"));

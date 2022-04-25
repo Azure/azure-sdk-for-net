@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -149,6 +152,137 @@ namespace Azure.AI.Language.Conversations
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>Analyzes a conversational utterance.</summary>
+        /// <param name="input">The <see cref="GeneratedConversation"/> used for tasks input.</param>
+        /// <param name="tasks"> <see cref="AnalyzeConversationLROTask"/> defines the tasks to be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> or is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual async Task<Response<AnalyzeConversationJobState>> AnalyzeConversationAsync(List<GeneratedConversation> input, List<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(input, nameof(input));
+            Argument.AssertNotNull(tasks, nameof(tasks));
+
+            MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+
+            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            scope.Start();
+
+            try
+            {
+                var responseHeaders = await _analysisRestClient.SubmitJobAsync(analyzeConversationJobsInput, cancellationToken).ConfigureAwait(false);
+                var jobId = getJobId(responseHeaders.Headers.OperationLocation);
+
+                await WaitForJobUntilDoneAsync(jobId).ConfigureAwait(false);
+
+                return await _analysisRestClient.JobStatusAsync(jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<bool> WaitForJobUntilDoneAsync(Guid jobId, int timeoutInSeconds = 0, int pollingIntervalInSeconds = 5)
+        {
+            var startTimeStamp = DateTime.Now;
+            while (true)
+            {
+                var jobStatus = await _analysisRestClient.JobStatusAsync(jobId).ConfigureAwait(false);
+
+                // check job status is done
+                if (jobStatus.Value.Status == JobState.Succeeded || jobStatus.Value.Status == JobState.Failed || jobStatus.Value.Status == JobState.PartiallySucceeded)
+                    return true;
+
+                // check for timeouts
+                if (timeoutInSeconds > 0)
+                {
+                    var nowTimeStamp = DateTime.Now;
+                    var diff = nowTimeStamp.Subtract(startTimeStamp).TotalSeconds;
+                    if (diff > timeoutInSeconds)
+                    {
+                        break;
+                    }
+                }
+
+                // sleep for a while
+                Thread.Sleep(pollingIntervalInSeconds);
+            }
+            return false;
+        }
+
+        /// <summary>Analyzes a conversational utterance.</summary>
+        /// <param name="input">The <see cref="GeneratedConversation"/> used for tasks input.</param>
+        /// <param name="tasks"> <see cref="AnalyzeConversationLROTask"/> defines the tasks to be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> or is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<AnalyzeConversationJobState> AnalyzeConversation(List<GeneratedConversation> input, List<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(input, nameof(input));
+            Argument.AssertNotNull(tasks, nameof(tasks));
+
+            MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+
+            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            scope.Start();
+
+            try
+            {
+                var responseHeaders = _analysisRestClient.SubmitJob(analyzeConversationJobsInput, cancellationToken);
+                var jobId = getJobId(responseHeaders.Headers.OperationLocation);
+
+                WaitForJobUntilDone(jobId);
+
+                return _analysisRestClient.JobStatus(jobId, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private bool WaitForJobUntilDone(Guid jobId, int timeoutInSeconds = 0, int pollingIntervalInSeconds = 5)
+        {
+            var startTimeStamp = DateTime.Now;
+            while (true)
+            {
+                var jobStatus = _analysisRestClient.JobStatus(jobId);
+
+                // check job status is done
+                if (jobStatus.Value.Status == JobState.Succeeded || jobStatus.Value.Status == JobState.Failed || jobStatus.Value.Status == JobState.PartiallySucceeded)
+                    return true;
+
+                // check for timeouts
+                if (timeoutInSeconds > 0)
+                {
+                    var nowTimeStamp = DateTime.Now;
+                    var diff = nowTimeStamp.Subtract(startTimeStamp).TotalSeconds;
+                    if (diff > timeoutInSeconds)
+                    {
+                        break;
+                    }
+                }
+
+                // sleep for a while
+                Thread.Sleep(pollingIntervalInSeconds);
+            }
+            return false;
+        }
+
+        private static Guid getJobId(string operationLocationHeader)
+        {
+            string last = operationLocationHeader.Split('/').ToList().Last();
+            string jobId = last.Split('?').ToList().First();
+            return Guid.Parse(jobId);
         }
     }
 }
