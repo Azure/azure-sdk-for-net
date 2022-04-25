@@ -101,23 +101,25 @@ Inner error: {
 
 The following code shows an example of setting the server timeout. By setting this server timeout, the Azure Monitor Query library will automatically extend the client timeout to wait for 10 minutes for the server to respond. You don't need to configure your HTTP client to extend the response timeout, as shown in the previous section.
 
-```C# Snippet:QueryLogsWithStatistics
+```C# Snippet:QueryLogsWithTimeout
 string workspaceId = "<workspace_id>";
+
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
-Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+// Query TOP 10 resource groups by event count
+Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
     workspaceId,
-    "AzureActivity | top 10 by TimeGenerated",
+    "AzureActivity | summarize count()",
     new QueryTimeRange(TimeSpan.FromDays(1)),
-    new LogsQueryOptions
+    options: new LogsQueryOptions
     {
-        IncludeStatistics = true,
+        ServerTimeout = TimeSpan.FromMinutes(10)
     });
 
-BinaryData stats = response.Value.GetStatistics();
-using var statsDoc = JsonDocument.Parse(stats);
-var queryStats = statsDoc.RootElement.GetProperty("query");
-Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
+foreach (var resourceGroup in response.Value)
+{
+    Console.WriteLine(resourceGroup);
+}
 ```
 
 ### Troubleshooting partially successful logs query requests
