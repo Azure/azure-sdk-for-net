@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal DeviceUpdatePrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        internal DeviceUpdatePrivateLinkServiceConnectionState(DeviceUpdatePrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public PrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public DeviceUpdatePrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             SystemData systemData = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<DeviceUpdatePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<DeviceUpdatePrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new DeviceUpdatePrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

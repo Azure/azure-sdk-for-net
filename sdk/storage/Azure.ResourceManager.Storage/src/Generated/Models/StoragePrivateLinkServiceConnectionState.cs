@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal StoragePrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionRequired)
+        internal StoragePrivateLinkServiceConnectionState(StoragePrivateEndpointServiceConnectionStatus? status, string description, string actionRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public PrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public StoragePrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>

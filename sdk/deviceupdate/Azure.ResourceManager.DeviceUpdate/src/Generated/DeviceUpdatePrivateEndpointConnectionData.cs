@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState, DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public DeviceUpdatePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public DeviceUpdatePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

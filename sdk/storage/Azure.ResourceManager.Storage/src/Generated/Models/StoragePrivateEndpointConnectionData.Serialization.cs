@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage
             SystemData systemData = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<StoragePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<StoragePrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new StoragePrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
