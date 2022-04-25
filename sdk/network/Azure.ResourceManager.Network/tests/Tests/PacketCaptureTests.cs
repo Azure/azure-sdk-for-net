@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string pcName1 = "pc1";
             string pcName2 = "pc2";
 
-            var pcProperties = new PacketCaptureInput(vm.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
+            var pcProperties = new PacketCaptureCreateOrUpdateContent(vm.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
 
             var packetCaptureCollection = GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
             var  createPacketCapture1Operation = await packetCaptureCollection.CreateOrUpdateAsync(WaitUntil.Completed, pcName1, pcProperties);
             var createPacketCapture1 = await createPacketCapture1Operation.WaitForCompletionAsync();;
-            Response<PacketCapture> getPacketCapture = await packetCaptureCollection.GetAsync(pcName1);
+            Response<PacketCaptureResource> getPacketCapture = await packetCaptureCollection.GetAsync(pcName1);
             var queryPCOperation = await getPacketCapture.Value.GetStatusAsync(WaitUntil.Completed);
             await queryPCOperation.WaitForCompletionAsync();;
 
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Tests
             var  packetCapturesCreateOperation = await packetCaptureCollection.CreateOrUpdateAsync(WaitUntil.Completed, pcName2, pcProperties);
             await packetCapturesCreateOperation.WaitForCompletionAsync();;
 
-            AsyncPageable<PacketCapture> listPCByRg1AP = packetCaptureCollection.GetAllAsync();
-            List<PacketCapture> listPCByRg1 = await listPCByRg1AP.ToEnumerableAsync();
+            AsyncPageable<PacketCaptureResource> listPCByRg1AP = packetCaptureCollection.GetAllAsync();
+            List<PacketCaptureResource> listPCByRg1 = await listPCByRg1AP.ToEnumerableAsync();
 
             var packetCapturesStopOperation = await getPacketCapture.Value.StopAsync(WaitUntil.Completed);
             await packetCapturesStopOperation.WaitForCompletionResponseAsync();;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var packetCapturesDeleteOperation = await getPacketCapture.Value.DeleteAsync(WaitUntil.Completed);
             await packetCapturesDeleteOperation.WaitForCompletionResponseAsync();;
-            AsyncPageable<PacketCapture> listPCByRg2 = packetCaptureCollection.GetAllAsync();
+            AsyncPageable<PacketCaptureResource> listPCByRg2 = packetCaptureCollection.GetAllAsync();
 
             //Validation
             Assert.AreEqual(2, listPCByRg1.Count());

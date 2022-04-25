@@ -15,6 +15,8 @@ clear-output-folder: true
 skip-csproj: true
  
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -22,6 +24,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -30,12 +33,21 @@ rename-rules:
   Ipv4: IPv4
   Ipv6: IPv6
   Ipsec: IPsec
+  SSO: Sso
   URI: Uri
+
 directive:
+  - rename-model:
+      from: EndpointAccessResource
+      to: TargetResourceEndpointAccess
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
     transform: >
       $["x-ms-client-name"] = "EndpointType";
       $["x-ms-enum"]["name"] = "EndpointType"
+  - from: swagger-document
+    where: $.parameters.ResourceUriParameter
+    transform: >
+      $["x-ms-client-name"] = "scope"
 
 ```

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             // get cluster
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             // check for exists cluster
-            cluster1 = await _clusterCollection.GetIfExistsAsync(clusterName);
-            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            bool exists = await _clusterCollection.ExistsAsync(clusterName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             int count = 0;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             cluster1 = null;

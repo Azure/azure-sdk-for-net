@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   The client diagnostics instance responsible for managing scope.
         /// </summary>
         ///
-        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true);
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true, false);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the event with.</param>
         ///
-        /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
+        /// <returns>A tuple containing a flag that identifies whether a new message scope was created and the identifier that the event was instrumented with, if one is assigned.</returns>
         ///
-        public static bool InstrumentEvent(EventData eventData,
-                                           string fullyQualifiedNamespace,
-                                           string eventHubName)
+        public static (bool ScopeCreated, string Identifier) InstrumentEvent(EventData eventData,
+                                                                             string fullyQualifiedNamespace,
+                                                                             string eventHubName)
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
@@ -46,15 +46,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 messageScope.AddAttribute(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace);
                 messageScope.Start();
 
-                Activity activity = Activity.Current;
+                var activity = Activity.Current;
+
                 if (activity != null)
                 {
                     eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
-                    return true;
+                    return (true, activity.Id);
                 }
             }
+            else if (TryExtractDiagnosticId(eventData, out var identifier))
+            {
+                return (false, identifier);
+            }
 
-            return false;
+            return (false, null);
         }
 
         /// <summary>

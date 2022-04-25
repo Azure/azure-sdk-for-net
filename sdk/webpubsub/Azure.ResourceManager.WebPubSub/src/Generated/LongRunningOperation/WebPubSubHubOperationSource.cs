@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal class WebPubSubHubOperationSource : IOperationSource<WebPubSubHub>
+    internal class WebPubSubHubOperationSource : IOperationSource<WebPubSubHubResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.WebPubSub
             _client = client;
         }
 
-        WebPubSubHub IOperationSource<WebPubSubHub>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebPubSubHubResource IOperationSource<WebPubSubHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
-            return new WebPubSubHub(_client, data);
+            return new WebPubSubHubResource(_client, data);
         }
 
-        async ValueTask<WebPubSubHub> IOperationSource<WebPubSubHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebPubSubHubResource> IOperationSource<WebPubSubHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
-            return new WebPubSubHub(_client, data);
+            return new WebPubSubHubResource(_client, data);
         }
     }
 }

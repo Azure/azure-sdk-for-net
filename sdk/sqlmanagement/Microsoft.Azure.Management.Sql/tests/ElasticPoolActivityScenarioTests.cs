@@ -68,6 +68,49 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestListHyperscaleElasticPoolDatabaseActivity()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                Server server = context.CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create a Hyperscale elasticPool with specified replica count of 2
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4"),
+                    HighAvailabilityReplicaCount = 2
+                };
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+
+                // Create a database in Hyperscale elastic pool
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    ElasticPoolId = returnedEp.Id
+                };
+                sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                var returnedDb = sqlClient.Databases.Get(resourceGroup.Name, server.Name, dbName);
+
+                // Verify database has the same value for replica count as pool
+                Assert.Equal(2, returnedDb.HighAvailabilityReplicaCount);
+
+                // Get the Elastic Pool Database Activity List
+                var activity = sqlClient.ElasticPoolDatabaseActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName).Count());
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
+            }
+        }
+
+        [Fact]
         public void TestListElasticPoolActivity()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -167,6 +210,50 @@ namespace Sql.Tests
                 Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
                 Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
                 Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE").Count());
+            }
+        }
+
+        [Fact]
+        public void TestMoveOutOfHyperscalePoolAndGetActivity()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup(TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                Server server = context.CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultStagePrimaryLocation);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create a Hyperscale elasticPool with specified replica count of 2
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4"),
+                    HighAvailabilityReplicaCount = 2
+                };
+
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+
+                // Create a database in elastic pool
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    ElasticPoolId = returnedEp.Id
+                };
+                sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                // Move database out of elastic pool
+                dbInput = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4")
+                };
+                var returnedDb = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+
+                // Verify database has the same value for replica count as pool
+                Assert.Equal(2, returnedDb.HighAvailabilityReplicaCount);
             }
         }
     }

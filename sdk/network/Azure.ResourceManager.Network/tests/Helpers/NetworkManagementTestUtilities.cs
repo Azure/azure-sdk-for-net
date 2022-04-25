@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         /// <returns>A location where this resource type is supported for the current subscription</returns>
         public static async Task<string> GetResourceLocation(ArmClient client, string resourceType, FeaturesInfo.Type feature = FeaturesInfo.Type.Default)
         {
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             HashSet<string> supportedLocations = null;
 
             switch (feature)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Provider provider = await subscription.GetProviders().GetAsync(providerName);
+            ResourceProviderResource provider = await subscription.GetResourceProviders().GetAsync(providerName);
             foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

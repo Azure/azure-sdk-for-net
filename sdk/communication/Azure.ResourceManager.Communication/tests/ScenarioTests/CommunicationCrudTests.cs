@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Tests
 {
     public class CommunicationCrudTests : CommunicationManagementClientLiveTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         private string _location;
         private string _dataLocation;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task OneTimeSetup()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus")));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _location = ResourceLocation;
             _dataLocation = ResourceDataLocation;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task SetUp()
         {
             ArmClient = GetArmClient();
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

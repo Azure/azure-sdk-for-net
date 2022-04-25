@@ -19,6 +19,10 @@ param (
 
 . $PSScriptRoot/job-matrix-functions.ps1
 
+if (!(Test-Path $ConfigPath)) {
+    Write-Error "ConfigPath '$ConfigPath' does not exist."
+    exit 1
+}
 $config = GetMatrixConfigFromJson (Get-Content $ConfigPath)
 # Strip empty string filters in order to be able to use azure pipelines yaml join()
 $Filters = $Filters | Where-Object { $_ }

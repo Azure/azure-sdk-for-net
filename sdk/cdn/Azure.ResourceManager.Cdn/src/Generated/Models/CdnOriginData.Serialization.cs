@@ -89,8 +89,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
+                if (PrivateLinkResourceId != null)
+                {
+                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WriteStringValue(PrivateLinkResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkResourceId");
+                }
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
@@ -110,7 +117,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> hostName = default;
             Optional<int?> httpPort = default;
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<int?> weight = default;
             Optional<bool> enabled = default;
             Optional<string> privateLinkAlias = default;
-            Optional<string> privateLinkResourceId = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
             Optional<OriginResourceState> resourceState = default;
@@ -224,7 +231,12 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("privateLinkResourceId"))
                         {
-                            privateLinkResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateLinkResourceId = null;
+                                continue;
+                            }
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkLocation"))

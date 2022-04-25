@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
 {
     public class Sample1_ManagingApplicationDefinitions
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_ApplicationDefinitions_CreateAnApplicationDefinition
             // First we need to get the application definition collection from the resource group
-            ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
+            ArmApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetArmApplicationDefinitions();
             // Use the same location as the resource group
             string applicationDefinitionName = "myApplicationDefinition";
-            var input = new ApplicationDefinitionData(resourceGroup.Data.Location, ApplicationLockLevel.None)
+            var input = new ArmApplicationDefinitionData(resourceGroup.Data.Location, ArmApplicationLockLevel.None)
             {
                 DisplayName = applicationDefinitionName,
                 Description = $"{applicationDefinitionName} description",
                 PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
             };
-            ArmOperation<ApplicationDefinition> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, input);
-            ApplicationDefinition applicationDefinition = lro.Value;
+            ArmOperation<ArmApplicationDefinitionResource> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, input);
+            ArmApplicationDefinitionResource applicationDefinition = lro.Value;
             #endregion Snippet:Managing_ApplicationDefinitions_CreateAnApplicationDefinition
         }
 
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_ApplicationDefinitions_ListAllApplicationDefinitions
             // First we need to get the application definition collection from the resource group
-            ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
+            ArmApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetArmApplicationDefinitions();
             // With GetAllAsync(), we can get a list of the application definitions in the collection
-            AsyncPageable<ApplicationDefinition> response = applicationDefinitionCollection.GetAllAsync();
-            await foreach (ApplicationDefinition applicationDefinition in response)
+            AsyncPageable<ArmApplicationDefinitionResource> response = applicationDefinitionCollection.GetAllAsync();
+            await foreach (ArmApplicationDefinitionResource applicationDefinition in response)
             {
                 Console.WriteLine(applicationDefinition.Data.Name);
             }
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_ApplicationDefinitions_DeleteAnApplicationDefinition
             // First we need to get the application definition collection from the resource group
-            ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
+            ArmApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetArmApplicationDefinitions();
             // Now we can get the application definition with GetAsync()
-            ApplicationDefinition applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
+            ArmApplicationDefinitionResource applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
             // With DeleteAsync(), we can delete the application definition
             await applicationDefinition.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_ApplicationDefinitions_DeleteAnApplicationDefinition
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupCollection
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

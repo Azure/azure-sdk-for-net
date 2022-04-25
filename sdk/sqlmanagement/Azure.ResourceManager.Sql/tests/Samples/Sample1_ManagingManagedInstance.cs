@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 {
     public class Sample1_ManagingManagedInstance
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            SubscriptionResource subscription = armClient.GetDefaultSubscription();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             };
             string managedInstanceName = "myManagedInstance";
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
-            ManagedInstance managedInstance = managedInstanceLro.Value;
+            ManagedInstanceResource managedInstance = managedInstanceLro.Value;
             #endregion
         }
 
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_ListAllManagedInstances
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            AsyncPageable<ManagedInstance> response = managedInstanceCollection.GetAllAsync();
-            await foreach (ManagedInstance managedInstance in response)
+            AsyncPageable<ManagedInstanceResource> response = managedInstanceCollection.GetAllAsync();
+            await foreach (ManagedInstanceResource managedInstance in response)
             {
                 Console.WriteLine(managedInstance.Data.Name);
             }
@@ -122,28 +122,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_GetAManagedInstance
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+            ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
             Console.WriteLine(managedInstance.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Sql_GetAManagedInstanceIfExists
-            ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-            ManagedInstance managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-            if (managedInstance != null)
-            {
-                Console.WriteLine(managedInstance.Data.Name);
-            }
-
-            if (await managedInstanceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
             #endregion
         }
 
@@ -154,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_DeleteAManagedInstance
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+            ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
             await managedInstance.DeleteAsync(WaitUntil.Completed);
             #endregion
         }

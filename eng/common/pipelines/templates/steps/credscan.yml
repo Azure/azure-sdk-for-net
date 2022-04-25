@@ -1,3 +1,7 @@
+# cSpell:ignore changedfiles
+# cSpell:ignore credscan
+# cSpell:ignore securedevelopmentteam
+# cSpell:ignore postanalysis
 parameters:
   SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
@@ -7,12 +11,7 @@ parameters:
 steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
-
-      # Add config to disable the quote and encoding on file name. 
-      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-quoted-file-names
-      # Ref: https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support#disable-commit-message-transcoding
-      $changedFiles = git -c core.quotepath=off -c i18n.logoutputencoding=utf-8 diff $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles = & "eng/common/scripts/get-changedfiles.ps1"
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
@@ -31,14 +30,14 @@ steps:
   displayName: CredScan setup
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
-  condition: and(succeededOrFailed(), ne('SKIP_CREDSCAN', true))
+  condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
     toolVersion: 2.2.7.8 
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: CredScan result analysis
-  condition: and(succeededOrFailed(), ne('SKIP_CREDSCAN', true))
+  condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
     GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
     GdnBreakAllTools: false
@@ -51,4 +50,4 @@ steps:
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
   displayName: CredScan troubleshooting guide
-  condition: and(failed(), ne('SKIP_CREDSCAN', true))
+  condition: and(failed(), ne(variables['SKIP_CREDSCAN'], true))

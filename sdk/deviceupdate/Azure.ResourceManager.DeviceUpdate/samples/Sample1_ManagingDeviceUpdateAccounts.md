@@ -19,7 +19,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -29,8 +29,8 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the accounts inside this resource group.
@@ -41,8 +41,8 @@ Now that we have the resource group created, we can manage the accounts inside t
 // Get the account collection from the specific resource group and create an account
 string accountName = "myAccount";
 DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
-DeviceUpdateAccount account = lro.Value;
+ArmOperation<DeviceUpdateAccountResource> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
+DeviceUpdateAccountResource account = lro.Value;
 ```
 
 ***List all accounts***
@@ -51,14 +51,14 @@ DeviceUpdateAccount account = lro.Value;
 // First we need to get the account collection from the specific resource group
 DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
 // With GetAllAsync(), we can get a list of the accounts in the collection
-AsyncPageable<DeviceUpdateAccount> response = accountCollection.GetAllAsync();
-await foreach (DeviceUpdateAccount account in response)
+AsyncPageable<DeviceUpdateAccountResource> response = accountCollection.GetAllAsync();
+await foreach (DeviceUpdateAccountResource account in response)
 {
     Console.WriteLine(account.Data.Name);
 }
 //We can also list all accounts in the subscription
 response = subscription.GetDeviceUpdateAccountsAsync();
-await foreach (DeviceUpdateAccount account in response)
+await foreach (DeviceUpdateAccountResource account in response)
 {
     Console.WriteLine(account.Data.Name);
 }
@@ -70,14 +70,14 @@ await foreach (DeviceUpdateAccount account in response)
 // First we need to get the account collection from the specific resource group
 DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
 // Now we can get the account with GetAsync()
-DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
+DeviceUpdateAccountResource account = await accountCollection.GetAsync("myAccount");
 // With UpdateAsync(), we can update the account
-PatchableDeviceUpdateAccountData updateOptions = new PatchableDeviceUpdateAccountData()
+DeviceUpdateAccountPatch updateOptions = new DeviceUpdateAccountPatch()
 {
     Location = AzureLocation.WestUS2,
     Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
 };
-ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(WaitUntil.Completed, updateOptions);
+ArmOperation<DeviceUpdateAccountResource> lro = await account.UpdateAsync(WaitUntil.Completed, updateOptions);
 account = lro.Value;
 ```
 
@@ -87,7 +87,7 @@ account = lro.Value;
 // First we need to get the account collection from the specific resource group
 DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
 // Now we can get the account with GetAsync()
-DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
+DeviceUpdateAccountResource account = await accountCollection.GetAsync("myAccount");
 // With DeleteAsync(), we can delete the account
 await account.DeleteAsync(WaitUntil.Completed);
 ```

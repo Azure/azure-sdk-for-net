@@ -146,7 +146,6 @@ namespace Microsoft.Azure.Management.Sql
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\OpenSourceProjects\\azure-sdk-for-net\\sdk";

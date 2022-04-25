@@ -7,7 +7,6 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of EndpointResources in the EndpointResource. </summary>
+        /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public virtual EndpointResourceCollection GetEndpointResources()
         {

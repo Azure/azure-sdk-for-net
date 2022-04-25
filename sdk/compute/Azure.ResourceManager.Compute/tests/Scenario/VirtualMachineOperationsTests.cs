@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            VirtualMachine vm2 = await vm.GetAsync();
+            VirtualMachineResource vm2 = await vm.GetAsync();
 
             ResourceDataHelper.AssertVirtualMachine(vm.Data, vm2.Data);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
             await vm.DeallocateAsync(WaitUntil.Completed);
-            var update = new PatchableVirtualMachineData()
+            var update = new VirtualMachinePatch()
             {
                 HardwareProfile = new HardwareProfile
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 }
             };
             var lro = await vm.UpdateAsync(WaitUntil.Completed, update);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
 
             Assert.AreEqual(VirtualMachineSizeTypes.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
         }
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task BootDiagnostic()
         {
             string vmName = Recording.GenerateAssetName("testVM-");
-            VirtualMachine virtualMachine = await CreateVirtualMachineAsync(vmName);
+            VirtualMachineResource virtualMachine = await CreateVirtualMachineAsync(vmName);
             Assert.IsNull(virtualMachine.Data.BootDiagnostics);
 
-            PatchableVirtualMachineData updateOptions = new PatchableVirtualMachineData();
+            VirtualMachinePatch updateOptions = new VirtualMachinePatch();
             updateOptions.BootDiagnostics = new BootDiagnostics();
             updateOptions.BootDiagnostics.Enabled = true;
             virtualMachine = (await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions)).Value;
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var originalEnabled = virtualMachine.Data.BootDiagnostics?.Enabled;
 
             string vmName2 = Recording.GenerateAssetName("testVM-");
-            VirtualMachine virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
+            VirtualMachineResource virtualMachine2 = await CreateVirtualMachineAsync(vmName2);
             Assert.IsNull(virtualMachine2.Data.DiagnosticsProfile?.BootDiagnostics);
 
-            PatchableVirtualMachineData updateOptions2 = new PatchableVirtualMachineData();
+            VirtualMachinePatch updateOptions2 = new VirtualMachinePatch();
             updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();
             updateOptions2.DiagnosticsProfile.BootDiagnostics= new BootDiagnostics();
             updateOptions2.DiagnosticsProfile.BootDiagnostics.Enabled = true;

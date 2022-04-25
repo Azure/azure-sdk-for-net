@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             string secretName = Recording.GenerateId();
 
             // TODO: Update this value whenever you re-record tests. Both the sync and async JSON recordings need to use the same value.
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1626221282));
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1648054293));
 
             KeyVaultSecret setResult = null;
 

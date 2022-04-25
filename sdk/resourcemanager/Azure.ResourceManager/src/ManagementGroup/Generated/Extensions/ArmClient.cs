@@ -6,20 +6,23 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager
 {
     public partial class ArmClient
     {
-        #region ManagementGroup
-        /// <summary> Gets an object representing a ManagementGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroup" /> object. </returns>
-        public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupResource" /> object. </returns>
+        public virtual ManagementGroupResource GetManagementGroupResource(ResourceIdentifier id)
         {
-            ManagementGroup.ValidateResourceId(id);
-            return new ManagementGroup(this, id);
+            ManagementGroupResource.ValidateResourceId(id);
+            return new ManagementGroupResource(this, id);
         }
         #endregion
     }

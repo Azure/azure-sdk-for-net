@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineBody.PlacementProfile = _placementProfile;
             virtualMachineBody.TemplateId = _vmTemplateId;
             // create virtual machine
-            VirtualMachine vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
+            VirtualMachineResource vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
             Assert.IsNotNull(vm1);
             Assert.AreEqual(vm1.Id.Name, vmName);
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineBody.PlacementProfile = _placementProfile;
             virtualMachineBody.TemplateId = _vmTemplateId;
             // create virtual machine
-            VirtualMachine vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
+            VirtualMachineResource vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
             Assert.IsNotNull(vm1);
             Assert.AreEqual(vm1.Id.Name, vmName);
             // get virtual machine
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineBody.PlacementProfile = _placementProfile;
             virtualMachineBody.TemplateId = _vmTemplateId;
             // create virtual machine
-            VirtualMachine vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
+            VirtualMachineResource vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
             Assert.IsNotNull(vm1);
             Assert.AreEqual(vm1.Id.Name, vmName);
             // check for exists virtual machine
-            vm1 = await _virtualMachineCollection.GetIfExistsAsync(vmName);
-            Assert.AreEqual(vm1.Id.Name, vmName);
+            bool exists = await _virtualMachineCollection.ExistsAsync(vmName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             virtualMachineBody.PlacementProfile = _placementProfile;
             virtualMachineBody.TemplateId = _vmTemplateId;
             // create virtual machine
-            VirtualMachine vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
+            VirtualMachineResource vm1 = (await _virtualMachineCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, virtualMachineBody)).Value;
             Assert.IsNotNull(vm1);
             Assert.AreEqual(vm1.Id.Name, vmName);
             int count = 0;

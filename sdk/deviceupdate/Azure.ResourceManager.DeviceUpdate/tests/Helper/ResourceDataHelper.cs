@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 
         public static DeviceUpdateInstanceData CreateInstanceData() => new DeviceUpdateInstanceData(AzureLocation.WestUS2);
 
-        public static void AssertValidAccount(DeviceUpdateAccount model, DeviceUpdateAccount getResult)
+        public static void AssertValidAccount(DeviceUpdateAccountResource model, DeviceUpdateAccountResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             Assert.AreEqual(model.Data.PublicNetworkAccess, getResult.Data.PublicNetworkAccess);
         }
 
-        public static void AssertValidInstance(DeviceUpdateInstance model, DeviceUpdateInstance getResult)
+        public static void AssertValidInstance(DeviceUpdateInstanceResource model, DeviceUpdateInstanceResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, PatchableDeviceUpdateAccountData updateParameters)
+        public static void AssertAccountUpdate(DeviceUpdateAccountResource updatedAccount, DeviceUpdateAccountPatch updateParameters)
         {
             Assert.AreEqual(updatedAccount.Data.Location.ToString(), updateParameters.Location);
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, string key, string value)
+        public static void AssertInstanceUpdate(DeviceUpdateInstanceResource updatedInstance, string key, string value)
         {
             Assert.GreaterOrEqual(updatedInstance.Data.Tags.Count, 1);
             Assert.IsTrue(updatedInstance.Data.Tags.ContainsKey(key));

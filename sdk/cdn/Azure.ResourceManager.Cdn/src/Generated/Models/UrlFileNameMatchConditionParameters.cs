@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlFileNameMatchConditionParameters
     {
         /// <summary> Initializes a new instance of UrlFileNameMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public UrlFileNameMatchConditionParameters(UrlFileNameMatchConditionParametersOdataType odataType, UrlFileNameOperator @operator)
+        public UrlFileNameMatchConditionParameters(UrlFileNameMatchConditionParametersTypeName typeName, UrlFileNameOperator @operator)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of UrlFileNameMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UrlFileNameMatchConditionParameters(UrlFileNameMatchConditionParametersOdataType odataType, UrlFileNameOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal UrlFileNameMatchConditionParameters(UrlFileNameMatchConditionParametersTypeName typeName, UrlFileNameOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public UrlFileNameMatchConditionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public UrlFileNameMatchConditionParametersTypeName TypeName { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public UrlFileNameOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class KeyVaultKeyReference
     {
         /// <summary> Initializes a new instance of KeyVaultKeyReference. </summary>
-        /// <param name="keyUrl"> The URL referencing a key encryption key in Key Vault. </param>
+        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyUrl"/> or <paramref name="sourceVault"/> is null. </exception>
-        public KeyVaultKeyReference(string keyUrl, WritableSubResource sourceVault)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
-            if (keyUrl == null)
+            if (keyUri == null)
             {
-                throw new ArgumentNullException(nameof(keyUrl));
+                throw new ArgumentNullException(nameof(keyUri));
             }
             if (sourceVault == null)
             {
                 throw new ArgumentNullException(nameof(sourceVault));
             }
 
-            KeyUrl = keyUrl;
+            KeyUri = keyUri;
             SourceVault = sourceVault;
         }
 
         /// <summary> The URL referencing a key encryption key in Key Vault. </summary>
-        public string KeyUrl { get; set; }
+        public Uri KeyUri { get; set; }
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
         internal WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets Id. </summary>

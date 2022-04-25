@@ -18,7 +18,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Managing_ServiceBusTopics_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -26,8 +26,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_ServiceBusTopics_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 
 After we have the resource group created, we can create a namespace
@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_ServiceBusTopics_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ServiceBusTopicCollection serviceBusTopicCollection = serviceBusNamespace.GetServiceBusTopics();
 ```
 
@@ -45,13 +45,13 @@ Now that we have a namespace, we can manage the topics inside this namespace.
 
 ```C# Snippet:Managing_ServiceBusTopics_CreateTopic
 string topicName = "myTopic";
-ServiceBusTopic serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
+ServiceBusTopicResource serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
 ```
 
 ***List all topics***
 
 ```C# Snippet:Managing_ServiceBusTopics_ListTopics
-await foreach (ServiceBusTopic serviceBusTopic in serviceBusTopicCollection.GetAllAsync())
+await foreach (ServiceBusTopicResource serviceBusTopic in serviceBusTopicCollection.GetAllAsync())
 {
     Console.WriteLine(serviceBusTopic.Id.Name);
 }
@@ -60,27 +60,13 @@ await foreach (ServiceBusTopic serviceBusTopic in serviceBusTopicCollection.GetA
 ***Get a topic***
 
 ```C# Snippet:Managing_ServiceBusTopics_GetTopic
-ServiceBusTopic serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
-```
-
-***Try to get a topic if it exists***
-
-```C# Snippet:Managing_ServiceBusTopics_GetTopicIfExists
-ServiceBusTopic serviceBusTopic = await serviceBusTopicCollection.GetIfExistsAsync("foo");
-if (serviceBusTopic != null)
-{
-    Console.WriteLine("topic 'foo' exists");
-}
-if (await serviceBusTopicCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("topic 'bar' exists");
-}
+ServiceBusTopicResource serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
 ```
 
 ***Delete a blob container***
 
 ```C# Snippet:Managing_ServiceBusTopics_DeleteTopic
-ServiceBusTopic serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
+ServiceBusTopicResource serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
 await serviceBusTopic.DeleteAsync(WaitUntil.Completed);
 ```
 

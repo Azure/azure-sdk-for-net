@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnConnectionOperationSource : IOperationSource<VpnConnection>
+    internal class VpnConnectionOperationSource : IOperationSource<VpnConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VpnConnection IOperationSource<VpnConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnConnectionResource IOperationSource<VpnConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VpnConnectionData.DeserializeVpnConnectionData(document.RootElement);
-            return new VpnConnection(_client, data);
+            return new VpnConnectionResource(_client, data);
         }
 
-        async ValueTask<VpnConnection> IOperationSource<VpnConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnConnectionResource> IOperationSource<VpnConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VpnConnectionData.DeserializeVpnConnectionData(document.RootElement);
-            return new VpnConnection(_client, data);
+            return new VpnConnectionResource(_client, data);
         }
     }
 }
