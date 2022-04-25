@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
                 new BlobUploadOptions
                 {
                     TransferOptions = Options.StorageTransferOptions,
-                    ValidationOptions = Options.UploadValidationOptions
+                    TransferValidationOptions = Options.UploadValidationOptions
                 },
                 cancellationToken: cancellationToken);
         }

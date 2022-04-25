@@ -72,9 +72,12 @@ namespace Azure.Storage.Blobs.Models
         public bool? LegalHold { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using checksum
-        /// content validation on uploads.
+        /// Options for transfer validation settings on this operation.
+        /// When transfer validation options are set in the client, setting this parameter
+        /// acts as an override.
+        /// This operation does not allow <see cref="UploadTransferValidationOptions.PrecalculatedChecksum"/>
+        /// to be set.
         /// </summary>
-        public UploadTransferValidationOptions ValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

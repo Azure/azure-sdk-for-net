@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return await client.OpenWriteAsync(true, new BlobOpenWriteOptions
             {
-                ValidationOptions = validationOptions,
+                TransferValidationOptions = validationOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Tests
             StorageTransferOptions transferOptions)
             => await client.UploadAsync(source, new BlobUploadOptions
             {
-                ValidationOptions = validationOptions,
+                TransferValidationOptions = validationOptions,
                 TransferOptions = transferOptions
             });
 

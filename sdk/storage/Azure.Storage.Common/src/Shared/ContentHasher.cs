@@ -117,7 +117,7 @@ namespace Azure.Storage
         /// <param name="options">Hash options.</param>
         /// <returns>
         /// Object containing the requested hash on its algorithm's respective property. If
-        /// <paramref name="options"/> are default, then the returned result is default.
+        /// <paramref name="options"/> are default or specified as "None", then the returned result is default.
         /// </returns>
         /// <exception cref="ArgumentException">
         /// Throws if <paramref name="options"/> exists and <see cref="UploadTransferValidationOptions.Algorithm"/>
@@ -125,7 +125,7 @@ namespace Azure.Storage
         /// </exception>
         public static GetHashResult GetHashOrDefault(Stream content, UploadTransferValidationOptions options)
         {
-            if (options == default)
+            if (options == default || options.Algorithm == ValidationAlgorithm.None)
             {
                 return default;
             }

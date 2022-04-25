@@ -1622,12 +1622,14 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.UploadTransferValidationOptions;
+
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
                 options ??= new BlobUploadOptions();
 
-                if (UsingClientSideEncryption && options.ValidationOptions != default)
+                if (UsingClientSideEncryption && validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None)
                 {
                     throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 }
@@ -1644,7 +1646,7 @@ namespace Azure.Storage.Blobs
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.ValidationOptions,
+                validationOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1797,11 +1799,10 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                // TODO #27253
-                //if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                //{
-                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                //}
+                if (options.TransferValidationOptions != default && options.TransferValidationOptions.Algorithm != ValidationAlgorithm.None)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
 
                 return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptionOpenWriteInternal(
