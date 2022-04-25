@@ -160,7 +160,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationJobState>> AnalyzeConversationAsync(List<GeneratedConversation> input, List<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationJobState>> AnalyzeConversationAsync(IEnumerable<GeneratedConversation> input, IEnumerable<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(input, nameof(input));
             Argument.AssertNotNull(tasks, nameof(tasks));
@@ -222,7 +222,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> or is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationJobState> AnalyzeConversation(List<GeneratedConversation> input, List<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationJobState> AnalyzeConversation(IEnumerable<GeneratedConversation> input, IEnumerable<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(input, nameof(input));
             Argument.AssertNotNull(tasks, nameof(tasks));
