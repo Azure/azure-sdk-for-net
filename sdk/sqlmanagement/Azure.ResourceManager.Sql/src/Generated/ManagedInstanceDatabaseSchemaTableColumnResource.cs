@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceDatabaseSchemaTableColumnResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceDatabaseSchemaTableColumn along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDatabaseSchemaTableColumnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceDatabaseSchemaTableResource" /> using the GetManagedInstanceDatabaseSchemaTableColumn method.
+    /// </summary>
     public partial class ManagedInstanceDatabaseSchemaTableColumnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource"/> instance. </summary>
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabels().GetAsync(sensitivityLabelSource, cancellationToken).ConfigureAwait(false);
@@ -113,6 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabels().Get(sensitivityLabelSource, cancellationToken);

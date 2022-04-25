@@ -17,7 +17,12 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a HostingEnvironmentWorkerPoolResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a HostingEnvironmentWorkerPool along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostingEnvironmentWorkerPoolResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHostingEnvironmentWorkerPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource" /> using the GetHostingEnvironmentWorkerPool method.
+    /// </summary>
     public partial class HostingEnvironmentWorkerPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentWorkerPoolResource"/> instance. </summary>
@@ -135,18 +140,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
-        /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workerPoolEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -161,18 +166,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
-        /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
+        /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workerPoolEnvelope, nameof(workerPoolEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workerPoolEnvelope, cancellationToken);
+                var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.UpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

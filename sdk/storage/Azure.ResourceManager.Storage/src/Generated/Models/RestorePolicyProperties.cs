@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
         /// <param name="enabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
-        /// <param name="lastEnabledTime"> Deprecated in favor of minRestoreTime property. </param>
-        /// <param name="minRestoreTime"> Returns the minimum date and time that the restore can be started. </param>
-        internal RestorePolicyProperties(bool enabled, int? days, DateTimeOffset? lastEnabledTime, DateTimeOffset? minRestoreTime)
+        /// <param name="lastEnabledOn"> Deprecated in favor of minRestoreTime property. </param>
+        /// <param name="minRestoreOn"> Returns the minimum date and time that the restore can be started. </param>
+        internal RestorePolicyProperties(bool enabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn)
         {
             Enabled = enabled;
             Days = days;
-            LastEnabledTime = lastEnabledTime;
-            MinRestoreTime = minRestoreTime;
+            LastEnabledOn = lastEnabledOn;
+            MinRestoreOn = minRestoreOn;
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
         public int? Days { get; set; }
         /// <summary> Deprecated in favor of minRestoreTime property. </summary>
-        public DateTimeOffset? LastEnabledTime { get; }
+        public DateTimeOffset? LastEnabledOn { get; }
         /// <summary> Returns the minimum date and time that the restore can be started. </summary>
-        public DateTimeOffset? MinRestoreTime { get; }
+        public DateTimeOffset? MinRestoreOn { get; }
     }
 }

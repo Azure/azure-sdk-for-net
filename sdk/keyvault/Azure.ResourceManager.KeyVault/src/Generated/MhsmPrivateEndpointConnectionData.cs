@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the MhsmPrivateEndpointConnection data model. </summary>
-    public partial class MhsmPrivateEndpointConnectionData : Models.ManagedHsmResource
+    public partial class MhsmPrivateEndpointConnectionData : KeyVaultTrackedResourceData
     {
         /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionData. </summary>
         /// <param name="location"> The location. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, string etag, SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location, sku)
+        internal MhsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ETag? etag, SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location, sku)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public string Etag { get; set; }
+        public ETag? Etag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>

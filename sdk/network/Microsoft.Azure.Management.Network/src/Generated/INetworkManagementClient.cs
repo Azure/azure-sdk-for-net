@@ -221,6 +221,11 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
+        /// Gets the IExpressRoutePortAuthorizationsOperations.
+        /// </summary>
+        IExpressRoutePortAuthorizationsOperations ExpressRoutePortAuthorizations { get; }
+
+        /// <summary>
         /// Gets the IFirewallPoliciesOperations.
         /// </summary>
         IFirewallPoliciesOperations FirewallPolicies { get; }
@@ -544,6 +549,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVpnServerConfigurationsOperations.
         /// </summary>
         IVpnServerConfigurationsOperations VpnServerConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationPolicyGroupsOperations.
+        /// </summary>
+        IConfigurationPolicyGroupsOperations ConfigurationPolicyGroups { get; }
 
         /// <summary>
         /// Gets the IVirtualHubsOperations.

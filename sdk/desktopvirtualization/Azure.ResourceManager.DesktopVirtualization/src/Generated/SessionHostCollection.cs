@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of SessionHost and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SessionHostResource" /> and their operations.
+    /// Each <see cref="SessionHostResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
+    /// To get a <see cref="SessionHostCollection" /> instance call the GetSessionHosts method from an instance of <see cref="HostPoolResource" />.
+    /// </summary>
     public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
         private readonly ClientDiagnostics _sessionHostClientDiagnostics;
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,66 +239,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(sessionHostName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
-        /// Operation Id: SessionHosts_Get
-        /// </summary>
-        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public virtual async Task<Response<SessionHostResource>> GetIfExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
-
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SessionHostResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
-        /// Operation Id: SessionHosts_Get
-        /// </summary>
-        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public virtual Response<SessionHostResource> GetIfExists(string sessionHostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
-
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SessionHostResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

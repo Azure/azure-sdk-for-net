@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRoutePort and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRoutePortResource" /> and their operations.
+    /// Each <see cref="ExpressRoutePortResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ExpressRoutePortCollection" /> instance call the GetExpressRoutePorts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ExpressRoutePortCollection : ArmCollection, IEnumerable<ExpressRoutePortResource>, IAsyncEnumerable<ExpressRoutePortResource>
     {
         private readonly ClientDiagnostics _expressRoutePortClientDiagnostics;
@@ -55,23 +59,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
         /// Operation Id: ExpressRoutePorts_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
-        /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
+        /// <param name="data"> Parameters supplied to the create ExpressRoutePort operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExpressRoutePortResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ExpressRoutePortResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expressRoutePortRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ExpressRoutePortResource>(new ExpressRoutePortOperationSource(Client), _expressRoutePortClientDiagnostics, Pipeline, _expressRoutePortRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _expressRoutePortRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ExpressRoutePortResource>(new ExpressRoutePortOperationSource(Client), _expressRoutePortClientDiagnostics, Pipeline, _expressRoutePortRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,23 +92,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
         /// Operation Id: ExpressRoutePorts_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
-        /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
+        /// <param name="data"> Parameters supplied to the create ExpressRoutePort operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ExpressRoutePortResource> CreateOrUpdate(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ExpressRoutePortResource> CreateOrUpdate(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRoutePortRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<ExpressRoutePortResource>(new ExpressRoutePortOperationSource(Client), _expressRoutePortClientDiagnostics, Pipeline, _expressRoutePortRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _expressRoutePortRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, data, cancellationToken);
+                var operation = new NetworkArmOperation<ExpressRoutePortResource>(new ExpressRoutePortOperationSource(Client), _expressRoutePortClientDiagnostics, Pipeline, _expressRoutePortRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,66 +306,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(expressRoutePortName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
-        /// Operation Id: ExpressRoutePorts_Get
-        /// </summary>
-        /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public virtual async Task<Response<ExpressRoutePortResource>> GetIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
-
-            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _expressRoutePortRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ExpressRoutePortResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
-        /// Operation Id: ExpressRoutePorts_Get
-        /// </summary>
-        /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public virtual Response<ExpressRoutePortResource> GetIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
-
-            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _expressRoutePortRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ExpressRoutePortResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

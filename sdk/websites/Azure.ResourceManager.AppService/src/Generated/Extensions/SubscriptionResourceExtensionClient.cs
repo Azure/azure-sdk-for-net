@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
             scope.Start();
             try
             {
-                var response = await AppServiceCertificateOrdersRestClient.ValidatePurchaseInformationAsync(Id.SubscriptionId, appServiceCertificateOrder, cancellationToken).ConfigureAwait(false);
+                var response = await AppServiceCertificateOrdersRestClient.ValidatePurchaseInformationAsync(Id.SubscriptionId, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -234,15 +234,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
             scope.Start();
             try
             {
-                var response = AppServiceCertificateOrdersRestClient.ValidatePurchaseInformation(Id.SubscriptionId, appServiceCertificateOrder, cancellationToken);
+                var response = AppServiceCertificateOrdersRestClient.ValidatePurchaseInformation(Id.SubscriptionId, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
-        /// <param name="parameters"> Search parameters for domain name recommendations. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             async Task<Page<NameIdentifier>> FirstPageFunc(int? pageSizeHint)
             {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DomainsRestClient.ListRecommendationsAsync(Id.SubscriptionId, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DomainsRestClient.ListRecommendationsAsync(Id.SubscriptionId, content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DomainsRestClient.ListRecommendationsNextPageAsync(nextLink, Id.SubscriptionId, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DomainsRestClient.ListRecommendationsNextPageAsync(nextLink, Id.SubscriptionId, content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -474,10 +474,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
-        /// <param name="parameters"> Search parameters for domain name recommendations. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NameIdentifier> GetRecommendationsDomains(DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Pageable<NameIdentifier> GetRecommendationsDomains(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Page<NameIdentifier> FirstPageFunc(int? pageSizeHint)
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DomainsRestClient.ListRecommendations(Id.SubscriptionId, parameters, cancellationToken: cancellationToken);
+                    var response = DomainsRestClient.ListRecommendations(Id.SubscriptionId, content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DomainsRestClient.ListRecommendationsNextPage(nextLink, Id.SubscriptionId, parameters, cancellationToken: cancellationToken);
+                    var response = DomainsRestClient.ListRecommendationsNextPage(nextLink, Id.SubscriptionId, content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1881,15 +1881,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.VerifyHostingEnvironmentVnetAsync(Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.VerifyHostingEnvironmentVnetAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1904,15 +1904,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.VerifyHostingEnvironmentVnet(Id.SubscriptionId, parameters, cancellationToken);
+                var response = DefaultRestClient.VerifyHostingEnvironmentVnet(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1928,15 +1928,15 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_PreviewWorkflow
         /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
             scope.Start();
             try
             {
-                var response = await StaticSitesRestClient.PreviewWorkflowAsync(Id.SubscriptionId, location, staticSitesWorkflowPreviewRequest, cancellationToken).ConfigureAwait(false);
+                var response = await StaticSitesRestClient.PreviewWorkflowAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1952,15 +1952,15 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_PreviewWorkflow
         /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
             scope.Start();
             try
             {
-                var response = StaticSitesRestClient.PreviewWorkflow(Id.SubscriptionId, location, staticSitesWorkflowPreviewRequest, cancellationToken);
+                var response = StaticSitesRestClient.PreviewWorkflow(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

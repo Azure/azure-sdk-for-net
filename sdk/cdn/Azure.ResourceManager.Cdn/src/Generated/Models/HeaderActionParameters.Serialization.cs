@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("headerAction");
             writer.WriteStringValue(HeaderAction.ToString());
             writer.WritePropertyName("headerName");
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HeaderActionParameters DeserializeHeaderActionParameters(JsonElement element)
         {
-            HeaderActionParametersOdataType odataType = default;
+            HeaderActionParametersTypeName typeName = default;
             HeaderAction headerAction = default;
             string headerName = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new HeaderActionParametersOdataType(property.Value.GetString());
+                    typeName = new HeaderActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("headerAction"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new HeaderActionParameters(odataType, headerAction, headerName, value.Value);
+            return new HeaderActionParameters(typeName, headerAction, headerName, value.Value);
         }
     }
 }

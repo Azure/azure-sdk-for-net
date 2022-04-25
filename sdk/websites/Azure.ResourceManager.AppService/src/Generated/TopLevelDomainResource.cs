@@ -14,10 +14,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a TopLevelDomainResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a TopLevelDomain along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TopLevelDomainResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetTopLevelDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetTopLevelDomain method.
+    /// </summary>
     public partial class TopLevelDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TopLevelDomainResource"/> instance. </summary>

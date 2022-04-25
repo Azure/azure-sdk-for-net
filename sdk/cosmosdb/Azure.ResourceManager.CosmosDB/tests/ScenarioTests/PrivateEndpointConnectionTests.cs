@@ -103,12 +103,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await CreatePrivateEndpoint();
 
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnectionResource privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
-            Assert.IsNotNull(privateEndpointConnection);
+            var name = privateEndpointConnections[0].Data.Name;
+            Assert.IsTrue(await PrivateEndpointConnectionCollection.ExistsAsync(name));
+            var id = PrivateEndpointConnectionCollection.Id;
+            id = PrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
+            PrivateEndpointConnectionResource privateEndpointConnection = this.ArmClient.GetPrivateEndpointConnectionResource(id);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
-            privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnection.Data.Name);
-            Assert.Null(privateEndpointConnection);
+            bool exists = await PrivateEndpointConnectionCollection.ExistsAsync(name);
+            Assert.IsFalse(exists);
         }
 
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()

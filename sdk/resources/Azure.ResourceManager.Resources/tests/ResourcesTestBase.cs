@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
@@ -38,14 +37,14 @@ namespace Azure.ResourceManager.Resources.Tests
             Client = GetArmClient();
         }
 
-        protected static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(AzureLocation.WestUS2, ApplicationLockLevel.None)
+        protected static ArmApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ArmApplicationDefinitionData(AzureLocation.WestUS2, ArmApplicationLockLevel.None)
         {
             DisplayName = displayName,
             Description = $"{displayName} description",
             PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
         };
 
-        protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
+        protected static ArmApplicationData CreateApplicationData(ResourceIdentifier applicationDefinitionId, ResourceIdentifier managedResourceGroupId, string storageAccountPrefix) => new ArmApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
@@ -64,52 +63,78 @@ namespace Azure.ResourceManager.Resources.Tests
             })
         };
 
-        protected static DeploymentProperties CreateDeploymentProperties()
+        protected static ArmDeploymentProperties CreateDeploymentProperties()
         {
-            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
-            tmpDeploymentProperties.Parameters = new JsonObject()
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountType", new JsonObject()
                     {
                         {"value", "Standard_GRS" }
                     }
                 }
-            };
+            });
             return tmpDeploymentProperties;
         }
 
-        protected static DeploymentProperties CreateDeploymentPropertiesUsingString()
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesAtSub()
         {
-            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
-            tmpDeploymentProperties.Template = File.ReadAllText(Path.Combine(
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-            "Scenario",
-            "DeploymentTemplates",
-            $"storage-template.json"));
-            tmpDeploymentProperties.Parameters = File.ReadAllText(Path.Combine(
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-            "Scenario",
-            "DeploymentTemplates",
-            $"storage-parameters.json"));
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyrg.json");
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
+            {
+                {"rgName", new JsonObject()
+                    {
+                        {"value", "testDeployAtSub" }
+                    }
+                },
+                {"rgLocation", new JsonObject()
+                    {
+                        {"value", $"{AzureLocation.CentralUS}" }
+                    }
+                },
+            });
             return tmpDeploymentProperties;
         }
 
-        protected static DeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingString()
         {
-            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-template.json")));
+            tmpDeploymentProperties.Parameters = BinaryData.FromString(File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-parameters.json")));
+            return tmpDeploymentProperties;
+        }
+
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
             var parameters = JsonDocument.Parse(parametersString).RootElement;
-            tmpDeploymentProperties.Parameters = parameters;
+            tmpDeploymentProperties.Parameters = BinaryData.FromString(parameters.GetRawText());
             return tmpDeploymentProperties;
         }
 
-        protected static DeploymentInput CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentInput(deploymentProperties);
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentContent(deploymentProperties);
+
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentContent(deploymentProperties)
+        {
+            Location = location
+        };
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {
@@ -117,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Tests
             return userAssignedIdentities;
         }
 
-        protected async Task<DeploymentScriptData> GetDeploymentScriptDataAsync()
+        protected async Task<ArmDeploymentScriptData> GetDeploymentScriptDataAsync()
         {
             //The user assigned identities was created firstly in Portal due to the unexpected behavior of using generic resource to create the user assigned identities.
             string rgName4Identities = "rg-for-DeployScript";
@@ -129,9 +154,9 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
-            var managedIdentity = new DeploymentScriptManagedIdentity()
+            var managedIdentity = new ArmDeploymentScriptManagedIdentity()
             {
-                DeploymentScriptManagedIdentityType = "UserAssigned",
+                IdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {

@@ -1330,5 +1330,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport), nameof(transport));
             }
         }
+
+        internal void CloseLink(AmqpLink link)
+        {
+            if (!_useSingleSession)
+            {
+                link.Session?.SafeClose();
+            }
+            link.SafeClose();
+        }
+
+        internal void CloseLink(RequestResponseAmqpLink link)
+        {
+            if (!_useSingleSession)
+            {
+                link.Session?.SafeClose();
+            }
+            link.SafeClose();
+        }
     }
 }

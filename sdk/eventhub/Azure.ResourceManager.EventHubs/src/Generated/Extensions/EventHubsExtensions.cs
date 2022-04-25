@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(subscriptionResource).CheckEventHubNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckEventHubNameAvailabilityAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(subscriptionResource).CheckEventHubNameAvailability(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckEventHubNameAvailability(options, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -165,6 +165,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<EventHubClusterResource>> GetEventHubClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetEventHubClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
@@ -180,6 +181,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<EventHubClusterResource> GetEventHubCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetEventHubClusters().Get(clusterName, cancellationToken);
@@ -203,6 +205,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<EventHubNamespaceResource>> GetEventHubNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetEventHubNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
@@ -218,6 +221,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<EventHubNamespaceResource> GetEventHubNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetEventHubNamespaces().Get(namespaceName, cancellationToken);

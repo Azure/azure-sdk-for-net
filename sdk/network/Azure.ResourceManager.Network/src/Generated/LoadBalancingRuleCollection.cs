@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of LoadBalancingRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LoadBalancingRuleResource" /> and their operations.
+    /// Each <see cref="LoadBalancingRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get a <see cref="LoadBalancingRuleCollection" /> instance call the GetLoadBalancingRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class LoadBalancingRuleCollection : ArmCollection, IEnumerable<LoadBalancingRuleResource>, IAsyncEnumerable<LoadBalancingRuleResource>
     {
         private readonly ClientDiagnostics _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics;
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,66 +239,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(loadBalancingRuleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
-        /// Operation Id: LoadBalancerLoadBalancingRules_Get
-        /// </summary>
-        /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public virtual async Task<Response<LoadBalancingRuleResource>> GetIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
-
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LoadBalancingRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
-        /// Operation Id: LoadBalancerLoadBalancingRules_Get
-        /// </summary>
-        /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public virtual Response<LoadBalancingRuleResource> GetIfExists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
-
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LoadBalancingRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

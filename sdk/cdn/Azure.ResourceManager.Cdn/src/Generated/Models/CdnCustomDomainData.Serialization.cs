@@ -24,6 +24,18 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
+            if (Optional.IsDefined(CustomHttpsParameters))
+            {
+                if (CustomHttpsParameters != null)
+                {
+                    writer.WritePropertyName("customHttpsParameters");
+                    writer.WriteObjectValue(CustomHttpsParameters);
+                }
+                else
+                {
+                    writer.WriteNull("customHttpsParameters");
+                }
+            }
             if (Optional.IsDefined(ValidationData))
             {
                 writer.WritePropertyName("validationData");
@@ -37,12 +49,13 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> hostName = default;
             Optional<CustomDomainResourceState> resourceState = default;
             Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
             Optional<CustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
+            Optional<CustomDomainHttpsContent> customHttpsParameters = default;
             Optional<string> validationData = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -111,6 +124,16 @@ namespace Azure.ResourceManager.Cdn
                             customHttpsProvisioningSubstate = new CustomHttpsProvisioningSubstate(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("customHttpsParameters"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                customHttpsParameters = null;
+                                continue;
+                            }
+                            customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("validationData"))
                         {
                             validationData = property0.Value.GetString();
@@ -125,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnCustomDomainData(id, name, type, systemData, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), validationData.Value, provisioningState.Value);
+            return new CdnCustomDomainData(id, name, type, systemData, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, provisioningState.Value);
         }
     }
 }

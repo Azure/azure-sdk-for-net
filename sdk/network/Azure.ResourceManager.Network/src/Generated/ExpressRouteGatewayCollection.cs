@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteGateway and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteGatewayResource" /> and their operations.
+    /// Each <see cref="ExpressRouteGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ExpressRouteGatewayCollection" /> instance call the GetExpressRouteGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGatewayResource>, IAsyncEnumerable<ExpressRouteGatewayResource>
     {
         private readonly ClientDiagnostics _expressRouteGatewayClientDiagnostics;
@@ -55,23 +59,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
         /// Operation Id: ExpressRouteGateways_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
-        /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
+        /// <param name="data"> Parameters required in an ExpressRoute gateway PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
-            Argument.AssertNotNull(putExpressRouteGatewayParameters, nameof(putExpressRouteGatewayParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _expressRouteGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,23 +92,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
         /// Operation Id: ExpressRouteGateways_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
-        /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
+        /// <param name="data"> Parameters required in an ExpressRoute gateway PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public virtual ArmOperation<ExpressRouteGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ExpressRouteGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
-            Argument.AssertNotNull(putExpressRouteGatewayParameters, nameof(putExpressRouteGatewayParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken);
-                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _expressRouteGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, data, cancellationToken);
+                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -245,7 +249,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,66 +276,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(expressRouteGatewayName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
-        /// Operation Id: ExpressRouteGateways_Get
-        /// </summary>
-        /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public virtual async Task<Response<ExpressRouteGatewayResource>> GetIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
-
-            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _expressRouteGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ExpressRouteGatewayResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
-        /// Operation Id: ExpressRouteGateways_Get
-        /// </summary>
-        /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public virtual Response<ExpressRouteGatewayResource> GetIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
-
-            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _expressRouteGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ExpressRouteGatewayResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ipGroupsName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ipGroupsName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ipGroupsName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ipGroupsName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateGroupsRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject parameters)
+        internal HttpMessage CreateUpdateGroupsRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(tagsObject);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -231,18 +231,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="tagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPGroupData>> UpdateGroupsAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<IPGroupData>> UpdateGroupsAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, parameters);
+            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -262,18 +262,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="tagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPGroupData> UpdateGroups(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public Response<IPGroupData> UpdateGroups(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, parameters);
+            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, tagsObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

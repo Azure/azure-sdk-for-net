@@ -652,7 +652,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfiguration");
+            return GetAlertsByAnomalyAlertingConfigurationImplementationAsync("MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAlertsByAnomalyAlertingConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -707,7 +712,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfiguration");
+            return GetAlertsByAnomalyAlertingConfigurationImplementation("MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetAlertsByAnomalyAlertingConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -765,7 +775,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration");
+            return GetAnomaliesFromAlertByAnomalyAlertingConfigurationImplementationAsync("MetricsAdvisorClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration", configurationId, alertId, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAnomaliesFromAlertByAnomalyAlertingConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, string alertId, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -823,7 +838,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration");
+            return GetAnomaliesFromAlertByAnomalyAlertingConfigurationImplementation("MetricsAdvisorClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration", configurationId, alertId, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetAnomaliesFromAlertByAnomalyAlertingConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, string alertId, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -883,7 +903,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration");
+            return GetIncidentsFromAlertByAnomalyAlertingConfigurationImplementationAsync("MetricsAdvisorClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration", configurationId, alertId, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetIncidentsFromAlertByAnomalyAlertingConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, string alertId, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -943,7 +968,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration");
+            return GetIncidentsFromAlertByAnomalyAlertingConfigurationImplementation("MetricsAdvisorClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration", configurationId, alertId, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetIncidentsFromAlertByAnomalyAlertingConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, string alertId, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1017,7 +1047,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfiguration");
+            return GetAnomaliesByAnomalyDetectionConfigurationImplementationAsync("MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAnomaliesByAnomalyDetectionConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1091,7 +1126,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfiguration");
+            return GetAnomaliesByAnomalyDetectionConfigurationImplementation("MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetAnomaliesByAnomalyDetectionConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1142,7 +1182,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration");
+            return GetDimensionOfAnomaliesByAnomalyDetectionConfigurationImplementationAsync("MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1193,7 +1238,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration");
+            return GetDimensionOfAnomaliesByAnomalyDetectionConfigurationImplementation("MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration", configurationId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1264,7 +1314,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfiguration");
+            return GetIncidentsByAnomalyDetectionConfigurationImplementationAsync("MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfiguration", configurationId, content, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationImplementationAsync(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1335,7 +1390,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfiguration");
+            return GetIncidentsByAnomalyDetectionConfigurationImplementation("MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfiguration", configurationId, content, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationImplementation(string diagnosticsScopeName, Guid configurationId, RequestContent content, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1390,7 +1450,12 @@ namespace Azure.AI.MetricsAdvisor
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationNextPagesAsync(Guid configurationId, int? maxpagesize = null, string token = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfigurationNextPages");
+            return GetIncidentsByAnomalyDetectionConfigurationNextPagesImplementationAsync("MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfigurationNextPages", configurationId, maxpagesize, token, context);
+        }
+
+        private AsyncPageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationNextPagesImplementationAsync(string diagnosticsScopeName, Guid configurationId, int? maxpagesize, string token, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1445,7 +1510,12 @@ namespace Azure.AI.MetricsAdvisor
         /// </remarks>
         public virtual Pageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationNextPages(Guid configurationId, int? maxpagesize = null, string token = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfigurationNextPages");
+            return GetIncidentsByAnomalyDetectionConfigurationNextPagesImplementation("MetricsAdvisorClient.GetIncidentsByAnomalyDetectionConfigurationNextPages", configurationId, maxpagesize, token, context);
+        }
+
+        private Pageable<BinaryData> GetIncidentsByAnomalyDetectionConfigurationNextPagesImplementation(string diagnosticsScopeName, Guid configurationId, int? maxpagesize, string token, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1508,7 +1578,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacks");
+            return GetMetricFeedbacksImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacks", content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricFeedbacksImplementationAsync(string diagnosticsScopeName, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1571,7 +1646,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacks");
+            return GetMetricFeedbacksImplementation("MetricsAdvisorClient.GetMetricFeedbacks", content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetMetricFeedbacksImplementation(string diagnosticsScopeName, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1623,7 +1703,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricSeries");
+            return GetMetricSeriesImplementationAsync("MetricsAdvisorClient.GetMetricSeries", metricId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricSeriesImplementationAsync(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1675,7 +1760,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricSeries");
+            return GetMetricSeriesImplementation("MetricsAdvisorClient.GetMetricSeries", metricId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetMetricSeriesImplementation(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1722,7 +1812,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricDimension");
+            return GetMetricDimensionImplementationAsync("MetricsAdvisorClient.GetMetricDimension", metricId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricDimensionImplementationAsync(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1769,7 +1864,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricDimension");
+            return GetMetricDimensionImplementation("MetricsAdvisorClient.GetMetricDimension", metricId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetMetricDimensionImplementation(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1822,7 +1922,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetEnrichmentStatusByMetric");
+            return GetEnrichmentStatusByMetricImplementationAsync("MetricsAdvisorClient.GetEnrichmentStatusByMetric", metricId, content, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetEnrichmentStatusByMetricImplementationAsync(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1875,7 +1980,12 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetEnrichmentStatusByMetric");
+            return GetEnrichmentStatusByMetricImplementation("MetricsAdvisorClient.GetEnrichmentStatusByMetric", metricId, content, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetEnrichmentStatusByMetricImplementation(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1929,7 +2039,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfigurationNext");
+            return GetAlertsByAnomalyAlertingConfigurationNextImplementationAsync("MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfigurationNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAlertsByAnomalyAlertingConfigurationNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextRequest(nextLink, content, context);
@@ -1937,6 +2052,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query alerts under anomaly alerting configuration. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1976,7 +2092,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfigurationNext");
+            return GetAlertsByAnomalyAlertingConfigurationNextImplementation("MetricsAdvisorClient.GetAlertsByAnomalyAlertingConfigurationNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetAlertsByAnomalyAlertingConfigurationNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextRequest(nextLink, content, context);
@@ -1984,6 +2105,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query anomalies under anomaly detection configuration. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2042,7 +2164,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfigurationNext");
+            return GetAnomaliesByAnomalyDetectionConfigurationNextImplementationAsync("MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfigurationNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAnomaliesByAnomalyDetectionConfigurationNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextRequest(nextLink, content, context);
@@ -2050,6 +2177,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query anomalies under anomaly detection configuration. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2108,7 +2236,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfigurationNext");
+            return GetAnomaliesByAnomalyDetectionConfigurationNextImplementation("MetricsAdvisorClient.GetAnomaliesByAnomalyDetectionConfigurationNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetAnomaliesByAnomalyDetectionConfigurationNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextRequest(nextLink, content, context);
@@ -2116,6 +2249,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query dimension values of anomalies. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2151,7 +2285,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNext");
+            return GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextImplementationAsync("MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextRequest(nextLink, content, context);
@@ -2159,6 +2298,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query dimension values of anomalies. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2194,7 +2334,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNext");
+            return GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextImplementation("MetricsAdvisorClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextRequest(nextLink, content, context);
@@ -2202,6 +2347,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2250,7 +2396,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNext");
+            return GetMetricFeedbacksNextImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacksNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricFeedbacksNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetMetricFeedbacksNextRequest(nextLink, content, context);
@@ -2258,6 +2409,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2306,7 +2458,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNext");
+            return GetMetricFeedbacksNextImplementation("MetricsAdvisorClient.GetMetricFeedbacksNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetMetricFeedbacksNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetMetricFeedbacksNextRequest(nextLink, content, context);
@@ -2314,6 +2471,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Get data ingestion status by data feed. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2351,7 +2509,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetDataFeedIngestionStatusNext");
+            return GetDataFeedIngestionStatusNextImplementationAsync("MetricsAdvisorClient.GetDataFeedIngestionStatusNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetDataFeedIngestionStatusNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetDataFeedIngestionStatusNextRequest(nextLink, content, context);
@@ -2359,6 +2522,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Get data ingestion status by data feed. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2396,7 +2560,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetDataFeedIngestionStatusNext");
+            return GetDataFeedIngestionStatusNextImplementation("MetricsAdvisorClient.GetDataFeedIngestionStatusNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetDataFeedIngestionStatusNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetDataFeedIngestionStatusNextRequest(nextLink, content, context);
@@ -2404,6 +2573,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List series (dimension combinations) from metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2440,7 +2610,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricSeriesNext");
+            return GetMetricSeriesNextImplementationAsync("MetricsAdvisorClient.GetMetricSeriesNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricSeriesNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetMetricSeriesNextRequest(nextLink, content, context);
@@ -2448,6 +2623,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List series (dimension combinations) from metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2484,7 +2660,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricSeriesNext");
+            return GetMetricSeriesNextImplementation("MetricsAdvisorClient.GetMetricSeriesNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetMetricSeriesNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetMetricSeriesNextRequest(nextLink, content, context);
@@ -2492,6 +2673,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List dimension from certain metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2523,7 +2705,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricDimensionNext");
+            return GetMetricDimensionNextImplementationAsync("MetricsAdvisorClient.GetMetricDimensionNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetricDimensionNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetMetricDimensionNextRequest(nextLink, content, context);
@@ -2531,6 +2718,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> List dimension from certain metric. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2562,7 +2750,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricDimensionNext");
+            return GetMetricDimensionNextImplementation("MetricsAdvisorClient.GetMetricDimensionNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetMetricDimensionNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetMetricDimensionNextRequest(nextLink, content, context);
@@ -2570,6 +2763,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query anomaly detection status. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2607,7 +2801,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetEnrichmentStatusByMetricNext");
+            return GetEnrichmentStatusByMetricNextImplementationAsync("MetricsAdvisorClient.GetEnrichmentStatusByMetricNext", nextLink, content, context);
+        }
+
+        private AsyncPageable<BinaryData> GetEnrichmentStatusByMetricNextImplementationAsync(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 using var message = CreateGetEnrichmentStatusByMetricNextRequest(nextLink, content, context);
@@ -2615,6 +2814,7 @@ namespace Azure.AI.MetricsAdvisor
                 yield return page;
             }
         }
+
         /// <summary> Query anomaly detection status. </summary>
         /// <param name="nextLink"> the next link. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -2652,7 +2852,12 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetEnrichmentStatusByMetricNext");
+            return GetEnrichmentStatusByMetricNextImplementation("MetricsAdvisorClient.GetEnrichmentStatusByMetricNext", nextLink, content, context);
+        }
+
+        private Pageable<BinaryData> GetEnrichmentStatusByMetricNextImplementation(string diagnosticsScopeName, string nextLink, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 using var message = CreateGetEnrichmentStatusByMetricNextRequest(nextLink, content, context);

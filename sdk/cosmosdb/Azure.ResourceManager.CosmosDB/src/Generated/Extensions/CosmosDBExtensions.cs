@@ -88,6 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetCosmosDBLocations().Get(location, cancellationToken);
@@ -213,6 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DatabaseAccountResource>> GetDatabaseAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDatabaseAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
@@ -228,6 +231,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DatabaseAccountResource> GetDatabaseAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDatabaseAccounts().Get(accountName, cancellationToken);
@@ -251,6 +255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ClusterResource>> GetClusterResourceAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetClusterResources().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
@@ -266,6 +271,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ClusterResource> GetClusterResource(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetClusterResources().Get(clusterName, cancellationToken);
@@ -551,6 +557,44 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 SqlTriggerResource.ValidateResourceId(id);
                 return new SqlTriggerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlRoleDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlRoleDefinitionResource" /> object. </returns>
+        public static SqlRoleDefinitionResource GetSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlRoleDefinitionResource.ValidateResourceId(id);
+                return new SqlRoleDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlRoleAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlRoleAssignmentResource" /> object. </returns>
+        public static SqlRoleAssignmentResource GetSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlRoleAssignmentResource.ValidateResourceId(id);
+                return new SqlRoleAssignmentResource(client, id);
             }
             );
         }

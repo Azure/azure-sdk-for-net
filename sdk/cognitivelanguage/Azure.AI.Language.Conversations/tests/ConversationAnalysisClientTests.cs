@@ -44,11 +44,11 @@ namespace Azure.AI.Language.Conversations.Tests
             ConversationsProject conversationsProject = new ConversationsProject("project","deployment");
 
             // Validate query parameter first given the order the constructors get called.
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
+            Assert.That<Response<AnalyzeConversationTaskResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
+            Assert.That<Task<Response<AnalyzeConversationTaskResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("utterance"));
 
-            Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null), Throws.ArgumentNullException.WithParamName("project"));
-            Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null), Throws.ArgumentNullException.WithParamName("project"));
+            Assert.That<Response<AnalyzeConversationTaskResult>>(() => Client.AnalyzeConversation("test", null), Throws.ArgumentNullException.WithParamName("project"));
+            Assert.That<Task<Response<AnalyzeConversationTaskResult>>>(async () => await Client.AnalyzeConversationAsync("test", null), Throws.ArgumentNullException.WithParamName("project"));
         }
     }
 }

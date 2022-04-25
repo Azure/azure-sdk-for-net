@@ -1138,15 +1138,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
         /// Operation Id: Servers_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> The name availability request parameters. </param>
+        /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
             try
             {
-                var response = await SqlServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await SqlServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1161,15 +1161,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
         /// Operation Id: Servers_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> The name availability request parameters. </param>
+        /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
             try
             {
-                var response = SqlServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, parameters, cancellationToken);
+                var response = SqlServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

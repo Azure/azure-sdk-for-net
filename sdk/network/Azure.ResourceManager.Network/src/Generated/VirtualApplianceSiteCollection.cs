@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualApplianceSite and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualApplianceSiteResource" /> and their operations.
+    /// Each <see cref="VirtualApplianceSiteResource" /> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// To get a <see cref="VirtualApplianceSiteCollection" /> instance call the GetVirtualApplianceSites method from an instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// </summary>
     public partial class VirtualApplianceSiteCollection : ArmCollection, IEnumerable<VirtualApplianceSiteResource>, IAsyncEnumerable<VirtualApplianceSiteResource>
     {
         private readonly ClientDiagnostics _virtualApplianceSiteClientDiagnostics;
@@ -54,23 +58,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/virtualApplianceSites/{siteName}
         /// Operation Id: VirtualApplianceSites_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualApplianceSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualApplianceSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSiteRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualApplianceSiteResource>(new VirtualApplianceSiteOperationSource(Client), _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualApplianceSiteRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualApplianceSiteResource>(new VirtualApplianceSiteOperationSource(Client), _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,23 +91,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/virtualApplianceSites/{siteName}
         /// Operation Id: VirtualApplianceSites_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualApplianceSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualApplianceSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSiteRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualApplianceSiteResource>(new VirtualApplianceSiteOperationSource(Client), _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualApplianceSiteRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualApplianceSiteResource>(new VirtualApplianceSiteOperationSource(Client), _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -274,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +305,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(siteName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/virtualApplianceSites/{siteName}
-        /// Operation Id: VirtualApplianceSites_Get
-        /// </summary>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual async Task<Response<VirtualApplianceSiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualApplianceSiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualApplianceSiteResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplianceSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/virtualApplianceSites/{siteName}
-        /// Operation Id: VirtualApplianceSites_Get
-        /// </summary>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
-        public virtual Response<VirtualApplianceSiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _virtualApplianceSiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualApplianceSiteResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplianceSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

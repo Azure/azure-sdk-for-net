@@ -16,8 +16,8 @@ param (
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
-    [Parameter(ParameterSetName = 'ResourceGroup', Mandatory = $true)]
-    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup')]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
     [string] $ResourceGroupName,
 
     [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
@@ -48,6 +48,10 @@ param (
     [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud', 'Dogfood')]
     [string] $Environment = 'AzureCloud',
 
+    [Parameter(ParameterSetName = 'ResourceGroup')]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
+    [switch] $CI,
+
     [Parameter()]
     [switch] $Force,
 
@@ -73,6 +77,7 @@ trap {
     $exitActions.Invoke()
 }
 
+. $PSScriptRoot/SubConfig-Helpers.ps1
 # Source helpers to purge resources.
 . "$PSScriptRoot\..\scripts\Helpers\Resource-Helpers.ps1"
 
@@ -126,18 +131,27 @@ if ($ProvisionerApplicationId) {
 $context = Get-AzContext
 
 if (!$ResourceGroupName) {
-    # Make sure $BaseName is set.
-    if (!$BaseName) {
-        $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $UserName
-        $UserName = $UserName -replace '\W'
+    if ($CI) {
+        if (!$ServiceDirectory) {
+            Write-Warning "ServiceDirectory parameter is empty, nothing to remove"
+            exit 0
+        }
+        $envVarName = (BuildServiceDirectoryPrefix (GetServiceLeafDirectoryName $ServiceDirectory)) + "RESOURCE_GROUP"
+        $ResourceGroupName = [Environment]::GetEnvironmentVariable($envVarName)
+        if (!$ResourceGroupName) {
+            Write-Error "Could not find resource group name environment variable '$envVarName'. This is likely due to an earlier failure in the 'Deploy Test Resources' step above."
+            exit 0
+        }
+    } else {
+        if (!$BaseName) {
+            $UserName = GetUserName
+            $BaseName = GetBaseName $UserName $ServiceDirectory
+            Log "BaseName was not set. Using default base name '$BaseName'"
+        }
 
-        $BaseName = "$UserName$ServiceDirectory"
-        Log "BaseName was not set. Using default base name '$BaseName'"
+        # Format the resource group name like in New-TestResources.ps1.
+        $ResourceGroupName = "rg-$BaseName"
     }
-
-    # Format the resource group name like in New-TestResources.ps1.
-    $ResourceGroupName = "rg-$BaseName"
 }
 
 # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
@@ -281,6 +295,9 @@ specified - in which to discover pre removal script named 'remove-test-resources
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
 ('PublicCloud')
+
+.PARAMETER CI
+Run script in CI mode. Infers various environment variable names based on CI convention.
 
 .PARAMETER Force
 Force removal of resource group without asking for user confirmation

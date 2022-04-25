@@ -17,7 +17,12 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a VirtualDesktopResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VirtualDesktop along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualDesktopResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVirtualDesktopResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualApplicationGroupResource" /> using the GetVirtualDesktop method.
+    /// </summary>
     public partial class VirtualDesktopResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualDesktopResource"/> instance. </summary>
@@ -135,18 +140,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}
         /// Operation Id: Desktops_Update
         /// </summary>
-        /// <param name="data"> Object containing Desktop definitions. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<VirtualDesktopResource>> UpdateAsync(PatchableVirtualDesktopData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<VirtualDesktopResource>> UpdateAsync(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();
             try
             {
-                var response = await _virtualDesktopDesktopsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualDesktopDesktopsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -161,18 +166,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}
         /// Operation Id: Desktops_Update
         /// </summary>
-        /// <param name="data"> Object containing Desktop definitions. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<VirtualDesktopResource> Update(PatchableVirtualDesktopData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<VirtualDesktopResource> Update(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();
             try
             {
-                var response = _virtualDesktopDesktopsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _virtualDesktopDesktopsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

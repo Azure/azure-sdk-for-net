@@ -60,16 +60,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
 
             //validate if created successfully
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.NotNull(schemaGroup);
             Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
+            schemaGroup = await _schemaGroupCollection.GetAsync(schemaGroupName);
 
             //delete eventhub
             await schemaGroup.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.Null(schemaGroup);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _schemaGroupCollection.GetAsync(schemaGroupName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 

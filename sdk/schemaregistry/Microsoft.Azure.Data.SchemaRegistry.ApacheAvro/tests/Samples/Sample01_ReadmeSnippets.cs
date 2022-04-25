@@ -13,7 +13,7 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
 {
-    public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
+    public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryAvroSerializerTestEnvironment>
     {
 #pragma warning disable IDE1006 // Naming Styles
         private SchemaRegistryClient schemaRegistryClient;

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,10 +42,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tableName">Table name under the specified
         /// account</param>
-        public Table(string id = default(string), string name = default(string), string type = default(string), string tableName = default(string))
+        /// <param name="signedIdentifiers">List of stored access policies
+        /// specified on the table.</param>
+        public Table(string id = default(string), string name = default(string), string type = default(string), string tableName = default(string), IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>))
             : base(id, name, type)
         {
             TableName = tableName;
+            SignedIdentifiers = signedIdentifiers;
             CustomInit();
         }
 
@@ -57,6 +62,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tableName")]
         public string TableName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of stored access policies specified on the table.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.signedIdentifiers")]
+        public IList<TableSignedIdentifier> SignedIdentifiers { get; set; }
 
     }
 }

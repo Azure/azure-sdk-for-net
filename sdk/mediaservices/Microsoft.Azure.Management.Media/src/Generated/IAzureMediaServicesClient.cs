@@ -45,11 +45,6 @@ namespace Microsoft.Azure.Management.Media
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The version of the API to be used with the client request.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -67,6 +62,11 @@ namespace Microsoft.Azure.Management.Media
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        IAccountFiltersOperations AccountFilters { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -94,11 +94,6 @@ namespace Microsoft.Azure.Management.Media
         ILocationsOperations Locations { get; }
 
         /// <summary>
-        /// Gets the IAccountFiltersOperations.
-        /// </summary>
-        IAccountFiltersOperations AccountFilters { get; }
-
-        /// <summary>
         /// Gets the IAssetsOperations.
         /// </summary>
         IAssetsOperations Assets { get; }
@@ -107,6 +102,21 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the IAssetFiltersOperations.
         /// </summary>
         IAssetFiltersOperations AssetFilters { get; }
+
+        /// <summary>
+        /// Gets the ITracksOperations.
+        /// </summary>
+        ITracksOperations Tracks { get; }
+
+        /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        IOperationStatusesOperations OperationStatuses { get; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        IOperationResultsOperations OperationResults { get; }
 
         /// <summary>
         /// Gets the IContentKeyPoliciesOperations.

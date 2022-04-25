@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal UpdateDomainListResult(IEnumerable<UpdateDomain> value)
+        internal UpdateDomainListResult(IEnumerable<UpdateDomainIdentifier> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal UpdateDomainListResult(IReadOnlyList<UpdateDomain> value, string nextLink)
+        internal UpdateDomainListResult(IReadOnlyList<UpdateDomainIdentifier> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<UpdateDomain> Value { get; }
+        public IReadOnlyList<UpdateDomainIdentifier> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> policyMode = default;
             Optional<bool> isBuiltInOnly = default;
             Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
-            Optional<IReadOnlyList<DataEffect>> effects = default;
+            Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
             Optional<IReadOnlyList<string>> fieldValues = default;
             Optional<IReadOnlyList<string>> standard = default;
             Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataEffect> array = new List<DataEffect>();
+                            List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataEffect.DeserializeDataEffect(item));
+                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item));
                             }
                             effects = array;
                             continue;

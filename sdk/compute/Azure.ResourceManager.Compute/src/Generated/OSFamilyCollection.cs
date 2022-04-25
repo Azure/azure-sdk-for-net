@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of OSFamily and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OSFamilyResource" /> and their operations.
+    /// Each <see cref="OSFamilyResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get an <see cref="OSFamilyCollection" /> instance call the GetOSFamilies method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class OSFamilyCollection : ArmCollection, IEnumerable<OSFamilyResource>, IAsyncEnumerable<OSFamilyResource>
     {
         private readonly ClientDiagnostics _osFamilyCloudServiceOperatingSystemsClientDiagnostics;
@@ -214,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,66 +245,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(osFamilyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSFamily
-        /// </summary>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public virtual async Task<Response<OSFamilyResource>> GetIfExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
-
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<OSFamilyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}
-        /// Operation Id: CloudServiceOperatingSystems_GetOSFamily
-        /// </summary>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public virtual Response<OSFamilyResource> GetIfExists(string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
-
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<OSFamilyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
