@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.0.0-preview.25 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated Change Feed to return 0 events when meta/segments.json file hasn't been created yet.
 
 ## 12.0.0-preview.24 (2022-04-19)
 - Added ability to specify chunk download size with BlobChangeFeedClientOptions.MaximumTransferSize.
