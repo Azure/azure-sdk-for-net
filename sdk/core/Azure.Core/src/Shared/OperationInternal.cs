@@ -121,7 +121,7 @@ namespace Azure.Core
             public async ValueTask<OperationState<VoidValue>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-                return state.HasSucceeded
+                return state.HasCompleted
                     ? state.HasSucceeded
                         ? OperationState<VoidValue>.Success(state.RawResponse, new VoidValue())
                         : OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException)
