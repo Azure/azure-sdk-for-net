@@ -947,7 +947,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Range = range,
                     Conditions = conditions,
-                    TransferValidationOverride = rangeGetContentHash
+                    TransferValidationOptions = rangeGetContentHash
                         ? new DownloadTransferValidationOptions()
                         {
                             Algorithm = ValidationAlgorithm.MD5
@@ -1329,7 +1329,7 @@ namespace Azure.Storage.Blobs.Specialized
             return DownloadStreamingInternal(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOverride,
+                options?.TransferValidationOptions,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
@@ -1376,14 +1376,14 @@ namespace Azure.Storage.Blobs.Specialized
             return await DownloadStreamingInternal(
                 options?.Range ?? default,
                 options?.Conditions,
-                options?.TransferValidationOverride,
+                options?.TransferValidationOptions,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
                 cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1393,7 +1393,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration.DownloadTransferValidationOptions;
-            if (UsingClientSideEncryption && validationOptions != default)
+            if (UsingClientSideEncryption && validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None)
             {
                 throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
             }
@@ -1411,8 +1411,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (UsingClientSideEncryption)
                     {
-                        // TODO #27253
-                        //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
                         range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
                     }
 
@@ -2276,8 +2274,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2316,8 +2313,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2355,8 +2351,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2395,8 +2390,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
-                // TODO #27253
-                //options?.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2616,6 +2610,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="StorageTransferOptions"/> to configure
         /// parallel transfer behavior.
         /// </param>
+        /// <param name="validationOptionsOverride">
+        /// Override for client options on transfer validation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2635,21 +2632,20 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions validationOptionsOverride = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, /*hashingOptions,*/ progressHandler);
+            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.DownloadTransferValidationOptions;
+
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
 
             if (UsingClientSideEncryption)
             {
-                // TODO #27253
-                //if (hashingOptions != default)
-                //{
-                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                //}
+                if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
 
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
@@ -2690,7 +2686,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOverride,
+                validationOptionsOverride: options?.TransferValidationOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2719,7 +2715,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                validationOptionsOverride: options?.TransferValidationOverride,
+                validationOptionsOverride: options?.TransferValidationOptions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 

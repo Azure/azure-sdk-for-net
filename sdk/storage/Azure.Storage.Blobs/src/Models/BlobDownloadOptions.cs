@@ -30,13 +30,18 @@ namespace Azure.Storage.Blobs.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional override for settings in client options.
+        /// Options for transfer validation settings on this operation.
+        /// When transfer validation options are set in the client, setting this parameter
+        /// acts as an override.
+        /// Set <see cref="DownloadTransferValidationOptions.Validate"/> to false if you
+        /// would like to skip SDK checksum validation and validate the checksum found
+        /// in the <see cref="Response"/> object yourself.
         /// Range must be provided explicitly, stating a range withing Azure
         /// Storage size limits for requesting a transactional hash. See the
         /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
         /// REST documentation</a> for range limitation details.
         /// </summary>
-        public DownloadTransferValidationOptions TransferValidationOverride { get; set; }
+        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -57,12 +62,12 @@ namespace Azure.Storage.Blobs.Models
             Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
             ProgressHandler = deepCopySource.ProgressHandler;
             // can't access an internal deep copy in Storage.Common
-            TransferValidationOverride = deepCopySource.TransferValidationOverride == default
+            TransferValidationOptions = deepCopySource.TransferValidationOptions == default
                 ? default
                 : new DownloadTransferValidationOptions()
                 {
-                    Algorithm = deepCopySource.TransferValidationOverride.Algorithm,
-                    Validate = deepCopySource.TransferValidationOverride.Validate
+                    Algorithm = deepCopySource.TransferValidationOptions.Algorithm,
+                    Validate = deepCopySource.TransferValidationOptions.Validate
                 };
         }
 

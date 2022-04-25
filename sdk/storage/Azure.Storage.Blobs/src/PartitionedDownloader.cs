@@ -38,16 +38,19 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly long _rangeSize;
 
-        // TODO #27253
-        //private readonly DownloadTransactionalHashingOptions _hashingOptions;
+        /// <summary>
+        /// Validation options to specify on transactions for this download operation.
+        /// This downloader may alter the options it sends to individual download requests,
+        /// but will on obey the user-specified options on the overall download.
+        /// </summary>
+        private readonly DownloadTransferValidationOptions _validationOptions;
 
         private readonly IProgress<long> _progress;
 
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions = default,
+            DownloadTransferValidationOptions validationOptions = default,
             IProgress<long> progress = default)
         {
             _client = client;
@@ -85,14 +88,13 @@ namespace Azure.Storage.Blobs
                 _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
-            // TODO #27253
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            //if (!(hashingOptions?.Validate ?? true))
-            //{
-            //    throw Errors.CannotDeferTransactionalHashVerification();
-            //}
+            if (!(validationOptions?.Validate ?? true))
+            {
+                throw Errors.CannotDeferTransactionalHashVerification();
+            }
 
-            //_hashingOptions = hashingOptions;
+            _validationOptions = validationOptions;
             _progress = progress;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
@@ -122,11 +124,13 @@ namespace Azure.Storage.Blobs
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
-                    _client.DownloadStreamingAsync(
+                    _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: true,
                         cancellationToken);
 
                 Response<BlobDownloadStreamingResult> initialResponse = null;
@@ -136,11 +140,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = await _client.DownloadStreamingAsync(
+                    initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -190,11 +196,13 @@ namespace Azure.Storage.Blobs
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
-                    runningTasks.Enqueue(_client.DownloadStreamingAsync(
-                        httpRange,
+                    runningTasks.Enqueue(_client.DownloadStreamingInternal(
+                        initialRange,
                         conditionsWithEtag,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: true,
                         cancellationToken));
 
                     // If we have fewer tasks than alotted workers, then just
@@ -270,21 +278,27 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    initialResponse = _client.DownloadStreaming(
+                    initialResponse = _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
-                        cancellationToken);
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: false,
+                        cancellationToken)
+                        .EnsureCompleted();
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = _client.DownloadStreaming(
+                    initialResponse = _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
-                        cancellationToken);
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: false,
+                        cancellationToken)
+                        .EnsureCompleted();
                 }
 
                 // If the initial request returned no content (i.e., a 304),
@@ -317,12 +331,15 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
-                        httpRange,
+                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
+                        range: default,
                         conditionsWithEtag,
-                        rangeGetContentHash: default,
+                        _validationOptions,
                         _progress,
-                        cancellationToken);
+                        $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                        async: false,
+                        cancellationToken)
+                        .EnsureCompleted();
                     CopyTo(result.Value, destination, cancellationToken);
                 }
 
