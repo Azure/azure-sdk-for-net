@@ -217,16 +217,16 @@ namespace Azure.ResourceManager.Arc.ScVmm
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? retain = default(bool?), bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? retain = default(bool?), bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation DeleteCheckpoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineDeleteCheckpointContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCheckpointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineDeleteCheckpointContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation DeleteCheckpoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineDeleteCheckpoint body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCheckpointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineDeleteCheckpoint body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RestoreCheckpoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineRestoreCheckpointContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreCheckpointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineRestoreCheckpointContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RestoreCheckpoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineRestoreCheckpoint body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreCheckpointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineRestoreCheckpoint body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Arc.ScVmm.VirtualMachineResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -666,10 +666,9 @@ namespace Azure.ResourceManager.Arc.ScVmm.Models
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class VirtualMachineDeleteCheckpointContent
+    public partial class VirtualMachineDeleteCheckpoint
     {
-        public VirtualMachineDeleteCheckpointContent() { }
-        public string Description { get { throw null; } set { } }
+        public VirtualMachineDeleteCheckpoint() { }
         public string Id { get { throw null; } set { } }
     }
     public partial class VirtualMachinePatch
@@ -678,10 +677,9 @@ namespace Azure.ResourceManager.Arc.ScVmm.Models
         public Azure.ResourceManager.Arc.ScVmm.Models.VirtualMachineUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class VirtualMachineRestoreCheckpointContent
+    public partial class VirtualMachineRestoreCheckpoint
     {
-        public VirtualMachineRestoreCheckpointContent() { }
-        public string Description { get { throw null; } set { } }
+        public VirtualMachineRestoreCheckpoint() { }
         public string Id { get { throw null; } set { } }
     }
     public partial class VirtualMachineUpdateProperties
