@@ -346,5 +346,32 @@ namespace Azure.Monitor.Query.Tests
             public int Count { get; set; }
         }
         #endregion
+
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithPartialSuccess()
+        {
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            #region Snippet:QueryLogsWithPartialSuccess
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                TestEnvironment.WorkspaceId,
+                "My Not So Valid Query",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    AllowPartialErrors = true
+                });
+            LogsQueryResult result = response.Value;
+
+            if (result.Status == LogsQueryResultStatus.PartialFailure)
+            {
+                var errorCode = result.Error.Code;
+                var errorMessage = result.Error.Message;
+
+                // code omitted for brevity
+            }
+            #endregion
+        }
     }
 }
