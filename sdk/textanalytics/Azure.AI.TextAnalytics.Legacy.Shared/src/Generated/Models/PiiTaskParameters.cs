@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()
         {
-            PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
+            PiiCategories = new ChangeTrackingList<PiiEntityLegacyCategory>();
         }
 
         /// <summary> Gets or sets the domain. </summary>

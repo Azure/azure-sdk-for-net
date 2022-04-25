@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// The list of available categories is described at
         /// <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
-        public PiiEntityCategory Category { get; }
+        public PiiEntityLegacyCategory Category { get; }
 
         /// <summary>
         /// Gets the sub category of the entity inferred by the Text Analytics service's

@@ -19,9 +19,10 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsClient
     {
-        private readonly Uri _baseUri;
         internal readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
+
+        private readonly Uri _baseUri;
         private readonly TextAnalyticsClientOptions _options;
         private readonly TextAnalyticsRequestOptions _requestOptions = new TextAnalyticsRequestOptions();
 
