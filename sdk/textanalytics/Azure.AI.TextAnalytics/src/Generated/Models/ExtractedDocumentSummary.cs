@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sentences"/>, or <paramref name="warnings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sentences"/> or <paramref name="warnings"/> is null. </exception>
         internal ExtractedDocumentSummary(string id, IEnumerable<ExtractedSummarySentence> sentences, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)

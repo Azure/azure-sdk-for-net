@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Private endpoint. </summary>
-    public partial class PrivateEndpoint
+    internal partial class PrivateEndpoint
     {
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         public PrivateEndpoint()

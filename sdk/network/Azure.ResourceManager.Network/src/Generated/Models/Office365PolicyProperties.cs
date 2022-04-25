@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
-    public partial class Office365PolicyProperties
+    internal partial class Office365PolicyProperties
     {
         /// <summary> Initializes a new instance of Office365PolicyProperties. </summary>
         public Office365PolicyProperties()

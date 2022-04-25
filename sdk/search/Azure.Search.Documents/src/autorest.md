@@ -11,8 +11,9 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/b8d48bca1298614fdf7734c26e21a88adf5375d9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/b8d48bca1298614fdf7734c26e21a88adf5375d9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

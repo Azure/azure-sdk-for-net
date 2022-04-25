@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
-    public partial class UserManagedHttpsOptions : CustomDomainHttpsOptions
+    public partial class UserManagedHttpsOptions : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of UserManagedHttpsOptions. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
@@ -27,7 +27,18 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource = CertificateSource.AzureKeyVault;
         }
 
+        /// <summary> Initializes a new instance of UserManagedHttpsOptions. </summary>
+        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
+        internal UserManagedHttpsOptions(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion, KeyVaultCertificateSourceParameters certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        {
+            CertificateSourceParameters = certificateSourceParameters;
+            CertificateSource = certificateSource;
+        }
+
         /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
-        public KeyVaultCertificateSourceParameters CertificateSourceParameters { get; }
+        public KeyVaultCertificateSourceParameters CertificateSourceParameters { get; set; }
     }
 }

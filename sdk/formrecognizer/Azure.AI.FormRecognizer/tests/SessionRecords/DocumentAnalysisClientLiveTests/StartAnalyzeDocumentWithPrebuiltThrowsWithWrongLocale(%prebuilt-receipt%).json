@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?locale=not-locale\u0026stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?locale=not-locale\u0026stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "279674",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-caf5ef86ccfcd442b0ca7297409bc7cd-fef2437a2e7b7841-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c1d8594bf81ed1fb857c90aa36b9dfdc",
+        "traceparent": "00-ccc4f2156a517145b08f519454d53f13-6ff09c36f566de48-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5e1c9fc52c6cf3bf5beb8170fb276619",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "098ec6b8-308c-4d7c-a0db-312733d03962",
+        "apim-request-id": "16ac2e2f-2cea-4130-afc8-a7068505c8b9",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:24:27 GMT",
+        "Date": "Wed, 26 Jan 2022 00:18:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "105"
+        "x-envoy-upstream-service-time": "145"
       },
       "ResponseBody": {
         "error": {
@@ -38,7 +38,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "379465254"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
+    "RandomSeed": "427057034"
   }
 }

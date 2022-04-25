@@ -134,6 +134,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        public DataLakeCustomerProvidedKey GetCustomerProvidedKey()
+        {
+            var bytes = new byte[32];
+            Recording.Random.NextBytes(bytes);
+            return new DataLakeCustomerProvidedKey(bytes);
+        }
+
         public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
         {
             Assert.AreEqual(expected.Owner, actual.Owner);

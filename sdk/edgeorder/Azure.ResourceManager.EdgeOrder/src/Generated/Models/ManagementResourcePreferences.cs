@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Management resource preference to link device. </summary>
-    public partial class ManagementResourcePreferences
+    internal partial class ManagementResourcePreferences
     {
         /// <summary> Initializes a new instance of ManagementResourcePreferences. </summary>
         public ManagementResourcePreferences()

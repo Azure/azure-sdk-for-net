@@ -17,6 +17,8 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
@@ -289,7 +291,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(
                 _blobUri,
@@ -298,6 +301,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -476,7 +481,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
 
@@ -489,6 +495,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -527,7 +535,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: pipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
 
@@ -540,6 +549,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -578,6 +589,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         internal DataLakePathClient(
@@ -607,11 +620,13 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri dfsUri, Uri blobUri)
         {
-            PathRestClient dfsPathRestClient =  new PathRestClient(
+            PathRestClient dfsPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
@@ -640,12 +655,33 @@ namespace Azure.Storage.Files.DataLake
                     uri,
                     new BlobClientOptions(clientConfiguration.Version.AsBlobsVersion())
                     {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
+                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey()
                     },
                     clientConfiguration.Pipeline);
             }
         }
         #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="DataLakePathClient"/>.
+        /// </remarks>
+        public DataLakePathClient WithCustomerProvidedKey(Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new DataLakePathClient(
+                pathUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
 
         /// <summary>
         /// Converts metadata in DFS metadata string
@@ -920,6 +956,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -940,6 +979,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1261,7 +1303,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1280,7 +1322,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1302,7 +1344,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1321,7 +1363,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1343,7 +1385,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1365,7 +1407,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1438,7 +1480,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified path
         /// for deletion, if the path exists. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1457,7 +1499,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1477,7 +1519,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified path
         /// deletion, if the path exists. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1496,7 +1538,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1516,7 +1558,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified path
         /// deletion, if the path exists. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1538,7 +1580,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3385,5 +3427,103 @@ namespace Azure.Storage.Files.DataLake
             return sasUri.ToUri();
         }
         #endregion
+
+        #region GetParentDataLakeFileSystemClientCore
+
+        private DataLakeFileSystemClient _parentFileSystemClient;
+        private DataLakeDirectoryClient _parentDirectoryClient;
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+        /// The new <see cref="DataLakeFileSystemClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual DataLakeFileSystemClient GetParentFileSystemClientCore()
+        {
+            if (_parentFileSystemClient == null)
+            {
+                DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentFileSystemClient = new DataLakeFileSystemClient(
+                    datalakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentFileSystemClient;
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeDirectoryClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+        /// The new <see cref="DataLakeDirectoryClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+        protected internal virtual DataLakeDirectoryClient GetParentDirectoryClientCore()
+        {
+            if (_parentDirectoryClient == null)
+            {
+                DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    Snapshot = null,
+                };
+
+                if (dataLakeUriBuilder.DirectoryOrFilePath == null || dataLakeUriBuilder.LastDirectoryOrFileName == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                dataLakeUriBuilder.DirectoryOrFilePath = dataLakeUriBuilder.DirectoryOrFilePath.GetParentPath();
+
+                _parentDirectoryClient = new DataLakeDirectoryClient(
+                    dataLakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentDirectoryClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="DataLakePathClient"/> for
+        /// creating <see cref="DataLakeFileSystemClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedDataLakeExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+            /// The new <see cref="DataLakeFileSystemClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+            public static DataLakeFileSystemClient GetParentFileSystemClient(this DataLakePathClient client)
+            {
+                return client.GetParentFileSystemClientCore();
+            }
+
+            /// <summary>
+            /// Create a new <see cref="DataLakeDirectoryClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent directory.
+            /// The new <see cref="DataLakeDirectoryClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+            public static DataLakeDirectoryClient GetParentDirectoryClient(this DataLakePathClient client)
+            {
+                return client.GetParentDirectoryClientCore();
+            }
+        }
     }
 }

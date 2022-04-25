@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DeletedAppRestoreRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="deletedSiteId">
         /// ARM resource ID of the deleted app. Example:
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If unspecified, default value is the time that the app was deleted.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
-        internal DeletedAppRestoreRequest(ResourceIdentifier id, string name, ResourceType type, string kind, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary) : base(id, name, type, kind)
+        internal DeletedAppRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary) : base(id, name, resourceType, systemData, kind)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;

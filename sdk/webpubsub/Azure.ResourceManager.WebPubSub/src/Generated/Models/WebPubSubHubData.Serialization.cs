@@ -24,23 +24,13 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubHubData DeserializeWebPubSubHubData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             WebPubSubHubProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     properties = WebPubSubHubProperties.DeserializeWebPubSubHubProperties(property.Value);
@@ -59,6 +49,11 @@ namespace Azure.ResourceManager.WebPubSub
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }

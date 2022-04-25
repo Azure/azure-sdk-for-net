@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Tests.Samples
         public void GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_DefaultSubscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_DefaultSubscription
         }
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_SpecificSubscription
             string subscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionCollection subscriptions = client.GetSubscriptions();
+            SubscriptionResource subscription = subscriptions.Get(subscriptionId);
             Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
             #endregion Snippet:Hello_World_SpecificSubscription
         }
@@ -39,8 +40,8 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_SpecifyDefaultSubscription
             string defaultSubscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
-            Subscription subscription = armClient.GetDefaultSubscription();
+            ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion
         }
@@ -49,10 +50,10 @@ namespace Azure.ResourceManager.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void RetrieveResourceGroupCollection()
         {
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             #region Snippet:Hello_World_ResourceGroupCollection
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             #endregion Snippet:Hello_World_ResourceGroupCollection
         }
     }

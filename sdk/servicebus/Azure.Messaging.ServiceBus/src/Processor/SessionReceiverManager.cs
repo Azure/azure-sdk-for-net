@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionCancellationSource;
         private volatile bool _receiveTimeout;
 
-        protected override ServiceBusReceiver Receiver => _receiver;
+        internal override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly ServiceBusSessionProcessor _sessionProcessor;
@@ -233,7 +233,19 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 // cancel the automatic session lock renewal
-                await CancelTask(_sessionLockRenewalCancellationSource, _sessionLockRenewalTask).ConfigureAwait(false);
+                try
+                {
+                    if (_sessionLockRenewalCancellationSource != null)
+                    {
+                        _sessionLockRenewalCancellationSource.Cancel();
+                        _sessionLockRenewalCancellationSource.Dispose();
+                        await _sessionLockRenewalTask.ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex) when (ex is TaskCanceledException)
+                {
+                    // Nothing to do here.  These exceptions are expected.
+                }
 
                 try
                 {
@@ -350,7 +362,8 @@ namespace Azure.Messaging.ServiceBus
                     // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
                     Task delayTask = await Task.Delay(delay, sessionLockRenewalCancellationToken)
                         .ContinueWith(
-                            (t, s) => t,
+                            t => t,
+                            CancellationToken.None,
                             TaskContinuationOptions.ExecuteSynchronously,
                             TaskScheduler.Default)
                         .ConfigureAwait(false);
@@ -376,16 +389,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected override async Task OnMessageHandler(
+        protected override async Task<EventArgs> OnMessageHandler(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken)
         {
             var args = new ProcessSessionMessageEventArgs(
                 message,
-                _receiver,
                 this,
                 cancellationToken);
+
             await _sessionProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+            return args;
         }
 
         protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
@@ -397,14 +411,17 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 // don't bubble up exceptions raised from customer exception handler
-                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString(), Processor.Identifier);
             }
         }
 
         internal void CancelSession()
         {
-            _sessionCancellationSource?.Cancel();
-            _sessionCancellationSource?.Dispose();
+            if (_sessionCancellationSource is { IsCancellationRequested: false })
+            {
+                _sessionCancellationSource.Cancel();
+                _sessionCancellationSource.Dispose();
+            }
         }
     }
 }

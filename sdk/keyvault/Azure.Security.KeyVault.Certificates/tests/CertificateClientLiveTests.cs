@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            Matcher = new RecordMatcher(compareBodies: false);
+            CompareBodies = false;
         }
 
         [SetUp]
@@ -358,10 +358,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Pretend a separate process was started subsequently and we need to get the operation again.
             CertificateOperation operation = new CertificateOperation(Client, certName);
+            operation = InstrumentOperation(operation);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
             using CancellationTokenSource cts = new CancellationTokenSource(DefaultCertificateOperationTimeout);
-            await operation.WaitForCompletionAsync(PollingInterval, cts.Token);
+            await operation.WaitForCompletionAsync(cts.Token);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -468,11 +469,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public async Task VerifyImportCertificatePemWithoutIssuer()
         {
             string certificateName = Recording.GenerateId();
-            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
 #if SNIPPET
             byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#else
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 #endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)

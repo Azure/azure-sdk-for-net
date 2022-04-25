@@ -5,17 +5,9 @@
 
 #nullable disable
 
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RuleSetProperties : IUtf8JsonSerializable
+    internal partial class RuleSetProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
     }
 }

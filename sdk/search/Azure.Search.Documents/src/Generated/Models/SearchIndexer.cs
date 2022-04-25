@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
         /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/>, or <paramref name="targetIndexName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/> or <paramref name="targetIndexName"/> is null. </exception>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
             if (name == null)

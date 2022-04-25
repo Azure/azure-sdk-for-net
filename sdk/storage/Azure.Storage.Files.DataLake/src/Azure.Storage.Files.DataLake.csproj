@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library</AssemblyTitle>
-    <Version>12.9.0-beta.3</Version>
+    <Version>12.10.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.8.0</ApiCompatVersion>
+    <ApiCompatVersion>12.9.0</ApiCompatVersion>
     <DefineConstants>DataLakeSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Data Lake;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
@@ -18,6 +18,7 @@
       REST API Reference for Data Lake - https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
@@ -27,22 +28,11 @@
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
@@ -58,6 +48,7 @@
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PathExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task NetworkSecurityGroupApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
-            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
+            Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
             Assert.AreEqual(networkSecurityGroupName, getNsgResponse.Value.Data.Name);
             Assert.NotNull(getNsgResponse.Value.Data.ResourceGuid);
             Assert.AreEqual(6, getNsgResponse.Value.Data.DefaultSecurityRules.Count);
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("*", getNsgResponse.Value.Data.DefaultSecurityRules[0].SourcePortRange);
 
             // List NSG
-            AsyncPageable<NetworkSecurityGroup> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
-            List<NetworkSecurityGroup> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
+            List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
             Assert.AreEqual(networkSecurityGroupName, listNsgResponse.First().Data.Name);
             Assert.AreEqual(6, listNsgResponse.First().Data.DefaultSecurityRules.Count);
             Assert.AreEqual("AllowVnetInBound", listNsgResponse.First().Data.DefaultSecurityRules[0].Name);
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
 
             // List NSG in a subscription
-            AsyncPageable<NetworkSecurityGroup> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
-            List<NetworkSecurityGroup> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
+            List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNsgSubsciptionResponse);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(true);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task NetworkSecurityGroupWithRulesApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
-            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
+            Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
             Assert.AreEqual(networkSecurityGroupName, getNsgResponse.Value.Data.Name);
             Assert.AreEqual(6, getNsgResponse.Value.Data.DefaultSecurityRules.Count);
             Assert.AreEqual("AllowVnetInBound", getNsgResponse.Value.Data.DefaultSecurityRules[0].Name);
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("655", getNsgResponse.Value.Data.SecurityRules[0].SourcePortRange);
 
             // List NSG
-            AsyncPageable<NetworkSecurityGroup> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
-            List<NetworkSecurityGroup> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
+            List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(listNsgResponse);
             Assert.AreEqual(networkSecurityGroupName, listNsgResponse.First().Data.Name);
             Assert.AreEqual(6, listNsgResponse.First().Data.DefaultSecurityRules.Count);
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
 
             // List NSG in a subscription
-            AsyncPageable<NetworkSecurityGroup> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
-            List<NetworkSecurityGroup> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
+            List<NetworkSecurityGroupResource> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNsgSubsciptionResponse);
 
             // Add a new security rule
-            var SecurityRule = new SecurityRuleData()
+            var securityRule = new SecurityRuleData()
             {
                 Name = securityRule2,
                 Access = SecurityRuleAccess.Deny,
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.Network.Tests
                 SourcePortRange = "656",
             };
 
-            networkSecurityGroup.SecurityRules.Add(SecurityRule);
+            networkSecurityGroup.SecurityRules.Add(securityRule);
 
-            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
+            putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
             getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("656", getNsgResponse.Value.Data.SecurityRules[1].SourcePortRange);
 
             // List Default Security Groups
-            AsyncPageable<DefaultSecurityRule> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRules().GetAllAsync();
-            List<DefaultSecurityRule> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
+            AsyncPageable<DefaultSecurityRuleResource> listDefaultSecurityGroupsAP = getNsgResponse.Value.GetDefaultSecurityRules().GetAllAsync();
+            List<DefaultSecurityRuleResource> listDefaultSecurityGroups = await listDefaultSecurityGroupsAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listDefaultSecurityGroups);
 
             // Get Defaul Security Group
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.AreEqual(listDefaultSecurityGroups.First().Name, getDefaultSecurityGroups.Value.Name);
 
             // Delete NSG
-            await putNsgResponse.Value.DeleteAsync(true);
+            await putNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // List NSG
             listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();

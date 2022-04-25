@@ -8,8 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/11cb5c629a836dc99454d85c233405f952b555d8/specification/cognitiveservices/data-plane/TextAnalytics/preview/v3.2-preview.2/TextAnalytics.json
-modelerfour:
-    seal-single-value-enum-by-default: true
+generation1-convenience-client: true
 ```
 
 ### Make generated models internal by default

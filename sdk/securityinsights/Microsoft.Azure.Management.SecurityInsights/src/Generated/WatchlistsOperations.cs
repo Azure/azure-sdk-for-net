@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// WatchlistsOperations operations.
     /// </summary>
-    internal partial class WatchlistsOperations : IServiceOperations<SecurityInsightsClient>, IWatchlistsOperations
+    internal partial class WatchlistsOperations : IServiceOperations<SecurityInsights>, IWatchlistsOperations
     {
         /// <summary>
         /// Initializes a new instance of the WatchlistsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal WatchlistsOperations(SecurityInsightsClient client)
+        internal WatchlistsOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Gets all watchlists, without watchlist items.
@@ -58,6 +58,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
+        /// </param>
+        /// <param name='skipToken'>
+        /// Skiptoken is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the
+        /// nextLink element will include a skiptoken parameter that specifies a
+        /// starting point to use for subsequent calls. Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,7 +86,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Watchlist>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Watchlist>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -143,6 +149,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -156,6 +163,10 @@ namespace Microsoft.Azure.Management.SecurityInsights
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -553,7 +564,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<WatchlistsDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -729,12 +740,25 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<WatchlistsDeleteHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<WatchlistsDeleteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -744,9 +768,14 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates a watchlist and its watchlist items (bulk creation, e.g.
-        /// through text/csv content type). To create a Watchlist and its items, we
-        /// should call this endpoint with rawContent and contentType properties.
+        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g.
+        /// through text/csv content type). To create a Watchlist and its Items, we
+        /// should call this endpoint with either rawContent or a valid SAR URI and
+        /// contentType properties. The rawContent is mainly used for small watchlist
+        /// (content size below 3.8 MB). The SAS URI enables the creation of large
+        /// watchlist, where the content size can go up to 500 MB. The status of
+        /// processing such large file can be polled through the URL returned in
+        /// Azure-AsyncOperation header.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -781,7 +810,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Watchlist>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Watchlist watchlist, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Watchlist,WatchlistsCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Watchlist watchlist, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -972,7 +1001,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Watchlist>();
+            var _result = new AzureOperationResponse<Watchlist,WatchlistsCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1014,6 +1043,19 @@ namespace Microsoft.Azure.Management.SecurityInsights
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<WatchlistsCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

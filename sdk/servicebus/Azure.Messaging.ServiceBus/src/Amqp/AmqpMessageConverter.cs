@@ -30,7 +30,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch = false)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
+        {
+            Argument.AssertNotNull(source, nameof(source));
+            var batchMessages = new List<AmqpMessage>(1) { SBMessageToAmqpMessage(source) };
+            return BuildAmqpBatchFromMessages(batchMessages, source, forceBatch);
+        }
+
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
@@ -46,25 +53,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch)
+        private static AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
             ServiceBusMessage firstMessage = null;
 
-            return BuildAmqpBatchFromMessages(
-                source.Select(sbMessage =>
+            var batchMessages = new List<AmqpMessage>(source.Count);
+            foreach (ServiceBusMessage sbMessage in source)
+            {
+                if (firstAmqpMessage == null)
                 {
-                    if (firstAmqpMessage == null)
-                    {
-                        firstAmqpMessage = SBMessageToAmqpMessage(sbMessage);
-                        firstMessage = sbMessage;
-                        return firstAmqpMessage;
-                    }
-                    else
-                    {
-                        return SBMessageToAmqpMessage(sbMessage);
-                    }
-                }).ToList(), firstMessage, forceBatch);
+                    firstAmqpMessage = SBMessageToAmqpMessage(sbMessage);
+                    firstMessage = sbMessage;
+                    batchMessages.Add(firstAmqpMessage);
+                }
+                else
+                {
+                    batchMessages.Add(SBMessageToAmqpMessage(sbMessage));
+                }
+            }
+
+            return BuildAmqpBatchFromMessages(batchMessages, firstMessage, forceBatch);
         }
 
         /// <summary>
@@ -78,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
-            IList<AmqpMessage> batchMessages,
+            List<AmqpMessage> batchMessages,
             ServiceBusMessage firstMessage,
             bool forceBatch)
         {
@@ -90,13 +99,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else
             {
-                batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
+                var data = new List<Data>(batchMessages.Count);
+                foreach (var message in batchMessages)
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();
-                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
-                }));
-
+                    data.Add(new Data { Value = ReadStreamToArraySegment(messageStream) });
+                }
+                batchEnvelope = AmqpMessage.Create(data);
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 

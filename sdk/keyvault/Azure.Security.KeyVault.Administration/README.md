@@ -203,6 +203,11 @@ The following section provides several code snippets using the `client` created 
 
 ## Troubleshooting
 
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/TROUBLESHOOTING.md)
+for details on how to diagnose various failure scenarios.
+
+### General
+
 When you interact with the Azure Key Vault administration library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 
 For example, if you try to retrieve a role assignment that doesn't exist in your Azure Key Vault, a `404` error is returned, indicating "Not Found".

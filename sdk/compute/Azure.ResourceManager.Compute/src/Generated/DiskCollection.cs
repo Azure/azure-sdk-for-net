@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of Disk and their operations over its parent. </summary>
-    public partial class DiskCollection : ArmCollection, IEnumerable<Disk>, IAsyncEnumerable<Disk>
+    /// <summary>
+    /// A class representing a collection of <see cref="DiskResource" /> and their operations.
+    /// Each <see cref="DiskResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DiskCollection" /> instance call the GetDisks method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class DiskCollection : ArmCollection, IEnumerable<DiskResource>, IAsyncEnumerable<DiskResource>
     {
         private readonly ClientDiagnostics _diskClientDiagnostics;
         private readonly DisksRestOperations _diskRestClient;
@@ -34,12 +36,13 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref="DiskCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiskCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DiskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Disk.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Disk.ResourceType, out string diskApiVersion);
-            _diskRestClient = new DisksRestOperations(_diskClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskApiVersion);
+            _diskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DiskResource.ResourceType, out string diskApiVersion);
+            _diskRestClient = new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,66 +50,33 @@ namespace Azure.ResourceManager.Compute
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a disk. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a disk.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
+        /// <param name="data"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public virtual DiskCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DiskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskName, DiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diskRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk, cancellationToken);
-                var operation = new DiskCreateOrUpdateOperation(ArmClient, _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a disk. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async virtual Task<DiskCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _diskRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskCreateOrUpdateOperation(ArmClient, _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk).Request, response);
-                if (waitForCompletion)
+                var response = await _diskRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<DiskResource>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -117,23 +87,31 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a disk. </summary>
+        /// <summary>
+        /// Creates or updates a disk.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="data"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual Response<Disk> Get(string diskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DiskResource> CreateOrUpdate(WaitUntil waitUntil, string diskName, DiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Get");
+            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken);
-                if (response.Value == null)
-                    throw _diskClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
+                var response = _diskRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskName, data, cancellationToken);
+                var operation = new ComputeArmOperation<DiskResource>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -142,12 +120,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a disk. </summary>
+        /// <summary>
+        /// Gets information about a disk.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_Get
+        /// </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<Disk>> GetAsync(string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskResource>> GetAsync(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
@@ -157,8 +139,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _diskClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,23 +149,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets information about a disk.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_Get
+        /// </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual Response<Disk> GetIfExists(string diskName, CancellationToken cancellationToken = default)
+        public virtual Response<DiskResource> Get(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetIfExists");
+            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Get");
             scope.Start();
             try
             {
-                var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
+                var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Disk>(null, response.GetRawResponse());
-                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,128 +178,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <summary>
+        /// Lists all the disks under a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<Disk>> GetIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Disk>(null, response.GetRawResponse());
-                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual Response<bool> Exists(string diskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(diskName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string diskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
-
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all the disks under a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Disk" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Disk> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<Disk> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Disk(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Disk> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Disk(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists all the disks under a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Disk" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Disk> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Disk>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DiskResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _diskRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Disk(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,14 +202,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<Disk>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DiskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _diskRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Disk(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,21 +220,67 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="Disk" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Lists all the disks under a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiskResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAllAsGenericResources");
+            Page<DiskResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diskRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DiskResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diskRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_Get
+        /// </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(Disk.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -362,21 +289,25 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of <see cref="Disk" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
+        /// Operation Id: Disks_Get
+        /// </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        public virtual Response<bool> Exists(string diskName, CancellationToken cancellationToken = default)
         {
-            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            using var scope = _diskClientDiagnostics.CreateScope("DiskCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(Disk.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,7 +316,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<Disk> IEnumerable<Disk>.GetEnumerator()
+        IEnumerator<DiskResource> IEnumerable<DiskResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -395,7 +326,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Disk> IAsyncEnumerable<Disk>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DiskResource> IAsyncEnumerable<DiskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

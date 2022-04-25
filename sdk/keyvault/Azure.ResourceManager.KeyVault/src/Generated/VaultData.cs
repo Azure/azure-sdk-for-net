@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Vault data model. </summary>
-    public partial class VaultData : Resource
+    public partial class VaultData : ResourceData
     {
         /// <summary> Initializes a new instance of VaultData. </summary>
         /// <param name="properties"> Properties of the vault. </param>
@@ -33,25 +33,22 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of VaultData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <param name="systemData"> System metadata for the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal VaultData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, Models.SystemData systemData, VaultProperties properties) : base(id, name, type)
+        internal VaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, VaultProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
-            SystemData = systemData;
             Properties = properties;
         }
 
         /// <summary> Azure location of the key vault resource. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> System metadata for the key vault. </summary>
-        public Models.SystemData SystemData { get; }
         /// <summary> Properties of the vault. </summary>
         public VaultProperties Properties { get; }
     }

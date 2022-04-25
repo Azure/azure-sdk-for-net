@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SqlServer data model. </summary>
-    public partial class SqlServerData : TrackedResource
+    public partial class SqlServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlServerData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the server. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory identity of the server. </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
-        internal SqlServerData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ResourceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<ServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, string primaryUserAssignedIdentityId, Guid? federatedClientId, string keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess) : base(id, name, type, tags, location)
+        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<ServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, string primaryUserAssignedIdentityId, Guid? federatedClientId, string keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The Azure Active Directory identity of the server. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Kind of sql server. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> Administrator username for the server. Once created it cannot be changed. </summary>

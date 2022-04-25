@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> siteName = default;
             Optional<string> domainId = default;
             Optional<string> azureResourceName = default;
@@ -102,6 +104,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -182,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HostNameBindingData(id, name, type, kind.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value);
+            return new HostNameBindingData(id, name, type, systemData, kind.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value);
         }
     }
 }

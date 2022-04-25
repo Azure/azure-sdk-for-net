@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the GuestAgent data model. </summary>
-    public partial class GuestAgentData : Resource
+    public partial class GuestAgentData : ResourceData
     {
         /// <summary> Initializes a new instance of GuestAgentData. </summary>
         public GuestAgentData()
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of GuestAgentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system data. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="uuid"> Gets or sets a unique identifier for this resource. </param>
         /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
         /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
@@ -34,9 +34,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type)
+        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData)
         {
-            SystemData = systemData;
             Uuid = uuid;
             Credentials = credentials;
             HttpProxyConfig = httpProxyConfig;
@@ -47,14 +46,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The system data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Gets or sets a unique identifier for this resource. </summary>
         public string Uuid { get; }
         /// <summary> Username / Password Credentials to provision guest agent. </summary>
         public GuestCredential Credentials { get; set; }
         /// <summary> HTTP Proxy configuration for the VM. </summary>
-        public HttpProxyConfiguration HttpProxyConfig { get; set; }
+        internal HttpProxyConfiguration HttpProxyConfig { get; set; }
+        /// <summary> Gets or sets httpsProxy url. </summary>
+        public string HttpsProxy
+        {
+            get => HttpProxyConfig is null ? default : HttpProxyConfig.HttpsProxy;
+            set
+            {
+                if (HttpProxyConfig is null)
+                    HttpProxyConfig = new HttpProxyConfiguration();
+                HttpProxyConfig.HttpsProxy = value;
+            }
+        }
+
         /// <summary> Gets or sets the guest agent provisioning action. </summary>
         public ProvisioningAction? ProvisioningAction { get; set; }
         /// <summary> Gets or sets the guest agent status. </summary>

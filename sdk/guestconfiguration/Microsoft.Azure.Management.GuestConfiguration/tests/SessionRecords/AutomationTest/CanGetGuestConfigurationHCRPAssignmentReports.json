@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2021-01-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlaHVhbi1hcmMwMDEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9JYW1QcmV0ZW5kaW5nVG8vcHJvdmlkZXJzL01pY3Jvc29mdC5HdWVzdENvbmZpZ3VyYXRpb24vZ3Vlc3RDb25maWd1cmF0aW9uQXNzaWdubWVudHMvQXVkaXRTZWN1cmVQcm90b2NvbD9hcGktdmVyc2lvbj0yMDIxLTAxLTI1",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2021-01-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL25lZWxhLXNkay1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvTEFQVE9QLTRCNzdKNTNKL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzL0F1ZGl0U2VjdXJlUHJvdG9jb2w/YXBpLXZlcnNpb249MjAyMS0wMS0yNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ab7859f3-ddd5-4870-8ba1-43162ccfd50f"
+          "2d78d6f7-1d20-41a6-afb6-37ad193cc835"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.11601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.5.0"
         ]
       },
@@ -39,22 +39,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "61218e1f-628e-4943-add0-01aee1149abd"
+          "692121d0-4f43-4eda-a9be-2ad0c62aae4e"
         ],
         "x-ms-correlation-request-id": [
-          "61218e1f-628e-4943-add0-01aee1149abd"
+          "692121d0-4f43-4eda-a9be-2ad0c62aae4e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210625T012111Z:61218e1f-628e-4943-add0-01aee1149abd"
+          "WESTUS2:20220401T193816Z:692121d0-4f43-4eda-a9be-2ad0c62aae4e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jun 2021 01:21:11 GMT"
+          "Fri, 01 Apr 2022 19:38:15 GMT"
         ],
         "Content-Length": [
-          "1232"
+          "1226"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,25 +63,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Compliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"parameterHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n    \"lastComplianceStatusChecked\": \"2021-06-25T01:17:25Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"assignmentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationProtectedParameter\": [],\r\n      \"configurationSetting\": {\r\n        \"configurationMode\": \"MonitorOnly\",\r\n        \"allowModuleOverwrite\": false,\r\n        \"actionAfterReboot\": \"\",\r\n        \"refreshFrequencyMins\": 5,\r\n        \"rebootIfNeeded\": true,\r\n        \"configurationModeFrequencyMins\": 15\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceType\": null,\r\n    \"vmssVMList\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": \"\",\r\n    \"parameterHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/05d589ca-e470-4f43-88d8-f0d499737eb7\",\r\n    \"lastComplianceStatusChecked\": \"2022-04-01T19:35:39Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"assignmentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationProtectedParameter\": [],\r\n      \"configurationSetting\": {\r\n        \"configurationMode\": \"MonitorOnly\",\r\n        \"allowModuleOverwrite\": false,\r\n        \"actionAfterReboot\": \"\",\r\n        \"refreshFrequencyMins\": 5,\r\n        \"rebootIfNeeded\": true,\r\n        \"configurationModeFrequencyMins\": 15\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceType\": null,\r\n    \"vmssVMList\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports?api-version=2021-01-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlaHVhbi1hcmMwMDEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9JYW1QcmV0ZW5kaW5nVG8vcHJvdmlkZXJzL01pY3Jvc29mdC5HdWVzdENvbmZpZ3VyYXRpb24vZ3Vlc3RDb25maWd1cmF0aW9uQXNzaWdubWVudHMvQXVkaXRTZWN1cmVQcm90b2NvbC9yZXBvcnRzP2FwaS12ZXJzaW9uPTIwMjEtMDEtMjU=",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports?api-version=2021-01-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL25lZWxhLXNkay1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvTEFQVE9QLTRCNzdKNTNKL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzL0F1ZGl0U2VjdXJlUHJvdG9jb2wvcmVwb3J0cz9hcGktdmVyc2lvbj0yMDIxLTAxLTI1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24587f96-9be7-47a3-a85a-ca4f323297a8"
+          "dac1733d-aeab-4fdc-b7c0-fbfd3433e03b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.11601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.5.0"
         ]
       },
@@ -105,22 +105,22 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "55de71fa-3db7-4ddf-9c9e-00fed40163da"
+          "10ead064-0664-4655-b986-2f59081904b8"
         ],
         "x-ms-correlation-request-id": [
-          "55de71fa-3db7-4ddf-9c9e-00fed40163da"
+          "10ead064-0664-4655-b986-2f59081904b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210625T012112Z:55de71fa-3db7-4ddf-9c9e-00fed40163da"
+          "WESTUS2:20220401T193817Z:10ead064-0664-4655-b986-2f59081904b8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jun 2021 01:21:12 GMT"
+          "Fri, 01 Apr 2022 19:38:16 GMT"
         ],
         "Content-Length": [
-          "854"
+          "7589"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -129,7 +129,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n      \"name\": \"2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo\",\r\n          \"uuid\": \"e5c6272f-72ae-44c8-8b3a-1ab65469a39e\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2021-06-25T01:17:02Z\",\r\n        \"endTime\": \"2021-06-25T01:17:25Z\",\r\n        \"VMSSResourceId\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/05d589ca-e470-4f43-88d8-f0d499737eb7\",\r\n      \"name\": \"05d589ca-e470-4f43-88d8-f0d499737eb7\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"05d589ca-e470-4f43-88d8-f0d499737eb7\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T19:35:39Z\",\r\n        \"endTime\": \"2022-04-01T19:35:39Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/ff0f976a-fd8d-4fcb-9350-0bf4b2694dc1\",\r\n      \"name\": \"ff0f976a-fd8d-4fcb-9350-0bf4b2694dc1\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"ff0f976a-fd8d-4fcb-9350-0bf4b2694dc1\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T19:20:32Z\",\r\n        \"endTime\": \"2022-04-01T19:20:32Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/7617f232-c06d-4084-9c83-d2a70e8b2076\",\r\n      \"name\": \"7617f232-c06d-4084-9c83-d2a70e8b2076\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"7617f232-c06d-4084-9c83-d2a70e8b2076\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T19:05:27Z\",\r\n        \"endTime\": \"2022-04-01T19:05:27Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/4fa0fe34-467e-43c8-8222-919015b41c4e\",\r\n      \"name\": \"4fa0fe34-467e-43c8-8222-919015b41c4e\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"4fa0fe34-467e-43c8-8222-919015b41c4e\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T18:50:17Z\",\r\n        \"endTime\": \"2022-04-01T18:50:17Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/7b9cede5-21ea-4621-b8ce-6ad924474c63\",\r\n      \"name\": \"7b9cede5-21ea-4621-b8ce-6ad924474c63\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"7b9cede5-21ea-4621-b8ce-6ad924474c63\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T18:35:10Z\",\r\n        \"endTime\": \"2022-04-01T18:35:10Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/c0233467-d163-4f7b-99d1-aa9e2e016910\",\r\n      \"name\": \"c0233467-d163-4f7b-99d1-aa9e2e016910\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"c0233467-d163-4f7b-99d1-aa9e2e016910\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T18:20:05Z\",\r\n        \"endTime\": \"2022-04-01T18:20:05Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/a597f2a3-8933-407c-b858-cfa3866b16ba\",\r\n      \"name\": \"a597f2a3-8933-407c-b858-cfa3866b16ba\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"a597f2a3-8933-407c-b858-cfa3866b16ba\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T01:46:10Z\",\r\n        \"endTime\": \"2022-04-01T01:46:10Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/69d61162-ee24-464c-bb02-7eb518258641\",\r\n      \"name\": \"69d61162-ee24-464c-bb02-7eb518258641\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"69d61162-ee24-464c-bb02-7eb518258641\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T01:31:04Z\",\r\n        \"endTime\": \"2022-04-01T01:31:04Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/cbc35b4b-206a-4b16-a4a6-cc721b7cc6d1\",\r\n      \"name\": \"cbc35b4b-206a-4b16-a4a6-cc721b7cc6d1\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"cbc35b4b-206a-4b16-a4a6-cc721b7cc6d1\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J\",\r\n          \"uuid\": \"8cbc0dc9-5269-4a60-80b5-fd40b4104e86\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2022-04-01T01:16:04Z\",\r\n        \"endTime\": \"2022-04-01T01:16:04Z\",\r\n        \"vmssResourceId\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

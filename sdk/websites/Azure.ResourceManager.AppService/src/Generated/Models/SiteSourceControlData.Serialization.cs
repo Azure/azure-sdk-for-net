@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -23,10 +25,10 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUrl))
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl");
-                writer.WriteStringValue(RepoUrl);
+                writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -75,7 +77,8 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> repoUrl = default;
+            SystemData systemData = default;
+            Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
             Optional<bool> isManualIntegration = default;
             Optional<bool> isGitHubAction = default;
@@ -104,6 +107,11 @@ namespace Azure.ResourceManager.AppService
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,7 +123,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("repoUrl"))
                         {
-                            repoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repoUrl = null;
+                                continue;
+                            }
+                            repoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -177,7 +190,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteSourceControlData(id, name, type, kind.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value);
+            return new SiteSourceControlData(id, name, type, systemData, kind.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value);
         }
     }
 }

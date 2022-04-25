@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the script sources for run command. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="script"> Specifies the script content to be executed on the VM. </param>
         /// <param name="scriptUri"> Specifies the script download location. </param>
         /// <param name="commandId"> Specifies a commandId of predefined built-in script. </param>
-        internal VirtualMachineRunCommandScriptSource(string script, string scriptUri, string commandId)
+        internal VirtualMachineRunCommandScriptSource(string script, Uri scriptUri, string commandId)
         {
             Script = script;
             ScriptUri = scriptUri;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the script content to be executed on the VM. </summary>
         public string Script { get; set; }
         /// <summary> Specifies the script download location. </summary>
-        public string ScriptUri { get; set; }
+        public Uri ScriptUri { get; set; }
         /// <summary> Specifies a commandId of predefined built-in script. </summary>
         public string CommandId { get; set; }
     }

@@ -9,6 +9,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -20,7 +21,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage : MessageWithMetadata
+    public class ServiceBusMessage
     {
         /// <summary>
         /// Creates a new message.
@@ -159,17 +160,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Hidden property that shadows the <see cref="Body"/> property. This is added
-        /// in order to inherit from <see cref="MessageWithMetadata"/>.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override BinaryData Data
-        {
-            get => Body;
-            set => Body = value;
-        }
-
-        /// <summary>
         /// Gets or sets the MessageId to identify the message.
         /// </summary>
         /// <remarks>
@@ -254,11 +244,14 @@ namespace Azure.Messaging.ServiceBus
             set
             {
                 Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(value));
+                AmqpMessage.Properties.GroupId = value;
+
+                // If the PartitionKey was already set to a different value, override it with the SessionId, as the SessionId takes precedence.
                 if (PartitionKey != null && PartitionKey != value)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"SessionId:{value} cannot be set to a different value than PartitionKey:{PartitionKey}.");
+                    ServiceBusEventSource.Log.PartitionKeyOverwritten(PartitionKey, value, MessageId);
+                    PartitionKey = value;
                 }
-                AmqpMessage.Properties.GroupId = value;
             }
         }
 
@@ -361,7 +354,7 @@ namespace Azure.Messaging.ServiceBus
         /// Optionally describes the payload of the message, with a descriptor following the format of
         /// RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public override string ContentType
+        public string ContentType
         {
             get
             {
@@ -372,13 +365,6 @@ namespace Azure.Messaging.ServiceBus
                 AmqpMessage.Properties.ContentType = value;
             }
         }
-
-        /// <summary>
-        /// Hidden property that indicates that the <see cref="ServiceBusMessage"/> is not read-only. This is part of
-        /// the <see cref="MessageWithMetadata"/> abstraction.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool IsReadOnly => false;
 
         /// <summary>Gets or sets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>

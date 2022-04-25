@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             DnsServers = new ChangeTrackingList<string>();
             Gateway = new ChangeTrackingList<string>();
-            IpAddressInfo = new ChangeTrackingList<NicIPAddressSettings>();
+            IPAddressInfo = new ChangeTrackingList<NicIPAddressSettings>();
         }
 
         /// <summary> Initializes a new instance of NicIPSettings. </summary>
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             AllocationMethod = allocationMethod;
             DnsServers = dnsServers;
             Gateway = gateway;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SubnetMask = subnetMask;
             PrimaryWinsServer = primaryWinsServer;
             SecondaryWinsServer = secondaryWinsServer;
-            IpAddressInfo = ipAddressInfo;
+            IPAddressInfo = ipAddressInfo;
         }
 
         /// <summary> Gets or sets the nic allocation method. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets the gateway. </summary>
         public IList<string> Gateway { get; }
         /// <summary> Gets or sets the ip address for the nic. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> Gets or sets the mask. </summary>
         public string SubnetMask { get; set; }
         /// <summary> Gets or sets the primary server. </summary>
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets the secondary server. </summary>
         public string SecondaryWinsServer { get; }
         /// <summary> Gets or sets the IP address information being reported for this NIC. This contains the same IPv4 information above plus IPV6 information. </summary>
-        public IReadOnlyList<NicIPAddressSettings> IpAddressInfo { get; }
+        public IReadOnlyList<NicIPAddressSettings> IPAddressInfo { get; }
     }
 }

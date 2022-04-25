@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -38,10 +39,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("refreshToken");
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(ExpirationTime))
+            if (Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationTime.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> token = default;
             Optional<string> tokenSecret = default;
             Optional<string> refreshToken = default;
@@ -77,6 +79,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SourceControlData(id, name, type, kind.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime));
+            return new SourceControlData(id, name, type, systemData, kind.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime));
         }
     }
 }

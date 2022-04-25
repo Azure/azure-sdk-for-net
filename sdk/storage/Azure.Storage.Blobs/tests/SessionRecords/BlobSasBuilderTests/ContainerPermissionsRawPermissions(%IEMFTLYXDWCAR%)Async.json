@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "bfeedc91-a125-78af-4398-d529d723ac1c",
         "x-ms-date": "Wed, 01 Dec 2021 17:36:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,12 +30,12 @@
         ],
         "x-ms-client-request-id": "bfeedc91-a125-78af-4398-d529d723ac1c",
         "x-ms-request-id": "d4838829-401e-0000-77da-e69182000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanada.blob.core.windows.net/test-container-fac3762b-ff7f-88fd-74b2-6c2d059e8d78?sv=2021-04-10\u0026st=2021-12-01T16%3A36%3A40Z\u0026se=2021-12-01T18%3A36%3A40Z\u0026sr=c\u0026sp=racwdxyltfmei\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
+      "RequestUri": "https://seanmcccanada.blob.core.windows.net/test-container-fac3762b-ff7f-88fd-74b2-6c2d059e8d78?sv=2021-06-08\u0026st=2021-12-01T16%3A36%3A40Z\u0026se=2021-12-01T18%3A36%3A40Z\u0026sr=c\u0026sp=racwdxyltfmei\u0026sig=Sanitized\u0026restype=container\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -45,7 +45,7 @@
         ],
         "x-ms-client-request-id": "289c7363-ceaf-f752-8e6b-631e4b0bdce0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -59,7 +59,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "289c7363-ceaf-f752-8e6b-631e4b0bdce0",
         "x-ms-request-id": "d483888a-401e-0000-4fda-e69182000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanada.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-fac3762b-ff7f-88fd-74b2-6c2d059e8d78\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -77,7 +77,7 @@
         "x-ms-client-request-id": "63c671b1-8387-656c-1345-468f2a58be34",
         "x-ms-date": "Wed, 01 Dec 2021 17:36:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -90,7 +90,7 @@
         ],
         "x-ms-client-request-id": "63c671b1-8387-656c-1345-468f2a58be34",
         "x-ms-request-id": "d48388fa-401e-0000-39da-e69182000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

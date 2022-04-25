@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -49,8 +48,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -76,8 +74,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -94,8 +91,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -118,8 +114,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -136,8 +131,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the template will be deployed to. The name
-            /// is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='rmplName'>
             /// The name of the resource management private link.
@@ -173,6 +167,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<ResourceManagementPrivateLinkListResult> ListAsync(this IResourceManagementPrivateLinkOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all the resource management private links in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            public static ResourceManagementPrivateLinkListResult ListByResourceGroup(this IResourceManagementPrivateLinkOperations operations, string resourceGroupName)
+            {
+                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all the resource management private links in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceManagementPrivateLinkListResult> ListByResourceGroupAsync(this IResourceManagementPrivateLinkOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

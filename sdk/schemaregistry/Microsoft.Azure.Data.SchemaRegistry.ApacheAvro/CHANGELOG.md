@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-05)
+
+### Breaking Changes
+
+- Wrap Apache Avro exceptions with new exception type, `SchemaRegistryAvroException`.
+
+## 1.0.0-beta.7 (2022-03-11)
+
+### Features Added
+
+- Added logging of cache size.
+- Non-generic overloads are available for serializing and deserializing.
+
+### Breaking Changes
+
+- `SchemaRegistryAvroEncoder` has been renamed to `SchemaRegistryAvroSerializer`
+- The `DecodeMessageData` method has been renamed to `Deserialize`.
+- The `EncodeMessageData` method has been renamed to `Serialize`.
+- The type `MessageWithMetadata` has been renamed to `BinaryContent`.
+
+## 1.0.0-beta.6 (2022-02-10)
+
+### Features Added
+
+- Added dynamic overload for encoding messages.
+- Added generic overload for decoding messages.
+
+### Breaking Changes
+
+- The generic method signature for encoding has changed.
+- The dynamic method signature for decoding has changed.
 
 ## 1.0.0-beta.5 (2022-01-13)
 

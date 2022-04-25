@@ -4,70 +4,69 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal struct TagEnumerationState
     {
-        private static readonly IReadOnlyDictionary<string, PartBType> Part_B_Mapping = new Dictionary<string, PartBType>()
+        private static readonly IReadOnlyDictionary<string, OperationType> s_part_B_Mapping = new Dictionary<string, OperationType>()
         {
-            [SemanticConventions.AttributeDbStatement] = PartBType.Db,
-            [SemanticConventions.AttributeDbSystem] = PartBType.Db,
-            [SemanticConventions.AttributeDbName] = PartBType.Db,
+            [SemanticConventions.AttributeDbStatement] = OperationType.Db,
+            [SemanticConventions.AttributeDbSystem] = OperationType.Db,
+            [SemanticConventions.AttributeDbName] = OperationType.Db,
 
-            [SemanticConventions.AttributeHttpMethod] = PartBType.Http,
-            [SemanticConventions.AttributeHttpUrl] = PartBType.Http,
-            [SemanticConventions.AttributeHttpStatusCode] = PartBType.Http,
-            [SemanticConventions.AttributeHttpScheme] = PartBType.Http,
-            [SemanticConventions.AttributeHttpHost] = PartBType.Http,
-            [SemanticConventions.AttributeHttpHostPort] = PartBType.Http,
-            [SemanticConventions.AttributeHttpTarget] = PartBType.Http,
-            [SemanticConventions.AttributeHttpUserAgent] = PartBType.Http,
-            [SemanticConventions.AttributeHttpClientIP] = PartBType.Http,
-            [SemanticConventions.AttributeHttpRoute] = PartBType.Http,
+            [SemanticConventions.AttributeHttpMethod] = OperationType.Http,
+            [SemanticConventions.AttributeHttpUrl] = OperationType.Http,
+            [SemanticConventions.AttributeHttpStatusCode] = OperationType.Http,
+            [SemanticConventions.AttributeHttpScheme] = OperationType.Http,
+            [SemanticConventions.AttributeHttpHost] = OperationType.Http,
+            [SemanticConventions.AttributeHttpHostPort] = OperationType.Http,
+            [SemanticConventions.AttributeHttpTarget] = OperationType.Http,
+            [SemanticConventions.AttributeHttpUserAgent] = OperationType.Http,
+            [SemanticConventions.AttributeHttpClientIP] = OperationType.Http,
+            [SemanticConventions.AttributeHttpRoute] = OperationType.Http,
 
-            [SemanticConventions.AttributePeerService] = PartBType.Common,
-            [SemanticConventions.AttributeNetPeerName] = PartBType.Common,
-            [SemanticConventions.AttributeNetPeerIp] = PartBType.Common,
-            [SemanticConventions.AttributeNetPeerPort] = PartBType.Common,
-            [SemanticConventions.AttributeNetTransport] = PartBType.Common,
-            [SemanticConventions.AttributeNetHostIp] = PartBType.Common,
-            [SemanticConventions.AttributeNetHostPort] = PartBType.Common,
-            [SemanticConventions.AttributeNetHostName] = PartBType.Common,
-            [SemanticConventions.AttributeComponent] = PartBType.Common,
-            ["otel.status_code"] = PartBType.Common,
+            [SemanticConventions.AttributePeerService] = OperationType.Common,
+            [SemanticConventions.AttributeNetPeerName] = OperationType.Common,
+            [SemanticConventions.AttributeNetPeerIp] = OperationType.Common,
+            [SemanticConventions.AttributeNetPeerPort] = OperationType.Common,
+            [SemanticConventions.AttributeNetTransport] = OperationType.Common,
+            [SemanticConventions.AttributeNetHostIp] = OperationType.Common,
+            [SemanticConventions.AttributeNetHostPort] = OperationType.Common,
+            [SemanticConventions.AttributeNetHostName] = OperationType.Common,
+            [SemanticConventions.AttributeComponent] = OperationType.Common,
+            ["otel.status_code"] = OperationType.Common,
 
-            [SemanticConventions.AttributeRpcService] = PartBType.Rpc,
-            [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
-            [SemanticConventions.AttributeRpcStatus] = PartBType.Rpc,
+            [SemanticConventions.AttributeRpcService] = OperationType.Rpc,
+            [SemanticConventions.AttributeRpcSystem] = OperationType.Rpc,
+            [SemanticConventions.AttributeRpcStatus] = OperationType.Rpc,
 
-            [SemanticConventions.AttributeFaasTrigger] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasExecution] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasColdStart] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentCollection] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentOperation] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentTime] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasDocumentName] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasCron] = PartBType.FaaS,
-            [SemanticConventions.AttributeFaasTime] = PartBType.FaaS,
+            [SemanticConventions.AttributeFaasTrigger] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasExecution] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasColdStart] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasDocumentCollection] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasDocumentOperation] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasDocumentTime] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasDocumentName] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasCron] = OperationType.FaaS,
+            [SemanticConventions.AttributeFaasTime] = OperationType.FaaS,
 
-            [SemanticConventions.AttributeAzureNameSpace] = PartBType.Azure,
-            [SemanticConventions.AttributeMessageBusDestination] = PartBType.Azure,
+            [SemanticConventions.AttributeAzureNameSpace] = OperationType.Azure,
+            [SemanticConventions.AttributeMessageBusDestination] = OperationType.Azure,
 
-            [SemanticConventions.AttributeEndpointAddress] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingSystem] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingDestination] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingDestinationKind] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingTempDestination] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingUrl] = PartBType.Messaging
+            [SemanticConventions.AttributeEndpointAddress] = OperationType.Messaging,
+            [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
+            [SemanticConventions.AttributeMessagingDestination] = OperationType.Messaging,
+            [SemanticConventions.AttributeMessagingDestinationKind] = OperationType.Messaging,
+            [SemanticConventions.AttributeMessagingTempDestination] = OperationType.Messaging,
+            [SemanticConventions.AttributeMessagingUrl] = OperationType.Messaging
         };
 
-        public AzMonList PartBTags;
-        public AzMonList PartCTags;
+        public AzMonList MappedTags;
+        public AzMonList UnMappedTags;
 
-        private PartBType tempActivityType;
-        public PartBType activityType;
+        private OperationType _tempActivityType;
+        public OperationType activityType;
 
         public void ForEach(IEnumerable<KeyValuePair<string, object>> activityTags)
         {
@@ -96,30 +95,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         sw.Length--;
                     }
 
-                    AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
+                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
                     continue;
                 }
 
-                if (!Part_B_Mapping.TryGetValue(activityTag.Key, out tempActivityType))
+                if (!s_part_B_Mapping.TryGetValue(activityTag.Key, out _tempActivityType))
                 {
-                    AzMonList.Add(ref PartCTags, activityTag);
+                    AzMonList.Add(ref UnMappedTags, activityTag);
                     continue;
                 }
 
-                if (activityType == PartBType.Unknown || activityType == PartBType.Common)
+                if (activityType == OperationType.Unknown || activityType == OperationType.Common)
                 {
-                    activityType = tempActivityType;
+                    activityType = _tempActivityType;
                 }
 
-                if (tempActivityType == activityType || tempActivityType == PartBType.Common)
+                if (_tempActivityType == activityType || _tempActivityType == OperationType.Common)
                 {
-                    AzMonList.Add(ref PartBTags, activityTag);
+                    AzMonList.Add(ref MappedTags, activityTag);
                 }
                 else
                 {
-                    AzMonList.Add(ref PartCTags, activityTag);
+                    AzMonList.Add(ref UnMappedTags, activityTag);
                 }
             }
+        }
+
+        public void Return()
+        {
+            MappedTags.Return();
+            UnMappedTags.Return();
         }
     }
 }

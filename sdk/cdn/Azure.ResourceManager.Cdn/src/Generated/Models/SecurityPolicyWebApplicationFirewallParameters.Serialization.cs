@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewallParameters : IUtf8JsonSerializable
+    internal partial class SecurityPolicyWebApplicationFirewallParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 

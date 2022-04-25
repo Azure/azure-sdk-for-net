@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupData
     {
@@ -19,9 +21,10 @@ namespace Azure.ResourceManager.Management
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> tenantId = default;
+            SystemData systemData = default;
+            Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
-            Optional<ManagementGroupDetails> details = default;
+            Optional<ManagementGroupInfo> details = default;
             Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,6 +43,11 @@ namespace Azure.ResourceManager.Management
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -51,7 +59,12 @@ namespace Azure.ResourceManager.Management
                     {
                         if (property0.NameEquals("tenantId"))
                         {
-                            tenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -66,7 +79,7 @@ namespace Azure.ResourceManager.Management
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            details = ManagementGroupDetails.DeserializeManagementGroupDetails(property0.Value);
+                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("children"))
@@ -88,7 +101,7 @@ namespace Azure.ResourceManager.Management
                     continue;
                 }
             }
-            return new ManagementGroupData(id, name, type, tenantId.Value, displayName.Value, details.Value, Optional.ToList(children));
+            return new ManagementGroupData(id, name, type, systemData, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children));
         }
     }
 }

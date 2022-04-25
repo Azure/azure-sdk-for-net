@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="identifier"> ARM Identifier for deployment. </param>
         /// <param name="deploymentName"> Deployment name. </param>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="handleCount"> Handle count. </param>
         /// <param name="moduleCount"> Module count. </param>
         /// <param name="threadCount"> Thread count. </param>
-        /// <param name="startTime"> Start time. </param>
+        /// <param name="startOn"> Start time. </param>
         /// <param name="totalCpuTime"> Total CPU time. </param>
         /// <param name="userCpuTime"> User CPU time. </param>
         /// <param name="privilegedCpuTime"> Privileged CPU time. </param>
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isScmSite"> Is this the SCM site?. </param>
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType type, string kind, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startTime, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description) : base(id, name, type, kind)
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description) : base(id, name, resourceType, systemData, kind)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.AppService
             HandleCount = handleCount;
             ModuleCount = moduleCount;
             ThreadCount = threadCount;
-            StartTime = startTime;
+            StartOn = startOn;
             TotalCpuTime = totalCpuTime;
             UserCpuTime = userCpuTime;
             PrivilegedCpuTime = privilegedCpuTime;
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Thread count. </summary>
         public int? ThreadCount { get; set; }
         /// <summary> Start time. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> Total CPU time. </summary>
         public string TotalCpuTime { get; set; }
         /// <summary> User CPU time. </summary>

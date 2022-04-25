@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Private endpoint which the connection belongs to. </summary>
-    public partial class PrivateEndpointProperty
+    internal partial class PrivateEndpointProperty
     {
         /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
         public PrivateEndpointProperty()

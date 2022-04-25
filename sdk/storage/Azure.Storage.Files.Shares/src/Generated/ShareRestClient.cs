@@ -19,23 +19,25 @@ namespace Azure.Storage.Files.Shares
 {
     internal partial class ShareRestClient
     {
-        private string url;
-        private string version;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _url;
+        private readonly string _version;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ShareRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08")
         {
-            this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
         internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash)
@@ -44,7 +46,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
             {
@@ -63,7 +65,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-access-tier", accessTier.Value.ToString());
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (enabledProtocols != null)
             {
                 request.Headers.Add("x-ms-enabled-protocols", enabledProtocols);
@@ -94,7 +96,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -116,7 +118,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -126,7 +128,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             if (sharesnapshot != null)
             {
@@ -137,7 +139,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
@@ -161,7 +163,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -180,7 +182,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -190,7 +192,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             if (sharesnapshot != null)
             {
@@ -201,7 +203,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (deleteSnapshots != null)
             {
                 request.Headers.Add("x-ms-delete-snapshots", deleteSnapshots.Value.ToSerialString());
@@ -230,7 +232,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -250,7 +252,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -260,7 +262,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -281,7 +283,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -302,7 +304,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -322,7 +324,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -332,7 +334,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -346,7 +348,7 @@ namespace Azure.Storage.Files.Shares
             request.Uri = uri;
             request.Headers.Add("x-ms-lease-action", "release");
             request.Headers.Add("x-ms-lease-id", leaseId);
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -372,7 +374,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -397,7 +399,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -407,7 +409,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -425,7 +427,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -452,7 +454,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -478,7 +480,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -488,7 +490,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -502,7 +504,7 @@ namespace Azure.Storage.Files.Shares
             request.Uri = uri;
             request.Headers.Add("x-ms-lease-action", "renew");
             request.Headers.Add("x-ms-lease-id", leaseId);
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -528,7 +530,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -553,7 +555,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -563,7 +565,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "share", true);
             if (timeout != null)
@@ -584,7 +586,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -605,7 +607,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -625,7 +627,7 @@ namespace Azure.Storage.Files.Shares
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -635,7 +637,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "snapshot", true);
             if (timeout != null)
@@ -647,7 +649,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -666,7 +668,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -684,7 +686,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -694,7 +696,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "filepermission", true);
             if (timeout != null)
@@ -702,7 +704,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -731,7 +733,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -755,7 +757,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -765,7 +767,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "filepermission", true);
             if (timeout != null)
@@ -774,7 +776,7 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -804,7 +806,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -833,7 +835,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -843,7 +845,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
@@ -851,7 +853,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (quota != null)
             {
                 request.Headers.Add("x-ms-share-quota", quota.Value);
@@ -889,7 +891,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -910,7 +912,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -920,7 +922,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
@@ -932,7 +934,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
@@ -956,7 +958,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -975,7 +977,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -985,7 +987,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -993,7 +995,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
@@ -1029,7 +1031,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1060,7 +1062,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1070,7 +1072,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -1078,7 +1080,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
@@ -1114,7 +1116,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1133,7 +1135,7 @@ namespace Azure.Storage.Files.Shares
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1143,7 +1145,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "stats", true);
             if (timeout != null)
@@ -1151,7 +1153,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
@@ -1182,7 +1184,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1208,7 +1210,7 @@ namespace Azure.Storage.Files.Shares
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1218,7 +1220,7 @@ namespace Azure.Storage.Files.Shares
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendQuery("restype", "share", true);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
@@ -1226,7 +1228,7 @@ namespace Azure.Storage.Files.Shares
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (deletedShareName != null)
             {
                 request.Headers.Add("x-ms-deleted-share-name", deletedShareName);
@@ -1254,7 +1256,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1273,7 +1275,7 @@ namespace Azure.Storage.Files.Shares
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

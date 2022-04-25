@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<Disk> CreateDiskAsync(string diskName)
+        private async Task<DiskResource> CreateDiskAsync(string diskName)
         {
             var collection = (await CreateResourceGroupAsync()).GetDisks();
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
-            var lro = await collection.CreateOrUpdateAsync(true, diskName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(diskName);
-            await disk.DeleteAsync(true);
+            await disk.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk1 = await CreateDiskAsync(diskName);
-            Disk disk2 = await disk1.GetAsync();
+            DiskResource disk2 = await disk1.GetAsync();
 
             ResourceDataHelper.AssertDisk(disk1.Data, disk2.Data);
         }
@@ -51,14 +51,13 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(diskName);
-
             var newDiskSize = 20;
-            var update = new DiskUpdate()
+            var update = new DiskPatch()
             {
                 DiskSizeGB = newDiskSize
             };
-            var lro = await disk.UpdateAsync(true, update);
-            Disk updatedDisk = lro.Value;
+            var lro = await disk.UpdateAsync(WaitUntil.Completed, update);
+            DiskResource updatedDisk = lro.Value;
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
         }

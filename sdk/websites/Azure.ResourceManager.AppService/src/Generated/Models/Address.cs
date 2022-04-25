@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="country"> The country for the address. </param>
         /// <param name="postalCode"> The postal code for the address. </param>
         /// <param name="state"> The state or province for the address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="address1"/>, <paramref name="city"/>, <paramref name="country"/>, <paramref name="postalCode"/>, or <paramref name="state"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="address1"/>, <paramref name="city"/>, <paramref name="country"/>, <paramref name="postalCode"/> or <paramref name="state"/> is null. </exception>
         public Address(string address1, string city, string country, string postalCode, string state)
         {
             if (address1 == null)

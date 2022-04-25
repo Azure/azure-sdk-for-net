@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RuleGroupValue = "ruleGroup";
         private const string RuleIdValue = "ruleId";
         private const string UserAgentValue = "userAgent";
-        private const string ClientIpValue = "clientIp";
+        private const string ClientIPValue = "clientIp";
         private const string UrlValue = "url";
-        private const string CountryValue = "country";
+        private const string CountryOrRegionValue = "countryOrRegion";
         private const string RuleTypeValue = "ruleType";
 
         /// <summary> action. </summary>
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> userAgent. </summary>
         public static WafRankingType UserAgent { get; } = new WafRankingType(UserAgentValue);
         /// <summary> clientIp. </summary>
-        public static WafRankingType ClientIp { get; } = new WafRankingType(ClientIpValue);
+        public static WafRankingType ClientIP { get; } = new WafRankingType(ClientIPValue);
         /// <summary> url. </summary>
         public static WafRankingType Url { get; } = new WafRankingType(UrlValue);
-        /// <summary> country. </summary>
-        public static WafRankingType Country { get; } = new WafRankingType(CountryValue);
+        /// <summary> countryOrRegion. </summary>
+        public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
         /// <summary> ruleType. </summary>
         public static WafRankingType RuleType { get; } = new WafRankingType(RuleTypeValue);
         /// <summary> Determines if two <see cref="WafRankingType"/> values are the same. </summary>

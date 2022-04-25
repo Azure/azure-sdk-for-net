@@ -46,9 +46,42 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        public void DeserializesImmutable([Values] bool immutable)
+        {
+            KeyReleasePolicy policy = new();
+            using (JsonStream json = new(@$"{{""contentType"":""application/json"",""data"":""dGVzdA"",""immutable"":{(immutable ? "true" : "false")}}}"))
+            {
+                policy.Deserialize(json.AsStream());
+            }
+
+            Assert.AreEqual("application/json", policy.ContentType);
+            Assert.AreEqual("test", policy.EncodedPolicy.ToString());
+            Assert.AreEqual(immutable, policy.Immutable);
+        }
+
+        [Test]
+        public void SerializesImmutable([Values] bool immutable)
+        {
+            KeyReleasePolicy policy = new(BinaryData.FromString("test"))
+            {
+                ContentType = "application/json",
+                Immutable = immutable,
+            };
+
+            using JsonStream json = new();
+            json.WriteObject(policy);
+
+            Assert.AreEqual(@$"{{""contentType"":""application/json"",""data"":""dGVzdA"",""immutable"":{(immutable ? "true" : "false")}}}", json.ToString());
+        }
+
+        [Test]
         public void SampleToStream()
         {
             using MemoryStream ms = new();
+
+#if SNIPPET
+            KeyVaultKey key = null;
+#endif
 
             #region Snippet:KeyReleasePolicy_ToStream
 #if SNIPPET

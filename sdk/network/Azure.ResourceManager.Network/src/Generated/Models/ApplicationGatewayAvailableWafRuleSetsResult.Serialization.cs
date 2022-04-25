@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableWafRuleSetsResult
+    internal partial class ApplicationGatewayAvailableWafRuleSetsResult
     {
         internal static ApplicationGatewayAvailableWafRuleSetsResult DeserializeApplicationGatewayAvailableWafRuleSetsResult(JsonElement element)
         {

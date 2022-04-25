@@ -17,23 +17,25 @@ namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class QueryRestClient
     {
-        private string environmentFqdn;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _environmentFqdn;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of QueryRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="environmentFqdn"> Per environment FQDN, for example 10000000-0000-0000-0000-100000000109.env.timeseries.azure.com. You can obtain this domain name from the response of the Get Environments API, Azure portal, or Azure Resource Manager. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentFqdn"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="environmentFqdn"/> or <paramref name="apiVersion"/> is null. </exception>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string environmentFqdn, string apiVersion = "2020-07-31")
         {
-            this.environmentFqdn = environmentFqdn ?? throw new ArgumentNullException(nameof(environmentFqdn));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _environmentFqdn = environmentFqdn ?? throw new ArgumentNullException(nameof(environmentFqdn));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateGetAvailabilityRequest(string storeType, string clientSessionId)
@@ -43,9 +45,9 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(environmentFqdn, false);
+            uri.AppendRaw(_environmentFqdn, false);
             uri.AppendPath("/availability", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (storeType != null)
             {
                 uri.AppendQuery("storeType", storeType, true);
@@ -77,7 +79,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -99,7 +101,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -110,9 +112,9 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(environmentFqdn, false);
+            uri.AppendRaw(_environmentFqdn, false);
             uri.AppendPath("/eventSchema", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (storeType != null)
             {
                 uri.AppendQuery("storeType", storeType, true);
@@ -155,7 +157,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -184,7 +186,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -195,9 +197,9 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(environmentFqdn, false);
+            uri.AppendRaw(_environmentFqdn, false);
             uri.AppendPath("/timeseries/query", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (storeType != null)
             {
                 uri.AppendQuery("storeType", storeType, true);
@@ -245,7 +247,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -275,7 +277,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

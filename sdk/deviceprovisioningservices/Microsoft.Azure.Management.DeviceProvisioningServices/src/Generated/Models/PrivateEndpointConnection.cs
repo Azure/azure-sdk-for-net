@@ -36,12 +36,13 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        public PrivateEndpointConnection(PrivateEndpointConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string))
+        public PrivateEndpointConnection(PrivateEndpointConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -73,6 +74,11 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -21,12 +21,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     [ClientTestFixture(ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)]
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
+        // The authorization key needs to be exactly 44 ASCII encoded bytes.
+        private const string SanitizedKeyValue = "SanitizedSanitizedSanitizedSanitizedSanitize";
+
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
             base(isAsync: true)
         {
-            Sanitizer = new ServiceBusRecordedTestSanitizer();
+            SanitizedHeaders.Add("ServiceBusDlqSupplementaryAuthorization");
+            SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
+                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"));
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
+                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"));
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "[^\\r](?<break>\\n)",
+                    "\r\n")
+                {
+                    GroupForReplace = "break"
+                });
             _serviceVersion = serviceVersion;
         }
 

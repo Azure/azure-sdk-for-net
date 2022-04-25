@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new BinaryData("Too many"))), Is.False, "The batch is full; a second attempt to add a new event should not succeed.");
 
             Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
-            Assert.That(batch.AsEnumerable<ServiceBusMessage>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            Assert.That(batch.AsReadOnly<ServiceBusMessage>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
         }
 
         /// <summary>

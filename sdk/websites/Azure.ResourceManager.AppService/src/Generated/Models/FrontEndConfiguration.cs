@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The FrontEndConfiguration. </summary>
-    public partial class FrontEndConfiguration
+    internal partial class FrontEndConfiguration
     {
         /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
         public FrontEndConfiguration()

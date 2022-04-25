@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.SendAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyCollection<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
@@ -127,6 +127,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             mockTransportBatch
                 .Setup(transport => transport.Count)
                 .Returns(3);
+
+            mockTransportBatch
+                .Setup(transport => transport.AsReadOnly<ServiceBusMessage>())
+                .Returns(new List<ServiceBusMessage>());
 
             mockTransportSender.Setup(
                  sender => sender.CreateMessageBatchAsync(
@@ -173,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyCollection<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((IReadOnlyList<long>) new List<long> { 1 }));
 
@@ -210,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyCollection<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 

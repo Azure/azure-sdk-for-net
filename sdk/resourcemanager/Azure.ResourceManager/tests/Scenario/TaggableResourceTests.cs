@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         private static readonly IDictionary<string, string> ExpectedAddTags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "UpdateKey3", "UpdateValue3" } };
         private static readonly IDictionary<string, string> OriTags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
-        private ResourceGroup _rg;
+        private ResourceGroupResource _rg;
         private string _rgPrefix = "rg";
 
         public TaggableResourceTests(bool isAsync)
@@ -39,15 +39,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestAddTags(string key, string value, IDictionary<string, string> tags)
         {
-            if (key is null)
+            if (key is null || value is null)
             {
                 var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
                 Assert.That(ex.Message.Contains("Value cannot be null"));
-            }
-            else if (value is null)
-            {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
             }
             else
             {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="maxAgeInSeconds"> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </param>
         /// <param name="exposedHeaders"> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </param>
         /// <param name="allowedHeaders"> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="exposedHeaders"/>, or <paramref name="allowedHeaders"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="exposedHeaders"/> or <paramref name="allowedHeaders"/> is null. </exception>
         public CorsRule(IEnumerable<string> allowedOrigins, IEnumerable<CorsRuleAllowedMethodsItem> allowedMethods, int maxAgeInSeconds, IEnumerable<string> exposedHeaders, IEnumerable<string> allowedHeaders)
         {
             if (allowedOrigins == null)

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnConnectionId"> The vpn client Id. </param>
         /// <param name="vpnConnectionDuration"> The duration time of a connected vpn client. </param>
         /// <param name="vpnConnectionTime"> The start time of a connected vpn client. </param>
-        /// <param name="publicIpAddress"> The public Ip of a connected vpn client. </param>
-        /// <param name="privateIpAddress"> The assigned private Ip of a connected vpn client. </param>
+        /// <param name="publicIPAddress"> The public Ip of a connected vpn client. </param>
+        /// <param name="privateIPAddress"> The assigned private Ip of a connected vpn client. </param>
         /// <param name="vpnUserName"> The user name of a connected vpn client. </param>
         /// <param name="maxBandwidth"> The max band width. </param>
         /// <param name="egressPacketsTransferred"> The egress packets per second. </param>
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressPacketsTransferred"> The ingress packets per second. </param>
         /// <param name="ingressBytesTransferred"> The ingress bytes per second. </param>
         /// <param name="maxPacketsPerSecond"> The max packets transferred per second. </param>
-        internal VpnClientConnectionHealthDetail(string vpnConnectionId, long? vpnConnectionDuration, string vpnConnectionTime, string publicIpAddress, string privateIpAddress, string vpnUserName, long? maxBandwidth, long? egressPacketsTransferred, long? egressBytesTransferred, long? ingressPacketsTransferred, long? ingressBytesTransferred, long? maxPacketsPerSecond)
+        internal VpnClientConnectionHealthDetail(string vpnConnectionId, long? vpnConnectionDuration, string vpnConnectionTime, string publicIPAddress, string privateIPAddress, string vpnUserName, long? maxBandwidth, long? egressPacketsTransferred, long? egressBytesTransferred, long? ingressPacketsTransferred, long? ingressBytesTransferred, long? maxPacketsPerSecond)
         {
             VpnConnectionId = vpnConnectionId;
             VpnConnectionDuration = vpnConnectionDuration;
             VpnConnectionTime = vpnConnectionTime;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             VpnUserName = vpnUserName;
             MaxBandwidth = maxBandwidth;
             EgressPacketsTransferred = egressPacketsTransferred;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The start time of a connected vpn client. </summary>
         public string VpnConnectionTime { get; }
         /// <summary> The public Ip of a connected vpn client. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
         /// <summary> The assigned private Ip of a connected vpn client. </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
         /// <summary> The user name of a connected vpn client. </summary>
         public string VpnUserName { get; }
         /// <summary> The max band width. </summary>

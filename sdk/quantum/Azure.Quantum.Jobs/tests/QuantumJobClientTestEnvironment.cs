@@ -10,10 +10,10 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientTestEnvironment : TestEnvironment
     {
-        public string WorkspaceName => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_NAME") ?? QuantumJobClientRecordedTestSanitizer.WORKSPACE;
-        public string WorkspaceLocation => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_LOCATION") ?? QuantumJobClientRecordedTestSanitizer.LOCATION;
-        public string WorkspaceResourceGroup => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_RG") ?? QuantumJobClientRecordedTestSanitizer.RESOURCE_GROUP;
-        public new string SubscriptionId => Environment.GetEnvironmentVariable("SUBSCRIPTION_ID") ?? QuantumJobClientRecordedTestSanitizer.ZERO_UID;
+        public string WorkspaceName => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_NAME") ?? QuantumJobClientLiveTests.WORKSPACE;
+        public string WorkspaceLocation => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_LOCATION") ?? QuantumJobClientLiveTests.LOCATION;
+        public string WorkspaceResourceGroup => Environment.GetEnvironmentVariable("AZURE_QUANTUM_WORKSPACE_RG") ?? QuantumJobClientLiveTests.RESOURCE_GROUP;
+        public new string SubscriptionId => Environment.GetEnvironmentVariable("SUBSCRIPTION_ID") ?? QuantumJobClientLiveTests.ZERO_UID;
 
         public string GetRandomId(string idName)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<MetricName> name = default;
             Optional<PrimaryAggregationType> primaryAggregationType = default;
-            Optional<string> resourceUri = default;
+            Optional<Uri> resourceUri = default;
             Optional<UnitDefinitionType> unit = default;
             Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +45,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("resourceUri"))
                 {
-                    resourceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceUri = null;
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkRuleSetListResult
+    internal partial class NetworkRuleSetListResult
     {
         internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> name0 = default;
             Optional<string> health = default;
             Optional<string> description = default;
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new OperationsHealth(id, name, type, name0.Value, health.Value, description.Value);
+            return new OperationsHealth(id, name, type, systemData, name0.Value, health.Value, description.Value);
         }
     }
 }

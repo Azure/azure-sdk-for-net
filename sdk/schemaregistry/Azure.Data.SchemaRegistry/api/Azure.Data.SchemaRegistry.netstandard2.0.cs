@@ -21,7 +21,9 @@ namespace Azure.Data.SchemaRegistry
     {
         internal SchemaProperties() { }
         public Azure.Data.SchemaRegistry.SchemaFormat Format { get { throw null; } }
+        public string GroupName { get { throw null; } }
         public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class SchemaRegistryClient
     {
@@ -46,7 +48,10 @@ namespace Azure.Data.SchemaRegistry
     }
     public static partial class SchemaRegistryModelFactory
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Data.SchemaRegistry.SchemaProperties SchemaProperties(Azure.Data.SchemaRegistry.SchemaFormat format, string schemaId) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Data.SchemaRegistry.SchemaProperties SchemaProperties(Azure.Data.SchemaRegistry.SchemaFormat format, string schemaId, string groupName, string name) { throw null; }
     }
     public partial class SchemaRegistrySchema
     {

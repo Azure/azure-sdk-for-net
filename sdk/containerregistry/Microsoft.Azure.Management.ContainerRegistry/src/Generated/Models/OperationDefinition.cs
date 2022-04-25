@@ -40,12 +40,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry operation.</param>
         /// <param name="serviceSpecification">The definition of Azure
         /// Monitoring service.</param>
-        public OperationDefinition(string origin = default(string), string name = default(string), OperationDisplayDefinition display = default(OperationDisplayDefinition), OperationServiceSpecificationDefinition serviceSpecification = default(OperationServiceSpecificationDefinition))
+        /// <param name="isDataAction">This property indicates if the operation
+        /// is an action or a data action
+        /// ref:
+        /// https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#management-and-data-operations</param>
+        public OperationDefinition(string origin = default(string), string name = default(string), OperationDisplayDefinition display = default(OperationDisplayDefinition), OperationServiceSpecificationDefinition serviceSpecification = default(OperationServiceSpecificationDefinition), bool? isDataAction = default(bool?))
         {
             Origin = origin;
             Name = name;
             Display = display;
             ServiceSpecification = serviceSpecification;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -79,6 +84,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceSpecification")]
         public OperationServiceSpecificationDefinition ServiceSpecification { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property indicates if the operation is an action
+        /// or a data action
+        /// ref:
+        /// https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#management-and-data-operations
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
     }
 }

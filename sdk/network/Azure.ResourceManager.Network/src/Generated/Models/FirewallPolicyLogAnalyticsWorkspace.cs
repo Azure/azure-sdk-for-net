@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -29,6 +30,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Region to configure the Workspace. </summary>
         public string Region { get; set; }
         /// <summary> The workspace Id for Firewall Policy Insights. </summary>
-        public WritableSubResource WorkspaceId { get; set; }
+        internal WritableSubResource WorkspaceId { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier WorkspaceIdId
+        {
+            get => WorkspaceId is null ? default : WorkspaceId.Id;
+            set
+            {
+                if (WorkspaceId is null)
+                    WorkspaceId = new WritableSubResource();
+                WorkspaceId.Id = value;
+            }
+        }
     }
 }

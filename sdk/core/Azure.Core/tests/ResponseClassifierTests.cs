@@ -47,5 +47,55 @@ namespace Azure.Core.Tests
 
             Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
         }
+
+        [Test]
+        [TestCase(100, false)]
+        [TestCase(200, false)]
+        [TestCase(201, false)]
+        [TestCase(202, false)]
+        [TestCase(204, false)]
+        [TestCase(300, false)]
+        [TestCase(304, false)]
+        [TestCase(400, true)]
+        [TestCase(404, true)]
+        [TestCase(412, true)]
+        [TestCase(429, true)]
+        [TestCase(500, true)]
+        [TestCase(502, true)]
+        [TestCase(503, true)]
+        [TestCase(504, true)]
+        public void SharedClassifierClassifiesError(int code, bool isError)
+        {
+            var classifier = ResponseClassifier.Shared;
+            var message = new HttpMessage(new MockRequest(), classifier);
+            message.Response = new MockResponse(code);
+
+            Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        }
+
+        [Test]
+        [TestCase(100, false)]
+        [TestCase(200, false)]
+        [TestCase(201, false)]
+        [TestCase(202, false)]
+        [TestCase(204, false)]
+        [TestCase(300, false)]
+        [TestCase(304, false)]
+        [TestCase(400, true)]
+        [TestCase(404, true)]
+        [TestCase(412, true)]
+        [TestCase(429, true)]
+        [TestCase(500, true)]
+        [TestCase(502, true)]
+        [TestCase(503, true)]
+        [TestCase(504, true)]
+        public void SharedClassifierClassifiesErrorResponse(int code, bool isError)
+        {
+            var classifier = ResponseClassifier.Shared;
+            var message = new HttpMessage(new MockRequest(), classifier);
+            message.Response = new MockResponse(code);
+
+            Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        }
     }
 }

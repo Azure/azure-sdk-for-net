@@ -7,15 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>2.0.0-preview</Version>
+		<Version>2.1.1-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Update TDE operations to use "2021-02-01-preview" API version
-- Backup storage redundancy now has GeoZone option and this is why API version upgrade was needed (2021-05-01-preview) for following operations: ManagedInstances, Databases, LongTermRetentionBackups, LongTermRetentionManagedInstanceBackups,
-RestorableDroppedDatabases, RestorableDroppedManagedDatabases, ServerConnecionPolicies
-- ManagedInstances StorageAccountType parameter is now replaced with RequestedBackupStorageRedundancy and CurrentBackupStorageRedundancy
+- Add optional parameter SourceResourceId to Databases, which allows cross-subscription restore for DataWarehouse edition 
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

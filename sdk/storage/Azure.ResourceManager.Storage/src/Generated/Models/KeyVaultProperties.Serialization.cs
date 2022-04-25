@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyvaulturi");
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<string> keyname = default;
             Optional<string> keyversion = default;
-            Optional<string> keyvaulturi = default;
+            Optional<Uri> keyvaulturi = default;
             Optional<string> currentVersionedKeyIdentifier = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("keyvaulturi"))
                 {
-                    keyvaulturi = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyvaulturi = null;
+                        continue;
+                    }
+                    keyvaulturi = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentVersionedKeyIdentifier"))

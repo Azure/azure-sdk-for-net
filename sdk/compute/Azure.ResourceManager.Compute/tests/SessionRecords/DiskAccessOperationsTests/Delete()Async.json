@@ -381,7 +381,7 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220118T034018Z:a45b0f6a-336e-40b2-99e2-e6a4db93289e",
         "x-ms-served-by": "4bf15084-9f45-4a17-82a6-013632a884fb_132726572129482938"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westus2/DiskOperations/8dd4ec6d-124d-4d53-8f24-616b9d4e18cc?p=4bf15084-9f45-4a17-82a6-013632a884fb\u0026api-version=2021-08-01",

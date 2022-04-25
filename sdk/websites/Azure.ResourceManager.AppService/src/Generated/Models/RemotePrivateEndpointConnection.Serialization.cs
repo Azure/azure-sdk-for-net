@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -34,11 +35,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
-                foreach (var item in IpAddresses)
+                foreach (var item in IPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
@@ -78,6 +80,11 @@ namespace Azure.ResourceManager.AppService.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RemotePrivateEndpointConnection(id, name, type, kind.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses));
+            return new RemotePrivateEndpointConnection(id, name, type, systemData, kind.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses));
         }
     }
 }

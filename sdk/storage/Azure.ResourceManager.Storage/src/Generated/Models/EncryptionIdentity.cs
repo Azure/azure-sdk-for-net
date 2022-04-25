@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of EncryptionIdentity. </summary>
         /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the storage account. </param>
-        internal EncryptionIdentity(string encryptionUserAssignedIdentity)
+        /// <param name="encryptionFederatedIdentityClientId"> ClientId of the multi-tenant application to be used in conjunction with the user-assigned identity for cross-tenant customer-managed-keys server-side encryption on the storage account. </param>
+        internal EncryptionIdentity(string encryptionUserAssignedIdentity, string encryptionFederatedIdentityClientId)
         {
             EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
+            EncryptionFederatedIdentityClientId = encryptionFederatedIdentityClientId;
         }
 
         /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the storage account. </summary>
         public string EncryptionUserAssignedIdentity { get; set; }
+        /// <summary> ClientId of the multi-tenant application to be used in conjunction with the user-assigned identity for cross-tenant customer-managed-keys server-side encryption on the storage account. </summary>
+        public string EncryptionFederatedIdentityClientId { get; set; }
     }
 }

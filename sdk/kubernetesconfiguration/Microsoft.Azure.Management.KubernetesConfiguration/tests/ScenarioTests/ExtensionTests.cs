@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
 
     public class ExtensionInstanceTest
@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteExtensionInstanceWithoutIdentity()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "kctestcluster",
+                name: "arc-cluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "kubernetesconfiguration"
+                resourceGroup: "dotnet-sdk-tests"
             );
 
             Extension extensionInstance = new Extension(
-                name: "openservicemesh",
+                name: "dapr",
                 type: ExtensionTestBase.ConfigurationType,
-                extensionType: "microsoft.openservicemesh",
+                extensionType: "microsoft.dapr",
                 autoUpgradeMinorVersion: false,
-                releaseTrain: "staging",
-                version: "0.1.0",
+                releaseTrain: "stable",
+                version: "1.6.0",
                 scope: new Scope(
                     cluster: new ScopeCluster(
-                        releaseNamespace: "arc-osm-system"
+                        releaseNamespace: "dapr-system"
                     )
                 )
             );
@@ -74,22 +74,22 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteExtensionInstanceWithIdentity()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "kctestcluster",
+                name: "arc-cluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "kubernetesconfiguration"
+                resourceGroup: "dotnet-sdk-tests"
             );
 
             Extension extensionInstance = new Extension(
-                name: "microsoft.azuredefender.kubernetes",
+                name: "openservicemesh",
                 type: ExtensionTestBase.ConfigurationType,
-                extensionType: "microsoft.azuredefender.kubernetes",
+                extensionType: "microsoft.openservicemesh",
                 autoUpgradeMinorVersion: false,
-                releaseTrain: "Stable",
-                version: "0.4.61",
+                releaseTrain: "pilot",
+                version: "1.0.0",
                 scope: new Scope(
                     cluster: new ScopeCluster(
-                        releaseNamespace: "azuredefender"
+                        releaseNamespace: "servicemesh-system"
                     )
                 ),
                 identity: new Identity(

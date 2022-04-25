@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests
             var options = new ArmClientOptions();
             options.SetApiVersion(vmType, "foo");
             options.SetApiVersion(vmType, "bar");
-            options.TryGetApiVersion(vmType, out var actualVersion);
+            options.ResourceApiVersionOverrides.TryGetValue(vmType, out var actualVersion);
             Assert.AreEqual("bar", actualVersion);
         }
 

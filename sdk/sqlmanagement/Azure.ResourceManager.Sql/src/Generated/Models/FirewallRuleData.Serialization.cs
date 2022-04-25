@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIpAddress))
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress");
-                writer.WriteStringValue(StartIpAddress);
+                writer.WriteStringValue(StartIPAddress);
             }
-            if (Optional.IsDefined(EndIpAddress))
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress");
-                writer.WriteStringValue(EndIpAddress);
+                writer.WriteStringValue(EndIPAddress);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

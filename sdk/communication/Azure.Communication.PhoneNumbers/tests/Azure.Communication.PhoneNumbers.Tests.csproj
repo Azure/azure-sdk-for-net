@@ -25,5 +25,6 @@
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />
     <None Include="..\samples\Sample_PhoneNumbersClientAsync.md" Link="samples\Sample_PhoneNumbersClientAsync.md" />
+    <None Include="..\phone-numbers-livetest-matrix.json"/>
   </ItemGroup>
 </Project>

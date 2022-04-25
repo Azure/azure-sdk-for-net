@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 #if SNIPPET
-            string fileUri = "<fileUri>";
+            Uri fileUri = new Uri("<fileUri>");
 #else
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
-                if (kvp.Value.Content == null)
+                if (kvp.Value == null)
                 {
                     Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
                 }

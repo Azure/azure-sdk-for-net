@@ -26,17 +26,7 @@ namespace Azure.Core.Experimental.Tests
         {
         }
 
-        private ResponseClassifier Classifier200
-        {
-            get
-            {
-                if (_classifier200 == null)
-                {
-                    _classifier200 = new ResponseClassifier200();
-                }
-                return _classifier200;
-            }
-        }
+        private ResponseClassifier Classifier200 => _classifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         /// <summary> Initializes a new instance of PetStoreClient. </summary>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
@@ -70,29 +60,12 @@ namespace Azure.Core.Experimental.Tests
         public virtual async Task<Response> GetPetAsync(string id, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using HttpMessage message = CreateGetPetRequest(id, context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, context?.CancellationToken ?? default).ConfigureAwait(false);
-                var errorOptions = context?.ErrorOptions ?? ErrorOptions.Default;
-
-                if (errorOptions == ErrorOptions.NoThrow)
-                {
-                    return message.Response;
-                }
-                else
-                {
-                    if (!message.ResponseClassifier.IsErrorResponse(message))
-                    {
-                        return message.Response;
-                    }
-                    else
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
+                using HttpMessage message = CreateGetPetRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -108,30 +81,12 @@ namespace Azure.Core.Experimental.Tests
         public virtual Response GetPet(string id, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using HttpMessage message = CreateGetPetRequest(id, context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
             {
-                Pipeline.Send(message, context?.CancellationToken ?? default);
-                var errorOptions = context?.ErrorOptions ?? ErrorOptions.Default;
-
-                if (errorOptions == ErrorOptions.NoThrow)
-                {
-                    return message.Response;
-                }
-                else
-                {
-                    // This will change to message.Response.IsError in a later PR
-                    if (!message.ResponseClassifier.IsErrorResponse(message))
-                    {
-                        return message.Response;
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
+                using HttpMessage message = CreateGetPetRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -145,7 +100,7 @@ namespace Azure.Core.Experimental.Tests
         /// <param name="options"> The request options. </param>
         private HttpMessage CreateGetPetRequest(string id, RequestContext context = null)
         {
-            var message = Pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage(context, Classifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -154,22 +109,7 @@ namespace Azure.Core.Experimental.Tests
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = Classifier200;
             return message;
-        }
-
-        private class ResponseClassifier200 : ResponseClassifier
-        {
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        return false;
-                    default:
-                        return true;
-                }
-            }
         }
     }
 }

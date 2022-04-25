@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetResourceUsage()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            _ = await CreateCdnProfile(rg, profileName, SkuName.StandardAkamai);
+            _ = await CreateCdnProfile(rg, profileName, CdnSkuName.StandardAkamai);
             int count = 0;
             await foreach (var tempResourceUsage in subscription.GetResourceUsagesAsync())
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     Assert.AreEqual(tempResourceUsage.Limit, 25);
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.AreEqual(count, 2);
         }
     }
 }

@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri");
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -46,10 +48,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<OperationMode> operationMode = default;
             Optional<StorageKeyType> storageKeyType = default;
             Optional<string> storageKey = default;
-            Optional<string> storageUri = default;
+            Optional<Uri> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -65,6 +68,11 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -103,14 +111,19 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("storageUri"))
                         {
-                            storageUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageUri = null;
+                                continue;
+                            }
+                            storageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DatabaseExtensions(id, name, type, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value);
+            return new DatabaseExtensions(id, name, type, systemData, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value);
         }
     }
 }

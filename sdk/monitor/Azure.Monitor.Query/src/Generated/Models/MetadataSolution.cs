@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="id"> The ID of the Log Analytics solution. </param>
         /// <param name="name"> The name of the Log Analytics solution. </param>
         /// <param name="related"> The related metadata items for the Log Analytics solution. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/>, or <paramref name="related"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="related"/> is null. </exception>
         internal MetadataSolution(string id, string name, MetadataSolutionRelated related)
         {
             if (id == null)

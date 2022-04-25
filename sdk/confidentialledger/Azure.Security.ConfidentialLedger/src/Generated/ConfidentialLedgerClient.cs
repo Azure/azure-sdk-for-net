@@ -22,9 +22,11 @@ namespace Azure.Security.ConfidentialLedger
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _ledgerUri;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -54,11 +56,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
@@ -92,11 +92,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetConstitution(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
@@ -134,11 +132,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
@@ -176,11 +172,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetConsortiumMembers(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
@@ -214,11 +208,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
@@ -252,11 +244,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
@@ -298,11 +288,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
@@ -344,11 +332,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
@@ -367,6 +353,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -389,13 +376,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
@@ -414,6 +399,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -436,13 +422,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
@@ -460,6 +444,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -490,13 +475,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
@@ -514,6 +497,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -544,13 +528,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
@@ -568,6 +550,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -586,13 +569,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
@@ -610,6 +591,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -628,13 +610,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
@@ -670,11 +650,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
@@ -710,11 +688,9 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
@@ -732,6 +708,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -744,13 +721,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
@@ -768,6 +743,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -780,13 +756,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteUser(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
@@ -804,6 +778,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -822,13 +797,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
@@ -846,6 +819,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -864,13 +838,11 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetUser(string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
@@ -889,6 +861,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -913,14 +886,12 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
@@ -939,6 +910,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -963,14 +935,12 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
@@ -1014,11 +984,14 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return GetLedgerEntriesImplementationAsync("ConfidentialLedgerClient.GetLedgerEntries", subLedgerId, fromTransactionId, toTransactionId, context);
+        }
+
+        private AsyncPageable<BinaryData> GetLedgerEntriesImplementationAsync(string diagnosticsScopeName, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1063,11 +1036,14 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return GetLedgerEntriesImplementation("ConfidentialLedgerClient.GetLedgerEntries", subLedgerId, fromTransactionId, toTransactionId, context);
+        }
+
+        private Pageable<BinaryData> GetLedgerEntriesImplementation(string diagnosticsScopeName, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1084,7 +1060,7 @@ namespace Azure.Security.ConfidentialLedger
 
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1093,13 +1069,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetConsortiumMembersRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1108,13 +1083,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1123,13 +1097,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1150,13 +1123,12 @@ namespace Azure.Security.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1171,13 +1143,12 @@ namespace Azure.Security.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1191,13 +1162,12 @@ namespace Azure.Security.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetReceiptRequest(string transactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1208,13 +1178,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetTransactionStatusRequest(string transactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1225,13 +1194,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1244,13 +1212,12 @@ namespace Azure.Security.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteUserRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1260,13 +1227,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUserRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1276,13 +1242,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1294,13 +1259,12 @@ namespace Azure.Security.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetLedgerEntriesNextPageRequest(string nextLink, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1308,35 +1272,12 @@ namespace Azure.Security.ConfidentialLedger
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

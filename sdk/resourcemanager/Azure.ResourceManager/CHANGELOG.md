@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,60 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-04-07)
+This is the first stable release of the Azure Resources management core library. 
+
+### Breaking Changes
+
+Minor changes since the public beta release:
+- All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Tweaked some properties to right type.
+
+## 1.0.0-beta.9 (2022-03-31)
+
+### Features Added
+
+- New struct `ArmEnvironment`.
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- Moved class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
+- Moved class `ArmResource` and `ArmCollection` from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
+- Removed namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management`.
+- Removed class `ErrorDetail` and `ErrorAdditionalInfo`.
+- Removed `GetIfExists` methods from all the resource classes.
+- Changed `Scope` in `ArmClientOptions` to `ArmEnvironment`.
+- The constructor of `ArmClient` no longer accepts a `Uri` parameter, please use the `ArmEnvironment` in `ArmClientOptions` instead.
+- All properties of the type `object` were changed to `BinaryData`.
+
+## 1.0.0-beta.8 (2022-01-29)
+
+### Features Added
+
+- ManagementGroup: Added GetAvailableLocations methods.
+- GenericResourceData: Added a new property ExtendedLocation.
+- Support using different api versions for a service.
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- GenericResourceCollection: Parent changes from Subscription to Tenant.
+- GenericResourceCollection: GetAll method replaced by GetGenericResources in Subscription, GetByResourceGroup method replaced by GetGenericResources in ResourceGroup.
+- GenericResourceData: Now inherits from TrackedResourceExtended which also has ExtendedLocation and inherits from TrackedResource.
+- PredefinedTag: Changed from a resource to a non-resource, i.e. removed PredefinedTagCollection, PredefinedTag, renamed PredefinedTagData to PredefinedTag, the methods are moved to its Parent Subscription.
+- ResourceLinkCollection: body parameter is unflattened in CreateOrUpdate.
+- ManagementLockObject renamed to ManagementLock.
+- Removed GenericResourceFilter classes.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added ArmResource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Moved ResourceIdentifier and Location into Azure.Core.
+- Removed GetGenericResources overload methods that are used to construct GenericResources.
+- Removed CheckNameAvailabilityRequest, CheckNameAvailabilityResponse and CheckNameAvailabilityReason in common type.
 
 ## 1.0.0-beta.7 (2021-12-23)
 

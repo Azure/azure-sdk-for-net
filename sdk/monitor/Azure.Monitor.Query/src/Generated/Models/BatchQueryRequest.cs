@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="id"> The error details. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="workspace"> Workspace Id to be included in the query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/>, or <paramref name="workspace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/> or <paramref name="workspace"/> is null. </exception>
         public BatchQueryRequest(string id, QueryBody body, string workspace)
         {
             if (id == null)

@@ -88,6 +88,82 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             }
 
             /// <summary>
+            /// Lists the associated resources for this identity.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the identity belongs.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the identity resource.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression to apply to the query.
+            /// </param>
+            /// <param name='orderby'>
+            /// OData orderBy expression to apply to the query.
+            /// </param>
+            /// <param name='top'>
+            /// Number of records to return.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of records to skip.
+            /// </param>
+            /// <param name='skiptoken'>
+            /// A skip token is used to continue retrieving items after an operation
+            /// returns a partial result. If a previous response contains a nextLink
+            /// element, the value of the nextLink element will include a skipToken
+            /// parameter that specifies a starting point to use for subsequent calls.
+            /// </param>
+            public static IPage<AzureResource> ListAssociatedResources(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, string filter = default(string), string orderby = default(string), int? top = default(int?), int? skip = default(int?), string skiptoken = default(string))
+            {
+                return operations.ListAssociatedResourcesAsync(resourceGroupName, resourceName, filter, orderby, top, skip, skiptoken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the associated resources for this identity.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the identity belongs.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the identity resource.
+            /// </param>
+            /// <param name='filter'>
+            /// OData filter expression to apply to the query.
+            /// </param>
+            /// <param name='orderby'>
+            /// OData orderBy expression to apply to the query.
+            /// </param>
+            /// <param name='top'>
+            /// Number of records to return.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of records to skip.
+            /// </param>
+            /// <param name='skiptoken'>
+            /// A skip token is used to continue retrieving items after an operation
+            /// returns a partial result. If a previous response contains a nextLink
+            /// element, the value of the nextLink element will include a skipToken
+            /// parameter that specifies a starting point to use for subsequent calls.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AzureResource>> ListAssociatedResourcesAsync(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, string filter = default(string), string orderby = default(string), int? top = default(int?), int? skip = default(int?), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociatedResourcesWithHttpMessagesAsync(resourceGroupName, resourceName, filter, orderby, top, skip, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an identity in the specified subscription and resource
             /// group.
             /// </summary>
@@ -325,6 +401,40 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             public static async Task<IPage<Identity>> ListByResourceGroupNextAsync(this IUserAssignedIdentitiesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the associated resources for this identity.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AzureResource> ListAssociatedResourcesNext(this IUserAssignedIdentitiesOperations operations, string nextPageLink)
+            {
+                return operations.ListAssociatedResourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the associated resources for this identity.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AzureResource>> ListAssociatedResourcesNextAsync(this IUserAssignedIdentitiesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociatedResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

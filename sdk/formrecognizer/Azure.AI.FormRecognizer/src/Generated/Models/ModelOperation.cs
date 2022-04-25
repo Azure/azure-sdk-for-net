@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -41,9 +42,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, JsonElement error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation)
+        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
         {
             _error = error;
             Result = result;

@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<string> sourceResourceId = default;
             Optional<OperatingSystemTypes> osType = default;
@@ -50,6 +52,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -195,7 +202,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskRestorePointData(id, name, type, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, sourceResourceLocation.Value);
+            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, sourceResourceLocation.Value);
         }
     }
 }

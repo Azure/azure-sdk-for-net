@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information about the formal API definition for the app. </summary>
-    public partial class ApiDefinitionInfo
+    internal partial class ApiDefinitionInfo
     {
         /// <summary> Initializes a new instance of ApiDefinitionInfo. </summary>
         public ApiDefinitionInfo()
@@ -16,13 +18,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ApiDefinitionInfo. </summary>
-        /// <param name="url"> The URL of the API definition. </param>
-        internal ApiDefinitionInfo(string url)
+        /// <param name="uri"> The URL of the API definition. </param>
+        internal ApiDefinitionInfo(Uri uri)
         {
-            Url = url;
+            Uri = uri;
         }
 
         /// <summary> The URL of the API definition. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
     }
 }

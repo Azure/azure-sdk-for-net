@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdSecurityPolicy data model. </summary>
-    public partial class AfdSecurityPolicyData : ProxyResource
+    public partial class AfdSecurityPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         public AfdSecurityPolicyData()
@@ -21,15 +22,17 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
+        /// <param name="profileName"> The name of the profile which holds the security policy. </param>
         /// <param name="parameters"> object which contains security policy parameters. </param>
-        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, SecurityPolicyParameters parameters) : base(id, name, type, systemData)
+        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName, SecurityPolicyPropertiesParameters parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             Parameters = parameters;
         }
 
@@ -37,7 +40,20 @@ namespace Azure.ResourceManager.Cdn
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
+        /// <summary> The name of the profile which holds the security policy. </summary>
+        public string ProfileName { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyParameters Parameters { get; set; }
+        internal SecurityPolicyPropertiesParameters Parameters { get; set; }
+        /// <summary> The type of the Security policy to create. </summary>
+        internal SecurityPolicyType ParametersPolicyType
+        {
+            get => Parameters is null ? default : Parameters.PolicyType;
+            set
+            {
+                if (Parameters is null)
+                    Parameters = new SecurityPolicyPropertiesParameters();
+                Parameters.PolicyType = value;
+            }
+        }
     }
 }

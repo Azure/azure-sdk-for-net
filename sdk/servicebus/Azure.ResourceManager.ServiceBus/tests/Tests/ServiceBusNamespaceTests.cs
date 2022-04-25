@@ -18,11 +18,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class ServiceBusNamespaceTests : ServiceBusTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
+
         public ServiceBusNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteNamespace()
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //validate if created successfully
@@ -41,11 +43,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //delete namespace
-            await serviceBusNamespace.DeleteAsync(true);
+            await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            serviceBusNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
-            Assert.IsNull(serviceBusNamespace);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
@@ -60,13 +62,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             var parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new Models.Sku(SkuName.Premium)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = SkuTier.Premium
+                    Tier = ServiceBusSkuTier.Premium
                 },
                 ZoneRedundant = true
             };
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, parameters)).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
             Assert.IsTrue(serviceBusNamespace.Data.ZoneRedundant);
         }
@@ -80,11 +82,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            ServiceBusNamespaceUpdateOptions parameters = new ServiceBusNamespaceUpdateOptions(DefaultLocation);
+            ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);
@@ -107,15 +109,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
-            _ = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new ServiceBusNamespaceData(DefaultLocation))).Value;
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
-            _ = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
             int count = 0;
-            ServiceBusNamespace namespace1 = null;
-            ServiceBusNamespace namespace2 = null;
+            ServiceBusNamespaceResource namespace1 = null;
+            ServiceBusNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (ServiceBusNamespace serviceBusNamespace in namespaceCollection.GetAllAsync())
+            await foreach (ServiceBusNamespaceResource serviceBusNamespace in namespaceCollection.GetAllAsync())
             {
                 count++;
                 if (serviceBusNamespace.Id.Name == namespaceName1)
@@ -136,18 +138,18 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create two namespaces in two resourcegroups
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection1 = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceCollection namespaceCollection2 = resourceGroup.GetServiceBusNamespaces();
-            _ = (await namespaceCollection1.CreateOrUpdateAsync(true, namespaceName1, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new ServiceBusNamespaceData(DefaultLocation))).Value;
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
-            _ = (await namespaceCollection2.CreateOrUpdateAsync(true, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection2.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
             int count = 0;
-            ServiceBusNamespace namespace1 = null;
-            ServiceBusNamespace namespace2 = null;
+            ServiceBusNamespaceResource namespace1 = null;
+            ServiceBusNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetServiceBusNamespacesAsync())
+            await foreach (ServiceBusNamespaceResource serviceBusNamespace in DefaultSubscription.GetServiceBusNamespacesAsync())
             {
                 count++;
                 if (serviceBusNamespace.Id.Name == namespaceName1)
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
             await foreach (var _ in serviceBusNamespace.GetPrivateLinkResourcesAsync())
@@ -188,12 +190,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
             PrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetPrivateEndpointConnections();
 
             //create another namespace for connection
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespace serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //create an endpoint connection
             string connectionName = Recording.GenerateAssetName("endpointconnection");
@@ -204,7 +206,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     Id = serviceBusNamespace2.Id
                 }
             };
-            PrivateEndpointConnection privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(true, connectionName, parameter)).Value;
+            PrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
@@ -215,12 +217,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
-            List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<PrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
             Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
             //delete endpoint connection and validate
-            await privateEndpointConnection.DeleteAsync(true);
+            await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await privateEndpointConnectionCollection.ExistsAsync(connectionName));
         }
 
@@ -233,7 +235,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
             NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
 
             //create authorization rule
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -253,13 +255,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<NamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
             bool isContainAuthorizationRuleName = false;
             bool isContainDefaultRuleName = false;
-            foreach (NamespaceAuthorizationRule rule in rules)
+            foreach (NamespaceAuthorizationRuleResource rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -275,12 +277,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //delete authorization rule
-            await authorizationRule.DeleteAsync(true);
+            await authorizationRule.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted
             Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
@@ -298,7 +300,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
             NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
 
             //create authorization rule
@@ -307,7 +309,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(true, ruleName, parameter)).Value;
+            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -341,17 +343,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters.Sku = new Models.Sku(SkuName.Premium)
+            createParameters.Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
             {
-                Tier = SkuTier.Premium
+                Tier = ServiceBusSkuTier.Premium
             };
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, createParameters)).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, createParameters)).Value;
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
             var parameters = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
                 Subnets = {
                     new SubnetData
                     {
@@ -374,7 +375,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 },
                 Location = "eastus2"
             };
-            VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, parameters)).Value;
+            parameters.AddressPrefixes.Add("10.0.0.0/16");
+            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
@@ -399,10 +401,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                         new NetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await serviceBusNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(true, parameter);
+            await serviceBusNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Completed, parameter);
 
             //get the network rule set
-            NetworkRuleSet networkRuleSet = await serviceBusNamespace.GetNetworkRuleSet().GetAsync();
+            NetworkRuleSetResource networkRuleSet = await serviceBusNamespace.GetNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
             Assert.NotNull(networkRuleSet.Data.IPRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
@@ -410,7 +412,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
 
             //delete virtual network
-            await virtualNetwork.DeleteAsync(true);
+            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -423,33 +425,33 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters1 = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters1.Sku = new Models.Sku(SkuName.Premium)
+            createParameters1.Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
             {
-                Tier = SkuTier.Premium
+                Tier = ServiceBusSkuTier.Premium
             };
-            ServiceBusNamespace serviceBusNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, createParameters1)).Value;
+            ServiceBusNamespaceResource serviceBusNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, createParameters1)).Value;
 
             //create namespace with standard
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS);
-            createParameters2.Sku = new Models.Sku(SkuName.Standard)
+            createParameters2.Sku = new ServiceBusSku(ServiceBusSkuName.Standard)
             {
-                Tier = SkuTier.Standard
+                Tier = ServiceBusSkuTier.Standard
             };
-            ServiceBusNamespace serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, createParameters2)).Value;
+            ServiceBusNamespaceResource serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, createParameters2)).Value;
 
             //add 10 queues to standard namespace
             for (int i = 0; i < 10; i++)
             {
                 string queueName = Recording.GenerateAssetName("queue" + i);
-                _ = await serviceBusNamespace2.GetServiceBusQueues().CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData());
+                _ = await serviceBusNamespace2.GetServiceBusQueues().CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData());
             }
 
             //add 10 topics to standard namespace
             for (int i = 0; i < 10; i++)
             {
                 string topicName = Recording.GenerateAssetName("topic" + i);
-                _ = await serviceBusNamespace2.GetServiceBusTopics().CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData());
+                _ = await serviceBusNamespace2.GetServiceBusTopics().CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData());
             }
 
             //create the migration config, it's name should always be $default
@@ -459,10 +461,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 PostMigrationName = postMigrationName,
                 TargetNamespace = serviceBusNamespace1.Id.ToString()
             };
-            _ = await serviceBusNamespace2.GetMigrationConfigProperties().CreateOrUpdateAsync(true, MigrationConfigurationName.Default, migrationParameters);
+            _ = await serviceBusNamespace2.GetMigrationConfigProperties().CreateOrUpdateAsync(WaitUntil.Completed, MigrationConfigurationName.Default, migrationParameters);
 
             //wait for migration state
-            MigrationConfigProperties migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
+            MigrationConfigPropertiesResource migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
             int count = 0;
             while (count < 100 && (migrationConfig.Data.MigrationState != "Active" || (migrationConfig.Data.PendingReplicationOperationsCount.HasValue && migrationConfig.Data.PendingReplicationOperationsCount != 0)))
             {
@@ -474,16 +476,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 count++;
             }
             Assert.NotNull(migrationConfig);
-            List<MigrationConfigProperties> migrationConfigs = await serviceBusNamespace2.GetMigrationConfigProperties().GetAllAsync().ToEnumerableAsync();
+            List<MigrationConfigPropertiesResource> migrationConfigs = await serviceBusNamespace2.GetMigrationConfigProperties().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, migrationConfigs.Count);
 
             //complete migration
             await migrationConfig.CompleteMigrationAsync();
 
             //validate migration
-            List<ServiceBusTopic> topics = await serviceBusNamespace1.GetServiceBusTopics().GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusTopicResource> topics = await serviceBusNamespace1.GetServiceBusTopics().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(10, topics.Count);
-            List<ServiceBusQueue> queues = await serviceBusNamespace1.GetServiceBusQueues().GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusQueueResource> queues = await serviceBusNamespace1.GetServiceBusQueues().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(10, queues.Count);
 
             //wait for migration config and premium namespace
@@ -501,7 +503,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await GetSucceededNamespace(serviceBusNamespace1);
         }
 
-        public async Task<ServiceBusNamespace> GetSucceededNamespace(ServiceBusNamespace serviceBusNamespace)
+        public async Task<ServiceBusNamespaceResource> GetSucceededNamespace(ServiceBusNamespaceResource serviceBusNamespace)
         {
             int i = 0;
             serviceBusNamespace = await serviceBusNamespace.GetAsync();

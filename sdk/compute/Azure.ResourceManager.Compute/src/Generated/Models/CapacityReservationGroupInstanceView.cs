@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The CapacityReservationGroupInstanceView. </summary>
-    public partial class CapacityReservationGroupInstanceView
+    internal partial class CapacityReservationGroupInstanceView
     {
         /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
         internal CapacityReservationGroupInstanceView()

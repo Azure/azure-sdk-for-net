@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='subscriptionId'>
         /// The ID of the target subscription.
         /// </param>
+        /// <param name='includeExtendedLocations'>
+        /// Whether to include extended locations.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -49,7 +52,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Location>>> ListLocationsWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Location>>> ListLocationsWithHttpMessagesAsync(string subscriptionId, bool? includeExtendedLocations = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets details about a specified subscription.
         /// </summary>

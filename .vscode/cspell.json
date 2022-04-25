@@ -27,7 +27,6 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
-
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -52,6 +51,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "cref",
     "deduplication",
     "deserializable",
     "deserializes",
@@ -98,6 +98,14 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
@@ -126,7 +134,9 @@
       "words": [
         "apim",
         "nigiri",
-        "qnas"
+        "qnas",
+        "petabit",
+        "Picometer"
       ]
     },
     {
@@ -143,6 +153,16 @@
         "VCenter",
         "VMware",
         "vSphere"
+      ]
+    },
+    {
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
       ]
     },
     {

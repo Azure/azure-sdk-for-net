@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ApplicationGateway and their operations over its parent. </summary>
-    public partial class ApplicationGatewayCollection : ArmCollection, IEnumerable<ApplicationGateway>, IAsyncEnumerable<ApplicationGateway>
+    /// <summary>
+    /// A class representing a collection of <see cref="ApplicationGatewayResource" /> and their operations.
+    /// Each <see cref="ApplicationGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApplicationGatewayCollection" /> instance call the GetApplicationGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class ApplicationGatewayCollection : ArmCollection, IEnumerable<ApplicationGatewayResource>, IAsyncEnumerable<ApplicationGatewayResource>
     {
         private readonly ClientDiagnostics _applicationGatewayClientDiagnostics;
         private readonly ApplicationGatewaysRestOperations _applicationGatewayRestClient;
@@ -34,12 +36,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ApplicationGatewayCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ApplicationGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
-            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
+            _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApplicationGatewayResource.ResourceType, out string applicationGatewayApiVersion);
+            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,66 +50,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates the specified application gateway. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ApplicationGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationGatewayName, ApplicationGatewayData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApplicationGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken);
-                var operation = new ApplicationGatewayCreateOrUpdateOperation(ArmClient, _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified application gateway. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ApplicationGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationGatewayName, ApplicationGatewayData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _applicationGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayCreateOrUpdateOperation(ArmClient, _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _applicationGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ApplicationGatewayResource>(new ApplicationGatewayOperationSource(Client), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -117,23 +87,31 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified application gateway. </summary>
+        /// <summary>
+        /// Creates or updates the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="data"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public virtual Response<ApplicationGateway> Get(string applicationGatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ApplicationGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
-                if (response.Value == null)
-                    throw _applicationGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
+                var response = _applicationGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, data, cancellationToken);
+                var operation = new NetworkArmOperation<ApplicationGatewayResource>(new ApplicationGatewayOperationSource(Client), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -142,12 +120,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified application gateway. </summary>
+        /// <summary>
+        /// Gets the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> GetAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGatewayResource>> GetAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
@@ -157,8 +139,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _applicationGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,23 +149,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public virtual Response<ApplicationGateway> GetIfExists(string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewayResource> Get(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken);
+                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ApplicationGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,128 +178,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <summary>
+        /// Lists all application gateways in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways
+        /// Operation Id: ApplicationGateways_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGateway>> GetIfExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ApplicationGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public virtual Response<bool> Exists(string applicationGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(applicationGatewayName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
-
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(applicationGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all application gateways in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGateway> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<ApplicationGateway> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationGateway> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists all application gateways in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGateway> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApplicationGateway>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApplicationGatewayResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _applicationGatewayRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,14 +202,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<ApplicationGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApplicationGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _applicationGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,21 +220,67 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="ApplicationGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Lists all application gateways in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways
+        /// Operation Id: ApplicationGateways_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
+            Page<ApplicationGatewayResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApplicationGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _applicationGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(ApplicationGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -362,21 +289,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Filters the list of <see cref="ApplicationGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
+        /// <param name="applicationGatewayName"> The name of the application gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
+        public virtual Response<bool> Exists(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(ApplicationGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,7 +316,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<ApplicationGateway> IEnumerable<ApplicationGateway>.GetEnumerator()
+        IEnumerator<ApplicationGatewayResource> IEnumerable<ApplicationGatewayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -395,7 +326,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ApplicationGateway> IAsyncEnumerable<ApplicationGateway>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApplicationGatewayResource> IAsyncEnumerable<ApplicationGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

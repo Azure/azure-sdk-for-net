@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> state = default;
             Optional<string> partnerServer = default;
             foreach (var property in element.EnumerateObject())
@@ -62,6 +64,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -85,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerCommunicationLinkData(id, name, type, location.Value, kind.Value, state.Value, partnerServer.Value);
+            return new ServerCommunicationLinkData(id, name, type, systemData, location.Value, kind.Value, state.Value, partnerServer.Value);
         }
     }
 }

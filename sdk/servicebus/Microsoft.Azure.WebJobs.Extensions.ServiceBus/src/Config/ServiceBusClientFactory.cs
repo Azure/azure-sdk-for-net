@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
             : _messagingProvider.CreateClient(connectionInfo.FullyQualifiedNamespace, connectionInfo.Credential, _options.ToClientOptions());
         }
 
-        internal ServiceBusAdministrationClient CreateAdministrationClient(string connection)
+        internal virtual ServiceBusAdministrationClient CreateAdministrationClient(string connection)
         {
             var connectionInfo = ResolveConnectionInformation(connection);
             if (connectionInfo.ConnectionString != null)

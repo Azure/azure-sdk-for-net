@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -14,27 +15,38 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class KeyVaultSecretReference
     {
         /// <summary> Initializes a new instance of KeyVaultSecretReference. </summary>
-        /// <param name="secretUrl"> The URL referencing a secret in a Key Vault. </param>
+        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretUrl"/> or <paramref name="sourceVault"/> is null. </exception>
-        public KeyVaultSecretReference(string secretUrl, WritableSubResource sourceVault)
+        /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault)
         {
-            if (secretUrl == null)
+            if (secretUri == null)
             {
-                throw new ArgumentNullException(nameof(secretUrl));
+                throw new ArgumentNullException(nameof(secretUri));
             }
             if (sourceVault == null)
             {
                 throw new ArgumentNullException(nameof(sourceVault));
             }
 
-            SecretUrl = secretUrl;
+            SecretUri = secretUri;
             SourceVault = sourceVault;
         }
 
         /// <summary> The URL referencing a secret in a Key Vault. </summary>
-        public string SecretUrl { get; set; }
+        public Uri SecretUri { get; set; }
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        internal WritableSubResource SourceVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVaultId
+        {
+            get => SourceVault is null ? default : SourceVault.Id;
+            set
+            {
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
+            }
+        }
     }
 }

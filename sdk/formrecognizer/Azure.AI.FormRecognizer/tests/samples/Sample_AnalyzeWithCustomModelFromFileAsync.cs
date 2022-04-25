@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri);
+            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 
             await buildOperation.WaitForCompletionAsync();
 

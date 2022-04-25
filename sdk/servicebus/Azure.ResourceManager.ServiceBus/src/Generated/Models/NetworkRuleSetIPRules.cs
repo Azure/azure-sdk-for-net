@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetIPRules. </summary>
-        /// <param name="iPMask"> IP Mask. </param>
+        /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal NetworkRuleSetIPRules(string iPMask, NetworkRuleIPAction? action)
+        internal NetworkRuleSetIPRules(string ipMask, NetworkRuleIPAction? action)
         {
-            IPMask = iPMask;
+            IPMask = ipMask;
             Action = action;
         }
 

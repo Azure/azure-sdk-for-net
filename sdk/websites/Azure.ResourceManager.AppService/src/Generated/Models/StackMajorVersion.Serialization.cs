@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -68,7 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in AppSettingsDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -79,7 +84,11 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in SiteConfigPropertiesDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -96,8 +105,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isPreview = default;
             Optional<bool> isDeprecated = default;
             Optional<bool> isHidden = default;
-            Optional<IDictionary<string, object>> appSettingsDictionary = default;
-            Optional<IDictionary<string, object>> siteConfigPropertiesDictionary = default;
+            Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
+            Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"))
@@ -182,10 +191,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     appSettingsDictionary = dictionary;
                     continue;
@@ -197,10 +206,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     siteConfigPropertiesDictionary = dictionary;
                     continue;

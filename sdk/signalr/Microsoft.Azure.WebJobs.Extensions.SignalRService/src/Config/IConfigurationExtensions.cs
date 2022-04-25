@@ -9,6 +9,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using static Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -55,13 +56,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public static bool TryGetNamedEndpointFromIdentity(this IConfigurationSection section, AzureComponentFactory azureComponentFactory, out ServiceEndpoint endpoint)
         {
-            var text = section["ServiceUri"];
+            var text = section[ServiceUriKey];
             if (text != null)
             {
                 var key = section.Key;
-                var value = section.GetValue("Type", EndpointType.Primary);
+                var value = section.GetValue(TypeKey, EndpointType.Primary);
                 var credential = azureComponentFactory.CreateTokenCredential(section);
-                endpoint = new ServiceEndpoint(new Uri(text), credential, value, key);
+                var serverEndpoint = section.GetValue<Uri>(ServerEndpointKey);
+                var clientEndpoint = section.GetValue<Uri>(ClientEndpointKey);
+                endpoint = new ServiceEndpoint(new Uri(text), credential, value, key, serverEndpoint, clientEndpoint);
                 return true;
             }
 
@@ -94,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     HubProtocol.NewtonsoftJson => new NewtonsoftJsonObjectSerializer(),
                     HubProtocol.SystemTextJson => new JsonObjectSerializer(),
-                    _ => throw new NotSupportedException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
+                    _ => throw new InvalidOperationException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
                 };
                 return true;
             }
