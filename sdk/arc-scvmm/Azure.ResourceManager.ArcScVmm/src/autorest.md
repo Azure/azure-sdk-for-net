@@ -59,5 +59,5 @@ directive:
       to: ScVmmVirtualNetwork
   - rename-model:
       from: VMMServer
-      to: ScVmmVmmServer
+      to: ScVmmServer
 ```
