@@ -12,44 +12,39 @@ namespace Azure.AI.TextAnalytics
 {
     internal static class Transforms
     {
+        #region Needs Review
+
+        //
+        // REGION: Common
+        //
+        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
+
+        #endregion
+
         #region Common
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
+        internal static TextAnalyticsError ConvertToError(Legacy.TextAnalyticsError error)
         {
-            //string errorCode = error.Code;
-            //string message = error.Message;
-            //string target = error.Target;
-            //InnerError innerError = error.Innererror;
+            var innerError = error.Innererror;
 
-            //if (innerError != null)
-            //{
-            //    // Return the innermost error, which should be only one level down.
-            //    return new TextAnalyticsError(innerError.Code, innerError.Message, innerError.Target);
-            //}
-
-            //return new TextAnalyticsError(errorCode, message, target);
-            throw new NotImplementedException();
+            return (innerError != null)
+                ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
+                : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
         }
 
         internal static TextAnalyticsError ConvertToError(DocumentError error)
         {
-            string errorCode = error.Error.Code.ToString();
-            string message = error.Error.Message;
-            string target = error.Error.Target;
-            InnerErrorModel innerError = error.Error.Innererror;
+            var innerError = error.Error.Innererror;
 
-            if (innerError != null)
-            {
-                // Return the innermost error, which should be only one level down.
-                return new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target);
-            }
-
-            return new TextAnalyticsError(errorCode, message, target);
+            return (innerError != null)
+                ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
+                : new TextAnalyticsError(error.Error.Code.ToString(), error.Error.Message, error.Error.Target);
         }
 
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<Legacy.TextAnalyticsError> internalErrors)
         {
             var errors = new List<TextAnalyticsError>();
 
@@ -58,10 +53,11 @@ namespace Azure.AI.TextAnalytics
                 return errors;
             }
 
-            foreach (TextAnalyticsErrorInternal error in internalErrors)
+            foreach (var error in internalErrors)
             {
                 errors.Add(ConvertToError(error));
             }
+
             return errors;
         }
 
@@ -81,14 +77,42 @@ namespace Azure.AI.TextAnalytics
             return warnings;
         }
 
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<Legacy.TextAnalyticsWarning> internalWarnings)
+        {
+            var warnings = new List<TextAnalyticsWarning>();
+
+            if (internalWarnings == null)
+            {
+                return warnings;
+            }
+
+            foreach (var warning in internalWarnings)
+            {
+                warnings.Add(new TextAnalyticsWarning(warning.Code.ToString(), warning.Message));
+            }
+
+            return warnings;
+        }
+
+        internal static TextDocumentStatistics ConvertToDocumentStatistics(Legacy.DocumentStatistics legacyStatistics) =>
+            (legacyStatistics != null)
+                ? new TextDocumentStatistics(legacyStatistics.CharactersCount, legacyStatistics.TransactionsCount)
+                : default;
+
+        internal static TextDocumentBatchStatistics ConvertToBatchStatistics(Legacy.RequestStatistics legacyStatistics) =>
+            (legacyStatistics != null)
+                ? new TextDocumentBatchStatistics(legacyStatistics.DocumentsCount, legacyStatistics.ValidDocumentsCount, legacyStatistics.ErroneousDocumentsCount, legacyStatistics.TransactionsCount)
+                : default;
+
         #endregion
 
         #region DetectLanguage
 
-        //internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage) //TODO: CHANGED
-        //{
-        //    return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
-        //}
+        internal static DetectedLanguage ConvertToDetectedLanguage(Legacy.DocumentLanguage documentLanguage)
+        {
+            var detected = documentLanguage.DetectedLanguage;
+            return new DetectedLanguage(detected.Name, detected.Iso6391Name, detected.ConfidenceScore, ConvertToWarnings(documentLanguage.Warnings));
+        }
 
         // CHANGED: added overload for New Swagger
         internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage)
@@ -101,26 +125,26 @@ namespace Azure.AI.TextAnalytics
             return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
-        //internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
-        //{
-        //    var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
+        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(Legacy.LanguageResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
 
-        //    //Read errors
-        //    foreach (DocumentError error in results.Errors)
-        //    {
-        //        detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
-        //    }
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
+            }
 
-        //    //Read languages
-        //    foreach (DocumentLanguage language in results.Documents)
-        //    {
-        //        detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
-        //    }
+            //Read languages
+            foreach (var language in results.Documents)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(language.Id, ConvertToDocumentStatistics(language.Statistics), ConvertToDetectedLanguage(language)));
+            }
 
-        //    detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
+            detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
 
-        //    return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
-        //}
+            return new DetectLanguageResultCollection(detectedLanguages, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
 
         // CHANGED: added overload for New Swagger
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionTaskResult results, IDictionary<string, int> idToIndexMap)
@@ -145,7 +169,121 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
+
         #region AnalyzeSentiment
+
+        internal static TextSentiment ConvertToTextSentiment(Legacy.Models.SentenceSentimentValue sentiment) =>
+            sentiment switch
+            {
+                Legacy.Models.SentenceSentimentValue.Neutral => TextSentiment.Neutral,
+                Legacy.Models.SentenceSentimentValue.Positive => TextSentiment.Positive,
+                Legacy.Models.SentenceSentimentValue.Negative => TextSentiment.Negative,
+                _ => throw new NotSupportedException($"The sentence sentiment, { sentiment }, is not supported for conversion.")
+            };
+
+        internal static TextSentiment ConvertToTextSentiment(Legacy.Models.TokenSentimentValue sentiment) =>
+            sentiment switch
+            {
+                Legacy.Models.TokenSentimentValue.Mixed => TextSentiment.Neutral,
+                Legacy.Models.TokenSentimentValue.Positive => TextSentiment.Positive,
+                Legacy.Models.TokenSentimentValue.Negative => TextSentiment.Negative,
+                _ => throw new NotSupportedException($"The token sentiment, { sentiment }, is not supported for conversion.")
+            };
+
+        internal static TextSentiment ConvertToTextSentiment(Legacy.Models.DocumentSentimentValue sentiment) =>
+            sentiment switch
+            {
+                Legacy.Models.DocumentSentimentValue.Neutral => TextSentiment.Neutral,
+                Legacy.Models.DocumentSentimentValue.Positive => TextSentiment.Positive,
+                Legacy.Models.DocumentSentimentValue.Negative => TextSentiment.Negative,
+                _ => throw new NotSupportedException($"The document sentiment, { sentiment }, is not supported for conversion.")
+            };
+
+        //TODO:  Check this conversion.  Seems to match: https://github.com/Azure/azure-sdk-for-net/blob/Azure.AI.TextAnalytics_5.2.0-beta.2/sdk/textanalytics/Azure.AI.TextAnalytics/src/DocumentSentiment.cs#L56
+        internal static List<SentenceOpinion> ConvertToSentenceOpinions(IReadOnlyList<Legacy.SentenceAssessment> assessments)
+        {
+            var assessmentList = new List<AssessmentSentiment>(assessments.Count);
+            var targetList = new List<TargetSentiment>(assessments.Count);
+
+            foreach (var assessment in assessments)
+            {
+                targetList.Add(new TargetSentiment(
+                    ConvertToTextSentiment(assessment.Sentiment),
+                    assessment.Text,
+                    assessment.ConfidenceScores.Positive,
+                    assessment.ConfidenceScores.Negative,
+                    assessment.Offset,
+                    assessment.Length));
+
+                assessmentList.Add(new AssessmentSentiment(
+                    ConvertToTextSentiment(assessment.Sentiment),
+                    assessment.ConfidenceScores.Positive,
+                    assessment.ConfidenceScores.Negative,
+                    assessment.Text,
+                    assessment.IsNegated,
+                    assessment.Offset,
+                    assessment.Length));
+            }
+
+            var opinions = new List<SentenceOpinion>(targetList.Count);
+
+            foreach (var target in targetList)
+            {
+                opinions.Add(new SentenceOpinion(target, assessmentList));
+            }
+
+            return opinions;
+        }
+
+        //TODO: Check this conversion.  The assessment conversion is odd, but seems to match the legacy version.
+        internal static List<SentenceSentiment> ConvertToSentenceSentiments(IReadOnlyList<Legacy.SentenceSentiment> legacySentiments)
+        {
+            var sentences = new List<SentenceSentiment>(legacySentiments.Count);
+
+            foreach (var sentiment in legacySentiments)
+            {
+                sentences.Add(new SentenceSentiment(
+                    ConvertToTextSentiment(sentiment.Sentiment),
+                    sentiment.Text,
+                    sentiment.ConfidenceScores.Positive,
+                    sentiment.ConfidenceScores.Neutral,
+                    sentiment.ConfidenceScores.Negative,
+                    sentiment.Offset,
+                    sentiment.Length,
+                    ConvertToSentenceOpinions(sentiment.Assessments)));
+            }
+
+            return sentences;
+        }
+
+        internal static DocumentSentiment ConvertToDocumentSentiment(Legacy.DocumentSentiment legacySentiment) =>
+            new DocumentSentiment(
+                sentiment: ConvertToTextSentiment(legacySentiment.Sentiment),
+                positiveScore: legacySentiment.ConfidenceScores.Positive,
+                negativeScore: legacySentiment.ConfidenceScores.Negative,
+                neutralScore: legacySentiment.ConfidenceScores.Neutral,
+                sentenceSentiments: ConvertToSentenceSentiments(legacySentiment.Sentences),
+                warnings: ConvertToWarnings(legacySentiment.Warnings));
+
+        internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(Legacy.SentimentResponse results, IDictionary<string, int> idToIndexMap)
+        {
+            var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read sentiments
+            foreach (var docSentiment in results.Documents)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, ConvertToDocumentStatistics(docSentiment.Statistics), ConvertToDocumentSentiment(docSentiment)));
+            }
+
+            analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
+            return new AnalyzeSentimentResultCollection(analyzedSentiments, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
         {
@@ -170,14 +308,60 @@ namespace Azure.AI.TextAnalytics
             throw new NotImplementedException();
         }
 
+        internal static Legacy.SentimentAnalysisTask ConvertToLegacySentimentAnalysisTask(AnalyzeSentimentAction action)
+        {
+            return new Legacy.SentimentAnalysisTask()
+            {
+                Parameters = new Legacy.Models.SentimentAnalysisTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultLegacyStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                    OpinionMining = action.IncludeOpinionMining
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.SentimentAnalysisTask> ConvertFromAnalyzeSentimentActionsToLegacyTasks(IReadOnlyCollection<AnalyzeSentimentAction> analyzeSentimentActions)
+        {
+            List<Legacy.SentimentAnalysisTask> list = new List<Legacy.SentimentAnalysisTask>(analyzeSentimentActions.Count);
+
+            foreach (AnalyzeSentimentAction action in analyzeSentimentActions)
+            {
+                list.Add(ConvertToLegacySentimentAnalysisTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
         #region KeyPhrases
 
-        //internal static KeyPhraseCollection ConvertToKeyPhraseCollection(DocumentKeyPhrases documentKeyPhrases)
-        //{
-        //    return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
-        //}
+        internal static KeyPhraseCollection ConvertToKeyPhraseCollection(Legacy.DocumentKeyPhrases documentKeyPhrases) =>
+            new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
+
+        internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(Legacy.KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read Key phrases
+            foreach (var docKeyPhrases in results.Documents)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(docKeyPhrases.Id, ConvertToDocumentStatistics(docKeyPhrases.Statistics), ConvertToKeyPhraseCollection(docKeyPhrases)));
+            }
+
+            keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
+
+            return new ExtractKeyPhrasesResultCollection(keyPhrases, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
 
         internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
         {
@@ -202,17 +386,88 @@ namespace Azure.AI.TextAnalytics
             throw new NotImplementedException();
         }
 
+        internal static Legacy.KeyPhrasesTask ConvertToLegacyKeyPhrasesTask(ExtractKeyPhrasesAction action)
+        {
+            return new Legacy.KeyPhrasesTask()
+            {
+                Parameters = new Legacy.Models.KeyPhrasesTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.KeyPhrasesTask> ConvertFromExtractKeyPhrasesActionsToLegacyTasks(IReadOnlyCollection<ExtractKeyPhrasesAction> extractKeyPhrasesActions)
+        {
+            List<Legacy.KeyPhrasesTask> list = new List<Legacy.KeyPhrasesTask>(extractKeyPhrasesActions.Count);
+
+            foreach (ExtractKeyPhrasesAction action in extractKeyPhrasesActions)
+            {
+                list.Add(ConvertToLegacyKeyPhrasesTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
         #region Recognize Entities
 
-        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
-            => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(IList<Entity> entities)
+        {
+            var entityList = new List<CategorizedEntity>(entities.Count);
 
-        //internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(DocumentEntities documentEntities)
-        //{
-        //    return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
-        //}
+            foreach (var entity in entities)
+            {
+                entityList.Add(new CategorizedEntity(entity));
+            }
+
+            return entityList;
+        }
+
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(IReadOnlyList<Legacy.Entity> entities)
+        {
+            var entityList = new List<CategorizedEntity>(entities.Count);
+
+            foreach (var entity in entities)
+            {
+                entityList.Add(new CategorizedEntity(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length));
+            }
+
+            return entityList;
+        }
+
+        internal static List<LinkedEntityMatch> ConvertToLinkedEntityMatches(IReadOnlyList<Legacy.Match> matches)
+        {
+            var matchesList = new List<LinkedEntityMatch>(matches.Count);
+
+            foreach (var match in matches)
+            {
+                matchesList.Add(new LinkedEntityMatch(match.ConfidenceScore, match.Text, match.Offset, match.Length));
+            }
+
+            return matchesList;
+        }
+
+        internal static List<LinkedEntity> ConvertToLinkedEntityList(IReadOnlyList<Legacy.LinkedEntity> entities)
+        {
+            var entitiesList = new List<LinkedEntity>(entities.Count);
+
+            foreach (var entity in entities)
+            {
+                entitiesList.Add(new LinkedEntity(entity.Name, ConvertToLinkedEntityMatches(entity.Matches), entity.Language, entity.Id, new Uri(entity.Url), entity.DataSource, entity.BingId));
+            }
+
+            return entitiesList;
+        }
+
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(Legacy.DocumentEntities documentEntities) =>
+            new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities), ConvertToWarnings(documentEntities.Warnings));
+
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(Legacy.DocumentLinkedEntities documentEntities) =>
+            new LinkedEntityCollection(ConvertToLinkedEntityList(documentEntities.Entities), ConvertToWarnings(documentEntities.Warnings));
 
         // CHANGED: added overload for New Swagger
         internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
@@ -222,7 +477,27 @@ namespace Azure.AI.TextAnalytics
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
             }
-            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), warnings);
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities), warnings);
+        }
+
+        internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(Legacy.EntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (var docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToCategorizedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+            return new RecognizeEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
         }
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
@@ -245,6 +520,32 @@ namespace Azure.AI.TextAnalytics
 
             //return new RecognizeEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
             throw new NotImplementedException();
+        }
+
+        internal static Legacy.EntitiesTask ConvertToLegacyEntitiesTask(RecognizeEntitiesAction action)
+        {
+            return new Legacy.EntitiesTask()
+            {
+                Parameters = new Legacy.Models.EntitiesTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultLegacyStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.EntitiesTask> ConvertFromRecognizeEntitiesActionsToLegacyTasks(IReadOnlyCollection<RecognizeEntitiesAction> recognizeEntitiesActions)
+        {
+            List<Legacy.EntitiesTask> list = new List<Legacy.EntitiesTask>(recognizeEntitiesActions.Count);
+
+            foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
+            {
+                list.Add(ConvertToLegacyEntitiesTask(action));
+            }
+
+            return list;
         }
 
         #endregion
@@ -272,17 +573,79 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
+        internal static Legacy.CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
+        {
+            return new Legacy.CustomEntitiesTask()
+            {
+                Parameters = new Legacy.Models.CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToLegacyTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
+        {
+            var list = new List<Legacy.CustomEntitiesTask>(recognizeCustomEntitiesActions.Count);
+
+            foreach (var action in recognizeCustomEntitiesActions)
+            {
+                list.Add(ConvertToCustomEntitiesTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
         #region Recognize PII Entities
 
-        internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
-            => entities.Select((entity) => new PiiEntity(entity)).ToList();
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(Legacy.PiiDocumentEntities documentEntities)
+        {
+            var entities = new List<PiiEntity>(documentEntities.Entities.Count);
 
-        //internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
-        //{
-        //    return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
-        //}
+            foreach (var entity in documentEntities.Entities)
+            {
+                entities.Add(new PiiEntity(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length));
+            }
+
+            return new PiiEntityCollection(entities, documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(Legacy.PiiResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (var docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToPiiEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizePiiEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
+
+        internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
+        {
+            var entityList = new List<PiiEntity>(entities.Count);
+
+            foreach (var entity in entities)
+            {
+                entityList.Add(new PiiEntity(entity));
+            }
+
+            return entityList;
+        }
 
         // CHANGED: added overload for New Swagger
         internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
@@ -320,6 +683,45 @@ namespace Azure.AI.TextAnalytics
             throw new NotImplementedException();
         }
 
+        internal static Legacy.PiiTask ConvertToLegacyPiiTask(RecognizePiiEntitiesAction action)
+        {
+            var parameters = new Legacy.PiiTaskParameters()
+            {
+                Domain = action.DomainFilter.GetString() ?? (Legacy.Models.PiiTaskParametersDomain?)null,
+                ModelVersion = action.ModelVersion,
+                StringIndexType = Constants.DefaultLegacyStringIndexType,
+                LoggingOptOut = action.DisableServiceLogs
+            };
+
+            if (action.CategoriesFilter.Count > 0)
+            {
+                parameters.PiiCategories = new List<Legacy.PiiEntityCategory>(action.CategoriesFilter.Count);
+
+                foreach (var category in action.CategoriesFilter)
+                {
+                    parameters.PiiCategories.Add(new Legacy.PiiEntityCategory(category.ToString()));
+                }
+            }
+
+            return new Legacy.PiiTask()
+            {
+                Parameters = parameters,
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.PiiTask> ConvertFromRecognizePiiEntitiesActionsToLegacyTasks(IReadOnlyCollection<RecognizePiiEntitiesAction> recognizePiiEntitiesActions)
+        {
+            List<Legacy.PiiTask> list = new List<Legacy.PiiTask>(recognizePiiEntitiesActions.Count);
+
+            foreach (RecognizePiiEntitiesAction action in recognizePiiEntitiesActions)
+            {
+                list.Add(ConvertToLegacyPiiTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
         #region Recognize Linked Entities
@@ -328,6 +730,27 @@ namespace Azure.AI.TextAnalytics
         //{
         //    return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
         //}
+
+        internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(Legacy.EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document linked entities
+            foreach (var docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToLinkedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
 
         internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
         {
@@ -350,6 +773,32 @@ namespace Azure.AI.TextAnalytics
             //return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
 
             throw new NotImplementedException();
+        }
+
+        internal static Legacy.EntityLinkingTask ConvertToLegacyLinkedEntitiesTask(RecognizeLinkedEntitiesAction action)
+        {
+            return new Legacy.EntityLinkingTask()
+            {
+                Parameters = new Legacy.Models.EntityLinkingTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultLegacyStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToLegacyTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
+        {
+            List<Legacy.EntityLinkingTask> list = new List<Legacy.EntityLinkingTask>(recognizeLinkedEntitiesActions.Count);
+
+            foreach (RecognizeLinkedEntitiesAction action in recognizeLinkedEntitiesActions)
+            {
+                list.Add(ConvertToLegacyLinkedEntitiesTask(action));
+            }
+
+            return list;
         }
 
         #endregion
@@ -464,9 +913,45 @@ namespace Azure.AI.TextAnalytics
             throw new NotImplementedException();
         }
 
+        internal static Legacy.ExtractiveSummarizationTask ConvertToLegacyExtractiveSummarizationTask(ExtractSummaryAction action)
+        {
+            var sortBy = action.OrderBy switch
+            {
+                null => null,
+                SummarySentencesOrder.Rank => Legacy.Models.ExtractiveSummarizationTaskParametersSortBy.Rank,
+                SummarySentencesOrder.Offset => Legacy.Models.ExtractiveSummarizationTaskParametersSortBy.Rank,
+                _ => throw new NotSupportedException($"The sentence sort by, { action.OrderBy }, is not supported for conversion.")
+            };
+
+            return new Legacy.ExtractiveSummarizationTask()
+            {
+                Parameters = new Legacy.Models.ExtractiveSummarizationTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultLegacyStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                    SentenceCount = action.MaxSentenceCount,
+                    SortBy = sortBy
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.ExtractiveSummarizationTask> ConvertFromExtractSummaryActionsToLegacyTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
+        {
+            List<Legacy.ExtractiveSummarizationTask> list = new List<Legacy.ExtractiveSummarizationTask>(extractSummaryActions.Count);
+
+            foreach (ExtractSummaryAction action in extractSummaryActions)
+            {
+                list.Add(ConvertToLegacyExtractiveSummarizationTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
-        #region Multi Category Classify
+        #region Multi-Category Classify
         internal static List<ClassificationCategory> ConvertToClassificationCategoryList(List<ClassificationResult> classifications)
             => classifications.Select((classification) => new ClassificationCategory(classification)).ToList();
 
@@ -497,9 +982,34 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
+        internal static Legacy.CustomSingleClassificationTask ConvertToLegacyCustomSingleClassificationTask(SingleCategoryClassifyAction action)
+        {
+            return new Legacy.CustomSingleClassificationTask()
+            {
+                Parameters = new Legacy.Models.CustomSingleClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToLegacyTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
+        {
+            List<Legacy.CustomMultiClassificationTask> list = new List<Legacy.CustomMultiClassificationTask>(MultiCategoryClassifyActions.Count);
+
+            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
+            {
+                list.Add(ConvertToLegacyCustomMultiClassificationTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
-        #region SingleCategoryClassifyResult
+        #region Single Category Classify
         internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
             //var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>(results.Errors.Count);
@@ -522,9 +1032,34 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
+        internal static Legacy.CustomMultiClassificationTask ConvertToLegacyCustomMultiClassificationTask(MultiCategoryClassifyAction action)
+        {
+            return new Legacy.CustomMultiClassificationTask()
+            {
+                Parameters = new Legacy.Models.CustomMultiClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
+
+        internal static IList<Legacy.CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToLegacyTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
+        {
+            List<Legacy.CustomSingleClassificationTask> list = new List<Legacy.CustomSingleClassificationTask>(singleCategoryClassifyActions.Count);
+
+            foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
+            {
+                list.Add(ConvertToLegacyCustomSingleClassificationTask(action));
+            }
+
+            return list;
+        }
+
         #endregion
 
-        //#region Analyze Operation
+        #region Analyze Operation
 
         //internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
         //{
@@ -1059,7 +1594,7 @@ namespace Azure.AI.TextAnalytics
         //    return collection;
         //}
 
-        //#endregion
+        #endregion
 
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {

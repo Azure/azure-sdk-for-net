@@ -14,13 +14,18 @@ namespace Azure.AI.TextAnalytics
     public readonly struct PiiEntity
     {
         internal PiiEntity(Entity entity)
+            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length)
         {
-            Category = entity.Category;
-            Text = entity.Text;
-            SubCategory = entity.Subcategory;
-            ConfidenceScore = entity.ConfidenceScore;
-            Offset = entity.Offset;
-            Length = entity.Length;
+        }
+
+        internal PiiEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length)
+        {
+            Text = text;
+            Category = category;
+            SubCategory = subcategory;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = length;
         }
 
         /// <summary>
