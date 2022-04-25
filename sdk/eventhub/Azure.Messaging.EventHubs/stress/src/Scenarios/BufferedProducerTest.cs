@@ -19,9 +19,9 @@ namespace Azure.Messaging.EventHubs.Stress
     internal class BufferedProducerTest
     {
         private Metrics metrics;
-        private ProducerConfiguration testConfiguration;
+        private BufferedProducerTestConfig testConfiguration;
 
-        public BufferedProducerTest(ProducerConfiguration configuration)
+        public BufferedProducerTest(BufferedProducerTestConfig configuration)
         {
             testConfiguration = configuration;
             metrics = new Metrics(configuration.InstrumentationKey);

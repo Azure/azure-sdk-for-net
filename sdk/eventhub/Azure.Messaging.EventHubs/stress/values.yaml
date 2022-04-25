@@ -1,5 +1,5 @@
 scenarios:
 - "EventProd"
-- "EventBuffProd"
+- "BuffProd"
 - "BurstBuffProd"
 - "ConcurBuffProd"

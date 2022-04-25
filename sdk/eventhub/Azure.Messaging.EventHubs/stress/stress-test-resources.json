@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1318.3566",
-      "templateHash": "9849786101028970025"
+      "templateHash": "8950278392494739656"
     }
   },
   "parameters": {
@@ -38,15 +38,17 @@
     }
   },
   "variables": {
-    "eventHubsNamespace_var": "[format('eh-{0}', resourceGroup().name)]",
+    "eventHubsNamespace_var": "[resourceGroup().name]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace_var'), variables('defaultSASKeyName'))]",
-    "ehBufferedProducer": "bufferedproducertest",
-    "bufferproducerPartitions": 10,
-    "ehEventProducer": "eventproducertest",
-    "eventProducerPartitions": 10,
-    "ehBurstBufferedProducer": "burstbufferedproducertest",
-    "ehConcurrentBufferedProducer": "concurrentbufferedproducertest"
+    "bufferedProducerEventHubName": "bufferedproducertest",
+    "bufferproducerEventHubPartitions": 10,
+    "eventProducerEventHubName": "eventproducertest",
+    "eventProducerEventHubPartitions": 10,
+    "burstBufferedProducerEventHubName": "burstbufferedproducertest",
+    "burstBufferedProducerEventHubPartitions": 10,
+    "concurrentBufferedProducerEventHubName": "concurrentbufferedproducertest",
+    "concurrentBufferedProducerEventHubPartitions": 10
   },
   "resources": [
     {
@@ -62,10 +64,10 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBufferedProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('bufferedProducerEventHubName'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": "[variables('bufferproducerPartitions')]"
+        "partitionCount": "[variables('bufferproducerEventHubPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -74,10 +76,10 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehEventProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('eventProducerEventHubName'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": "[variables('eventProducerPartitions')]"
+        "partitionCount": "[variables('eventProducerEventHubPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -86,10 +88,10 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehBurstBufferedProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('burstBufferedProducerEventHubName'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": "[variables('bufferproducerPartitions')]"
+        "partitionCount": "[variables('burstBufferedProducerEventHubPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -98,10 +100,10 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehConcurrentBufferedProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('concurrentBufferedProducerEventHubName'))]",
       "properties": {
         "messageRetentionInDays": 7,
-        "partitionCount": "[variables('bufferproducerPartitions')]"
+        "partitionCount": "[variables('concurrentBufferedProducerEventHubPartitions')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace_var'))]"
@@ -129,37 +131,37 @@
       "type": "string",
       "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
     },
-    "EVENTHUB_NAME_EBPT": {
+    "EVENTHUB_NAME_BUFFERED_PRODUCER_TEST": {
       "type": "string",
-      "value": "[variables('ehBufferedProducer')]"
+      "value": "[variables('bufferedProducerEventHubName')]"
     },
-    "EVENTHUB_PARTITIONS_EBPT": {
+    "EVENTHUB_PARTITIONS_BUFFERED_PRODUCER_TEST": {
       "type": "int",
-      "value": "[variables('bufferproducerPartitions')]"
+      "value": "[variables('bufferproducerEventHubPartitions')]"
     },
-    "EVENTHUB_NAME_EPT": {
+    "EVENTHUB_NAME_EVENT_PRODUCER_TEST": {
       "type": "string",
-      "value": "[variables('ehEventProducer')]"
+      "value": "[variables('eventProducerEventHubName')]"
     },
-    "EVENTHUB_PARTITIONS_EPT": {
+    "EVENTHUB_PARTITIONS_EVENT_PRODUCER_TEST": {
       "type": "int",
-      "value": "[variables('eventProducerPartitions')]"
+      "value": "[variables('eventProducerEventHubPartitions')]"
     },
-    "EVENTHUB_NAME_BBPT": {
+    "EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST": {
       "type": "string",
-      "value": "[variables('ehBurstBufferedProducer')]"
+      "value": "[variables('burstBufferedProducerEventHubName')]"
     },
-    "EVENTHUB_PARTITIONS_BBPT": {
+    "EVENTHUB_PARTITIONS_BURST_BUFFERED_PRODUCER": {
       "type": "int",
-      "value": "[variables('bufferproducerPartitions')]"
+      "value": "[variables('burstBufferedProducerEventHubPartitions')]"
     },
-    "EVENTHUB_NAME_CBPT": {
+    "EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST": {
       "type": "string",
-      "value": "[variables('ehConcurrentBufferedProducer')]"
+      "value": "[variables('concurrentBufferedProducerEventHubName')]"
     },
-    "EVENTHUB_PARTITIONS_CBPT": {
+    "EVENTHUB_PARTITIONS_CONCURRENT_BUFFERED_PRODUCER_TEST": {
       "type": "int",
-      "value": "[variables('bufferproducerPartitions')]"
+      "value": "[variables('concurrentBufferedProducerEventHubPartitions')]"
     }
   }
 }

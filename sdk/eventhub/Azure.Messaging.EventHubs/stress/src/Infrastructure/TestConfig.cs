@@ -5,8 +5,9 @@ using System;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
-    internal class ProducerConfiguration
+    internal class TestConfig
     {
+        public bool Run;
         public string EventHubsConnectionString;
         public string EventHub;
         public string InstrumentationKey;
@@ -28,13 +29,5 @@ namespace Azure.Messaging.EventHubs.Stress
         public int LargeMessageRandomFactorPercent = 50;
         public TimeSpan SendTimeout = TimeSpan.FromMinutes(3);
         public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(4000);
-
-        // EventProducerTest only
-
-        public int PublishBatchSize = 50;
-
-        // BufferedProducerTest only
-
-        public int EventEnqueueListSize = 50;
     }
 }

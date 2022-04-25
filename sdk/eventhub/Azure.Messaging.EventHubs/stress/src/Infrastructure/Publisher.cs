@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventHubs.Stress
 
         private Metrics metrics;
 
-        private ProducerConfiguration testConfiguration;
+        private EventProducerTestConfig testConfiguration;
 
-        public Publisher(ProducerConfiguration configuration,
+        public Publisher(EventProducerTestConfig configuration,
                          Metrics metricsIn)
         {
             testConfiguration = configuration;
@@ -118,8 +118,7 @@ namespace Azure.Messaging.EventHubs.Stress
                     backgroundCancellationSource.Cancel();
                     await Task.WhenAll(sendTasks).ConfigureAwait(false);
 
-                    //Interlocked.Increment(ref Metrics.ProducerRestarted);
-                    //ErrorsObserved.Add(ex);
+                    metrics.Client.GetMetric(Metrics.EventProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
                 }
             }

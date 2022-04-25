@@ -11,7 +11,8 @@ spec:
       imagePullPolicy: Always
       command: [ 'dotnet']
       args:
-      - 'Azure.Messaging.EventHubs.Stress.dll'
+      - 'Azure.Messaging.EventHubs.Stress.exe'
+      - '--tests'
       - {{ .Scenario }}
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}
