@@ -475,7 +475,7 @@ namespace Azure.AI.TextAnalytics
         //    return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(extractedClassificationsDocuments.Classifications.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
         //}
 
-        internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
+        internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(CustomMultiLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
             //var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>(results.Errors.Count);
 
@@ -500,7 +500,7 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region SingleCategoryClassifyResult
-        internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
+        internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
             //var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>(results.Errors.Count);
 
