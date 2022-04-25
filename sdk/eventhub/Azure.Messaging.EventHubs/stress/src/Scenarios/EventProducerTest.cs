@@ -20,9 +20,9 @@ namespace Azure.Messaging.EventHubs.Stress
     internal class EventProducerTest
     {
         private Metrics metrics;
-        private ProducerConfiguration testConfiguration;
+        private EventProducerTestConfig testConfiguration;
 
-        public EventProducerTest(ProducerConfiguration configuration)
+        public EventProducerTest(EventProducerTestConfig configuration)
         {
             testConfiguration = configuration;
             metrics = new Metrics(configuration.InstrumentationKey);

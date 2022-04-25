@@ -21,9 +21,9 @@ namespace Azure.Messaging.EventHubs.Stress
         private string connectionString;
         private string eventHubName;
         private Metrics metrics;
-        private ProducerConfiguration testConfiguration;
+        private BufferedProducerTestConfig testConfiguration;
 
-        public BufferedPublisher(ProducerConfiguration testConfigurationIn, Metrics metricsIn)
+        public BufferedPublisher(BufferedProducerTestConfig testConfigurationIn, Metrics metricsIn)
         {
             connectionString = testConfigurationIn.EventHubsConnectionString;
             eventHubName = testConfigurationIn.EventHub;
@@ -45,9 +45,8 @@ namespace Azure.Messaging.EventHubs.Stress
                     producer.SendEventBatchSucceededAsync += args =>
                     {
                         var numEvents = args.EventBatch.ToList().Count;
-                        var eventProperties = new Dictionary<String, String>();
 
-                        metrics.Client.GetMetric(metrics.SuccessfullySentFromQueue, args.PartitionId).TrackValue(numEvents);
+                        metrics.Client.GetMetric(metrics.SuccessfullySentFromQueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
 
                         return Task.CompletedTask;
                     };
@@ -56,9 +55,7 @@ namespace Azure.Messaging.EventHubs.Stress
                     {
                         var numEvents = args.EventBatch.ToList().Count;
 
-                        var eventProperties = new Dictionary<String, String>();
-
-                        metrics.Client.GetMetric(metrics.EventsNotSentAfterEnqueue, args.PartitionId).TrackValue(numEvents);
+                        metrics.Client.GetMetric(metrics.EventsNotSentAfterEnqueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
                         metrics.Client.TrackException(args.Exception);
 
                         return Task.CompletedTask;
@@ -77,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Stress
                                 {
                                     while (!cancellationToken.IsCancellationRequested)
                                     {
-                                        await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+                                        await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
                                         if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                         {
@@ -95,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Stress
                         {
                             try
                             {
-                                await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+                                await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
                                 if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                 {
@@ -123,12 +120,13 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (Exception ex)
                 {
+                    metrics.Client.GetMetric(Metrics.BufferedProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
                 }
             }
         }
 
-        private async Task PerformSend(EventHubBufferedProducerClient producer,
+        private async Task PerformEnqueue(EventHubBufferedProducerClient producer,
                                        CancellationToken cancellationToken)
         {
             var events = EventGenerator.CreateEvents(testConfiguration.EventEnqueueListSize);

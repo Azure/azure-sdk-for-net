@@ -16,5 +16,11 @@ namespace Azure.Messaging.EventHubs.Stress
         public const string EventHubEventProducerTest = "EVENTHUB_NAME_EVENT_PRODUCER_TEST";
         public const string EventHubBurstBufferedProducerTest = "EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST";
         public const string EventHubConcurrentBufferedProducerTest = "EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST";
+
+        // Event Hub Partition Numbers
+        public const string EventHubPartitionsBufferedProducerTest = "EVENTHUB_PARTITIONS_BUFFERED_PRODUCER_TEST";
+        public const string EventHubPartitionsEventProducerTest = "EVENTHUB_PARTITIONS_EVENT_PRODUCER_TEST";
+        public const string EventHubPartitionsBurstBufferedProducerTest = "EVENTHUB_PARTITIONS_BURST_BUFFERED_PRODUCER";
+        public const string EventHubPartitionsConcurrentBufferedProducerTest = "EVENTHUB_PARTITIONS_CONCURRENT_BUFFERED_PRODUCER_TEST";
     }
 }

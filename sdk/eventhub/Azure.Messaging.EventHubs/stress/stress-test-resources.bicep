@@ -10,19 +10,21 @@ param testApplicationOid string
 @description('The location of the resource group.')
 param location string = resourceGroup().location
 
-var eventHubsNamespace_var = 'eh-${resourceGroup().name}'
+var eventHubsNamespace_var = resourceGroup().name
 var defaultSASKeyName = 'RootManageSharedAccessKey'
 var eventHubsAuthRuleResourceId = resourceId('Microsoft.EventHub/namespaces/authorizationRules', eventHubsNamespace_var, defaultSASKeyName)
 
-var ehBufferedProducer = 'bufferedproducertest'
-var bufferproducerPartitions = 10
+var bufferedProducerEventHubName = 'bufferedproducertest'
+var bufferproducerEventHubPartitions = 10
 
-var ehEventProducer = 'eventproducertest'
-var eventProducerPartitions = 10
+var eventProducerEventHubName = 'eventproducertest'
+var eventProducerEventHubPartitions = 10
 
-var ehBurstBufferedProducer = 'burstbufferedproducertest'
+var burstBufferedProducerEventHubName = 'burstbufferedproducertest'
+var burstBufferedProducerEventHubPartitions = 10
 
-var ehConcurrentBufferedProducer = 'concurrentbufferedproducertest'
+var concurrentBufferedProducerEventHubName = 'concurrentbufferedproducertest'
+var concurrentBufferedProducerEventHubPartitions = 10
 
 // Event Hubs Namespace Creation
 resource eventHubsNamespace 'Microsoft.EventHub/Namespaces@2015-08-01' = {
@@ -37,37 +39,37 @@ resource eventHubsNamespace 'Microsoft.EventHub/Namespaces@2015-08-01' = {
 // Event Hubs Creation
 resource eventHubBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: ehBufferedProducer
+  name: bufferedProducerEventHubName
   properties: {
     messageRetentionInDays: 7
-    partitionCount: bufferproducerPartitions
+    partitionCount: bufferproducerEventHubPartitions
   }
 }
 
 resource eventHubEventProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: ehEventProducer
+  name: eventProducerEventHubName
   properties: {
     messageRetentionInDays: 7
-    partitionCount: eventProducerPartitions
+    partitionCount: eventProducerEventHubPartitions
   }
 }
 
 resource eventHubBurstBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: ehBurstBufferedProducer
+  name: burstBufferedProducerEventHubName
   properties: {
     messageRetentionInDays: 7
-    partitionCount: bufferproducerPartitions
+    partitionCount: burstBufferedProducerEventHubPartitions
   }
 }
 
 resource eventHubConcurrentBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: ehConcurrentBufferedProducer
+  name: concurrentBufferedProducerEventHubName
   properties: {
     messageRetentionInDays: 7
-    partitionCount: bufferproducerPartitions
+    partitionCount: concurrentBufferedProducerEventHubPartitions
   }
 }
 
@@ -79,17 +81,17 @@ output EVENTHUB_PER_TEST_LIMIT_MINUTES string = perTestExecutionLimitMinutes
 output EVENTHUB_NAMESPACE_CONNECTION_STRING string = listkeys(eventHubsAuthRuleResourceId, '2015-08-01').primaryConnectionString
 
 // Outputs for the BufferedProducerTest scenario
-output EVENTHUB_NAME_EBPT string = eventHubBufferedProducer.name
-output EVENTHUB_PARTITIONS_EBPT int = bufferproducerPartitions
+output EVENTHUB_NAME_BUFFERED_PRODUCER_TEST string = eventHubBufferedProducer.name
+output EVENTHUB_PARTITIONS_BUFFERED_PRODUCER_TEST int = bufferproducerEventHubPartitions
 
 // Outputs for the EventProducerTest
-output EVENTHUB_NAME_EPT string = eventHubEventProducer.name
-output EVENTHUB_PARTITIONS_EPT int = eventProducerPartitions
+output EVENTHUB_NAME_EVENT_PRODUCER_TEST string = eventHubEventProducer.name
+output EVENTHUB_PARTITIONS_EVENT_PRODUCER_TEST int = eventProducerEventHubPartitions
 
 // Outputs for the BurstBufferedProducerTest scenario
-output EVENTHUB_NAME_BBPT string = eventHubBurstBufferedProducer.name
-output EVENTHUB_PARTITIONS_BBPT int = bufferproducerPartitions
+output EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST string = eventHubBurstBufferedProducer.name
+output EVENTHUB_PARTITIONS_BURST_BUFFERED_PRODUCER int = burstBufferedProducerEventHubPartitions
 
 // Outputs for the ConcurrentBufferedProducerTest scenario
-output EVENTHUB_NAME_CBPT string = eventHubConcurrentBufferedProducer.name
-output EVENTHUB_PARTITIONS_CBPT int = bufferproducerPartitions
+output EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST string = eventHubConcurrentBufferedProducer.name
+output EVENTHUB_PARTITIONS_CONCURRENT_BUFFERED_PRODUCER_TEST int = concurrentBufferedProducerEventHubPartitions

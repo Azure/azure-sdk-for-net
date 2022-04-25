@@ -20,12 +20,11 @@ namespace Azure.Messaging.EventHubs.Stress
         public string LostEventDataEvent = "LostEventDataEvent";
 
         // Environment statistics
-        public MetricIdentifier MemorySamples = new MetricIdentifier("MemorySamples");
         public MetricIdentifier GenerationZeroCollections = new MetricIdentifier("GenerationZeroCollections");
         public MetricIdentifier GenerationOneCollections = new MetricIdentifier("GenerationOneCollections");
         public MetricIdentifier GenerationTwoCollections = new MetricIdentifier("GenerationTwoCollections");
 
-        // Publisher statistics
+        // Producer statistics
         public MetricIdentifier BatchesCount = new MetricIdentifier("BatchesCount");
         public MetricIdentifier SentEventsCount = new MetricIdentifier("SentEventsCount");
         public MetricIdentifier SuccessfullyReceivedEventsCount = new MetricIdentifier("SuccessfullyReceivedEventsCount");
@@ -46,6 +45,7 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier PublishAttempts = new MetricIdentifier("PublishAttempts");
         public MetricIdentifier BatchesPublished = new MetricIdentifier("BatchesPublished");
         public MetricIdentifier TotalPublishedSizeBytes = new MetricIdentifier("TotalPublishedSizeBytes");
+        public MetricIdentifier EventProducerRestarted = new MetricIdentifier("EventProducerRestarted");
 
         public Metrics(string instrumentationKey)
         {
