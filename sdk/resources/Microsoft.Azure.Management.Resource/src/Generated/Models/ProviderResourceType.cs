@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="capabilities">The additional capabilities offered by
         /// this resource type.</param>
         /// <param name="properties">The properties.</param>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<ProviderExtendedLocation> locationMappings = default(IList<ProviderExtendedLocation>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string defaultApiVersion = default(string), IList<ApiProfile> apiProfiles = default(IList<ApiProfile>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<ProviderExtendedLocation> locationMappings = default(IList<ProviderExtendedLocation>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string defaultApiVersion = default(string), IList<ZoneMapping> zoneMappings = default(IList<ZoneMapping>), IList<ApiProfile> apiProfiles = default(IList<ApiProfile>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Aliases = aliases;
             ApiVersions = apiVersions;
             DefaultApiVersion = defaultApiVersion;
+            ZoneMappings = zoneMappings;
             ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
@@ -101,6 +102,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "defaultApiVersion")]
         public string DefaultApiVersion { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneMappings")]
+        public IList<ZoneMapping> ZoneMappings { get; set; }
 
         /// <summary>
         /// Gets the API profiles for the resource provider.
