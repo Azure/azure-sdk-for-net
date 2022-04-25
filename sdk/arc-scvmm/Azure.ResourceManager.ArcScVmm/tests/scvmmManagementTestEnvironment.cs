@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ArcScVmm.Tests
 {
-    public class scvmmManagementTestEnvironment : TestEnvironment
+    public class ArcScVmmManagementTestEnvironment : TestEnvironment
     {
     }
 }
