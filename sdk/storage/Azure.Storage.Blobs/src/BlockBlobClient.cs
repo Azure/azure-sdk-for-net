@@ -356,6 +356,8 @@ namespace Azure.Storage.Blobs.Specialized
                     new StorageClientDiagnostics(options),
                     options.Version,
                     options.CustomerProvidedKey,
+                    options.UploadTransferValidationOptions,
+                    options.DownloadTransferValidationOptions,
                     null));
         }
 

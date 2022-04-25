@@ -197,6 +197,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
+                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
+                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
                 encryptionScope: options.EncryptionScope);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
@@ -256,6 +258,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
+                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
+                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
@@ -344,6 +348,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
+                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
+                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
@@ -413,6 +419,8 @@ namespace Azure.Storage.Blobs
                     clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
+                    uploadTransferValidationOptions: options.UploadTransferValidationOptions,
+                    downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
                     encryptionScope: null),
                 clientSideEncryption: null);
         }

@@ -16,6 +16,10 @@ namespace Azure.Storage.Blobs
 
         public virtual CustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
+        public virtual UploadTransferValidationOptions UploadTransferValidationOptions { get; internal set; }
+
+        public virtual DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
+
         public string EncryptionScope { get; internal set; }
 
         public BlobClientConfiguration(
@@ -24,11 +28,15 @@ namespace Azure.Storage.Blobs
             ClientDiagnostics clientDiagnostics,
             BlobClientOptions.ServiceVersion version,
             CustomerProvidedKey? customerProvidedKey,
+            UploadTransferValidationOptions uploadTransferValidationOptions,
+            DownloadTransferValidationOptions downloadTransferValidationOptions,
             string encryptionScope)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
+            UploadTransferValidationOptions = uploadTransferValidationOptions;
+            DownloadTransferValidationOptions = downloadTransferValidationOptions;
             EncryptionScope = encryptionScope;
         }
 
@@ -39,6 +47,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
+                uploadTransferValidationOptions: originalClientConfiguration.UploadTransferValidationOptions,
+                downloadTransferValidationOptions: originalClientConfiguration.DownloadTransferValidationOptions,
                 encryptionScope: originalClientConfiguration.EncryptionScope);
     }
 }

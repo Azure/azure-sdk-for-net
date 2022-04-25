@@ -2646,13 +2646,11 @@ namespace Azure.Storage.Files.Shares
 
                 return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
-                    // TODO #27253
-                    //DownloadTransactionalHashingOptions downloadTransactionalHashingOptions,
+                    DownloadTransferValidationOptions downloadTransactionalHashingOptions,
                     bool async,
                     CancellationToken cancellationToken) =>
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
-                            // TODO #27253
                             //new ShareFileDownloadOptions
                             //{
                             //    Range = range,
@@ -2680,7 +2678,7 @@ namespace Azure.Storage.Files.Shares
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
                     // TODO #27253
-                    //hashingOptions,
+                    default,
                     allowModifications,
                     properties.Value.ContentLength,
                     position,
