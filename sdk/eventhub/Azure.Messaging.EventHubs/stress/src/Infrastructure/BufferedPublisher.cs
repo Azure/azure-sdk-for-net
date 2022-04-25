@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (Exception ex)
                 {
-                    metrics.Client.GetMetric(Metrics.BufferedProducerRestarted).TrackValue(1);
+                    metrics.Client.GetMetric(metrics.BufferedProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
                 }
             }
