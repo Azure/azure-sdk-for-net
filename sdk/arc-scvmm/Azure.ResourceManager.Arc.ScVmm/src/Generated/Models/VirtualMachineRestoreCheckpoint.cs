@@ -8,16 +8,14 @@
 namespace Azure.ResourceManager.Arc.ScVmm.Models
 {
     /// <summary> Defines the restore checkpoint action properties. </summary>
-    public partial class VirtualMachineRestoreCheckpointContent
+    public partial class VirtualMachineRestoreCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineRestoreCheckpointContent. </summary>
-        public VirtualMachineRestoreCheckpointContent()
+        /// <summary> Initializes a new instance of VirtualMachineRestoreCheckpoint. </summary>
+        public VirtualMachineRestoreCheckpoint()
         {
         }
 
         /// <summary> ID of the checkpoint to be restored to. </summary>
         public string Id { get; set; }
-        /// <summary> Description of the checkpoint. </summary>
-        public string Description { get; set; }
     }
 }

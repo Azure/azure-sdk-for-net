@@ -8,16 +8,14 @@
 namespace Azure.ResourceManager.Arc.ScVmm.Models
 {
     /// <summary> Defines the delete checkpoint action properties. </summary>
-    public partial class VirtualMachineDeleteCheckpointContent
+    public partial class VirtualMachineDeleteCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineDeleteCheckpointContent. </summary>
-        public VirtualMachineDeleteCheckpointContent()
+        /// <summary> Initializes a new instance of VirtualMachineDeleteCheckpoint. </summary>
+        public VirtualMachineDeleteCheckpoint()
         {
         }
 
         /// <summary> ID of the checkpoint to be deleted. </summary>
         public string Id { get; set; }
-        /// <summary> Description of the checkpoint. </summary>
-        public string Description { get; set; }
     }
 }

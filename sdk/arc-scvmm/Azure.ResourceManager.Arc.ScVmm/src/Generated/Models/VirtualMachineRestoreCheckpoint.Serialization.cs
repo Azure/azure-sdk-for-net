@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Arc.ScVmm.Models
 {
-    public partial class VirtualMachineDeleteCheckpointContent : IUtf8JsonSerializable
+    public partial class VirtualMachineRestoreCheckpoint : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Arc.ScVmm.Models
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
         }

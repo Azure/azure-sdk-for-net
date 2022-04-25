@@ -35,22 +35,8 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-directive:
-  - from: scvmm.json
-    where: $.definitions
-    transform: >
-      $.VirtualMachineDeleteCheckpoint.properties["description"] = {
-          "description": "Description of the checkpoint.",
-          "type": "string"
-        };
-      $.VirtualMachineRestoreCheckpoint.properties["description"] = {
-          "description": "Description of the checkpoint.",
-          "type": "string"
-        };
-  - rename-model:
-      from: VirtualMachineDeleteCheckpoint
-      to: VirtualMachineDeleteCheckpointContent
-  - rename-model:
-      from: VirtualMachineRestoreCheckpoint
-      to: VirtualMachineRestoreCheckpointContent
+
+no-property-type-replacement:
+- VirtualMachineDeleteCheckpoint
+- VirtualMachineRestoreCheckpoint
 ```
