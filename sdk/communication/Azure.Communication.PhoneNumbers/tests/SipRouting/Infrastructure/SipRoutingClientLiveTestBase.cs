@@ -13,7 +13,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
     {
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new SipRoutingClientRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..credential");
+            SanitizedHeaders.Add("x-ms-content-sha256");
         }
 
         public bool SkipSipRoutingLiveTests
