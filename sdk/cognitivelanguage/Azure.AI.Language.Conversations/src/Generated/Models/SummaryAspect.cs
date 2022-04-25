@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SummaryValue = "summary";
+        private const string SummaryValue = "issue";
         private const string ResolutionValue = "resolution";
 
         /// <summary> summary. </summary>

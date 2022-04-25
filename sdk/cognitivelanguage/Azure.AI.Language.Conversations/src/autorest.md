@@ -72,3 +72,11 @@ directive:
       transform: >
           $["operationId"] = "ConversationAnalysis_JobStatus";
 ```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["info"]
+      transform: >
+          $["version"] = "2022-04-01-preview";
+```

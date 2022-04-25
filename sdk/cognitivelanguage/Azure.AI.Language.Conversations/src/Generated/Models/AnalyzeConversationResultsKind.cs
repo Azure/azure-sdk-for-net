@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         private const string ConversationalPIIResultsValue = "ConversationalPIIResults";
-        private const string ConversationalSummarizationResultsValue = "ConversationalSummarizationResults";
+        private const string ConversationalSummarizationResultsValue = "issueResolutionSummaryResults";
 
         /// <summary> ConversationalPIIResults. </summary>
         public static AnalyzeConversationResultsKind ConversationalPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationalPIIResultsValue);

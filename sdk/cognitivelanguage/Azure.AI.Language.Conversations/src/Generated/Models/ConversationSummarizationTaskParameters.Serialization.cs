@@ -11,18 +11,19 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class ConversationSummarizationTaskParameters : IUtf8JsonSerializable
+    public partial class  ConversationSummarizationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("summaryAspects");
-            writer.WriteStartArray();
+            /*writer.WriteStartArray();
             foreach (var item in SummaryAspects)
             {
                 writer.WriteStringValue(item.ToString());
             }
-            writer.WriteEndArray();
+            writer.WriteEndArray();*/
+            writer.WriteStringValue("issue, resolution");
             if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion");

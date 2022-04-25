@@ -11,9 +11,10 @@ namespace Azure.AI.Language.Conversations
     public partial class AnalyzeConversationSummarizationTask : AnalyzeConversationLROTask
     {
         /// <summary> Initializes a new instance of AnalyzeConversationSummarizationTask. </summary>
-        public AnalyzeConversationSummarizationTask()
+        public AnalyzeConversationSummarizationTask() : base()
         {
             Kind = AnalyzeConversationLROTaskKind.ConversationalSummarizationTask;
+
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSummarizationTask. </summary>

@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations
                 switch (discriminator.GetString())
                 {
                     case "ConversationalPIIResults": return AnalyzeConversationPIIResult.DeserializeAnalyzeConversationPIIResult(element);
-                    case "ConversationalSummarizationResults": return AnalyzeConversationSummarizationResult.DeserializeAnalyzeConversationSummarizationResult(element);
+                    case "issueResolutionSummaryResults": return AnalyzeConversationSummarizationResult.DeserializeAnalyzeConversationSummarizationResult(element);
                 }
             }
             AnalyzeConversationResultsKind kind = default;
