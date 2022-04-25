@@ -48,7 +48,7 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
-        public static OperationInternal Success(Response rawResponse) => new(OperationState.Success(rawResponse));
+        public static OperationInternal Succeeded(Response rawResponse) => new(OperationState.Success(rawResponse));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.

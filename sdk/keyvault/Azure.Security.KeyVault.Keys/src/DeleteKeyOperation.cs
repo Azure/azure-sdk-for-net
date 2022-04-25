@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Keys
             if (_value.RecoveryId is null)
             {
                 // If soft delete is not enabled, deleting is immediate so set success accordingly.
-                _operationInternal = OperationInternal.Success(response.GetRawResponse());
+                _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
             }
             else
             {
