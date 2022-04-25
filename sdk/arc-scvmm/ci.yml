@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: arc-scvmm
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Arc.ScVmm
+    - name: Azure.ResourceManager.ArcScVmm
       safeName: AzureResourceManagerArcScVmm
