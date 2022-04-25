@@ -141,7 +141,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
@@ -159,7 +158,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+            AsyncPageable<BinaryData> pageableBinaryData = GetDataFeedsImplementationAsync("MetricsAdvisorAdministrationClient.GetDataFeeds", name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
             return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
 
@@ -170,7 +169,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        [ForwardsClientCalls]
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
@@ -188,7 +186,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            Pageable<BinaryData> pageableBinaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+            Pageable<BinaryData> pageableBinaryData = GetDataFeedsImplementation("MetricsAdvisorAdministrationClient.GetDataFeeds", name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
             return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
 
@@ -265,19 +263,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual AsyncPageable<BinaryData> GetDataFeedsAsync(string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
-                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "@nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            return GetDataFeedsImplementationAsync("MetricsAdvisorAdministrationClient.GetDataFeeds", dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
         }
 
         /// <summary> List all data feeds. </summary>
@@ -353,19 +339,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual Pageable<BinaryData> GetDataFeeds(string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
-                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "@nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            return GetDataFeedsImplementation("MetricsAdvisorAdministrationClient.GetDataFeeds", dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
         }
 
         /// <summary>
