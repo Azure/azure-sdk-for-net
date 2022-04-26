@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<DataFeed>> GetDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
             scope.Start();
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 {
                     CancellationToken = cancellationToken,
                 };
-                Response response = await GetDataFeedByIdAsync(dataFeedGuid, context).ConfigureAwait(false);
+                Response response = await GetDataFeedByIdAsync(dataFeedId, context).ConfigureAwait(false);
                 DataFeedDetail value = DataFeedDetail.FromResponse(response);
                 return Response.FromValue(new DataFeed(value), response);
             }
@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response<DataFeed> GetDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
             scope.Start();
@@ -123,7 +123,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 {
                     CancellationToken = cancellationToken,
                 };
-                Response response = GetDataFeedById(dataFeedGuid, context);
+                Response response = GetDataFeedById(dataFeedId, context);
                 DataFeedDetail value = DataFeedDetail.FromResponse(response);
                 return Response.FromValue(new DataFeed(value), response);
             }
@@ -439,15 +439,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeedAsync)} and update the returned model before calling this method.");
             }
 
-            Guid dataFeedGuid = new Guid(dataFeed.Id);
-
             DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
             RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
             RequestContext context = new RequestContext()
             {
                 CancellationToken = cancellationToken,
             };
-            Response response = await UpdateDataFeedAsync(dataFeedGuid, content, context).ConfigureAwait(false);
+            Response response = await UpdateDataFeedAsync(dataFeed.Id, content, context).ConfigureAwait(false);
             DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
             return Response.FromValue(new DataFeed(dataFeedDetail), response);
         }
@@ -472,15 +470,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeed)} and update the returned model before calling this method.");
             }
 
-            Guid dataFeedGuid = new Guid(dataFeed.Id);
-
             DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
             RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
             RequestContext context = new RequestContext()
             {
                 CancellationToken = cancellationToken,
             };
-            Response response = UpdateDataFeed(dataFeedGuid, content, context);
+            Response response = UpdateDataFeed(dataFeed.Id, content, context);
             DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
             return Response.FromValue(new DataFeed(dataFeedDetail), response);
         }
@@ -497,13 +493,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> DeleteDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
 
             RequestContext context = new RequestContext()
             {
                 CancellationToken = cancellationToken,
             };
-            return await DeleteDataFeedAsync(dataFeedGuid, context).ConfigureAwait(false);
+            return await DeleteDataFeedAsync(dataFeedId, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -518,13 +514,81 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response DeleteDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
 
             RequestContext context = new RequestContext()
             {
                 CancellationToken = cancellationToken,
             };
-            return DeleteDataFeed(dataFeedGuid, context);
+            return DeleteDataFeed(dataFeedId, context);
+        }
+
+        /// <summary> Delete a data feed. </summary>
+        /// <param name="dataFeedId"> The data feed unique id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   message: string,
+        ///   code: string
+        /// }
+        /// </code>
+        ///
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response> DeleteDataFeedAsync(string dataFeedId, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
+            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.DeleteDataFeed");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDataFeedRequest(dataFeedId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a data feed. </summary>
+        /// <param name="dataFeedId"> The data feed unique id. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   message: string,
+        ///   code: string
+        /// }
+        /// </code>
+        ///
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response DeleteDataFeed(string dataFeedId, RequestContext context)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
+            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.DeleteDataFeed");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDataFeedRequest(dataFeedId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private static IReadOnlyList<DataFeed> ConvertToDataFeeds(IReadOnlyList<DataFeedDetail> dataFeedDetails)

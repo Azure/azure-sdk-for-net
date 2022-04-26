@@ -62,6 +62,35 @@ directive:
       }
 ```
 
+### Fix format
+``` yaml
+directive:
+- from: swagger-document
+  where: $["paths"]["/dataFeeds/{dataFeedId}"]
+  transform: >
+    delete $.get.parameters[0].format;
+    delete $.patch.parameters[0].format;
+    delete $.delete.parameters[0].format;
+```
+
+### Fix format
+``` yaml
+directive:
+- from: swagger-document
+  where: $["paths"]["/feedback/metric/{feedbackId}"]
+  transform: >
+    delete $.get.parameters[0].format;
+```
+
+### Fix format
+``` yaml
+directive:
+- from: swagger-document
+  where: $["paths"]["/metrics/{metricId}/dimension/query"]
+  transform: >
+    delete $.post.parameters[0].format;
+```
+
 ### Make Endpoint type as Uri
 
 ``` yaml

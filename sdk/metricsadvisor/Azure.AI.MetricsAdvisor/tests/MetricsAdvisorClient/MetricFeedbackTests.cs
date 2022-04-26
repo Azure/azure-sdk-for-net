@@ -49,11 +49,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetFeedbackAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetFeedbackAsync(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetFeedbackAsync("feedbackId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => client.GetFeedback(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetFeedback(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetFeedback("feedbackId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]

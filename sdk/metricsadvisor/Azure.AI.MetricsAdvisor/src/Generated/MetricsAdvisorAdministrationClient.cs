@@ -1784,6 +1784,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary> Get a data feed by its id. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1839,8 +1841,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetDataFeedByIdAsync(Guid dataFeedId, RequestContext context = null)
+        public virtual async Task<Response> GetDataFeedByIdAsync(string dataFeedId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.GetDataFeedById");
             scope.Start();
             try
@@ -1858,6 +1862,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary> Get a data feed by its id. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1913,8 +1919,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetDataFeedById(Guid dataFeedId, RequestContext context = null)
+        public virtual Response GetDataFeedById(string dataFeedId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.GetDataFeedById");
             scope.Start();
             try
@@ -1933,7 +1941,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2015,8 +2024,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UpdateDataFeedAsync(Guid dataFeedId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.UpdateDataFeed");
@@ -2037,7 +2047,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFeedId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2119,8 +2130,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UpdateDataFeed(Guid dataFeedId, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateDataFeed(string dataFeedId, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.UpdateDataFeed");
@@ -2128,62 +2140,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 using HttpMessage message = CreateUpdateDataFeedRequest(dataFeedId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a data feed. </summary>
-        /// <param name="dataFeedId"> The data feed unique id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   message: string,
-        ///   code: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteDataFeedAsync(Guid dataFeedId, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.DeleteDataFeed");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteDataFeedRequest(dataFeedId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a data feed. </summary>
-        /// <param name="dataFeedId"> The data feed unique id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   message: string,
-        ///   code: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteDataFeed(Guid dataFeedId, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorAdministrationClient.DeleteDataFeed");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteDataFeedRequest(dataFeedId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3650,7 +3606,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetDataFeedByIdRequest(Guid dataFeedId, RequestContext context)
+        internal HttpMessage CreateGetDataFeedByIdRequest(string dataFeedId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3665,7 +3621,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return message;
         }
 
-        internal HttpMessage CreateUpdateDataFeedRequest(Guid dataFeedId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateDataFeedRequest(string dataFeedId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3682,7 +3638,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return message;
         }
 
-        internal HttpMessage CreateDeleteDataFeedRequest(Guid dataFeedId, RequestContext context)
+        internal HttpMessage CreateDeleteDataFeedRequest(string dataFeedId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;

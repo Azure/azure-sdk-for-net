@@ -343,6 +343,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a metric feedback by its id. </summary>
         /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="feedbackId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="feedbackId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -364,8 +366,10 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetMetricFeedbackAsync(Guid feedbackId, RequestContext context = null)
+        public virtual async Task<Response> GetMetricFeedbackAsync(string feedbackId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.GetMetricFeedback");
             scope.Start();
             try
@@ -383,6 +387,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a metric feedback by its id. </summary>
         /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="feedbackId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="feedbackId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -404,8 +410,10 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetMetricFeedback(Guid feedbackId, RequestContext context = null)
+        public virtual Response GetMetricFeedback(string feedbackId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.GetMetricFeedback");
             scope.Start();
             try
@@ -1786,7 +1794,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metricId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1808,14 +1817,15 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetMetricDimensionAsync(Guid metricId, RequestContent content, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetricDimensionAsync(string metricId, RequestContent content, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetMetricDimensionImplementationAsync("MetricsAdvisorClient.GetMetricDimension", metricId, content, skip, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetMetricDimensionImplementationAsync(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetMetricDimensionImplementationAsync(string diagnosticsScopeName, string metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1838,7 +1848,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metricId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1860,14 +1871,15 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetMetricDimension(Guid metricId, RequestContent content, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetricDimension(string metricId, RequestContent content, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetMetricDimensionImplementation("MetricsAdvisorClient.GetMetricDimension", metricId, content, skip, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetMetricDimensionImplementation(string diagnosticsScopeName, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetMetricDimensionImplementation(string diagnosticsScopeName, string metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -3092,7 +3104,7 @@ namespace Azure.AI.MetricsAdvisor
             return message;
         }
 
-        internal HttpMessage CreateGetMetricFeedbackRequest(Guid feedbackId, RequestContext context)
+        internal HttpMessage CreateGetMetricFeedbackRequest(string feedbackId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3191,7 +3203,7 @@ namespace Azure.AI.MetricsAdvisor
             return message;
         }
 
-        internal HttpMessage CreateGetMetricDimensionRequest(Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetMetricDimensionRequest(string metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3505,7 +3517,7 @@ namespace Azure.AI.MetricsAdvisor
             return message;
         }
 
-        internal HttpMessage CreateGetMetricDimensionNextPageRequest(string nextLink, Guid metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetMetricDimensionNextPageRequest(string nextLink, string metricId, RequestContent content, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

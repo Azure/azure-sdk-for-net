@@ -71,8 +71,8 @@ namespace Azure.AI.MetricsAdvisor
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
                 DimensionValueFilter = options?.DimensionValueFilter
@@ -85,7 +85,7 @@ namespace Azure.AI.MetricsAdvisor
             };
 
             RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-            AsyncPageable<BinaryData> pageableBinaryData = GetMetricDimensionImplementationAsync("MetricsAdvisorClient.GetMetricDimensionValues", metricGuid, content, skip, maxPageSize, context);
+            AsyncPageable<BinaryData> pageableBinaryData = GetMetricDimensionImplementationAsync("MetricsAdvisorClient.GetMetricDimensionValues", metricId, content, skip, maxPageSize, context);
             return PageableHelpers.Select(pageableBinaryData, response => MetricDimensionList.FromResponse(response).Value);
         }
 
@@ -102,8 +102,8 @@ namespace Azure.AI.MetricsAdvisor
         public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
-            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
                 DimensionValueFilter = options?.DimensionValueFilter
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor
             };
 
             RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-            Pageable<BinaryData> pageableBindaryData = GetMetricDimensionImplementation("MetricsAdvisorClient.GetMetricDimensionValues", metricGuid, content, skip, maxPageSize, context);
+            Pageable<BinaryData> pageableBindaryData = GetMetricDimensionImplementation("MetricsAdvisorClient.GetMetricDimensionValues", metricId, content, skip, maxPageSize, context);
             return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
         }
 
@@ -313,7 +313,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<MetricFeedback>> GetFeedbackAsync(string feedbackId, CancellationToken cancellationToken = default)
         {
-            Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetFeedback)}");
             scope.Start();
@@ -324,7 +324,7 @@ namespace Azure.AI.MetricsAdvisor
                 {
                     CancellationToken = cancellationToken,
                 };
-                Response response = await GetMetricFeedbackAsync(feedbackGuid, context).ConfigureAwait(false);
+                Response response = await GetMetricFeedbackAsync(feedbackId, context).ConfigureAwait(false);
                 MetricFeedback value = MetricFeedback.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -347,7 +347,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
         public virtual Response<MetricFeedback> GetFeedback(string feedbackId, CancellationToken cancellationToken = default)
         {
-            Guid feedbackGuid = ClientCommon.ValidateGuid(feedbackId, nameof(feedbackId));
+            Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetFeedback)}");
             scope.Start();
@@ -358,7 +358,7 @@ namespace Azure.AI.MetricsAdvisor
                 {
                     CancellationToken = cancellationToken,
                 };
-                Response response = GetMetricFeedback(feedbackGuid, context);
+                Response response = GetMetricFeedback(feedbackId, context);
                 MetricFeedback value = MetricFeedback.FromResponse(response);
                 return Response.FromValue(value, response);
             }

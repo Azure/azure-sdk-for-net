@@ -126,11 +126,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => adminClient.GetDataFeedAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.GetDataFeedAsync(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.GetDataFeedAsync("dataFeedId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => adminClient.GetDataFeed(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.GetDataFeed(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.GetDataFeed("dataFeedId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]
@@ -167,11 +165,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => adminClient.DeleteDataFeedAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.DeleteDataFeedAsync(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.DeleteDataFeedAsync("dataFeedId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => adminClient.DeleteDataFeed(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.DeleteDataFeed(""), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.DeleteDataFeed("dataFeedId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]
