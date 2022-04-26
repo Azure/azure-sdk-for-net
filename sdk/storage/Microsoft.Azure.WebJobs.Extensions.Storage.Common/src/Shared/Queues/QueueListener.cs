@@ -156,7 +156,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
             catch (Exception ex)
             {
-                _logger.LogDebug(ex, $"Storage queue listener exception while starting ({_details.Value})");
+                _logger.LogDebug(ex, $"Storage queue listener encountered an error while starting ({_details.Value})");
                 throw;
             }
         }
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogDebug(ex, $"Storage queue listener exception while stopping ({_details.Value})");
+                    _logger.LogDebug(ex, $"Storage queue listener encountered an error while stopping ({_details.Value})");
                 }
                 finally
                 {

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Storage blob listener exception during starting ({_details.Value})");
+                _logger.LogError(ex, $"Storage blob listener encountered an error during starting ({_details.Value})");
                 throw;
             }
         }
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Storage blob listener exception during stopping ({_details.Value})");
+                _logger.LogError(ex, $"Storage blob listener encountered an error during stopping ({_details.Value})");
                 throw;
             }
             finally
