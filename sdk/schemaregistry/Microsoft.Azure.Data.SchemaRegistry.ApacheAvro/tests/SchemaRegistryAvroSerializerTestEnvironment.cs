@@ -11,6 +11,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
 
-        public string EventHubName => GetRecordedVariable("EVENTHUB_NAME");
+        public string EventHubName => GetVariable("EVENTHUB_NAME");
     }
 }
