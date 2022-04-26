@@ -120,4 +120,4 @@ var name = doc.RootElement.GetProperty("name").GetString();
 
 ## Configuration And Customization
 
-**Protocol methods** share the same configuration and customization as **standard model methods**. For details, see the [ReadMe](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md). You can find more samples [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/README.md).
+**Protocol methods** share the same configuration and customization as **convenience methods**. For details, see the [ReadMe](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md). You can find more samples [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/README.md).
