@@ -277,6 +277,61 @@ namespace Azure.Core.Tests
             Assert.AreEqual(retries, fallbackStrategy.CallCount);
         }
 
+        [Test]
+        public async Task UpdateStatusConcurrent([Values(true, false)] bool async)
+        {
+            var fallbackStrategy = new CallCountStrategy();
+            var mre = new ManualResetEventSlim(false);
+            var callCount = 0;
+            var expectedDelayStrategyCalls = 40;
+            var operation = new TestOperation(async (callAsync, ct) =>
+            {
+                mre.Wait(ct);
+                if (callAsync)
+                {
+                    await Task.Yield();
+                }
+
+                if (callCount < expectedDelayStrategyCalls)
+                {
+                    callCount++;
+                    return OperationState.Pending(new MockResponse(200));
+                }
+
+                if (callCount > expectedDelayStrategyCalls)
+                {
+                    throw new Exception("More calls than expected");
+                }
+
+                callCount++;
+                return OperationState.Success(new MockResponse(200));
+            });
+
+            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, fallbackStrategy: fallbackStrategy);
+
+            var tasks = new List<Task<Response>>();
+            for (var i = 0; i < 50; i++)
+            {
+                var task = Task.Run(async () => async
+                    ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None).ConfigureAwait(false)
+                    : operationInternal.WaitForCompletionResponse(CancellationToken.None));
+
+                tasks.Add(task);
+            }
+
+            mre.Set();
+
+            await Task.WhenAll(tasks);
+
+            Assert.AreEqual(expectedDelayStrategyCalls + 1, callCount);
+            Assert.AreEqual(expectedDelayStrategyCalls, fallbackStrategy.CallCount);
+
+            foreach (var task in tasks.Skip(1))
+            {
+                Assert.AreEqual(task.Result, tasks[0].Result);
+            }
+        }
+
         private readonly struct TestOperation : IOperation
         {
             private readonly Func<bool, CancellationToken, ValueTask<OperationState>> _updateStateAsyncHandler;
@@ -325,6 +380,17 @@ namespace Azure.Core.Tests
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => _updateStateAsyncHandler(async, cancellationToken);
+        }
+
+        private class CallCountStrategy : DelayStrategy
+        {
+            public int CallCount { get; private set; }
+
+            public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+            {
+                CallCount++;
+                return TimeSpan.Zero;
+            }
         }
     }
 }
