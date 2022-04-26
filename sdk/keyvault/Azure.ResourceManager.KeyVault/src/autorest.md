@@ -7,6 +7,7 @@ azure-arm: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 tag: package-2021-10
+output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -49,40 +50,31 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedHsmSku.properties.family
     transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: $.definitions.CheckNameAvailabilityResult.properties.reason
-    transform: >
-      $["x-ms-enum"] = {
-        "modelAsString": false,
-        "name": "NameAvailabilityReason"
-      }
-  - from: swagger-document
-    where: $.definitions.Permissions.properties
-    transform: >
-      $.keys.items["x-ms-enum"]["name"] = "KeyPermission";
-      $.secrets.items["x-ms-enum"]["name"] = "SecretPermission";
-      $.certificates.items["x-ms-enum"]["name"] = "CertificatePermission";
-      $.storage.items["x-ms-enum"]["name"] = "StoragePermission";
-  - from: swagger-document
-    where: "$.definitions.Resource"
-    transform: >
-      $["x-ms-client-name"] = "KeyVaultResourceData";
   - from: managedHsm.json
     where: "$.definitions"
     transform: >
       $.ManagedHsmResource["x-ms-client-name"] = "KeyVaultTrackedResourceData";
       $.MHSMIPRule.properties.value["x-ms-client-name"] = "AddressRange";
-      $.ManagedHsmResource.properties.location["x-ms-format"] = "azure-location"; 
-      $.DeletedManagedHsmProperties.properties.location["x-ms-format"] = "azure-location"; 
+      $.ManagedHsmResource.properties.location["x-ms-format"] = "azure-location";
+      $.DeletedManagedHsmProperties.properties.location["x-ms-format"] = "azure-location";
+      $.MHSMPrivateEndpointConnection.properties.etag["x-ms-format"] = "etag";
   - from: keyvault.json
     where: "$.definitions"
     transform: >
+      $.CheckNameAvailabilityResult.properties.reason["x-ms-enum"]["name"] = "NameAvailabilityReason";
+      $.Permissions.properties.keys.items["x-ms-enum"]["name"] = "KeyPermission";
+      $.Permissions.properties.secrets.items["x-ms-enum"]["name"] = "SecretPermission";
+      $.Permissions.properties.certificates.items["x-ms-enum"]["name"] = "CertificatePermission";
+      $.Permissions.properties.storage.items["x-ms-enum"]["name"] = "StoragePermission";
+      $.Resource["x-ms-client-name"] = "KeyVaultResourceData";
       $.IPRule.properties.value["x-ms-client-name"] = "AddressRange";
       $.DeletedVaultProperties.properties.location["x-ms-format"] = "azure-location";
-      $.VaultCreateOrUpdateParameters.properties.location["x-ms-format"] = "azure-location"; 
-      $.VaultAccessPolicyParameters.properties.location["x-ms-format"] = "azure-location"; 
-      $.Vault.properties.location["x-ms-format"] = "azure-location"; 
-      $.Resource.properties.location["x-ms-format"] = "azure-location"; 
+      $.VaultCreateOrUpdateParameters.properties.location["x-ms-format"] = "azure-location";
+      $.VaultAccessPolicyParameters.properties.location["x-ms-format"] = "azure-location";
+      $.Vault.properties.location["x-ms-format"] = "azure-location";
+      $.Resource.properties.location["x-ms-format"] = "azure-location";
+      $.PrivateEndpointConnectionItem.properties.etag["x-ms-format"] = "etag";
+      $.PrivateEndpointConnection.properties.etag["x-ms-format"] = "etag";
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule

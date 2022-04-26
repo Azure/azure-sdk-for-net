@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Reference to another resource along with its state. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ActivatedResourceReference. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="isActive"> Whether the resource is active or inactive. </param>
-        internal ActivatedResourceReference(string id, bool? isActive)
+        internal ActivatedResourceReference(ResourceIdentifier id, bool? isActive)
         {
             Id = id;
             IsActive = isActive;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Whether the resource is active or inactive. </summary>
         public bool? IsActive { get; }
     }

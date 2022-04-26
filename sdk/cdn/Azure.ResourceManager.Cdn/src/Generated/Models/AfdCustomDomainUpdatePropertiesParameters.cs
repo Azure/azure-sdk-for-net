@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; }
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; }
         /// <summary> Resource ID. </summary>
-        public string PreValidatedCustomDomainResourceIdId
+        public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
-            get => PreValidatedCustomDomainResourceId?.Id;
+            get => PreValidatedCustomDomainResource?.Id;
         }
     }
 }

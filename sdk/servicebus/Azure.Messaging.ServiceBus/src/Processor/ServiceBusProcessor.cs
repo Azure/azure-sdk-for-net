@@ -892,7 +892,7 @@ namespace Azure.Messaging.ServiceBus
                     catch (Exception ex)
                     {
                         // Don't bubble up exceptions raised from customer exception handler.
-                        Logger.ProcessorErrorHandlerThrewException(ex.ToString());
+                        Logger.ProcessorErrorHandlerThrewException(ex.ToString(), Identifier);
                     }
 
                     // This call will deadlock if awaited, as StopProcessingAsync awaits

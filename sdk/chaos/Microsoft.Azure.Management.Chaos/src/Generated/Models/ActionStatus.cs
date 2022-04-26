@@ -34,12 +34,18 @@ namespace Microsoft.Azure.Management.Chaos.Models
         /// <param name="name">The name of the action status.</param>
         /// <param name="id">The id of the action status.</param>
         /// <param name="status">The status of the action.</param>
+        /// <param name="startTime">String that represents the start time of
+        /// the action.</param>
+        /// <param name="endTime">String that represents the end time of the
+        /// action.</param>
         /// <param name="targets">The array of targets.</param>
-        public ActionStatus(string name = default(string), string id = default(string), string status = default(string), IList<ExperimentExecutionActionTargetDetailsProperties> targets = default(IList<ExperimentExecutionActionTargetDetailsProperties>))
+        public ActionStatus(string name = default(string), string id = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), IList<ExperimentExecutionActionTargetDetailsProperties> targets = default(IList<ExperimentExecutionActionTargetDetailsProperties>))
         {
             Name = name;
             Id = id;
             Status = status;
+            StartTime = startTime;
+            EndTime = endTime;
             Targets = targets;
             CustomInit();
         }
@@ -66,6 +72,18 @@ namespace Microsoft.Azure.Management.Chaos.Models
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
+
+        /// <summary>
+        /// Gets string that represents the start time of the action.
+        /// </summary>
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets string that represents the end time of the action.
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
         /// Gets the array of targets.

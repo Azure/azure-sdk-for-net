@@ -116,19 +116,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _sendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
                 timeout => CreateLinkAndEnsureSenderStateAsync(timeout, CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(

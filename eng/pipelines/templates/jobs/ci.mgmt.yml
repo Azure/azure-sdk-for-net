@@ -1,3 +1,11 @@
+parameters: 
+- name: ShouldPublish
+  type: boolean
+  default: false
+- name: Scope
+  type: string
+  default: ''
+
 jobs:
   - job: Build
     timeoutInMinutes: 100
@@ -9,7 +17,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
-          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{ parameters.Scope }} /p:ForPublishing=${{ parameters.ShouldPublish }} $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
       - task: PowerShell@2
         displayName: "Verify generated code"
@@ -62,7 +70,7 @@ jobs:
           AgentImage: $(OSVmImage)
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
+      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{ parameters.Scope }} /p:ForPublishing=${{ parameters.ShouldPublish }} /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
       - task: PublishTestResults@2
         condition: succeededOrFailed()
