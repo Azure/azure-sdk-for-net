@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     if (PreValidatedCustomDomainResource is null)
                         PreValidatedCustomDomainResource = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
-                    PreValidatedCustomDomainResourceId.Id = value;
+                    PreValidatedCustomDomainResource.Id = value;
                 }
                 else
                 {

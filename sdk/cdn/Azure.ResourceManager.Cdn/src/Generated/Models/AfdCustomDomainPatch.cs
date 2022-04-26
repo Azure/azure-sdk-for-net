@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (value is not null)
                 {
-                    if (PreValidatedCustomDomainResourceId is null)
-                        PreValidatedCustomDomainResourceId = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
-                    PreValidatedCustomDomainResourceId.Id = value;
+                    if (PreValidatedCustomDomainResource is null)
+                        PreValidatedCustomDomainResource = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource.Id = value;
                 }
                 else
                 {
-                    PreValidatedCustomDomainResourceId = null;
+                    PreValidatedCustomDomainResource = null;
                 }
             }
         }
