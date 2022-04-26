@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static PrivateEndpointConnectionList DeserializePrivateEndpointConnectionList(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                    List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                        array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;
