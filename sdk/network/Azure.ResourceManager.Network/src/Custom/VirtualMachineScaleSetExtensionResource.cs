@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Pageable<PublicIPAddressResource> GetAllPublicIpAddresses(CancellationToken cancellationToken = default)
+        public Pageable<PublicIPAddressResource> GetAllPublicIPAddresses(CancellationToken cancellationToken = default)
         {
             Page<PublicIPAddressResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIpAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIPAddresses");
                 scope.Start();
                 try
                 {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public AsyncPageable<PublicIPAddressResource> GetAllPublicIpAddressesAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<PublicIPAddressResource> GetAllPublicIPAddressesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PublicIPAddressResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIpAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIPAddresses");
                 scope.Start();
                 try
                 {
