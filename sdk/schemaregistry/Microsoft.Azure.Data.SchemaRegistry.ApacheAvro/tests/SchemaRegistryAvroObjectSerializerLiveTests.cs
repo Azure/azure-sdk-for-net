@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(true)]
+        [LiveOnly]
         public async Task CanUseEncoderWithEventData()
         {
             var client = CreateClient();
