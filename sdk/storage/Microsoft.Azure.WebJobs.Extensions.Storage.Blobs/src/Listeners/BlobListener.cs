@@ -54,10 +54,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 _logger.LogError(ex, $"Storage blob listener exception during starting ({_details.Value})");
                 throw;
             }
-            finally
-            {
-                _logger.LogDebug($"Storage blob listener stopped ({_details.Value})");
-            }
         }
 
         private async Task StartAsyncCore(CancellationToken cancellationToken)

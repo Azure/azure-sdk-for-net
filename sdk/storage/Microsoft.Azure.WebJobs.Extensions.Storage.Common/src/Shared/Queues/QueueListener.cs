@@ -52,6 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private bool _disposed;
         private TaskCompletionSource<object> _stopWaitingTaskSource;
         private ConcurrencyManager _concurrencyManager;
+        private Lazy<string> _details;
 
         // for mock testing only
         internal QueueListener()
@@ -105,6 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger = loggerFactory.CreateLogger<QueueListener>();
             _functionDescriptor = functionDescriptor ?? throw new ArgumentNullException(nameof(functionDescriptor));
             _functionId = functionId ?? _functionDescriptor.Id;
+            _details = new Lazy<string>(() => $"queue name='{_queue.Name}', storage account name='{_queue.AccountName}'");
 
             // if the function runs longer than this, the invisibility will be updated
             // on a timer periodically for the duration of the function execution
@@ -145,19 +147,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            ThrowIfDisposed();
-            _timer.Start();
-            return Task.FromResult(0);
+            try
+            {
+                ThrowIfDisposed();
+                _timer.Start();
+                _logger.LogDebug($"Storage queue listener started ({_details.Value})");
+                return Task.FromResult(0);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, $"Storage queue listener exception while starting ({_details.Value})");
+                throw;
+            }
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
             {
-                ThrowIfDisposed();
-                _timer.Cancel();
-                await Task.WhenAll(_processing).ConfigureAwait(false);
-                await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    ThrowIfDisposed();
+                    _timer.Cancel();
+                    await Task.WhenAll(_processing).ConfigureAwait(false);
+                    await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug(ex, $"Storage queue listener exception while stopping ({_details.Value})");
+                }
+                finally
+                {
+                    _logger.LogDebug($"Storage queue listener stopped ({_details.Value})");
+                }
             }
         }
 
