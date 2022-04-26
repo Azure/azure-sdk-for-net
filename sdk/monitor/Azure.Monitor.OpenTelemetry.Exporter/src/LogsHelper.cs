@@ -99,9 +99,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         {
                             properties.Add($"OriginalFormatScope_{originalFormatDepth++}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
                         }
-                        else
+                        else if (!properties.TryGetValue(scopeItem.Key, out _))
                         {
                             properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.Write($"DuplicateScopeItem{EventLevelSuffix.Informational}", $"Found duplicate scope key - {scopeItem.Key}.");
                         }
                     }
                 }
