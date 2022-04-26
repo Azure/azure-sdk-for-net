@@ -19,23 +19,20 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ExtendedDatabaseBlobAuditingPoliciesOperations operations.
+    /// EndpointCertificatesOperations operations.
     /// </summary>
-    public partial interface IExtendedDatabaseBlobAuditingPoliciesOperations
+    public partial interface IEndpointCertificatesOperations
     {
         /// <summary>
-        /// Lists extended auditing settings of a database.
+        /// List certificates used on endpoints on the target instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
         /// obtain this value from the Azure Resource Manager API or the
         /// portal.
         /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,20 +49,20 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExtendedDatabaseBlobAuditingPolicy>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EndpointCertificate>>> ListByInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an extended database's blob auditing policy.
+        /// Gets a certificate used on the endpoint with the given id.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
         /// obtain this value from the Azure Resource Manager API or the
         /// portal.
         /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
         /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
+        /// <param name='endpointType'>
+        /// Type of the endpoint whose certificate the customer is looking for.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -82,42 +79,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExtendedDatabaseBlobAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EndpointCertificate>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string endpointType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an extended database's blob auditing policy.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
-        /// </param>
-        /// <param name='parameters'>
-        /// The extended database blob auditing policy.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ExtendedDatabaseBlobAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ExtendedDatabaseBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists extended auditing settings of a database.
+        /// List certificates used on endpoints on the target instance.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -137,6 +101,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExtendedDatabaseBlobAuditingPolicy>>> ListByDatabaseNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EndpointCertificate>>> ListByInstanceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
