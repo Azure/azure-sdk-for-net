@@ -15,18 +15,18 @@ namespace Azure.Communication.Chat
     /// <summary>
     /// The Cross Platform Messaging Services client.
     /// </summary>
-    public class ThreadlessChatClient
+    public class BroadcastClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ThreadlessRestClient _threadlessRestClient;
+        private readonly BroadcastRestClient _broadcastRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
 
-        /// <summary> Initializes a new instance of <see cref="ThreadlessChatClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="BroadcastClient"/>.</summary>
         /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ThreadlessChatClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
+        public BroadcastClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
             Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -35,19 +35,19 @@ namespace Azure.Communication.Chat
             _endpointUrl = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationTokenCredential);
-            _threadlessRestClient = new ThreadlessRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _broadcastRestClient = new BroadcastRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
-        /// <summary>Initializes a new instance of <see cref="ThreadlessChatClient"/> for mocking.</summary>
-        protected ThreadlessChatClient()
+        /// <summary>Initializes a new instance of <see cref="BroadcastClient"/> for mocking.</summary>
+        protected BroadcastClient()
         {
             _clientDiagnostics = null!;
-            _threadlessRestClient = null;
+            _broadcastRestClient = null;
             _endpointUrl = null!;
             _communicationTokenCredential = null!;
         }
 
-        #region Threadless Messaging Operations
+        #region Broadcast Messaging Operations
         /// <summary> Sends a Fire and Forget/Threadless/CPM template message asynchronously. </summary>
         /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
@@ -57,13 +57,13 @@ namespace Azure.Communication.Chat
         /// <param name="template"> The template object used to create message templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendThreadlessChatMessageResult>> SendMessageAsync(string from, string to, ThreadlessChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendMessageAsync(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                return await _threadlessRestClient.SendChatMessageAsync(from, to, type, content, media, template, cancellationToken).ConfigureAwait(false);
+                return await _broadcastRestClient.SendChatMessageAsync(from, to, type, content, media, template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -81,13 +81,13 @@ namespace Azure.Communication.Chat
         /// <param name="template"> The template object used to create message templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendThreadlessChatMessageResult> SendMessage(string from, string to, ThreadlessChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendBroadcastChatMessageResult> SendMessage(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                return _threadlessRestClient.SendChatMessage(from, to, type, content, media, template, cancellationToken);
+                return _broadcastRestClient.SendChatMessage(from, to, type, content, media, template, cancellationToken);
             }
             catch (Exception ex)
             {

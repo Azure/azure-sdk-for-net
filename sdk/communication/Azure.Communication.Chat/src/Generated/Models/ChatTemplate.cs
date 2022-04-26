@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
         /// <summary> Name of the template. </summary>
         public string Name { get; set; }
         /// <summary> The codes for the supported languages for message templates. </summary>
-        public LanguageCode? Language { get; set; }
+        public string Language { get; set; }
         /// <summary> Array of parameters for the content of the message. </summary>
         public IList<string> Parameters { get; }
     }

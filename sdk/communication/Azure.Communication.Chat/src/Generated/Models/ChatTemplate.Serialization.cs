@@ -23,7 +23,7 @@ namespace Azure.Communication.Chat
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
-                writer.WriteStringValue(Language.Value.ToString());
+                writer.WriteStringValue(Language);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {

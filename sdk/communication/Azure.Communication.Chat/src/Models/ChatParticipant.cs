@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Chat
 {
@@ -22,6 +23,7 @@ namespace Azure.Communication.Chat
             User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
+            RoleIds = chatParticipantInternal.RoleIds;
         }
 
         ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
@@ -30,10 +32,12 @@ namespace Azure.Communication.Chat
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
+        /// <summary> Identifiers of roles for this chat participant. </summary>
+        public IList<string> RoleIds { get; }
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime, RoleIds);
         }
     }
 }

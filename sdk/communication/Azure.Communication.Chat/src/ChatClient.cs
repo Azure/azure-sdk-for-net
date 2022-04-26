@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
-        private readonly ThreadlessRestClient _threadlessRestClient;
+        private readonly BroadcastRestClient _threadlessRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
-            _threadlessRestClient = new ThreadlessRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _threadlessRestClient = new BroadcastRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -52,7 +52,7 @@ namespace Azure.Communication.Chat
             _chatClientOptions = null!;
         }
 
-        #region Threadless Messaging Operations
+        #region Broadcast Messaging Operations
         /// <summary> Sends a Fire and Forget/Threadless/CPM message asynchronously. </summary>
         /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
@@ -62,9 +62,9 @@ namespace Azure.Communication.Chat
         /// <param name="template"> The template object used to create message templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendThreadlessChatMessageResult>> SendThreadlessMessageAsync(string from, string to, ThreadlessChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendBroadcastMessageAsync(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendThreadlessMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
             scope.Start();
             try
             {
@@ -86,9 +86,9 @@ namespace Azure.Communication.Chat
         /// <param name="template"> The template object used to create message templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendThreadlessChatMessageResult> SendThreadlessMessage(string from = null, string to = null, ThreadlessChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendBroadcastChatMessageResult> SendBroadcastMessage(string from = null, string to = null, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessChatClient)}.{nameof(SendThreadlessMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
             scope.Start();
             try
             {

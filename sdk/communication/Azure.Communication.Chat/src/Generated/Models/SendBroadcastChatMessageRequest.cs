@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> Details of the CPM message to send. </summary>
-    internal partial class SendThreadlessChatMessageRequest
+    /// <summary> Details of the broadcast chat message to send. </summary>
+    internal partial class SendBroadcastChatMessageRequest
     {
-        /// <summary> Initializes a new instance of SendThreadlessChatMessageRequest. </summary>
-        public SendThreadlessChatMessageRequest()
+        /// <summary> Initializes a new instance of SendBroadcastChatMessageRequest. </summary>
+        public SendBroadcastChatMessageRequest()
         {
         }
 
@@ -19,9 +19,9 @@ namespace Azure.Communication.Chat
         public string From { get; set; }
         /// <summary> The channel user identifiers of the recipient. </summary>
         public string To { get; set; }
-        /// <summary> The threadless chat message type. </summary>
-        public ThreadlessChatMessageType? Type { get; set; }
-        /// <summary> Chat message content. </summary>
+        /// <summary> The broadcast chat message type. </summary>
+        public BroadcastChatMessageType? Type { get; set; }
+        /// <summary> Broadcasr chat message content. </summary>
         public string Content { get; set; }
         /// <summary> The media Object. </summary>
         public ChatMedia Media { get; set; }

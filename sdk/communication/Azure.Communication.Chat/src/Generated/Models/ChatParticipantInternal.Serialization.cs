@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
@@ -29,6 +30,16 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("shareHistoryTime");
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
             }
+            if (Optional.IsCollectionDefined(RoleIds))
+            {
+                writer.WritePropertyName("roleIds");
+                writer.WriteStartArray();
+                foreach (var item in RoleIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -37,6 +48,7 @@ namespace Azure.Communication.Chat
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;
+            Optional<IList<string>> roleIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"))
@@ -59,8 +71,23 @@ namespace Azure.Communication.Chat
                     shareHistoryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("roleIds"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    roleIds = array;
+                    continue;
+                }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime), Optional.ToList(roleIds));
         }
     }
 }
