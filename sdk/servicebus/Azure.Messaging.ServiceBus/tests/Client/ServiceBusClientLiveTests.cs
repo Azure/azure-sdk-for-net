@@ -279,21 +279,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
 
-                client.ConnectedAsync += (args) =>
-                {
-                    Console.WriteLine($"{args.FullyQualifiedNamespace} Connected!");
-                    return Task.CompletedTask;
-                };
-
-                client.DisconnectedAsync += (args) =>
-                {
-                    Console.WriteLine($"{args.FullyQualifiedNamespace} Disconnected!");
-                    return Task.CompletedTask;
-                };
-                Console.WriteLine(client.IsConnected);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(new ServiceBusMessage());
-                Console.WriteLine(client.IsConnected);
 
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
@@ -301,13 +288,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
-                Console.WriteLine(client.IsConnected);
                 await sender.SendMessageAsync(new ServiceBusMessage());
-                Console.WriteLine(client.IsConnected);
                 Assert.AreEqual(firstOpen, metrics.LastConnectionOpen);
 
                 await client.DisposeAsync();
-                Console.WriteLine(client.IsConnected);
                 // The close frame does not come back from the service before the DisposeAsync
                 // call is returned.
                 await Task.Delay(500);
