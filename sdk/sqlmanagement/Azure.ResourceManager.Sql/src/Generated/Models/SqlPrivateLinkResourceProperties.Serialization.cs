@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PrivateLinkResourceProperties
+    public partial class SqlPrivateLinkResourceProperties
     {
-        internal static PrivateLinkResourceProperties DeserializePrivateLinkResourceProperties(JsonElement element)
+        internal static SqlPrivateLinkResourceProperties DeserializeSqlPrivateLinkResourceProperties(JsonElement element)
         {
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new SqlPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

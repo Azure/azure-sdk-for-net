@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
-        internal SqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal SqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> The private link resource group id. </summary>
-        public PrivateLinkResourceProperties Properties { get; }
+        public SqlPrivateLinkResourceProperties Properties { get; }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    internal partial class PrivateLinkResourceProperties
+    internal partial class DeviceUpdatePrivateLinkResourceProperties
     {
     }
 }

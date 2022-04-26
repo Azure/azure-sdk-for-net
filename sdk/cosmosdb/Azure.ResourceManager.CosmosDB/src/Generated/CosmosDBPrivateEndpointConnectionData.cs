@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
-        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState) : base(id, name, resourceType, systemData)
+        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
-        public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Group id of the private endpoint. </summary>
         public string GroupId { get; set; }
         /// <summary> Provisioning state of the private endpoint. </summary>

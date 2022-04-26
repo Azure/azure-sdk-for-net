@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class PrivateLinkResourceProperties
+    internal partial class DeviceUpdatePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceProperties. </summary>
-        internal PrivateLinkResourceProperties()
+        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkResourceProperties. </summary>
+        internal DeviceUpdatePrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceType type = default;
             SystemData systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<MonitorPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionStateProperty.DeserializePrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = MonitorPrivateLinkServiceConnectionStateProperty.DeserializeMonitorPrivateLinkServiceConnectionStateProperty(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

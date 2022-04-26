@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServicePrivateLinkResource DeserializeAppServicePrivateLinkResource(JsonElement element)
         {
-            PrivateLinkResourceProperties properties = default;
+            AppServicePrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = PrivateLinkResourceProperties.DeserializePrivateLinkResourceProperties(property.Value);
+                    properties = AppServicePrivateLinkResourceProperties.DeserializeAppServicePrivateLinkResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

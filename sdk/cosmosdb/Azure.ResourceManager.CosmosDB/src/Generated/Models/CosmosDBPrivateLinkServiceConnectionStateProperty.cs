@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Connection State of the Private Endpoint Connection. </summary>
-    public partial class PrivateLinkServiceConnectionStateProperty
+    public partial class CosmosDBPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionStateProperty. </summary>
-        public PrivateLinkServiceConnectionStateProperty()
+        /// <summary> Initializes a new instance of CosmosDBPrivateLinkServiceConnectionStateProperty. </summary>
+        public CosmosDBPrivateLinkServiceConnectionStateProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of CosmosDBPrivateLinkServiceConnectionStateProperty. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
-        internal PrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
+        internal CosmosDBPrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;

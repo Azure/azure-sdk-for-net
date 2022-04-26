@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlPrivateLinkResourceData DeserializeSqlPrivateLinkResourceData(JsonElement element)
         {
-            Optional<PrivateLinkResourceProperties> properties = default;
+            Optional<SqlPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PrivateLinkResourceProperties.DeserializePrivateLinkResourceProperties(property.Value);
+                    properties = SqlPrivateLinkResourceProperties.DeserializeSqlPrivateLinkResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

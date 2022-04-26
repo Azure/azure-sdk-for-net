@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionStateProperty.DeserializePrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = SqlPrivateLinkServiceConnectionStateProperty.DeserializeSqlPrivateLinkServiceConnectionStateProperty(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

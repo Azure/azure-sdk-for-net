@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             _ = await PrivateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new CosmosDBPrivateEndpointConnectionData()
             {
-                PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionStateProperty()
+                PrivateLinkServiceConnectionState = new CosmosDBPrivateLinkServiceConnectionStateProperty()
                 {
                     Status = "Approved",
                     Description = "Approved by test",

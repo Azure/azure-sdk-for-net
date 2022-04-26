@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
+    public partial class CosmosDBPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceConnectionStateProperty DeserializePrivateLinkServiceConnectionStateProperty(JsonElement element)
+        internal static CosmosDBPrivateLinkServiceConnectionStateProperty DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
             Optional<string> status = default;
             Optional<string> description = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionStateProperty(status.Value, description.Value, actionsRequired.Value);
+            return new CosmosDBPrivateLinkServiceConnectionStateProperty(status.Value, description.Value, actionsRequired.Value);
         }
     }
 }

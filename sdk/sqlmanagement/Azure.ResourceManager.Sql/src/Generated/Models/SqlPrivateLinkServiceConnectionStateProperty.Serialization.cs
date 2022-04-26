@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
+    public partial class SqlPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceConnectionStateProperty DeserializePrivateLinkServiceConnectionStateProperty(JsonElement element)
+        internal static SqlPrivateLinkServiceConnectionStateProperty DeserializeSqlPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
             PrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired));
+            return new SqlPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired));
         }
     }
 }
