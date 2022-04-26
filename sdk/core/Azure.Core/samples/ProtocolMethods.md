@@ -61,7 +61,7 @@ Response SetPet(RequestContent requestBody, RequestContext context = null);
 
 ## Usage
 
-The basic structure of calling protocol methods remains the same as that of standard model methods:
+The basic structure of calling protocol methods remains the same as that of convenience methods:
 
 1. [Initialize Your Client](#1-initialize-your-client "Initialize Your Client")
 
