@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the DiskAccess. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of ComputePrivateEndpointConnectionResources in the DiskAccess. </summary>
+        /// <returns> An object representing collection of ComputePrivateEndpointConnectionResources and their operations over a ComputePrivateEndpointConnectionResource. </returns>
+        public virtual ComputePrivateEndpointConnectionCollection GetComputePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new ComputePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputePrivateEndpointConnectionResource>> GetComputePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetComputePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputePrivateEndpointConnectionResource> GetComputePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetComputePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskAccesses_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ComputePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
                 scope.Start();
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskAccesses_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ComputePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
                 scope.Start();

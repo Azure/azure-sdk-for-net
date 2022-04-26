@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetDeviceUpdateInstances().Get(instanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of DeviceUpdatePrivateEndpointConnectionResources in the DeviceUpdateAccount. </summary>
+        /// <returns> An object representing collection of DeviceUpdatePrivateEndpointConnectionResources and their operations over a DeviceUpdatePrivateEndpointConnectionResource. </returns>
+        public virtual DeviceUpdatePrivateEndpointConnectionCollection GetDeviceUpdatePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new DeviceUpdatePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdatePrivateEndpointConnectionResource>> GetDeviceUpdatePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceUpdatePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdatePrivateEndpointConnectionResource> GetDeviceUpdatePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetDeviceUpdatePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateLinkResources in the DeviceUpdateAccount. </summary>
