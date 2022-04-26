@@ -10,7 +10,6 @@ tag: package-2021-10
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
-use: C:/Users/mingzhehuang/workspaces/archerzz/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1
 modelerfour:
   flatten-payloads: false
 override-operation-name:
