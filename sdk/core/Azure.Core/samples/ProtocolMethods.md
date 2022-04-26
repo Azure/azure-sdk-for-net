@@ -6,7 +6,7 @@ Azure SDK clients provide an interface to Azure services by translating library 
 
 In Azure SDK clients, there are two ways to expose the schematized body in the request or response, known as the `message body`:
 
-- Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the `message body` of the REST call. Those methods can be called here '**standard model methods**'.
+- Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the `message body` of the REST call. Those methods can be called here '**convenience methods**'.
 
 - However, some clients expose methods that mirror the message body directly. Those methods are called here '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
 
