@@ -293,7 +293,7 @@ namespace Azure.Core
         private class FinalOperation : IOperation<T>
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
-                => throw new NotSupportedException("Type is in final state");
+                => throw new NotSupportedException("The operation has already completed");
         }
     }
 

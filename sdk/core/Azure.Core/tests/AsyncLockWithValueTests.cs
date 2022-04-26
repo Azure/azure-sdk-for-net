@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
         public async Task AsyncLockWithValue_GetLockOrValueAsync([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
-            AsyncLockWithValue<int>.Lock asyncLock;
+            AsyncLockWithValue<int>.LockOrValue asyncLock;
 
             Assert.IsFalse(alwv.HasValue);
             Assert.IsFalse(alwv.TryGetValue(out _));
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
         public async Task AsyncLockWithValue_ThrowOnValueOverride([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
-            AsyncLockWithValue<int>.Lock asyncLock;
+            AsyncLockWithValue<int>.LockOrValue asyncLock;
 
             Assert.IsFalse(alwv.HasValue);
             Assert.IsFalse(alwv.TryGetValue(out _));
@@ -169,6 +169,36 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_SetAfterDispose([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+            AsyncLockWithValue<int>.LockOrValue lockOrValue;
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
+            using (lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+
+            Assert.Throws<InvalidOperationException>(() => lockOrValue.SetValue(42));
+        }
+
+        [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_DisposedMoreThanOnce([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
+            var lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false);
+
+            lockOrValue.Dispose();
+            lockOrValue.Dispose();
+
+            using (await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+
+            lockOrValue.Dispose();
+        }
+
+        [Test]
         public async Task AsyncLockWithValue_GetLockOrValueAsync_OneHundredCalls_HasNoValue([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
@@ -208,6 +238,36 @@ namespace Azure.Core.Tests
             }
 
             firstLock.SetValue(42);
+            await Task.WhenAll(tasks);
+        }
+
+        [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_OneHundredCalls_SetValue([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+            var firstLock = await alwv.GetLockOrValueAsync(async);
+            var tasks = new List<Task>();
+            for (var i = 0; i < 50; i++)
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using var asyncLock = await alwv.GetLockOrValueAsync(async);
+                    if (asyncLock.HasValue)
+                    {
+                        Assert.AreEqual(asyncLock.Value, 42);
+                    }
+                }));
+            }
+
+            AsyncLockWithValue<int>.LockOrValue lastLock;
+            tasks.Add(Task.Run(async () =>
+            {
+                lastLock = await alwv.GetLockOrValueAsync(async);
+                lastLock.SetValue(42);
+                lastLock.Dispose();
+            }));
+
+            firstLock.Dispose();
             await Task.WhenAll(tasks);
         }
 
