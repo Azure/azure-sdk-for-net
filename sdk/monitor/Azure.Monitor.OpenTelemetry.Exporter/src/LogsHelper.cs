@@ -86,13 +86,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static void WriteScopeInformation(LogRecord logRecord, IDictionary<string, string> properties)
         {
             StringBuilder builder = null;
+            int originalFormatDepth = 1;
             logRecord.ForEachScope(ProcessScope, properties);
 
             void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
             {
                 if (scope.Scope is IEnumerable<KeyValuePair<string, object>> stateDictionary)
                 {
-                    int originalFormatDepth = 1;
                     foreach (KeyValuePair<string, object> scopeItem in scope)
                     {
                         if (scopeItem.Key == "{OriginalFormat}")
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
                         else
                         {
-                            AzureMonitorExporterEventSource.Log.Write($"DuplicateScopeItem{EventLevelSuffix.Informational}", $"Found duplicate scope key - {scopeItem.Key}.");
+                            AzureMonitorExporterEventSource.Log.Write($"DuplicateScopeItem{EventLevelSuffix.Warning}", $"Found duplicate scope key - {scopeItem.Key}.");
                         }
                     }
                 }
