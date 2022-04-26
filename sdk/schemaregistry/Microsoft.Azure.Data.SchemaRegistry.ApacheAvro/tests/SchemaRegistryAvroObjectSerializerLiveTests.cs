@@ -101,29 +101,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
-                Throws.InstanceOf<SchemaRegistryAvroException>()
-                    .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>()
-                    .And.Property(nameof(SchemaRegistryAvroException.SchemaId)).EqualTo(schemaId));
-
-            #region Snippet:SchemaRegistryAvroException
-            try
-            {
-                Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
-            }
-            catch (SchemaRegistryAvroException exception)
-            {
-                // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
-                // serialize the data.
-                Console.WriteLine(exception);
-
-                // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
-                if (exception.SchemaId != null)
-                {
-                    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
-                    Console.WriteLine(schema.Definition);
-                }
-            }
-            #endregion
+                Throws.InstanceOf<Exception>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
         }
 
         [RecordedTest]
@@ -136,7 +115,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.That(
                 async () => await serializer.SerializeAsync<MessageContent, InvalidAvroModel>(invalid),
-                Throws.InstanceOf<SchemaRegistryAvroException>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
+                Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
         [RecordedTest]
@@ -148,13 +127,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             var employee = new Employee { Age = 42, Name = "Caketown" };
             var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
-            var schemaId = content.ContentType.ToString().Split('+')[1];
 
             Assert.That(
                 async () => await serializer.DeserializeAsync<InvalidAvroModel>(content),
-                Throws.InstanceOf<SchemaRegistryAvroException>()
-                    .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>()
-                    .And.Property(nameof(SchemaRegistryAvroException.SchemaId)).EqualTo(schemaId));
+                Throws.InstanceOf<Exception>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
         [RecordedTest]

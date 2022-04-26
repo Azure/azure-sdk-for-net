@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.Sql
             return GetJobAgents().Get(jobAgentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of SqlPrivateEndpointConnectionResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlPrivateEndpointConnectionResources and their operations over a SqlPrivateEndpointConnectionResource. </returns>
+        public virtual SqlPrivateEndpointConnectionCollection GetSqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new SqlPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -566,9 +566,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlPrivateEndpointConnectionResource>> GetSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -581,31 +581,16 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlPrivateEndpointConnectionResource> GetSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetSqlPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of SqlPrivateLinkResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlPrivateLinkResources and their operations over a SqlPrivateLinkResource. </returns>
+        public virtual SqlPrivateLinkResourceCollection GetSqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PrivateLinkResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a private link resource for SQL server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}
-        /// Operation Id: PrivateLinkResources_Get
-        /// </summary>
-        /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
-        {
-            return await GetPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -618,9 +603,24 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlPrivateLinkResource>> GetSqlPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinkResources().Get(groupName, cancellationToken);
+            return await GetSqlPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private link resource for SQL server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlPrivateLinkResource> GetSqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ServerAutomaticTuningResource along with the instance operations that can be performed on it in the SqlServer. </summary>

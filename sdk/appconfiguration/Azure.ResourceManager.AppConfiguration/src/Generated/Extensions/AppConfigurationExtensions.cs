@@ -217,39 +217,39 @@ namespace Azure.ResourceManager.AppConfiguration
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region AppConfigurationPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource" /> object. </returns>
+        public static AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                AppConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new AppConfigurationPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateLinkResource
+        #region AppConfigurationPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource" /> object. </returns>
+        public static AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkResource.ValidateResourceId(id);
-                return new PrivateLinkResource(client, id);
+                AppConfigurationPrivateLinkResource.ValidateResourceId(id);
+                return new AppConfigurationPrivateLinkResource(client, id);
             }
             );
         }

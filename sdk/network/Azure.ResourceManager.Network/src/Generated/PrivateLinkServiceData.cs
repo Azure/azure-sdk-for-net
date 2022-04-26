@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
             LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
             IPConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkServiceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags)
+        internal PrivateLinkServiceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the private link service resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> An array of list about connections to the private endpoint. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<NetworkPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
         internal PrivateLinkServicePropertiesVisibility Visibility { get; set; }
         /// <summary> The list of subscriptions. </summary>
