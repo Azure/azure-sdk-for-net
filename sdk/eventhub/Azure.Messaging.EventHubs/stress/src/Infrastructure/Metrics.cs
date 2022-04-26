@@ -29,9 +29,6 @@ namespace Azure.Messaging.EventHubs.Stress
         public MetricIdentifier SentEventsCount = new MetricIdentifier("SentEventsCount");
         public MetricIdentifier SuccessfullyReceivedEventsCount = new MetricIdentifier("SuccessfullyReceivedEventsCount");
         public MetricIdentifier ProducerFailureCount = new MetricIdentifier("ProducerFailureCount");
-        public MetricIdentifier ConsumerFailureCount = new MetricIdentifier("ConsumerFailureCount");
-        public MetricIdentifier CorruptedBodyFailureCount = new MetricIdentifier("CorruptedBodyFailureCount");
-        public MetricIdentifier LostEventsCount = new MetricIdentifier("LostEventsCount");
 
         // Buffered Producer statistics
         public string EventsNotSentAfterEnqueue = "EventsNotSentAfterEnqueue";

@@ -38,10 +38,18 @@ namespace Azure.Messaging.EventHubs.Stress
             while (!cancellationToken.IsCancellationRequested)
             {
                 using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                var options = new EventHubBufferedProducerClientOptions
+                {
+                    RetryOptions = new EventHubsRetryOptions
+                    {
+                        TryTimeout = testConfiguration.SendTimeout
+                    },
+                    MaximumWaitTime = testConfiguration.MaxWaitTime
+                };
+                var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
 
                 try
                 {
-                    var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
                     producer.SendEventBatchSucceededAsync += args =>
                     {
                         var numEvents = args.EventBatch.ToList().Count;
@@ -61,28 +69,22 @@ namespace Azure.Messaging.EventHubs.Stress
                         return Task.CompletedTask;
                     };
 
-                    await using (producer.ConfigureAwait(false))
+                    if (testConfiguration.ConcurrentSends > 1)
                     {
-                        // Create a set of background tasks to handle all but one of the concurrent sends.  The final
-                        // send will be performed directly.
-
-                        if (testConfiguration.ConcurrentSends > 1)
+                        for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
                         {
-                            for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
+                            enqueueTasks.Add(Task.Run(async () =>
                             {
-                                enqueueTasks.Add(Task.Run(async () =>
+                                while (!cancellationToken.IsCancellationRequested)
                                 {
-                                    while (!cancellationToken.IsCancellationRequested)
-                                    {
-                                        await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
+                                    await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
-                                        if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                                        {
-                                            await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
-                                        }
+                                    if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                    {
+                                        await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
                                     }
-                                }));
-                            }
+                                }
+                            }));
                         }
 
                         // Perform one of the sends in the foreground, which will allow easier detection of a
@@ -122,6 +124,10 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     metrics.Client.GetMetric(metrics.BufferedProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
+                }
+                finally
+                {
+                    await producer.CloseAsync();
                 }
             }
         }

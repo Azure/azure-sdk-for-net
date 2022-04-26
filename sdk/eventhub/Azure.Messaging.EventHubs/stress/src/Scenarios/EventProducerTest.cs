@@ -78,7 +78,8 @@ namespace Azure.Messaging.EventHubs.Stress
             }
             finally
             {
-                // flush metrics
+                metrics.Client.Flush();
+                await Task.Delay(60000);
             }
         }
     }

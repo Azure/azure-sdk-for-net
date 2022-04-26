@@ -38,43 +38,38 @@ namespace Azure.Messaging.EventHubs.Stress
             while (!cancellationToken.IsCancellationRequested)
             {
                 using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                var options = new EventHubProducerClientOptions
+                {
+                    RetryOptions = new EventHubsRetryOptions
+                    {
+                        TryTimeout = testConfiguration.SendTimeout
+                    }
+                };
+                var producer = new EventHubProducerClient(testConfiguration.EventHubsConnectionString, testConfiguration.EventHub, options);
 
                 try
                 {
                     sendTasks.Clear();
 
-                    var options = new EventHubProducerClientOptions
+                    // Create a set of background tasks to handle all but one of the concurrent sends.  The final
+                    // send will be performed directly.
+
+                    if (testConfiguration.ConcurrentSends > 1)
                     {
-                        RetryOptions = new EventHubsRetryOptions
+                        for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
                         {
-                            TryTimeout = testConfiguration.SendTimeout
-                        }
-                    };
-
-                    var producer = new EventHubProducerClient(testConfiguration.EventHubsConnectionString, testConfiguration.EventHub, options);
-
-                    await using (producer.ConfigureAwait(false))
-                    {
-                        // Create a set of background tasks to handle all but one of the concurrent sends.  The final
-                        // send will be performed directly.
-
-                        if (testConfiguration.ConcurrentSends > 1)
-                        {
-                            for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
+                            sendTasks.Add(Task.Run(async () =>
                             {
-                                sendTasks.Add(Task.Run(async () =>
+                                while (!backgroundCancellationSource.Token.IsCancellationRequested)
                                 {
-                                    while (!backgroundCancellationSource.Token.IsCancellationRequested)
-                                    {
-                                        await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                    await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
 
-                                        if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                                        {
-                                            await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
-                                        }
+                                    if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                    {
+                                        await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
                                     }
-                                }));
-                            }
+                                }
+                            }));
                         }
 
                         // Perform one of the sends in the foreground, which will allow easier detection of a
@@ -120,6 +115,10 @@ namespace Azure.Messaging.EventHubs.Stress
 
                     metrics.Client.GetMetric(metrics.EventProducerRestarted).TrackValue(1);
                     metrics.Client.TrackException(ex);
+                }
+                finally
+                {
+                    await producer.CloseAsync();
                 }
             }
         }

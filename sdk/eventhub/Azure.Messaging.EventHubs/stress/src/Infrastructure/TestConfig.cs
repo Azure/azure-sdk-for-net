@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Stress
 
         // Test Run Configurations
 
-        public int DurationInHours = 1;
+        public int DurationInHours = 120;
 
         // Publishing Configurations
 

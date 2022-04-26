@@ -67,6 +67,11 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 metrics.Client.TrackException(ex);
             }
+            finally
+            {
+                metrics.Client.Flush();
+                await Task.Delay(60000);
+            }
         }
     }
 }

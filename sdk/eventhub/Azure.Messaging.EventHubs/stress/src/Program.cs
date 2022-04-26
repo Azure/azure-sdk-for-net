@@ -33,8 +33,6 @@ namespace Azure.Messaging.EventHubs.Stress
             var burstBufferedProducerTestConfig = new BufferedProducerTestConfig();
             var concurrentBufferedProducerTestConfig = new BufferedProducerTestConfig();
 
-            Console.WriteLine($"HELLO {opts.Interactive}");
-
             foreach (var testRun in opts.Tests)
             {
                 if (testRun == "EventProd" || testRun == "EventProducerTest")

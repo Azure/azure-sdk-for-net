@@ -8,5 +8,6 @@ namespace Azure.Messaging.EventHubs.Stress
     internal class BufferedProducerTestConfig : TestConfig
     {
         public int EventEnqueueListSize = 50;
+        public TimeSpan MaxWaitTime = TimeSpan.FromMilliseconds(5000);
     }
 }
