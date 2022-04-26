@@ -42,8 +42,8 @@ stages:
                       -workingDirectory $(System.DefaultWorkingDirectory)
                       -packageRepository 'Nuget'
                       -releaseSha '$(Build.SourceVersion)'
-                      -repoOwner 'azure-sdk-for-net'
-                      -repoName 'Azure'
+                      -repoOwner 'Azure'
+                      -repoName 'azure-sdk-for-net'
                     pwsh: true
                   env:
                     GH_TOKEN: $(azuresdk-github-pat)

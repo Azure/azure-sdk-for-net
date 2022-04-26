@@ -41,7 +41,7 @@ jobs:
           targetPath: $(Build.ArtifactStagingDirectory)
       - pwsh: |
           $releaseTag = "FOR_SIGNING"
-          if ("$(ShouldPublish)" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
+          if ("${{ parameters.ShouldPublish }}" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
           echo "Tagging build with $releaseTag"
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
