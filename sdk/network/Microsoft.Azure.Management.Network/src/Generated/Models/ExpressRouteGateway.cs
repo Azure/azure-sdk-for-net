@@ -73,10 +73,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
 
         /// <summary>
-        /// Gets list of ExpressRoute connections to the ExpressRoute gateway.
+        /// Gets or sets list of ExpressRoute connections to the ExpressRoute
+        /// gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteConnections")]
-        public IList<ExpressRouteConnection> ExpressRouteConnections { get; private set; }
+        public IList<ExpressRouteConnection> ExpressRouteConnections { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the express route gateway resource.

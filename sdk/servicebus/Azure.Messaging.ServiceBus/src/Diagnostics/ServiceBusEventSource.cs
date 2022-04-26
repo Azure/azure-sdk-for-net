@@ -194,6 +194,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         internal const int ProcessorStoppingCancellationWarningEvent = 113;
 
+        internal const int RunOperationExceptionVerboseEvent = 114;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -844,12 +846,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ProcessorErrorHandlerThrewExceptionEvent, Level = EventLevel.Error, Message = "ExceptionReceivedHandler threw exception. Exception:{0}")]
-        public void ProcessorErrorHandlerThrewException(string exception)
+        [Event(ProcessorErrorHandlerThrewExceptionEvent, Level = EventLevel.Error, Message = "{1}: ExceptionReceivedHandler threw exception. Exception:{0}")]
+        public void ProcessorErrorHandlerThrewException(string exception, string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception);
+                WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception, identifier);
             }
         }
 
@@ -1363,6 +1365,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(RunOperationExceptionEvent, exception);
+            }
+        }
+
+        [Event(RunOperationExceptionVerboseEvent, Level = EventLevel.Verbose, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        public virtual void RunOperationExceptionEncounteredVerbose(string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RunOperationExceptionVerboseEvent, exception);
             }
         }
         #endregion

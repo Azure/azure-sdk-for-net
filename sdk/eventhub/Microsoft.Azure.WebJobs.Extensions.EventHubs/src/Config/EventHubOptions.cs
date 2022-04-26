@@ -115,7 +115,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private int _maxEventBatchSize;
 
         /// <summary>
-        /// Gets or sets the maximum number of events delivered in a batch. Default 10.
+        /// Gets or sets the maximum number of events delivered in a batch. This setting applies only to functions that
+        /// receive multiple events. Default 10.
         /// </summary>
         public int MaxEventBatchSize
         {

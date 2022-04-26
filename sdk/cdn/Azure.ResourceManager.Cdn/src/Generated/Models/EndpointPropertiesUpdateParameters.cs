@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; }
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        public ResourceIdentifier DefaultOriginGroupId
         {
             get => DefaultOriginGroup.Id;
             set => DefaultOriginGroup.Id = value;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
         internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; }
         /// <summary> Resource ID. </summary>
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink.Id;
             set => WebApplicationFirewallPolicyLink.Id = value;

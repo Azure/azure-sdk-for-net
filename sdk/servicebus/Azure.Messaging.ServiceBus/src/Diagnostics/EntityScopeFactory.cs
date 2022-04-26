@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   The client diagnostics instance responsible for managing scope.
         /// </summary>
         ///
-        private static DiagnosticScopeFactory _scopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, _resourceProviderNamespace, true);
+        private static DiagnosticScopeFactory _scopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, _resourceProviderNamespace, true, false);
 
         public EntityScopeFactory(
             string entityPath,

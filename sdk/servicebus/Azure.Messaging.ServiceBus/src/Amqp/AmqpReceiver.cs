@@ -167,11 +167,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
                         // the fault tolerant object because session receivers are never reconnected.
                         cancellationToken: cancellationToken),
-                link => CloseLink(link));
+                link => _connectionScope.CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link => CloseLink(link));
+                link => _connectionScope.CloseLink(link));
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -252,18 +252,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.CreateReceiveLinkException(_identifier, ex.ToString());
                 throw;
             }
-        }
-
-        private static void CloseLink(ReceivingAmqpLink link)
-        {
-            link.Session?.SafeClose();
-            link.SafeClose();
-        }
-
-        private static void CloseLink(RequestResponseAmqpLink link)
-        {
-            link.Session?.SafeClose();
-            link.SafeClose();
         }
 
         /// <summary>
@@ -1325,10 +1313,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private void OnReceiverLinkClosed(object receiver, EventArgs e)
         {
             var receivingAmqpLink = (ReceivingAmqpLink)receiver;
-            if (_isSessionReceiver && receivingAmqpLink != null)
+            if (receivingAmqpLink != null)
             {
                 Exception exception = receivingAmqpLink.GetInnerException();
-                if (((exception is ServiceBusException sbException) && sbException.Reason != ServiceBusFailureReason.SessionLockLost) ||
+                if (_isSessionReceiver && ((exception is ServiceBusException sbException) && sbException.Reason != ServiceBusFailureReason.SessionLockLost) ||
                     !(exception is ServiceBusException))
                 {
                     exception = new ServiceBusException(
@@ -1363,7 +1351,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             (firstOption < secondOption) ? firstOption : secondOption;
 
         /// <summary>
-        /// Opens an AMQP link for use with receiver operations.
+        /// Opens an AMQP link for use with session receiver operations.
         /// </summary>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -1374,7 +1362,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await receiveLink.GetOrCreateAsync(timeout, token).ConfigureAwait(false),
                 _receiveLink,
                 _connectionScope,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken,
+                true).ConfigureAwait(false);
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>

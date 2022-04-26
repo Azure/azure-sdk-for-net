@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="properties"> Properties of the access policy. </param>
-        internal VaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, VaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
+        internal VaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, VaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
         }
 
         /// <summary> The resource type of the access policy. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Properties of the access policy. </summary>
         internal VaultAccessPolicyProperties Properties { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>

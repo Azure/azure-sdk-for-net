@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -180,6 +181,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of a Security Partner Provider resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update Security Partner Provider tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<SecurityPartnerProviderResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _securityPartnerProviderRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of a Security Partner Provider resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update Security Partner Provider tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<SecurityPartnerProviderResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _securityPartnerProviderRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

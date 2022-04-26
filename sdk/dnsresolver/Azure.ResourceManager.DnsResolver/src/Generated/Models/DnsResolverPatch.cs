@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a DNS resolver for PATCH operation. </summary>
-    internal partial class DnsResolverPatch
+    public partial class DnsResolverPatch
     {
         /// <summary> Initializes a new instance of DnsResolverPatch. </summary>
         public DnsResolverPatch()

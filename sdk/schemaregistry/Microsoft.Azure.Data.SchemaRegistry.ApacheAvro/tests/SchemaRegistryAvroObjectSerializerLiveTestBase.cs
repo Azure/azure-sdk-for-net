@@ -6,7 +6,7 @@ using Azure.Data.SchemaRegistry;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
-    public class SchemaRegistryAvroObjectSerializerLiveTestBase : RecordedTestBase<SchemaRegistryClientTestEnvironment>
+    public class SchemaRegistryAvroObjectSerializerLiveTestBase : RecordedTestBase<SchemaRegistryAvroSerializerTestEnvironment>
     {
         public SchemaRegistryAvroObjectSerializerLiveTestBase(bool isAsync) : base(isAsync)
         {
