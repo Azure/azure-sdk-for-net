@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, WritableSubResource virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
+        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
         {
             OsType = osType;
             VmSize = vmSize;
@@ -68,17 +67,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Virtual Machine priority. </summary>
         public VmPriority? VmPriority { get; set; }
         /// <summary> Virtual Machine image for AML Compute - windows only. </summary>
-        internal WritableSubResource VirtualMachineImage { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier VirtualMachineImageId
+        internal VirtualMachineImage VirtualMachineImage { get; set; }
+        /// <summary> Virtual Machine image path. </summary>
+        public string VirtualMachineImageId
         {
             get => VirtualMachineImage is null ? default : VirtualMachineImage.Id;
-            set
-            {
-                if (VirtualMachineImage is null)
-                    VirtualMachineImage = new WritableSubResource();
-                VirtualMachineImage.Id = value;
-            }
+            set => VirtualMachineImage = new VirtualMachineImage(value);
         }
 
         /// <summary> Network is isolated or not. </summary>

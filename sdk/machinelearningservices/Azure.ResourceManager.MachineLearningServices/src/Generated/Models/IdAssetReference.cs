@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Reference to an asset via its ARM resource ID. </summary>
-    internal partial class IdAssetReference : AssetReferenceBase
+    public partial class IdAssetReference : AssetReferenceBase
     {
         /// <summary> Initializes a new instance of IdAssetReference. </summary>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of IdAssetReference. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
+        /// <param name="foo"> This is a workaround to fix discriminator internal issue. No need to input any value in it. </param>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
-        internal IdAssetReference(ReferenceType referenceType, string assetId) : base(referenceType)
+        internal IdAssetReference(ReferenceType referenceType, string foo, string assetId) : base(referenceType, foo)
         {
             AssetId = assetId;
             ReferenceType = referenceType;

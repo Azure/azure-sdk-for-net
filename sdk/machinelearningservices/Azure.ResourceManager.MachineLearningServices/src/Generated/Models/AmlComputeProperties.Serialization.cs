@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -35,8 +34,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(VirtualMachineImage))
             {
-                writer.WritePropertyName("virtualMachineImage");
-                JsonSerializer.Serialize(writer, VirtualMachineImage);
+                if (VirtualMachineImage != null)
+                {
+                    writer.WritePropertyName("virtualMachineImage");
+                    writer.WriteObjectValue(VirtualMachineImage);
+                }
+                else
+                {
+                    writer.WriteNull("virtualMachineImage");
+                }
             }
             if (Optional.IsDefined(IsolatedNetwork))
             {
@@ -98,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<OsType> osType = default;
             Optional<string> vmSize = default;
             Optional<VmPriority> vmPriority = default;
-            Optional<WritableSubResource> virtualMachineImage = default;
+            Optional<VirtualMachineImage> virtualMachineImage = default;
             Optional<bool> isolatedNetwork = default;
             Optional<ScaleSettings> scaleSettings = default;
             Optional<UserAccountCredentials> userAccountCredentials = default;
@@ -143,10 +149,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        virtualMachineImage = null;
                         continue;
                     }
-                    virtualMachineImage = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isolatedNetwork"))
@@ -290,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
         }
     }
 }

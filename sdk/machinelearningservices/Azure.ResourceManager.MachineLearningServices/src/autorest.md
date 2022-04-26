@@ -13,7 +13,9 @@ modelerfour:
 clear-output-folder: true
 namespace: Azure.ResourceManager.MachineLearningServices
 skip-csproj: true
-no-property-type-replacement: ResourceId
+no-property-type-replacement: 
+- ResourceId
+- VirtualMachineImage
 directive:
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties
@@ -80,4 +82,30 @@ directive:
     where: $.definitions.AmlComputeProperties.properties.errors
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlComputeProperties.properties.virtualMachineImage
+    transform: >
+        $["x-nullable"] = true;       
+  - from: swagger-document
+    where: $.definitions.AssetReferenceBase
+    transform:  >
+        $ = {
+            "description": "Base definition for asset references.",
+            "required": [
+                "referenceType"
+            ],
+            "type": "object",
+            "properties": {
+                "referenceType": {
+                "description": "[Required] Specifies the type of asset reference.",
+                "$ref": "#/definitions/ReferenceType"
+                },
+                "foo": {
+                "type": "string",
+                "description": "This is a workaround to fix discriminator internal issue. No need to input any value in it.",
+                "x-nullable": true
+                }
+            },
+            "discriminator": "referenceType"
+        }
 ```

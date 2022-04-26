@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Base definition for asset references. </summary>
-    internal partial class AssetReferenceBase
+    public partial class AssetReferenceBase
     {
         /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
         public AssetReferenceBase()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        internal AssetReferenceBase(ReferenceType referenceType)
+        /// <param name="foo"> This is a workaround to fix discriminator internal issue. No need to input any value in it. </param>
+        internal AssetReferenceBase(ReferenceType referenceType, string foo)
         {
             ReferenceType = referenceType;
+            Foo = foo;
         }
 
         /// <summary> [Required] Specifies the type of asset reference. </summary>
         internal ReferenceType ReferenceType { get; set; }
+        /// <summary> This is a workaround to fix discriminator internal issue. No need to input any value in it. </summary>
+        public string Foo { get; set; }
     }
 }

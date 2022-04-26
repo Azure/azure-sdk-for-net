@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    internal partial class IdAssetReference : IUtf8JsonSerializable
+    public partial class IdAssetReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStringValue(AssetId);
             writer.WritePropertyName("referenceType");
             writer.WriteStringValue(ReferenceType.ToString());
+            if (Optional.IsDefined(Foo))
+            {
+                if (Foo != null)
+                {
+                    writer.WritePropertyName("foo");
+                    writer.WriteStringValue(Foo);
+                }
+                else
+                {
+                    writer.WriteNull("foo");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -26,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             string assetId = default;
             ReferenceType referenceType = default;
+            Optional<string> foo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetId"))
@@ -38,8 +51,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("foo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        foo = null;
+                        continue;
+                    }
+                    foo = property.Value.GetString();
+                    continue;
+                }
             }
-            return new IdAssetReference(referenceType, assetId);
+            return new IdAssetReference(referenceType, foo.Value, assetId);
         }
     }
 }
