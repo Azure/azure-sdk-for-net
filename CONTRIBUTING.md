@@ -410,6 +410,12 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 ## On-boarding New generated code library
 
+### (Data plane) Generated Clients
+
+See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md) for details.
+
+### Data Plane (Gen 1) Convenience Clients And Management Plane Generated Clients
+
 1. Install templates for both data-plane and management-plane (control-plan) SDKs:
 
    ```dotnetcli
