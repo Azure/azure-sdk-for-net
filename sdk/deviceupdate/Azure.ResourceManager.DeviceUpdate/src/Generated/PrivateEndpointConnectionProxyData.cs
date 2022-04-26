@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
         /// <param name="status"> Operation status. </param>
-        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status) : base(id, name, resourceType, systemData)
+        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             RemotePrivateEndpoint = remotePrivateEndpoint;
