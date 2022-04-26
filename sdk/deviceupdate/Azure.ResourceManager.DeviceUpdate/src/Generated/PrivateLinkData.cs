@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="provisioningState"> The provisioning state of private link group ID. </param>
-        internal PrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, GroupIdProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal PrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, GroupIdProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

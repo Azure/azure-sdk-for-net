@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> accountName = default;
             Optional<IList<IotHubSettings>> iotHubs = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="hostName"> API host name. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceManager.Models.ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary> The type of identity used for the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> API host name. </summary>

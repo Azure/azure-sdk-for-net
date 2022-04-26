@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="iotHubs"> List of IoT Hubs associated with the account. </param>
         /// <param name="enableDiagnostics"> Enables or Disables the diagnostic logs collection. </param>
         /// <param name="diagnosticStorageProperties"> Customer-initiated diagnostic log collection storage properties. </param>
-        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AccountName = accountName;
