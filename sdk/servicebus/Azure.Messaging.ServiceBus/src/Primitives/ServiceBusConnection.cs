@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        /// <param name="client"></param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
         ///   and can be used directly without passing the  name="entityName" />.  The name of the Service Bus entity should be
@@ -79,11 +79,9 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         internal ServiceBusConnection(
             string connectionString,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(client, nameof(client));
-            var options = client.Options;
             ValidateConnectionOptions(options);
 
             var connectionStringProperties = ServiceBusConnectionStringProperties.Parse(connectionString);
@@ -111,7 +109,7 @@ namespace Azure.Messaging.ServiceBus
             var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(tokenCredential, client);
+            InnerClient = CreateTransportClient(tokenCredential, options);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -121,15 +119,15 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="client">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         internal ServiceBusConnection(
             string fullyQualifiedNamespace,
             AzureNamedKeyCredential credential,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
                 : this(
                     fullyQualifiedNamespace,
-                    TranslateNamedKeyCredential(credential, fullyQualifiedNamespace, null, client.Options.TransportType),
-                    client)
+                    TranslateNamedKeyCredential(credential, fullyQualifiedNamespace, null, options.TransportType),
+                    options)
         {
         }
 
@@ -139,15 +137,15 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="AzureSasCredential"/> credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="client">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         internal ServiceBusConnection(
             string fullyQualifiedNamespace,
             AzureSasCredential credential,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
                 : this(
                     fullyQualifiedNamespace,
                     new SharedAccessCredential(credential),
-                    client)
+                    options)
         {
         }
 
@@ -157,15 +155,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="client">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         internal ServiceBusConnection(
             string fullyQualifiedNamespace,
             TokenCredential credential,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
         {
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
-            var options = client.Options;
             ValidateConnectionOptions(options);
 
             var tokenCredential = new ServiceBusTokenCredential(credential);
@@ -175,7 +172,7 @@ namespace Azure.Messaging.ServiceBus
             RetryOptions = options.RetryOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(tokenCredential, client);
+            InnerClient = CreateTransportClient(tokenCredential, options);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -267,7 +264,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
-        /// <param name="client"></param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         /// <returns>A client generalization specific to the specified protocol/transport to which operations may be delegated.</returns>
         ///
         /// <remarks>
@@ -280,16 +277,16 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal virtual TransportClient CreateTransportClient(
             ServiceBusTokenCredential credential,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
         {
             switch (TransportType)
             {
                 case ServiceBusTransportType.AmqpTcp:
                 case ServiceBusTransportType.AmqpWebSockets:
-                    return new AmqpClient(FullyQualifiedNamespace, credential, client);
+                    return new AmqpClient(FullyQualifiedNamespace, credential, options);
 
                 default:
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, client.Options.TransportType.ToString()), nameof(client));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options));
             }
         }
 
@@ -348,7 +345,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The credential to use for authorization.  This may be of type <see cref="TokenCredential" />, <see cref="AzureSasCredential" />, or <see cref="AzureNamedKeyCredential" />.</param>
-        /// <param name="client">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         ///
         /// <returns>The connection that was created.</returns>
         ///
@@ -360,12 +357,12 @@ namespace Azure.Messaging.ServiceBus
         internal static ServiceBusConnection CreateWithCredential<TCredential>(
             string fullyQualifiedNamespace,
             TCredential credential,
-            ServiceBusClient client) =>
+            ServiceBusClientOptions options) =>
             credential switch
             {
-                TokenCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, client),
-                AzureSasCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, client),
-                AzureNamedKeyCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, client),
+                TokenCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, options),
+                AzureSasCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, options),
+                AzureNamedKeyCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, options),
                 _ => throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential))
             };
 

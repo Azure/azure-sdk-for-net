@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         internal static Mock<ServiceBusConnection> CreateMockConnection()
         {
-            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), CreateDefaultMockedClient())
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
             {
                 CallBase = true
             };
@@ -116,17 +116,10 @@ namespace Azure.Messaging.ServiceBus.Tests
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClient>()))
+                    It.IsAny<ServiceBusClientOptions>()))
                 .Returns(Mock.Of<TransportClient>());
 
             return mockConnection;
-        }
-
-        internal static ServiceBusClient CreateDefaultMockedClient()
-        {
-            var client = new Mock<ServiceBusClient>();
-            client.Setup(c => c.Options).Returns(new ServiceBusClientOptions());
-            return client.Object;
         }
     }
 }

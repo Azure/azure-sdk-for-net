@@ -99,11 +99,11 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var observedException = default(Exception);
             var openException = (Exception)Activator.CreateInstance(exceptionType, "stringArg");
-            var host = "test.service.gov";
+            var endpoint = "test.service.gov";
             var transport = ServiceBusTransportType.AmqpTcp;
             var mockCredential = new Mock<TokenCredential>();
             var mockServiceBusCredential = new Mock<ServiceBusTokenCredential>(mockCredential.Object);
-            var mockScope = new MockConnectionScope(host, mockServiceBusCredential.Object, transport, null);
+            var mockScope = new MockConnectionScope(endpoint, mockServiceBusCredential.Object, transport, null);
 
             mockScope.MockConnection
                 .Protected()
@@ -211,10 +211,10 @@ namespace Azure.Messaging.ServiceBus.Tests
             public readonly Mock<AmqpConnection> MockConnection;
 
             public MockConnectionScope(
-                string hostName,
+                string fullyQualifiedNamespace,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(hostName, credential, ServiceBusTestUtilities.CreateDefaultMockedClient(), default)
+                IWebProxy proxy) : base(fullyQualifiedNamespace, credential, transport, proxy, false, default, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }

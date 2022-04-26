@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
-        internal virtual ServiceBusClientOptions Options { get; }
+        private readonly ServiceBusClientOptions _options;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
@@ -73,28 +74,36 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool IsConnected => Connection.IsConnected;
 
         /// <summary>
-        ///
+        /// Invokes the <see cref="ConnectedAsync"/> event handler when the client connects to the service.
+        /// This method can be overridden to raise an event manually for testing purposes.
         /// </summary>
-        /// <returns></returns>
-        protected internal virtual async Task OnConnectedAsync(ServiceBusConnectionEventArgs args)
+        /// <param name="args">The event args containing information related to the connection.</param>
+        protected virtual async Task OnConnectedAsync(ServiceBusConnectionEventArgs args)
         {
-            if (ConnectedAsync != null)
+            var handler = ConnectedAsync;
+            if (handler != null)
             {
-                await ConnectedAsync(args).ConfigureAwait(false);
+                await handler(args).ConfigureAwait(false);
             }
         }
 
         /// <summary>
-        ///
+        /// Invokes the <see cref="DisconnectedAsync"/> event handler when the client disconnects from the service.
+        /// This method can be overridden to raise an event manually for testing purposes.
         /// </summary>
-        /// <returns></returns>
-        protected internal virtual async Task OnDisconnectedAsync(ServiceBusConnectionEventArgs args)
+        /// <param name="args">The event args containing information related to the connection.</param>
+        protected virtual async Task OnDisconnectedAsync(ServiceBusConnectionEventArgs args)
         {
-            if (ConnectedAsync != null)
+            var handler = DisconnectedAsync;
+            if (handler != null)
             {
-                await DisconnectedAsync(args).ConfigureAwait(false);
+                await handler(args).ConfigureAwait(false);
             }
         }
+
+        private async Task DisconnectHandlerAsync(ServiceBusConnectionEventArgs args) => await OnDisconnectedAsync(args).ConfigureAwait(false);
+
+        private async Task ConnectedHandlerAsync(ServiceBusConnectionEventArgs args) => await OnConnectedAsync(args).ConfigureAwait(false);
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.
@@ -200,11 +209,13 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
-            Options = options?.Clone() ?? new ServiceBusClientOptions();
-            Connection = new ServiceBusConnection(connectionString, this);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
-            TransportType = Options.TransportType;
+            TransportType = _options.TransportType;
+            Connection.InnerClient.ConnectedAsync += ConnectedHandlerAsync;
+            Connection.InnerClient.DisconnectedAsync += DisconnectHandlerAsync;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -282,13 +293,15 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusClientOptions options)
         {
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
-            Options = options?.Clone() ?? new ServiceBusClientOptions();
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
-                this);
-            TransportType = Options.TransportType;
+                _options);
+            TransportType = _options.TransportType;
+            Connection.InnerClient.ConnectedAsync += ConnectedHandlerAsync;
+            Connection.InnerClient.DisconnectedAsync += DisconnectHandlerAsync;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         internal FaultTolerantAmqpObject<Controller> TransactionController { get; }
 
-        private readonly string _fullyQualifiedHostName;
+        private readonly string _fullyQualifiedNamespace;
 
         private readonly bool _useSingleSession;
 
@@ -170,42 +170,47 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private readonly object _syncLock = new();
         private readonly TimeSpan _operationTimeout;
-        private readonly ServiceBusClient _client;
+
+        public event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+        public event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedHostName">Endpoint for the Service Bus service to which the scope is associated.</param>
+        /// <param name="fullyQualifiedNamespace">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
-        /// <param name="client">The transport to use for communication.</param>
+        /// <param name="transport">The transport to use for communication.</param>
+        /// <param name="proxy">The proxy, if any, to use for communication.</param>
+        /// <param name="useSingleSession">If true, all links will use a single session.</param>
+        /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
         public AmqpConnectionScope(
-            string fullyQualifiedHostName,
+            string fullyQualifiedNamespace,
             ServiceBusTokenCredential credential,
-            ServiceBusClient client,
+            ServiceBusTransportType transport,
+            IWebProxy proxy,
+            bool useSingleSession,
+            TimeSpan operationTimeout,
             ServiceBusTransportMetrics metrics)
         {
-            Argument.AssertNotNull(fullyQualifiedHostName, nameof(fullyQualifiedHostName));
+            Argument.AssertNotNull(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(client, nameof(client));
 
-            ValidateTransport(client.TransportType);
+            ValidateTransport(transport);
 
-            _operationTimeout = client.Options.RetryOptions.TryTimeout;
-            _fullyQualifiedHostName = fullyQualifiedHostName;
+            _operationTimeout = operationTimeout;
+            _fullyQualifiedNamespace = fullyQualifiedNamespace;
+            Transport = transport;
             ServiceEndpoint = new UriBuilder
             {
-                Scheme = client.Options.TransportType.GetUriScheme(),
-                Host = _fullyQualifiedHostName
+                Scheme = Transport.GetUriScheme(),
+                Host = _fullyQualifiedNamespace
             }.Uri;
-
-            Transport = client.TransportType;
-            Proxy = client.Options.WebProxy;
-            _client = client;
+            Proxy = proxy;
 
             Id = $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
-            _useSingleSession = client.Options.EnableCrossEntityTransactions;
+            _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout, metrics);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
@@ -490,7 +495,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // When the connection is closed, close each of the links associated with it.
 
             EventHandler closeHandler = null;
-            var connectionArgs = new ServiceBusConnectionEventArgs(_fullyQualifiedHostName, transportType, proxy);
+            var connectionArgs = new ServiceBusConnectionEventArgs(_fullyQualifiedNamespace, transportType, proxy);
             closeHandler = async (snd, args) =>
             {
                 foreach (var link in ActiveLinks.Keys)
@@ -498,12 +503,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     link.SafeClose();
                 }
                 // async void is okay in EventHandlers
-                await _client.OnDisconnectedAsync(connectionArgs).ConfigureAwait(false);
+                await DisconnectedAsync(connectionArgs).ConfigureAwait(false);
                 connection.Closed -= closeHandler;
             };
 
             connection.Closed += closeHandler;
-            await _client.OnConnectedAsync(connectionArgs).ConfigureAwait(false);
+            await ConnectedAsync(connectionArgs).ConfigureAwait(false);
             return connection;
         }
 

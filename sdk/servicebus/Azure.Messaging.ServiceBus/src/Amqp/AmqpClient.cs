@@ -61,12 +61,33 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override ServiceBusTransportMetrics TransportMetrics { get; }
 
         /// <summary>
+        /// An event that can be subscribed to for notification when the client connects to the service.
+        /// </summary>
+        public override event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync
+        {
+            add => ConnectionScope.ConnectedAsync += value;
+            remove => ConnectionScope.ConnectedAsync -= value;
+        }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client disconnects from the service.
+        /// No action is required when the client temporarily disconnects due to a transient network or service issue, as the client will attempt
+        /// to re-establish the connection automatically on the next operation. If <see cref="ServiceBusClient.DisposeAsync"/> is
+        /// called, then the connection will not be re-established.
+        /// </summary>
+        public override event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync
+        {
+            add => ConnectionScope.DisconnectedAsync += value;
+            remove => ConnectionScope.DisconnectedAsync -= value;
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
         /// </summary>
         ///
         /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="client">A set of options to apply when configuring the client.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -80,12 +101,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal AmqpClient(
             string host,
             ServiceBusTokenCredential credential,
-            ServiceBusClient client)
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            var options = client.Options;
             Argument.AssertNotNull(options, nameof(options));
 
             Credential = credential;
@@ -96,7 +116,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ConnectionScope = new AmqpConnectionScope(
                 host,
                 credential,
-                client,
+                options.TransportType,
+                options.WebProxy,
+                options.EnableCrossEntityTransactions,
+                options.RetryOptions.TryTimeout,
                 TransportMetrics);
         }
 

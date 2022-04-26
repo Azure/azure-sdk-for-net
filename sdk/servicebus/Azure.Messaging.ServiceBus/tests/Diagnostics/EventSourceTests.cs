@@ -1268,7 +1268,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
         private Mock<ServiceBusConnection> GetMockConnection()
         {
-            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), ServiceBusTestUtilities.CreateDefaultMockedClient())
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
             {
                 CallBase = true
             };
@@ -1276,7 +1276,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             mockConnection.Setup(
                 connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClient>()))
+                    It.IsAny<ServiceBusClientOptions>()))
                 .Returns(Mock.Of<TransportClient>());
 
             return mockConnection;

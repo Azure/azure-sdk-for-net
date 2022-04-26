@@ -473,6 +473,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         ///
         public class ReadableOptionsMock : ServiceBusClient
         {
+            public ServiceBusClientOptions Options =>
+               typeof(ServiceBusClient)
+                  .GetField("_options", BindingFlags.Instance | BindingFlags.NonPublic)
+                  .GetValue(this) as ServiceBusClientOptions;
+
             public ReadableOptionsMock(string connectionString,
                                        ServiceBusClientOptions clientOptions = default) : base(connectionString, clientOptions)
             {

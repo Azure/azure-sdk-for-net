@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -49,6 +46,19 @@ namespace Azure.Messaging.ServiceBus.Core
         /// The metrics related to the client.
         /// </summary>
         public virtual ServiceBusTransportMetrics TransportMetrics { get; }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client connects to the service.
+        /// </summary>
+        public abstract event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client disconnects from the service.
+        /// No action is required when the client temporarily disconnects due to a transient network or service issue, as the client will attempt
+        /// to re-establish the connection automatically on the next operation. If <see cref="DisposeAsync"/> is
+        /// called, then the connection will not be re-established.
+        /// </summary>
+        public abstract event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
 
         /// <summary>
         ///   Creates a sender strongly aligned with the active protocol and transport,

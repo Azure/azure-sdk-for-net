@@ -300,11 +300,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        public async Task CanSubscribeToConnectedEvents()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanSubscribeToConnectedEvents(bool useIdentity)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusClient client = null;
+                if (useIdentity)
+                {
+                    client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                }
+                else
+                {
+                    client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                }
+
                 int connectedCount = 0;
                 int disconnectedCount = 0;
                 client.ConnectedAsync += (args) =>
