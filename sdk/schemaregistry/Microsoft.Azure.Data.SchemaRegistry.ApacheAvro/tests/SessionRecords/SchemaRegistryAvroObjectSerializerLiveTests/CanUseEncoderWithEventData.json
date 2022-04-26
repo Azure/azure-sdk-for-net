@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "167",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0-alpha.20211206.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3b574b18e0fa6c00495245e9a42b56ef",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b6a2ac47232d88b087dc18c947208433",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,13 +33,13 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 07 Dec 2021 19:08:18 GMT",
-        "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions/2?api-version=2021-10",
+        "Date": "Tue, 26 Apr 2022 23:06:38 GMT",
+        "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions/1?api-version=2021-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "6b6ee2de55fe46b58be31f43dee3b51e",
-        "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/6b6ee2de55fe46b58be31f43dee3b51e?api-version=2021-10",
+        "Schema-Id": "5ef6d45d1c1a490dbb96fbe6bfc47e5e",
+        "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/5ef6d45d1c1a490dbb96fbe6bfc47e5e?api-version=2021-10",
         "Schema-Name": "TestSchema.Employee",
-        "Schema-Version": "2",
+        "Schema-Version": "1",
         "Schema-Versions-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/TestSchema.Employee/versions?api-version=2021-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
@@ -48,7 +48,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "642804989",
+    "EVENTHUB_NAME": "azsdk_net_test_hub",
+    "RandomSeed": "1256529388",
     "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
