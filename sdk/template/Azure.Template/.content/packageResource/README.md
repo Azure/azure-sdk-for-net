@@ -28,12 +28,6 @@ This section should include everything a developer needs to do to install and cr
 
 First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
-
-```dotnetcli
-dotnet add package Azure.Template --prerelease
-```
-
 ### Prerequisites
 
 Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
@@ -71,19 +65,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template/samples).
 
-### Get secret
+### <scenario>
 
-The `GetSecret` method retrieves a secret from the service.
+You can create a client and call the client's `<operation>` method.
 
-```C# Snippet:Azure_Template_GetSecret
-string endpoint = "https://myvault.vault.azure.net";
-var client = new TemplateClient(endpoint, new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecretValue("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+```C# Snippet:Azure_Template_Scenario
 ```
 
 ## Troubleshooting

@@ -3,7 +3,7 @@
   "classifications": [ "Azure", "ClassLibrary" ],
   "identity": "Azure.Template",
   "name": "Azure DataPlane SDK template: client project",
-  "shortName": "dpg",
+  "shortName": "azsdkdpg",
   "tags": {
     "language": "C#",
     "type": "project"
@@ -50,6 +50,10 @@
       "target": "./perf"
     },
     {
+      "source": ".content/samples",
+      "target": "./samples"
+    },
+    {
       "source": ".content/stress",
       "target": "./stress"
     },
@@ -60,6 +64,10 @@
     {
       "source": ".content/src",
       "target": "./src"
+    },
+    {
+      "source": ".content/packageResource",
+      "target": "./"
     }
   ],
   "symbols": {
@@ -149,6 +157,27 @@
       "isRequired": false,
       "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorldAsync.cs",
       "replaces": "AsyncSamplesLink"
+    },
+    "readmeLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md",
+      "replaces": "ReadmeLink"
+    },
+    "sampleReadmeLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md",
+      "replaces": "SampleReadmeLink"
+    },
+    "asyncSampleReadmeLink": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false,
+      "defaultValue": "https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md",
+      "replaces": "AsyncSampleReadmeLink"
     },
     "ServiceName": {
       "type": "derived",

@@ -30,7 +30,7 @@ if ( $serviceType -eq "resource-manager" ) {
   Write-Host "Data-plane SDK Generation is not implemented currently."
   exit 1
 }
-if ( $? -ne $True) {
+if ( !$? ) {
   Write-Error "Failed to create sdk project folder. exit code: $?"
   exit 1
 }
@@ -39,18 +39,11 @@ $projectFolder = $newpackageoutputJson.projectFolder
 $path = $newpackageoutputJson.path
 Write-Host "projectFolder:$projectFolder"
 Remove-Item $newpackageoutput
-
+# Generate Code
 Invoke-Generate -sdkfolder $projectFolder
-if ( $? -ne $True) {
-  Write-Error "Failed to generate sdk. exit code: $?"
-  exit 1
-}
-
+# Build
 Invoke-Build -sdkfolder $projectFolder
-if ( $? -ne $True) {
-  Write-Error "Failed to build sdk. exit code: $?"
-  exit 1
-}
+
 $outputJson = [PSCustomObject]@{
     packages = @([pscustomobject]@{packageName="$packageName"; result='succeeded'; path=@("$path");packageFolder="$path"})
 }

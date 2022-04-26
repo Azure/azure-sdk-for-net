@@ -127,7 +127,6 @@ function New-DataPlanePackageFolder() {
   $inputfile = ""
   $fileArray = $inputfiles.Split(";")
   if (($inputfiles -ne "") -And ($fileArray.Length -gt 0)) {
-    # $inputfile = "- " + $fileArray[0];
     for ($i = 0; $i -lt $fileArray.Count ; $i++) {
         $inputfile = $inputfile + [Environment]::NewLine + "- " + $fileArray[$i]
     }
@@ -161,7 +160,7 @@ function New-DataPlanePackageFolder() {
 
     $libraryName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new dpg --libraryName $libraryName --groupName $groupName --force"
+    $dotnetNewCmd = "dotnet new azsdkdpg --libraryName $libraryName --groupName $groupName --force"
     if ($inputfile -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
     }
@@ -180,7 +179,7 @@ function New-DataPlanePackageFolder() {
         $dotnetNewCmd = $dotnetNewCmd + " --includeCI true"
     }
 
-    # dotnet new dpg --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+    # dotnet new azsdkdpg --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
@@ -192,7 +191,6 @@ function New-DataPlanePackageFolder() {
     dotnet sln remove tests\$namespace.Tests.csproj
     dotnet sln add tests\$namespace.Tests.csproj
     Pop-Location
-    dotnet new -u $sdkPath/sdk/template/Azure.Template
   }
 
   Push-Location $sdkPath
@@ -278,6 +276,11 @@ function Invoke-Generate() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+    if ( !$? ) {
+        Write-Error "Failed to create generate sdk."
+        Pop-Location
+        exit 1
+    }
     Pop-Location
 }
 
@@ -288,6 +291,11 @@ function Invoke-Build() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder
     dotnet build
+    if ( !$? ) {
+        Write-Error "Failed to build sdk. exit code: $?"
+        Pop-Location
+        exit 1
+    }
     Pop-Location
 }
 
@@ -298,6 +306,11 @@ function Invoke-Pack() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder
     dotnet pack
+    if ( !$? ) {
+        Write-Error "Failed to build sdk package. exit code: $?"
+        Pop-Location
+        exit 1
+    }
     Pop-Location
 }
 function Get-ResourceProviderFromReadme($readmeFile) {

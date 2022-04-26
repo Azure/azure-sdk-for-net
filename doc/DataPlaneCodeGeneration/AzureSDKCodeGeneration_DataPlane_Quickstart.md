@@ -85,7 +85,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 
 When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` script, it will:
 
-- Create a project folder, install template files from `eng/templates/Azure.ServiceTemplate.Template`, and create `.csproj` and `.sln` files for your new library.
+- Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
 
     These files are created following the guidance for the [Azure SDK Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
 
@@ -130,13 +130,13 @@ You will update all the `Sample<sample_number>_<scenario>.md` and README.md file
 
 ### Snippets
 
-Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/tests/Samples/Sample1_CreateResource.cs#L32) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
+Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs#L21) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#get-secret). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
 ### README
 
 README.md file instructions are listed in `Azure.<group>.<service>/README.md` file. Please add/update the README.md file as per your library.
 
-**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
+**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
 
 ### Changelog
 
@@ -150,7 +150,7 @@ You can add convienice APIs by adding a customization layer on top of the genera
 
 If other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) shows and example of how this can be accomplished.
 
-Once you've made changes to the public API, you will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory similar to the example found in [eng\templates\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
+Once you've made changes to the public API, you will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory similar to the example found in [sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/api/Azure.Template.netstandard2.0.cs).
 
 e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
 

@@ -14,6 +14,6 @@ You can create a client and call the client's `<operation>` method
 ```
 
 To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs)
+* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs))
 
-<!-- please refer to <https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md> to write sample readme file. -->
+<!-- please refer to <SampleReadmeLink> to write sample readme file. -->

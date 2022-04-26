@@ -9,6 +9,6 @@ name: Azure.Template samples for .NET
 description: Samples for the Azure.Template client library.
 ---
 
-# Azure.ServiceTemplate.Template Samples
+# Azure.Template Samples
 
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. -->
+<!-- please refer to <ReadmeLink> to write sample readme. -->

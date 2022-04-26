@@ -18,13 +18,12 @@ namespace Azure.Template.Tests.Samples
         [SyncOnly]
         public void GettingASecret()
         {
-            string endpoint = TestEnvironment.KeyVaultUri;
-
             #region Snippet:Azure_Template_GetSecret
-#if SNIPPET
-            endpoint = "https://myvault.vault.azure.net";
+            string endpoint = "https://myvault.vault.azure.net";
+#if !SNIPPET
+            endpoint = TestEnvironment.KeyVaultUri;
 #endif
-            TemplateClient client = new TemplateClient(endpoint, new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
             SecretBundle secret = client.GetSecretValue("TestSecret");
 
