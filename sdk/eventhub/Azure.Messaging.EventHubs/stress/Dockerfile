@@ -19,14 +19,13 @@ COPY ./sdk/core /app/sdk/core
 # Run restore and build, copy the .dll files over so they can used in the running container
 WORKDIR /app
 RUN dotnet build './sdk/eventhub/Azure.Messaging.EventHubs/stress/src/' --configuration Release
-COPY /artifacts/bin/Azure.Messaging.EventHubs.Stress/Release /app/bin/Release
 
 # Copy in the dll files to be ready to run
 FROM build-env as publish
 WORKDIR /app
-COPY --from=build-env /app/bin/Release/net6.0 /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
+COPY --from=build-env /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0 /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
 COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Shared /app/sdk/evethub/Azure.Messaging.EventHubs.Shared
 COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs/stress /app/sdk/eventhub/Azure.Messaging.EventHubs/stress
 
 WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
-ENTRYPOINT dotnet Azure.Messaging.EventHubs.Stress.dll --tests EventProd BuffProd BurstBuffProd ConcurBuffProd
+ENTRYPOINT dotnet Azure.Messaging.EventHubs.Stress.dll --tests EventProd BuffProd BurstBuffProd ConcurBuffProd -i

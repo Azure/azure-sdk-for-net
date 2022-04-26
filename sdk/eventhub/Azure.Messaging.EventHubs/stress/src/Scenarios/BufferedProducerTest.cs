@@ -49,6 +49,12 @@ namespace Azure.Messaging.EventHubs.Stress
                     .Select(_ => Task.Run(() => new BufferedPublisher(testConfiguration, metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
+                while (!enqueueingCancellationSource.Token.IsCancellationRequested)
+                {
+                    UpdateEnvironmentStatistics(metrics);
+                    await Task.Delay(TimeSpan.FromMinutes(1), enqueueingCancellationSource.Token).ConfigureAwait(false);
+                }
+
                 await Task.WhenAll(enqueuingTasks).ConfigureAwait(false);
             }
             catch (TaskCanceledException)
@@ -72,6 +78,13 @@ namespace Azure.Messaging.EventHubs.Stress
                 metrics.Client.Flush();
                 await Task.Delay(60000);
             }
+        }
+
+        private void UpdateEnvironmentStatistics(Metrics metrics)
+        {
+            metrics.Client.GetMetric(metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
+            metrics.Client.GetMetric(metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
+            metrics.Client.GetMetric(metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
         }
     }
 }
