@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -43,11 +44,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override bool IsClosed => _closed;
 
-        /// <summary>
-        ///   The endpoint for the Service Bus service to which the client is associated.
-        /// </summary>
-        ///
-        public override Uri ServiceEndpoint { get; }
+        public override bool IsConnected => ConnectionScope.ActiveConnection.TryGetOpenedObject(out AmqpConnection _);
 
         /// <summary>
         ///   Gets the credential to use for authorization with the Service Bus service.
@@ -62,6 +59,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private AmqpConnectionScope ConnectionScope { get; }
 
         public override ServiceBusTransportMetrics TransportMetrics { get; }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client connects to the service.
+        /// </summary>
+        public override event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync
+        {
+            add => ConnectionScope.ConnectedAsync += value;
+            remove => ConnectionScope.ConnectedAsync -= value;
+        }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client disconnects from the service.
+        /// No action is required when the client temporarily disconnects due to a transient network or service issue, as the client will attempt
+        /// to re-establish the connection automatically on the next operation. If <see cref="ServiceBusClient.DisposeAsync"/> is
+        /// called, then the connection will not be re-established.
+        /// </summary>
+        public override event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync
+        {
+            add => ConnectionScope.DisconnectedAsync += value;
+            remove => ConnectionScope.DisconnectedAsync -= value;
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
@@ -87,13 +105,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
 
-            ServiceEndpoint = new UriBuilder
-            {
-                Scheme = options.TransportType.GetUriScheme(),
-                Host = host
-            }.Uri;
+            Argument.AssertNotNull(options, nameof(options));
 
             Credential = credential;
             if (options.EnableTransportMetrics)
@@ -101,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 TransportMetrics = new ServiceBusTransportMetrics();
             }
             ConnectionScope = new AmqpConnectionScope(
-                ServiceEndpoint,
+                host,
                 credential,
                 options.TransportType,
                 options.WebProxy,

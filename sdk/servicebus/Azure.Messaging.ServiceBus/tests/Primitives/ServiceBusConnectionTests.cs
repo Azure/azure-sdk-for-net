@@ -505,7 +505,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 TransportClientCredential = credential;
                 TransportClient ??= new();
-
+                TransportClient.ConnectedAsync += default;
+                TransportClient.DisconnectedAsync += default;
                 return TransportClient;
             }
         }
@@ -518,10 +519,11 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             public bool WasCloseCalled;
 
-            public override Task CloseAsync(CancellationToken cancellationToken)
+            public override async Task CloseAsync(CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
-                return Task.CompletedTask;
+                await DisconnectedAsync(new ServiceBusConnectionEventArgs(ServiceEndpoint.Host, ServiceBusTransportType.AmqpTcp, null));
+                await ConnectedAsync(new ServiceBusConnectionEventArgs(ServiceEndpoint.Host, ServiceBusTransportType.AmqpTcp, null));
             }
 
             public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy,
@@ -531,6 +533,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 throw new NotImplementedException();
             }
+
+            public override event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+            public override event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
 
             public override TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier)
             {

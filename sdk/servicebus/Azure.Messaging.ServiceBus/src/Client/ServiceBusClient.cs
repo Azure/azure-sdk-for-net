@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,10 +26,9 @@ namespace Azure.Messaging.ServiceBus
         private volatile bool _closed;
 
         /// <summary>
-        ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
+        ///   The fully qualified Service Bus namespace that the connection is associated with. This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        ///
         public virtual string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
@@ -43,6 +43,67 @@ namespace Azure.Messaging.ServiceBus
             get => _closed;
             private set => _closed = value;
         }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client connects to the service.
+        /// </summary>
+#pragma warning disable AZC0002
+#pragma warning disable AZC0003
+        public event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+#pragma warning restore AZC0003
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client disconnects from the service.
+        /// No action is required when the client temporarily disconnects due to a transient network or service issue, as the client will attempt
+        /// to re-establish the connection automatically on the next operation. If <see cref="DisposeAsync"/> is
+        /// called, then the connection will not be re-established.
+        /// </summary>
+#pragma warning disable AZC0003
+#pragma warning disable AZC0002
+        public event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
+#pragma warning restore AZC0002
+#pragma warning restore AZC0003
+
+        /// <summary>
+        /// Gets whether or not the client is currently connected to the service. No action is required when the client temporarily
+        /// disconnects due to a transient network or service issue, as the client will attempt to re-establish the connection
+        /// automatically on the next operation. As such, it is not recommended that this property is checked before performing operations with the <see cref="ServiceBusClient"/>
+        /// or any of the other Service Bus types. This property should be used only for diagnostic information.
+        /// </summary>
+        public virtual bool IsConnected => Connection.IsConnected;
+
+        /// <summary>
+        /// Invokes the <see cref="ConnectedAsync"/> event handler when the client connects to the service.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the connection.</param>
+        protected virtual async Task OnConnectedAsync(ServiceBusConnectionEventArgs args)
+        {
+            var handler = ConnectedAsync;
+            if (handler != null)
+            {
+                await handler(args).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Invokes the <see cref="DisconnectedAsync"/> event handler when the client disconnects from the service.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the connection.</param>
+        protected virtual async Task OnDisconnectedAsync(ServiceBusConnectionEventArgs args)
+        {
+            var handler = DisconnectedAsync;
+            if (handler != null)
+            {
+                await handler(args).ConfigureAwait(false);
+            }
+        }
+
+        private async Task DisconnectHandlerAsync(ServiceBusConnectionEventArgs args) => await OnDisconnectedAsync(args).ConfigureAwait(false);
+
+        private async Task ConnectedHandlerAsync(ServiceBusConnectionEventArgs args) => await OnConnectedAsync(args).ConfigureAwait(false);
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.
@@ -153,6 +214,8 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             TransportType = _options.TransportType;
+            Connection.InnerClient.ConnectedAsync += ConnectedHandlerAsync;
+            Connection.InnerClient.DisconnectedAsync += DisconnectHandlerAsync;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -237,6 +300,8 @@ namespace Azure.Messaging.ServiceBus
                 credential,
                 _options);
             TransportType = _options.TransportType;
+            Connection.InnerClient.ConnectedAsync += ConnectedHandlerAsync;
+            Connection.InnerClient.DisconnectedAsync += DisconnectHandlerAsync;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

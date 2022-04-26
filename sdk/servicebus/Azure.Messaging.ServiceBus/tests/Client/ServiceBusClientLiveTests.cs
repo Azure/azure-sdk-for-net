@@ -280,8 +280,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-
                 await sender.SendMessageAsync(new ServiceBusMessage());
+
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
@@ -296,6 +296,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 // call is returned.
                 await Task.Delay(500);
                 Assert.IsNull(metrics.LastConnectionClose);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanSubscribeToConnectedEvents(bool useIdentity)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                ServiceBusClient client = null;
+                if (useIdentity)
+                {
+                    client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                }
+                else
+                {
+                    client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                }
+
+                int connectedCount = 0;
+                int disconnectedCount = 0;
+                client.ConnectedAsync += (args) =>
+                {
+                    Interlocked.Increment(ref connectedCount);
+                    Assert.AreEqual(client.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Assert.AreEqual(ServiceBusTransportType.AmqpTcp, args.TransportType);
+                    Assert.IsNull(args.Proxy);
+                    return Task.CompletedTask;
+                };
+
+                client.DisconnectedAsync += (args) =>
+                {
+                    Interlocked.Increment(ref disconnectedCount);
+                    Assert.AreEqual(client.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Assert.AreEqual(ServiceBusTransportType.AmqpTcp, args.TransportType);
+                    Assert.IsNull(args.Proxy);
+                    return Task.CompletedTask;
+                };
+
+                Assert.IsFalse(client.IsConnected);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                Assert.IsTrue(client.IsConnected);
+
+                SimulateNetworkFailure(client);
+                Assert.IsFalse(client.IsConnected);
+
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                Assert.IsTrue(client.IsConnected);
+
+                await client.DisposeAsync();
+                Assert.IsFalse(client.IsConnected);
+
+                Assert.AreEqual(2, connectedCount);
+
+                // The disconnected event is fired asynchronously, so add a small delay.
+                await Task.Delay(500);
+                Assert.AreEqual(2, disconnectedCount);
             }
         }
     }

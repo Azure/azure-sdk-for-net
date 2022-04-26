@@ -153,12 +153,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
-        private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
+        internal FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
 
         /// <summary>
         ///  The controller responsible for managing transactions.
         /// </summary>
         internal FaultTolerantAmqpObject<Controller> TransactionController { get; }
+
+        private readonly string _fullyQualifiedNamespace;
 
         private readonly bool _useSingleSession;
 
@@ -169,10 +171,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly object _syncLock = new();
         private readonly TimeSpan _operationTimeout;
 
+        public event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+        public event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
-        /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
+        /// <param name="fullyQualifiedNamespace">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
@@ -180,7 +185,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
         public AmqpConnectionScope(
-            Uri serviceEndpoint,
+            string fullyQualifiedNamespace,
             ServiceBusTokenCredential credential,
             ServiceBusTransportType transport,
             IWebProxy proxy,
@@ -188,14 +193,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan operationTimeout,
             ServiceBusTransportMetrics metrics)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
+
             ValidateTransport(transport);
 
             _operationTimeout = operationTimeout;
-            ServiceEndpoint = serviceEndpoint;
+            _fullyQualifiedNamespace = fullyQualifiedNamespace;
             Transport = transport;
+            ServiceEndpoint = new UriBuilder
+            {
+                Scheme = Transport.GetUriScheme(),
+                Host = _fullyQualifiedNamespace
+            }.Uri;
             Proxy = proxy;
+
             Id = $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
@@ -483,18 +495,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // When the connection is closed, close each of the links associated with it.
 
             EventHandler closeHandler = null;
-
-            closeHandler = (snd, args) =>
+            var connectionArgs = new ServiceBusConnectionEventArgs(_fullyQualifiedNamespace, transportType, proxy);
+            closeHandler = async (snd, args) =>
             {
                 foreach (var link in ActiveLinks.Keys)
                 {
                     link.SafeClose();
                 }
-
+                // async void is okay in EventHandlers
+                await DisconnectedAsync(connectionArgs).ConfigureAwait(false);
                 connection.Closed -= closeHandler;
             };
 
             connection.Closed += closeHandler;
+            await ConnectedAsync(connectionArgs).ConfigureAwait(false);
             return connection;
         }
 

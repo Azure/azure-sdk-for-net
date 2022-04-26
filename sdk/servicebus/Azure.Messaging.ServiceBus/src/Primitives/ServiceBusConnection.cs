@@ -35,6 +35,8 @@ namespace Azure.Messaging.ServiceBus
         /// </value>
         public bool IsClosed => InnerClient.IsClosed;
 
+        public bool IsConnected => InnerClient.IsConnected;
+
         /// <summary>
         /// The entity path that the connection is bound to.
         /// </summary>
@@ -70,7 +72,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
         /// <param name="options">A set of options to apply when configuring the connection.</param>
-        ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
         ///   and can be used directly without passing the  name="entityName" />.  The name of the Service Bus entity should be
@@ -263,8 +264,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
-        /// <param name="options"></param>
-        ///
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         /// <returns>A client generalization specific to the specified protocol/transport to which operations may be delegated.</returns>
         ///
         /// <remarks>

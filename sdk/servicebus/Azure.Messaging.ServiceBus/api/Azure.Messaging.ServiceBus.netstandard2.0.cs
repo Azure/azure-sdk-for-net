@@ -73,7 +73,10 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsConnected { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
+        public event System.Func<Azure.Messaging.ServiceBus.ServiceBusConnectionEventArgs, System.Threading.Tasks.Task> ConnectedAsync { add { } remove { } }
+        public event System.Func<Azure.Messaging.ServiceBus.ServiceBusConnectionEventArgs, System.Threading.Tasks.Task> DisconnectedAsync { add { } remove { } }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptSessionAsync(string queueName, string sessionId, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -92,6 +95,8 @@ namespace Azure.Messaging.ServiceBus
         public virtual Azure.Messaging.ServiceBus.ServiceBusSessionProcessor CreateSessionProcessor(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionProcessorOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public virtual Azure.Messaging.ServiceBus.ServiceBusTransportMetrics GetTransportMetrics() { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnConnectedAsync(Azure.Messaging.ServiceBus.ServiceBusConnectionEventArgs args) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnDisconnectedAsync(Azure.Messaging.ServiceBus.ServiceBusConnectionEventArgs args) { throw null; }
     }
     public partial class ServiceBusClientOptions
     {
@@ -107,6 +112,13 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusConnectionEventArgs : System.EventArgs
+    {
+        public ServiceBusConnectionEventArgs(string fullyQualifiedNamespace, Azure.Messaging.ServiceBus.ServiceBusTransportType transportType, System.Net.IWebProxy proxy) { }
+        public string FullyQualifiedNamespace { get { throw null; } }
+        public System.Net.IWebProxy Proxy { get { throw null; } }
+        public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
     }
     public partial class ServiceBusConnectionStringProperties
     {
