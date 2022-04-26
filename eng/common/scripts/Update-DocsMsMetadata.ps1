@@ -129,8 +129,6 @@ author: $author
 ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
-ms.prod: azure
-ms.technology: azure
 ms.devlang: $Language
 ms.service: $service
 ---
