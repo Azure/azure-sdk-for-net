@@ -28,8 +28,6 @@ Here's an example using the Azure CLI:
 ```
 -->
 
-## Phone numbers client
-
 ### Key concepts
 
 Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
@@ -79,9 +77,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-### Examples
+## Examples
 
-#### Creating a PhoneNumbersClient
+### Creating a PhoneNumbersClient
 
 To create a new `PhoneNumbersClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource.
 
@@ -93,7 +91,7 @@ var connectionString = "<connection_string>";
 var client = new PhoneNumbersClient(connectionString);
 ```
 
-#### Search phone numbers
+### Search phone numbers
 
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
@@ -104,7 +102,7 @@ var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(country
 await searchOperation.WaitForCompletionAsync();
 ```
 
-#### Purchase phone numbers
+### Purchase phone numbers
 
 Phone numbers can be acquired through purchasing a search.
 
@@ -113,7 +111,7 @@ var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperat
 await purchaseOperation.WaitForCompletionResponseAsync();
 ```
 
-#### Listing purchased phone numbers
+### Listing purchased phone numbers
 
 You can list all phone numbers that have been purchased for your resource.
 
@@ -126,7 +124,7 @@ await foreach (var phoneNumber in purchasedPhoneNumbers)
 }
 ```
 
-#### Release phone numbers
+### Release phone numbers
 
 If you no longer need a phone number you can release it.
 
