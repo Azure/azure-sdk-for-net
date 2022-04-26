@@ -9,7 +9,8 @@ The following example shows an how an application already using some other mecha
 
 ```C# Snippet:TokenCredentialCreateUsage
 AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
-var credential = TokenCredential.Create((_, _) => token);
+
+var credential = DelegatedTokenCredential.Create((_, _) => token);
 
 var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
 ```
