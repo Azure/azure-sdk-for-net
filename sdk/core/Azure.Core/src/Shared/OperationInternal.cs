@@ -89,7 +89,7 @@ namespace Azure.Core
             DelayStrategy? fallbackStrategy = null)
             :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationWrapper(operation), rawResponse, operationTypeName, scopeAttributes, fallbackStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationWrapper(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState)
