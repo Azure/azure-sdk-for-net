@@ -19,16 +19,15 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
-        private readonly ServiceBusClientOptions _options;
+        internal virtual ServiceBusClientOptions Options { get; }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
         /// <summary>
-        ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
+        ///   The fully qualified Service Bus namespace that the connection is associated with. This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        ///
         public virtual string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
@@ -42,6 +41,59 @@ namespace Azure.Messaging.ServiceBus
         {
             get => _closed;
             private set => _closed = value;
+        }
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client connects to the service.
+        /// </summary>
+#pragma warning disable AZC0002
+#pragma warning disable AZC0003
+        public event Func<ServiceBusConnectionEventArgs, Task> ConnectedAsync;
+#pragma warning restore AZC0003
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// An event that can be subscribed to for notification when the client disconnects from the service.
+        /// No action is required when the client temporarily disconnects due to a transient network or service issue, as the client will attempt
+        /// to re-establish the connection automatically on the next operation. If <see cref="DisposeAsync"/> is
+        /// called, then the connection will not be re-established.
+        /// </summary>
+#pragma warning disable AZC0003
+#pragma warning disable AZC0002
+        public event Func<ServiceBusConnectionEventArgs, Task> DisconnectedAsync;
+#pragma warning restore AZC0002
+#pragma warning restore AZC0003
+
+        /// <summary>
+        /// Gets whether or not the client is currently connected to the service. No action is required when the client temporarily
+        /// disconnects due to a transient network or service issue, as the client will attempt to re-establish the connection
+        /// automatically on the next operation. As such, it is not recommended that this property is checked before performing operations with the <see cref="ServiceBusClient"/>
+        /// or any of the other Service Bus types. This property should be used only for diagnostic information.
+        /// </summary>
+        public virtual bool IsConnected => Connection.IsConnected;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        protected internal virtual async Task OnConnectedAsync(ServiceBusConnectionEventArgs args)
+        {
+            if (ConnectedAsync != null)
+            {
+                await ConnectedAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        protected internal virtual async Task OnDisconnectedAsync(ServiceBusConnectionEventArgs args)
+        {
+            if (ConnectedAsync != null)
+            {
+                await DisconnectedAsync(args).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -148,11 +200,11 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
-            _options = options?.Clone() ?? new ServiceBusClientOptions();
-            Connection = new ServiceBusConnection(connectionString, _options);
+            Options = options?.Clone() ?? new ServiceBusClientOptions();
+            Connection = new ServiceBusConnection(connectionString, this);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
-            TransportType = _options.TransportType;
+            TransportType = Options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -230,13 +282,13 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusClientOptions options)
         {
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
-            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Options = options?.Clone() ?? new ServiceBusClientOptions();
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
-                _options);
-            TransportType = _options.TransportType;
+                this);
+            TransportType = Options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

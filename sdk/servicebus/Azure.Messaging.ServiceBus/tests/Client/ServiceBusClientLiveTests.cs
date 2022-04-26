@@ -279,23 +279,87 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
 
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                client.ConnectedAsync += (args) =>
+                {
+                    Console.WriteLine($"{args.FullyQualifiedNamespace} Connected!");
+                    return Task.CompletedTask;
+                };
 
+                client.DisconnectedAsync += (args) =>
+                {
+                    Console.WriteLine($"{args.FullyQualifiedNamespace} Disconnected!");
+                    return Task.CompletedTask;
+                };
+                Console.WriteLine(client.IsConnected);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(new ServiceBusMessage());
+                Console.WriteLine(client.IsConnected);
+
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
                 Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
+                Console.WriteLine(client.IsConnected);
                 await sender.SendMessageAsync(new ServiceBusMessage());
+                Console.WriteLine(client.IsConnected);
                 Assert.AreEqual(firstOpen, metrics.LastConnectionOpen);
 
                 await client.DisposeAsync();
+                Console.WriteLine(client.IsConnected);
                 // The close frame does not come back from the service before the DisposeAsync
                 // call is returned.
                 await Task.Delay(500);
                 Assert.IsNull(metrics.LastConnectionClose);
+            }
+        }
+
+        [Test]
+        public async Task CanSubscribeToConnectedEvents()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                int connectedCount = 0;
+                int disconnectedCount = 0;
+                client.ConnectedAsync += (args) =>
+                {
+                    Interlocked.Increment(ref connectedCount);
+                    Assert.AreEqual(client.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Assert.AreEqual(ServiceBusTransportType.AmqpTcp, args.TransportType);
+                    Assert.IsNull(args.Proxy);
+                    return Task.CompletedTask;
+                };
+
+                client.DisconnectedAsync += (args) =>
+                {
+                    Interlocked.Increment(ref disconnectedCount);
+                    Assert.AreEqual(client.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Assert.AreEqual(ServiceBusTransportType.AmqpTcp, args.TransportType);
+                    Assert.IsNull(args.Proxy);
+                    return Task.CompletedTask;
+                };
+
+                Assert.IsFalse(client.IsConnected);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                Assert.IsTrue(client.IsConnected);
+
+                SimulateNetworkFailure(client);
+                Assert.IsFalse(client.IsConnected);
+
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                Assert.IsTrue(client.IsConnected);
+
+                await client.DisposeAsync();
+                Assert.IsFalse(client.IsConnected);
+
+                Assert.AreEqual(2, connectedCount);
+
+                // The disconnected event is fired asynchronously, so add a small delay.
+                await Task.Delay(500);
+                Assert.AreEqual(2, disconnectedCount);
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheRefreshBuffer()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope("mine.hubs.com", credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var expireTime = currentTime.AddHours(1);
             var buffer = GetAuthorizationRefreshBuffer();
@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMinimumDuration()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope("mine.hubs.com", credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
             var minimumRefresh = GetMinimumAuthorizationRefresh();
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMaximumDuration()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope("mine.hubs.com", credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var refreshBuffer = GetAuthorizationRefreshBuffer();
             var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
@@ -99,11 +99,11 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var observedException = default(Exception);
             var openException = (Exception)Activator.CreateInstance(exceptionType, "stringArg");
-            var endpoint = new Uri("amqp://test.service.gov");
+            var host = "test.service.gov";
             var transport = ServiceBusTransportType.AmqpTcp;
             var mockCredential = new Mock<TokenCredential>();
             var mockServiceBusCredential = new Mock<ServiceBusTokenCredential>(mockCredential.Object);
-            var mockScope = new MockConnectionScope(endpoint, mockServiceBusCredential.Object, transport, null);
+            var mockScope = new MockConnectionScope(host, mockServiceBusCredential.Object, transport, null);
 
             mockScope.MockConnection
                 .Protected()
@@ -211,10 +211,10 @@ namespace Azure.Messaging.ServiceBus.Tests
             public readonly Mock<AmqpConnection> MockConnection;
 
             public MockConnectionScope(
-                Uri serviceEndpoint,
+                string hostName,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, credential, transport, proxy, false, default, default)
+                IWebProxy proxy) : base(hostName, credential, ServiceBusTestUtilities.CreateDefaultMockedClient(), default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }

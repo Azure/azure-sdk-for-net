@@ -30,6 +30,16 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual bool IsClosed { get; }
 
         /// <summary>
+        ///   Indicates whether or not this client is currently connected to the service endpoint.
+        ///   </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool IsConnected { get; }
+
+        /// <summary>
         ///   The endpoint for the Service Bus service to which the client is associated.
         /// </summary>
         ///

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -43,11 +44,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override bool IsClosed => _closed;
 
-        /// <summary>
-        ///   The endpoint for the Service Bus service to which the client is associated.
-        /// </summary>
-        ///
-        public override Uri ServiceEndpoint { get; }
+        public override bool IsConnected => ConnectionScope.ActiveConnection.TryGetOpenedObject(out AmqpConnection _);
 
         /// <summary>
         ///   Gets the credential to use for authorization with the Service Bus service.
@@ -69,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <param name="client">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -83,17 +80,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal AmqpClient(
             string host,
             ServiceBusTokenCredential credential,
-            ServiceBusClientOptions options)
+            ServiceBusClient client)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
 
-            ServiceEndpoint = new UriBuilder
-            {
-                Scheme = options.TransportType.GetUriScheme(),
-                Host = host
-            }.Uri;
+            var options = client.Options;
+            Argument.AssertNotNull(options, nameof(options));
 
             Credential = credential;
             if (options.EnableTransportMetrics)
@@ -101,12 +94,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 TransportMetrics = new ServiceBusTransportMetrics();
             }
             ConnectionScope = new AmqpConnectionScope(
-                ServiceEndpoint,
+                host,
                 credential,
-                options.TransportType,
-                options.WebProxy,
-                options.EnableCrossEntityTransactions,
-                options.RetryOptions.TryTimeout,
+                client,
                 TransportMetrics);
         }
 

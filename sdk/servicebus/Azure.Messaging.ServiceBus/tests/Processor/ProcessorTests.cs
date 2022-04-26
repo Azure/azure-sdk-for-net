@@ -384,7 +384,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var connectionClosed = false;
             var mockTransportClient = new Mock<TransportClient>();
-            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), ServiceBusTestUtilities.CreateDefaultMockedClient())
             {
                 CallBase = true
             };
@@ -396,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClientOptions>()))
+                    It.IsAny<ServiceBusClient>()))
                 .Returns(mockTransportClient.Object);
 
             var processor = new ServiceBusProcessor(
