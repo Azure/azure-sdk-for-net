@@ -55,7 +55,7 @@ namespace Azure.Core.Experimental.Tests
 
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
-        /// <param name="context"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
         public virtual async Task<Response> GetPetAsync(string id, RequestContext context = null)
 #pragma warning restore AZC0002
@@ -76,7 +76,7 @@ namespace Azure.Core.Experimental.Tests
 
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
         public virtual Response GetPet(string id, RequestContext context = null)
 #pragma warning restore AZC0002
@@ -97,7 +97,7 @@ namespace Azure.Core.Experimental.Tests
 
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
         /// <param name="id"> Id of pet to return. </param>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
         private HttpMessage CreateGetPetRequest(string id, RequestContext context = null)
         {
             var message = Pipeline.CreateMessage(context, Classifier200);
