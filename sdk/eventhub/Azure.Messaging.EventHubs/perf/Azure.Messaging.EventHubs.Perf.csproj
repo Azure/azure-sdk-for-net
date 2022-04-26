@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Perf.slnf" />
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="SharedSource\" />
   </ItemGroup>
 

@@ -233,6 +233,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates a Network Virtual Appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// Operation Id: NetworkVirtualAppliances_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<NetworkVirtualApplianceResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _networkVirtualApplianceRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a Network Virtual Appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
+        /// Operation Id: NetworkVirtualAppliances_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<NetworkVirtualApplianceResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _networkVirtualApplianceRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}
         /// Operation Id: InboundSecurityRule_CreateOrUpdate

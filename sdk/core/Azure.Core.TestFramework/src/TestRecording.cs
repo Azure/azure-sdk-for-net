@@ -241,12 +241,17 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-        public async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync(bool save)
         {
             if (Mode == RecordedTestMode.Record)
             {
-                await _proxy.Client.StopRecordAsync(RecordingId, Variables);
+                await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsync(true);
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

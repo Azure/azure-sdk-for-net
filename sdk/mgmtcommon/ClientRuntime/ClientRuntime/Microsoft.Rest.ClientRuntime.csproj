@@ -3,12 +3,13 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.23</Version>
+    <Version>2.3.24</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Added support for specifying MaxRetries in RetryAfterDelegatingHandler.
+		    - Improving sanitization of exception messages. For details, see "CVE-2022-26907 - Security Update Guide - Microsoft - Azure SDK for .NET Information Disclosure Vulnerability": https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-26907
+		    - Optimize performance of parsing JSON content
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

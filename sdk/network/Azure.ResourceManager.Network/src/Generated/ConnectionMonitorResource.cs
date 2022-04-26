@@ -189,6 +189,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Update tags of the specified connection monitor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<ConnectionMonitorResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _connectionMonitorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update tags of the specified connection monitor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<ConnectionMonitorResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _connectionMonitorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Stops the specified connection monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop
         /// Operation Id: ConnectionMonitors_Stop

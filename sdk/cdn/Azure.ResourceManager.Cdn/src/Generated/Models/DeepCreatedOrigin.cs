@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, string privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus)
+        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus)
         {
             Name = name;
             HostName = hostName;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </summary>
         public string PrivateLinkAlias { get; set; }
         /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </summary>
         public string PrivateLinkLocation { get; set; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>

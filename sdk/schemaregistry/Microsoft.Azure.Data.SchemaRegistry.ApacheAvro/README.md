@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry Apache Avro library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --version 1.0.0-beta.1
+dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --prerelease
 ```
 
 ### Prerequisites
@@ -131,30 +131,7 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ## Troubleshooting
 
-If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to serialization to Avro, or deserialization from Avro, will be thrown as a `AvroSerializationException`. The `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. When deserializing, the `SerializedSchemaId` property will contain the schema ID corresponding to the serialized data. Using our `Employee` schema example, if we add an `Employee_V2` model that adds a new required field, this would not be compatible with `Employee`. If the data we are attempting to deserialize may contain a schema that would not be compatible with our `Employee_V2` model, then we might write code like the following:
-
-```C# Snippet:SchemaRegistryAvroException
-try
-{
-    Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
-}
-catch (SchemaRegistryAvroException exception)
-{
-    // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
-    // serialize the data.
-    Console.WriteLine(exception);
-
-    // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
-    if (exception.SchemaId != null)
-    {
-        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
-        Console.WriteLine(schema.Definition);
-    }
-}
-```
-
-In general, any invalid Avro schemas would probably be caught during testing, but such schemas will also result in a `AvroSerializationException` being thrown when attempting to serialize using an invalid writer schema, or deserialize when using an invalid reader schema.
-
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. This type of error would typically be caught during testing and should not be handled in code. Any errors related to incompatible schemas will be thrown as an `Exception` with the `InnerException` property set to the underlying exception from the Apache Avro library.
 
 ## Next steps
 

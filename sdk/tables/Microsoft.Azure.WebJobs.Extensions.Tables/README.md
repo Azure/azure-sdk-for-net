@@ -6,10 +6,10 @@ This extension provides functionality for accessing Azure Tables in Azure Functi
 
 ### Install the package
 
-Install the Storage Blobs extension with [NuGet][nuget]:
+Install the Tables extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables
 ```
 
 ### Prerequisites

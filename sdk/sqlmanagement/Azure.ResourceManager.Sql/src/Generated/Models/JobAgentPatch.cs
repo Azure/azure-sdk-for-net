@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update to an Azure SQL job agent. </summary>
-    internal partial class JobAgentPatch
+    public partial class JobAgentPatch
     {
         /// <summary> Initializes a new instance of JobAgentPatch. </summary>
         public JobAgentPatch()

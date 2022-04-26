@@ -19,8 +19,8 @@ authentication. This document illustrates the most common scenario.
 
 Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0
+```dotnetcli
+dotnet add package Azure.ResourceManager
 ```
 
 ## Prerequisites
