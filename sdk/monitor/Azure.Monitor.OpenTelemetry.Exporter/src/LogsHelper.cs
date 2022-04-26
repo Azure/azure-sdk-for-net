@@ -86,18 +86,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static void WriteScopeInformation(LogRecord logRecord, IDictionary<string, string> properties)
         {
             StringBuilder builder = null;
-            int originalFormatDepth = 1;
+            int originalScopeDepth = 1;
             logRecord.ForEachScope(ProcessScope, properties);
 
             void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
             {
+                int valueDepth = 1;
                 if (scope.Scope is IEnumerable<KeyValuePair<string, object>> stateDictionary)
                 {
                     foreach (KeyValuePair<string, object> scopeItem in scope)
                     {
                         if (scopeItem.Key == "{OriginalFormat}")
                         {
-                            properties.Add($"OriginalFormatScope_{originalFormatDepth++}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                            properties.Add($"OriginalFormatScope_{originalScopeDepth}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
                         }
                         else if (!properties.TryGetValue(scopeItem.Key, out _))
                         {
@@ -105,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
                         else
                         {
-                            AzureMonitorExporterEventSource.Log.Write($"DuplicateScopeItem{EventLevelSuffix.Warning}", $"Found duplicate scope key - {scopeItem.Key}.");
+                            properties.Add($"{scopeItem.Key}_{originalScopeDepth}_{valueDepth++}", Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
                         }
                     }
                 }
@@ -114,6 +115,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     builder ??= new StringBuilder();
                     builder.Append(" => ").Append(scope.Scope);
                 }
+
+                originalScopeDepth++;
             }
 
             if (builder?.Length > 0)
