@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string SubnetId { get { throw null; } set { } }
         public int? TargetNodeCount { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.UserAccountCredentials UserAccountCredentials { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VirtualMachineImageId { get { throw null; } set { } }
+        public string VirtualMachineImageId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.VmPriority? VmPriority { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
     }
@@ -1023,6 +1023,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? IsArchived { get { throw null; } set { } }
         public string LatestVersion { get { throw null; } }
         public string NextVersion { get { throw null; } }
+    }
+    public partial class AssetReferenceBase
+    {
+        public AssetReferenceBase() { }
+        public string Foo { get { throw null; } set { } }
     }
     public partial class AssignedUser
     {
@@ -1133,6 +1138,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.BatchLoggingLevel? LoggingLevel { get { throw null; } set { } }
         public int? MaxConcurrencyPerInstance { get { throw null; } set { } }
         public long? MiniBatchSize { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase Model { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchOutputAction? OutputAction { get { throw null; } set { } }
         public string OutputFileName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState? ProvisioningState { get { throw null; } }
@@ -1682,6 +1688,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public DataLakeAnalytics() { }
         public string DataLakeStoreAccountName { get { throw null; } set { } }
     }
+    public partial class DataPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
+    {
+        public DataPathAssetReference() { }
+        public string DatastoreId { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+    }
     public partial class DataSettings
     {
         public DataSettings(string targetColumnName, Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings trainingDataSettings) { }
@@ -2211,6 +2223,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Address { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSshCredentials AdministratorAccount { get { throw null; } set { } }
         public int? SshPort { get { throw null; } set { } }
+    }
+    public partial class IdAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
+    {
+        public IdAssetReference(string assetId) { }
+        public string AssetId { get { throw null; } set { } }
     }
     public partial class ImageClassification : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
@@ -3177,6 +3194,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class OutputPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
+    {
+        public OutputPathAssetReference() { }
+        public string JobId { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
     }
     public partial class PartialBatchDeployment
     {
