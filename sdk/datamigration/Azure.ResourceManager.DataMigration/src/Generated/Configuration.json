@@ -1,0 +1,43 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.DataMigration",
+  "LibraryName": "DataMigration",
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
+    "C:\\Users\\micnash\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20220422.1\\content\\Generator.Shared\\"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "ListException": [
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}",
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}",
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}"
+  ],
+  "RequestPathToResourceName": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}": "DatabaseMigrationSqlDbResource",
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}": "DatabaseMigrationSqlMiResource",
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}": "DatabaseMigrationSqlVmResource"
+  },
+  "RenameRules": {
+    "CPU": "Cpu",
+    "CPUs": "Cpus",
+    "Os": "OS",
+    "Ip": "IP",
+    "Ips": "IPs",
+    "ID": "Id",
+    "IDs": "Ids",
+    "VM": "Vm",
+    "VMs": "Vms",
+    "VMScaleSet": "VmScaleSet",
+    "DNS": "Dns",
+    "VPN": "Vpn",
+    "NAT": "Nat",
+    "WAN": "Wan",
+    "Ipv4": "IPv4",
+    "Ipv6": "IPv6",
+    "Ipsec": "IPsec",
+    "SSO": "Sso",
+    "URI": "Uri"
+  }
+}

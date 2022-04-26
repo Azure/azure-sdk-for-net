@@ -5,14 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListPublicIpAddresses API service call. </summary>
-    internal partial class PublicIPAddressListResult
+    [JsonConverter(typeof(PublicIPAddressListResultConverter))]
+    public partial class PublicIPAddressListResult
     {
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         internal PublicIPAddressListResult()
@@ -33,5 +36,18 @@ namespace Azure.ResourceManager.Network.Models
         public IReadOnlyList<PublicIPAddressData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
+
+        internal partial class PublicIPAddressListResultConverter : JsonConverter<PublicIPAddressListResult>
+        {
+            public override void Write(Utf8JsonWriter writer, PublicIPAddressListResult model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override PublicIPAddressListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePublicIPAddressListResult(document.RootElement);
+            }
+        }
     }
 }
