@@ -48,22 +48,17 @@ namespace Azure.Communication.Chat
         }
 
         #region Broadcast Messaging Operations
-        /// <summary> Sends a Fire and Forget/Threadless/CPM template message asynchronously. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The threadless chat message type. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create message templates. </param>
+        /// <summary> Sends a Fire and Forget/Threadless/CPM message asynchronously. </summary>
+        /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendMessageAsync(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendMessageAsync(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                return await _broadcastRestClient.SendChatMessageAsync(from, to, type, content, media, template, cancellationToken).ConfigureAwait(false);
+                return await _broadcastRestClient.SendChatMessageAsync(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -73,21 +68,16 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Sends a Fire and Forget/Threadless/CPM message. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The threadless chat message type. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create message templates. </param>
+        /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendBroadcastChatMessageResult> SendMessage(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+       public virtual Response<SendBroadcastChatMessageResult> SendMessage(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                return _broadcastRestClient.SendChatMessage(from, to, type, content, media, template, cancellationToken);
+                return _broadcastRestClient.SendChatMessage(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken);
             }
             catch (Exception ex)
             {

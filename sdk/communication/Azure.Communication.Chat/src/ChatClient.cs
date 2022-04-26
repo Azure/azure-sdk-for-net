@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
-        private readonly BroadcastRestClient _threadlessRestClient;
+        private readonly BroadcastRestClient _broadcastRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
-            _threadlessRestClient = new BroadcastRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _broadcastRestClient = new BroadcastRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat
         {
             _clientDiagnostics = null!;
             _chatRestClient = null!;
-            _threadlessRestClient = null;
+            _broadcastRestClient = null;
             _endpointUrl = null!;
             _communicationTokenCredential = null!;
             _chatClientOptions = null!;
@@ -54,21 +54,16 @@ namespace Azure.Communication.Chat
 
         #region Broadcast Messaging Operations
         /// <summary> Sends a Fire and Forget/Threadless/CPM message asynchronously. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The threadless chat message type. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create message templates. </param>
+        /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendBroadcastMessageAsync(string from, string to, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendBroadcastMessageAsync(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
             scope.Start();
             try
             {
-                return await _threadlessRestClient.SendChatMessageAsync(from, to, type, content, media, template, cancellationToken).ConfigureAwait(false);
+                return await _broadcastRestClient.SendChatMessageAsync(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -78,21 +73,16 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Sends a Fire and Forget/Threadless/CPM message. </summary>
-        /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
-        /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The threadless chat message type. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create message templates. </param>
+        /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendBroadcastChatMessageResult> SendBroadcastMessage(string from = null, string to = null, BroadcastChatMessageType type = default, string content = null, ChatMedia media = null, ChatTemplate template = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendBroadcastChatMessageResult> SendBroadcastMessage(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
             scope.Start();
             try
             {
-                return _threadlessRestClient.SendChatMessage(from, to, type, content, media, template, cancellationToken);
+                return _broadcastRestClient.SendChatMessage(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken);
             }
             catch (Exception ex)
             {
