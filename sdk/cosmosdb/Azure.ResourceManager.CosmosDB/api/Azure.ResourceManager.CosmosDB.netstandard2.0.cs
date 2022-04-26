@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBPrivateEndpointConnectionData() { }
         public string GroupId { get { throw null; } set { } }
         public string PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
     }
     public partial class CosmosDBPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -1668,6 +1668,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ExposedHeaders { get { throw null; } set { } }
         public long? MaxAgeInSeconds { get { throw null; } set { } }
     }
+    public partial class CosmosDBPrivateLinkServiceConnectionStateProperty
+    {
+        public CosmosDBPrivateLinkServiceConnectionStateProperty() { }
+        public string ActionsRequired { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+    }
     public partial class CosmosTableCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CosmosTableCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.TableResource resource) : base (default(Azure.Core.AzureLocation)) { }
@@ -2308,13 +2315,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static implicit operator Azure.ResourceManager.CosmosDB.Models.PrimaryAggregationType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.PrimaryAggregationType left, Azure.ResourceManager.CosmosDB.Models.PrimaryAggregationType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PrivateLinkServiceConnectionStateProperty
-    {
-        public PrivateLinkServiceConnectionStateProperty() { }
-        public string ActionsRequired { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.PublicNetworkAccess>

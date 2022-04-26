@@ -4624,7 +4624,14 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServicePrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal AppServicePrivateLinkResource() { }
-        public Azure.ResourceManager.AppService.Models.PrivateLinkResourceProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceProperties Properties { get { throw null; } }
+    }
+    public partial class AppServicePrivateLinkResourceProperties
+    {
+        internal AppServicePrivateLinkResourceProperties() { }
+        public string GroupId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class AppServiceRecommendation : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6339,13 +6346,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
-    }
-    public partial class PrivateLinkResourceProperties
-    {
-        internal PrivateLinkResourceProperties() { }
-        public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class ProcessThreadInfo : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {

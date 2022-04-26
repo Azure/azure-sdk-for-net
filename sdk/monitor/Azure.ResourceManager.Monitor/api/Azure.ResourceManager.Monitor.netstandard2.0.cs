@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Monitor
     {
         public MonitorPrivateEndpointConnectionData() { }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
     public partial class MonitorPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -1460,6 +1460,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset? ResolvedOn { get { throw null; } }
         public string RuleName { get { throw null; } }
     }
+    public partial class MonitorPrivateLinkServiceConnectionStateProperty
+    {
+        public MonitorPrivateLinkServiceConnectionStateProperty(string status, string description) { }
+        public string ActionsRequired { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+    }
     public partial class MonitorRecurrence
     {
         public MonitorRecurrence(Azure.ResourceManager.Monitor.Models.RecurrenceFrequency frequency, Azure.ResourceManager.Monitor.Models.RecurrentSchedule schedule) { }
@@ -1562,13 +1569,6 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public PrivateLinkScopePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PrivateLinkServiceConnectionStateProperty
-    {
-        public PrivateLinkServiceConnectionStateProperty(string status, string description) { }
-        public string ActionsRequired { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.ProvisioningState>
