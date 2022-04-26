@@ -94,7 +94,10 @@ namespace Azure.Core
             }
             else if (cancellationToken.CanBeCanceled)
             {
-                cancellationToken.WaitHandle.WaitOne(delay);
+                if (cancellationToken.WaitHandle.WaitOne(delay))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
             }
             else
             {
