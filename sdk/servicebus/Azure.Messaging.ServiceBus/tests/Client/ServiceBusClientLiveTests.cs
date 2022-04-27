@@ -265,7 +265,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await client.DisposeAsync();
                 // The close frame does not come back from the service before the DisposeAsync
                 // call is returned.
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 metrics = client.GetTransportMetrics();
                 Assert.Greater(metrics.LastConnectionClose, thirdOpen);
                 Assert.Greater(metrics.LastHeartBeat, firstHeartBeat);

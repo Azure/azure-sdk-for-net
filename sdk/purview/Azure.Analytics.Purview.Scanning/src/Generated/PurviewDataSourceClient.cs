@@ -816,7 +816,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetScansAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewDataSourceClient.GetScans");
+            return GetScansImplementationAsync("PurviewDataSourceClient.GetScans", context);
+        }
+
+        private AsyncPageable<BinaryData> GetScansImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -910,7 +915,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetScans(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewDataSourceClient.GetScans");
+            return GetScansImplementation("PurviewDataSourceClient.GetScans", context);
+        }
+
+        private Pageable<BinaryData> GetScansImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
