@@ -2426,11 +2426,6 @@ namespace Azure.AI.TextAnalytics
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
-        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
-            (string.IsNullOrEmpty(error.Target))
-                ? null
-                : new Dictionary<string, string> { { "Target", error.Target } };
-
         private static IDictionary<string, string> CreateAdditionalInformation(Error error) =>
             (string.IsNullOrEmpty(error.Target))
                 ? null
