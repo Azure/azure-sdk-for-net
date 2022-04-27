@@ -158,7 +158,7 @@ namespace Azure.AI.TextAnalytics
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = languageDetection.Results.Errors.First().Error;
+                    var error = languageDetection.Results.Errors[0].Error;
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
@@ -218,7 +218,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = languageDetection.Results.Errors.First().Error;
+                    var error = languageDetection.Results.Errors[0].Error;
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -487,7 +487,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = entityRecognition.Results.Errors.First().Error;
+                    var error = entityRecognition.Results.Errors[0].Error;
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -550,7 +550,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = entityRecognition.Results.Errors.First().Error;
+                    var error = entityRecognition.Results.Errors[0].Error;
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -828,7 +828,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = piiEntities.Results.Errors.First().Error;
+                    var error = piiEntities.Results.Errors[0].Error;
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -898,7 +898,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = piiEntities.Results.Errors.First().Error;
+                    var error = piiEntities.Results.Errors[0].Error;
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
