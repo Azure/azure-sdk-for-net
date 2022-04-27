@@ -15,6 +15,10 @@ override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
 
+# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
+modelerfour:
+  lenient-model-deduplication: true
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -38,6 +42,15 @@ rename-rules:
   URI: Uri
 
 directive:
+    - from: namespace-preview.json
+      where: $.definitions.Encryption
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.Identity
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.userAssignedIdentityProperties
+      transform: $['x-ms-client-flatten'] = false
     - rename-model:
         from: SBNamespace
         to: ServiceBusNamespace
