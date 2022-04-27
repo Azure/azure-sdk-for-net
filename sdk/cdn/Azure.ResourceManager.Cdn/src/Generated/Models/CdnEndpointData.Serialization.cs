@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = (AzureLocation)property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = (Core.ResourceType)property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemData"))
