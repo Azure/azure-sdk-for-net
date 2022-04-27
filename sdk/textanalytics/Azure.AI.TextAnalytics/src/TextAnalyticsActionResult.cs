@@ -17,6 +17,7 @@ namespace Azure.AI.TextAnalytics
             //CompletedOn = completedOn;
             //Error = error != null ? Transforms.ConvertToError(error) : default;
             throw new NotImplementedException();
+            // update TextAnalyticsErrorInternal to Error
         }
 
         internal TextAnalyticsActionResult(string actionName, DateTimeOffset completedOn)
