@@ -18,19 +18,18 @@ namespace Azure.AI.TextAnalytics
 
         internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
         {
-            //string errorCode = error.Code;
-            //string message = error.Message;
-            //string target = error.Target;
-            //InnerError innerError = error.Innererror;
+            string errorCode = error.Code;
+            string message = error.Message;
+            string target = error.Target;
+            InnerError innerError = error.Innererror;
 
-            //if (innerError != null)
-            //{
-            //    // Return the innermost error, which should be only one level down.
-            //    return new TextAnalyticsError(innerError.Code, innerError.Message, innerError.Target);
-            //}
+            if (innerError != null)
+            {
+                // Return the innermost error, which should be only one level down.
+                return new TextAnalyticsError(innerError.Code, message, target);
+            }
 
-            //return new TextAnalyticsError(errorCode, message, target);
-            throw new NotImplementedException();
+            return new TextAnalyticsError(errorCode, message, target);
         }
 
         internal static TextAnalyticsError ConvertToError(DocumentError error)
@@ -81,39 +80,47 @@ namespace Azure.AI.TextAnalytics
             return warnings;
         }
 
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IList<DocumentWarning> documentWarnings)
+        {
+            var warnings = new List<TextAnalyticsWarning>();
+            foreach (var warning in documentWarnings)
+            {
+                warnings.Add(new TextAnalyticsWarning(warning));
+            }
+
+            return warnings;
+        }
+
         #endregion
 
         #region DetectLanguage
 
         internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage)
         {
-            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
-            foreach (var warning in documentLanguage.Warnings)
-            {
-                warnings.Add(new TextAnalyticsWarning(warning));
-            }
+            List<TextAnalyticsWarning> warnings = ConvertToWarnings(documentLanguage.Warnings);
+
             return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
-        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionTaskResult results, IDictionary<string, int> idToIndexMap)
+        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionResult results, IDictionary<string, int> idToIndexMap)
         {
-            var detectedLanguages = new List<DetectLanguageResult>(results.Results.Errors.Count);
+            var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
 
             //Read errors
-            foreach (DocumentError error in results.Results.Errors)
+            foreach (DocumentError error in results.Errors)
             {
                 detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error)));
             }
 
             //Read languages
-            foreach (var language in results.Results.Documents)
+            foreach (var language in results.Documents)
             {
                 detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
             }
 
             detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
 
-            return new DetectLanguageResultCollection(detectedLanguages, results.Results.Statistics, results.Results.ModelVersion);
+            return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
         }
 
         #endregion

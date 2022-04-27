@@ -259,13 +259,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            int id = 0;
-            foreach (var document in documents)
-            {
-                LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
-                id++;
-                detectLanguageInputs.Documents.Add(languageInput);
-            }
+            detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -300,14 +294,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            int id = 0;
-            foreach (var document in documents)
-            {
-                LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
-                id++;
-                detectLanguageInputs.Documents.Add(languageInput);
-            }
-
+            detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
@@ -338,6 +325,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var document in documents)
             {
                 LanguageInput languageInput = new LanguageInput(document.Id, document.Text);
+                languageInput.CountryHint = document.CountryHint;
                 detectLanguageInputs.Documents.Add(languageInput);
             }
 
@@ -393,7 +381,7 @@ namespace Azure.AI.TextAnalytics
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection, map);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
                 return Response.FromValue(results, response);
             }
             catch (Exception e)
@@ -419,7 +407,7 @@ namespace Azure.AI.TextAnalytics
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection, map);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
                 return Response.FromValue(results, response);
             }
             catch (Exception e)
@@ -427,6 +415,18 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private LanguageDetectionAnalysisInput documentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        {
+            int id = 0;
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
+                id++;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
         }
 
         #endregion
