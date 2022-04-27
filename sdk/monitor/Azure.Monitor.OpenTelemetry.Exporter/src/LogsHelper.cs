@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
             {
                 int valueDepth = 1;
-                if (scope.Scope is IEnumerable<KeyValuePair<string, object>> stateDictionary)
+                if (scope.Scope is IEnumerable<KeyValuePair<string, object>>)
                 {
                     foreach (KeyValuePair<string, object> scopeItem in scope)
                     {
