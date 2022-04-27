@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.IotCentral
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _appClientDiagnostics;
-        private AppsRestOperations _appRestClient;
+        private ClientDiagnostics _iotCentralAppAppsClientDiagnostics;
+        private AppsRestOperations _iotCentralAppAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.IotCentral
         {
         }
 
-        private ClientDiagnostics AppClientDiagnostics => _appClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotCentral", AppResource.ResourceType.Namespace, Diagnostics);
-        private AppsRestOperations AppRestClient => _appRestClient ??= new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppResource.ResourceType));
+        private ClientDiagnostics IotCentralAppAppsClientDiagnostics => _iotCentralAppAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotCentral", IotCentralAppResource.ResourceType.Namespace, Diagnostics);
+        private AppsRestOperations IotCentralAppAppsRestClient => _iotCentralAppAppsRestClient ??= new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotCentralAppResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppResource> GetAppsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotCentralAppResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
                 scope.Start();
                 try
                 {
-                    var response = await AppRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.IotCentral
                     throw;
                 }
             }
-            async Task<Page<AppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotCentralAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
                 scope.Start();
                 try
                 {
-                    var response = await AppRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppResource> GetApps(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotCentralAppResource> GetIotCentralApps(CancellationToken cancellationToken = default)
         {
-            Page<AppResource> FirstPageFunc(int? pageSizeHint)
+            Page<IotCentralAppResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
                 scope.Start();
                 try
                 {
-                    var response = AppRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotCentralAppAppsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.IotCentral
                     throw;
                 }
             }
-            Page<AppResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotCentralAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
                 scope.Start();
                 try
                 {
-                    var response = AppRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotCentralAppAppsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppAvailabilityInfo>> CheckNameAvailabilityAppAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
-            using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
             scope.Start();
             try
             {
-                var response = await AppRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
+                var response = await IotCentralAppAppsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppAvailabilityInfo> CheckNameAvailabilityApp(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
-            using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
             scope.Start();
             try
             {
-                var response = AppRestClient.CheckNameAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
+                var response = IotCentralAppAppsRestClient.CheckNameAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppAvailabilityInfo>> CheckSubdomainAvailabilityAppAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
-            using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
             scope.Start();
             try
             {
-                var response = await AppRestClient.CheckSubdomainAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
+                var response = await IotCentralAppAppsRestClient.CheckSubdomainAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppAvailabilityInfo> CheckSubdomainAvailabilityApp(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
-            using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
             scope.Start();
             try
             {
-                var response = AppRestClient.CheckSubdomainAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
+                var response = IotCentralAppAppsRestClient.CheckSubdomainAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.IotCentral
         {
             async Task<Page<AppTemplate>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
                 try
                 {
-                    var response = await AppRestClient.ListTemplatesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await IotCentralAppAppsRestClient.ListTemplatesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.IotCentral
             }
             async Task<Page<AppTemplate>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
                 try
                 {
-                    var response = await AppRestClient.ListTemplatesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await IotCentralAppAppsRestClient.ListTemplatesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.IotCentral
         {
             Page<AppTemplate> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
                 try
                 {
-                    var response = AppRestClient.ListTemplates(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = IotCentralAppAppsRestClient.ListTemplates(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,11 +288,11 @@ namespace Azure.ResourceManager.IotCentral
             }
             Page<AppTemplate> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
+                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
                 try
                 {
-                    var response = AppRestClient.ListTemplatesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = IotCentralAppAppsRestClient.ListTemplatesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

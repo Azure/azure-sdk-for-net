@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
-    /// A Class representing an App along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApp method.
+    /// A Class representing an IotCentralApp along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotCentralAppResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetIotCentralAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIotCentralApp method.
     /// </summary>
-    public partial class AppResource : ArmResource
+    public partial class IotCentralAppResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="IotCentralAppResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appClientDiagnostics;
-        private readonly AppsRestOperations _appRestClient;
-        private readonly AppData _data;
+        private readonly ClientDiagnostics _iotCentralAppAppsClientDiagnostics;
+        private readonly AppsRestOperations _iotCentralAppAppsRestClient;
+        private readonly IotCentralAppData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AppResource"/> class for mocking. </summary>
-        protected AppResource()
+        /// <summary> Initializes a new instance of the <see cref="IotCentralAppResource"/> class for mocking. </summary>
+        protected IotCentralAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "IotCentralAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppResource(ArmClient client, AppData data) : this(client, data.Id)
+        internal IotCentralAppResource(ArmClient client, IotCentralAppData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotCentralAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IotCentralAppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotCentral", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appApiVersion);
-            _appRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appApiVersion);
+            _iotCentralAppAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotCentral", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string iotCentralAppAppsApiVersion);
+            _iotCentralAppAppsRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotCentralAppAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotCentral
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AppData Data
+        public virtual IotCentralAppData Data
         {
             get
             {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.IotCentral
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the App. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of IotCentralPrivateEndpointConnectionResources in the IotCentralApp. </summary>
+        /// <returns> An object representing collection of IotCentralPrivateEndpointConnectionResources and their operations over a IotCentralPrivateEndpointConnectionResource. </returns>
+        public virtual IotCentralPrivateEndpointConnectionCollection GetIotCentralPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new IotCentralPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralPrivateEndpointConnectionResource>> GetIotCentralPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetIotCentralPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,31 +121,16 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralPrivateEndpointConnectionResource> GetIotCentralPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetIotCentralPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the App. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of IotCentralPrivateLinkResources in the IotCentralApp. </summary>
+        /// <returns> An object representing collection of IotCentralPrivateLinkResources and their operations over a IotCentralPrivateLinkResource. </returns>
+        public virtual IotCentralPrivateLinkResourceCollection GetIotCentralPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PrivateLinkResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a private link resource of a IoT Central Application.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinks_Get
-        /// </summary>
-        /// <param name="groupId"> The private link resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            return await GetPrivateLinkResources().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new IotCentralPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,9 +143,24 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralPrivateLinkResource>> GetIotCentralPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinkResources().Get(groupId, cancellationToken);
+            return await GetIotCentralPrivateLinkResources().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a private link resource of a IoT Central Application.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTCentral/iotApps/{resourceName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinks_Get
+        /// </summary>
+        /// <param name="groupId"> The private link resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IotCentralPrivateLinkResource> GetIotCentralPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
+        {
+            return GetIotCentralPrivateLinkResources().Get(groupId, cancellationToken);
         }
 
         /// <summary>
@@ -169,16 +169,16 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Get");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Get");
             scope.Start();
             try
             {
-                var response = await _appRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _iotCentralAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,16 +193,16 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Get");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Get");
             scope.Start();
             try
             {
-                var response = _appRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _iotCentralAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Delete");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation(_appClientDiagnostics, Pipeline, _appRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _iotCentralAppAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Delete");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Delete");
             scope.Start();
             try
             {
-                var response = _appRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotCentralArmOperation(_appClientDiagnostics, Pipeline, _appRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _iotCentralAppAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -272,16 +272,16 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="patch"> The IoT Central application metadata and security metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, AppPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, IotCentralAppPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Update");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Update");
             scope.Start();
             try
             {
-                var response = await _appRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation(_appClientDiagnostics, Pipeline, _appRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _iotCentralAppAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -302,16 +302,16 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="patch"> The IoT Central application metadata and security metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, AppPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, IotCentralAppPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.Update");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.Update");
             scope.Start();
             try
             {
-                var response = _appRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new IotCentralArmOperation(_appClientDiagnostics, Pipeline, _appRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _iotCentralAppAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -332,20 +332,20 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AppResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.AddTag");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _iotCentralAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -363,20 +363,20 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AppResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.AddTag");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _iotCentralAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AppResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.SetTags");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.SetTags");
             scope.Start();
             try
             {
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.IotCentral
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _iotCentralAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AppResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.SetTags");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.SetTags");
             scope.Start();
             try
             {
@@ -435,8 +435,8 @@ namespace Azure.ResourceManager.IotCentral
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _iotCentralAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -453,19 +453,19 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AppResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.RemoveTag");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _iotCentralAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -482,19 +482,19 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AppResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appClientDiagnostics.CreateScope("AppResource.RemoveTag");
+            using var scope = _iotCentralAppAppsClientDiagnostics.CreateScope("IotCentralAppResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new AppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _iotCentralAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new IotCentralAppResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class AppPatch : IUtf8JsonSerializable
+    public partial class IotCentralAppPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

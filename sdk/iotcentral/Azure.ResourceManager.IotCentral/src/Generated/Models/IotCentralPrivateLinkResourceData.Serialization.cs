@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    public partial class PrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class IotCentralPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotCentral
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
+        internal static IotCentralPrivateLinkResourceData DeserializeIotCentralPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new PrivateLinkResourceData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new IotCentralPrivateLinkResourceData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

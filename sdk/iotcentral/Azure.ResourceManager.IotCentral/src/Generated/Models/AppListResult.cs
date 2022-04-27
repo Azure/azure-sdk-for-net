@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of AppListResult. </summary>
         internal AppListResult()
         {
-            Value = new ChangeTrackingList<AppData>();
+            Value = new ChangeTrackingList<IotCentralAppData>();
         }
 
         /// <summary> Initializes a new instance of AppListResult. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Central Applications. </param>
         /// <param name="value"> A list of IoT Central Applications. </param>
-        internal AppListResult(string nextLink, IReadOnlyList<AppData> value)
+        internal AppListResult(string nextLink, IReadOnlyList<IotCentralAppData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> The link used to get the next page of IoT Central Applications. </summary>
         public string NextLink { get; }
         /// <summary> A list of IoT Central Applications. </summary>
-        public IReadOnlyList<AppData> Value { get; }
+        public IReadOnlyList<IotCentralAppData> Value { get; }
     }
 }

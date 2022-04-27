@@ -13,13 +13,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotCentral.Models
 {
     /// <summary> The description of the IoT Central application. </summary>
-    public partial class AppPatch
+    public partial class IotCentralAppPatch
     {
-        /// <summary> Initializes a new instance of AppPatch. </summary>
-        public AppPatch()
+        /// <summary> Initializes a new instance of IotCentralAppPatch. </summary>
+        public IotCentralAppPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
         /// <summary> Instance tags. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Network Rule Set Properties of this IoT Central application. </summary>
         public NetworkRuleSets NetworkRuleSets { get; set; }
         /// <summary> Private endpoint connections created on this IoT Central application. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

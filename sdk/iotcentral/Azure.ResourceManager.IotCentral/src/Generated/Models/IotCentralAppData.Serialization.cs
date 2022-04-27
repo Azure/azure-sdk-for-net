@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    public partial class AppData : IUtf8JsonSerializable
+    public partial class IotCentralAppData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotCentral
             writer.WriteEndObject();
         }
 
-        internal static AppData DeserializeAppData(JsonElement element)
+        internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element)
         {
             AppSkuInfo sku = default;
             Optional<SystemAssignedServiceIdentity> identity = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotCentral
             Optional<AppState> state = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<NetworkRuleSets> networkRuleSets = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.IotCentral
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<IotCentralPrivateEndpointConnectionData> array = new List<IotCentralPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new AppData(id, name, type, systemData, tags, location, sku, identity, Optional.ToNullable(provisioningState), applicationId.Value, displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections));
+            return new IotCentralAppData(id, name, type, systemData, tags, location, sku, identity, Optional.ToNullable(provisioningState), applicationId.Value, displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

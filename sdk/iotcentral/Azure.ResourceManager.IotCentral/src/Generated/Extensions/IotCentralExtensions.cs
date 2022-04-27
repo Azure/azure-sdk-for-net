@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppResource> GetAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAppsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotCentralAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppResource> GetApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotCentralAppResource> GetIotCentralApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetApps(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotCentralApps(cancellationToken);
         }
 
         /// <summary>
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.IotCentral
             );
         }
 
-        /// <summary> Gets a collection of AppResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IotCentralAppResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AppResources and their operations over a AppResource. </returns>
-        public static AppCollection GetApps(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IotCentralAppResources and their operations over a IotCentralAppResource. </returns>
+        public static IotCentralAppCollection GetIotCentralApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetApps();
+            return GetExtensionClient(resourceGroupResource).GetIotCentralApps();
         }
 
         /// <summary>
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AppResource>> GetAppAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IotCentralAppResource>> GetIotCentralAppAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApps().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIotCentralApps().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -188,63 +188,63 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AppResource> GetApp(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<IotCentralAppResource> GetIotCentralApp(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApps().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetIotCentralApps().Get(resourceName, cancellationToken);
         }
 
-        #region AppResource
+        #region IotCentralAppResource
         /// <summary>
-        /// Gets an object representing an <see cref="AppResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppResource.CreateResourceIdentifier" /> to create an <see cref="AppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralAppResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppResource" /> object. </returns>
-        public static AppResource GetAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotCentralAppResource" /> object. </returns>
+        public static IotCentralAppResource GetIotCentralAppResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AppResource.ValidateResourceId(id);
-                return new AppResource(client, id);
+                IotCentralAppResource.ValidateResourceId(id);
+                return new IotCentralAppResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region IotCentralPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotCentralPrivateEndpointConnectionResource" /> object. </returns>
+        public static IotCentralPrivateEndpointConnectionResource GetIotCentralPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                IotCentralPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new IotCentralPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateLinkResource
+        #region IotCentralPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotCentralPrivateLinkResource" /> object. </returns>
+        public static IotCentralPrivateLinkResource GetIotCentralPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkResource.ValidateResourceId(id);
-                return new PrivateLinkResource(client, id);
+                IotCentralPrivateLinkResource.ValidateResourceId(id);
+                return new IotCentralPrivateLinkResource(client, id);
             }
             );
         }

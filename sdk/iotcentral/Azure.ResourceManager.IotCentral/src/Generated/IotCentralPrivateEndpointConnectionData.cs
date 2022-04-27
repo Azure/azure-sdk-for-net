@@ -13,16 +13,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : ResourceData
+    /// <summary> A class representing the IotCentralPrivateEndpointConnection data model. </summary>
+    public partial class IotCentralPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
-        public PrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
+        public IotCentralPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal IotCentralPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, IotCentralPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IotCentralPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.IotCentral
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public IotCentralPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public IotCentralPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

@@ -35,4 +35,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+directive:
+  - rename-model:
+      from: App
+      to: IotCentralApp
 ```

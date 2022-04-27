@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the App data model. </summary>
-    public partial class AppData : TrackedResourceData
+    /// <summary> A class representing the IotCentralApp data model. </summary>
+    public partial class IotCentralAppData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppData. </summary>
+        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> A valid instance SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public AppData(AzureLocation location, AppSkuInfo sku) : base(location)
+        public IotCentralAppData(AzureLocation location, AppSkuInfo sku) : base(location)
         {
             if (sku == null)
             {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotCentral
             }
 
             Sku = sku;
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AppData. </summary>
+        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="publicNetworkAccess"> Whether requests from the public network are allowed. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
-        internal AppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppSkuInfo sku, SystemAssignedServiceIdentity identity, ProvisioningState? provisioningState, string applicationId, string displayName, string subdomain, string template, AppState? state, PublicNetworkAccess? publicNetworkAccess, NetworkRuleSets networkRuleSets, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal IotCentralAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppSkuInfo sku, SystemAssignedServiceIdentity identity, ProvisioningState? provisioningState, string applicationId, string displayName, string subdomain, string template, AppState? state, PublicNetworkAccess? publicNetworkAccess, NetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.IotCentral
         /// <summary> Network Rule Set Properties of this IoT Central application. </summary>
         public NetworkRuleSets NetworkRuleSets { get; set; }
         /// <summary> Private endpoint connections created on this IoT Central application. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

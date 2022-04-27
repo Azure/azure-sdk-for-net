@@ -12,11 +12,11 @@ using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    internal partial class PrivateLinkResourceListResult
+    internal partial class IotCentralPrivateEndpointConnectionListResult
     {
-        internal static PrivateLinkResourceListResult DeserializePrivateLinkResourceListResult(JsonElement element)
+        internal static IotCentralPrivateEndpointConnectionListResult DeserializeIotCentralPrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResourceData> array = new List<PrivateLinkResourceData>();
+                    List<IotCentralPrivateEndpointConnectionData> array = new List<IotCentralPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResourceData.DeserializePrivateLinkResourceData(item));
+                        array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new PrivateLinkResourceListResult(Optional.ToList(value));
+            return new IotCentralPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

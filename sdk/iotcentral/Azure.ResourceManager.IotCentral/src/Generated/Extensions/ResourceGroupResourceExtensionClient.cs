@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.IotCentral
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AppResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AppResources and their operations over a AppResource. </returns>
-        public virtual AppCollection GetApps()
+        /// <summary> Gets a collection of IotCentralAppResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IotCentralAppResources and their operations over a IotCentralAppResource. </returns>
+        public virtual IotCentralAppCollection GetIotCentralApps()
         {
-            return GetCachedClient(Client => new AppCollection(Client, Id));
+            return GetCachedClient(Client => new IotCentralAppCollection(Client, Id));
         }
     }
 }

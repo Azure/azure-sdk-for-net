@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
-    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="AppResource" />.
-    /// To get a <see cref="PrivateLinkResourceCollection" /> instance call the GetPrivateLinkResources method from an instance of <see cref="AppResource" />.
+    /// A class representing a collection of <see cref="IotCentralPrivateLinkResource" /> and their operations.
+    /// Each <see cref="IotCentralPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="IotCentralAppResource" />.
+    /// To get an <see cref="IotCentralPrivateLinkResourceCollection" /> instance call the GetIotCentralPrivateLinkResources method from an instance of <see cref="IotCentralAppResource" />.
     /// </summary>
-    public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
+    public partial class IotCentralPrivateLinkResourceCollection : ArmCollection, IEnumerable<IotCentralPrivateLinkResource>, IAsyncEnumerable<IotCentralPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _privateLinkResourcePrivateLinksClientDiagnostics;
-        private readonly PrivateLinksRestOperations _privateLinkResourcePrivateLinksRestClient;
+        private readonly ClientDiagnostics _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics;
+        private readonly PrivateLinksRestOperations _iotCentralPrivateLinkResourcePrivateLinksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResourceCollection"/> class for mocking. </summary>
-        protected PrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateLinkResourceCollection"/> class for mocking. </summary>
+        protected IotCentralPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IotCentralPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkResourcePrivateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotCentral", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourcePrivateLinksApiVersion);
-            _privateLinkResourcePrivateLinksRestClient = new PrivateLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourcePrivateLinksApiVersion);
+            _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotCentral", IotCentralPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(IotCentralPrivateLinkResource.ResourceType, out string iotCentralPrivateLinkResourcePrivateLinksApiVersion);
+            _iotCentralPrivateLinkResourcePrivateLinksRestClient = new PrivateLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotCentralPrivateLinkResourcePrivateLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppResource.ResourceType), nameof(id));
+            if (id.ResourceType != IotCentralAppResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotCentralAppResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralPrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcePrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
+                var response = await _iotCentralPrivateLinkResourcePrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<PrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralPrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcePrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
+                var response = _iotCentralPrivateLinkResourcePrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: PrivateLinks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotCentralPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotCentralPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateLinkResourcePrivateLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _iotCentralPrivateLinkResourcePrivateLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: PrivateLinks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotCentralPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<IotCentralPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateLinkResourcePrivateLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Client, value)), null, response.GetRawResponse());
+                    var response = _iotCentralPrivateLinkResourcePrivateLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcePrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _iotCentralPrivateLinkResourcePrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.IotCentral
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _privateLinkResourcePrivateLinksClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcePrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                var response = _iotCentralPrivateLinkResourcePrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.IotCentral
             }
         }
 
-        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
+        IEnumerator<IotCentralPrivateLinkResource> IEnumerable<IotCentralPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.IotCentral
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<IotCentralPrivateLinkResource> IAsyncEnumerable<IotCentralPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

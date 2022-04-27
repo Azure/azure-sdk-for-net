@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         internal static AppListResult DeserializeAppListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AppData>> value = default;
+            Optional<IReadOnlyList<IotCentralAppData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.IotCentral.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppData> array = new List<AppData>();
+                    List<IotCentralAppData> array = new List<IotCentralAppData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppData.DeserializeAppData(item));
+                        array.Add(IotCentralAppData.DeserializeIotCentralAppData(item));
                     }
                     value = array;
                     continue;
