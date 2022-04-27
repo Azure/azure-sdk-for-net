@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.AI.TextAnalytics.Legacy.Tests
+namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientMockTests : ClientTestBase
     {
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
+            var options = new TextAnalyticsClientOptions()
             {
                 Transport = transport
             };
@@ -35,6 +35,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
+        [Ignore ("Not implemented yet")]
         public async Task RecognizeEntitiesResultsSorted_NoErrors()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
@@ -107,6 +108,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task RecognizeEntitiesResultsSorted_WithErrors()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
@@ -210,19 +212,22 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                    {
-                        ""id"": ""1"",
-                        ""detectedLanguage"": {
-                            ""name"": null,
-                            ""iso6391Name"": ""en"",
-                            ""confidenceScore"": 1
-                            },
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -07-01""
+                    ""kind"": ""LanguageDetectionResults"",
+                    ""results"": {
+                        ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""detectedLanguage"": {
+                                ""name"": null,
+                                ""iso6391Name"": ""en"",
+                                ""confidenceScore"": 1
+                                },
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -07-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -250,19 +255,22 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                    {
-                        ""id"": ""1"",
-                        ""detectedLanguage"": {
-                            ""name"": ""English"",
-                            ""iso6391Name"": null,
-                            ""confidenceScore"": 1
-                            },
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -07-01""
+                    ""kind"": ""LanguageDetectionResults"",
+                    ""results"": {
+                        ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""detectedLanguage"": {
+                                ""name"": ""English"",
+                                ""iso6391Name"": null,
+                                ""confidenceScore"": 1
+                                },
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -07-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -288,53 +296,53 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
         // We want to verify behavior is the same after code auto generated.
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentNullText()
         {
-            //using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-            //    {
-            //        ""documents"": [
-            //            {
-            //                ""id"": ""1"",
-            //                ""sentiment"": ""neutral"",
-            //                ""confidenceScores"": {
-            //                    ""positive"": 0.1,
-            //                    ""neutral"": 0.88,
-            //                    ""negative"": 0.02
-            //                },
-            //                ""sentences"": [
-            //                    {
-            //                    ""sentiment"": ""neutral"",
-            //                        ""confidenceScores"": {
-            //                        ""positive"": 0.1,
-            //                            ""neutral"": 0.88,
-            //                            ""negative"": 0.02
-            //                        },
-            //                        ""offset"": 0,
-            //                        ""length"": 18,
-            //                        ""text"": null
-            //                    }
-            //                ],
-            //                ""warnings"": []
-            //            }
-            //        ],
-            //        ""errors"": [],
-            //        ""modelVersion"": ""2020 -04-01""
-            //    }"));
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""neutral"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": null
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
 
-            //var mockResponse = new MockResponse(200);
-            //mockResponse.ContentStream = stream;
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
 
-            //var mockTransport = new MockTransport(new[] { mockResponse });
-            //var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
 
-            //DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
 
-            //Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public void AnalyzeSentimentNotSupportedSentenceSentiment()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
@@ -378,169 +386,168 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentMixedSentenceSentiment()
         {
-            //using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-            //    {
-            //        ""documents"": [
-            //            {
-            //                ""id"": ""1"",
-            //                ""sentiment"": ""neutral"",
-            //                ""confidenceScores"": {
-            //                    ""positive"": 0.1,
-            //                    ""neutral"": 0.88,
-            //                    ""negative"": 0.02
-            //                },
-            //                ""sentences"": [
-            //                    {
-            //                    ""sentiment"": ""mixed"",
-            //                        ""confidenceScores"": {
-            //                        ""positive"": 0.1,
-            //                            ""neutral"": 0.88,
-            //                            ""negative"": 0.02
-            //                        },
-            //                        ""offset"": 0,
-            //                        ""length"": 18,
-            //                        ""text"": ""today is a hot day""
-            //                    }
-            //                ],
-            //                ""warnings"": []
-            //            }
-            //        ],
-            //        ""errors"": [],
-            //        ""modelVersion"": ""2020 -04-01""
-            //    }"));
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""neutral"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.1,
+                                ""neutral"": 0.88,
+                                ""negative"": 0.02
+                            },
+                            ""sentences"": [
+                                {
+                                ""sentiment"": ""mixed"",
+                                    ""confidenceScores"": {
+                                    ""positive"": 0.1,
+                                        ""neutral"": 0.88,
+                                        ""negative"": 0.02
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 18,
+                                    ""text"": ""today is a hot day""
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
 
-            //var mockResponse = new MockResponse(200);
-            //mockResponse.ContentStream = stream;
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
 
-            //var mockTransport = new MockTransport(new[] { mockResponse });
-            //var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
 
-            //DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
 
-            //Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentAssessmentInOtherSentence()
         {
-            //using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
-            //    {
-            //        ""documents"": [
-            //            {
-            //                ""id"": ""1"",
-            //                ""sentiment"": ""positive"",
-            //                ""confidenceScores"": {
-            //                    ""positive"": 0.5,
-            //                    ""neutral"": 0.0,
-            //                    ""negative"": 0.5
-            //                },
-            //                ""sentences"": [
-            //                    {
-            //                        ""sentiment"": ""positive"",
-            //                        ""confidenceScores"": {
-            //                            ""positive"": 1.0,
-            //                            ""neutral"": 0.0,
-            //                            ""negative"": 0.0
-            //                        },
-            //                        ""offset"": 0,
-            //                        ""length"": 30,
-            //                        ""text"": ""The park was clean."",
-            //                        ""targets"": [
-            //                            {
-            //                                ""sentiment"": ""positive"",
-            //                                ""confidenceScores"": {
-            //                                    ""positive"": 1.0,
-            //                                    ""negative"": 0.0
-            //                                },
-            //                                ""offset"": 4,
-            //                                ""length"": 4,
-            //                                ""text"": ""park"",
-            //                                ""relations"": [
-            //                                    {
-            //                                        ""relationType"": ""assessment"",
-            //                                        ""ref"": ""#/documents/0/sentences/0/assessments/0""
-            //                                    }
-            //                                ]
-            //                            }
-            //                        ],
-            //                        ""assessments"": [
-            //                            {
-            //                                ""sentiment"": ""positive"",
-            //                                ""confidenceScores"": {
-            //                                    ""positive"": 1.0,
-            //                                    ""negative"": 0.0
-            //                                },
-            //                                ""offset"": 13,
-            //                                ""length"": 5,
-            //                                ""text"": ""clean"",
-            //                                ""isNegated"": false
-            //                            }
-            //                        ]
-            //                    },
-            //                    {
-            //                        ""sentiment"": ""positive"",
-            //                        ""confidenceScores"": {
-            //                            ""positive"": 0.0,
-            //                            ""neutral"": 0.0,
-            //                            ""negative"": 1.0
-            //                        },
-            //                        ""offset"": 31,
-            //                        ""length"": 23,
-            //                        ""text"": ""It was clean."",
-            //                        ""targets"": [
-            //                            {
-            //                                ""sentiment"": ""positive"",
-            //                                ""confidenceScores"": {
-            //                                    ""positive"": 0.0,
-            //                                    ""negative"": 1.0
-            //                                },
-            //                                ""offset"": 35,
-            //                                ""length"": 4,
-            //                                ""text"": ""park"",
-            //                                ""relations"": [
-            //                                    {
-            //                                        ""relationType"": ""assessment"",
-            //                                        ""ref"": ""#/documents/0/sentences/0/assessments/0""
-            //                                    }
-            //                                ]
-            //                            }
-            //                        ],
-            //                        ""assessments"": []
-            //                    }
-            //                ],
-            //                ""warnings"": []
-            //            }
-            //        ],
-            //        ""errors"": [],
-            //        ""modelVersion"": ""2020-04-01""
-            //    }"));
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""positive"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.5,
+                                ""neutral"": 0.0,
+                                ""negative"": 0.5
+                            },
+                            ""sentences"": [
+                                {
+                                    ""sentiment"": ""positive"",
+                                    ""confidenceScores"": {
+                                        ""positive"": 1.0,
+                                        ""neutral"": 0.0,
+                                        ""negative"": 0.0
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 30,
+                                    ""text"": ""The park was clean."",
+                                    ""targets"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 1.0,
+                                                ""negative"": 0.0
+                                            },
+                                            ""offset"": 4,
+                                            ""length"": 4,
+                                            ""text"": ""park"",
+                                            ""relations"": [
+                                                {
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    ""assessments"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 1.0,
+                                                ""negative"": 0.0
+                                            },
+                                            ""offset"": 13,
+                                            ""length"": 5,
+                                            ""text"": ""clean"",
+                                            ""isNegated"": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    ""sentiment"": ""positive"",
+                                    ""confidenceScores"": {
+                                        ""positive"": 0.0,
+                                        ""neutral"": 0.0,
+                                        ""negative"": 1.0
+                                    },
+                                    ""offset"": 31,
+                                    ""length"": 23,
+                                    ""text"": ""It was clean."",
+                                    ""targets"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 0.0,
+                                                ""negative"": 1.0
+                                            },
+                                            ""offset"": 35,
+                                            ""length"": 4,
+                                            ""text"": ""park"",
+                                            ""relations"": [
+                                                {
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    ""assessments"": []
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020-04-01""
+                }"));
 
-            //var mockResponse = new MockResponse(200);
-            //mockResponse.ContentStream = stream;
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
 
-            //var mockTransport = new MockTransport(new[] { mockResponse });
-            //var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
 
-            //DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
-            //SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
-            //Assert.AreEqual("park", opinionS1.Target.Text);
-            //Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
-            //Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
+            SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS1.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
 
-            //SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
-            //Assert.AreEqual("park", opinionS2.Target.Text);
-            //Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
-            //Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
-            await Task.Yield();
-            throw new NotImplementedException();
+            SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS2.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task RecognizeEntitiesNullCategory()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
@@ -576,6 +583,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task RecognizeLinkedEntitiesNullText()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
@@ -621,6 +629,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
+        [Ignore("Not implemented yet")]
         public async Task DeserializeTextAnalyticsError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"

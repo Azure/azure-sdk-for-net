@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.TextAnalytics.Tests
+namespace Azure.AI.TextAnalytics.Legacy.Tests
 {
     public class OperationsMockTests : ClientTestBase
     {
