@@ -157,7 +157,7 @@ namespace Azure.AI.TextAnalytics
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
@@ -211,15 +211,14 @@ namespace Azure.AI.TextAnalytics
                 var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, cancellationToken: cancellationToken);
 
-                var languageDetection = result.Value as LanguageDetectionTaskResult;
-                Debug.Assert(languageDetection != null);
+                var languageDetection = (LanguageDetectionTaskResult)result.Value;
                 Response response = result.GetRawResponse();
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault());
-                    throw  _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
@@ -258,12 +257,12 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //LanguageDetectionAnalysisInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
-            //return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,11 +292,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //LanguageDetectionAnalysisInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
-            //return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -321,12 +320,12 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //LanguageDetectionAnalysisInput detectLanguageInputs = ConvertToLanguageInputs(documents);
-            //return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -350,14 +349,14 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //LanguageDetectionAnalysisInput detectLanguageInputs = ConvertToLanguageInputs(documents);
-            //return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
-        // Overload Method for New Swagger
         private async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -365,16 +364,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput };
-                analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
-                analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection, map);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
                 return Response.FromValue(results, response);
             }
             catch (Exception e)
@@ -384,7 +383,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        // Overload Method for New Swagger
         private Response<DetectLanguageResultCollection> DetectLanguageBatch(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -392,16 +390,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput };
-                analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
-                analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection, map);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
                 return Response.FromValue(results, response);
             }
             catch (Exception e)
@@ -409,6 +407,29 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        {
+            int id = 0;
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
+                id++;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
+        }
+
+        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents, LanguageDetectionAnalysisInput detectLanguageInputs)
+        {
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = new LanguageInput (document.Id, document.Text);
+                languageInput.CountryHint = document.CountryHint;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
         }
 
         #endregion
@@ -465,7 +486,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -528,7 +549,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -803,7 +824,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -873,7 +894,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -2400,12 +2421,6 @@ namespace Azure.AI.TextAnalytics
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
-
-        //private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
-        //    => new LanguageBatchInput(documents.Select((document, i) => ConvertToLanguageInput(document, countryHint, i)).ToList());
-
-        //private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
-        //    => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint }).ToList());
 
         private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error)
         {
