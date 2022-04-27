@@ -95,29 +95,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
             {
                 int valueDepth = 1;
-                if (scope.Scope is IEnumerable<KeyValuePair<string, object>>)
+                foreach (KeyValuePair<string, object> scopeItem in scope)
                 {
-                    foreach (KeyValuePair<string, object> scopeItem in scope)
+                    if (string.IsNullOrEmpty(scopeItem.Key))
                     {
-                        if (scopeItem.Key == "{OriginalFormat}")
-                        {
-                            properties.Add($"OriginalFormatScope_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
-                        }
-                        else if (!properties.TryGetValue(scopeItem.Key, out _))
-                        {
-                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
-                        }
-                        else
-                        {
-                            properties.Add($"{scopeItem.Key}_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}_{DepthCache.GetOrAdd(valueDepth, ConvertDepthToStringRef)}", Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
-                            valueDepth++;
-                        }
+                        builder ??= new StringBuilder();
+                        builder.Append(" => ").Append(scope.Scope);
                     }
-                }
-                else
-                {
-                    builder ??= new StringBuilder();
-                    builder.Append(" => ").Append(scope.Scope);
+                    else if (scopeItem.Key == "{OriginalFormat}")
+                    {
+                        properties.Add($"OriginalFormatScope_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                    }
+                    else if (!properties.TryGetValue(scopeItem.Key, out _))
+                    {
+                        properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        properties.Add($"{scopeItem.Key}_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}_{DepthCache.GetOrAdd(valueDepth, ConvertDepthToStringRef)}",
+                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                        valueDepth++;
+                    }
                 }
 
                 originalScopeDepth++;
