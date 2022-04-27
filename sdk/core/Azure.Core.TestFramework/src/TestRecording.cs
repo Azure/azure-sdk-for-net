@@ -118,11 +118,6 @@ namespace Azure.Core.TestFramework
                     RecordingId);
             }
 
-            foreach (string jsonPath in _recordedTestBase.JsonPathSanitizers)
-            {
-                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = jsonPath }, RecordingId);
-            }
-
             foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
             {
                 await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);
@@ -138,6 +133,11 @@ namespace Azure.Core.TestFramework
             foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
+            }
+
+            foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
+            {
+                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
             }
 
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
@@ -241,12 +241,17 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-        public async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync(bool save)
         {
             if (Mode == RecordedTestMode.Record)
             {
-                await _proxy.Client.StopRecordAsync(RecordingId, Variables);
+                await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsync(true);
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

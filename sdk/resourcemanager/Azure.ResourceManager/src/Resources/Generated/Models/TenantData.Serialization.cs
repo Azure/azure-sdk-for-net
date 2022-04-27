@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         internal static TenantData DeserializeTenantData(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<TenantCategory> tenantCategory = default;
             Optional<string> country = default;
             Optional<string> countryCode = default;
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<string>> domains = default;
             Optional<string> defaultDomain = default;
             Optional<string> tenantType = default;
-            Optional<string> tenantBrandingLogoUrl = default;
+            Optional<Uri> tenantBrandingLogoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -35,7 +36,12 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantCategory"))
@@ -90,11 +96,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("tenantBrandingLogoUrl"))
                 {
-                    tenantBrandingLogoUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tenantBrandingLogoUrl = null;
+                        continue;
+                    }
+                    tenantBrandingLogoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new TenantData(id.Value, tenantId.Value, Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value);
+            return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value);
         }
     }
 }

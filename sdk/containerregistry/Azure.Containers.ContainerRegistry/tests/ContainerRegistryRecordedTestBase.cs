@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Azure.Management.ContainerRegistry;
@@ -67,6 +68,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(new ContainerRegistryClient(
                     new Uri(endpoint),
+                    InstrumentClientOptions(new ContainerRegistryClientOptions()
+                    {
+                        Audience = audience
+                    })
+                ));
+        }
+        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            Uri authorityHost = GetAuthorityHost(endpoint);
+            ContainerRegistryAudience audience = GetAudience(authorityHost);
+
+            return InstrumentClient(new ContainerRegistryBlobClient(
+                    new Uri(endpoint),
+                    TestEnvironment.Credential,
+                    repository,
                     InstrumentClientOptions(new ContainerRegistryClientOptions()
                     {
                         Audience = audience

@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="enabled">The property to decide policy is enabled or
         /// not</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public SnapshotPolicy(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SnapshotPolicy(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             MonthlySchedule = monthlySchedule;
             Enabled = enabled;
             ProvisioningState = provisioningState;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -155,6 +158,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -12,38 +12,32 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     internal partial class TemplateSpecVersionsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of TemplateSpecVersionsRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public TemplateSpecVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public TemplateSpecVersionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-05-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +57,9 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(templateSpecVersionModel);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -74,33 +68,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
+        /// <param name="data"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public async Task<Response<TemplateSpecVersionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<TemplateSpecVersionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
-            if (templateSpecVersionModel == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersionModel));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionModel);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -113,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -122,33 +102,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="templateSpecVersionModel"> Template Spec Version supplied to the operation. </param>
+        /// <param name="data"> Template Spec Version supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public Response<TemplateSpecVersionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<TemplateSpecVersionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
-            if (templateSpecVersionModel == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersionModel));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionModel);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -161,11 +127,11 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,14 +149,11 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (options != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(options);
-                request.Content = content;
-            }
-            message.SetProperty("SDKUserAgent", _userAgent);
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -199,29 +162,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
+        /// <param name="patch"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
-        public async Task<Response<TemplateSpecVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<TemplateSpecVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -233,7 +186,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -242,29 +195,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
-        /// <param name="options"> Template Spec Version resource with the tags to be updated. </param>
+        /// <param name="patch"> Template Spec Version resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
-        public Response<TemplateSpecVersionData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/>, <paramref name="templateSpecVersion"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<TemplateSpecVersionData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -276,11 +219,11 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -298,7 +241,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -309,24 +252,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -342,7 +274,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((TemplateSpecVersionData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -353,24 +285,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionData> Get(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             _pipeline.Send(message, cancellationToken);
@@ -386,11 +307,11 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((TemplateSpecVersionData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -408,7 +329,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -419,24 +340,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -446,7 +356,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -457,24 +367,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecVersion == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             _pipeline.Send(message, cancellationToken);
@@ -484,11 +383,11 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -505,7 +404,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -515,20 +414,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,7 +433,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -552,20 +443,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionsListResult> List(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
@@ -579,11 +462,11 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -593,7 +476,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -604,24 +487,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -635,7 +507,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -646,24 +518,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
@@ -677,7 +538,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

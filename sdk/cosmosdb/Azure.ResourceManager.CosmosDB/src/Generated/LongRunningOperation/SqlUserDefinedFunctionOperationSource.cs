@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class SqlUserDefinedFunctionOperationSource : IOperationSource<SqlUserDefinedFunction>
+    internal class SqlUserDefinedFunctionOperationSource : IOperationSource<SqlUserDefinedFunctionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        SqlUserDefinedFunction IOperationSource<SqlUserDefinedFunction>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlUserDefinedFunctionResource IOperationSource<SqlUserDefinedFunctionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
-            return new SqlUserDefinedFunction(_client, data);
+            return new SqlUserDefinedFunctionResource(_client, data);
         }
 
-        async ValueTask<SqlUserDefinedFunction> IOperationSource<SqlUserDefinedFunction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlUserDefinedFunctionResource> IOperationSource<SqlUserDefinedFunctionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
-            return new SqlUserDefinedFunction(_client, data);
+            return new SqlUserDefinedFunctionResource(_client, data);
         }
     }
 }

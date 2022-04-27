@@ -54,10 +54,12 @@ namespace Azure.Data.Tables
     }
     public partial class TableClientOptions : Azure.Core.ClientOptions
     {
-        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2019_02_02) { }
+        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2020_12_06) { }
+        public bool EnableTenantDiscovery { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
+            V2020_12_06 = 2,
         }
     }
     public sealed partial class TableEntity : Azure.Data.Tables.ITableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable

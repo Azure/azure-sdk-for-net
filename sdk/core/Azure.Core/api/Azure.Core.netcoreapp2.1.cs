@@ -18,6 +18,7 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureKeyCredential
@@ -189,11 +190,14 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : Azure.RequestOptions
+    public partial class RequestContext
     {
         public RequestContext() { }
-        public RequestContext(Azure.RequestOptions options) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
+        public void AddClassifier(int statusCode, bool isError) { }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -208,16 +212,6 @@ namespace Azure
         public string? ErrorCode { get { throw null; } }
         public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-    }
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected RequestOptions(Azure.RequestOptions options) { }
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
-        public void AddClassifier(int statusCode, bool isError) { }
-        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
     }
     public abstract partial class Response : System.IDisposable
     {
@@ -262,6 +256,11 @@ namespace Azure
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool IsRunningSynchronously { get { throw null; } }
     }
+    public enum WaitUntil
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace Azure.Core
 {
@@ -293,13 +292,19 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CanadaEast { get { throw null; } }
         public static Azure.Core.AzureLocation CentralIndia { get { throw null; } }
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS2 { get { throw null; } }
         public static Azure.Core.AzureLocation FranceCentral { get { throw null; } }
         public static Azure.Core.AzureLocation FranceSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyCentral { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
@@ -308,6 +313,7 @@ namespace Azure.Core
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -320,6 +326,12 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
         public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
         public static Azure.Core.AzureLocation UKWest { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation USDoDEast { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovArizona { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovIowa { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovTexas { get { throw null; } }
+        public static Azure.Core.AzureLocation USGovVirginia { get { throw null; } }
         public static Azure.Core.AzureLocation WestCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation WestEurope { get { throw null; } }
         public static Azure.Core.AzureLocation WestIndia { get { throw null; } }
@@ -339,6 +351,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -369,11 +382,6 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CoreResponseClassifier : Azure.Core.ResponseClassifier
-    {
-        public CoreResponseClassifier(System.ReadOnlySpan<int> nonErrors) { }
-        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
-    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -381,7 +389,7 @@ namespace Azure.Core
     }
     public partial class DiagnosticsOptions
     {
-        internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
@@ -391,6 +399,7 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
+        public bool SuppressNestedClientSpans { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
@@ -640,7 +649,20 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
+    {
+        public StatusCodeClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public override bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+    }
     public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
+    public partial class TelemetryDetails
+    {
+        public TelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public void Apply(Azure.Core.HttpMessage message) { }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -891,10 +913,6 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public static partial class HttpMessageExtensions
-    {
-        public static void SetUserAgentString(this Azure.Core.HttpMessage message, Azure.Core.Pipeline.UserAgentValue userAgentValue) { }
-    }
     public partial class HttpPipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
@@ -951,12 +969,6 @@ namespace Azure.Core.Pipeline
         public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
     }
-    public partial class UserAgentValue
-    {
-        public UserAgentValue(System.Type type, string? applicationId = null) { }
-        public static Azure.Core.Pipeline.UserAgentValue FromType<T>(string? applicationId = null) { throw null; }
-        public override string ToString() { throw null; }
-    }
 }
 namespace Azure.Core.Serialization
 {
@@ -1010,5 +1022,14 @@ namespace Azure.Messaging
     {
         Binary = 0,
         Json = 1,
+    }
+    public partial class MessageContent
+    {
+        public MessageContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }

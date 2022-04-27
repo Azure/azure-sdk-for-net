@@ -24,9 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord);
-                telemetryItem.InstrumentationKey = instrumentationKey;
-                telemetryItem.SetResource(roleName, roleInstance);
+                telemetryItem = new TelemetryItem(logRecord, roleName, roleInstance, instrumentationKey);
                 if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase

@@ -3,7 +3,7 @@
 
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// Previous info for Change Feed Event.
@@ -25,12 +25,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// Blob version.
         /// </summary>
-        public string BlobVersion { get; internal set; }
+        public string NewBlobVersion { get; internal set; }
 
         /// <summary>
         /// Last version.
         /// </summary>
-        public string LastVersion { get; internal set; }
+        public string OldBlobVersion { get; internal set; }
 
         /// <summary>
         /// Previous Access Tier.

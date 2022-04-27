@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A web application firewall rule set. </summary>
-    public partial class ApplicationGatewayFirewallRuleSet : Resource
+    public partial class ApplicationGatewayFirewallRuleSet : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         public ApplicationGatewayFirewallRuleSet()
@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="provisioningState"> The provisioning state of the web application firewall rule set. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(string id, string name, string type, string location, IDictionary<string, string> tags, ProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups) : base(id, name, type, location, tags)
+        internal ApplicationGatewayFirewallRuleSet(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups) : base(id, name, resourceType, location, tags)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;

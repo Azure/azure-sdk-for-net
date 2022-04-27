@@ -656,6 +656,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task QueueWithSessions(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage msg,
+                string sessionId,
                 ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
@@ -663,6 +664,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 logger.LogInformation(
                     $"DrainModeValidationFunctions.QueueWithSessions: message data {msg.Body} with session id {msg.SessionId}");
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
+                Assert.AreEqual(msg.SessionId, sessionId);
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
@@ -696,7 +698,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task QueueWithSessionsBatch(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage[] array,
-                ServiceBusMessageActions messageActions,
+                string[] sessionIdArray,
+                ServiceBusSessionMessageActions sessionActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -707,9 +710,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellation(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
+                int index = 0;
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageActions.CompleteMessageAsync(msg);
+                    Assert.AreEqual(msg.SessionId, sessionIdArray[index++]);
+                    // validate that manual lock renewal works
+                    var initialLockedUntil = sessionActions.SessionLockedUntil;
+                    await sessionActions.RenewSessionLockAsync();
+                    Assert.Greater(sessionActions.SessionLockedUntil, initialLockedUntil);
+
+                    await sessionActions.CompleteMessageAsync(msg);
                 }
 
                 _drainValidationPostDelay.Set();

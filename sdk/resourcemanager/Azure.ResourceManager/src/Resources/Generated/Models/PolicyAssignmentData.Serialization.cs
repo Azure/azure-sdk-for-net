@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -40,11 +41,11 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("policyDefinitionId");
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsCollectionDefined(NotScopes))
+            if (Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("notScopes");
                 writer.WriteStartArray();
-                foreach (var item in NotScopes)
+                foreach (var item in ExcludedScopes)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -69,7 +70,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnforcementMode))
             {
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicyAssignmentData DeserializePolicyAssignmentData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<SystemAssignedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -102,16 +107,21 @@ namespace Azure.ResourceManager.Resources
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
             Optional<IList<string>> notScopes = default;
-            Optional<IDictionary<string, ParameterValuesValue>> parameters = default;
+            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> description = default;
-            Optional<object> metadata = default;
+            Optional<BinaryData> metadata = default;
             Optional<EnforcementMode> enforcementMode = default;
             Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -190,10 +200,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                            Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValuesValue.DeserializeParameterValuesValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -210,7 +220,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enforcementMode"))
@@ -242,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyAssignmentData(id, name, type, systemData, location.Value, identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
+            return new PolicyAssignmentData(id, name, type, systemData, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
         }
     }
 }

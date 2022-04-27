@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class MhsmPrivateLinkResourceListResult
+    internal partial class MhsmPrivateLinkResourceListResult
     {
         internal static MhsmPrivateLinkResourceListResult DeserializeMhsmPrivateLinkResourceListResult(JsonElement element)
         {

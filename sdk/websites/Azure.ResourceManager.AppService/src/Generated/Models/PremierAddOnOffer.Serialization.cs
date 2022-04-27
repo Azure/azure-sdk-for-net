@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -53,15 +54,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("webHostingPlanRestrictions");
                 writer.WriteStringValue(WebHostingPlanRestrictions.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PrivacyPolicyUrl))
+            if (Optional.IsDefined(PrivacyPolicyUri))
             {
                 writer.WritePropertyName("privacyPolicyUrl");
-                writer.WriteStringValue(PrivacyPolicyUrl);
+                writer.WriteStringValue(PrivacyPolicyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LegalTermsUrl))
+            if (Optional.IsDefined(LegalTermsUri))
             {
                 writer.WritePropertyName("legalTermsUrl");
-                writer.WriteStringValue(LegalTermsUrl);
+                writer.WriteStringValue(LegalTermsUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MarketplacePublisher))
             {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> promoCodeRequired = default;
             Optional<int> quota = default;
             Optional<AppServicePlanRestrictions> webHostingPlanRestrictions = default;
-            Optional<string> privacyPolicyUrl = default;
-            Optional<string> legalTermsUrl = default;
+            Optional<Uri> privacyPolicyUrl = default;
+            Optional<Uri> legalTermsUrl = default;
             Optional<string> marketplacePublisher = default;
             Optional<string> marketplaceOffer = default;
             foreach (var property in element.EnumerateObject())
@@ -177,12 +178,22 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("privacyPolicyUrl"))
                         {
-                            privacyPolicyUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyPolicyUrl = null;
+                                continue;
+                            }
+                            privacyPolicyUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("legalTermsUrl"))
                         {
-                            legalTermsUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                legalTermsUrl = null;
+                                continue;
+                            }
+                            legalTermsUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("marketplacePublisher"))

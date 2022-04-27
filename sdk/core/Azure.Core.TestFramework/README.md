@@ -302,6 +302,8 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
+In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+
 ## Support multi service version testing
 
 To enable multi-version testing, add the `ClientTestFixture` attribute listing to all the service versions to the test class itself or a base class:

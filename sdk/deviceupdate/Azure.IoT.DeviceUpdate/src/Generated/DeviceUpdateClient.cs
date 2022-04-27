@@ -554,7 +554,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetUpdates");
+            return GetUpdatesImplementationAsync("DeviceUpdateClient.GetUpdates", search, filter, context);
+        }
+
+        private AsyncPageable<BinaryData> GetUpdatesImplementationAsync(string diagnosticsScopeName, string search, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -633,7 +638,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetUpdates");
+            return GetUpdatesImplementation("DeviceUpdateClient.GetUpdates", search, filter, context);
+        }
+
+        private Pageable<BinaryData> GetUpdatesImplementation(string diagnosticsScopeName, string search, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -678,7 +688,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetProviders");
+            return GetProvidersImplementationAsync("DeviceUpdateClient.GetProviders", context);
+        }
+
+        private AsyncPageable<BinaryData> GetProvidersImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -723,7 +738,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetProviders");
+            return GetProvidersImplementation("DeviceUpdateClient.GetProviders", context);
+        }
+
+        private Pageable<BinaryData> GetProvidersImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -773,7 +793,12 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetNames");
+            return GetNamesImplementationAsync("DeviceUpdateClient.GetNames", provider, context);
+        }
+
+        private AsyncPageable<BinaryData> GetNamesImplementationAsync(string diagnosticsScopeName, string provider, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -823,7 +848,12 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetNames");
+            return GetNamesImplementation("DeviceUpdateClient.GetNames", provider, context);
+        }
+
+        private Pageable<BinaryData> GetNamesImplementation(string diagnosticsScopeName, string provider, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -876,7 +906,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
+            return GetVersionsImplementationAsync("DeviceUpdateClient.GetVersions", provider, name, filter, context);
+        }
+
+        private AsyncPageable<BinaryData> GetVersionsImplementationAsync(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -929,7 +964,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
+            return GetVersionsImplementation("DeviceUpdateClient.GetVersions", provider, name, filter, context);
+        }
+
+        private Pageable<BinaryData> GetVersionsImplementation(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -983,7 +1023,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
+            return GetFilesImplementationAsync("DeviceUpdateClient.GetFiles", provider, name, version, context);
+        }
+
+        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1037,7 +1082,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
+            return GetFilesImplementation("DeviceUpdateClient.GetFiles", provider, name, version, context);
+        }
+
+        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1112,7 +1162,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetOperations");
+            return GetOperationsImplementationAsync("DeviceUpdateClient.GetOperations", filter, top, context);
+        }
+
+        private AsyncPageable<BinaryData> GetOperationsImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1187,7 +1242,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetOperations");
+            return GetOperationsImplementation("DeviceUpdateClient.GetOperations", filter, top, context);
+        }
+
+        private Pageable<BinaryData> GetOperationsImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1203,7 +1263,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Import new update version. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1277,7 +1337,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));
@@ -1287,7 +1347,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(action, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1297,7 +1357,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Import new update version. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1371,7 +1431,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> ImportUpdate(bool waitForCompletion, string action, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportUpdate(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));
@@ -1381,7 +1441,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportUpdateRequest(action, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1391,7 +1451,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Delete a specific update version. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
@@ -1418,7 +1478,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteUpdateAsync(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1429,7 +1489,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1439,7 +1499,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Delete a specific update version. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
@@ -1466,7 +1526,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeleteUpdate(bool waitForCompletion, string provider, string name, string version, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1477,7 +1537,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1488,7 +1548,7 @@ namespace Azure.IoT.DeviceUpdate
 
         internal HttpMessage CreateImportUpdateRequest(string action, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1503,13 +1563,12 @@ namespace Azure.IoT.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUpdatesRequest(string search, string filter, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1529,13 +1588,12 @@ namespace Azure.IoT.DeviceUpdate
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUpdateRequest(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1556,13 +1614,12 @@ namespace Azure.IoT.DeviceUpdate
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
-            message.ResponseClassifier = ResponseClassifier200304.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteUpdateRequest(string provider, string name, string version, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1579,13 +1636,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetProvidersRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1597,13 +1653,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetNamesRequest(string provider, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1617,13 +1672,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetVersionsRequest(string provider, string name, string filter, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1643,13 +1697,12 @@ namespace Azure.IoT.DeviceUpdate
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFilesRequest(string provider, string name, string version, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1667,13 +1720,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFileRequest(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1696,13 +1748,12 @@ namespace Azure.IoT.DeviceUpdate
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
-            message.ResponseClassifier = ResponseClassifier200304.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetOperationsRequest(string filter, int? top, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1722,13 +1773,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1745,13 +1795,12 @@ namespace Azure.IoT.DeviceUpdate
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
-            message.ResponseClassifier = ResponseClassifier200304.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUpdatesNextPageRequest(string nextLink, string search, string filter, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1760,13 +1809,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetProvidersNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1775,13 +1823,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetNamesNextPageRequest(string nextLink, string provider, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1790,13 +1837,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string provider, string name, string filter, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1805,13 +1851,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFilesNextPageRequest(string nextLink, string provider, string name, string version, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1820,13 +1865,12 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1835,49 +1879,14 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200304 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200304();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    304 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200304;
+        private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
     }
 }

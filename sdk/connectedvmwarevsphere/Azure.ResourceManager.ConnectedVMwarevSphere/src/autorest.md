@@ -10,8 +10,26 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca8
 clear-output-folder: true
 output-folder: Generated/
 skip-csproj: true
-mgmt-debug:
-  show-request-path: true
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 directive:
   - rename-model:
       from: Identity
@@ -25,46 +43,10 @@ directive:
   - rename-model:
       from: Host
       to: VMwareHost
-  - from: swagger-document
-    where: "$.definitions.OsType"
-    transform: >
-      $["x-ms-enum"] = {
-        "modelAsString": true,
-        "name": "OSType"
-      }
-  - from: swagger-document
-    where: "$.definitions.VirtualMachineTemplateInventoryItem.properties.numCPUs"
-    transform: >
-      $["x-ms-client-name"] = "numCpus";
-  - from: swagger-document
-    where: "$.definitions.HardwareProfile.properties.numCPUs"
-    transform: >
-      $["x-ms-client-name"] = "numCpus";
-  - from: swagger-document
-    where: "$.definitions.VirtualMachineTemplateProperties.properties.numCPUs"
-    transform: >
-      $["x-ms-client-name"] = "numCpus";
-  - from: swagger-document
-    where: "$.definitions.VirtualMachineTemplateProperties.properties.osType"
-    transform: >
-      $["x-ms-client-name"] = "OSType";
-  - from: swagger-document
-    where: "$.definitions.VirtualMachineTemplateProperties.properties.osName"
-    transform: >
-      $["x-ms-client-name"] = "OSName";
-  - from: swagger-document
-    where: "$.definitions.OsProfile.properties.osType"
-    transform: >
-      $["x-ms-client-name"] = "OSType";
-  - from: swagger-document
-    where: "$.definitions.OsProfile.properties.osName"
-    transform: >
-      $["x-ms-client-name"] = "OSName";
-  - rename-model:
-      from: OsProfile
-      to: OSProfile
-  - from: swagger-document
-    where: "$.definitions.VirtualMachineProperties.properties.osProfile"
-    transform: >
-      $["x-ms-client-name"] = "OSProfile";
+  - from: connectedvmware.json
+    where: $.definitions.MachineExtensionUpdateProperties.properties.type
+    transform: $["x-ms-client-name"] = "MachineExtensionType"
+  - from: connectedvmware.json
+    where: $.definitions.MachineExtensionProperties.properties.type
+    transform: $["x-ms-client-name"] = "MachineExtensionType"
 ```

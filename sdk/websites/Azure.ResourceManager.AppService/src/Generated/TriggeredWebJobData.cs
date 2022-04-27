@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,33 +19,33 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
         public TriggeredWebJobData()
         {
-            Settings = new ChangeTrackingDictionary<string, object>();
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="latestRun"> Latest job run information. </param>
-        /// <param name="historyUrl"> History URL. </param>
-        /// <param name="schedulerLogsUrl"> Scheduler Logs URL. </param>
+        /// <param name="historyUri"> History URL. </param>
+        /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
         /// <param name="runCommand"> Run command. </param>
-        /// <param name="url"> Job URL. </param>
-        /// <param name="extraInfoUrl"> Extra Info URL. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, TriggeredJobRun latestRun, string historyUrl, string schedulerLogsUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
         {
             LatestRun = latestRun;
-            HistoryUrl = historyUrl;
-            SchedulerLogsUrl = schedulerLogsUrl;
+            HistoryUri = historyUri;
+            SchedulerLogsUri = schedulerLogsUri;
             RunCommand = runCommand;
-            Url = url;
-            ExtraInfoUrl = extraInfoUrl;
+            Uri = uri;
+            ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
             UsingSdk = usingSdk;
@@ -54,15 +55,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Latest job run information. </summary>
         public TriggeredJobRun LatestRun { get; set; }
         /// <summary> History URL. </summary>
-        public string HistoryUrl { get; set; }
+        public Uri HistoryUri { get; set; }
         /// <summary> Scheduler Logs URL. </summary>
-        public string SchedulerLogsUrl { get; set; }
+        public Uri SchedulerLogsUri { get; set; }
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public string ExtraInfoUrl { get; set; }
+        public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>
@@ -70,6 +71,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Using SDK?. </summary>
         public bool? UsingSdk { get; set; }
         /// <summary> Job settings. </summary>
-        public IDictionary<string, object> Settings { get; }
+        public IDictionary<string, BinaryData> Settings { get; }
     }
 }

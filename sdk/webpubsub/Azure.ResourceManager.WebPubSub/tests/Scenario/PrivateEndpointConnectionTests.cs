@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private WebPubSub _webPubSub;
-        private VirtualNetwork _vnet;
+        private ResourceGroupResource _resourceGroup;
+        private WebPubSubResource _webPubSub;
+        private VirtualNetworkResource _vnet;
         private string _vnetName;
         private string _privateEndPointName;
 
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
             _privateEndPointName = SessionRecording.GenerateAssetName("PrivateEndPoint-");
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, _vnetName, vnetData);
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
             _vnet = vnetLro.Value;
 
             await StopSessionRecordingAsync();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var privateEndpointList = await _resourceGroup.GetPrivateEndpoints().GetAllAsync().ToEnumerableAsync();
             foreach (var item in privateEndpointList)
             {
-                await (await item.DeleteAsync(true)).WaitForCompletionResponseAsync();
+                await (await item.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
             }
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        public async Task<WebPubSub> CreateWebPubSub(string webPubSubName)
+        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
-            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(true, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
+            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
         }
 
         [Test]
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _webPubSub = await CreateWebPubSub(webPubSubName);
             await CreatePrivateEndpointConnection(_privateEndPointName);
-            var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            var PrivateEndpointConnection = await _webPubSub.GetPrivateEndpointConnections().GetAsync(list[0].Data.Name);
+            var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var PrivateEndpointConnection = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAsync(list[0].Data.Name);
             Assert.NotNull(PrivateEndpointConnection.Value.Data);
             Assert.AreEqual("Approved", PrivateEndpointConnection.Value.Data.PrivateLinkServiceConnectionState.Status.ToString());
         }
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _webPubSub = await CreateWebPubSub(webPubSubName);
-            var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
             await CreatePrivateEndpointConnection(_privateEndPointName);
-            list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
         }
 
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _webPubSub = await CreateWebPubSub(webPubSubName);
             await CreatePrivateEndpointConnection(_privateEndPointName);
-            var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.True(await _webPubSub.GetPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
-            Assert.False(await _webPubSub.GetPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"));
+            var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            Assert.True(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
+            Assert.False(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"));
         }
 
         [Test]
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _webPubSub = await CreateWebPubSub(webPubSubName);
             await CreatePrivateEndpointConnection(_privateEndPointName);
-            var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
-            list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }

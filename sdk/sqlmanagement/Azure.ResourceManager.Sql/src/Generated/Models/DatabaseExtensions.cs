@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="operationMode"> Operation Mode. </param>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, type, systemData)
+        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, resourceType, systemData)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;

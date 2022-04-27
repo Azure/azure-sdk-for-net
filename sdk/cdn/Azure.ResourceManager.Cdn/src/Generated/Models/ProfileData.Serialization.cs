@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -32,27 +33,46 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            {
+                if (OriginResponseTimeoutSeconds != null)
+                {
+                    writer.WritePropertyName("originResponseTimeoutSeconds");
+                    writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("originResponseTimeoutSeconds");
+                }
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
-            Models.Sku sku = default;
+            CdnSku sku = default;
+            Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
             Optional<string> provisioningState = default;
-            Optional<string> frontdoorId = default;
+            Optional<Guid> frontDoorId = default;
+            Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kind"))
+                {
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -114,16 +134,31 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("frontdoorId"))
+                        if (property0.NameEquals("frontDoorId"))
                         {
-                            frontdoorId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frontDoorId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("originResponseTimeoutSeconds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                originResponseTimeoutSeconds = null;
+                                continue;
+                            }
+                            originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, Optional.ToNullable(resourceState), provisioningState.Value, frontdoorId.Value);
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

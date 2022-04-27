@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Status of the Key Vault secret. </summary>
     public enum KeyVaultSecretStatus
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> Initialized. </summary>
         Initialized,
         /// <summary> WaitingOnCertificateOrder. </summary>
@@ -29,8 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> UnknownError. </summary>
         UnknownError,
         /// <summary> ExternalPrivateKey. </summary>
-        ExternalPrivateKey,
-        /// <summary> Unknown. </summary>
-        Unknown
+        ExternalPrivateKey
     }
 }

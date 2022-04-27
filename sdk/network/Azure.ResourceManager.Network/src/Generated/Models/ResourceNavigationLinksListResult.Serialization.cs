@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ResourceNavigationLinksListResult
+    internal partial class ResourceNavigationLinksListResult
     {
         internal static ResourceNavigationLinksListResult DeserializeResourceNavigationLinksListResult(JsonElement element)
         {

@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var httpUrl = "https://www.foo.bar/search";
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeDbSystem, "mssql");
-            activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in HttpHelperTests.
+            activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeDbStatement, "Select * from table");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);

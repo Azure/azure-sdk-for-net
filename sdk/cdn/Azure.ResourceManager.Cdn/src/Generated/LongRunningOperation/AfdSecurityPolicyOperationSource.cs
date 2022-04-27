@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdSecurityPolicyOperationSource : IOperationSource<AfdSecurityPolicy>
+    internal class AfdSecurityPolicyOperationSource : IOperationSource<AfdSecurityPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        AfdSecurityPolicy IOperationSource<AfdSecurityPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdSecurityPolicyResource IOperationSource<AfdSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
-            return new AfdSecurityPolicy(_client, data);
+            return new AfdSecurityPolicyResource(_client, data);
         }
 
-        async ValueTask<AfdSecurityPolicy> IOperationSource<AfdSecurityPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdSecurityPolicyResource> IOperationSource<AfdSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
-            return new AfdSecurityPolicy(_client, data);
+            return new AfdSecurityPolicyResource(_client, data);
         }
     }
 }

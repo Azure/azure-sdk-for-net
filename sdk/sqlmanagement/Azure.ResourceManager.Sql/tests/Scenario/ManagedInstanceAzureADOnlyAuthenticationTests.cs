@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ManagedInstanceAzureADOnlyAuthenticationTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public ManagedInstanceAzureADOnlyAuthenticationTests(bool isAsync)
             : base(isAsync)
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 AzureADOnlyAuthentication = true,
             };
-            var adoAuth = await collection.CreateOrUpdateAsync(true, AuthenticationName.Default, data);
+            var adoAuth = await collection.CreateOrUpdateAsync(WaitUntil.Completed, AuthenticationName.Default, data);
 
             // 2.CheckIfExist
             Assert.IsTrue(collection.Exists(adoAuthName));
@@ -71,8 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotEmpty(list);
 
             // 5.GetIfExist
-            var getIfExistADOAuth = await collection.GetIfExistsAsync(adoAuthName);
-            Assert.IsNotNull(getIfExistADOAuth.Value.Data);
+            Assert.IsTrue(await collection.ExistsAsync(adoAuthName));
         }
     }
 }

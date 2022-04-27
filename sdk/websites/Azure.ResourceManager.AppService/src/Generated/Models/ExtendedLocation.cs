@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of ExtendedLocation. </summary>
         /// <param name="name"> Name of extended location. </param>
-        /// <param name="type"> Type of extended location. </param>
-        internal ExtendedLocation(string name, string type)
+        /// <param name="extendedLocationType"> Type of extended location. </param>
+        internal ExtendedLocation(string name, string extendedLocationType)
         {
             Name = name;
-            Type = type;
+            ExtendedLocationType = extendedLocationType;
         }
 
         /// <summary> Name of extended location. </summary>
         public string Name { get; set; }
         /// <summary> Type of extended location. </summary>
-        public string Type { get; }
+        public string ExtendedLocationType { get; }
     }
 }

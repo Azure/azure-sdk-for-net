@@ -8,11 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable
+    internal partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Domains)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element)
         {
-            Optional<IList<WritableSubResource>> domains = default;
+            Optional<IList<ActivatedResourceReference>> domains = default;
             Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,10 +52,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<ActivatedResourceReference> array = new List<ActivatedResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(ActivatedResourceReference.DeserializeActivatedResourceReference(item));
                     }
                     domains = array;
                     continue;

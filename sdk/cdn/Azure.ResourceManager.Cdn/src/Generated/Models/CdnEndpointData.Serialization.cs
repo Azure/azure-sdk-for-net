@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> originPath = default;
             Optional<IList<string>> contentTypesToCompress = default;
@@ -199,6 +199,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
+            Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
             Optional<EndpointResourceState> resourceState = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -422,6 +423,21 @@ namespace Azure.ResourceManager.Cdn
                             originGroups = array;
                             continue;
                         }
+                        if (property0.NameEquals("customDomains"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                            }
+                            customDomains = array;
+                            continue;
+                        }
                         if (property0.NameEquals("resourceState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -441,7 +457,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnEndpointData(id, name, type, systemData, tags, location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToNullable(resourceState), provisioningState.Value);
+            return new CdnEndpointData(id, name, type, systemData, tags, location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), provisioningState.Value);
         }
     }
 }

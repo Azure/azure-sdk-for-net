@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="expressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </param>
         /// <param name="peerExpressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </param>
         /// <param name="addressPrefix"> /29 IP address space to carve out Customer addresses for tunnels. </param>
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="iPv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(string id, string name, string etag, string type, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, ProvisioningState? provisioningState) : base(id)
+        internal ExpressRouteCircuitConnectionData(string id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
             AddressPrefix = addressPrefix;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </summary>
         internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of AccessPermissions. </summary>
         public AccessPermissions()
         {
-            Keys = new ChangeTrackingList<KeyPermissions>();
-            Secrets = new ChangeTrackingList<SecretPermissions>();
-            Certificates = new ChangeTrackingList<CertificatePermissions>();
-            Storage = new ChangeTrackingList<StoragePermissions>();
+            Keys = new ChangeTrackingList<KeyPermission>();
+            Secrets = new ChangeTrackingList<SecretPermission>();
+            Certificates = new ChangeTrackingList<CertificatePermission>();
+            Storage = new ChangeTrackingList<StoragePermission>();
         }
 
         /// <summary> Initializes a new instance of AccessPermissions. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>
         /// <param name="storage"> Permissions to storage accounts. </param>
-        internal AccessPermissions(IList<KeyPermissions> keys, IList<SecretPermissions> secrets, IList<CertificatePermissions> certificates, IList<StoragePermissions> storage)
+        internal AccessPermissions(IList<KeyPermission> keys, IList<SecretPermission> secrets, IList<CertificatePermission> certificates, IList<StoragePermission> storage)
         {
             Keys = keys;
             Secrets = secrets;
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Permissions to keys. </summary>
-        public IList<KeyPermissions> Keys { get; }
+        public IList<KeyPermission> Keys { get; }
         /// <summary> Permissions to secrets. </summary>
-        public IList<SecretPermissions> Secrets { get; }
+        public IList<SecretPermission> Secrets { get; }
         /// <summary> Permissions to certificates. </summary>
-        public IList<CertificatePermissions> Certificates { get; }
+        public IList<CertificatePermission> Certificates { get; }
         /// <summary> Permissions to storage accounts. </summary>
-        public IList<StoragePermissions> Storage { get; }
+        public IList<StoragePermission> Storage { get; }
     }
 }
