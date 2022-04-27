@@ -38,7 +38,7 @@ stages:
                   inputs:
                     filePath: ${{ parameters.BuildToolsPath }}/scripts/create-tags-and-git-release.ps1
                     arguments: >
-                      -artifactLocation '$(PIPELINE.WORKSPACE)\packages'
+                      -artifactLocation '$(PIPELINE.WORKSPACE)/packages'
                       -workingDirectory $(System.DefaultWorkingDirectory)
                       -packageRepository 'Nuget'
                       -releaseSha '$(Build.SourceVersion)'
@@ -52,7 +52,7 @@ stages:
                 - ${{ if eq(parameters.ShouldPublish, true) }}:
                   - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                     parameters:
-                      PackagesPath: '$(PIPELINE.WORKSPACE)\packages'
+                      PackagesPath: '$(PIPELINE.WORKSPACE)/packages'
                       BuildToolsPath: '${{ parameters.BuildToolsPath }}'
 
                   - task: MSBuild@1
@@ -60,7 +60,7 @@ stages:
                     inputs:
                       solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
                       msbuildArguments: >
-                        /p:PackagesPath='$(PIPELINE.WORKSPACE)\packages'
+                        /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
                         /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
                         /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
                         /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
@@ -76,12 +76,12 @@ stages:
                     displayName: 'Publish to Nuget'
                     inputs:
                       command: push
-                      packagesToPush: '$(PIPELINE.WORKSPACE)\packages\**\*.nupkg;!$(PIPELINE.WORKSPACE)\packages\**\*.symbols.nupkg'
+                      packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
                       nuGetFeedType: external
                       publishFeedCredentials: Nuget.org
                     condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
 
                   - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
                     parameters:
-                      ArtifactPath: '$(PIPELINE.WORKSPACE)\packages'
+                      ArtifactPath: '$(PIPELINE.WORKSPACE)/packages'
                       ArtifactName: 'packages-signed'
