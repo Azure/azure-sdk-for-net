@@ -158,8 +158,8 @@ namespace Azure.AI.TextAnalytics
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = languageDetection.Results.Errors[0].Error;
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
@@ -218,8 +218,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = languageDetection.Results.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
@@ -487,8 +487,8 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = entityRecognition.Results.Errors[0].Error;
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
             }
@@ -550,8 +550,8 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = entityRecognition.Results.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
             }
@@ -828,8 +828,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = piiEntities.Results.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
@@ -898,8 +898,8 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = piiEntities.Results.Errors[0].Error;
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.Code.ToString(), error.Message), CreateAdditionalInformation(error));
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
@@ -2426,7 +2426,7 @@ namespace Azure.AI.TextAnalytics
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
-        private static IDictionary<string, string> CreateAdditionalInformation(Error error) =>
+        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
             (string.IsNullOrEmpty(error.Target))
                 ? null
                 : new Dictionary<string, string> { { "Target", error.Target } };
