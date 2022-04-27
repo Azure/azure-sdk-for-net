@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
 {
     public sealed class UpdateDataFeed : MetricsAdvisorTest<PerfOptions>
     {
-        private DataFeed _dataFeed;
+        private static DataFeed s_dataFeed;
 
         public UpdateDataFeed(PerfOptions options) : base(options)
         {
@@ -18,23 +18,23 @@ namespace Azure.AI.MetricsAdvisor.Perf
 
         public override async Task GlobalSetupAsync()
         {
-            _dataFeed = GetDataFeedInstance();
-            _dataFeed = await AdminClient.CreateDataFeedAsync(_dataFeed);
+            s_dataFeed = GetDataFeedInstance();
+            s_dataFeed = await AdminClient.CreateDataFeedAsync(s_dataFeed);
         }
 
         public override async Task GlobalCleanupAsync()
         {
-            await AdminClient.DeleteDataFeedAsync(_dataFeed.Id);
+            await AdminClient.DeleteDataFeedAsync(s_dataFeed.Id);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            AdminClient.UpdateDataFeed(_dataFeed, cancellationToken);
+            AdminClient.UpdateDataFeed(s_dataFeed, cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await AdminClient.UpdateDataFeedAsync(_dataFeed, cancellationToken);
+            await AdminClient.UpdateDataFeedAsync(s_dataFeed, cancellationToken);
         }
     }
 }
