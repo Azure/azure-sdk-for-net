@@ -23,6 +23,7 @@ namespace Azure.AI.TextAnalytics
         internal readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
+        private readonly TextAnalyticsRequestOptions _requestOptions = new TextAnalyticsRequestOptions();
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -568,13 +569,10 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
-            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
+            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
