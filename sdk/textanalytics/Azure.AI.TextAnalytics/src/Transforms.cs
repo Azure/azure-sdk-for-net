@@ -83,6 +83,12 @@ namespace Azure.AI.TextAnalytics
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IList<DocumentWarning> documentWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
+
+            if (documentWarnings == null)
+            {
+                return warnings;
+            }
+
             foreach (var warning in documentWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));

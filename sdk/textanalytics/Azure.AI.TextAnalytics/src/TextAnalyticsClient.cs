@@ -260,7 +260,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -295,7 +295,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
@@ -323,12 +323,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            foreach (var document in documents)
-            {
-                LanguageInput languageInput = new LanguageInput(document.Id, document.Text);
-                languageInput.CountryHint = document.CountryHint;
-                detectLanguageInputs.Documents.Add(languageInput);
-            }
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -357,11 +352,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            foreach (var document in documents)
-            {
-                LanguageInput languageInput = new LanguageInput(document.Id, document.Text);
-                detectLanguageInputs.Documents.Add(languageInput);
-            }
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
@@ -373,7 +364,9 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput, Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
@@ -397,7 +390,9 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput, Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
@@ -414,13 +409,24 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private LanguageDetectionAnalysisInput documentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
         {
             int id = 0;
             foreach (var document in documents)
             {
                 LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
                 id++;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
+        }
+
+        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents, LanguageDetectionAnalysisInput detectLanguageInputs)
+        {
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = new LanguageInput (document.Id, document.Text);
+                languageInput.CountryHint = document.CountryHint;
                 detectLanguageInputs.Documents.Add(languageInput);
             }
             return detectLanguageInputs;
