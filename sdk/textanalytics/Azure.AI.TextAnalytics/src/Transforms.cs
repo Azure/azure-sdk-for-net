@@ -26,15 +26,6 @@ namespace Azure.AI.TextAnalytics
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        internal static TextAnalyticsError ConvertToError(DocumentError error)
-        {
-            var innerError = error.Error.Innererror;
-
-            return (innerError != null)
-                ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
-                : new TextAnalyticsError(error.Error.Code.ToString(), error.Error.Message, error.Error.Target);
-        }
-
         internal static TextAnalyticsError ConvertToError(Error error)
         {
             var innerError = error.Innererror;
@@ -139,7 +130,12 @@ namespace Azure.AI.TextAnalytics
 
         #region KeyPhrases
 
-        internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
+        //internal static KeyPhraseCollection ConvertToKeyPhraseCollection(DocumentKeyPhrases documentKeyPhrases)
+        //{
+        //    return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
+        //}
+
+    internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
         {
             //var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Errors.Count);
 

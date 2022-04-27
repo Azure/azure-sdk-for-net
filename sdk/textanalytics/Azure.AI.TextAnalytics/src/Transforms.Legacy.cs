@@ -167,21 +167,21 @@ namespace Azure.AI.TextAnalytics
         }
 
         //TODO: Check this conversion.  The assessment conversion is odd, but seems to match the legacy version.
-        internal static List<SentenceSentiment> ConvertToSentenceSentiments(IReadOnlyList<Legacy.SentenceSentiment> legacySentiments)
+        internal static List<SentenceSentiment> ConvertToSentenceSentiments(IReadOnlyList<Legacy.SentenceSentiment> legacySentences)
         {
-            var sentences = new List<SentenceSentiment>(legacySentiments.Count);
+            var sentences = new List<SentenceSentiment>(legacySentences.Count);
 
-            foreach (var sentiment in legacySentiments)
+            foreach (var sentence in legacySentences)
             {
                 sentences.Add(new SentenceSentiment(
-                    ConvertToTextSentiment(sentiment.Sentiment),
-                    sentiment.Text,
-                    sentiment.ConfidenceScores.Positive,
-                    sentiment.ConfidenceScores.Neutral,
-                    sentiment.ConfidenceScores.Negative,
-                    sentiment.Offset,
-                    sentiment.Length,
-                    ConvertToSentenceOpinions(sentiment.Assessments)));
+                    ConvertToTextSentiment(sentence.Sentiment),
+                    sentence.Text,
+                    sentence.ConfidenceScores.Positive,
+                    sentence.ConfidenceScores.Neutral,
+                    sentence.ConfidenceScores.Negative,
+                    sentence.Offset,
+                    sentence.Length,
+                    ConvertToSentenceOpinions(sentence.Assessments)));
             }
 
             return sentences;
