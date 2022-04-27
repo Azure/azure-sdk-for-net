@@ -32,12 +32,12 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
-        internal static TextAnalyticsError ConvertToError(DocumentError error)
+        internal static TextAnalyticsError ConvertToError(Error error)
         {
-            string errorCode = error.Error.Code.ToString();
-            string message = error.Error.Message;
-            string target = error.Error.Target;
-            InnerErrorModel innerError = error.Error.Innererror;
+            string errorCode = error.Code.ToString();
+            string message = error.Message;
+            string target = error.Target;
+            InnerErrorModel innerError = error.Innererror;
 
             if (innerError != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.TextAnalytics
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error)));
+                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read languages

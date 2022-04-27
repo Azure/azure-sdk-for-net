@@ -157,7 +157,7 @@ namespace Azure.AI.TextAnalytics
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
@@ -217,7 +217,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -373,9 +373,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput };
-                analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
-                analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput, Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
@@ -399,9 +397,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput };
-                analyzeLanguageDetection.Parameters.ModelVersion = options.ModelVersion;
-                analyzeLanguageDetection.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = batchInput, Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion) };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
                 var languageDetection = result.Value as LanguageDetectionTaskResult;
@@ -484,7 +480,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -547,7 +543,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -825,7 +821,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -895,7 +891,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault());
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
