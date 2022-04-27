@@ -23,6 +23,7 @@ namespace Azure.AI.TextAnalytics
         internal readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
+        private readonly TextAnalyticsRequestOptions _requestOptions = new TextAnalyticsRequestOptions();
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -257,7 +258,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
 
@@ -292,7 +293,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             detectLanguageInputs = documentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
@@ -320,7 +321,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             foreach (var document in documents)
             {
@@ -354,7 +355,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= _requestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             foreach (var document in documents)
             {
