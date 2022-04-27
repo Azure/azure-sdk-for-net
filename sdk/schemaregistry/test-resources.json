@@ -109,7 +109,7 @@
       "type": "string",
       "value": "[variables('schemaRegistryEndpoint')]"
     },
-    "EVENTHUB_NAME": {
+    "SCHEMAREGISTRY_EVENTHUB_NAME": {
       "type": "string",
       "value": "[variables('eventHubName')]"
     }

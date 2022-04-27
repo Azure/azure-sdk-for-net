@@ -222,16 +222,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var credential = new DefaultAzureCredential();
 #else
             var fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
-            var eventHubName = TestEnvironment.EventHubName;
+            var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
             var credential = TestEnvironment.Credential;
 #endif
             await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
-            using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-            if (!eventBatch.TryAdd(eventData))
-            {
-                throw new InvalidOperationException("Payload is too large to be sent to Event Hubs service.");
-            }
-            await producer.SendAsync(eventBatch);
+            await producer.SendAsync(new EventData[] { eventData });
             #endregion
 
             Assert.IsFalse(eventData.IsReadOnly);
