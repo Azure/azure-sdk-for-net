@@ -559,6 +559,10 @@ namespace Azure.AI.FormRecognizer.Tests
                     regionA = "usgovarizona";
                     regionB = "usgovvirginia";
                     break;
+                case "https://login.microsoftonline.us/":
+                    regionA = "chinaeast2";
+                    regionB = "chinanorth";
+                    break;
                 default:
                     regionA = "westcentralus";
                     regionB = "eastus2";
