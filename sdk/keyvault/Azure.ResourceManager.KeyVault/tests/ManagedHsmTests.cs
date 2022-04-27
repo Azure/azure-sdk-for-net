@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         // The MHSM is very expensive and only allow to have 5 MHSM instance per retion.
         // So before running live / record please make sure the test region have the capacity for create a new one.
+        [PlaybackOnly("Live test for MHSM is not necessary")]
         [RecordedTest]
         public async Task ManagedHsmFull()
         {
