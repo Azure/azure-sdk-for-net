@@ -95,12 +95,7 @@ var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like som
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
-using EventDataBatch eventBatch = await producer.CreateBatchAsync();
-if (!eventBatch.TryAdd(eventData))
-{
-    throw new InvalidOperationException("Payload is too large to be sent to Event Hubs service.");
-}
-await producer.SendAsync(eventBatch);
+await producer.SendAsync(new EventData[] { eventData });
 ```
 
 To deserialize an `EventData` event that you are consuming:
