@@ -42,6 +42,9 @@ namespace Azure.Core
     /// </summary>
     internal class OperationInternal : OperationInternalBase
     {
+        // To minimize code duplication and avoid introduction of another type,
+        // OperationInternal delegates implementation to the OperationInternal<VoidValue>.
+        // VoidValue is a private empty struct which only purpose is to be used as generic parameter.
         private readonly OperationInternal<VoidValue> _internalOperation;
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace Azure.Core
             DelayStrategy? fallbackStrategy = null)
             :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationWrapper(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState)
@@ -109,11 +112,12 @@ namespace Azure.Core
 
         private readonly struct VoidValue { }
 
-        private readonly struct OperationWrapper : IOperation<VoidValue>
+        // Wrapper type that converts OperationState to OperationState<T> and can be passed to `OperationInternal<T>` constructor.
+        private class OperationToOperationOfTProxy : IOperation<VoidValue>
         {
             private readonly IOperation _operation;
 
-            public OperationWrapper(IOperation operation)
+            public OperationToOperationOfTProxy(IOperation operation)
             {
                 _operation = operation;
             }
@@ -121,11 +125,17 @@ namespace Azure.Core
             public async ValueTask<OperationState<VoidValue>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-                return state.HasCompleted
-                    ? state.HasSucceeded
-                        ? OperationState<VoidValue>.Success(state.RawResponse, new VoidValue())
-                        : OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException)
-                    : OperationState<VoidValue>.Pending(state.RawResponse);
+                if (!state.HasCompleted)
+                {
+                    return OperationState<VoidValue>.Pending(state.RawResponse);
+                }
+
+                if (state.HasSucceeded)
+                {
+                    return OperationState<VoidValue>.Success(state.RawResponse, new VoidValue());
+                }
+
+                return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
             }
         }
     }

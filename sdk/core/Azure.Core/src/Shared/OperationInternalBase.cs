@@ -180,10 +180,12 @@ namespace Azure.Core
 
         private async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
-            using var asyncLock = await _responseLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
-            if (asyncLock.HasValue)
+            // If _responseLock has the value, lockOrValue will return that value, and no lock is acquired.
+            // If _responseLock doesn't have the value, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
+            using var lockOrValue = await _responseLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (lockOrValue.HasValue)
             {
-                return asyncLock.Value;
+                return lockOrValue.Value;
             }
 
             var poller = new OperationPoller(_fallbackStrategy);
@@ -191,7 +193,7 @@ namespace Azure.Core
                 ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
                 : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
 
-            asyncLock.SetValue(response);
+            lockOrValue.SetValue(response);
             return response;
         }
 

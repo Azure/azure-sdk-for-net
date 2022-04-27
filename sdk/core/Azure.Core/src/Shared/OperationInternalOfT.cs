@@ -109,6 +109,8 @@ namespace Azure.Core
         private OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)
         {
+            // FinalOperation represents operation that is in final state and can't be updated.
+            // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
             _operation = new FinalOperation();
             _rawResponse = finalState.RawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
@@ -249,6 +251,9 @@ namespace Azure.Core
 
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
+            // If _stateLock has the final state, lockOrValue will contain that state, and no lock is acquired.
+            // If _stateLock doesn't have the state, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
+            // While _responseLock is used for the whole WaitForCompletionResponseAsync, _stateLock is used for individual calls of UpdateStatusAsync
             using var asyncLock = await _stateLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
             {
