@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class LogsHelper
     {
         private const int Version = 2;
+        private static readonly ConcurrentDictionary<int, string> DepthCache = new ConcurrentDictionary<int, string>();
+        private static readonly Func<int, string> ConvertDepthToStringRef = ConvertDepthToString;
 
         internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
         {
@@ -98,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     {
                         if (scopeItem.Key == "{OriginalFormat}")
                         {
-                            properties.Add($"OriginalFormatScope_{originalScopeDepth}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                            properties.Add($"OriginalFormatScope_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
                         }
                         else if (!properties.TryGetValue(scopeItem.Key, out _))
                         {
@@ -106,7 +109,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
                         else
                         {
-                            properties.Add($"{scopeItem.Key}_{originalScopeDepth}_{valueDepth++}", Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                            properties.Add($"{scopeItem.Key}_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}_{DepthCache.GetOrAdd(valueDepth, ConvertDepthToStringRef)}", Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                            valueDepth++;
                         }
                     }
                 }
@@ -201,5 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
         }
+
+        private static string ConvertDepthToString(int depth) => $"{depth}";
     }
 }
