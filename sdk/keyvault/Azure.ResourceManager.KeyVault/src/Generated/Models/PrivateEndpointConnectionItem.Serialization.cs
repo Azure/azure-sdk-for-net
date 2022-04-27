@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> id = default;
             Optional<string> etag = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = KeyVaultPrivateLinkServiceConnectionState.DeserializeKeyVaultPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
