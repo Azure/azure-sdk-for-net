@@ -134,7 +134,7 @@ ms.service: $service
 ---
 "@
 
-  $ReadmeContent = $ReadmeContent -replace "https://docs.microsoft.com(/en-us)?", ""
+  $ReadmeContent = $ReadmeContent -replace "https://docs.microsoft.com(/en-us)?/?", "/"
   return "$header`n$ReadmeContent"
 }
 
