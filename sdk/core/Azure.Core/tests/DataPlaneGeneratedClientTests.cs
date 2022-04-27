@@ -41,11 +41,15 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
+            #region Snippet:GetPetAsync
             Response response = await client.GetPetAsync("snoopy", new RequestContext());
+
             var doc = JsonDocument.Parse(response.Content.ToMemory());
+            var name = doc.RootElement.GetProperty("name").GetString();
+            #endregion
 
             Assert.AreEqual(200, response.Status);
-            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual("snoopy", name);
             Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
         }
 
@@ -183,10 +187,11 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetPetAsync("snoopy", new RequestContext()
-            {
-                ErrorOptions = ErrorOptions.Default
-            });
+            Response response = await client.GetPetAsync("snoopy",
+                new RequestContext()
+                {
+                    ErrorOptions = ErrorOptions.Default
+                });
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
             Assert.AreEqual(200, response.Status);
@@ -209,6 +214,25 @@ namespace Azure.Core.Tests
                     ErrorOptions = ErrorOptions.Default
                 });
             });
+        }
+
+        [Test]
+        public async Task Change404Category()
+        {
+            var mockResponse = new MockResponse(404);
+
+            // Send the response through the pipeline so IsError is set.
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            #region Snippet:SetRequestContext
+            var context = new RequestContext();
+            context.AddClassifier(404, isError: false);
+
+            Response response = await client.GetPetAsync("pet1", context);
+            #endregion
+
+            Assert.AreEqual(404, response.Status);
         }
 
         #region Helpers

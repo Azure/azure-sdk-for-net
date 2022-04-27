@@ -1080,7 +1080,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
+            return GetKeyVaultReferencesImplementationAsync("PurviewScanningServiceClient.GetKeyVaultReferences", context);
+        }
+
+        private AsyncPageable<BinaryData> GetKeyVaultReferencesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1135,7 +1140,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
+            return GetKeyVaultReferencesImplementation("PurviewScanningServiceClient.GetKeyVaultReferences", context);
+        }
+
+        private Pageable<BinaryData> GetKeyVaultReferencesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1187,7 +1197,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
+            return GetClassificationRulesImplementationAsync("PurviewScanningServiceClient.GetClassificationRules", context);
+        }
+
+        private AsyncPageable<BinaryData> GetClassificationRulesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1239,7 +1254,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
+            return GetClassificationRulesImplementation("PurviewScanningServiceClient.GetClassificationRules", context);
+        }
+
+        private Pageable<BinaryData> GetClassificationRulesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1340,7 +1360,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
+            return GetDataSourcesImplementationAsync("PurviewScanningServiceClient.GetDataSources", context);
+        }
+
+        private AsyncPageable<BinaryData> GetDataSourcesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1441,7 +1466,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetDataSources(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
+            return GetDataSourcesImplementation("PurviewScanningServiceClient.GetDataSources", context);
+        }
+
+        private Pageable<BinaryData> GetDataSourcesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1496,7 +1526,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
+            return GetScanRulesetsImplementationAsync("PurviewScanningServiceClient.GetScanRulesets", context);
+        }
+
+        private AsyncPageable<BinaryData> GetScanRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1551,7 +1586,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
+            return GetScanRulesetsImplementation("PurviewScanningServiceClient.GetScanRulesets", context);
+        }
+
+        private Pageable<BinaryData> GetScanRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1606,7 +1646,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
+            return GetSystemRulesetsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesets", context);
+        }
+
+        private AsyncPageable<BinaryData> GetSystemRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1661,7 +1706,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
+            return GetSystemRulesetsImplementation("PurviewScanningServiceClient.GetSystemRulesets", context);
+        }
+
+        private Pageable<BinaryData> GetSystemRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1717,7 +1767,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
+            return GetSystemRulesetsVersionsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
+        }
+
+        private AsyncPageable<BinaryData> GetSystemRulesetsVersionsImplementationAsync(string diagnosticsScopeName, string dataSourceType, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1773,7 +1828,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
+            return GetSystemRulesetsVersionsImplementation("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
+        }
+
+        private Pageable<BinaryData> GetSystemRulesetsVersionsImplementation(string diagnosticsScopeName, string dataSourceType, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

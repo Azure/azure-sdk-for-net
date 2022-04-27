@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateLinkService. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of NetworkPrivateEndpointConnectionResources in the PrivateLinkService. </summary>
+        /// <returns> An object representing collection of NetworkPrivateEndpointConnectionResources and their operations over a NetworkPrivateEndpointConnectionResource. </returns>
+        public virtual NetworkPrivateEndpointConnectionCollection GetNetworkPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkPrivateEndpointConnectionResource>> GetNetworkPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(peConnectionName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkPrivateEndpointConnections().GetAsync(peConnectionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkPrivateEndpointConnectionResource> GetNetworkPrivateEndpointConnection(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(peConnectionName, expand, cancellationToken);
+            return GetNetworkPrivateEndpointConnections().Get(peConnectionName, expand, cancellationToken);
         }
 
         /// <summary>
