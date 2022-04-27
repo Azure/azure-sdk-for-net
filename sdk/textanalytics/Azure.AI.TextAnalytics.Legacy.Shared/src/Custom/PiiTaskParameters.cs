@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,6 +14,6 @@ namespace Azure.AI.TextAnalytics.Legacy
     internal partial class PiiTaskParameters
     {
         /// <summary> (Optional) describes the PII categories to return. </summary>
-        public IList<PiiEntityCategory> PiiCategories { get; set; }
+        public IList<PiiEntityLegacyCategory> PiiCategories { get; set; }
     }
 }

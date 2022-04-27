@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     internal partial class SentimentAnalysisTaskParameters { }
 
     [CodeGenModel("PiiCategory")]
-    internal readonly partial struct PiiEntityCategory { }
+    internal readonly partial struct PiiEntityLegacyCategory { }
 
 #pragma warning restore SA1402 // File may only contain a single type
 }

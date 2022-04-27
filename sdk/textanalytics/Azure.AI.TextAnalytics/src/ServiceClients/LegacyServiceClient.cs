@@ -400,11 +400,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.PiiEntityCategory>(options.CategoriesFilter.Count) : null;
+                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.Models.PiiEntityLegacyCategory>(options.CategoriesFilter.Count) : null;
 
                 foreach (var filter in options.CategoriesFilter)
                 {
-                    filters.Add(new Legacy.PiiEntityCategory(filter.ToString()));
+                    filters.Add(new Legacy.Models.PiiEntityLegacyCategory(filter.ToString()));
                 }
 
                 var result = await _serviceRestClient.EntitiesRecognitionPiiAsync(
@@ -446,11 +446,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.PiiEntityCategory>(options.CategoriesFilter.Count) : null;
+                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.Models.PiiEntityLegacyCategory>(options.CategoriesFilter.Count) : null;
 
                 foreach (var filter in options.CategoriesFilter)
                 {
-                    filters.Add(new Legacy.PiiEntityCategory(filter.ToString()));
+                    filters.Add(new Legacy.Models.PiiEntityLegacyCategory(filter.ToString()));
                 }
 
                 var result = _serviceRestClient.EntitiesRecognitionPii(
@@ -523,11 +523,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.PiiEntityCategory>(options.CategoriesFilter.Count) : null;
+                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.Models.PiiEntityLegacyCategory>(options.CategoriesFilter.Count) : null;
 
                 foreach (var filter in options.CategoriesFilter)
                 {
-                    filters.Add(new Legacy.PiiEntityCategory(filter.ToString()));
+                    filters.Add(new Legacy.Models.PiiEntityLegacyCategory(filter.ToString()));
                 }
 
                 var result = await _serviceRestClient.EntitiesRecognitionPiiAsync(
@@ -559,11 +559,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.PiiEntityCategory>(options.CategoriesFilter.Count) : null;
+                var filters = options.CategoriesFilter.Count > 0 ? new List<Legacy.Models.PiiEntityLegacyCategory>(options.CategoriesFilter.Count) : null;
 
                 foreach (var filter in options.CategoriesFilter)
                 {
-                    filters.Add(new Legacy.PiiEntityCategory(filter.ToString()));
+                    filters.Add(new Legacy.Models.PiiEntityLegacyCategory(filter.ToString()));
                 }
 
                var result = _serviceRestClient.EntitiesRecognitionPii(

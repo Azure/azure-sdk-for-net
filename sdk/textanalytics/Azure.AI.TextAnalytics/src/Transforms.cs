@@ -695,11 +695,11 @@ namespace Azure.AI.TextAnalytics
 
             if (action.CategoriesFilter.Count > 0)
             {
-                parameters.PiiCategories = new List<Legacy.PiiEntityCategory>(action.CategoriesFilter.Count);
+                parameters.PiiCategories = new List<Legacy.Models.PiiEntityLegacyCategory>(action.CategoriesFilter.Count);
 
                 foreach (var category in action.CategoriesFilter)
                 {
-                    parameters.PiiCategories.Add(new Legacy.PiiEntityCategory(category.ToString()));
+                    parameters.PiiCategories.Add(new Legacy.Models.PiiEntityLegacyCategory(category.ToString()));
                 }
             }
 
