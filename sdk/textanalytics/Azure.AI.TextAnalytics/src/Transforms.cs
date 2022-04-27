@@ -35,6 +35,15 @@ namespace Azure.AI.TextAnalytics
                 : new TextAnalyticsError(error.Error.Code.ToString(), error.Error.Message, error.Error.Target);
         }
 
+        internal static TextAnalyticsError ConvertToError(Error error)
+        {
+            var innerError = error.Innererror;
+
+            return (innerError != null)
+                ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
+                : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
+        }
+
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
