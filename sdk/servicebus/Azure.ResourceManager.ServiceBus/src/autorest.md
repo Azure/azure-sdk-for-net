@@ -12,8 +12,8 @@ skip-csproj: true
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+  Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+  DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
 
 rename-rules:
   CPU: Cpu
@@ -182,10 +182,10 @@ directive:
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
     - rename-model:
         from: RegenerateAccessKeyParameters
-        to: RegenerateAccessKeyOptions
+        to: RegenerateAccessKeyContent
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateOptions
+        to: ServiceBusNamespaceUpdateContent
     - from: swagger-document
       where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
       transform: $['x-ms-client-name'] = 'iPRules'
@@ -196,7 +196,7 @@ directive:
       where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
       transform: >
         $['x-ms-enum'] = {
-          "name": "ProvisioningStateDisasterRecovery",
+          "name": "DisasterRecoveryProvisioningState",
           "modelAsString": false
         }
 ```

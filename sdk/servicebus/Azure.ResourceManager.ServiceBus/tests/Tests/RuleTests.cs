@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //update rule with sql filter and action
             ServiceBusRuleData updateParameters = new ServiceBusRuleData()
             {
-                Action = new SqlRuleAction()
+                Action = new FilterAction()
                 {
                     RequiresPreprocessing = true,
                     SqlExpression = "SET " + strSqlExp,
