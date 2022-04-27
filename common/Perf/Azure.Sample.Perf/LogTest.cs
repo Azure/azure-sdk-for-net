@@ -73,7 +73,7 @@ namespace Azure.Sample.Perf
         public override async ValueTask DisposeAsyncCore()
         {
             await base.DisposeAsyncCore();
-            Log($"DisposeAsyncCore()");
+            Log("DisposeAsyncCore()");
         }
 
         private void Log(string message)
