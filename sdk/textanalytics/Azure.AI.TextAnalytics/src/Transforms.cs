@@ -16,22 +16,6 @@ namespace Azure.AI.TextAnalytics
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
-        {
-            string errorCode = error.Code;
-            string message = error.Message;
-            string target = error.Target;
-            InnerError innerError = error.Innererror;
-
-            if (innerError != null)
-            {
-                // Return the innermost error, which should be only one level down.
-                return new TextAnalyticsError(innerError.Code, message, target);
-            }
-
-            return new TextAnalyticsError(errorCode, message, target);
-        }
-
         internal static TextAnalyticsError ConvertToError(Error error)
         {
             string errorCode = error.Code.ToString();
@@ -46,22 +30,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return new TextAnalyticsError(errorCode, message, target);
-        }
-
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
-        {
-            var errors = new List<TextAnalyticsError>();
-
-            if (internalErrors == null)
-            {
-                return errors;
-            }
-
-            foreach (TextAnalyticsErrorInternal error in internalErrors)
-            {
-                errors.Add(ConvertToError(error));
-            }
-            return errors;
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
