@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
+                writer.WriteStringValue(Etag);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static PrivateEndpointConnectionData DeserializePrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -62,12 +61,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

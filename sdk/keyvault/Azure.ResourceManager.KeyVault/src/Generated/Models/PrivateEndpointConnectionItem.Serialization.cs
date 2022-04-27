@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static PrivateEndpointConnectionItem DeserializePrivateEndpointConnectionItem(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -30,12 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -81,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionItem(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnectionItem(id.Value, etag.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
