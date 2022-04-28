@@ -122,6 +122,64 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
+        public void MongoPartitionMergeTests()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                this.fixture.ResourceGroupName = "canary-sdk-test";
+                var databaseAccountName = "canary-sdk-test-mongo-account";
+
+                var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+
+                string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");                
+                string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+                Assert.NotNull(mongoDBDatabaseGetResults);
+
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        ShardKey = dict
+                    },
+                    Options = new CreateUpdateOptions()
+                    {
+                        Throughput = 14000
+                    }
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
+
+                IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollections);
+
+                PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection =
+                    mongoClient.ListMongoDBCollectionPartitionMerge(fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, new MergeParameters(isDryRun: true));
+
+                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+
+                mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName);                
+                mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
+                
+            }
+        }
+
+        [Fact]
         public void MongoUsersAndRolesTests()
         {
             using (var context = MockContext.Start(this.GetType()))
