@@ -82,16 +82,12 @@ output EVENTHUB_NAMESPACE_CONNECTION_STRING string = listkeys(eventHubsAuthRuleR
 
 // Outputs for the BufferedProducerTest scenario
 output EVENTHUB_NAME_BUFFERED_PRODUCER_TEST string = eventHubBufferedProducer.name
-output EVENTHUB_PARTITIONS_BUFFERED_PRODUCER_TEST int = bufferproducerEventHubPartitions
 
 // Outputs for the EventProducerTest
 output EVENTHUB_NAME_EVENT_PRODUCER_TEST string = eventHubEventProducer.name
-output EVENTHUB_PARTITIONS_EVENT_PRODUCER_TEST int = eventProducerEventHubPartitions
 
 // Outputs for the BurstBufferedProducerTest scenario
 output EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST string = eventHubBurstBufferedProducer.name
-output EVENTHUB_PARTITIONS_BURST_BUFFERED_PRODUCER int = burstBufferedProducerEventHubPartitions
 
 // Outputs for the ConcurrentBufferedProducerTest scenario
 output EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST string = eventHubConcurrentBufferedProducer.name
-output EVENTHUB_PARTITIONS_CONCURRENT_BUFFERED_PRODUCER_TEST int = concurrentBufferedProducerEventHubPartitions

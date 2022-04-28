@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Stress
 
         public int ConcurrentSends = 5;
         public int PublishingBodyMinBytes = 100;
-        public int PublishingBodyRegularMaxBytes = 262144;
+        public int PublishingBodyRegularMaxBytes = 757760;
         public int LargeMessageRandomFactorPercent = 50;
         public TimeSpan SendTimeout = TimeSpan.FromMinutes(3);
         public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(4000);

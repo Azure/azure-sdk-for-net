@@ -16,19 +16,19 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class Publisher
     {
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref _randomSeed)), false);
 
-        private static int randomSeed = Environment.TickCount;
+        private Metrics _metrics;
 
-        private Metrics metrics;
+        private static int _randomSeed = Environment.TickCount;
 
-        private EventProducerTestConfig testConfiguration;
+        private EventProducerTestConfig _testConfiguration;
 
         public Publisher(EventProducerTestConfig configuration,
-                         Metrics metricsIn)
+                         Metrics metrics)
         {
-            testConfiguration = configuration;
-            metrics = metricsIn;
+            _testConfiguration = configuration;
+            _metrics = metrics;
         }
 
         public async Task Start(CancellationToken cancellationToken)
@@ -42,10 +42,10 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     RetryOptions = new EventHubsRetryOptions
                     {
-                        TryTimeout = testConfiguration.SendTimeout
+                        TryTimeout = _testConfiguration.SendTimeout
                     }
                 };
-                var producer = new EventHubProducerClient(testConfiguration.EventHubsConnectionString, testConfiguration.EventHub, options);
+                var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
 
                 try
                 {
@@ -54,9 +54,9 @@ namespace Azure.Messaging.EventHubs.Stress
                     // Create a set of background tasks to handle all but one of the concurrent sends.  The final
                     // send will be performed directly.
 
-                    if (testConfiguration.ConcurrentSends > 1)
+                    if (_testConfiguration.ConcurrentSends > 1)
                     {
-                        for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
+                        for (var index = 0; index < _testConfiguration.ConcurrentSends - 1; ++index)
                         {
                             sendTasks.Add(Task.Run(async () =>
                             {
@@ -64,9 +64,9 @@ namespace Azure.Messaging.EventHubs.Stress
                                 {
                                     await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
 
-                                    if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                    if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                     {
-                                        await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                        await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
                                     }
                                 }
                             }));
@@ -81,9 +81,9 @@ namespace Azure.Messaging.EventHubs.Stress
                             {
                                 await PerformSend(producer, cancellationToken).ConfigureAwait(false);
 
-                                if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                 {
-                                    await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                                    await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
                                 }
                             }
                             catch (TaskCanceledException)
@@ -113,8 +113,8 @@ namespace Azure.Messaging.EventHubs.Stress
                     backgroundCancellationSource.Cancel();
                     await Task.WhenAll(sendTasks).ConfigureAwait(false);
 
-                    metrics.Client.GetMetric(metrics.EventProducerRestarted).TrackValue(1);
-                    metrics.Client.TrackException(ex);
+                    _metrics.Client.GetMetric(_metrics.ProducerRestarted).TrackValue(1);
+                    _metrics.Client.TrackException(ex);
                 }
                 finally
                 {
@@ -132,7 +132,11 @@ namespace Azure.Messaging.EventHubs.Stress
 
             using var batch = await producer.CreateBatchAsync().ConfigureAwait(false);
 
-            var events = EventGenerator.CreateEvents(testConfiguration.PublishBatchSize);
+            var events = EventGenerator.CreateEvents(batch.MaximumSizeInBytes,
+                                                     _testConfiguration.PublishBatchSize,
+                                                     _testConfiguration.LargeMessageRandomFactorPercent,
+                                                     _testConfiguration.PublishingBodyMinBytes,
+                                                     _testConfiguration.PublishingBodyRegularMaxBytes);
 
             foreach (var currentEvent in events)
             {
@@ -148,24 +152,24 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 if (batch.Count > 0)
                 {
-                    metrics.Client.GetMetric(metrics.PublishAttempts).TrackValue(1);
+                    _metrics.Client.GetMetric(_metrics.PublishAttempts).TrackValue(1);
                     await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
                 }
 
-                metrics.Client.GetMetric(metrics.EventsPublished).TrackValue(batch.Count);
-                metrics.Client.GetMetric(metrics.BatchesPublished).TrackValue(1);
-                metrics.Client.GetMetric(metrics.TotalPublishedSizeBytes).TrackValue(batch.SizeInBytes);
+                _metrics.Client.GetMetric(_metrics.EventsPublished).TrackValue(batch.Count);
+                _metrics.Client.GetMetric(_metrics.BatchesPublished).TrackValue(1);
+                _metrics.Client.GetMetric(_metrics.TotalPublishedSizeBytes).TrackValue(batch.SizeInBytes);
             }
             catch (TaskCanceledException)
             {
-                metrics.Client.GetMetric(metrics.PublishAttempts).TrackValue(-1);
+                _metrics.Client.GetMetric(_metrics.PublishAttempts).TrackValue(-1);
             }
             catch (Exception ex)
             {
                 var eventProperties = new Dictionary<String, String>();
                 eventProperties.Add("Process", "Send");
 
-                metrics.Client.TrackException(ex, eventProperties);
+                _metrics.Client.TrackException(ex, eventProperties);
             }
         }
     }

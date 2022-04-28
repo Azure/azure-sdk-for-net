@@ -18,40 +18,39 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class BufferedProducerTest
     {
-        private Metrics metrics;
-        private BufferedProducerTestConfig testConfiguration;
+        private Metrics _metrics;
+        private BufferedProducerTestConfig _testConfiguration;
 
-        public BufferedProducerTest(BufferedProducerTestConfig configuration)
+        public BufferedProducerTest(BufferedProducerTestConfig testConfiguration)
         {
-            testConfiguration = configuration;
-            metrics = new Metrics(configuration.InstrumentationKey);
+            _testConfiguration = testConfiguration;
+            _metrics = new Metrics(testConfiguration.InstrumentationKey);
         }
 
         public async Task Run()
         {
-            var connectionString = testConfiguration.EventHubsConnectionString;
-            var eventHubName = testConfiguration.EventHub;
-            var appInsightsKey = testConfiguration.InstrumentationKey;
-            var durationInHours = testConfiguration.DurationInHours;
+            // Create a new metrics instance for the given test run.
+            _metrics = new Metrics(_testConfiguration.InstrumentationKey);
 
-            metrics = new Metrics(appInsightsKey);
+            // Set up cancellation token
             using var enqueueingCancellationSource = new CancellationTokenSource();
-
-            var runDuration = TimeSpan.FromHours(durationInHours);
+            var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
             enqueueingCancellationSource.CancelAfter(runDuration);
 
             var enqueuingTasks = default(IEnumerable<Task>);
 
+            // Start two buffered producer background tasks
             try
             {
                 enqueuingTasks = Enumerable
-                    .Range(0, 2)
-                    .Select(_ => Task.Run(() => new BufferedPublisher(testConfiguration, metrics).Start(enqueueingCancellationSource.Token)))
+                    .Range(0, 1)
+                    .Select(_ => Task.Run(() => new BufferedPublisher(_testConfiguration, _metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
+                // Periodically update garbage collection metrics
                 while (!enqueueingCancellationSource.Token.IsCancellationRequested)
                 {
-                    UpdateEnvironmentStatistics(metrics);
+                    UpdateEnvironmentStatistics(_metrics);
                     await Task.Delay(TimeSpan.FromMinutes(1), enqueueingCancellationSource.Token).ConfigureAwait(false);
                 }
 
@@ -66,25 +65,26 @@ namespace Azure.Messaging.EventHubs.Stress
                 || ex is StackOverflowException
                 || ex is ThreadAbortException)
             {
-                metrics.Client.TrackException(ex);
+                _metrics.Client.TrackException(ex);
                 Environment.FailFast(ex.Message);
             }
             catch (Exception ex)
             {
-                metrics.Client.TrackException(ex);
+                _metrics.Client.TrackException(ex);
             }
             finally
             {
-                metrics.Client.Flush();
+                // Flush and wait for all metrics to be aggregated and sent to application insights
+                _metrics.Client.Flush();
                 await Task.Delay(60000);
             }
         }
 
-        private void UpdateEnvironmentStatistics(Metrics metrics)
+        private void UpdateEnvironmentStatistics(Metrics _metrics)
         {
-            metrics.Client.GetMetric(metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-            metrics.Client.GetMetric(metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-            metrics.Client.GetMetric(metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
+            _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
+            _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
+            _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
         }
     }
 }
