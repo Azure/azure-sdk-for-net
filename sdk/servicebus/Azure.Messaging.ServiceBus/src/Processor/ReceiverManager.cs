@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (args is ProcessMessageEventArgs processMessageEventArgs)
                 {
-                    await processMessageEventArgs.CancelLockRenewalAsync().ConfigureAwait(false);
+                    await processMessageEventArgs.CancelMessageLockRenewalAsync().ConfigureAwait(false);
                 }
             }
         }
