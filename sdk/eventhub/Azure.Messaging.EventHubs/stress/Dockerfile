@@ -28,4 +28,5 @@ COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Shared /app/sd
 COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs/stress /app/sdk/eventhub/Azure.Messaging.EventHubs/stress
 
 WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
-ENTRYPOINT dotnet Azure.Messaging.EventHubs.Stress.dll --tests EventProd BuffProd BurstBuffProd ConcurBuffProd -i
+ENTRYPOINT ["dotnet Azure.Messaging.EventHubs.Stress.dll", "--tests"] 
+CMD ["EventProd"]

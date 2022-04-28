@@ -16,13 +16,33 @@ using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
+    /// <summary>
+    ///   The main program thread that allows for both local and deployed test runs.
+    ///   Determines which tests should be run and starts them in the background.
+    /// </summary>
+    ///
     public class Program
     {
+        /// <summary>
+        ///   Parses the command line arguments and runs the specified tests.
+        /// </summary>
+        ///
+        /// <param name="args">The command line inputs.</param>
+        ///
         public static async Task Main(string[] args)
         {
+            // Parse command line arguments
+
             await CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsedAsync(RunOptions);
         }
 
+        /// <summary>
+        ///   Starts a background task for each test that needs to be run, and waits for all
+        ///   test runs to completed before returning.
+        /// </summary>
+        ///
+        /// <param name="opts">The parsed command line inputs.</param>
+        ///
         private static async Task RunOptions(Options opts)
         {
             var environment = new Dictionary<string, string>();
@@ -32,6 +52,18 @@ namespace Azure.Messaging.EventHubs.Stress
             var bufferedProducerTestConfig = new BufferedProducerTestConfig();
             var burstBufferedProducerTestConfig = new BufferedProducerTestConfig();
             var concurrentBufferedProducerTestConfig = new BufferedProducerTestConfig();
+
+            var testRunTasks = new List<Task>();
+
+            // Determine which tests should be run based on the command line args
+
+            if (opts.All)
+            {
+                eventProducerTestConfig.Run = true;
+                bufferedProducerTestConfig.Run = true;
+                burstBufferedProducerTestConfig.Run = true;
+                concurrentBufferedProducerTestConfig.Run = true;
+            }
 
             foreach (var testRun in opts.Tests)
             {
@@ -53,124 +85,141 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
             }
 
-            if (!(opts.Interactive))
-            {
-                environment = EnvironmentReader.LoadFromFile(Environment.GetEnvironmentVariable("ENV_FILE"));
+            // See if there are environment variables available to use in the .env file
 
-                environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out appInsightsKey);
-                environment.TryGetValue(EnvironmentVariables.EventHubsConnectionString, out eventHubsConnectionString);
+            var environmentFile = Environment.GetEnvironmentVariable("ENV_FILE");
+            if (!(string.IsNullOrEmpty(environmentFile)))
+            {
+                environment = EnvironmentReader.LoadFromFile(environmentFile);
             }
+
+            environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out appInsightsKey);
+
+            // Prompt for needed resources if interactive mode is enabled
+
+            if (opts.Interactive)
+            {
+                eventHubsConnectionString = _promptForResources("Event Hubs connection string", "all test runs", eventHubsConnectionString);
+                appInsightsKey = _promptForResources("Application Insights key", "all test runs", appInsightsKey);
+            }
+
+            // Run the event producer test
 
             if (eventProducerTestConfig.Run)
             {
+                eventProducerTestConfig.InstrumentationKey = appInsightsKey;
+                eventProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
+
+                environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventProducerTestConfig.EventHub);
+
                 if (opts.Interactive)
                 {
-                    eventProducerTestConfig.EventHubsConnectionString = PromptForResources("Event Hubs connection string", "event producer test");
-                    eventProducerTestConfig.EventHub = PromptForResources("Event Hub name", "event producer test");
-                    eventProducerTestConfig.InstrumentationKey = PromptForResources("App Insights instrumentation key", "event producer test");
-                }
-                else
-                {
-                    eventProducerTestConfig.InstrumentationKey = appInsightsKey;
-                    eventProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
-
-                    environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventProducerTestConfig.EventHub);
-                    environment.TryGetValue(EnvironmentVariables.EventHubPartitionsEventProducerTest, out eventProducerTestConfig.NumPartitions);
+                    eventProducerTestConfig.EventHub = _promptForResources("Event Hub name", "event producer test", eventProducerTestConfig.EventHub);
                 }
 
                 var testRun = new EventProducerTest(eventProducerTestConfig);
-                await testRun.Run();
+                testRunTasks.Add(testRun.Run());
             }
+
+            // Run the buffered producer test
 
             if (bufferedProducerTestConfig.Run)
             {
+                bufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
+                bufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
+
+                environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out bufferedProducerTestConfig.EventHub);
+
                 if (opts.Interactive)
                 {
-                    bufferedProducerTestConfig.EventHubsConnectionString = PromptForResources("Event Hubs connection string", "buffered producer test");
-                    bufferedProducerTestConfig.EventHub = PromptForResources("Event Hub name", "buffered producer test");
-                    bufferedProducerTestConfig.InstrumentationKey = PromptForResources("App Insights instrumentation key", "buffered producer test");
-                }
-                else
-                {
-                    bufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
-                    bufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
-
-                    environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out bufferedProducerTestConfig.EventHub);
-                    environment.TryGetValue(EnvironmentVariables.EventHubPartitionsBufferedProducerTest, out bufferedProducerTestConfig.NumPartitions);
+                    bufferedProducerTestConfig.EventHub = _promptForResources("Event Hub name", "buffered producer test", bufferedProducerTestConfig.EventHub);
                 }
 
                 bufferedProducerTestConfig.ConcurrentSends = 1;
 
                 var testRun = new BufferedProducerTest(bufferedProducerTestConfig);
-                await testRun.Run();
+                testRunTasks.Add(testRun.Run());
             }
+
+            // Run the burst buffered producer test
 
             if (burstBufferedProducerTestConfig.Run)
             {
+                burstBufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
+                burstBufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
+
+                environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out burstBufferedProducerTestConfig.EventHub);
+
                 if (opts.Interactive)
                 {
-                    burstBufferedProducerTestConfig.EventHubsConnectionString = PromptForResources("Event Hubs connection string", "burst buffered producer test");
-                    burstBufferedProducerTestConfig.EventHub = PromptForResources("Event Hub name", "burst buffered producer test");
-                    burstBufferedProducerTestConfig.InstrumentationKey = PromptForResources("App Insights instrumentation key", "burst buffered producer test");
-                }
-                else
-                {
-                    burstBufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
-                    burstBufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
-
-                    environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out burstBufferedProducerTestConfig.EventHub);
-                    environment.TryGetValue(EnvironmentVariables.EventHubPartitionsBurstBufferedProducerTest, out burstBufferedProducerTestConfig.NumPartitions);
+                    burstBufferedProducerTestConfig.EventHub = _promptForResources("Event Hub name", "burst buffered producer test", burstBufferedProducerTestConfig.EventHub);
                 }
 
                 burstBufferedProducerTestConfig.ConcurrentSends = 5;
                 burstBufferedProducerTestConfig.ProducerPublishingDelay = TimeSpan.FromMinutes(15);
 
                 var testRun = new BufferedProducerTest(burstBufferedProducerTestConfig);
-                await testRun.Run();
+                testRunTasks.Add(testRun.Run());
             }
+
+            // Run the concurrent buffered producer test
 
             if (concurrentBufferedProducerTestConfig.Run)
             {
+                concurrentBufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
+                concurrentBufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
+
+                environment.TryGetValue(EnvironmentVariables.EventHubConcurrentBufferedProducerTest, out concurrentBufferedProducerTestConfig.EventHub);
+
                 if (opts.Interactive)
                 {
-                    concurrentBufferedProducerTestConfig.EventHubsConnectionString = PromptForResources("Event Hubs connection string", "concurrent buffered producer test");
-                    concurrentBufferedProducerTestConfig.EventHub = PromptForResources("Event Hub name", "concurrent buffered producer test");
-                    concurrentBufferedProducerTestConfig.InstrumentationKey = PromptForResources("App Insights instrumentation key", "concurrent buffered producer test");
+                    concurrentBufferedProducerTestConfig.EventHub = _promptForResources("Event Hub name", "concurrent buffered producer test", concurrentBufferedProducerTestConfig.EventHub);
                 }
-                else
-                {
-                    concurrentBufferedProducerTestConfig.InstrumentationKey = appInsightsKey;
-                    concurrentBufferedProducerTestConfig.EventHubsConnectionString = eventHubsConnectionString;
 
-                    environment.TryGetValue(EnvironmentVariables.EventHubConcurrentBufferedProducerTest, out concurrentBufferedProducerTestConfig.EventHub);
-                    environment.TryGetValue(EnvironmentVariables.EventHubPartitionsConcurrentBufferedProducerTest, out concurrentBufferedProducerTestConfig.NumPartitions);
-                }
                 concurrentBufferedProducerTestConfig.ConcurrentSends = 5;
 
                 var testRun = new BufferedProducerTest(concurrentBufferedProducerTestConfig);
-                await testRun.Run();
+                testRunTasks.Add(testRun.Run());
             }
 
-            await Task.Delay(0);
+            // Wait for all test runs to complete
+
+            await Task.WhenAll(testRunTasks).ConfigureAwait(false);
         }
 
-        private static string PromptForResources(string resourceName, string testName)
+        /// <summary>
+        ///   Prompts the user using the command line for resources if they have not been provided yet.
+        /// </summary>
+        ///
+        /// <param name="resourceName">The name of the needed resource.</param>
+        /// <param name="testName">Which test(s) for which the resource is needed.</param>
+        /// <param name="currentValue">The current value of the resource.</param>
+        ///
+        private static string _promptForResources(string resourceName, string testName, string currentValue)
         {
-            var output = String.Empty;
-            while (string.IsNullOrEmpty(output))
+            // If the resource hasn't been provided already, wait for it to be provided through the CLI
+
+            while (string.IsNullOrEmpty(currentValue))
             {
-                Console.Write($"Please provide the {resourceName} for the {testName}: ");
-                output = Console.ReadLine().Trim();
+                Console.Write($"Please provide the {resourceName} for {testName}: ");
+                currentValue = Console.ReadLine().Trim();
             }
-            return output;
+            return currentValue;
         }
 
+        /// <summary>
+        ///   The available command line options that can be parsed.
+        /// </summary>
+        ///
         private class Options
         {
             [Option('i', "interactive", HelpText = "Set up stress tests in interactive mode.")]
             public bool Interactive { get; set; }
 
-            [Option('t', "tests", Default= false, HelpText = "Enter which tests to run.")]
+            [Option("all", HelpText = "Run all available tests.")]
+            public bool All { get; set; }
+
+            [Option('t', "tests", HelpText = "Enter which tests to run.")]
             public IEnumerable<string> Tests { get; set; }
         }
     }

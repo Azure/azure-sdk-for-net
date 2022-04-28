@@ -19,20 +19,20 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class EventProducerTest
     {
-        private Metrics metrics;
-        private EventProducerTestConfig testConfiguration;
+        private Metrics _metrics;
+        private EventProducerTestConfig _testConfiguration;
 
-        public EventProducerTest(EventProducerTestConfig configuration)
+        public EventProducerTest(EventProducerTestConfig testConfiguration)
         {
-            testConfiguration = configuration;
-            metrics = new Metrics(configuration.InstrumentationKey);
+            _testConfiguration = testConfiguration;
+            _metrics = new Metrics(testConfiguration.InstrumentationKey);
         }
 
         public async Task Run()
         {
             using var publishCancellationSource = new CancellationTokenSource();
 
-            var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
+            var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
             publishCancellationSource.CancelAfter(runDuration);
 
             var publishingTasks = default(IEnumerable<Task>);
@@ -42,13 +42,14 @@ namespace Azure.Messaging.EventHubs.Stress
                 // Begin publishing events in the background.
 
                 publishingTasks = Enumerable
-                    .Range(0, testConfiguration.ProducerCount)
-                    .Select(_ => Task.Run(() => new Publisher(testConfiguration, metrics).Start(publishCancellationSource.Token)))
+                    .Range(0, 1)
+                    .Select(_ => Task.Run(() => new Publisher(_testConfiguration, _metrics).Start(publishCancellationSource.Token)))
                     .ToList();
 
+                // Periodically update garbage collection metrics
                 while (!publishCancellationSource.Token.IsCancellationRequested)
                 {
-                    UpdateEnvironmentStatistics(metrics);
+                    UpdateEnvironmentStatistics(_metrics);
                     await Task.Delay(TimeSpan.FromMinutes(1), publishCancellationSource.Token).ConfigureAwait(false);
                 }
 
@@ -67,11 +68,10 @@ namespace Azure.Messaging.EventHubs.Stress
             }
             catch (Exception ex)
             {
-                metrics.Client.TrackException(ex);
+                _metrics.Client.TrackException(ex);
             }
 
-            // The run is ending.  Clean up the outstanding background operations and
-            // complete the necessary metrics tracking.
+            // The run is ending.  Clean up the outstanding background operations.
 
             try
             {
@@ -80,20 +80,21 @@ namespace Azure.Messaging.EventHubs.Stress
             }
             catch (Exception ex)
             {
-                metrics.Client.TrackException(ex);
+                _metrics.Client.TrackException(ex);
             }
             finally
             {
-                metrics.Client.Flush();
+                // Flush and wait for all metrics to be aggregated and sent to application insights
+                _metrics.Client.Flush();
                 await Task.Delay(60000);
             }
         }
 
-        private void UpdateEnvironmentStatistics(Metrics metrics)
+        private void UpdateEnvironmentStatistics(Metrics _metrics)
         {
-            metrics.Client.GetMetric(metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-            metrics.Client.GetMetric(metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-            metrics.Client.GetMetric(metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
+            _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
+            _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
+            _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
         }
     }
 }

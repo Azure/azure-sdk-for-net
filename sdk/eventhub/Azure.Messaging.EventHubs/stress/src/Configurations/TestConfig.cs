@@ -7,14 +7,14 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class TestConfig
     {
+        // true if the given test should be run.
         public bool Run;
+
+        // Resource Configurations
+
         public string EventHubsConnectionString;
         public string EventHub;
         public string InstrumentationKey;
-
-        // For initial printing purposes ONLY, number of partitions is not configurable after deployment
-
-        public string NumPartitions;
 
         // Test Run Configurations
 
@@ -22,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Stress
 
         // Publishing Configurations
 
-        public int ProducerCount = 2;
         public int ConcurrentSends = 5;
         public int PublishingBodyMinBytes = 100;
         public int PublishingBodyRegularMaxBytes = 757760;

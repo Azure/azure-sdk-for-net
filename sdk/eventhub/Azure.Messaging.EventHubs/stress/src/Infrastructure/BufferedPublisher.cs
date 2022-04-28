@@ -18,17 +18,18 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class BufferedPublisher
     {
-        private string connectionString;
-        private string eventHubName;
-        private Metrics metrics;
-        private BufferedProducerTestConfig testConfiguration;
+        private string _connectionString;
+        private string _eventHubName;
+        private Metrics _metrics;
+        private BufferedProducerTestConfig _testConfiguration;
 
-        public BufferedPublisher(BufferedProducerTestConfig testConfigurationIn, Metrics metricsIn)
+        public BufferedPublisher(BufferedProducerTestConfig testConfiguration,
+                                 Metrics metrics)
         {
-            connectionString = testConfigurationIn.EventHubsConnectionString;
-            eventHubName = testConfigurationIn.EventHub;
-            testConfiguration = testConfigurationIn;
-            metrics = metricsIn;
+            _connectionString = testConfiguration.EventHubsConnectionString;
+            _eventHubName = testConfiguration.EventHub;
+            _metrics = metrics;
+            _testConfiguration = testConfiguration;
         }
 
         public async Task Start(CancellationToken cancellationToken)
@@ -38,40 +39,46 @@ namespace Azure.Messaging.EventHubs.Stress
             while (!cancellationToken.IsCancellationRequested)
             {
                 using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+                // Create the buffered producer client and register the success and failure handlers
+
                 var options = new EventHubBufferedProducerClientOptions
                 {
                     RetryOptions = new EventHubsRetryOptions
                     {
-                        TryTimeout = testConfiguration.SendTimeout
+                        TryTimeout = _testConfiguration.SendTimeout
                     },
-                    MaximumWaitTime = testConfiguration.MaxWaitTime
+                    MaximumWaitTime = _testConfiguration.MaxWaitTime
                 };
-                var producer = new EventHubBufferedProducerClient(connectionString, eventHubName);
+                var producer = new EventHubBufferedProducerClient(_connectionString, _eventHubName, options);
 
                 try
                 {
                     producer.SendEventBatchSucceededAsync += args =>
                     {
-                        var numEvents = args.EventBatch.ToList().Count;
+                        var numEvents = args.EventBatch.Count;
 
-                        metrics.Client.GetMetric(metrics.SuccessfullySentFromQueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
+                        _metrics.Client.GetMetric(_metrics.SuccessfullySentFromQueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
+                        _metrics.Client.GetMetric(_metrics.BatchesPublished).TrackValue(1);
 
                         return Task.CompletedTask;
                     };
 
                     producer.SendEventBatchFailedAsync += args =>
                     {
-                        var numEvents = args.EventBatch.ToList().Count;
+                        var numEvents = args.EventBatch.Count;
 
-                        metrics.Client.GetMetric(metrics.EventsNotSentAfterEnqueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
-                        metrics.Client.TrackException(args.Exception);
+                        _metrics.Client.GetMetric(_metrics.EventsNotSentAfterEnqueue, "PartitionId").TrackValue(numEvents, args.PartitionId);
+                        _metrics.Client.TrackException(args.Exception);
 
                         return Task.CompletedTask;
                     };
 
-                    if (testConfiguration.ConcurrentSends > 1)
+                    // Start concurrent enqueuing tasks
+
+                    if (_testConfiguration.ConcurrentSends > 1)
                     {
-                        for (var index = 0; index < testConfiguration.ConcurrentSends - 1; ++index)
+                        for (var index = 0; index < _testConfiguration.ConcurrentSends - 1; ++index)
                         {
                             enqueueTasks.Add(Task.Run(async () =>
                             {
@@ -79,9 +86,9 @@ namespace Azure.Messaging.EventHubs.Stress
                                 {
                                     await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
-                                    if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                    if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                     {
-                                        await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                        await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
                                     }
                                 }
                             }));
@@ -96,9 +103,9 @@ namespace Azure.Messaging.EventHubs.Stress
                             {
                                 await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
-                                if ((testConfiguration.ProducerPublishingDelay.HasValue) && (testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                                if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                 {
-                                    await Task.Delay(testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                                    await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
                                 }
                             }
                             catch (TaskCanceledException)
@@ -111,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (TaskCanceledException)
                 {
-                    // No action needed.
+                    // No action needed, the cancellation token has been cancelled.
                 }
                 catch (Exception ex) when
                     (ex is OutOfMemoryException
@@ -122,26 +129,32 @@ namespace Azure.Messaging.EventHubs.Stress
                 }
                 catch (Exception ex)
                 {
-                    metrics.Client.GetMetric(metrics.BufferedProducerRestarted).TrackValue(1);
-                    metrics.Client.TrackException(ex);
+                    // If this catch is hit, it means the producer has restarted, collect metrics.
+
+                    _metrics.Client.GetMetric(_metrics.ProducerRestarted).TrackValue(1);
+                    _metrics.Client.TrackException(ex);
                 }
                 finally
                 {
-                    await producer.CloseAsync();
+                    await producer.CloseAsync(false);
                 }
             }
         }
 
         private async Task PerformEnqueue(EventHubBufferedProducerClient producer,
-                                       CancellationToken cancellationToken)
+                                          CancellationToken cancellationToken)
         {
-            var events = EventGenerator.CreateEvents(testConfiguration.EventEnqueueListSize);
+            var events = EventGenerator.CreateEvents(_testConfiguration.MaximumEventListSize,
+                                                     _testConfiguration.EventEnqueueListSize,
+                                                     _testConfiguration.LargeMessageRandomFactorPercent,
+                                                     _testConfiguration.PublishingBodyMinBytes,
+                                                     _testConfiguration.PublishingBodyRegularMaxBytes);
 
             try
             {
                 await producer.EnqueueEventsAsync(events, cancellationToken).ConfigureAwait(false);
 
-                metrics.Client.GetMetric(metrics.EventsEnqueued).TrackValue(testConfiguration.EventEnqueueListSize);
+                _metrics.Client.GetMetric(_metrics.EventsEnqueued).TrackValue(_testConfiguration.EventEnqueueListSize);
             }
             catch (TaskCanceledException)
             {
@@ -150,9 +163,12 @@ namespace Azure.Messaging.EventHubs.Stress
             catch (Exception ex)
             {
                 var eventProperties = new Dictionary<String, String>();
-                eventProperties.Add("Process", "Send");
 
-                metrics.Client.TrackException(ex, eventProperties);
+                // Track that the exception took place during the enqueuing of an event
+
+                eventProperties.Add("Process", "Enqueue");
+
+                _metrics.Client.TrackException(ex, eventProperties);
             }
         }
     }

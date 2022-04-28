@@ -7,6 +7,7 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class EventProducerTestConfig : TestConfig
     {
+        // The number of events to generate and put into a batch during each iteration of PerformSend
         public int PublishBatchSize = 50;
     }
 }

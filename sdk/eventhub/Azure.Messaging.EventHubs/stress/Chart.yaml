@@ -1,6 +1,6 @@
 apiVersion: v2
 name: eventhub-net-stress-test
-version: 0.1.1
+version: 0.1.2
 description: Stress tests for Event Hubs for .NET
 
 dependencies:
