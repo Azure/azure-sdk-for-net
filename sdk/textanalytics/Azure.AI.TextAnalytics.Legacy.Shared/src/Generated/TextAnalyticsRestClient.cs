@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -489,7 +490,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityCategory> piiCategories)
+        internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityLegacyCategory> piiCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -545,7 +546,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<PiiResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PiiResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -581,7 +582,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<PiiResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityCategory> piiCategories = null, CancellationToken cancellationToken = default)
+        public Response<PiiResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
