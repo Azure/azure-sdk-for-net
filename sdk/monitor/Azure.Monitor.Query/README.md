@@ -466,49 +466,7 @@ MetricsQueryResult
 
 ## Troubleshooting
 
-### General
-
-When you interact with the Azure Monitor Query client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][monitor_rest_api] requests.
-
-For example, if you submit an invalid query, an HTTP 400 error is returned, indicating "Bad Request".
-
-```C# Snippet:BadRequest
-string workspaceId = "<workspace_id>";
-
-var client = new LogsQueryClient(new DefaultAzureCredential());
-
-try
-{
-    await client.QueryWorkspaceAsync(
-        workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
-}
-catch (Exception e)
-{
-    Console.WriteLine(e);
-}
-```
-
-The exception also contains some additional information like the full error content:
-
-```
-Azure.RequestFailedException : The request had some invalid properties
-Status: 400 (Bad Request)
-ErrorCode: BadArgumentError
-
-Content:
-{"error":{"message":"The request had some invalid properties","code":"BadArgumentError","correlationId":"34f5f93a-6007-48a4-904f-487ca4e62a82","innererror":{"code":"SyntaxError","message":"A recognition error occurred in the query.","innererror":{"code":"SYN0002","message":"Query could not be parsed at 'Not' on line [1,3]","line":1,"pos":3,"token":"Not"}}}}
-```
-
-### Set up console logging
-
-The simplest way to see the logs is to enable the console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
-
-```C#
-// Set up a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
-```
-
-To learn more about other logging mechanisms, see [here][logging].
+To diagnose various failure scenarios, see the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/TROUBLESHOOTING.md).
 
 ## Next steps
 
@@ -525,10 +483,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
 [kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
-[logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [migration_guide_app_insights]: https://aka.ms/azsdk/net/migrate/ai-monitor-query
 [migration_guide_opp_insights]: https://aka.ms/azsdk/net/migrate/monitor-query
-[monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
 [msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
