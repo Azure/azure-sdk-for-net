@@ -4,7 +4,7 @@ param (
   [string]$namespace,
   [string]$sdkPath,
   [string]$inputfiles="", #input files, separated by semicolon if more than one
-  [stirng]$readme = "",
+  [string]$readme = "",
   [string]$securityScope="",
   [string]$securityHeaderName="",
   [string]$AUTOREST_CONFIG_FILE = "autorest.md"

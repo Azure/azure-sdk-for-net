@@ -42,8 +42,8 @@ stages:
                       -workingDirectory $(System.DefaultWorkingDirectory)
                       -packageRepository 'Nuget'
                       -releaseSha '$(Build.SourceVersion)'
-                      -repoOwner 'azure-sdk-for-net'
-                      -repoName 'Azure'
+                      -repoOwner 'Azure'
+                      -repoName 'azure-sdk-for-net'
                     pwsh: true
                   env:
                     GH_TOKEN: $(azuresdk-github-pat)
@@ -60,7 +60,7 @@ stages:
                     inputs:
                       solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
                       msbuildArguments: >
-                        /p:PackagesPath='$(PIPELINE.WORKSPACE)/packages'
+                        /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
                         /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
                         /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
                         /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
