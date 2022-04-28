@@ -60,7 +60,7 @@ foreach ($res in $responses)
     }
     try {
       $commitDate = Get-GithubReferenceCommitDate -commitUrl $res.object.url -AuthToken $AuthToken
-      if ($commitDate -and ($commitDate -gt $LastCommitOlderThan)) {
+      if ($commitDate -and ($commitDate -lt $LastCommitOlderThan)) {
         LogDebug "The branch $branch last commit date $commitDate is newer than the date $LastCommitOlderThan. Skipping."
         continue
       }
