@@ -15,7 +15,7 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         /// <param name="format">The format for the schema.</param>
         /// <param name="schemaId">The ID of the schema.</param>
-        /// <returns></returns>
+        /// <returns>A schemaProperties instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId) => SchemaProperties(format, schemaId, null, null);
 
@@ -26,8 +26,15 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The ID of the schema.</param>
         /// <param name="groupName">The group name for the schema.</param>
         /// <param name="name">The name of the schema.</param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <returns>A schemaProperties instance for mocking.</returns>
         public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name) => new(format, schemaId, groupName, name);
+
+        /// <summary>
+        /// Constructs a SchemaRegistrySchema instance for mocking.
+        /// </summary>
+        /// <param name="properties">The properties for the schema.</param>
+        /// <param name="definition">The defintion of the schema.</param>
+        /// <returns>A SchemaRegistrySchema instance for mocking.</returns>
+        public static SchemaRegistrySchema SchemaRegistrySchema(SchemaProperties properties, string definition) => new(properties, definition);
     }
 }

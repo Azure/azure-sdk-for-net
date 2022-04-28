@@ -38,7 +38,7 @@ catch {
 
 $SELECTED_IMAGE_TAG = $(Get-Content "$PSScriptRoot/target_version.txt" -Raw).Trim()
 $CONTAINER_NAME = "ambitious_azsdk_test_proxy"
-$IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/testproxy:${SELECTED_IMAGE_TAG}"
+$IMAGE_SOURCE = "azsdkengsys.azurecr.io/engsys/test-proxy:${SELECTED_IMAGE_TAG}"
 
 if($VersionOverride) { 
     Write-Host "Overriding default target proxy version of '$SELECTED_IMAGE_TAG' with override $VersionOverride."
