@@ -10,6 +10,8 @@ namespace Azure.Identity
     {
         private string _tenantId;
 
+        internal static readonly TokenCachePersistenceOptions s_defaulTokenCachetPersistenceOptions = new TokenCachePersistenceOptions();
+
         /// <summary>
         /// The client id of the application registration used to authenticate users in the cache.
         /// </summary>
@@ -59,7 +61,8 @@ namespace Azure.Identity
         /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
         public SharedTokenCacheCredentialOptions(TokenCachePersistenceOptions tokenCacheOptions)
         {
-            TokenCachePersistenceOptions = tokenCacheOptions;
+            // if no tokenCacheOptions were specified we should use the default shared token cache
+            TokenCachePersistenceOptions = tokenCacheOptions ?? s_defaulTokenCachetPersistenceOptions;
         }
     }
 }
