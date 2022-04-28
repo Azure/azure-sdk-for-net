@@ -64,23 +64,6 @@ ConfigurationStoreResource configurationStore = await resourceGroup.GetConfigura
 Console.WriteLine(configurationStore.Data.Name);
 ```
 
-***Try to get a configurationStore if it exists***
-
-```C# Snippet:Managing_ConfigurationStores_GetAConfigurationStoreIfExists
-ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
-
-ConfigurationStoreResource configurationStore = await configurationStoreCollection.GetIfExistsAsync("foo");
-if (configurationStore != null)
-{
-    Console.WriteLine(configurationStore.Data.Name);
-}
-
-if (await configurationStoreCollection.ExistsAsync("myApp"))
-{
-    Console.WriteLine("ConfigurationStoreResource 'myApp' exists.");
-}
-```
-
 ***Delete a configurationStore***
 
 ```C# Snippet:Managing_ConfigurationStores_DeleteAConfigurationStore

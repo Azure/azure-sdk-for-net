@@ -11,10 +11,10 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0-beta.8
+```dotnetcli
+dotnet add package Azure.ResourceManager
 ```
 
 ### Prerequisites
@@ -56,7 +56,7 @@ To reduce both the number of clients needed to perform common tasks and the amou
 
 To accomplish this, we're introducing 3 standard types for all resources in Azure:
 
-### **[Resource].cs**
+### **[Resource]Resource.cs**
 
 This represents a full resource client object which contains a **Data** property exposing the details as a **[Resource]Data** type.
 It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
@@ -91,7 +91,6 @@ This object provides most of the logical collection operations.
 | Index | Get(string name) |
 | Add | CreateOrUpdate(string name, [Resource]Data data) |
 | Contains | Exists(string name) |
-| TryGet | GetIfExists(string name) |
 
 For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
@@ -140,7 +139,7 @@ Console.WriteLine($"Subnet: {id.Name}");
 ## Managing Existing Resources By Id
 Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
-Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
+Here is an example how you can access an `AvailabilitySet` object and manage it directly with its id: 
 ```C# Snippet:Readme_ManageAvailabilitySetOld
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
 // We construct a new client to work with
@@ -199,9 +198,9 @@ Console.WriteLine(availabilitySet.Data.Name);
 
 ## Check if a [Resource] exists
 
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `Exists()` methods, which can be invoked from any [Resource]Collection class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `Exists()` method, which can be invoked from any [Resource]Collection class.
 
-`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `Exists()` and `ExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
+`Exists()` and `ExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
 
 Before these methods were introduced you would need to catch the `RequestFailedException` and inspect the status code for 404.
 
@@ -243,26 +242,6 @@ if (exists)
 else
 {
     Console.WriteLine($"Resource Group {resourceGroupName} does not exist.");
-}
-```
-
-Another way to do this is by using `GetIfExistsAsync()` which will avoid the race condition mentioned above:
-
-```C# Snippet:Readme_TryGetRG
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
-ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
-string resourceGroupName = "myRgName";
-
-ResourceGroupResource resourceGroup = await resourceGroups.GetIfExistsAsync(resourceGroupName);
-
-if (resourceGroup == null)
-{
-    Console.WriteLine($"Resource Group {resourceGroupName} does not exist.");
-}
-else
-{
-    // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
 }
 ```
 
@@ -340,7 +319,7 @@ To run test with code coverage and auto generate an html report with just a sing
 
 ## Troubleshooting
 
--   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
+-   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Mgmt" label to the issue.
 -   If you need help, check [previous
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using azure and .NET tags.
@@ -354,14 +333,14 @@ To run test with code coverage and auto generate an html report with just a sing
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
-If you are migrating from the old SDK to this preview, check out this [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md).
+If you are migrating from the old SDK, check out this [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md).
 
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
-guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md).
+guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -378,5 +357,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
 more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
 
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

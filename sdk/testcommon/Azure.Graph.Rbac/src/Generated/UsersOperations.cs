@@ -188,8 +188,10 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Gets list of users for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="expand"> The expand value for the operation result. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<User> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<User> ListAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<User>> FirstPageFunc(int? pageSizeHint)
             {
@@ -197,7 +199,7 @@ namespace Azure.Graph.Rbac
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAsync(filter, expand, top, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -226,8 +228,10 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Gets list of users for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="expand"> The expand value for the operation result. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<User> List(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<User> List(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<User> FirstPageFunc(int? pageSizeHint)
             {
@@ -235,7 +239,7 @@ namespace Azure.Graph.Rbac
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(filter, cancellationToken);
+                    var response = RestClient.List(filter, expand, top, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -1,5 +1,9 @@
 # Release History
 
+## 5.0.1 (Unreleased)
+### Bugs Fixed
+- Queue message is not removed from the queue after stopping QueueListener. (#28156)
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Blobs 5.0.0.
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.

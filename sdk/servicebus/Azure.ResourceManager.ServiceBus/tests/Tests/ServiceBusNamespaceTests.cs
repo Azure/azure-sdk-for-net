@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            serviceBusNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
-            Assert.IsNull(serviceBusNamespace);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            PatchableServiceBusNamespaceData parameters = new PatchableServiceBusNamespaceData(DefaultLocation);
+            ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetPrivateEndpointConnections();
+            ServiceBusPrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetServiceBusPrivateEndpointConnections();
 
             //create another namespace for connection
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create an endpoint connection
             string connectionName = Recording.GenerateAssetName("endpointconnection");
-            PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
+            ServiceBusPrivateEndpointConnectionData parameter = new ServiceBusPrivateEndpointConnectionData()
             {
                 PrivateEndpoint = new WritableSubResource()
                 {
                     Id = serviceBusNamespace2.Id
                 }
             };
-            PrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
+            ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
-            List<PrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
             Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 

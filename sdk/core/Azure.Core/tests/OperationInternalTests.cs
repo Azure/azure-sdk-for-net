@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
         {
             if (isOfT)
             {
-                return new TestOperationOfInt(
+                return new MockOperationOfInt(
                     result,
                     responseFactory ?? (() => null),
                     operationTypeName,
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                return new TestOperation(
+                return new MockOperation(
                     result,
                     responseFactory ?? (() => null),
                     operationTypeName,
@@ -255,7 +255,7 @@ namespace Azure.Core.Tests
             const string customTypeName = "CustomTypeName";
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
-            var operationTypeName = isOfT ? nameof(TestOperationOfInt) : nameof(TestOperation);
+            var operationTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
             string expectedTypeName = useDefaultTypeName ? operationTypeName : customTypeName;
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
             var operationInternal = CreateOperationAsInternalBase(
@@ -286,7 +286,7 @@ namespace Azure.Core.Tests
             }
             catch { }
 
-            var expectedTypeName = isOfT ? nameof(TestOperationOfInt) : nameof(TestOperation);
+            var expectedTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
             testListener.AssertScopeException(
                 $"{expectedTypeName}.UpdateStatus",
                 scopeException =>
@@ -308,7 +308,7 @@ namespace Azure.Core.Tests
             }
             catch { }
 
-            var expectedTypeName = isOfT ? nameof(TestOperationOfInt) : nameof(TestOperation);
+            var expectedTypeName = isOfT ? nameof(MockOperationOfInt) : nameof(MockOperation);
             testListener.AssertScopeException(
                 $"{expectedTypeName}.UpdateStatus",
                 scopeException =>
@@ -432,7 +432,7 @@ namespace Azure.Core.Tests
             [Values(1, 3)] int retries)
         {
             var fallbackStrategy = new MockDelayStrategy();
-            var operation = new TestOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+            var operation = new MockOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
             _ = await operation.WaitForCompletionResponseAsync(CancellationToken.None);
 
@@ -444,7 +444,7 @@ namespace Azure.Core.Tests
             [Values(1, 3)] int retries)
         {
             var fallbackStrategy = new MockDelayStrategy();
-            var opeartion = new TestOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+            var opeartion = new MockOperation(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
             _ = opeartion.WaitForCompletionResponse(CancellationToken.None);
 
@@ -459,7 +459,7 @@ namespace Azure.Core.Tests
                 return; //invalid for non T
 
             var fallbackStrategy = new MockDelayStrategy();
-            var operation = new TestOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+            var operation = new MockOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
             _ = await operation.WaitForCompletionAsync(CancellationToken.None);
 
@@ -474,7 +474,7 @@ namespace Azure.Core.Tests
                 return; //invalid for non T
 
             var fallbackStrategy = new MockDelayStrategy();
-            var operation = new TestOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
+            var operation = new MockOperationOfInt(UpdateResult.Pending, mockResponseFactory, callsToComplete: retries, fallbackStrategy: fallbackStrategy);
 
             _ = operation.WaitForCompletion(CancellationToken.None);
 

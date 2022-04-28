@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
             IDictionary<string, IList<FilterableProperty>> filterableProperties =
                 new Dictionary<string, IList<FilterableProperty>>() { { "azurestackedge", filterableProperty } };
-            ProductFamiliesRequest productFamiliesRequest = new(filterableProperties);
+            ProductFamiliesContent productFamiliesRequest = new(filterableProperties);
             AsyncPageable<ProductFamily> productFamilies = EdgeOrderExtensions.GetProductFamiliesAsync(Subscription, productFamiliesRequest);
             List<ProductFamily> productFamiliesResult = await productFamilies.ToEnumerableAsync();
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             ConfigurationFilters configurationFilters = new(GetHierarchyInformation());
             configurationFilters.FilterableProperty.Add(new FilterableProperty(SupportedFilterTypes.ShipToCountries,
                 new List<string>() { "US" }));
-            ConfigurationsRequest configurationsRequest = new(
+            ConfigurationsContent configurationsRequest = new(
                 new List<ConfigurationFilters>() { configurationFilters });
             AsyncPageable<ProductConfiguration> configurations = EdgeOrderExtensions.GetConfigurationsAsync(Subscription,
                 configurationsRequest);

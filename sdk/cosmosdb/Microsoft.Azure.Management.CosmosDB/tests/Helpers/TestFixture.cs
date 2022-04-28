@@ -58,6 +58,7 @@ namespace CosmosDB.Tests
         public enum AccountType
         {
             PitrSql,
+            Pitr7Sql,
             Sql,
             Mongo32,
             Mongo36,
@@ -76,6 +77,14 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.GlobalDocumentDB,
                         enablePitr: true
+                    );
+                }
+                if (accountType == AccountType.Pitr7Sql)
+                {
+                    accountName = CreateDatabaseAccount(
+                        kind: DatabaseAccountKind.GlobalDocumentDB,
+                        enablePitr: true,
+                        continuousTier: ContinuousTier.Continuous7Days
                     );
                 }
                 else if (accountType == AccountType.Sql)
@@ -128,7 +137,12 @@ namespace CosmosDB.Tests
             return accountName;
         }
 
-        private string CreateDatabaseAccount(string kind = "GlobalDocumentDB", List<Capability> capabilities = null, string serverVersion = null, bool enablePitr = true)
+        private string CreateDatabaseAccount(
+            string kind = "GlobalDocumentDB",
+            List<Capability> capabilities = null, 
+            string serverVersion = null, 
+            bool enablePitr = true, 
+            string continuousTier = ContinuousTier.Continuous30Days)
         {
             var databaseAccountName = TestUtilities.GenerateName("databaseaccount");
             var parameters = new DatabaseAccountCreateUpdateParameters
@@ -146,7 +160,15 @@ namespace CosmosDB.Tests
             };
             if (enablePitr)
             {
-                parameters.BackupPolicy = new ContinuousModeBackupPolicy();
+                ContinuousModeProperties properties = new ContinuousModeProperties()
+                {
+                    Tier = continuousTier
+                };
+
+                parameters.BackupPolicy = new ContinuousModeBackupPolicy()
+                {
+                    ContinuousModeProperties = properties
+                };
             }
             if (serverVersion != null)
             {

@@ -34,15 +34,7 @@ token from the STS that can be used to access Mixed Reality services.
 
 ### Install the package
 
-Install the Azure Mixed Reality Authentication client library for .NET using one of the following methods.
-
-From Visual Studio Package Manager:
-
-```powershell
-Install-Package Azure.MixedReality.Authentication
-```
-
-From .NET CLI
+Install the Azure Mixed Reality Authentication client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.MixedReality.Authentication

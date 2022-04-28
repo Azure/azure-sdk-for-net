@@ -129,13 +129,12 @@ author: $author
 ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
-ms.prod: azure
-ms.technology: azure
 ms.devlang: $Language
 ms.service: $service
 ---
 "@
 
+  $ReadmeContent = $ReadmeContent -replace "https://docs.microsoft.com(/en-us)?/?", "/"
   return "$header`n$ReadmeContent"
 }
 
@@ -153,7 +152,8 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
     # version is always 'dev' when interacting with NPM.
     if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
       $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
-    } else {
+    }
+    else {
       # Default: use the dev version from package info as the version for
       # downstream processes
       $packageInfo.Version = $packageInfo.DevVersion
@@ -162,19 +162,23 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) {
+function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
+  $packageInfo = GetPackageInfoJson $packageInfoJsonLocation
+
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageInfo.Group) {
-    $packageMetadataArray = ($packageMetadataArray).Where({$_.GroupId -eq $packageInfo.Group})
+    $packageMetadataArray = ($packageMetadataArray).Where({ $_.GroupId -eq $packageInfo.Group })
   }
   if ($packageMetadataArray.Count -eq 0) {
     LogWarning "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV. Using best effort defaults."
     $packageMetadata = $null
-  } elseif ($packageMetadataArray.Count -gt 1) {
+  }
+  elseif ($packageMetadataArray.Count -gt 1) {
     LogWarning "Multiple metadata entries for $($packageInfo.Name) in metadata CSV. Using first entry."
     $packageMetadata = $packageMetadataArray[0]
-  } else {
+  }
+  else {
     $packageMetadata = $packageMetadataArray[0]
   }
 
@@ -214,15 +218,17 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
+# For daily update and release, validate DocsMS publishing using the language-specific validation function
+if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+  Write-Host "Validating the packages..."
+
+  $packageInfos = @($PackageInfoJsonLocations | ForEach-Object { GetPackageInfoJson $_ })
+
+  &$ValidateDocsMsPackagesFn -PackageInfos $packageInfos -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
+}
+
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfoLocation"
   # Convert package metadata json file to metadata json property.
-  $packageInfo = GetPackageInfoJson $packageInfoLocation
-  # Add validation step for daily update and release
-  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
-    Write-Host "Validating the package..."
-    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
-  }
-  Write-Host "Updating the package json ..."
-  UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
+  UpdateDocsMsMetadataForPackage $packageInfoLocation
 }

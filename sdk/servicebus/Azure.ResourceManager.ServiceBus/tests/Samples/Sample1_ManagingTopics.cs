@@ -72,23 +72,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_ServiceBusTopics_GetTopicIfExists
-            ServiceBusTopicResource serviceBusTopic = await serviceBusTopicCollection.GetIfExistsAsync("foo");
-            if (serviceBusTopic != null)
-            {
-                Console.WriteLine("topic 'foo' exists");
-            }
-            if (await serviceBusTopicCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("topic 'bar' exists");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_ServiceBusTopics_DeleteTopic

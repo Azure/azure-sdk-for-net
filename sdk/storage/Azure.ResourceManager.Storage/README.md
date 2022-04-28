@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.6
+```dotnetcli
+dotnet add package Azure.ResourceManager.Storage --prerelease
 ```
 
 ### Prerequisites
@@ -65,7 +65,7 @@ Then we can create a storage account inside this resource group.
 StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
 StorageKind kind = StorageKind.Storage;
 string location = "westus2";
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
@@ -90,22 +90,6 @@ await foreach (StorageAccountResource storageAccount in response)
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 StorageAccountResource storageAccount = await accountCollection.GetAsync("myAccount");
 Console.WriteLine(storageAccount.Id.Name);
-```
-
-### Try to get a storage account if it exists
-
-
-```C# Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccountResource storageAccount = await accountCollection.GetIfExistsAsync("foo");
-if (storageAccount != null)
-{
-    Console.WriteLine(storageAccount.Id.Name);
-}
-if (await accountCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("storage account 'bar' exists");
-}
 ```
 
 ### Delete a storage account
@@ -149,8 +133,8 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-For details on contributing to this repository, see the contributing
-guide.
+For details on contributing to this repository, see the [contributing
+guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -163,12 +147,11 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

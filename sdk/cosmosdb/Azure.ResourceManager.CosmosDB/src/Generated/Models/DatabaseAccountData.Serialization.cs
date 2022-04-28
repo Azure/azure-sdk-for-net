@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<IReadOnlyList<DatabaseAccountLocation>> locations = default;
             Optional<IReadOnlyList<FailoverPolicy>> failoverPolicies = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> enableMultipleWriteLocations = default;
             Optional<bool> enableCassandraConnector = default;
             Optional<ConnectorOffer> connectorOffer = default;
@@ -464,10 +464,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<CosmosDBPrivateEndpointConnectionData> array = new List<CosmosDBPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                keyVaultKeyUri = null;
                                 continue;
                             }
                             keyVaultKeyUri = new Uri(property0.Value.GetString());

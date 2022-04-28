@@ -10,7 +10,7 @@ function Get-ChangedFiles {
     [string]$DiffFilterType = "d"
   )
   # If ${env:SYSTEM_PULLREQUEST_TARGETBRANCH} is empty, then return empty.
-  if ($TargetCommittish -eq "origin/") {
+  if (!$TargetCommittish -or ($TargetCommittish -eq "origin/")) {
     Write-Host "There is no target branch passed in. "
     return ""
   }

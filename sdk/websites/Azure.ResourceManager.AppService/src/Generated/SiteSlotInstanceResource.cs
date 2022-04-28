@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotInstanceResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotInstanceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotInstance method.
+    /// </summary>
     public partial class SiteSlotInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotInstanceResource"/> instance. </summary>
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotInstanceProcessResource>> GetSiteSlotInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotInstanceProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
@@ -118,6 +124,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotInstanceProcessResource> GetSiteSlotInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotInstanceProcesses().Get(processId, cancellationToken);

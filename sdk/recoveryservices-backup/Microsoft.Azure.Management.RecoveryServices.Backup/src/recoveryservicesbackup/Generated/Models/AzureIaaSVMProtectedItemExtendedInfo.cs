@@ -32,14 +32,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// AzureIaaSVMProtectedItemExtendedInfo class.
         /// </summary>
         /// <param name="oldestRecoveryPoint">The oldest backup copy available
-        /// for this backup item.</param>
+        /// for this backup item across all tiers.</param>
+        /// <param name="oldestRecoveryPointInVault">The oldest backup copy
+        /// available for this backup item in vault tier</param>
+        /// <param name="oldestRecoveryPointInArchive">The oldest backup copy
+        /// available for this backup item in archive tier</param>
+        /// <param name="newestRecoveryPointInArchive">The latest backup copy
+        /// available for this backup item in archive tier</param>
         /// <param name="recoveryPointCount">Number of backup copies available
         /// for this backup item.</param>
         /// <param name="policyInconsistent">Specifies if backup policy
         /// associated with the backup item is inconsistent.</param>
-        public AzureIaaSVMProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), int? recoveryPointCount = default(int?), bool? policyInconsistent = default(bool?))
+        public AzureIaaSVMProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), System.DateTime? oldestRecoveryPointInVault = default(System.DateTime?), System.DateTime? oldestRecoveryPointInArchive = default(System.DateTime?), System.DateTime? newestRecoveryPointInArchive = default(System.DateTime?), int? recoveryPointCount = default(int?), bool? policyInconsistent = default(bool?))
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoveryPointInVault = oldestRecoveryPointInVault;
+            OldestRecoveryPointInArchive = oldestRecoveryPointInArchive;
+            NewestRecoveryPointInArchive = newestRecoveryPointInArchive;
             RecoveryPointCount = recoveryPointCount;
             PolicyInconsistent = policyInconsistent;
             CustomInit();
@@ -51,10 +60,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the oldest backup copy available for this backup item.
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// across all tiers.
         /// </summary>
         [JsonProperty(PropertyName = "oldestRecoveryPoint")]
         public System.DateTime? OldestRecoveryPoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// in vault tier
+        /// </summary>
+        [JsonProperty(PropertyName = "oldestRecoveryPointInVault")]
+        public System.DateTime? OldestRecoveryPointInVault { get; set; }
+
+        /// <summary>
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// in archive tier
+        /// </summary>
+        [JsonProperty(PropertyName = "oldestRecoveryPointInArchive")]
+        public System.DateTime? OldestRecoveryPointInArchive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the latest backup copy available for this backup item
+        /// in archive tier
+        /// </summary>
+        [JsonProperty(PropertyName = "newestRecoveryPointInArchive")]
+        public System.DateTime? NewestRecoveryPointInArchive { get; set; }
 
         /// <summary>
         /// Gets or sets number of backup copies available for this backup

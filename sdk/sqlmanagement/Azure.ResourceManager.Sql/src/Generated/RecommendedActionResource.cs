@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a RecommendedActionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a RecommendedAction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecommendedActionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetRecommendedActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerDatabaseAdvisorResource" /> using the GetRecommendedAction method.
+    /// </summary>
     public partial class RecommendedActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecommendedActionResource"/> instance. </summary>
@@ -134,18 +139,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
         /// Operation Id: DatabaseRecommendedActions_Update
         /// </summary>
-        /// <param name="parameters"> The requested recommended action resource state. </param>
+        /// <param name="data"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<RecommendedActionResource>> UpdateAsync(RecommendedActionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<RecommendedActionResource>> UpdateAsync(RecommendedActionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
             scope.Start();
             try
             {
-                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,18 +165,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
         /// Operation Id: DatabaseRecommendedActions_Update
         /// </summary>
-        /// <param name="parameters"> The requested recommended action resource state. </param>
+        /// <param name="data"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<RecommendedActionResource> Update(RecommendedActionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<RecommendedActionResource> Update(RecommendedActionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
             scope.Start();
             try
             {
-                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

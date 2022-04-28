@@ -20,7 +20,6 @@ namespace Azure.ResourceManager
     /// </summary>
     public abstract partial class ArmResource
     {
-        private TagResource _tagResource;
         private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
@@ -70,17 +69,11 @@ namespace Azure.ResourceManager
         protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
-        /// Gets the TagResourceOperations.
-        /// </summary>
-        /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagHelper => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
-
-        /// <summary>
         /// Gets the api version override if it has been set for the current client options.
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
-        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
+        protected virtual bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
 
         /// <summary>
         /// Lists all available geo-locations.
@@ -92,8 +85,8 @@ namespace Azure.ResourceManager
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            Response<ProviderInfo> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
-            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
+            Response<TenantResourceProvider> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -112,8 +105,8 @@ namespace Azure.ResourceManager
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            Response<ProviderInfo> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
-            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
+            Response<TenantResourceProvider> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -126,12 +119,12 @@ namespace Azure.ResourceManager
         /// Gets a cached client to use for extension methods.
         /// </summary>
         /// <typeparam name="T"> The type of client to get. </typeparam>
-        /// <param name="func"> The constructor factory for the client. </param>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
             where T : class
         {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
         }
     }
 }

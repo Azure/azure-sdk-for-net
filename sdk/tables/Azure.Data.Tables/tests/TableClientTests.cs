@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
@@ -278,7 +281,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(
                 token.StartsWith(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
+                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}={sas.Version}&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -557,6 +560,36 @@ namespace Azure.Data.Tables.Tests
                 ctx?.Dispose();
                 env?.Dispose();
             }
+        }
+
+        [Test]
+        public async Task LoggedQueryParameters()
+        {
+            _transport = new MockTransport(request => new MockResponse(200));
+            var options = TableClientOptions.DefaultOptions;
+            options.Transport = _transport;
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    options));
+            client = service_Instrumented.GetTableClient(TableName);
+
+            var messages = new List<string>();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (args, message) => messages.Add(string.Format(message, args)),
+                level: EventLevel.Verbose);
+
+            try
+            {
+                await client.QueryAsync<TableEntity>(filter: "myFilter", maxPerPage: 987, select: new[] { "mySelect" }).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            catch {/* don't throw */}
+
+            var message = messages.First(m => m.StartsWith("Request"));
+            Assert.That(message, Does.Contain("myFilter"), "Path should not redact 'filter");
+            Assert.That(message, Does.Contain("987"), "Path should not redact 'top");
+            Assert.That(message, Does.Contain("mySelect"), "Path should not redact 'select");
         }
 
         private static MockTransport TableAlreadyExistsTransport() =>

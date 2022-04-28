@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("requestTracingEnabled");
                 }
             }
-            if (Optional.IsDefined(RequestTracingExpirationTime))
+            if (Optional.IsDefined(RequestTracingExpirationOn))
             {
-                if (RequestTracingExpirationTime != null)
+                if (RequestTracingExpirationOn != null)
                 {
                     writer.WritePropertyName("requestTracingExpirationTime");
-                    writer.WriteStringValue(RequestTracingExpirationTime.Value, "O");
+                    writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
                 }
                 else
                 {

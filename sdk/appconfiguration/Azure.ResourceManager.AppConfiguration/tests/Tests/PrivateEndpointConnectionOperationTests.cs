@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
-        private PrivateEndpointConnectionResource Connection { get; set; }
+        private AppConfigurationPrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
             : base(isAsync)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
-                List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+                List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }
         }
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await Connection.DeleteAsync(WaitUntil.Completed);
-            PrivateEndpointConnectionResource connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { AppConfigurationPrivateEndpointConnectionResource connection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(Connection.Data.Name); });
 
-            Assert.IsNull(connection);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
         public async Task GetTest()
         {
-            PrivateEndpointConnectionResource connection = await Connection.GetAsync();
+            AppConfigurationPrivateEndpointConnectionResource connection = await Connection.GetAsync();
             Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
         }
 

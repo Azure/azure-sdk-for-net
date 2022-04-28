@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceDatabaseSchemaTableResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceDatabaseSchemaTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDatabaseSchemaTableResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDatabaseSchemaTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceDatabaseSchemaResource" /> using the GetManagedInstanceDatabaseSchemaTable method.
+    /// </summary>
     public partial class ManagedInstanceDatabaseSchemaTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchemaTableResource"/> instance. </summary>
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableColumnResource>> GetManagedInstanceDatabaseSchemaTableColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseSchemaTableColumns().GetAsync(columnName, cancellationToken).ConfigureAwait(false);
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedInstanceDatabaseSchemaTableColumn(string columnName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseSchemaTableColumns().Get(columnName, cancellationToken);

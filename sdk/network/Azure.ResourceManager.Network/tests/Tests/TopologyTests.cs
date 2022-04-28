@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests
             //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName2, networkWatcherName, properties);
 
-            TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
+            TopologyContent tpProperties = new TopologyContent() { TargetResourceGroupName = resourceGroupName1 };
 
             //Get the current network topology of the resourceGroupName1
             var networkWatcherCollection = GetNetworkWatcherCollection("NetworkWatcherRG");

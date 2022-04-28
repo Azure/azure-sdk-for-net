@@ -18,6 +18,17 @@ namespace Azure.Identity.Tests
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var context = new TokenRequestContext(new[] { Scope });
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
+
         [Test]
         public void VerifyCtorParametersValidation()
         {
@@ -73,6 +84,25 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unknownFormatCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await encryptedCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unsupportedCertCredential.GetTokenAsync(tokenContext));
+        }
+
+        public async Task ExceptionContainsTroubleshootingLink()
+        {
+            var response = new MockResponse(400);
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var expectedTenantId = Guid.NewGuid().ToString();
+            var expectedClientId = Guid.NewGuid().ToString();
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+
+            var exception = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(exception.Message, Does.Contain(ClientCertificateCredential.Troubleshooting));
+            await Task.CompletedTask;
         }
 
         [TestCase(true)]
