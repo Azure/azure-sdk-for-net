@@ -150,7 +150,7 @@ namespace Azure.AI.TextAnalytics
                     }
                 }
 
-                var sentiment = new TargetSentiment(
+                var targetSentiment = new TargetSentiment(
                     ConvertToTextSentiment(target.Sentiment),
                     target.Text,
                     target.ConfidenceScores.Positive,
@@ -158,7 +158,7 @@ namespace Azure.AI.TextAnalytics
                     target.Offset,
                     target.Length);
 
-                opinions.Add(new SentenceOpinion(sentiment, assessments));
+                opinions.Add(new SentenceOpinion(targetSentiment, assessments));
             }
 
             return opinions;
