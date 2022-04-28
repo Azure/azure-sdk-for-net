@@ -25,6 +25,7 @@ namespace Azure.AI.TextAnalytics
         private readonly Uri _baseUri;
         private readonly TextAnalyticsClientOptions _options;
         private readonly TextAnalyticsRequestOptions _requestOptions = new TextAnalyticsRequestOptions();
+        private readonly RecognizePiiEntitiesOptions _piiEntitiesOptions = new RecognizePiiEntitiesOptions();
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -804,7 +805,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new RecognizePiiEntitiesOptions();
+            options ??= _piiEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("document", document);
@@ -874,7 +875,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new RecognizePiiEntitiesOptions();
+            options ??= _piiEntitiesOptions;
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("document", document);
@@ -943,12 +944,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new RecognizePiiEntitiesOptions();
-            //AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToLanguageInputs(documents, language);
-            //return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _piiEntitiesOptions;
+            AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToLanguageInputs(documents, language);
+
+            return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
