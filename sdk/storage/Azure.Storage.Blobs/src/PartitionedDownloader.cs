@@ -74,7 +74,9 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = Constants.DefaultBufferSize;
+                _rangeSize = validationOptions != null
+                    ? Constants.MaxHashRequestDownloadRange
+                    : Constants.DefaultBufferSize;
             }
 
             // Set _initialRangeSize
@@ -85,7 +87,9 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                _initialRangeSize = validationOptions != null
+                    ? Constants.MaxHashRequestDownloadRange
+                    : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
@@ -197,7 +201,7 @@ namespace Azure.Storage.Blobs
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
                     runningTasks.Enqueue(_client.DownloadStreamingInternal(
-                        initialRange,
+                        httpRange,
                         conditionsWithEtag,
                         _validationOptions,
                         _progress,
@@ -332,7 +336,7 @@ namespace Azure.Storage.Blobs
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
                     Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
-                        range: default,
+                        httpRange,
                         conditionsWithEtag,
                         _validationOptions,
                         _progress,

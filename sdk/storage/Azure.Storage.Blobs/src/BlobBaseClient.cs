@@ -2962,7 +2962,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        DownloadTransferValidationOptions validationOptions,
+                        DownloadTransferValidationOptions downloadValidationOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
@@ -2973,7 +2973,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 readConditions,
-                                transferValidationOverride: default,
+                                transferValidationOverride: downloadValidationOptions,
                                 progressHandler: default,
                                 operationName,
                                 async,

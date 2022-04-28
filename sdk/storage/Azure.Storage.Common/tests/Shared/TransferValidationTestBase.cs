@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Record)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -73,18 +73,18 @@ namespace Azure.Storage.Test.Shared
             Stream source,
             UploadTransferValidationOptions validationOptions);
 
-        ///// <summary>
-        ///// Calls the 1:1 download method for the given resource client.
-        ///// </summary>
-        ///// <param name="client">Client to call the download on.</param>
-        ///// <param name="destination">Where to send downloaded data.</param>
-        ///// <param name="validationOptions">Validation options to use on download.</param>
-        ///// <param name="range">Range parameter for download, necessary for transactional checksum request to be accepted by service.</param>
-        //protected abstract Task<Response> DownloadPartitionAsync(
-        //    TResourceClient client,
-        //    Stream destination,
-        //    DownloadTransferValidationOptions validationOptions,
-        //    HttpRange range = default);
+        /// <summary>
+        /// Calls the 1:1 download method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call the download on.</param>
+        /// <param name="destination">Where to send downloaded data.</param>
+        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="range">Range parameter for download, necessary for transactional checksum request to be accepted by service.</param>
+        protected abstract Task<Response> DownloadPartitionAsync(
+            TResourceClient client,
+            Stream destination,
+            DownloadTransferValidationOptions validationOptions,
+            HttpRange range = default);
 
         /// <summary>
         /// Calls the parallel upload method for the given resource client.
@@ -99,18 +99,18 @@ namespace Azure.Storage.Test.Shared
             UploadTransferValidationOptions validationOptions,
             StorageTransferOptions transferOptions);
 
-        ///// <summary>
-        ///// Calls the parallel download method for the given resource client.
-        ///// </summary>
-        ///// <param name="client">Client to call download on.</param>
-        ///// <param name="destination">Where to send downloaded data.</param>
-        ///// <param name="validationOptions">Validation options to use on download.</param>
-        ///// <param name="transferOptions">Storage transfer options to use on download.</param>
-        //protected abstract Task ParallelDownloadAsync(
-        //    TResourceClient client,
-        //    Stream destination,
-        //    DownloadTransferValidationOptions validationOptions,
-        //    StorageTransferOptions transferOptions);
+        /// <summary>
+        /// Calls the parallel download method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call download on.</param>
+        /// <param name="destination">Where to send downloaded data.</param>
+        /// <param name="validationOptions">Validation options to use on download.</param>
+        /// <param name="transferOptions">Storage transfer options to use on download.</param>
+        protected abstract Task ParallelDownloadAsync(
+            TResourceClient client,
+            Stream destination,
+            DownloadTransferValidationOptions validationOptions,
+            StorageTransferOptions transferOptions);
 
         /// <summary>
         /// Calls the open write method for the given resource client.
@@ -123,16 +123,16 @@ namespace Azure.Storage.Test.Shared
             UploadTransferValidationOptions validationOptions,
             int internalBufferSize);
 
-        ///// <summary>
-        ///// Calls the open read method for the given resource client.
-        ///// </summary>
-        ///// <param name="client">Client to call open read on.</param>
-        ///// <param name="validationOptions">Validation options to use in the read stream.</param>
-        ///// <param name="internalBufferSize">Buffer size for the read stream.</param>
-        //protected abstract Task<Stream> OpenReadAsync(
-        //    TResourceClient client,
-        //    DownloadTransferValidationOptions validationOptions,
-        //    int internalBufferSize);
+        /// <summary>
+        /// Calls the open read method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call open read on.</param>
+        /// <param name="validationOptions">Validation options to use in the read stream.</param>
+        /// <param name="internalBufferSize">Buffer size for the read stream.</param>
+        protected abstract Task<Stream> OpenReadAsync(
+            TResourceClient client,
+            DownloadTransferValidationOptions validationOptions,
+            int internalBufferSize);
 
         /// <summary>
         /// Sets up data for a test.
@@ -621,183 +621,183 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Parallel Download Tests
-        //[Test, Combinatorial]
-        //public virtual async Task ParallelDownloadSuccessfulHashVerification(
-        //    [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
-        //    [Values(512, 2 * Constants.KB)] int chunkSize)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [Test, Combinatorial]
+        public virtual async Task ParallelDownloadSuccessfulHashVerification(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [Values(512, 2 * Constants.KB)] int chunkSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = 2 * Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
+            // Arrange
+            const int dataLength = 2 * Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
-        //    var resourceName = GetNewResourceName();
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        resourceLength: dataLength,
-        //        createResource: true,
-        //        resourceName: resourceName);
-        //    await SetupDataAsync(client, new MemoryStream(data));
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
-        //    // make pipeline assertion for checking checksum was present on download
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        createResource: false,
-        //        resourceName: resourceName,
-        //        options: clientOptions);
-        //    var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
-        //    StorageTransferOptions transferOptions = new StorageTransferOptions
-        //    {
-        //        InitialTransferSize = chunkSize,
-        //        MaximumTransferSize = chunkSize
-        //    };
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferSize = chunkSize
+            };
 
-        //    // Act
-        //    checksumPipelineAssertion.CheckResponse = true;
-        //    await ParallelDownloadAsync(client, Stream.Null, validationOptions, transferOptions);
+            // Act
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, validationOptions, transferOptions);
 
-        //    // Assert
-        //    // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
-        //}
+            // Assert
+            // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
+        }
         #endregion
 
         #region OpenRead Tests
-        //[Test, Combinatorial]
-        //public virtual async Task OpenReadSuccessfulHashVerification(
-        //    [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
-        //    [Values(
-        //        // multiple reads that neatly align
-        //        Constants.KB,
-        //        // multiple reads with final having leftover buffer space
-        //        2 * Constants.KB,
-        //        // buffer larger than data
-        //        4 * Constants.KB)] int bufferSize)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [Test, Combinatorial]
+        public virtual async Task OpenReadSuccessfulHashVerification(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [Values(
+                // multiple reads that neatly align
+                Constants.KB,
+                // multiple reads with final having leftover buffer space
+                2 * Constants.KB,
+                // buffer larger than data
+                4 * Constants.KB)] int bufferSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    // bufferSize/datasize MUST be a multiple of 512 for pageblob tests
-        //    const int dataLength = 3 * Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
+            // Arrange
+            // bufferSize/datasize MUST be a multiple of 512 for pageblob tests
+            const int dataLength = 3 * Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
-        //    var resourceName = GetNewResourceName();
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        resourceLength: dataLength,
-        //        createResource: true,
-        //        resourceName: resourceName);
-        //    await SetupDataAsync(client, new MemoryStream(data));
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
-        //    // make pipeline assertion for checking checksum was present on download
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(algorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        createResource: false,
-        //        resourceName: resourceName,
-        //        options: clientOptions);
-        //    var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
-        //    // Act
-        //    var readStream = await OpenReadAsync(client, validationOptions, bufferSize);
+            // Act
+            var readStream = await OpenReadAsync(client, validationOptions, bufferSize);
 
-        //    // Assert
-        //    checksumPipelineAssertion.CheckResponse = true;
-        //    await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
-        //}
+            // Assert
+            checksumPipelineAssertion.CheckResponse = true;
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
         #endregion
 
         #region Download Streaming/Content Tests
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task DownloadSuccessfulHashVerification(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task DownloadSuccessfulHashVerification(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
-        //    var resourceName = GetNewResourceName();
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        resourceLength: dataLength,
-        //        createResource: true,
-        //        resourceName: resourceName);
-        //    await SetupDataAsync(client, new MemoryStream(data));
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
-        //    var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm };
 
-        //    // Act
-        //    var response = await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            // Act
+            var response = await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
 
-        //    // Assert
-        //    // no policies this time; just check response headers
-        //    switch (algorithm.ResolveAuto())
-        //    {
-        //        case ValidationAlgorithm.MD5:
-        //            Assert.True(response.Headers.Contains("Content-MD5"));
-        //            break;
-        //        case ValidationAlgorithm.StorageCrc64:
-        //            Assert.True(response.Headers.Contains("x-ms-content-crc64"));
-        //            break;
-        //        default:
-        //            Assert.Fail("Test can't validate given algorithm type.");
-        //            break;
-        //    }
-        //}
+            // Assert
+            // no policies this time; just check response headers
+            switch (algorithm.ResolveAuto())
+            {
+                case ValidationAlgorithm.MD5:
+                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    break;
+                case ValidationAlgorithm.StorageCrc64:
+                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+        }
 
-        //[Test, Combinatorial]
-        //public virtual async Task DownloadHashMismatchThrows(
-        //    [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
-        //    [Values(true, false)] bool validate)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [Test, Combinatorial]
+        public virtual async Task DownloadHashMismatchThrows(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm algorithm,
+            [Values(true, false)] bool validate)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
 
-        //    var resourceName = GetNewResourceName();
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        resourceLength: dataLength,
-        //        createResource: true,
-        //        resourceName: resourceName);
-        //    await SetupDataAsync(client, new MemoryStream(data));
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
 
-        //    var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
+            var validationOptions = new DownloadTransferValidationOptions { Algorithm = algorithm, Validate = validate };
 
-        //    // alter response contents in pipeline, forcing a checksum mismatch on verification step
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
-        //    client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        createResource: false,
-        //        resourceName: resourceName,
-        //        options: clientOptions);
+            // alter response contents in pipeline, forcing a checksum mismatch on verification step
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                createResource: false,
+                resourceName: resourceName,
+                options: clientOptions);
 
-        //    // Act
-        //    AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
+            // Act
+            AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, Stream.Null, validationOptions, new HttpRange(length: data.Length));
 
-        //    // Assert
-        //    if (validate)
-        //    {
-        //        // SDK responsible for finding bad checksum. Throw.
-        //        ThrowsOrInconclusiveAsync<InvalidDataException>(operation);
-        //    }
-        //    else
-        //    {
-        //        // bad checksum is for caller to find. Don't throw.
-        //        await DoesNotThrowOrInconclusiveAsync(operation);
-        //    }
-        //}
+            // Assert
+            if (validate)
+            {
+                // SDK responsible for finding bad checksum. Throw.
+                ThrowsOrInconclusiveAsync<InvalidDataException>(operation);
+            }
+            else
+            {
+                // bad checksum is for caller to find. Don't throw.
+                await DoesNotThrowOrInconclusiveAsync(operation);
+            }
+        }
         #endregion
 
         [Test]
@@ -807,51 +807,51 @@ namespace Azure.Storage.Test.Shared
             Assert.AreEqual(ValidationAlgorithm.Auto, uploadOptions.Algorithm);
             Assert.IsNull(uploadOptions.PrecalculatedChecksum);
 
-            //var downloadOptions = new DownloadTransferValidationOptions();
-            //Assert.AreEqual(ValidationAlgorithm.Auto, downloadOptions.Algorithm);
-            //Assert.IsTrue(downloadOptions.Validate);
+            var downloadOptions = new DownloadTransferValidationOptions();
+            Assert.AreEqual(ValidationAlgorithm.Auto, downloadOptions.Algorithm);
+            Assert.IsTrue(downloadOptions.Validate);
         }
 
-        //[Test]
-        //public async Task RoundtripWIthDefaults()
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [Test]
+        public async Task RoundtripWIthDefaults()
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
-        //    var uploadvalidationOptions = new UploadTransferValidationOptions();
-        //    var downloadvalidationOptions = new DownloadTransferValidationOptions();
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    StorageTransferOptions transferOptions = new StorageTransferOptions
-        //    {
-        //        InitialTransferSize = 512,
-        //        MaximumTransferSize = 512
-        //    };
+            // Arrange
+            const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var uploadvalidationOptions = new UploadTransferValidationOptions();
+            var downloadvalidationOptions = new DownloadTransferValidationOptions();
+            var clientOptions = ClientBuilder.GetOptions();
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = 512,
+                MaximumTransferSize = 512
+            };
 
-        //    // make pipeline assertion for checking checksum was present on upload AND download
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(
-        //        checkRequest: GetRequestChecksumAssertion(expectedAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected),
-        //        checkResponse: GetResponseChecksumAssertion(expectedAlgorithm));
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on upload AND download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(expectedAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected),
+                checkResponse: GetResponseChecksumAssertion(expectedAlgorithm));
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
-        //    // Act
-        //    using (var stream = new MemoryStream(data))
-        //    {
-        //        checksumPipelineAssertion.CheckRequest = true;
-        //        await ParallelUploadAsync(client, stream, uploadvalidationOptions, transferOptions);
-        //        checksumPipelineAssertion.CheckRequest = false;
-        //    }
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, uploadvalidationOptions, transferOptions);
+                checksumPipelineAssertion.CheckRequest = false;
+            }
 
-        //    checksumPipelineAssertion.CheckResponse = true;
-        //    await ParallelDownloadAsync(client, Stream.Null, downloadvalidationOptions, transferOptions);
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, downloadvalidationOptions, transferOptions);
 
-        //    // Assert
-        //    // Assertion was in the pipeline and the service returning success means the checksum was correct
-        //}
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
 
         /// <summary>
         /// Replicates <c>ThrowsOrInconclusiveAsync&lt;<typeparamref name="TException"/>&gt;</c> while allowing

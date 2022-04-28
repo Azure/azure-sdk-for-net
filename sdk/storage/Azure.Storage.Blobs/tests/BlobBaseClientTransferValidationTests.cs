@@ -36,96 +36,96 @@ namespace Azure.Storage.Blobs.Tests
             string containerName = null)
             => await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
 
-        //protected override async Task<Response> DownloadPartitionAsync(
-        //    TBlobClient client,
-        //    Stream destination,
-        //    DownloadTransferValidationOptions hashingOptions,
-        //    HttpRange range = default)
-        //{
-        //    var response = await client.DownloadStreamingAsync(new BlobDownloadOptions
-        //    {
-        //        TransactionalHashingOptions = hashingOptions,
-        //        Range = range
-        //    });
+        protected override async Task<Response> DownloadPartitionAsync(
+            TBlobClient client,
+            Stream destination,
+            DownloadTransferValidationOptions hashingOptions,
+            HttpRange range = default)
+        {
+            var response = await client.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                TransferValidationOptions = hashingOptions,
+                Range = range
+            });
 
-        //    await response.Value.Content.CopyToAsync(destination);
-        //    return response.GetRawResponse();
-        //}
+            await response.Value.Content.CopyToAsync(destination);
+            return response.GetRawResponse();
+        }
 
-        //protected override async Task ParallelDownloadAsync(
-        //    TBlobClient client,
-        //    Stream destination,
-        //    DownloadTransferValidationOptions hashingOptions,
-        //    StorageTransferOptions transferOptions)
-        //    => await client.DownloadToAsync(destination, new BlobDownloadToOptions
-        //    {
-        //        TransactionalHashingOptions = hashingOptions,
-        //        TransferOptions = transferOptions,
-        //    });
+        protected override async Task ParallelDownloadAsync(
+            TBlobClient client,
+            Stream destination,
+            DownloadTransferValidationOptions hashingOptions,
+            StorageTransferOptions transferOptions)
+            => await client.DownloadToAsync(destination, new BlobDownloadToOptions
+            {
+                TransferValidationOptions = hashingOptions,
+                TransferOptions = transferOptions,
+            });
 
-        //protected override async Task<Stream> OpenReadAsync(
-        //    TBlobClient client,
-        //    DownloadTransferValidationOptions hashingOptions,
-        //    int internalBufferSize)
-        //    => await client.OpenReadAsync(new BlobOpenReadOptions(false)
-        //    {
-        //        BufferSize = internalBufferSize,
-        //        TransactionalHashingOptions = hashingOptions
-        //    });
+        protected override async Task<Stream> OpenReadAsync(
+            TBlobClient client,
+            DownloadTransferValidationOptions hashingOptions,
+            int internalBufferSize)
+            => await client.OpenReadAsync(new BlobOpenReadOptions(false)
+            {
+                BufferSize = internalBufferSize,
+                TransferValidationOptions = hashingOptions
+            });
 
         #region Added Tests
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm)
-        //{
-        //    await using var test = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm)
+        {
+            await using var test = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    var data = GetRandomBuffer(Constants.KB);
-        //    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-        //    using (var stream = new MemoryStream(data))
-        //    {
-        //        await blob.UploadAsync(stream);
-        //    }
-        //    // don't make options instance at all for no hash request
-        //    DownloadTransferValidationOptions hashingOptions = algorithm == ValidationAlgorithm.None
-        //        ? default
-        //        : new DownloadTransferValidationOptions { Algorithm = algorithm };
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            // don't make options instance at all for no hash request
+            DownloadTransferValidationOptions hashingOptions = algorithm == ValidationAlgorithm.None
+                ? default
+                : new DownloadTransferValidationOptions { Algorithm = algorithm };
 
-        //    // Act
-        //    Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
-        //    {
-        //        TransactionalHashingOptions = hashingOptions,
-        //        Range = new HttpRange(length: data.Length)
-        //    });
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                TransferValidationOptions = hashingOptions,
+                Range = new HttpRange(length: data.Length)
+            });
 
-        //    // Assert
-        //    // validated stream is buffered
-        //    Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
-        //}
+            // Assert
+            // validated stream is buffered
+            Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
+        }
 
-        //[Test]
-        //public async Task ExpectedDownloadStreamingStreamTypeReturned_None()
-        //{
-        //    await using var test = await GetDisposingContainerAsync();
+        [Test]
+        public async Task ExpectedDownloadStreamingStreamTypeReturned_None()
+        {
+            await using var test = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    var data = GetRandomBuffer(Constants.KB);
-        //    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-        //    using (var stream = new MemoryStream(data))
-        //    {
-        //        await blob.UploadAsync(stream);
-        //    }
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
 
-        //    // Act
-        //    Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
-        //    {
-        //        Range = new HttpRange(length: data.Length)
-        //    });
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                Range = new HttpRange(length: data.Length)
+            });
 
-        //    // Assert
-        //    // unvalidated stream type is private; just check we didn't get back a buffered stream
-        //    Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
-        //}
+            // Assert
+            // unvalidated stream type is private; just check we didn't get back a buffered stream
+            Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
+        }
         #endregion
     }
 }
