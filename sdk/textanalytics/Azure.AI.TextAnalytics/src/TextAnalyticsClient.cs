@@ -593,6 +593,8 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
             AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
+            input = DocumentsToEntityRecognition(documents, input, options, language);
+
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -625,12 +627,12 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
-            //return RecognizeEntitiesBatch(input, options, cancellationToken);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
+            input = DocumentsToEntityRecognition(documents, input, options, language);
+
+            return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
 
         /// <summary>
@@ -657,15 +659,13 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
+            input = TextDocumentInputToEntityRecognition(documents, input, options);
 
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
-            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait
-            //(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait
+            (false);
         }
 
         /// <summary>
@@ -692,16 +692,14 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
+            input = TextDocumentInputToEntityRecognition(documents, input, options);
 
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
-            //return RecognizeEntitiesBatch(input, options, cancellationToken);
-            throw new NotImplementedException();
+            return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
 
-        //CHANGED: Overload for new Swagger
         private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -732,7 +730,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        //CHANGED: Overload for new Swagger
         private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -761,6 +758,34 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, AnalyzeTextEntityRecognitionInput textEntityInputs, TextAnalyticsRequestOptions options, string language)
+        {
+            int id = 0;
+            foreach (var document in documents)
+            {
+                var input = new MultiLanguageInput($"{id}", document);
+                id++;
+                input.Language = language;
+                textEntityInputs.AnalysisInput.Documents.Add(input);
+            }
+            textEntityInputs.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
+
+            return textEntityInputs;
+        }
+
+        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents, AnalyzeTextEntityRecognitionInput textEntityInputs, TextAnalyticsRequestOptions options)
+        {
+            foreach (var document in documents)
+            {
+                var input = new MultiLanguageInput(document.Id, document.Text);
+                input.Language = document.Language;
+                textEntityInputs.AnalysisInput.Documents.Add(input);
+            }
+            textEntityInputs.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
+
+            return textEntityInputs;
         }
 
         #endregion
