@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -13,6 +14,9 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     internal static partial class Transforms
     {
+        /// <summary>The expression used for extracting indexes from a sentence sentiment assessment.</summary>
+        private static readonly Regex s_sentenceSentimentAssessmentRegex = new(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/assessments/(?<assessmentIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
         #region Common
 
         internal static TextAnalyticsError ConvertToError(Legacy.TextAnalyticsError error)
@@ -130,58 +134,51 @@ namespace Azure.AI.TextAnalytics
                 _ => throw new NotSupportedException($"The document sentiment, { sentiment }, is not supported for conversion.")
             };
 
-        //TODO:  Check this conversion.  Seems to match: https://github.com/Azure/azure-sdk-for-net/blob/Azure.AI.TextAnalytics_5.2.0-beta.2/sdk/textanalytics/Azure.AI.TextAnalytics/src/DocumentSentiment.cs#L56
-        internal static List<SentenceOpinion> ConvertToSentenceOpinions(IReadOnlyList<Legacy.SentenceAssessment> assessments)
+        internal static List<SentenceOpinion> ConvertToSentenceOpinions(Legacy.SentenceSentiment currentSentence, IReadOnlyList<Legacy.SentenceSentiment> allSentences)
         {
-            var assessmentList = new List<AssessmentSentiment>(assessments.Count);
-            var targetList = new List<TargetSentiment>(assessments.Count);
+            var opinions = new List<SentenceOpinion>();
 
-            foreach (var assessment in assessments)
+            foreach (var target in currentSentence.Targets)
             {
-                targetList.Add(new TargetSentiment(
-                    ConvertToTextSentiment(assessment.Sentiment),
-                    assessment.Text,
-                    assessment.ConfidenceScores.Positive,
-                    assessment.ConfidenceScores.Negative,
-                    assessment.Offset,
-                    assessment.Length));
+                var assessments = new List<AssessmentSentiment>();
 
-                assessmentList.Add(new AssessmentSentiment(
-                    ConvertToTextSentiment(assessment.Sentiment),
-                    assessment.ConfidenceScores.Positive,
-                    assessment.ConfidenceScores.Negative,
-                    assessment.Text,
-                    assessment.IsNegated,
-                    assessment.Offset,
-                    assessment.Length));
-            }
+                foreach (var relation in target.Relations)
+                {
+                    if (relation.RelationType == Legacy.Models.TargetRelationType.Assessment)
+                    {
+                        assessments.Add(ResolveAssessmentReference(allSentences, relation.Ref));
+                    }
+                }
 
-            var opinions = new List<SentenceOpinion>(targetList.Count);
+                var sentiment = new TargetSentiment(
+                    ConvertToTextSentiment(target.Sentiment),
+                    target.Text,
+                    target.ConfidenceScores.Positive,
+                    target.ConfidenceScores.Negative,
+                    target.Offset,
+                    target.Length);
 
-            foreach (var target in targetList)
-            {
-                opinions.Add(new SentenceOpinion(target, assessmentList));
+                opinions.Add(new SentenceOpinion(sentiment, assessments));
             }
 
             return opinions;
         }
 
-        //TODO: Check this conversion.  The assessment conversion is odd, but seems to match the legacy version.
         internal static List<SentenceSentiment> ConvertToSentenceSentiments(IReadOnlyList<Legacy.SentenceSentiment> legacySentences)
         {
             var sentences = new List<SentenceSentiment>(legacySentences.Count);
 
-            foreach (var sentence in legacySentences)
+            foreach (var legacySentence in legacySentences)
             {
                 sentences.Add(new SentenceSentiment(
-                    ConvertToTextSentiment(sentence.Sentiment),
-                    sentence.Text,
-                    sentence.ConfidenceScores.Positive,
-                    sentence.ConfidenceScores.Neutral,
-                    sentence.ConfidenceScores.Negative,
-                    sentence.Offset,
-                    sentence.Length,
-                    ConvertToSentenceOpinions(sentence.Assessments)));
+                    ConvertToTextSentiment(legacySentence.Sentiment),
+                    legacySentence.Text,
+                    legacySentence.ConfidenceScores.Positive,
+                    legacySentence.ConfidenceScores.Neutral,
+                    legacySentence.ConfidenceScores.Negative,
+                    legacySentence.Offset,
+                    legacySentence.Length,
+                    ConvertToSentenceOpinions(legacySentence, legacySentences)));
             }
 
             return sentences;
@@ -241,6 +238,36 @@ namespace Azure.AI.TextAnalytics
             }
 
             return list;
+        }
+
+        private static AssessmentSentiment ResolveAssessmentReference(IReadOnlyList<Legacy.SentenceSentiment> sentences, string reference)
+        {
+            // Example:
+            //   The following should result in sentenceIndex = 2, assessmentIndex = 1. (there will not be cases where sentences from other documents are referenced)
+            //   "#/documents/0/sentences/2/assessments/1"
+
+            var assessmentMatch = s_sentenceSentimentAssessmentRegex.Match(reference);
+
+            if (assessmentMatch.Success
+                 && assessmentMatch.Groups.Count == 4
+                 && int.TryParse(assessmentMatch.Groups["sentenceIndex"]?.Value, out var sentenceIndex)
+                 && int.TryParse(assessmentMatch.Groups["assessmentIndex"]?.Value, out var assessmentIndex)
+                 && sentenceIndex < sentences.Count
+                 && assessmentIndex < sentences[sentenceIndex].Assessments.Count)
+            {
+                var assessment = sentences[sentenceIndex].Assessments[assessmentIndex];
+
+                return new AssessmentSentiment(
+                    ConvertToTextSentiment(assessment.Sentiment),
+                    assessment.ConfidenceScores.Positive,
+                    assessment.ConfidenceScores.Negative,
+                    assessment.Text,
+                    assessment.IsNegated,
+                    assessment.Offset,
+                    assessment.Length);
+            }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
 
         #endregion
