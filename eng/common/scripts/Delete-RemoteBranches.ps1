@@ -66,7 +66,7 @@ foreach ($res in $responses)
         continue
       }
       
-      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has a last commit date $commitDate that is older than $LastCommitOlderThan. Deleting branch..."
+      LogDebug "Branch [ $branch ] in repo [ $RepoId ] has a last commit date $commitDate that is older than $LastCommitOlderThan. "
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
@@ -75,6 +75,7 @@ foreach ($res in $responses)
   } 
   try {
     Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
+    LogDebug "The branch $branch in $RepoId has been deleted."
   }
   catch {
     LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
