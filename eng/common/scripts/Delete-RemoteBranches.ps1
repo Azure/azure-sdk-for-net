@@ -66,7 +66,7 @@ foreach ($res in $responses)
         continue
       }
       
-      LogDebug "Last commit date $commitDate is older than $LastCommitOlderThan. Deleting..."
+      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has a last commit date $commitDate that is older than $LastCommitOlderThan. Deleting branch..."
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
