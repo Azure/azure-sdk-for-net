@@ -103,6 +103,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
+
+        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
@@ -126,26 +131,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerUsagesOperations.
         /// </summary>
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IDatabaseAdvisorsOperations.
@@ -658,11 +643,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IEndpointCertificatesOperations EndpointCertificates { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
@@ -681,6 +661,26 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRecommendedSensitivityLabelsOperations.
         /// </summary>
         public virtual IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -929,15 +929,12 @@ namespace Microsoft.Azure.Management.Sql
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
             Databases = new DatabasesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
+            ReplicationLinks = new ReplicationLinksOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
-            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
-            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
-            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
-            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
             DatabaseAdvisors = new DatabaseAdvisorsOperations(this);
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             DatabaseColumns = new DatabaseColumnsOperations(this);
@@ -1040,11 +1037,14 @@ namespace Microsoft.Azure.Management.Sql
             ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
             IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             EndpointCertificates = new EndpointCertificatesOperations(this);
-            ReplicationLinks = new ReplicationLinksOperations(this);
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
             ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
             RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
+            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
+            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

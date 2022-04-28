@@ -107,6 +107,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RecommendedSensitivityLabels", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ReplicationLinks", "2021-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedDatabases", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2021-05-01-preview"),
@@ -149,10 +150,10 @@ namespace Microsoft.Azure.Management.Sql
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/IliasKhan/azure-rest-api-specs/blob/dev/iliaskhan/updateApiVersion/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "IliasKhan";
-      public static readonly String GithubBranchName = "dev/iliaskhan/updateApiVersion";
-      public static readonly String GithubCommidId = "0c03b7c6e4df521103d1deddfc51fca396798f78";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "bfc629362a914f63133ec7ecdbe3c1bdd539512f";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -98,6 +98,11 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        IReplicationLinksOperations ReplicationLinks { get; }
+
+        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
@@ -121,26 +126,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerUsagesOperations.
         /// </summary>
         IServerUsagesOperations ServerUsages { get; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
 
         /// <summary>
         /// Gets the IDatabaseAdvisorsOperations.
@@ -653,11 +638,6 @@ namespace Microsoft.Azure.Management.Sql
         IEndpointCertificatesOperations EndpointCertificates { get; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        IReplicationLinksOperations ReplicationLinks { get; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
@@ -676,6 +656,26 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRecommendedSensitivityLabelsOperations.
         /// </summary>
         IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
 
     }
 }
