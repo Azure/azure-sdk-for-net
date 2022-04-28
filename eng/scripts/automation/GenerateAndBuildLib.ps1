@@ -152,7 +152,7 @@ function New-DataPlanePackageFolder() {
     Invoke-Expression $dotnetNewCmd
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    Update-AutorestConfigFile -autorestFilePath $file -inputfile -readme $readme
+    Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
     # dotnet sln
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
