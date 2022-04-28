@@ -111,9 +111,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FailoverPriority < 0)
+            if (FailoverPriority != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "FailoverPriority", 0);
+                if (FailoverPriority < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "FailoverPriority", 0);
+                }
             }
         }
     }

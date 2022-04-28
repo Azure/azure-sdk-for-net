@@ -81,9 +81,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (InstanceCount < 0)
+            if (InstanceCount != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "InstanceCount", 0);
+                if (InstanceCount < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "InstanceCount", 0);
+                }
             }
         }
     }

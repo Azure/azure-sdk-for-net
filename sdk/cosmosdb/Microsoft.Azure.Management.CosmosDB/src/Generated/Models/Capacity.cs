@@ -65,9 +65,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TotalThroughputLimit < -1)
+            if (TotalThroughputLimit != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalThroughputLimit", -1);
+                if (TotalThroughputLimit < -1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalThroughputLimit", -1);
+                }
             }
         }
     }
