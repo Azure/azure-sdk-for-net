@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             ConnectionString.ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
             _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
 
-            if (!options.DisableStorage)
+            if (!options.DisableOfflineStorage)
             {
                 try
                 {
