@@ -135,7 +135,7 @@ namespace Azure.AI.TextAnalytics
         //    return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
         //}
 
-    internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
+        internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
         {
             //var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Errors.Count);
 
