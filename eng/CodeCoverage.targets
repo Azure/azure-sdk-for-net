@@ -85,7 +85,7 @@
     This needs to be available in all projects.
   -->
   <ItemGroup>
-    <SourceRoot Include="$(NuGetPackageRoot)" />
+    <SourceRoot Include="$([MSBuild]::EnsureTrailingSlash($(NuGetPackageRoot)))" />
   </ItemGroup>
 
   <Target Name="CoverletGetPathMap"
