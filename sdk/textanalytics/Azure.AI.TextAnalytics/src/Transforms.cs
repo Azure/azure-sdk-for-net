@@ -196,12 +196,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
         {
-            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
-            foreach (var warning in documentEntities.Warnings)
-            {
-                warnings.Add(new TextAnalyticsWarning(warning));
-            }
-            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), warnings);
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
         }
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)

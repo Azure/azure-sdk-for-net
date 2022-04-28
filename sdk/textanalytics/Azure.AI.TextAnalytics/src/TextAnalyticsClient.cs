@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -259,8 +260,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -294,8 +294,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
@@ -322,8 +321,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+            LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -351,8 +349,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+            LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
@@ -409,8 +406,9 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, string countryHint = default)
         {
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             int id = 0;
             foreach (var document in documents)
             {
@@ -421,8 +419,9 @@ namespace Azure.AI.TextAnalytics
             return detectLanguageInputs;
         }
 
-        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents, LanguageDetectionAnalysisInput detectLanguageInputs)
+        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents)
         {
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             foreach (var document in documents)
             {
                 LanguageInput languageInput = new LanguageInput (document.Id, document.Text);
@@ -592,8 +591,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
-            input = DocumentsToEntityRecognition(documents, input, options, language);
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, options, language);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -629,8 +627,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
-            input = DocumentsToEntityRecognition(documents, input, options, language);
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, options, language);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
@@ -661,11 +658,9 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
-            input = TextDocumentInputToEntityRecognition(documents, input, options);
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents, options);
 
-            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait
-            (false);
+            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -694,8 +689,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = new AnalyzeTextEntityRecognitionInput();
-            input = TextDocumentInputToEntityRecognition(documents, input, options);
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents, options);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
@@ -760,12 +754,13 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, AnalyzeTextEntityRecognitionInput textEntityInputs, TextAnalyticsRequestOptions options, string language)
+        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, TextAnalyticsRequestOptions options, string language)
         {
+            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
             int id = 0;
             foreach (var document in documents)
             {
-                var input = new MultiLanguageInput($"{id}", document);
+                var input = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
                 id++;
                 input.Language = language;
                 textEntityInputs.AnalysisInput.Documents.Add(input);
@@ -775,8 +770,9 @@ namespace Azure.AI.TextAnalytics
             return textEntityInputs;
         }
 
-        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents, AnalyzeTextEntityRecognitionInput textEntityInputs, TextAnalyticsRequestOptions options)
+        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options)
         {
+            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
             foreach (var document in documents)
             {
                 var input = new MultiLanguageInput(document.Id, document.Text);
