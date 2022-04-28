@@ -33,8 +33,8 @@ foreach ($res in $responses)
     continue
   }
   $branch = $res.ref
+  $branchName = $branch.Replace("refs/heads/","")
   try {
-    $branchName = $branch.Replace("refs/heads/","")
     $head = "${RepoId}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
     $pullRequests = Get-GitHubPullRequests -RepoId $RepoId -State "all" -Head $head -AuthToken $AuthToken
@@ -53,6 +53,7 @@ foreach ($res in $responses)
     continue
   }
 
+  LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
   if ($LastCommitOlderThan) {
     if (!$res.object -or !$res.object.url) {
       LogWarning "No commit url returned from response. Skipping... "
@@ -60,19 +61,26 @@ foreach ($res in $responses)
     }
     try {
       $commitDate = Get-GithubReferenceCommitDate -commitUrl $res.object.url -AuthToken $AuthToken
-      if ($commitDate -and ($commitDate -gt $LastCommitOlderThan)) {
-        LogDebug "The branch $branch last commit date $commitDate is newer than the date $LastCommitOlderThan. Skipping."
+      if (!$commitDate) 
+      {
+        LogDebug "No last commit date found. Skipping."
         continue
       }
+      if ($commitDate -gt $LastCommitOlderThan) {
+        LogDebug "The branch $branch last commit date [ $commitDate ] is newer than the date $LastCommitOlderThan. Skipping."
+        continue
+      }
+      
+      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has a last commit date [ $commitDate ] that is older than $LastCommitOlderThan. "
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
       exit 1
     }
   } 
-  LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
   try {
     Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
+    LogDebug "The branch [ $branchName ] in [ $RepoId ] has been deleted."
   }
   catch {
     LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
