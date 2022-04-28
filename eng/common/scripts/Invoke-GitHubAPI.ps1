@@ -429,5 +429,5 @@ function Get-GithubReferenceCommitDate($commitUrl, $AuthToken) {
     LogDebug "No date returned from the commit sha. "
     return $null
   }
-  return $commitData.committer.date
+  return $commitResponse.committer.date
 }
