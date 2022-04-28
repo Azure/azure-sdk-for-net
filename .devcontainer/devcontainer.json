@@ -1,13 +1,13 @@
 {
 	"name": "GitHub Codespaces (Default)",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"INSTALL_DOCKER": "true"
-		}
-	},
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"args": []
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "bash",
 		"go.useGoProxyToCheckForToolUpdates": false,
 		"go.useLanguageServer": true,
 		"go.gopath": "/go",
