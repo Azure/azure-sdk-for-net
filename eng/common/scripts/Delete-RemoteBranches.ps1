@@ -53,6 +53,7 @@ foreach ($res in $responses)
     continue
   }
 
+  LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
   if ($LastCommitOlderThan) {
     if (!$res.object -or !$res.object.url) {
       LogWarning "No commit url returned from response. Skipping... "
@@ -65,7 +66,7 @@ foreach ($res in $responses)
         continue
       }
       
-      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. Last commit date $commitDate is older than $LastCommitOlderThan. Deleting..."
+      LogDebug "Last commit date $commitDate is older than $LastCommitOlderThan. Deleting..."
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
