@@ -25,6 +25,20 @@
             "datatype": "text",
             "isRequired": true
         },
+        "ProjectNameUnderscored": {
+            "type": "generated",
+            "generator": "regex",
+            "parameters": {
+                "source": "ProjectName",
+                "steps": [
+                    {
+                        "regex": "\\.",
+                        "replacement": "_"
+                    }
+                ]
+            },
+            "replaces": "Azure_Template"
+        },
         "ServiceDirectoryPath": {
             "type": "generated",
             "generator": "join",

@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     internal partial class DesktopsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-12";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, PatchableVirtualDesktopData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,9 +145,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -157,19 +156,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
-        /// <param name="data"> Object containing Desktop definitions. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/>, <paramref name="desktopName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/>, <paramref name="desktopName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualDesktopData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, PatchableVirtualDesktopData data, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualDesktopData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, desktopName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, desktopName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -190,19 +189,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
-        /// <param name="data"> Object containing Desktop definitions. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/>, <paramref name="desktopName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/>, <paramref name="desktopName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualDesktopData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, PatchableVirtualDesktopData data, CancellationToken cancellationToken = default)
+        public Response<VirtualDesktopData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
             Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, desktopName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, desktopName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

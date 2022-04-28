@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> linkIdentifier = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

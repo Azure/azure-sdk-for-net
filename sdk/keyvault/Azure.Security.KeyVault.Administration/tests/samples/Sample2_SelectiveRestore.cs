@@ -30,9 +30,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Make sure we have a key to back up and restore.
             KeyVaultKey key = await KeyClient.CreateKeyAsync(Recording.GenerateId(), KeyType.Oct);
-            string keyName = key.Name;
-
-            RegisterKeyForCleanup(keyName);
 
             // Start the backup.
             KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
@@ -51,6 +48,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:SelectiveRestoreAsync
 #if SNIPPET
             string keyName = "<key name to restore>";
+#else
+            string keyName = key.Name;
+
+            RegisterKeyForCleanup(keyName);
 #endif
 
             // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.

@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public static string ToSerialString(this AfdMinimumTlsVersion value) => value switch
         {
-            AfdMinimumTlsVersion.TLS10 => "TLS10",
-            AfdMinimumTlsVersion.TLS12 => "TLS12",
+            AfdMinimumTlsVersion.Tls10 => "TLS10",
+            AfdMinimumTlsVersion.Tls12 => "TLS12",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AfdMinimumTlsVersion value.")
         };
 
         public static AfdMinimumTlsVersion ToAfdMinimumTlsVersion(this string value)
         {
-            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return AfdMinimumTlsVersion.TLS10;
-            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return AfdMinimumTlsVersion.TLS12;
+            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return AfdMinimumTlsVersion.Tls10;
+            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return AfdMinimumTlsVersion.Tls12;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AfdMinimumTlsVersion value.");
         }
     }

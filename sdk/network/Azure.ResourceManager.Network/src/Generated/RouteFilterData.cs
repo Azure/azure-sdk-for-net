@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="iPv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal RouteFilterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal RouteFilterData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Rules = rules;

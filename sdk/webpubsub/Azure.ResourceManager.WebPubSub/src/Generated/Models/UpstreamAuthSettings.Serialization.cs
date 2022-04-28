@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AuthType.Value.ToString());
             }
             if (Optional.IsDefined(ManagedIdentity))
             {

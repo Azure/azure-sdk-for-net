@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class AfdOriginProperties : AfdOriginUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginProperties. </summary>
-        public AfdOriginProperties()
+        internal AfdOriginProperties()
         {
         }
 

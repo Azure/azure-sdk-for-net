@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sourceUri = null;
                         continue;
                     }
                     sourceUri = new Uri(property.Value.GetString());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        securityDataUri = null;
                         continue;
                     }
                     securityDataUri = new Uri(property.Value.GetString());

@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public static string ToSerialString(this CreateMode value) => value switch
         {
-            CreateMode.Recover => "recover",
             CreateMode.Default => "default",
+            CreateMode.Recover => "recover",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateMode value.")
         };
 
         public static CreateMode ToCreateMode(this string value)
         {
-            if (string.Equals(value, "recover", StringComparison.InvariantCultureIgnoreCase)) return CreateMode.Recover;
             if (string.Equals(value, "default", StringComparison.InvariantCultureIgnoreCase)) return CreateMode.Default;
+            if (string.Equals(value, "recover", StringComparison.InvariantCultureIgnoreCase)) return CreateMode.Recover;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateMode value.");
         }
     }

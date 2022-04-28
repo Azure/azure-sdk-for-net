@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(string id, string name, string type, string location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, ProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, type, location, tags)
+        internal ExpressRouteCircuitData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, ProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
             Etag = etag;

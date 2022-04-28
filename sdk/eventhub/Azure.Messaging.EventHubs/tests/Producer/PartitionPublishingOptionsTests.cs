@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="PartitionPublishingOptionsInternal" />
+    ///   The suite of tests for the <see cref="PartitionPublishingOptions" />
     ///   class.
     /// </summary>
     ///
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new PartitionPublishingOptionsInternal
+            var options = new PartitionPublishingOptions
             {
                 OwnerLevel = 3,
                 ProducerGroupId = 99,

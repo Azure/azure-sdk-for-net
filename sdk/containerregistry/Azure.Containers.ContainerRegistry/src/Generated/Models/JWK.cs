@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class JWK
     {
         /// <summary> Initializes a new instance of JWK. </summary>
-        public JWK()
+        internal JWK()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> JSON web key parameter. </summary>
-        public JWKHeader Jwk { get; set; }
+        public JWKHeader Jwk { get; }
         /// <summary> The algorithm used to sign or encrypt the JWT. </summary>
-        public string Alg { get; set; }
+        public string Alg { get; }
     }
 }

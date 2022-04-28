@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal CdnUsage(string id, UsageUnit unit, long currentValue, long limit, UsageName name)
+        internal CdnUsage(ResourceIdentifier id, UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             Id = id;
             Unit = unit;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource identifier. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
         public UsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>

@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountMongodbDatabaseThroughputSettingOperationSource : IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>
+    internal class DatabaseAccountMongodbDatabaseThroughputSettingOperationSource : IOperationSource<DatabaseAccountMongodbDatabaseThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -31,26 +31,26 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        DatabaseAccountMongodbDatabaseThroughputSetting IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountMongodbDatabaseThroughputSettingResource IOperationSource<DatabaseAccountMongodbDatabaseThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountMongodbDatabaseThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<DatabaseAccountMongodbDatabaseThroughputSetting> IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountMongodbDatabaseThroughputSettingResource> IOperationSource<DatabaseAccountMongodbDatabaseThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountMongodbDatabaseThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseThroughputSettingResource(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountMongodbDatabaseThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountMongodbDatabaseThroughputSettingResource.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountMongodbDatabaseThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountMongodbDatabaseThroughputSettingResource.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),

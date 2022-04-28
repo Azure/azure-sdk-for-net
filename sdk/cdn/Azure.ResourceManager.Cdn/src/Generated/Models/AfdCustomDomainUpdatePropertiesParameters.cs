@@ -14,24 +14,30 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class AfdCustomDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdCustomDomainUpdatePropertiesParameters. </summary>
-        public AfdCustomDomainUpdatePropertiesParameters()
+        internal AfdCustomDomainUpdatePropertiesParameters()
         {
         }
 
+        /// <summary> The name of the profile which holds the domain. </summary>
+        public string ProfileName { get; }
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        public AfdCustomDomainHttpsParameters TlsSettings { get; set; }
+        public AfdCustomDomainHttpsParameters TlsSettings { get; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        internal WritableSubResource AzureDnsZone { get; set; }
+        internal WritableSubResource AzureDnsZone { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier AzureDnsZoneId
         {
-            get => AzureDnsZone is null ? default : AzureDnsZone.Id;
-            set
-            {
-                if (AzureDnsZone is null)
-                    AzureDnsZone = new WritableSubResource();
-                AzureDnsZone.Id = value;
-            }
+            get => AzureDnsZone.Id;
+            set => AzureDnsZone.Id = value;
+        }
+
+        /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; }
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier PreValidatedCustomDomainResourceId
+        {
+            get => PreValidatedCustomDomainResource.Id;
+            set => PreValidatedCustomDomainResource.Id = value;
         }
     }
 }

@@ -554,7 +554,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetUpdates");
+            return GetUpdatesImplementationAsync("DeviceUpdateClient.GetUpdates", search, filter, context);
+        }
+
+        private AsyncPageable<BinaryData> GetUpdatesImplementationAsync(string diagnosticsScopeName, string search, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -633,7 +638,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetUpdates");
+            return GetUpdatesImplementation("DeviceUpdateClient.GetUpdates", search, filter, context);
+        }
+
+        private Pageable<BinaryData> GetUpdatesImplementation(string diagnosticsScopeName, string search, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -678,7 +688,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetProviders");
+            return GetProvidersImplementationAsync("DeviceUpdateClient.GetProviders", context);
+        }
+
+        private AsyncPageable<BinaryData> GetProvidersImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -723,7 +738,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetProviders");
+            return GetProvidersImplementation("DeviceUpdateClient.GetProviders", context);
+        }
+
+        private Pageable<BinaryData> GetProvidersImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -773,7 +793,12 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetNames");
+            return GetNamesImplementationAsync("DeviceUpdateClient.GetNames", provider, context);
+        }
+
+        private AsyncPageable<BinaryData> GetNamesImplementationAsync(string diagnosticsScopeName, string provider, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -823,7 +848,12 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetNames");
+            return GetNamesImplementation("DeviceUpdateClient.GetNames", provider, context);
+        }
+
+        private Pageable<BinaryData> GetNamesImplementation(string diagnosticsScopeName, string provider, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -876,7 +906,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
+            return GetVersionsImplementationAsync("DeviceUpdateClient.GetVersions", provider, name, filter, context);
+        }
+
+        private AsyncPageable<BinaryData> GetVersionsImplementationAsync(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -929,7 +964,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetVersions");
+            return GetVersionsImplementation("DeviceUpdateClient.GetVersions", provider, name, filter, context);
+        }
+
+        private Pageable<BinaryData> GetVersionsImplementation(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -983,7 +1023,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
+            return GetFilesImplementationAsync("DeviceUpdateClient.GetFiles", provider, name, version, context);
+        }
+
+        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1037,7 +1082,12 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetFiles");
+            return GetFilesImplementation("DeviceUpdateClient.GetFiles", provider, name, version, context);
+        }
+
+        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1112,7 +1162,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "DeviceUpdateClient.GetOperations");
+            return GetOperationsImplementationAsync("DeviceUpdateClient.GetOperations", filter, top, context);
+        }
+
+        private AsyncPageable<BinaryData> GetOperationsImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1187,7 +1242,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </remarks>
         public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "DeviceUpdateClient.GetOperations");
+            return GetOperationsImplementation("DeviceUpdateClient.GetOperations", filter, top, context);
+        }
+
+        private Pageable<BinaryData> GetOperationsImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1203,7 +1263,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Import new update version. </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1297,7 +1357,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Import new update version. </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1391,7 +1451,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Delete a specific update version. </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
@@ -1439,7 +1499,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Delete a specific update version. </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>

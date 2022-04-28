@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             _serviceVersion = serviceVersion;
             JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..containerUrl");
+            JsonPathSanitizers.Add("$..source");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 

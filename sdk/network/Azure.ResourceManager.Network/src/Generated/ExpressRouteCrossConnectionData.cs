@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
-        internal ExpressRouteCrossConnectionData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, ProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, type, location, tags)
+        internal ExpressRouteCrossConnectionData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, ProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             PrimaryAzurePort = primaryAzurePort;

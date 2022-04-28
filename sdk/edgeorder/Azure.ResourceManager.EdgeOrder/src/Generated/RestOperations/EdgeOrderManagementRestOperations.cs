@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     internal partial class EdgeOrderManagementRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-12-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListAddressesAtSubscriptionLevelRequest(string subscriptionId, string filter, string skipToken)
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand, string skipToken)
+        internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,27 +138,27 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(productFamiliesRequest);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This method provides the list of product families for the given subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamilies>> ListProductFamiliesAsync(string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamilies>> ListProductFamiliesAsync(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesRequest(subscriptionId, productFamiliesRequest, expand, skipToken);
+            using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -177,18 +176,18 @@ namespace Azure.ResourceManager.EdgeOrder
 
         /// <summary> This method provides the list of product families for the given subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamilies> ListProductFamilies(string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamilies> ListProductFamilies(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesRequest(subscriptionId, productFamiliesRequest, expand, skipToken);
+            using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken)
+        internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,26 +221,26 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationsRequest);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductConfigurations>> ListConfigurationsAsync(string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductConfigurations>> ListConfigurationsAsync(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsRequest(subscriptionId, configurationsRequest, skipToken);
+            using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -259,17 +258,17 @@ namespace Azure.ResourceManager.EdgeOrder
 
         /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductConfigurations> ListConfigurations(string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductConfigurations> ListConfigurations(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsRequest(subscriptionId, configurationsRequest, skipToken);
+            using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -375,7 +374,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -539,7 +538,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -617,7 +616,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -683,7 +682,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource)
+        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -700,10 +699,10 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addressResource);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -711,18 +710,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -738,18 +737,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -777,7 +776,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -833,7 +832,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, PatchableAddressResourceData data, string ifMatch)
+        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -854,10 +853,10 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(patch);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -865,19 +864,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="data"> Address update parameters from request body. </param>
+        /// <param name="patch"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, PatchableAddressResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, data, ifMatch);
+            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -893,19 +892,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="data"> Address update parameters from request body. </param>
+        /// <param name="patch"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, PatchableAddressResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, data, ifMatch);
+            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -936,7 +935,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1014,7 +1013,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1111,7 +1110,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1195,7 +1194,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1263,7 +1262,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource)
+        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1280,10 +1279,10 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(orderItemResource);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1291,18 +1290,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1318,18 +1317,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1357,7 +1356,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1413,7 +1412,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, PatchableOrderItemResourceData data, string ifMatch)
+        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1434,10 +1433,10 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(patch);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1445,19 +1444,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="data"> order item update parameters from request body. </param>
+        /// <param name="patch"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data, ifMatch);
+            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1473,19 +1472,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="data"> order item update parameters from request body. </param>
+        /// <param name="patch"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data, ifMatch);
+            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1515,10 +1514,10 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancellationReason);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(cancellationReason);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1576,7 +1575,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails)
+        internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1594,10 +1593,10 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(returnOrderItemDetails);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(details);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1605,18 +1604,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
+        /// <param name="details"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
+        public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, returnOrderItemDetails);
+            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, details);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1632,18 +1631,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
+        /// <param name="details"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
+        public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, returnOrderItemDetails);
+            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, details);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1665,7 +1664,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1727,7 +1726,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand, string skipToken)
+        internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1737,26 +1736,26 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This method provides the list of product families for the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, productFamiliesRequest, expand, skipToken);
+            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1775,19 +1774,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> This method provides the list of product families for the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, productFamiliesRequest, expand, skipToken);
+            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1803,7 +1802,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken)
+        internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1813,25 +1812,25 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductConfigurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductConfigurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, configurationsRequest, skipToken);
+            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1850,18 +1849,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductConfigurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductConfigurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, configurationsRequest, skipToken);
+            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1887,7 +1886,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1957,7 +1956,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2027,7 +2026,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2101,7 +2100,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2177,7 +2176,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2251,7 +2250,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

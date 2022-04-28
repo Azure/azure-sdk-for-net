@@ -3371,5 +3371,20 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string DataworldLinkedService = @"
+{
+    name: ""LinkedService-Dataworld"",
+    properties:
+    {
+        type: ""Dataworld"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
     }
 }

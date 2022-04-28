@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using Castle.DynamicProxy;
 
@@ -18,16 +17,16 @@ namespace Azure.Core.TestFramework
 
         internal static readonly string PollerWaitForCompletionAsyncName = nameof(OperationPoller.WaitForCompletionAsync);
 
-        private readonly bool _noWait;
+        private readonly RecordedTestMode _mode;
 
-        public OperationInterceptor(bool noWait)
+        public OperationInterceptor(RecordedTestMode mode)
         {
-            _noWait = noWait;
+            _mode = mode;
         }
 
         public void Intercept(IInvocation invocation)
         {
-            if (_noWait)
+            if (_mode == RecordedTestMode.Playback)
             {
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
@@ -56,10 +55,17 @@ namespace Azure.Core.TestFramework
         {
             // get the concrete instance of OperationPoller.ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
             var poller = InjectZeroPoller();
-            var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 3);
+            var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 6);
             var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
 
-            return method.Invoke(InjectZeroPoller(), new object[] { target, null, cancellationToken});
+            var methodParams = method.GetParameters();
+            var updateStatus = Delegate.CreateDelegate(methodParams[0].ParameterType, target, targetType.GetMethod("UpdateStatusAsync"));
+            var hasCompleted = Delegate.CreateDelegate(methodParams[1].ParameterType, target, targetType.GetMethod("get_HasCompleted"));
+            var value = Delegate.CreateDelegate(methodParams[2].ParameterType, target, targetType.GetMethod("get_Value"));
+            var getResponse = Delegate.CreateDelegate(methodParams[3].ParameterType, target, targetType.GetMethod("GetRawResponse"));
+            //need to call the method that takes in the delegates so we used the runtime versions which allows mocking
+            //public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+            return method.Invoke(poller, new object[] { updateStatus, hasCompleted, value, getResponse, null, cancellationToken});
         }
 
         private void CheckArguments(object[] invocationArguments)

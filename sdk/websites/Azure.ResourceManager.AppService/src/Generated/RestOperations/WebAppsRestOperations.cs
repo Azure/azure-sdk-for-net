@@ -15,13 +15,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     internal partial class WebAppsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.AppService
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-02-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, WebSiteData siteEnvelope)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, WebSiteData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -286,9 +285,9 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -296,18 +295,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, siteEnvelope);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -323,18 +322,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, siteEnvelope);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -448,7 +447,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteEnvelope);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -537,7 +536,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -622,7 +621,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -699,7 +698,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -782,7 +781,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -862,7 +861,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -950,7 +949,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1029,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1122,7 +1121,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1201,7 +1200,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1280,7 +1279,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1346,7 +1345,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateFtpAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity)
+        internal HttpMessage CreateUpdateFtpAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -1365,9 +1364,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1375,18 +1374,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateFtpAllowedRequest(subscriptionId, resourceGroupName, name, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateFtpAllowedRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1406,18 +1405,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateFtpAllowedRequest(subscriptionId, resourceGroupName, name, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateFtpAllowedRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1450,7 +1449,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1516,7 +1515,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateScmAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity)
+        internal HttpMessage CreateUpdateScmAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -1535,9 +1534,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1545,18 +1544,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateScmAllowedRequest(subscriptionId, resourceGroupName, name, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateScmAllowedRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1576,18 +1575,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowed(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateScmAllowedRequest(subscriptionId, resourceGroupName, name, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateScmAllowedRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1620,7 +1619,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1703,7 +1702,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(appSettings);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1786,7 +1785,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1869,7 +1868,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettings);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1952,7 +1951,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2035,7 +2034,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2118,7 +2117,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2201,7 +2200,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(azureStorageAccounts);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2284,7 +2283,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2367,7 +2366,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2450,7 +2449,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2519,7 +2518,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2598,7 +2597,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2678,7 +2677,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2765,7 +2764,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2845,7 +2844,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2936,7 +2935,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionStrings);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3019,7 +3018,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3098,7 +3097,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3164,7 +3163,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDiagnosticLogsConfigRequest(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData siteLogsConfig)
+        internal HttpMessage CreateUpdateDiagnosticLogsConfigRequest(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -3183,9 +3182,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteLogsConfig);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3193,18 +3192,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigAsync(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigAsync(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDiagnosticLogsConfigRequest(subscriptionId, resourceGroupName, name, siteLogsConfig);
+            using var message = CreateUpdateDiagnosticLogsConfigRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3224,18 +3223,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfig(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfig(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDiagnosticLogsConfigRequest(subscriptionId, resourceGroupName, name, siteLogsConfig);
+            using var message = CreateUpdateDiagnosticLogsConfigRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3272,7 +3271,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(metadata);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3355,7 +3354,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3434,7 +3433,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3507,7 +3506,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pushSettings);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3590,7 +3589,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3669,7 +3668,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3735,7 +3734,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData slotConfigNames)
+        internal HttpMessage CreateUpdateSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -3754,9 +3753,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotConfigNames);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3764,18 +3763,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
+        /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SlotConfigNamesResourceData>> UpdateSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
+        public async Task<Response<SlotConfigNamesResourceData>> UpdateSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, slotConfigNames);
+            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3795,18 +3794,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
+        /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SlotConfigNamesResourceData> UpdateSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData slotConfigNames, CancellationToken cancellationToken = default)
+        public Response<SlotConfigNamesResourceData> UpdateSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, slotConfigNames);
+            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3839,7 +3838,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3905,7 +3904,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -3924,9 +3923,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteConfig);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -3934,18 +3933,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, siteConfig);
+            using var message = CreateCreateOrUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3965,18 +3964,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteConfigData> CreateOrUpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> CreateOrUpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, siteConfig);
+            using var message = CreateCreateOrUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3992,7 +3991,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -4011,9 +4010,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteConfig);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4021,18 +4020,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteConfigData>> UpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> UpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, siteConfig);
+            using var message = CreateUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4052,18 +4051,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteConfigData> UpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> UpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, siteConfig);
+            using var message = CreateUpdateConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4096,7 +4095,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4176,7 +4175,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4265,7 +4264,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4338,7 +4337,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/octet-stream");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4417,7 +4416,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/zip");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4496,7 +4495,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4576,7 +4575,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4664,7 +4663,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4741,7 +4740,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4816,7 +4815,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4889,7 +4888,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -4969,7 +4968,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5039,7 +5038,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData deployment)
+        internal HttpMessage CreateCreateDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -5059,9 +5058,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deployment);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5070,19 +5069,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> CreateDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentData>> CreateDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateDeploymentRequest(subscriptionId, resourceGroupName, name, id, deployment);
+            using var message = CreateCreateDeploymentRequest(subscriptionId, resourceGroupName, name, id, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -5103,19 +5102,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> CreateDeployment(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public Response<DeploymentData> CreateDeployment(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateDeploymentRequest(subscriptionId, resourceGroupName, name, id, deployment);
+            using var message = CreateCreateDeploymentRequest(subscriptionId, resourceGroupName, name, id, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -5149,7 +5148,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5226,7 +5225,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5313,7 +5312,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5396,7 +5395,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5476,7 +5475,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5546,7 +5545,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -5566,9 +5565,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5577,19 +5576,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -5610,19 +5609,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -5656,7 +5655,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5714,7 +5713,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -5734,9 +5733,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5745,19 +5744,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -5778,19 +5777,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> UpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<IdentifierData> UpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateUpdateDomainOwnershipIdentifierRequest(subscriptionId, resourceGroupName, name, domainOwnershipIdentifierName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -5823,7 +5822,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5910,7 +5909,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -5983,7 +5982,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6062,7 +6061,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6141,7 +6140,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6221,7 +6220,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6291,7 +6290,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateFunctionRequest(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData functionEnvelope)
+        internal HttpMessage CreateCreateFunctionRequest(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -6311,9 +6310,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(functionEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6322,19 +6321,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateFunctionAsync(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateFunctionAsync(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateFunctionRequest(subscriptionId, resourceGroupName, name, functionName, functionEnvelope);
+            using var message = CreateCreateFunctionRequest(subscriptionId, resourceGroupName, name, functionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -6350,19 +6349,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateFunction(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateFunction(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateFunctionRequest(subscriptionId, resourceGroupName, name, functionName, functionEnvelope);
+            using var message = CreateCreateFunctionRequest(subscriptionId, resourceGroupName, name, functionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -6391,7 +6390,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6447,7 +6446,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateFunctionSecretRequest(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key)
+        internal HttpMessage CreateCreateOrUpdateFunctionSecretRequest(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -6469,9 +6468,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(key);
+            content.JsonWriter.WriteObjectValue(info);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6481,20 +6480,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateFunctionSecretRequest(subscriptionId, resourceGroupName, name, functionName, keyName, key);
+            using var message = CreateCreateOrUpdateFunctionSecretRequest(subscriptionId, resourceGroupName, name, functionName, keyName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -6517,20 +6516,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyInfo> CreateOrUpdateFunctionSecret(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public Response<KeyInfo> CreateOrUpdateFunctionSecret(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateFunctionSecretRequest(subscriptionId, resourceGroupName, name, functionName, keyName, key);
+            using var message = CreateCreateOrUpdateFunctionSecretRequest(subscriptionId, resourceGroupName, name, functionName, keyName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -6567,7 +6566,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6646,7 +6645,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6731,7 +6730,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6814,7 +6813,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6893,7 +6892,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -6962,7 +6961,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7014,7 +7013,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHostSecretRequest(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key)
+        internal HttpMessage CreateCreateOrUpdateHostSecretRequest(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -7036,9 +7035,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(key);
+            content.JsonWriter.WriteObjectValue(info);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7048,20 +7047,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateHostSecretRequest(subscriptionId, resourceGroupName, name, keyType, keyName, key);
+            using var message = CreateCreateOrUpdateHostSecretRequest(subscriptionId, resourceGroupName, name, keyType, keyName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -7084,20 +7083,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyInfo> CreateOrUpdateHostSecret(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public Response<KeyInfo> CreateOrUpdateHostSecret(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateHostSecretRequest(subscriptionId, resourceGroupName, name, keyType, keyName, key);
+            using var message = CreateCreateOrUpdateHostSecretRequest(subscriptionId, resourceGroupName, name, keyType, keyName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -7134,7 +7133,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7211,7 +7210,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7291,7 +7290,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7361,7 +7360,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHostNameBindingRequest(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData hostNameBinding)
+        internal HttpMessage CreateCreateOrUpdateHostNameBindingRequest(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -7381,9 +7380,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hostNameBinding);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7392,19 +7391,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingAsync(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingAsync(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            Argument.AssertNotNull(hostNameBinding, nameof(hostNameBinding));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHostNameBindingRequest(subscriptionId, resourceGroupName, name, hostName, hostNameBinding);
+            using var message = CreateCreateOrUpdateHostNameBindingRequest(subscriptionId, resourceGroupName, name, hostName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -7425,19 +7424,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HostNameBindingData> CreateOrUpdateHostNameBinding(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        public Response<HostNameBindingData> CreateOrUpdateHostNameBinding(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            Argument.AssertNotNull(hostNameBinding, nameof(hostNameBinding));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHostNameBindingRequest(subscriptionId, resourceGroupName, name, hostName, hostNameBinding);
+            using var message = CreateCreateOrUpdateHostNameBindingRequest(subscriptionId, resourceGroupName, name, hostName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -7471,7 +7470,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7549,7 +7548,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7623,7 +7622,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -7645,9 +7644,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7657,20 +7656,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -7692,20 +7691,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridConnectionData> CreateOrUpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<HybridConnectionData> CreateOrUpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -7741,7 +7740,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7801,7 +7800,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope)
+        internal HttpMessage CreateUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -7823,9 +7822,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7835,20 +7834,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridConnectionData>> UpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectionData>> UpdateHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -7870,20 +7869,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name of the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridConnectionData> UpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<HybridConnectionData> UpdateHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateUpdateHybridConnectionRequest(subscriptionId, resourceGroupName, name, namespaceName, relayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -7916,7 +7915,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -7995,7 +7994,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8075,7 +8074,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8145,7 +8144,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -8165,9 +8164,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8176,19 +8175,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -8209,19 +8208,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -8255,7 +8254,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8311,7 +8310,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope)
+        internal HttpMessage CreateUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -8331,9 +8330,9 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
+            content.JsonWriter.WriteObjectValue(data);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8342,19 +8341,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionAsync(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, connectionEnvelope);
+            using var message = CreateUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -8375,19 +8374,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnection(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, connectionEnvelope);
+            using var message = CreateUpdateRelayServiceConnectionRequest(subscriptionId, resourceGroupName, name, entityName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -8420,7 +8419,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8500,7 +8499,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8589,7 +8588,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8682,7 +8681,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8761,7 +8760,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8846,7 +8845,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -8932,7 +8931,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9026,7 +9025,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9107,7 +9106,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9194,7 +9193,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9286,7 +9285,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9385,7 +9384,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9472,7 +9471,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9551,7 +9550,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9630,7 +9629,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9692,7 +9691,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateMigrateStorageRequest(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationOptions migrationOptions)
+        internal HttpMessage CreateMigrateStorageRequest(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -9711,10 +9710,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(migrationOptions);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9723,19 +9722,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
-        /// <param name="migrationOptions"> Migration migrationOptions. </param>
+        /// <param name="content"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MigrateStorageAsync(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public async Task<Response> MigrateStorageAsync(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
-            Argument.AssertNotNull(migrationOptions, nameof(migrationOptions));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMigrateStorageRequest(subscriptionId, resourceGroupName, name, subscriptionName, migrationOptions);
+            using var message = CreateMigrateStorageRequest(subscriptionId, resourceGroupName, name, subscriptionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -9751,19 +9750,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
-        /// <param name="migrationOptions"> Migration migrationOptions. </param>
+        /// <param name="content"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="subscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response MigrateStorage(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public Response MigrateStorage(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
-            Argument.AssertNotNull(migrationOptions, nameof(migrationOptions));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMigrateStorageRequest(subscriptionId, resourceGroupName, name, subscriptionName, migrationOptions);
+            using var message = CreateMigrateStorageRequest(subscriptionId, resourceGroupName, name, subscriptionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -9774,7 +9773,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateMigrateMySqlRequest(string subscriptionId, string resourceGroupName, string name, MigrateMySqlRequest migrationRequestEnvelope)
+        internal HttpMessage CreateMigrateMySqlRequest(string subscriptionId, string resourceGroupName, string name, MigrateMySqlContent content)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -9792,10 +9791,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(migrationRequestEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9803,18 +9802,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
+        /// <param name="content"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="migrationRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MigrateMySqlAsync(string subscriptionId, string resourceGroupName, string name, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> MigrateMySqlAsync(string subscriptionId, string resourceGroupName, string name, MigrateMySqlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(migrationRequestEnvelope, nameof(migrationRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMigrateMySqlRequest(subscriptionId, resourceGroupName, name, migrationRequestEnvelope);
+            using var message = CreateMigrateMySqlRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -9829,18 +9828,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
+        /// <param name="content"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="migrationRequestEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response MigrateMySql(string subscriptionId, string resourceGroupName, string name, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public Response MigrateMySql(string subscriptionId, string resourceGroupName, string name, MigrateMySqlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(migrationRequestEnvelope, nameof(migrationRequestEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMigrateMySqlRequest(subscriptionId, resourceGroupName, name, migrationRequestEnvelope);
+            using var message = CreateMigrateMySqlRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -9868,7 +9867,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -9947,7 +9946,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10013,7 +10012,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -10031,10 +10030,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10045,18 +10044,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, connectionEnvelope);
+            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -10079,18 +10078,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, connectionEnvelope);
+            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -10123,7 +10122,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10175,7 +10174,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope)
+        internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -10193,10 +10192,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10207,18 +10206,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckAsync(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, connectionEnvelope);
+            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -10241,18 +10240,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheck(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, connectionEnvelope);
+            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -10286,7 +10285,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10370,7 +10369,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10477,7 +10476,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10574,7 +10573,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10651,7 +10650,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10723,7 +10722,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10817,7 +10816,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -10913,7 +10912,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11006,7 +11005,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11081,7 +11080,7 @@ namespace Azure.ResourceManager.AppService
             }
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11162,7 +11161,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11241,7 +11240,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11321,7 +11320,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11391,7 +11390,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateAddPremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData premierAddOn)
+        internal HttpMessage CreateAddPremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -11410,10 +11409,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11422,19 +11421,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PremierAddOnData>> AddPremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public async Task<Response<PremierAddOnData>> AddPremierAddOnAsync(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateAddPremierAddOnRequest(subscriptionId, resourceGroupName, name, premierAddOnName, premierAddOn);
+            using var message = CreateAddPremierAddOnRequest(subscriptionId, resourceGroupName, name, premierAddOnName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -11455,19 +11454,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PremierAddOnData> AddPremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public Response<PremierAddOnData> AddPremierAddOn(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateAddPremierAddOnRequest(subscriptionId, resourceGroupName, name, premierAddOnName, premierAddOn);
+            using var message = CreateAddPremierAddOnRequest(subscriptionId, resourceGroupName, name, premierAddOnName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -11501,7 +11500,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11576,10 +11575,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(premierAddOn);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11666,7 +11665,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11732,7 +11731,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreatePutPrivateAccessVnetRequest(string subscriptionId, string resourceGroupName, string name, PrivateAccessData access)
+        internal HttpMessage CreatePutPrivateAccessVnetRequest(string subscriptionId, string resourceGroupName, string name, PrivateAccessData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -11750,10 +11749,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(access);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11761,18 +11760,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
-        /// <param name="access"> The information for the private access. </param>
+        /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetAsync(string subscriptionId, string resourceGroupName, string name, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetAsync(string subscriptionId, string resourceGroupName, string name, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(access, nameof(access));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutPrivateAccessVnetRequest(subscriptionId, resourceGroupName, name, access);
+            using var message = CreatePutPrivateAccessVnetRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -11792,18 +11791,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
-        /// <param name="access"> The information for the private access. </param>
+        /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateAccessData> PutPrivateAccessVnet(string subscriptionId, string resourceGroupName, string name, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public Response<PrivateAccessData> PutPrivateAccessVnet(string subscriptionId, string resourceGroupName, string name, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(access, nameof(access));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutPrivateAccessVnetRequest(subscriptionId, resourceGroupName, name, access);
+            using var message = CreatePutPrivateAccessVnetRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -11836,7 +11835,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -11916,7 +11915,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12005,10 +12004,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(privateEndpointWrapper);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12088,7 +12087,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12165,7 +12164,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12244,7 +12243,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12324,7 +12323,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12412,7 +12411,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12487,7 +12486,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12568,7 +12567,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12654,7 +12653,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12747,7 +12746,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12830,7 +12829,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12910,7 +12909,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -12980,7 +12979,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdatePublicCertificateRequest(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData publicCertificate)
+        internal HttpMessage CreateCreateOrUpdatePublicCertificateRequest(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -12999,10 +12998,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publicCertificate);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13011,19 +13010,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
+        /// <param name="data"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateAsync(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateAsync(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdatePublicCertificateRequest(subscriptionId, resourceGroupName, name, publicCertificateName, publicCertificate);
+            using var message = CreateCreateOrUpdatePublicCertificateRequest(subscriptionId, resourceGroupName, name, publicCertificateName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -13044,19 +13043,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
+        /// <param name="data"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PublicCertificateData> CreateOrUpdatePublicCertificate(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public Response<PublicCertificateData> CreateOrUpdatePublicCertificate(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdatePublicCertificateRequest(subscriptionId, resourceGroupName, name, publicCertificateName, publicCertificate);
+            using var message = CreateCreateOrUpdatePublicCertificateRequest(subscriptionId, resourceGroupName, name, publicCertificateName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -13090,7 +13089,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13148,7 +13147,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListPublishingProfileXmlWithSecretsRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions publishingProfileOptions)
+        internal HttpMessage CreateListPublishingProfileXmlWithSecretsRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -13166,10 +13165,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/xml");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(options);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13177,18 +13176,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsAsync(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateListPublishingProfileXmlWithSecretsRequest(subscriptionId, resourceGroupName, name, publishingProfileOptions);
+            using var message = CreateListPublishingProfileXmlWithSecretsRequest(subscriptionId, resourceGroupName, name, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -13206,18 +13205,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Stream> ListPublishingProfileXmlWithSecrets(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public Response<Stream> ListPublishingProfileXmlWithSecrets(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateListPublishingProfileXmlWithSecretsRequest(subscriptionId, resourceGroupName, name, publishingProfileOptions);
+            using var message = CreateListPublishingProfileXmlWithSecretsRequest(subscriptionId, resourceGroupName, name, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -13248,7 +13247,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13325,7 +13324,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13399,10 +13398,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13478,10 +13477,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(restoreRequest);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13557,10 +13556,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(restoreRequest);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13635,7 +13634,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13715,7 +13714,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13803,7 +13802,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13879,7 +13878,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -13952,7 +13951,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14032,7 +14031,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14102,7 +14101,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData siteEnvelope)
+        internal HttpMessage CreateCreateOrUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -14121,10 +14120,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14133,19 +14132,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, siteEnvelope);
+            using var message = CreateCreateOrUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -14162,19 +14161,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, siteEnvelope);
+            using var message = CreateCreateOrUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -14212,7 +14211,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14293,10 +14292,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(siteEnvelope);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14391,7 +14390,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14479,10 +14478,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14562,10 +14561,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14654,7 +14653,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14740,7 +14739,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14834,7 +14833,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -14916,10 +14915,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15015,10 +15014,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15103,7 +15102,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15188,7 +15187,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15258,7 +15257,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateFtpAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity)
+        internal HttpMessage CreateUpdateFtpAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -15278,10 +15277,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15290,19 +15289,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateFtpAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateFtpAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateFtpAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -15323,19 +15322,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateFtpAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateFtpAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateFtpAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -15370,7 +15369,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15440,7 +15439,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateScmAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity)
+        internal HttpMessage CreateUpdateScmAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -15460,10 +15459,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15472,19 +15471,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async Task<Response<CsmPublishingCredentialsPoliciesEntityData>> UpdateScmAllowedSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateScmAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateScmAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -15505,19 +15504,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public Response<CsmPublishingCredentialsPoliciesEntityData> UpdateScmAllowedSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(csmPublishingAccessPoliciesEntity, nameof(csmPublishingAccessPoliciesEntity));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateScmAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, csmPublishingAccessPoliciesEntity);
+            using var message = CreateUpdateScmAllowedSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -15552,7 +15551,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15638,10 +15637,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(appSettings);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15730,7 +15729,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15816,10 +15815,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettings);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(siteAuthSettings);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15908,7 +15907,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -15994,10 +15993,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16086,7 +16085,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16172,10 +16171,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureStorageAccounts);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(azureStorageAccounts);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16264,7 +16263,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16350,10 +16349,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16442,7 +16441,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16517,7 +16516,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16602,7 +16601,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16688,7 +16687,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16781,7 +16780,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16867,7 +16866,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -16961,10 +16960,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionStrings);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(connectionStrings);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17053,7 +17052,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17138,7 +17137,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17208,7 +17207,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDiagnosticLogsConfigSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData siteLogsConfig)
+        internal HttpMessage CreateUpdateDiagnosticLogsConfigSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -17228,10 +17227,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteLogsConfig);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17240,19 +17239,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
-        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteLogsConfigData>> UpdateDiagnosticLogsConfigSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDiagnosticLogsConfigSlotRequest(subscriptionId, resourceGroupName, name, slot, siteLogsConfig);
+            using var message = CreateUpdateDiagnosticLogsConfigSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -17273,19 +17272,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
-        /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteLogsConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfigSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public Response<SiteLogsConfigData> UpdateDiagnosticLogsConfigSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDiagnosticLogsConfigSlotRequest(subscriptionId, resourceGroupName, name, slot, siteLogsConfig);
+            using var message = CreateUpdateDiagnosticLogsConfigSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -17321,10 +17320,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(metadata);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(metadata);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17413,7 +17412,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17498,7 +17497,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17574,10 +17573,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pushSettings);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(pushSettings);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17666,7 +17665,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17751,7 +17750,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17821,7 +17820,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -17841,10 +17840,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteConfig);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17853,19 +17852,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, siteConfig);
+            using var message = CreateCreateOrUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -17886,19 +17885,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteConfigData> CreateOrUpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> CreateOrUpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, siteConfig);
+            using var message = CreateCreateOrUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -17914,7 +17913,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -17934,10 +17933,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteConfig);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -17946,19 +17945,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteConfigData>> UpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> UpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, siteConfig);
+            using var message = CreateUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -17979,19 +17978,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update configuration for the production slot. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteConfigData> UpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> UpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteConfig, nameof(siteConfig));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, siteConfig);
+            using var message = CreateUpdateConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -18026,7 +18025,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18112,7 +18111,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18207,7 +18206,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18286,7 +18285,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/octet-stream");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18371,7 +18370,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/zip");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18456,7 +18455,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18542,7 +18541,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18636,7 +18635,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18719,7 +18718,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18800,7 +18799,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18879,7 +18878,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -18965,7 +18964,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19039,7 +19038,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData deployment)
+        internal HttpMessage CreateCreateDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -19060,10 +19059,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deployment);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19073,20 +19072,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API creates a deployment for the production slot. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> CreateDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentData>> CreateDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateDeploymentSlotRequest(subscriptionId, resourceGroupName, name, slot, id, deployment);
+            using var message = CreateCreateDeploymentSlotRequest(subscriptionId, resourceGroupName, name, slot, id, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -19108,20 +19107,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API creates a deployment for the production slot. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> CreateDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public Response<DeploymentData> CreateDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateDeploymentSlotRequest(subscriptionId, resourceGroupName, name, slot, id, deployment);
+            using var message = CreateCreateDeploymentSlotRequest(subscriptionId, resourceGroupName, name, slot, id, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -19157,7 +19156,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19240,7 +19239,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19330,10 +19329,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19422,7 +19421,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19508,7 +19507,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19582,7 +19581,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -19603,10 +19602,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19616,20 +19615,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -19651,20 +19650,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -19700,7 +19699,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19762,7 +19761,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -19783,10 +19782,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19796,20 +19795,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -19831,20 +19830,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> UpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<IdentifierData> UpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier);
+            using var message = CreateUpdateDomainOwnershipIdentifierSlotRequest(subscriptionId, resourceGroupName, name, slot, domainOwnershipIdentifierName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -19879,7 +19878,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -19969,10 +19968,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(msDeploy);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20051,7 +20050,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20136,7 +20135,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20221,7 +20220,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20307,7 +20306,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20381,7 +20380,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateInstanceFunctionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData functionEnvelope)
+        internal HttpMessage CreateCreateInstanceFunctionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -20402,10 +20401,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(functionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20415,20 +20414,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateInstanceFunctionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateInstanceFunctionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInstanceFunctionSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, functionEnvelope);
+            using var message = CreateCreateInstanceFunctionSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -20445,20 +20444,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateInstanceFunctionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateInstanceFunctionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-            Argument.AssertNotNull(functionEnvelope, nameof(functionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateInstanceFunctionSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, functionEnvelope);
+            using var message = CreateCreateInstanceFunctionSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -20489,7 +20488,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20549,7 +20548,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateFunctionSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo key)
+        internal HttpMessage CreateCreateOrUpdateFunctionSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -20572,10 +20571,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(key);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(info);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20586,11 +20585,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20598,9 +20597,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateFunctionSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, keyName, key);
+            using var message = CreateCreateOrUpdateFunctionSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, keyName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -20624,11 +20623,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="functionName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20636,9 +20635,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateFunctionSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, keyName, key);
+            using var message = CreateCreateOrUpdateFunctionSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName, keyName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -20677,7 +20676,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20762,7 +20761,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20853,7 +20852,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -20942,7 +20941,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21027,7 +21026,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21102,7 +21101,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21158,7 +21157,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHostSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo key)
+        internal HttpMessage CreateCreateOrUpdateHostSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -21181,10 +21180,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(key);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(info);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21195,11 +21194,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -21207,9 +21206,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateHostSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, keyType, keyName, key);
+            using var message = CreateCreateOrUpdateHostSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, keyType, keyName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -21233,11 +21232,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. </param>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyInfo> CreateOrUpdateHostSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public Response<KeyInfo> CreateOrUpdateHostSecretSlot(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -21245,9 +21244,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateHostSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, keyType, keyName, key);
+            using var message = CreateCreateOrUpdateHostSecretSlotRequest(subscriptionId, resourceGroupName, name, slot, keyType, keyName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -21286,7 +21285,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21369,7 +21368,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21455,7 +21454,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21529,7 +21528,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHostNameBindingSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData hostNameBinding)
+        internal HttpMessage CreateCreateOrUpdateHostNameBindingSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -21550,10 +21549,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hostNameBinding);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21563,20 +21562,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        public async Task<Response<HostNameBindingData>> CreateOrUpdateHostNameBindingSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            Argument.AssertNotNull(hostNameBinding, nameof(hostNameBinding));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHostNameBindingSlotRequest(subscriptionId, resourceGroupName, name, slot, hostName, hostNameBinding);
+            using var message = CreateCreateOrUpdateHostNameBindingSlotRequest(subscriptionId, resourceGroupName, name, slot, hostName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -21598,20 +21597,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HostNameBindingData> CreateOrUpdateHostNameBindingSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        public Response<HostNameBindingData> CreateOrUpdateHostNameBindingSlot(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            Argument.AssertNotNull(hostNameBinding, nameof(hostNameBinding));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHostNameBindingSlotRequest(subscriptionId, resourceGroupName, name, slot, hostName, hostNameBinding);
+            using var message = CreateCreateOrUpdateHostNameBindingSlotRequest(subscriptionId, resourceGroupName, name, slot, hostName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -21647,7 +21646,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21731,7 +21730,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21809,7 +21808,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -21832,10 +21831,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21846,11 +21845,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectionData>> CreateOrUpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -21858,9 +21857,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -21883,11 +21882,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridConnectionData> CreateOrUpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<HybridConnectionData> CreateOrUpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -21895,9 +21894,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -21935,7 +21934,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -21999,7 +21998,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope)
+        internal HttpMessage CreateUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -22022,10 +22021,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22036,11 +22035,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridConnectionData>> UpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectionData>> UpdateHybridConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22048,9 +22047,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22073,11 +22072,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> The name of the slot for the web app. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridConnectionData> UpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<HybridConnectionData> UpdateHybridConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22085,9 +22084,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope);
+            using var message = CreateUpdateHybridConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, namespaceName, relayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -22122,7 +22121,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22207,7 +22206,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22293,7 +22292,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22367,7 +22366,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -22388,10 +22387,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22401,20 +22400,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create or update a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<RelayServiceConnectionEntityData>> CreateOrUpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22436,20 +22435,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create or update a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<RelayServiceConnectionEntityData> CreateOrUpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -22485,7 +22484,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22545,7 +22544,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope)
+        internal HttpMessage CreateUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -22566,10 +22565,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22579,20 +22578,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create or update a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<RelayServiceConnectionEntityData>> UpdateRelayServiceConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, connectionEnvelope);
+            using var message = CreateUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22614,20 +22613,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create or update a hybrid connection for the production slot. </param>
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
-        /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
+        /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<RelayServiceConnectionEntityData> UpdateRelayServiceConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, connectionEnvelope);
+            using var message = CreateUpdateRelayServiceConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, entityName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -22662,7 +22661,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22748,7 +22747,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22843,7 +22842,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -22939,10 +22938,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(msDeploy);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23027,7 +23026,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23118,7 +23117,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23210,7 +23209,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23310,7 +23309,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23397,7 +23396,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23490,7 +23489,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23588,7 +23587,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23693,7 +23692,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23786,7 +23785,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23871,7 +23870,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -23956,7 +23955,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24041,7 +24040,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24130,7 +24129,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24200,7 +24199,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -24220,10 +24219,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24235,19 +24234,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<SwiftVirtualNetworkData>> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, connectionEnvelope);
+            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -24271,19 +24270,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<SwiftVirtualNetworkData> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, connectionEnvelope);
+            using var message = CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -24318,7 +24317,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24374,7 +24373,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope)
+        internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -24394,10 +24393,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24409,19 +24408,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<SwiftVirtualNetworkData>> UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, connectionEnvelope);
+            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -24445,19 +24444,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<SwiftVirtualNetworkData> UpdateSwiftVirtualNetworkConnectionWithCheckSlot(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, connectionEnvelope);
+            using var message = CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -24493,7 +24492,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24587,7 +24586,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24700,7 +24699,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24803,7 +24802,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24886,7 +24885,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -24964,7 +24963,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25064,7 +25063,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25166,7 +25165,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25265,7 +25264,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25346,7 +25345,7 @@ namespace Azure.ResourceManager.AppService
             }
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25433,7 +25432,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25518,7 +25517,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25604,7 +25603,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25678,7 +25677,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateAddPremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData premierAddOn)
+        internal HttpMessage CreateAddPremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -25699,10 +25698,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25712,20 +25711,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PremierAddOnData>> AddPremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public async Task<Response<PremierAddOnData>> AddPremierAddOnSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateAddPremierAddOnSlotRequest(subscriptionId, resourceGroupName, name, slot, premierAddOnName, premierAddOn);
+            using var message = CreateAddPremierAddOnSlotRequest(subscriptionId, resourceGroupName, name, slot, premierAddOnName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -25747,20 +25746,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the named add-on for the production slot. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PremierAddOnData> AddPremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public Response<PremierAddOnData> AddPremierAddOnSlot(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateAddPremierAddOnSlotRequest(subscriptionId, resourceGroupName, name, slot, premierAddOnName, premierAddOn);
+            using var message = CreateAddPremierAddOnSlotRequest(subscriptionId, resourceGroupName, name, slot, premierAddOnName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -25796,7 +25795,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25877,10 +25876,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(premierAddOn);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -25973,7 +25972,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26043,7 +26042,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreatePutPrivateAccessVnetSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData access)
+        internal HttpMessage CreatePutPrivateAccessVnetSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -26063,10 +26062,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(access);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26075,19 +26074,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
-        /// <param name="access"> The information for the private access. </param>
+        /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateAccessData>> PutPrivateAccessVnetSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(access, nameof(access));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutPrivateAccessVnetSlotRequest(subscriptionId, resourceGroupName, name, slot, access);
+            using var message = CreatePutPrivateAccessVnetSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -26108,19 +26107,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
         /// <param name="slot"> The name of the slot for the web app. </param>
-        /// <param name="access"> The information for the private access. </param>
+        /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="access"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateAccessData> PutPrivateAccessVnetSlot(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public Response<PrivateAccessData> PutPrivateAccessVnetSlot(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(access, nameof(access));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutPrivateAccessVnetSlotRequest(subscriptionId, resourceGroupName, name, slot, access);
+            using var message = CreatePutPrivateAccessVnetSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -26155,7 +26154,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26241,7 +26240,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26336,10 +26335,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(privateEndpointWrapper);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26425,7 +26424,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26508,7 +26507,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26593,7 +26592,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26679,7 +26678,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26773,7 +26772,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26854,7 +26853,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -26941,7 +26940,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27033,7 +27032,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27132,7 +27131,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27221,7 +27220,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27307,7 +27306,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27381,7 +27380,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdatePublicCertificateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData publicCertificate)
+        internal HttpMessage CreateCreateOrUpdatePublicCertificateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -27402,10 +27401,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publicCertificate);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27415,20 +27414,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
+        /// <param name="data"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicCertificateData>> CreateOrUpdatePublicCertificateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdatePublicCertificateSlotRequest(subscriptionId, resourceGroupName, name, slot, publicCertificateName, publicCertificate);
+            using var message = CreateCreateOrUpdatePublicCertificateSlotRequest(subscriptionId, resourceGroupName, name, slot, publicCertificateName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -27450,20 +27449,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
-        /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
+        /// <param name="data"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="publicCertificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PublicCertificateData> CreateOrUpdatePublicCertificateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public Response<PublicCertificateData> CreateOrUpdatePublicCertificateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
-            Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdatePublicCertificateSlotRequest(subscriptionId, resourceGroupName, name, slot, publicCertificateName, publicCertificate);
+            using var message = CreateCreateOrUpdatePublicCertificateSlotRequest(subscriptionId, resourceGroupName, name, slot, publicCertificateName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -27499,7 +27498,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27561,7 +27560,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListPublishingProfileXmlWithSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions publishingProfileOptions)
+        internal HttpMessage CreateListPublishingProfileXmlWithSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -27581,10 +27580,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/xml");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(options);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27593,19 +27592,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public async Task<Response<Stream>> ListPublishingProfileXmlWithSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateListPublishingProfileXmlWithSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, publishingProfileOptions);
+            using var message = CreateListPublishingProfileXmlWithSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -27624,19 +27623,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Stream> ListPublishingProfileXmlWithSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public Response<Stream> ListPublishingProfileXmlWithSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateListPublishingProfileXmlWithSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, publishingProfileOptions);
+            using var message = CreateListPublishingProfileXmlWithSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -27669,7 +27668,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27752,7 +27751,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27832,10 +27831,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(request);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -27917,10 +27916,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(restoreRequest);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28002,10 +28001,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(restoreRequest);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28086,7 +28085,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28172,7 +28171,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28266,7 +28265,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28348,7 +28347,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28428,10 +28427,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28521,10 +28520,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28605,7 +28604,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28690,7 +28689,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28775,7 +28774,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28849,7 +28848,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl)
+        internal HttpMessage CreateCreateOrUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -28869,10 +28868,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteSourceControl);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -28881,19 +28880,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, siteSourceControl);
+            using var message = CreateCreateOrUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -28911,19 +28910,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, siteSourceControl);
+            using var message = CreateCreateOrUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -28959,7 +28958,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29019,7 +29018,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl)
+        internal HttpMessage CreateUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -29039,10 +29038,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteSourceControl);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29051,19 +29050,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteSourceControlData>> UpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteSourceControlData>> UpdateSourceControlSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, siteSourceControl);
+            using var message = CreateUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -29086,19 +29085,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the source control configuration for the production slot. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteSourceControlData> UpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public Response<SiteSourceControlData> UpdateSourceControlSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, siteSourceControl);
+            using var message = CreateUpdateSourceControlSlotRequest(subscriptionId, resourceGroupName, name, slot, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -29135,7 +29134,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29222,7 +29221,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29305,7 +29304,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29380,7 +29379,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29457,7 +29456,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29532,7 +29531,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29607,7 +29606,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29693,7 +29692,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29787,7 +29786,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29870,7 +29869,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -29962,7 +29961,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30061,7 +30060,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30144,7 +30143,7 @@ namespace Azure.ResourceManager.AppService
             }
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30231,7 +30230,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30327,7 +30326,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30401,7 +30400,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -30422,10 +30421,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30435,20 +30434,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -30470,20 +30469,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetInfoResourceData> CreateOrUpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetInfoResourceData> CreateOrUpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -30519,7 +30518,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30579,7 +30578,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope)
+        internal HttpMessage CreateUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -30600,10 +30599,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30613,20 +30612,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -30648,20 +30647,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update connections for the production slot. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetInfoResourceData> UpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetInfoResourceData> UpdateVnetConnectionSlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionSlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -30699,7 +30698,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30777,7 +30776,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -30800,10 +30799,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30814,11 +30813,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -30826,9 +30825,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -30851,11 +30850,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -30863,9 +30862,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -30881,7 +30880,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope)
+        internal HttpMessage CreateUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -30904,10 +30903,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -30918,11 +30917,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewaySlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -30930,9 +30929,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -30955,11 +30954,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> UpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetGatewayData> UpdateVnetConnectionGatewaySlot(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -30967,9 +30966,9 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionGatewaySlotRequest(subscriptionId, resourceGroupName, name, slot, vnetName, gatewayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -31004,7 +31003,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31090,7 +31089,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31182,10 +31181,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31269,10 +31268,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31347,7 +31346,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31426,7 +31425,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31505,7 +31504,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31575,7 +31574,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl)
+        internal HttpMessage CreateCreateOrUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -31593,10 +31592,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteSourceControl);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31604,18 +31603,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, siteSourceControl);
+            using var message = CreateCreateOrUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -31632,18 +31631,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, siteSourceControl);
+            using var message = CreateCreateOrUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -31677,7 +31676,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31733,7 +31732,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl)
+        internal HttpMessage CreateUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -31751,10 +31750,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteSourceControl);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31762,18 +31761,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteSourceControlData>> UpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteSourceControlData>> UpdateSourceControlAsync(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, siteSourceControl);
+            using var message = CreateUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -31795,18 +31794,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteSourceControl"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteSourceControlData> UpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public Response<SiteSourceControlData> UpdateSourceControl(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, siteSourceControl);
+            using var message = CreateUpdateSourceControlRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -31841,7 +31840,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31922,7 +31921,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -31999,7 +31998,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32068,7 +32067,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32139,7 +32138,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32208,7 +32207,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32277,7 +32276,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32357,7 +32356,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32445,7 +32444,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32522,7 +32521,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32608,7 +32607,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32701,7 +32700,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32778,7 +32777,7 @@ namespace Azure.ResourceManager.AppService
             }
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32859,7 +32858,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -32949,7 +32948,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33019,7 +33018,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -33038,10 +33037,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33050,19 +33049,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetInfoResourceData>> CreateOrUpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -33083,19 +33082,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetInfoResourceData> CreateOrUpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetInfoResourceData> CreateOrUpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -33129,7 +33128,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33185,7 +33184,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope)
+        internal HttpMessage CreateUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -33204,10 +33203,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33216,19 +33215,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetInfoResourceData>> UpdateVnetConnectionAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -33249,19 +33248,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetInfoResourceData> UpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetInfoResourceData> UpdateVnetConnection(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionRequest(subscriptionId, resourceGroupName, name, vnetName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -33297,7 +33296,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33371,7 +33370,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope)
+        internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -33392,10 +33391,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33405,20 +33404,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetGatewayData>> CreateOrUpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -33440,20 +33439,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetGatewayData> CreateOrUpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateCreateOrUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -33469,7 +33468,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope)
+        internal HttpMessage CreateUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -33490,10 +33489,10 @@ namespace Azure.ResourceManager.AppService
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionEnvelope);
-            request0.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request0.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33503,20 +33502,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetGatewayData>> UpdateVnetConnectionGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -33538,20 +33537,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
-        /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
+        /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> UpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        public Response<VnetGatewayData> UpdateVnetConnectionGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, connectionEnvelope);
+            using var message = CreateUpdateVnetConnectionGatewayRequest(subscriptionId, resourceGroupName, name, vnetName, gatewayName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -33584,7 +33583,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33664,7 +33663,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33744,7 +33743,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33812,7 +33811,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33886,7 +33885,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -33962,7 +33961,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34038,7 +34037,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34114,7 +34113,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34190,7 +34189,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34266,7 +34265,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34342,7 +34341,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34418,7 +34417,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34494,7 +34493,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34570,7 +34569,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34646,7 +34645,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34722,7 +34721,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34798,7 +34797,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34878,7 +34877,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -34962,7 +34961,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35046,7 +35045,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35122,7 +35121,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35200,7 +35199,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35276,7 +35275,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35352,7 +35351,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35432,7 +35431,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35512,7 +35511,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35588,7 +35587,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35664,7 +35663,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35740,7 +35739,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35820,7 +35819,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35900,7 +35899,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -35980,7 +35979,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36060,7 +36059,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36140,7 +36139,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36220,7 +36219,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36300,7 +36299,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36380,7 +36379,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36460,7 +36459,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36540,7 +36539,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36620,7 +36619,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36700,7 +36699,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36784,7 +36783,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36872,7 +36871,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -36960,7 +36959,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37040,7 +37039,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37122,7 +37121,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37202,7 +37201,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37282,7 +37281,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37366,7 +37365,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37450,7 +37449,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37530,7 +37529,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37610,7 +37609,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37694,7 +37693,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37774,7 +37773,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37854,7 +37853,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -37934,7 +37933,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38018,7 +38017,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38100,7 +38099,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38180,7 +38179,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38260,7 +38259,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38336,7 +38335,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38412,7 +38411,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38488,7 +38487,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38568,7 +38567,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -38646,7 +38645,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

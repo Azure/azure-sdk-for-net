@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     internal partial class DeploymentScriptsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-10-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript)
+        internal Core.HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,9 +55,9 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deploymentScript);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -66,18 +65,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
+        /// <param name="data"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,18 +92,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
+        /// <param name="data"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,9 +133,9 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -144,26 +143,26 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentScriptData value = default;
+                        ArmDeploymentScriptData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
+                        value = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -175,26 +174,26 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentScriptData value = default;
+                        ArmDeploymentScriptData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
+                        value = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptData>> GetAsync(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptData>> GetAsync(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -241,13 +240,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptData value = default;
+                        ArmDeploymentScriptData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
+                        value = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentScriptData)null, message.Response);
+                    return Response.FromValue((ArmDeploymentScriptData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptData> Get(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptData> Get(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -272,19 +271,19 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptData value = default;
+                        ArmDeploymentScriptData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
+                        value = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentScriptData)null, message.Response);
+                    return Response.FromValue((ArmDeploymentScriptData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -354,7 +353,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        internal Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,7 +366,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -376,7 +375,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -386,9 +385,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -401,7 +400,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -411,9 +410,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -421,7 +420,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal Core.HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -438,7 +437,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -500,7 +499,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetLogsDefaultRequest(string subscriptionId, string resourceGroupName, string scriptName, int? tail)
+        internal Core.HttpMessage CreateGetLogsDefaultRequest(string subscriptionId, string resourceGroupName, string scriptName, int? tail)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,7 +520,7 @@ namespace Azure.ResourceManager.Resources
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -589,7 +588,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -604,7 +603,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -614,7 +613,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -625,9 +624,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -641,7 +640,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -652,9 +651,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -662,7 +661,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -672,7 +671,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -682,7 +681,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -693,9 +692,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -709,7 +708,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -720,9 +719,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -730,7 +729,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -740,7 +739,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -751,7 +750,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -763,9 +762,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -780,7 +779,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentScriptListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentScriptListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -792,9 +791,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScriptListResult value = default;
+                        ArmDeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
+                        value = ArmDeploymentScriptListResult.DeserializeArmDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

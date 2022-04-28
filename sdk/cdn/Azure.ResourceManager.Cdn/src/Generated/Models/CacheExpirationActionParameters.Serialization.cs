@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("cacheBehavior");
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType");
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheExpirationActionParameters DeserializeCacheExpirationActionParameters(JsonElement element)
         {
-            CacheExpirationActionParametersOdataType odataType = default;
+            CacheExpirationActionParametersTypeName typeName = default;
             CacheBehavior cacheBehavior = default;
             CacheType cacheType = default;
             Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new CacheExpirationActionParametersOdataType(property.Value.GetString());
+                    typeName = new CacheExpirationActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheBehavior"))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CacheExpirationActionParameters(odataType, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
+            return new CacheExpirationActionParameters(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
         }
     }
 }

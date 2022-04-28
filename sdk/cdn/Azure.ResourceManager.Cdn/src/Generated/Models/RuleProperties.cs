@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class RuleProperties : RuleUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RuleProperties. </summary>
-        public RuleProperties()
+        internal RuleProperties()
         {
         }
 

@@ -13,9 +13,18 @@ namespace Azure.AI.Language.Conversations
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ConversationsModelFactory
     {
+        /// <summary> Initializes a new instance of CustomConversationalTaskResult. </summary>
+        /// <param name="kind"> Enumeration of supported conversational task results. </param>
+        /// <param name="results"> Represents a conversation analysis response. </param>
+        /// <returns> A new <see cref="Conversations.CustomConversationalTaskResult"/> instance for mocking. </returns>
+        public static CustomConversationalTaskResult CustomConversationalTaskResult(AnalyzeConversationTaskResultsKind kind = default, AnalyzeConversationResult results = null)
+        {
+            return new CustomConversationalTaskResult(kind, results);
+        }
+
         /// <summary> Initializes a new instance of AnalyzeConversationResult. </summary>
         /// <param name="query"> The conversation utterance given by the caller. </param>
-        /// <param name="detectedLanguage"> The system detected language for the query. </param>
+        /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
         /// <param name="prediction"> The prediction result of a conversation project. </param>
         /// <returns> A new <see cref="Conversations.AnalyzeConversationResult"/> instance for mocking. </returns>
         public static AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, BasePrediction prediction = null)
@@ -45,7 +54,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of ConversationResult. </summary>
         /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query. </param>
+        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation.. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
         /// <returns> A new <see cref="Conversations.ConversationResult"/> instance for mocking. </returns>
         public static ConversationResult ConversationResult(string query = null, string detectedLanguage = null, ConversationPrediction prediction = null)
@@ -82,13 +91,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidence"> The entity confidence score. </param>
-        /// <param name="listKeys"> List of keys. </param>
+        /// <param name="resolutions"> The collection of entity resolution objects. </param>
+        /// <param name="extraInformation"> The collection of entity extra information objects. </param>
         /// <returns> A new <see cref="Conversations.ConversationEntity"/> instance for mocking. </returns>
-        public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidence = default, IEnumerable<string> listKeys = null)
+        public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidence = default, IEnumerable<BaseResolution> resolutions = null, IEnumerable<BaseExtraInformation> extraInformation = null)
         {
-            listKeys ??= new List<string>();
+            resolutions ??= new List<BaseResolution>();
+            extraInformation ??= new List<BaseExtraInformation>();
 
-            return new ConversationEntity(category, text, offset, length, confidence, listKeys?.ToList());
+            return new ConversationEntity(category, text, offset, length, confidence, resolutions?.ToList(), extraInformation?.ToList());
         }
 
         /// <summary> Initializes a new instance of TargetIntentResult. </summary>
@@ -122,6 +133,188 @@ namespace Azure.AI.Language.Conversations
         public static ConversationTargetIntentResult ConversationTargetIntentResult(TargetKind targetKind = default, string apiVersion = null, double confidence = default, ConversationResult result = null)
         {
             return new ConversationTargetIntentResult(targetKind, apiVersion, confidence, result);
+        }
+
+        /// <summary> Initializes a new instance of EntitySubtype. </summary>
+        /// <param name="extraInformationKind"> The extra information object kind. </param>
+        /// <param name="value"> The Subtype of an extracted entity type. </param>
+        /// <returns> A new <see cref="Conversations.EntitySubtype"/> instance for mocking. </returns>
+        public static EntitySubtype EntitySubtype(ExtraInformationKind extraInformationKind = default, string value = null)
+        {
+            return new EntitySubtype(extraInformationKind, value);
+        }
+
+        /// <summary> Initializes a new instance of ListKey. </summary>
+        /// <param name="extraInformationKind"> The extra information object kind. </param>
+        /// <param name="key"> The canonical form of the extracted entity. </param>
+        /// <returns> A new <see cref="Conversations.ListKey"/> instance for mocking. </returns>
+        public static ListKey ListKey(ExtraInformationKind extraInformationKind = default, string key = null)
+        {
+            return new ListKey(extraInformationKind, key);
+        }
+
+        /// <summary> Initializes a new instance of QuantityResolution. </summary>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.QuantityResolution"/> instance for mocking. </returns>
+        public static QuantityResolution QuantityResolution(double value = default)
+        {
+            return new QuantityResolution(value);
+        }
+
+        /// <summary> Initializes a new instance of AgeResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The Age Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.AgeResolution"/> instance for mocking. </returns>
+        public static AgeResolution AgeResolution(ResolutionKind resolutionKind = default, AgeUnit unit = default, double value = default)
+        {
+            return new AgeResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of VolumeResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The Volume Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.VolumeResolution"/> instance for mocking. </returns>
+        public static VolumeResolution VolumeResolution(ResolutionKind resolutionKind = default, VolumeUnit unit = default, double value = default)
+        {
+            return new VolumeResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of SpeedResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The speed Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.SpeedResolution"/> instance for mocking. </returns>
+        public static SpeedResolution SpeedResolution(ResolutionKind resolutionKind = default, SpeedUnit unit = default, double value = default)
+        {
+            return new SpeedResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of AreaResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The area Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.AreaResolution"/> instance for mocking. </returns>
+        public static AreaResolution AreaResolution(ResolutionKind resolutionKind = default, AreaUnit unit = default, double value = default)
+        {
+            return new AreaResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of LengthResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The length Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.LengthResolution"/> instance for mocking. </returns>
+        public static LengthResolution LengthResolution(ResolutionKind resolutionKind = default, LengthUnit unit = default, double value = default)
+        {
+            return new LengthResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of InformationResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The information (data) Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.InformationResolution"/> instance for mocking. </returns>
+        public static InformationResolution InformationResolution(ResolutionKind resolutionKind = default, InformationUnit unit = default, double value = default)
+        {
+            return new InformationResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of TemperatureResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The temperature Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.TemperatureResolution"/> instance for mocking. </returns>
+        public static TemperatureResolution TemperatureResolution(ResolutionKind resolutionKind = default, TemperatureUnit unit = default, double value = default)
+        {
+            return new TemperatureResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of WeightResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="unit"> The weight Unit of measurement. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.WeightResolution"/> instance for mocking. </returns>
+        public static WeightResolution WeightResolution(ResolutionKind resolutionKind = default, WeightUnit unit = default, double value = default)
+        {
+            return new WeightResolution(resolutionKind, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of CurrencyResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="isO4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
+        /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
+        /// <param name="value"> The numeric value that the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.CurrencyResolution"/> instance for mocking. </returns>
+        public static CurrencyResolution CurrencyResolution(ResolutionKind resolutionKind = default, string isO4217 = null, string unit = null, double value = default)
+        {
+            return new CurrencyResolution(resolutionKind, isO4217, unit, value);
+        }
+
+        /// <summary> Initializes a new instance of BooleanResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Conversations.BooleanResolution"/> instance for mocking. </returns>
+        public static BooleanResolution BooleanResolution(ResolutionKind resolutionKind = default, bool value = default)
+        {
+            return new BooleanResolution(resolutionKind, value);
+        }
+
+        /// <summary> Initializes a new instance of DateTimeResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
+        /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
+        /// <param name="value"> The actual time that the extracted text denote. </param>
+        /// <param name="modifier"> An optional modifier of a date/time instance. </param>
+        /// <returns> A new <see cref="Conversations.DateTimeResolution"/> instance for mocking. </returns>
+        public static DateTimeResolution DateTimeResolution(ResolutionKind resolutionKind = default, string timex = null, DateTimeSubKind dateTimeSubKind = default, string value = null, TemporalModifier? modifier = null)
+        {
+            return new DateTimeResolution(resolutionKind, timex, dateTimeSubKind, value, modifier);
+        }
+
+        /// <summary> Initializes a new instance of NumberResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="numberKind"> The type of the extracted number entity. </param>
+        /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
+        /// <returns> A new <see cref="Conversations.NumberResolution"/> instance for mocking. </returns>
+        public static NumberResolution NumberResolution(ResolutionKind resolutionKind = default, NumberKind numberKind = default, string value = null)
+        {
+            return new NumberResolution(resolutionKind, numberKind, value);
+        }
+
+        /// <summary> Initializes a new instance of OrdinalResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="offset"> The offset With respect to the reference (e.g., offset = -1 in &quot;show me the second to last&quot;. </param>
+        /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
+        /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
+        /// <returns> A new <see cref="Conversations.OrdinalResolution"/> instance for mocking. </returns>
+        public static OrdinalResolution OrdinalResolution(ResolutionKind resolutionKind = default, string offset = null, RelativeTo relativeTo = default, string value = null)
+        {
+            return new OrdinalResolution(resolutionKind, offset, relativeTo, value);
+        }
+
+        /// <summary> Initializes a new instance of TemporalSpanResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="begin"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
+        /// <param name="end"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
+        /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
+        /// <param name="modifier"> An optional modifier of a date/time instance. </param>
+        /// <returns> A new <see cref="Conversations.TemporalSpanResolution"/> instance for mocking. </returns>
+        public static TemporalSpanResolution TemporalSpanResolution(ResolutionKind resolutionKind = default, string begin = null, string end = null, string duration = null, TemporalModifier? modifier = null)
+        {
+            return new TemporalSpanResolution(resolutionKind, begin, end, duration, modifier);
+        }
+
+        /// <summary> Initializes a new instance of NumericRangeResolution. </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
+        /// <param name="minimum"> The beginning value of  the interval. </param>
+        /// <param name="maximum"> The ending value of the interval. </param>
+        /// <returns> A new <see cref="Conversations.NumericRangeResolution"/> instance for mocking. </returns>
+        public static NumericRangeResolution NumericRangeResolution(ResolutionKind resolutionKind = default, RangeKind rangeKind = default, double minimum = default, double maximum = default)
+        {
+            return new NumericRangeResolution(resolutionKind, rangeKind, minimum, maximum);
         }
 
         /// <summary> Initializes a new instance of QuestionAnsweringTargetIntentResult. </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.7.0-beta.5 (Unreleased)
+## 5.7.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.7.0-beta.5 (2022-04-05)
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- An additional base class for event processors, `PluggableCheckpointStoreEventProcessor<T>`, has been added to simplify creating customized event processors and integrate with concrete `CheckpointStore` implementations.
+
+- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations. 
+
+### Other Changes
+
+- Partition key hashing performed by the `EventHubBufferedProducerClient` has been improved for better performance and efficiency.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.7.0-beta.4 (2022-03-11)
 

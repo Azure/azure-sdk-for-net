@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName);
+                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
                 }
             };
 #else

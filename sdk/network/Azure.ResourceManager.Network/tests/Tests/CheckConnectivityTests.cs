@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Network.Tests
             var properties = new NetworkWatcherData { Location = location };
             await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
 
-            ConnectivityParameters connectivityParameters =
-                new ConnectivityParameters(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
+            ConnectivityContent connectivityParameters =
+                new ConnectivityContent(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
             Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(WaitUntil.Completed, connectivityParameters);
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Network.Tests
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.ConnectionStatus.ToString());
             Assert.AreEqual(0, connectivityCheck.Value.ProbesFailed);
-            Assert.AreEqual("Source", connectivityCheck.Value.Hops.FirstOrDefault().Type);
-            Assert.AreEqual("Internet", connectivityCheck.Value.Hops.LastOrDefault().Type);
+            Assert.AreEqual("Source", connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType);
+            Assert.AreEqual("Internet", connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType);
         }
     }
 }

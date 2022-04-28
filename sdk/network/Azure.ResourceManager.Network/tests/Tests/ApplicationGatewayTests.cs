@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
         }
 
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Tests
                 };
         }
 
-        private ApplicationGatewayData CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId)
+        private ApplicationGatewayData CreateApplicationGateway(string location, SubnetResource subnet, string resourceGroupName, string appGwName, string subscriptionId)
         {
             string gatewayIPConfigName = Recording.GenerateAssetName("azsmnet");
             string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = redirectConfiguration2Name,
                         RedirectType = ApplicationGatewayRedirectType.Permanent,
-                        TargetUrl = "http://www.bing.com"
+                        TargetUri = new Uri("http://www.bing.com")
                     }
                 },
                 //SslCertificates = CreateSslCertificate(sslCertName, "abc")
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Network.Tests
             return appGw;
         }
 
-        private ApplicationGatewayData CreateApplicationGatewayWithoutSsl(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId, string[] ipAddresses)
+        private ApplicationGatewayData CreateApplicationGatewayWithoutSsl(string location, SubnetResource subnet, string resourceGroupName, string appGwName, string subscriptionId, string[] ipAddresses)
         {
             string gatewayIPConfigName = Recording.GenerateAssetName("azsmnet");
             string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
@@ -667,21 +667,21 @@ namespace Azure.ResourceManager.Network.Tests
             var virtualNetworkCollection = GetVirtualNetworkCollection(resourceGroup);
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
-            Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
+            Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
+            Response<SubnetResource> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
             Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Data.Id);
-            Response<Subnet> gwSubnet = getSubnetResponse;
+            Response<SubnetResource> gwSubnet = getSubnetResponse;
 
             ApplicationGatewayData appGw = CreateApplicationGateway(location, gwSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId);
 
             // Put AppGw
             var applicationGatewayCollection = GetApplicationGatewayCollection(resourceGroupName);
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, appGwName, appGw);
-            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
+            Operation<ApplicationGatewayResource> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, appGwName, appGw);
+            Response<ApplicationGatewayResource> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
-            Response<ApplicationGateway> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
+            Response<ApplicationGatewayResource> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network.Tests
             string nic1name = Recording.GenerateAssetName("azsmnet");
             string nic2name = Recording.GenerateAssetName("azsmnet");
 
-            Task<NetworkInterface> nic1 = CreateNetworkInterface(
+            Task<NetworkInterfaceResource> nic1 = CreateNetworkInterface(
                 nic1name,
                 resourceGroupName,
                 null,
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Network.Tests
                 location,
                 "ipconfig");
 
-            Task<NetworkInterface> nic2 = CreateNetworkInterface(
+            Task<NetworkInterfaceResource> nic2 = CreateNetworkInterface(
                 nic2name,
                 resourceGroupName,
                 null,
@@ -817,20 +817,20 @@ namespace Azure.ResourceManager.Network.Tests
 
             //create ApplicationGateway
             string appGwName = Recording.GenerateAssetName("azsmnet");
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
-            Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(AGSubnetName);
-            Response<Subnet> agSubnet = getSubnetResponse;
+            Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
+            Response<SubnetResource> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(AGSubnetName);
+            Response<SubnetResource> agSubnet = getSubnetResponse;
 
             ApplicationGatewayData appGw = CreateApplicationGatewayWithoutSsl(location, agSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId, ipAddresses);
 
             // Put AppGw
             var applicationGatewayCollection = resourceGroup.GetApplicationGateways();
-            Operation<ApplicationGateway> putAppGw = InstrumentOperation(await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Started, appGwName, appGw));
-            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
+            Operation<ApplicationGatewayResource> putAppGw = InstrumentOperation(await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Started, appGwName, appGw));
+            Response<ApplicationGatewayResource> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
-            Response<ApplicationGateway> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
+            Response<ApplicationGatewayResource> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
             CompareApplicationGatewayBase(appGw, getGateway.Value.Data);
 

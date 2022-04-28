@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestUriMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestUriMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType odataType, RequestUriOperator @operator)
+        public RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName typeName, RequestUriOperator @operator)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RequestUriMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType odataType, RequestUriOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName typeName, RequestUriOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public RequestUriMatchConditionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public RequestUriMatchConditionParametersTypeName TypeName { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestUriOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

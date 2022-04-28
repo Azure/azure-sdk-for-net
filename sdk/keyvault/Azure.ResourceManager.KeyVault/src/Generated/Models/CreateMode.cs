@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
     public enum CreateMode
     {
-        /// <summary> recover. </summary>
-        Recover,
         /// <summary> default. </summary>
-        Default
+        Default,
+        /// <summary> recover. </summary>
+        Recover
     }
 }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkResourceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal NetworkResourceData(string id, string name, string type, string location, IDictionary<string, string> tags)
+        internal NetworkResourceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             Location = location;
             Tags = tags;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Resource location. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>

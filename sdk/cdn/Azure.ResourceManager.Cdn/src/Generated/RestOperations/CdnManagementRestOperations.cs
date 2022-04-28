@@ -13,13 +13,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
     internal partial class CdnManagementRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -34,11 +33,92 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-09-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _apiVersion = apiVersion ?? "2021-06-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityInput checkNameAvailabilityInput)
+        internal HttpMessage CreateCheckEndpointNameAvailabilityRequest(string subscriptionId, string resourceGroupName, CheckEndpointNameAvailabilityContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/checkEndpointNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(string subscriptionId, string resourceGroupName, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckEndpointNameAvailabilityRequest(subscriptionId, resourceGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckEndpointNameAvailabilityOutput value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CheckEndpointNameAvailabilityOutput.DeserializeCheckEndpointNameAvailabilityOutput(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint. </summary>
+        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(string subscriptionId, string resourceGroupName, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckEndpointNameAvailabilityRequest(subscriptionId, resourceGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CheckEndpointNameAvailabilityOutput value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CheckEndpointNameAvailabilityOutput.DeserializeCheckEndpointNameAvailabilityOutput(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,22 +130,22 @@ namespace Azure.ResourceManager.Cdn
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityInput);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(input);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityInput);
+            using var message = CreateCheckNameAvailabilityRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -82,14 +162,14 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailability(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public Response<CheckNameAvailabilityOutput> CheckNameAvailability(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityInput);
+            using var message = CreateCheckNameAvailabilityRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -105,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityWithSubscriptionRequest(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput)
+        internal HttpMessage CreateCheckNameAvailabilityWithSubscriptionRequest(string subscriptionId, CheckNameAvailabilityInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -119,25 +199,25 @@ namespace Azure.ResourceManager.Cdn
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityInput);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(input);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionAsync(string subscriptionId, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
+            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -155,16 +235,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscription(string subscriptionId, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscription(string subscriptionId, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, checkNameAvailabilityInput);
+            using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -180,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateValidateProbeRequest(string subscriptionId, ValidateProbeInput validateProbeInput)
+        internal HttpMessage CreateValidateProbeRequest(string subscriptionId, ValidateProbeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -194,25 +274,25 @@ namespace Azure.ResourceManager.Cdn
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validateProbeInput);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validateProbeInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(string subscriptionId, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
+        public async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(string subscriptionId, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateProbeRequest(subscriptionId, validateProbeInput);
+            using var message = CreateValidateProbeRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -230,16 +310,16 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validateProbeInput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateProbeOutput> ValidateProbe(string subscriptionId, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
+        public Response<ValidateProbeOutput> ValidateProbe(string subscriptionId, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateProbeRequest(subscriptionId, validateProbeInput);
+            using var message = CreateValidateProbeRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

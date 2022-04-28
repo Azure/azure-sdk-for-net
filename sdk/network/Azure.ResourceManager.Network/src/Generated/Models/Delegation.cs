@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a subnet. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal Delegation(string id, string name, string etag, string type, string serviceName, IReadOnlyList<string> actions, ProvisioningState? provisioningState) : base(id)
+        internal Delegation(string id, string name, string etag, string resourceType, string serviceName, IReadOnlyList<string> actions, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             ServiceName = serviceName;
             Actions = actions;
             ProvisioningState = provisioningState;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Resource type. </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
         /// <summary> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </summary>
         public string ServiceName { get; set; }
         /// <summary> The actions permitted to the service upon delegation. </summary>

@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //Response<NetworkWatcher> createNetworkWatcher = await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //Response<NetworkWatcherResource> createNetworkWatcher = await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
             string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
             // Add a security rule
-            var SecurityRule = new SecurityRuleData()
+            var securityRule = new SecurityRuleData()
             {
                 Name = securityRule1,
                 Access = SecurityRuleAccess.Deny,
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var networkSecurityGroupCollection = GetNetworkSecurityGroupCollection(resourceGroupName);
-            Response<NetworkSecurityGroup> nsg = await networkSecurityGroupCollection.GetAsync(resourceGroupName, networkSecurityGroupName);
-            nsg.Value.Data.SecurityRules.Add(SecurityRule);
+            Response<NetworkSecurityGroupResource> nsg = await networkSecurityGroupCollection.GetAsync(resourceGroupName, networkSecurityGroupName);
+            nsg.Value.Data.SecurityRules.Add(securityRule);
             var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, nsg.Value.Data);
-            Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
+            Response<NetworkSecurityGroupResource> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVmSecurityRulesAsync(WaitUntil.Completed, new SecurityGroupViewParameters(vm.Id));
+            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVmSecurityRulesAsync(WaitUntil.Completed, new SecurityGroupViewContent(vm.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier

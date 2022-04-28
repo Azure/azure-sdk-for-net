@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of PublicCertificateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprint"> Certificate Thumbprint. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint) : base(id, name, type, systemData, kind)
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint) : base(id, name, resourceType, systemData, kind)
         {
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;

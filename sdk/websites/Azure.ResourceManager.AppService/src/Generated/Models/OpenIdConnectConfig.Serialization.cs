@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        certificationUri = null;
                         continue;
                     }
                     certificationUri = new Uri(property.Value.GetString());
