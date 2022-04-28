@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Pageable<PublicIPAddressResource> GetAllPublicIPAddresses(CancellationToken cancellationToken = default)
+        public virtual Pageable<PublicIPAddressResource> GetAllPublicIPAddresses(CancellationToken cancellationToken = default)
         {
             Page<PublicIPAddressResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIPAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionResource.GetAllPublicIPAddresses");
                 scope.Start();
                 try
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<PublicIPAddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIpAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionResource.GetAllPublicIpAddresses");
                 scope.Start();
                 try
                 {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public AsyncPageable<PublicIPAddressResource> GetAllPublicIPAddressesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PublicIPAddressResource> GetAllPublicIPAddressesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PublicIPAddressResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIPAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionResource.GetAllPublicIPAddresses");
                 scope.Start();
                 try
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PublicIPAddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetResourceExtensionClient.GetAllPublicIpAddresses");
+                using var scope = PublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionResource.GetAllPublicIpAddresses");
                 scope.Start();
                 try
                 {
