@@ -51,7 +51,7 @@ jobs:
         inputs:
           solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
           msbuildArguments: >
-            /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages/Azure.Template
+            /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
             /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
             /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
             /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)

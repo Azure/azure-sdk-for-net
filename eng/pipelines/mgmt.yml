@@ -202,7 +202,7 @@ stages:
           Scope: ${{ parameters.Scope }}
           ShouldPublish: ${{ parameters.ShouldPublish }}
 
-      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.ShouldPublish, 'true')) }}:
+      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.ShouldPublish, 'true'),  eq(variables['System.TeamProject'], 'internal')) }}:
         - template: /eng/pipelines/templates/jobs/mgmt-release.yml
           parameters:
             DependsOn: Build
