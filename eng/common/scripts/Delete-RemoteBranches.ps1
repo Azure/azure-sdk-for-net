@@ -72,11 +72,11 @@ foreach ($res in $responses)
       exit 1
     }
   } 
-  # try {
-  #   Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
-  # }
-  # catch {
-  #   LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
-  #   exit 1
-  # }
+  try {
+    Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
+  }
+  catch {
+    LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
+    exit 1
+  }
 }
