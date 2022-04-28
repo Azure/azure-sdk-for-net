@@ -60,22 +60,23 @@ foreach ($res in $responses)
     }
     try {
       $commitDate = Get-GithubReferenceCommitDate -commitUrl $res.object.url -AuthToken $AuthToken
-      if ($commitDate -and ($commitDate -lt $LastCommitOlderThan)) {
+      if ($commitDate -and ($commitDate -gt $LastCommitOlderThan)) {
         LogDebug "The branch $branch last commit date $commitDate is newer than the date $LastCommitOlderThan. Skipping."
         continue
       }
+      
+      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. Last commit date $commitDate is older than $LastCommitOlderThan. Deleting..."
     }
     catch {
       LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
       exit 1
     }
   } 
-  LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
-  try {
-    Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
-  }
-  catch {
-    LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
-    exit 1
-  }
+  # try {
+  #   Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
+  # }
+  # catch {
+  #   LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
+  #   exit 1
+  # }
 }
