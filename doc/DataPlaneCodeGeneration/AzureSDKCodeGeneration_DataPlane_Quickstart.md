@@ -183,6 +183,7 @@ Data plane clients support two types of authentication: Azure Key Credential(`Az
 - If your service supports AzureKey authentication, set parameter `-securityHeaderName`( the security header name).
 - If your service supports AADToken, just set the parameter `-securityScope`(the security scope).
 - You can set **both parameters** if your service supports both authentication.
+- You can set **neither** if your service doesn't require authentication(rare cases).
 
 #### Authentication Configuration In `autorest.md`
 
