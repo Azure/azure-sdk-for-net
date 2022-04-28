@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics
         ///// <summary>
         ///// Provides communication with the Text Analytics Azure Cognitive Service through its REST API.
         ///// </summary>
-        //private readonly TextAnalyticsRestClient _serviceClient;
+        private readonly ServiceClient _serviceClient;
 #pragma warning disable CS0649 // Add readonly modifier
         private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
 
@@ -143,28 +143,28 @@ namespace Azure.AI.TextAnalytics
             _operationInternal = new(_diagnostics, this, rawResponse: null);
         }
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
-        ///// </summary>
-        ///// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
-        ///// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
-        ///// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        ///// <param name="idToIndexMap"></param>
-        ///// <param name="showStats"></param>
-        //internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
-        //{
-        //    _serviceClient = serviceClient;
-        //    _diagnostics = diagnostics;
-        //    _idToIndexMap = idToIndexMap;
-        //    _showStats = showStats;
-        //    _operationInternal = new(_diagnostics, this, rawResponse: null);
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
+        /// </summary>
+        /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
+        /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
+        /// <param name="idToIndexMap"></param>
+        /// <param name="showStats"></param>
+        internal AnalyzeHealthcareEntitiesOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        {
+            _serviceClient = serviceClient;
+            _diagnostics = diagnostics;
+            _idToIndexMap = idToIndexMap;
+            _showStats = showStats;
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
 
-        //    // TODO: Add validation here
-        //    // https://github.com/Azure/azure-sdk-for-net/issues/11505
-        //    _jobId = operationLocation.Split('/').Last();
+            // TODO: Add validation here
+            // https://github.com/Azure/azure-sdk-for-net/issues/11505
+            _jobId = operationLocation.Split('/').Last();
 
-        //    Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
-        //}
+            Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class. This constructor
