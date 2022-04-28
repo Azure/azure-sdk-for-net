@@ -26,18 +26,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
-            try
+            if (!options.DisableStorage)
             {
-                _storage = new FileStorage(options.StorageDirectory);
+                try
+                {
+                    _storage = new FileStorage(options.StorageDirectory);
+                }
+                catch (Exception)
+                {
+                    // TODO:
+                    // log exception
+                    // Remove this when we add an option to disable offline storage.
+                    // So if someone opts in for storage and we cannot initialize, we can throw.
+                    // Change needed on persistent storage side to throw if not able to create storage directory.
+                }
             }
-            catch (Exception)
-            {
-                // TODO:
-                // log exception
-                // Remove this when we add an option to disable offline storage.
-                // So if someone opts in for storage and we cannot initialize, we can throw.
-                // Change needed on persistent storage side to throw if not able to create storage directory.
-            }
+
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
 
