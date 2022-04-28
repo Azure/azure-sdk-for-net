@@ -701,19 +701,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var input = entityRecognitionInput.AnalysisInput;
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
-                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    entityRecognitionInput, options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -731,19 +728,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var input = entityRecognitionInput.AnalysisInput;
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
-                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    entityRecognitionInput, options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
