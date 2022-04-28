@@ -25,6 +25,7 @@ This tutorial has following sections:
       - [Supported Authentication](#supported-authentication)
       - [Parameters To Create Starter Package](#parameters-to-create-starter-package)
       - [Authentication Configuration In `autorest.md`](#authentication-configuration-in-autorestmd)
+      - [More Read On Authentication](#more-read-on-authentication)
 
 <!-- /TOC -->
 
@@ -208,3 +209,7 @@ security: AADToken;AzureKey
 security-header-name: Your-Subscription-Key
 security-scopes: https://yourendpoint.azure.com/.default
 ```
+
+#### More Read On Authentication
+
+- [Autorest: Authentication in generated SDKs](https://github.com/Azure/autorest/blob/main/docs/generate/authentication.md)
