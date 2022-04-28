@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Legacy.Tests
 {
+    [Ignore("Not yet implemented")]
     public class TextAnalyticsClientMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
