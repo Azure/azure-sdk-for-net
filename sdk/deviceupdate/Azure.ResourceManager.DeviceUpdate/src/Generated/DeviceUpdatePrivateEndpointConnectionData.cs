@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.DeviceUpdate
     public partial class DeviceUpdatePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState connectionState)
         {
-            if (privateLinkServiceConnectionState == null)
+            if (connectionState == null)
             {
-                throw new ArgumentNullException(nameof(privateLinkServiceConnectionState));
+                throw new ArgumentNullException(nameof(connectionState));
             }
 
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             GroupIds = new ChangeTrackingList<string>();
         }
 
