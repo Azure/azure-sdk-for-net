@@ -10,9 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
+using System.Diagnostics.Tracing;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
@@ -37,13 +39,15 @@ namespace Azure.Messaging.EventHubs.Stress
             var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
             enqueueingCancellationSource.CancelAfter(runDuration);
 
+            using var azureEventListener = new AzureEventSourceListener(SendHeardException, EventLevel.Error);
+
             var enqueuingTasks = default(IEnumerable<Task>);
 
             // Start two buffered producer background tasks
             try
             {
                 enqueuingTasks = Enumerable
-                    .Range(0, 1)
+                    .Range(0, 2)
                     .Select(_ => Task.Run(() => new BufferedPublisher(_testConfiguration, _metrics).Start(enqueueingCancellationSource.Token)))
                     .ToList();
 
@@ -85,6 +89,12 @@ namespace Azure.Messaging.EventHubs.Stress
             _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
             _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
             _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
+        }
+
+        private void SendHeardException(EventWrittenEventArgs args, string level)
+        {
+            var output = args.ToString();
+            _metrics.Client.TrackTrace($"EventWritten: {output} Level: {level}.");
         }
     }
 }
