@@ -95,21 +95,21 @@ We have also compared the performance between the HLC APIs(released APIs) and DP
 
 #### HLC Result:
 
-|         Method |     Mean |    Error |   StdDev |   Median |   Gen 0 | Allocated |
-|--------------- |---------:|---------:|---------:|---------:|--------:|----------:|
-|    GetDataFeed | 186.2 μs | 16.82 μs | 47.72 μs | 176.8 μs |  6.8359 |     28 KB |
-| CreateDataFeed | 320.5 μs | 14.13 μs | 39.39 μs | 319.6 μs |  9.2773 |     39 KB |
-| UpdateDataFeed | 264.7 μs |  9.68 μs | 28.24 μs | 265.4 μs | 11.7188 |     49 KB |
-| DeleteDataFeed | 121.3 μs |  2.39 μs |  4.83 μs | 121.1 μs |  6.1035 |     25 KB |
-|   GetDataFeeds | 180.9 μs |  5.78 μs | 16.41 μs | 175.0 μs |  8.0566 |     34 KB |
+|         Method |      Mean |    Error |   StdDev |    Median |  Gen 0 | Allocated |
+|--------------- |----------:|---------:|---------:|----------:|-------:|----------:|
+|    GetDataFeed |  88.61 μs | 1.744 μs | 1.866 μs |  88.29 μs | 5.8594 |     24 KB |
+| CreateDataFeed | 109.67 μs | 2.025 μs | 5.509 μs | 107.96 μs | 8.3008 |     34 KB |
+| UpdateDataFeed | 111.41 μs | 2.178 μs | 3.516 μs | 109.62 μs | 8.3008 |     34 KB |
+| DeleteDataFeed |  73.05 μs | 0.978 μs | 0.867 μs |  73.32 μs | 5.3711 |     22 KB |
+|   GetDataFeeds | 103.20 μs | 1.967 μs | 2.558 μs | 102.66 μs | 7.0801 |     30 KB |
 
 
 #### DPG + Convenience APIs Result:
 
-|         Method |     Mean |    Error |   StdDev |   Median |  Gen 0 | Allocated |
-|--------------- |---------:|---------:|---------:|---------:|-------:|----------:|
-|    GetDataFeed | 126.6 μs |  2.53 μs |  5.05 μs | 125.0 μs | 6.3477 |     27 KB |
-| CreateDataFeed | 149.6 μs |  2.67 μs |  2.23 μs | 150.0 μs | 8.7891 |     37 KB |
-| UpdateDataFeed | 158.4 μs |  2.22 μs |  1.97 μs | 158.2 μs | 8.7891 |     37 KB |
-| DeleteDataFeed | 100.7 μs |  1.80 μs |  2.00 μs | 101.2 μs | 5.8594 |     24 KB |
-|   GetDataFeeds | 196.2 μs |  5.60 μs | 16.15 μs | 196.4 μs | 7.8125 |     33 KB |
+|         Method |      Mean |    Error |   StdDev |    Median |  Gen 0 | Allocated |
+|--------------- |----------:|---------:|---------:|----------:|-------:|----------:|
+|    GetDataFeed |  81.25 μs | 1.577 μs | 2.844 μs |  80.48 μs | 5.6152 |     23 KB |
+| CreateDataFeed | 101.91 μs | 2.009 μs | 3.725 μs | 101.08 μs | 7.8125 |     33 KB |
+| UpdateDataFeed | 105.84 μs | 2.374 μs | 6.925 μs | 103.58 μs | 7.8125 |     33 KB |
+| DeleteDataFeed |  67.39 μs | 1.345 μs | 1.841 μs |  67.17 μs | 5.0049 |     21 KB |
+|   GetDataFeeds | 115.01 μs | 2.237 μs | 3.612 μs | 114.69 μs | 7.0801 |     29 KB |
