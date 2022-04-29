@@ -89,4 +89,27 @@ We have selected a set of APIs to add convenient methods as explained above. The
 
 ### 9. Test
 
-Since we keep the public method signature same as released one, we can reuse the existing [tests](https://github.com/haolingdong-msft/metrics-advisor-poc/blob/master/src/test/java/com/azure/ai/metricsadvisor) to verify our grow-up methods. This allows us to run the existing tests in PLAYBACK as well as in LIVE mode.
+Since we keep the public method signature same as released one, we can reuse the existing [tests](https://github.com/ShivangiReja/azure-sdk-for-net/tree/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests) to verify our grow-up methods. This allows us to run the existing tests in PLAYBACK as well as in LIVE mode.
+
+We have also compared the performance between the HLC APIs(released APIs) and DPG + convenience APIs. [Here](https://github.com/ShivangiReja/azure-sdk-for-net/tree/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/perf/Azure.AI.MetricsAdvisor.Perf.Benchmark.Tests/BenchmarkTests.cs) we have added the benchmark tests for Datafeed APIs and below table shows the benchmark results:
+
+#### HLC Result:
+
+|         Method |     Mean |    Error |   StdDev |   Median |   Gen 0 | Allocated |
+|--------------- |---------:|---------:|---------:|---------:|--------:|----------:|
+|    GetDataFeed | 186.2 μs | 16.82 μs | 47.72 μs | 176.8 μs |  6.8359 |     28 KB |
+| CreateDataFeed | 320.5 μs | 14.13 μs | 39.39 μs | 319.6 μs |  9.2773 |     39 KB |
+| UpdateDataFeed | 264.7 μs |  9.68 μs | 28.24 μs | 265.4 μs | 11.7188 |     49 KB |
+| DeleteDataFeed | 121.3 μs |  2.39 μs |  4.83 μs | 121.1 μs |  6.1035 |     25 KB |
+|   GetDataFeeds | 180.9 μs |  5.78 μs | 16.41 μs | 175.0 μs |  8.0566 |     34 KB |
+
+
+#### DPG + Convenience APIs Result:
+
+|         Method |     Mean |    Error |   StdDev |   Median |  Gen 0 | Allocated |
+|--------------- |---------:|---------:|---------:|---------:|-------:|----------:|
+|    GetDataFeed | 126.6 μs |  2.53 μs |  5.05 μs | 125.0 μs | 6.3477 |     27 KB |
+| CreateDataFeed | 149.6 μs |  2.67 μs |  2.23 μs | 150.0 μs | 8.7891 |     37 KB |
+| UpdateDataFeed | 158.4 μs |  2.22 μs |  1.97 μs | 158.2 μs | 8.7891 |     37 KB |
+| DeleteDataFeed | 100.7 μs |  1.80 μs |  2.00 μs | 101.2 μs | 5.8594 |     24 KB |
+|   GetDataFeeds | 196.2 μs |  5.60 μs | 16.15 μs | 196.4 μs | 7.8125 |     33 KB |
