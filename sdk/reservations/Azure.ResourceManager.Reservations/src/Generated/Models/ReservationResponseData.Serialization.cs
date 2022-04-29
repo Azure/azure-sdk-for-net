@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static ReservationResponseData DeserializeReservationResponseData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;
             Optional<ReservationsProperties> properties = default;
@@ -29,7 +29,12 @@ namespace Azure.ResourceManager.Reservations
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.Reservations
                     continue;
                 }
             }
-            return new ReservationResponseData(id, name, type, systemData, location.Value, Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
+            return new ReservationResponseData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
         }
     }
 }

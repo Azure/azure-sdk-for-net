@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal static PurchaseRequest DeserializePurchaseRequest(JsonElement element)
         {
             Optional<ReservationsSkuName> sku = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<ReservedResourceType> reservedResourceType = default;
             Optional<string> billingScopeId = default;
             Optional<ReservationTerm> term = default;
@@ -115,7 +115,12 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -226,7 +231,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new PurchaseRequest(sku.Value, location.Value, Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
+            return new PurchaseRequest(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
         }
     }
 }

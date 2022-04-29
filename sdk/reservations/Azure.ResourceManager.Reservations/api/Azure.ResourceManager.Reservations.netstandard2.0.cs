@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Reservations
         internal ReservationResponseData() { }
         public int? Etag { get { throw null; } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationsProperties Properties { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } set { } }
         public string BillingScopeId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public int? Quantity { get { throw null; } set { } }
         public bool? Renew { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.InstanceFlexibility? ReservedResourceInstanceFlexibility { get { throw null; } set { } }

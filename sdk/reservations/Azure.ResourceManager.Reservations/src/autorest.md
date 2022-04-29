@@ -42,5 +42,11 @@ directive:
     where: $.definitions
     transform: >
       $.QuotaRequestProperties.properties.value['x-ms-client-name'] = 'QuotaRequestValue';
+  - from: reservations.json
+    where: $.definitions
+    transform: >
+      delete $.Location;
+      $.ReservationResponse.properties.location['x-ms-format'] = 'azure-location';
+      $.PurchaseRequest.properties.location['x-ms-format'] = 'azure-location';
 
 ```
