@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, resourceType, systemData)
+        internal PrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
     }
 }

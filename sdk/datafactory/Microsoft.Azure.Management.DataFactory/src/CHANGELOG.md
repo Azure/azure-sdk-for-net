@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.1.0
+###  Feature Additions
+- Added Dataworld, AppFigures, Asana, Twilio connectors in ADF
+- Added PrivateEndpoint property Into PrivateLinkConnectionApprovalRequest
+
 ## Version 6.0.0
 ###  Feature Additions
 ### Breaking Changes

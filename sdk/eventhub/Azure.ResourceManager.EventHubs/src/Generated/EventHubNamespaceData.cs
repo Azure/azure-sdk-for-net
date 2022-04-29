@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         public EventHubNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Properties of BYOK Encryption description. </summary>
         public EventHubEncryption Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
-        public IList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>

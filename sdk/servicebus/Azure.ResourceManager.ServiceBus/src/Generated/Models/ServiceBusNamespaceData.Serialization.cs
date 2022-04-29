@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<string> metricId = default;
             Optional<bool> zoneRedundant = default;
             Optional<Models.EncryptionProperties> encryption = default;
-            Optional<IList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<ServiceBusPrivateEndpointConnectionData> array = new List<ServiceBusPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

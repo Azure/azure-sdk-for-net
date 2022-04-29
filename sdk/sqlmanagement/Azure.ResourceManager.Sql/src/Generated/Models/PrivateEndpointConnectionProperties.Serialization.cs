@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static PrivateEndpointConnectionProperties DeserializePrivateEndpointConnectionProperties(JsonElement element)
         {
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<PrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateLinkServiceConnectionState = PrivateLinkServiceConnectionStateProperty.DeserializePrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = SqlPrivateLinkServiceConnectionStateProperty.DeserializeSqlPrivateLinkServiceConnectionStateProperty(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
