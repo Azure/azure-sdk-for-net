@@ -15,33 +15,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral.Tests
 {
-    public class IotCentralLifeCycleTests
+    public class IotCentralAppOperationsTests : IotCentralManagementTestBase
     {
-        private static readonly IotCentralManagementTestEnvironment TestEnvironmentVariables = new IotCentralManagementTestEnvironment();
+        public IotCentralAppOperationsTests(bool isAsync)
+            : base(isAsync)
+        {
+        }
 
-        private static readonly Func<string> GetRandomTestAppName = () => { return $"test-app-{Guid.NewGuid()}"; };
-
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralApplicationCrudOperationsTest()
         {
-            var appName = GetRandomTestAppName();
+            var appName = Recording.GenerateAssetName("test-app-");
 
             // Initialize ARM client.
             var credential = new DefaultAzureCredential();
             var armClient = new ArmClient(credential);
 
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
-
-            var rgCollection = subscription.GetResourceGroups();
-            var rgCreateOperation = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironmentVariables.ResourceGroup, new Resources.ResourceGroupData(AzureLocation.EastUS2), CancellationToken.None);
-            var rg = rgCreateOperation.Value;
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.EastUS2, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,
@@ -64,8 +62,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             await iotCentralApp.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
         }
 
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralListSubscriptionApplicationsTest()
         {
             // Initialize ARM client.
@@ -73,11 +71,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var armClient = new ArmClient(credential);
 
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
-
-            var rgCollection = subscription.GetResourceGroups();
-            var rgCreateOperation = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironmentVariables.ResourceGroup, new Resources.ResourceGroupData(AzureLocation.EastUS2), CancellationToken.None);
-            var rg = rgCreateOperation.Value;
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
 
@@ -85,7 +80,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appNames = new List<string>() { GetRandomTestAppName(), GetRandomTestAppName(), GetRandomTestAppName() };
             foreach (var appName in appNames)
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.EastUS2, new AppSkuInfo(AppSku.ST0))
+                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
                 {
                     DisplayName = appName,
                     Subdomain = appName,
@@ -107,8 +102,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             Assert.IsFalse(appNames.Any());
         }
 
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralListResourceGroupApplicationsTest()
         {
             // Initialize ARM client.
@@ -116,11 +111,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var armClient = new ArmClient(credential);
 
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
-
-            var rgCollection = subscription.GetResourceGroups();
-            var rgCreateOperation = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironmentVariables.ResourceGroup, new Resources.ResourceGroupData(AzureLocation.EastUS2), CancellationToken.None);
-            var rg = rgCreateOperation.Value;
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
 
@@ -128,7 +120,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appNames = new List<string>() { GetRandomTestAppName(), GetRandomTestAppName(), GetRandomTestAppName() };
             foreach (var appName in appNames)
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.EastUS2, new AppSkuInfo(AppSku.ST0))
+                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
                 {
                     DisplayName = appName,
                     Subdomain = appName,
@@ -150,8 +142,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             Assert.IsFalse(appNames.Any());
         }
 
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralCheckNameTest()
         {
             // Initialize ARM client.
@@ -159,15 +151,15 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var armClient = new ArmClient(credential);
 
             // Check name operation.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var appAvailabilityInfoResponse = await subscription.CheckNameAvailabilityAppAsync(new OperationInputs(Guid.NewGuid().ToString()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
             Assert.IsTrue(appAvailabilityInfo.NameAvailable);
         }
 
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralCheckSubdomainTest()
         {
             // Initialize ARM client.
@@ -175,15 +167,15 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var armClient = new ArmClient(credential);
 
             // Check subdomain operation.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var appAvailabilityInfoResponse = await subscription.CheckSubdomainAvailabilityAppAsync(new OperationInputs(Guid.NewGuid().ToString()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
             Assert.IsTrue(appAvailabilityInfo.NameAvailable);
         }
 
-        [Test]
-        [AsyncOnly]
+        [TestCase]
+        [RecordedTest]
         public async Task IotCentralAppTemplatesTest()
         {
             // Initialize ARM client.
@@ -191,7 +183,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var armClient = new ArmClient(credential);
 
             // List app templates.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{TestEnvironmentVariables.SubscriptionId}"));
+            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var firstAppTemplate = await subscription.GetTemplatesAppsAsync(CancellationToken.None).FirstOrDefaultAsync((_) => true, CancellationToken.None);
 
             Assert.IsNotNull(firstAppTemplate);

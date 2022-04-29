@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.IotCentral.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
