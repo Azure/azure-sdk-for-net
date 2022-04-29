@@ -202,9 +202,7 @@ stages:
           Scope: ${{ parameters.Scope }}
           ShouldPublish: ${{ parameters.ShouldPublish }}
 
-  # The Release job is conditioned on whether we are building a pull request and the branch.
-  - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
-    - template: /eng/pipelines/templates/jobs/mgmt-release.yml
-      parameters:
-        ShouldPublish: ${{ parameters.ShouldPublish }}
-        DependsOn: Build
+      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.ShouldPublish, 'true'),  eq(variables['System.TeamProject'], 'internal')) }}:
+        - template: /eng/pipelines/templates/jobs/mgmt-release.yml
+          parameters:
+            DependsOn: Build
