@@ -431,7 +431,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -458,7 +458,7 @@
           },
           "subnets": [
             {
-              "name": "azsmnet6540",
+              "name": "azsmnet1414",
               "properties": {
                 "addressPrefix": "10.0.0.0/24",
                 "routeTable": {
@@ -496,8 +496,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8897\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet5278\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u002211a09833-7a53-4201-9ef6-704e7f33ffe3\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -517,8 +517,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6540\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1414\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002211a09833-7a53-4201-9ef6-704e7f33ffe3\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -615,7 +615,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -648,8 +648,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8897\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet5278\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022221dc00b-16c5-46da-b4cc-d2f4659d77aa\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -669,8 +669,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6540\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1414\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u0022221dc00b-16c5-46da-b4cc-d2f4659d77aa\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -729,7 +729,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -762,8 +762,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8897\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet5278\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022221dc00b-16c5-46da-b4cc-d2f4659d77aa\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -783,8 +783,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6540\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1414\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u0022221dc00b-16c5-46da-b4cc-d2f4659d77aa\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -806,7 +806,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -840,8 +840,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6540\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet1414\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022221dc00b-16c5-46da-b4cc-d2f4659d77aa\\\u0022\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -918,7 +918,7 @@
         "    ],\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet8897/subnets/azsmnet6540\u0022\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5035/providers/Microsoft.Network/virtualNetworks/azsmnet5278/subnets/azsmnet1414\u0022\r\n",
         "      }\r\n",
         "    ]\r\n",
         "  }\r\n",

@@ -424,7 +424,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -451,7 +451,7 @@
           },
           "subnets": [
             {
-              "name": "azsmnet243",
+              "name": "azsmnet336",
               "properties": {
                 "addressPrefix": "10.0.0.0/24"
               }
@@ -485,8 +485,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7914\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet6179\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022e3bdad84-3482-482a-99ba-88573becd13d\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -506,8 +506,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet243\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet336\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u0022e3bdad84-3482-482a-99ba-88573becd13d\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -601,7 +601,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -634,8 +634,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7914\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet6179\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022f059d059-1639-4dd0-8fde-d64e524b498b\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -655,8 +655,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet243\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet336\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u0022f059d059-1639-4dd0-8fde-d64e524b498b\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -712,7 +712,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -745,8 +745,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7914\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet6179\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022f059d059-1639-4dd0-8fde-d64e524b498b\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
@@ -766,8 +766,8 @@
         "    },\r\n",
         "    \u0022subnets\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet243\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet336\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u0022f059d059-1639-4dd0-8fde-d64e524b498b\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -786,7 +786,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -820,8 +820,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet243\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet336\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022f059d059-1639-4dd0-8fde-d64e524b498b\\\u0022\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -835,7 +835,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -854,11 +854,11 @@
         "properties": {
           "ipConfigurations": [
             {
-              "name": "azsmnet6548",
+              "name": "azsmnet2965",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336",
                   "properties": {}
                 },
                 "primary": true,
@@ -869,11 +869,11 @@
               }
             },
             {
-              "name": "azsmnet4643",
+              "name": "azsmnet1919",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336",
                   "properties": {}
                 },
                 "primary": false
@@ -907,8 +907,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1392\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet8764\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -919,8 +919,8 @@
         "    \u0022resourceGuid\u0022: \u00229b4cec2b-b1f3-4b4b-99bd-2d83080506c6\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6548\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet2965\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -931,15 +931,15 @@
         "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547\u0022\r\n",
         "          },\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: true,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
         "        }\r\n",
         "      },\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet4643\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1919\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -947,7 +947,7 @@
         "          \u0022privateIPAddress\u0022: \u002210.0.0.5\u0022,\r\n",
         "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: false,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
@@ -1008,7 +1008,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1041,8 +1041,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1392\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet8764\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -1053,8 +1053,8 @@
         "    \u0022resourceGuid\u0022: \u00229b4cec2b-b1f3-4b4b-99bd-2d83080506c6\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6548\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet2965\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1065,15 +1065,15 @@
         "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547\u0022\r\n",
         "          },\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: true,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
         "        }\r\n",
         "      },\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet4643\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1919\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1081,7 +1081,7 @@
         "          \u0022privateIPAddress\u0022: \u002210.0.0.5\u0022,\r\n",
         "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: false,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
@@ -1142,7 +1142,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1175,8 +1175,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1392\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet8764\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -1187,8 +1187,8 @@
         "    \u0022resourceGuid\u0022: \u00229b4cec2b-b1f3-4b4b-99bd-2d83080506c6\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6548\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet2965\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1199,15 +1199,15 @@
         "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547\u0022\r\n",
         "          },\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: true,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
         "        }\r\n",
         "      },\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet4643\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1919\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1215,7 +1215,7 @@
         "          \u0022privateIPAddress\u0022: \u002210.0.0.5\u0022,\r\n",
         "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: false,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
@@ -1239,7 +1239,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1273,8 +1273,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1392\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet8764\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -1285,8 +1285,8 @@
         "    \u0022resourceGuid\u0022: \u00229b4cec2b-b1f3-4b4b-99bd-2d83080506c6\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet6548\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet2965\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1297,15 +1297,15 @@
         "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547\u0022\r\n",
         "          },\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: true,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
         "        }\r\n",
         "      },\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet4643\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet1919\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919\u0022,\r\n",
         "        \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
@@ -1313,7 +1313,7 @@
         "          \u0022privateIPAddress\u0022: \u002210.0.0.5\u0022,\r\n",
         "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
         "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "          },\r\n",
         "          \u0022primary\u0022: false,\r\n",
         "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
@@ -1372,8 +1372,8 @@
         "{\r\n",
         "  \u0022value\u0022: [\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet1392\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392\u0022,\r\n",
+        "      \u0022name\u0022: \u0022azsmnet8764\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764\u0022,\r\n",
         "      \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "      \u0022tags\u0022: {\r\n",
@@ -1384,8 +1384,8 @@
         "        \u0022resourceGuid\u0022: \u00229b4cec2b-b1f3-4b4b-99bd-2d83080506c6\u0022,\r\n",
         "        \u0022ipConfigurations\u0022: [\r\n",
         "          {\r\n",
-        "            \u0022name\u0022: \u0022azsmnet6548\u0022,\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548\u0022,\r\n",
+        "            \u0022name\u0022: \u0022azsmnet2965\u0022,\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965\u0022,\r\n",
         "            \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "            \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "            \u0022properties\u0022: {\r\n",
@@ -1396,15 +1396,15 @@
         "                \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547\u0022\r\n",
         "              },\r\n",
         "              \u0022subnet\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "                \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "              },\r\n",
         "              \u0022primary\u0022: true,\r\n",
         "              \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
         "            }\r\n",
         "          },\r\n",
         "          {\r\n",
-        "            \u0022name\u0022: \u0022azsmnet4643\u0022,\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643\u0022,\r\n",
+        "            \u0022name\u0022: \u0022azsmnet1919\u0022,\r\n",
+        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919\u0022,\r\n",
         "            \u0022etag\u0022: \u0022W/\\\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\\\u0022\u0022,\r\n",
         "            \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "            \u0022properties\u0022: {\r\n",
@@ -1412,7 +1412,7 @@
         "              \u0022privateIPAddress\u0022: \u002210.0.0.5\u0022,\r\n",
         "              \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
         "              \u0022subnet\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243\u0022\r\n",
+        "                \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336\u0022\r\n",
         "              },\r\n",
         "              \u0022primary\u0022: false,\r\n",
         "              \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
@@ -1470,8 +1470,8 @@
       "ResponseBody": {
         "value": [
           {
-            "name": "azsmnet1392",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392",
+            "name": "azsmnet8764",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764",
             "etag": "W/\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\u0022",
             "location": "eastus",
             "tags": {
@@ -1482,8 +1482,8 @@
               "resourceGuid": "9b4cec2b-b1f3-4b4b-99bd-2d83080506c6",
               "ipConfigurations": [
                 {
-                  "name": "azsmnet6548",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet6548",
+                  "name": "azsmnet2965",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet2965",
                   "etag": "W/\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\u0022",
                   "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                   "properties": {
@@ -1494,15 +1494,15 @@
                       "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/publicIPAddresses/azsmnet5547"
                     },
                     "subnet": {
-                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243"
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336"
                     },
                     "primary": true,
                     "privateIPAddressVersion": "IPv4"
                   }
                 },
                 {
-                  "name": "azsmnet4643",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392/ipConfigurations/azsmnet4643",
+                  "name": "azsmnet1919",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764/ipConfigurations/azsmnet1919",
                   "etag": "W/\u002252d55169-d6f4-4bba-89d9-c63580fd2ebb\u0022",
                   "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                   "properties": {
@@ -1510,7 +1510,7 @@
                     "privateIPAddress": "10.0.0.5",
                     "privateIPAllocationMethod": "Dynamic",
                     "subnet": {
-                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914/subnets/azsmnet243"
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179/subnets/azsmnet336"
                     },
                     "primary": false,
                     "privateIPAddressVersion": "IPv4"
@@ -1630,7 +1630,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet1392?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/networkInterfaces/azsmnet8764?api-version=2021-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1854,7 +1854,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet7914?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg5728/providers/Microsoft.Network/virtualNetworks/azsmnet6179?api-version=2021-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

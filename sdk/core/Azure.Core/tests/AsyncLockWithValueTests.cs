@@ -5,24 +5,43 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
 
-namespace Azure.Identity.Tests
+namespace Azure.Core.Tests
 {
     public class AsyncLockWithValueTests
     {
         [Test]
+        public async Task AsyncLockWithValue_SetValueInCtor([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>(42);
+
+            Assert.IsTrue(alwv.HasValue);
+            Assert.IsTrue(alwv.TryGetValue(out var value));
+            Assert.AreEqual(42, value);
+
+            using var asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false);
+            Assert.IsTrue(asyncLock.HasValue);
+            Assert.AreEqual(42, asyncLock.Value);
+        }
+
+        [Test]
         public async Task AsyncLockWithValue_GetLockOrValueAsync([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
-            AsyncLockWithValue<int>.Lock asyncLock;
+            AsyncLockWithValue<int>.LockOrValue asyncLock;
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
             using (asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
             {
                 Assert.IsFalse(asyncLock.HasValue);
                 asyncLock.SetValue(42);
             }
 
+            Assert.IsTrue(alwv.HasValue);
+            Assert.IsTrue(alwv.TryGetValue(out var value));
+            Assert.AreEqual(42, value);
             using (asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
             {
                 Assert.IsTrue(asyncLock.HasValue);
@@ -31,10 +50,34 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task AsyncLockWithValue_ThrowOnValueOverride([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+            AsyncLockWithValue<int>.LockOrValue asyncLock;
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
+            using (asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
+            {
+                Assert.IsFalse(asyncLock.HasValue);
+                asyncLock.SetValue(42);
+            }
+
+            Assert.IsTrue(alwv.HasValue);
+            Assert.IsTrue(alwv.TryGetValue(out var value));
+            Assert.AreEqual(42, value);
+            using (asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
+            {
+                Assert.IsTrue(asyncLock.HasValue);
+                Assert.Throws<InvalidOperationException>(() => asyncLock.SetValue(6*9));
+            }
+        }
+
+        [Test]
         public async Task AsyncLockWithValue_GetLockOrValueAsync_Canceled([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
-            var asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false);
+            using var asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false);
 
             var cts = new CancellationTokenSource();
             var task = Task.Run(async () =>
@@ -126,6 +169,36 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_SetAfterDispose([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+            AsyncLockWithValue<int>.LockOrValue lockOrValue;
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
+            using (lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+
+            Assert.Throws<InvalidOperationException>(() => lockOrValue.SetValue(42));
+        }
+
+        [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_DisposedMoreThanOnce([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
+            var lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false);
+
+            lockOrValue.Dispose();
+            lockOrValue.Dispose();
+
+            using (await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+
+            lockOrValue.Dispose();
+        }
+
+        [Test]
         public async Task AsyncLockWithValue_GetLockOrValueAsync_OneHundredCalls_HasNoValue([Values(true, false)] bool async)
         {
             var alwv = new AsyncLockWithValue<int>();
@@ -135,6 +208,8 @@ namespace Azure.Identity.Tests
             {
                 tasks.Add(Task.Run(async () =>
                 {
+                    Assert.IsFalse(alwv.HasValue);
+                    Assert.IsFalse(alwv.TryGetValue(out _));
                     using var asyncLock = await alwv.GetLockOrValueAsync(async);
                     Assert.IsFalse(asyncLock.HasValue);
                 }));
@@ -142,6 +217,8 @@ namespace Azure.Identity.Tests
 
             firstLock.Dispose();
             await Task.WhenAll(tasks);
+            Assert.IsFalse(alwv.HasValue);
+            Assert.IsFalse(alwv.TryGetValue(out _));
         }
 
         [Test]
@@ -161,6 +238,36 @@ namespace Azure.Identity.Tests
             }
 
             firstLock.SetValue(42);
+            await Task.WhenAll(tasks);
+        }
+
+        [Test]
+        public async Task AsyncLockWithValue_GetLockOrValueAsync_OneHundredCalls_SetValue([Values(true, false)] bool async)
+        {
+            var alwv = new AsyncLockWithValue<int>();
+            var firstLock = await alwv.GetLockOrValueAsync(async);
+            var tasks = new List<Task>();
+            for (var i = 0; i < 50; i++)
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using var asyncLock = await alwv.GetLockOrValueAsync(async);
+                    if (asyncLock.HasValue)
+                    {
+                        Assert.AreEqual(asyncLock.Value, 42);
+                    }
+                }));
+            }
+
+            AsyncLockWithValue<int>.LockOrValue lastLock;
+            tasks.Add(Task.Run(async () =>
+            {
+                lastLock = await alwv.GetLockOrValueAsync(async);
+                lastLock.SetValue(42);
+                lastLock.Dispose();
+            }));
+
+            firstLock.Dispose();
             await Task.WhenAll(tasks);
         }
 
