@@ -96,7 +96,7 @@ Without a .env file:
 
 - Ensure that all connection strings, istrumentation keys, and event hub names are correct.
 
-## Next Steps
+## Next steps
 
 ### Deploying a stress test
 In order to deploy stress tests to be run in kubernetes clusters, run:
