@@ -95,21 +95,21 @@ We have also compared the performance between the HLC APIs(released APIs) and DP
 
 #### HLC Result:
 
-|         Method |      Mean |    Error |   StdDev |    Median |  Gen 0 | Allocated |
-|--------------- |----------:|---------:|---------:|----------:|-------:|----------:|
-|    GetDataFeed |  88.61 μs | 1.744 μs | 1.866 μs |  88.29 μs | 5.8594 |     24 KB |
-| CreateDataFeed | 109.67 μs | 2.025 μs | 5.509 μs | 107.96 μs | 8.3008 |     34 KB |
-| UpdateDataFeed | 111.41 μs | 2.178 μs | 3.516 μs | 109.62 μs | 8.3008 |     34 KB |
-| DeleteDataFeed |  73.05 μs | 0.978 μs | 0.867 μs |  73.32 μs | 5.3711 |     22 KB |
-|   GetDataFeeds | 103.20 μs | 1.967 μs | 2.558 μs | 102.66 μs | 7.0801 |     30 KB |
+|         Method |      Mean |    Error |   StdDev |  Gen 0 | Allocated |
+|--------------- |----------:|---------:|---------:|-------:|----------:|
+|    GetDataFeed |  87.66 μs | 1.197 μs | 0.935 μs | 5.8594 |     24 KB |
+| CreateDataFeed | 103.02 μs | 1.786 μs | 2.384 μs | 8.3008 |     34 KB |
+| UpdateDataFeed | 110.46 μs | 2.018 μs | 2.243 μs | 8.3008 |     34 KB |
+| DeleteDataFeed |  73.50 μs | 1.439 μs | 1.921 μs | 5.3711 |     22 KB |
+|   GetDataFeeds |  99.41 μs | 1.948 μs | 1.727 μs | 7.0801 |     30 KB |
 
 
 #### DPG + Convenience APIs Result:
 
-|         Method |      Mean |    Error |   StdDev |    Median |  Gen 0 | Allocated |
-|--------------- |----------:|---------:|---------:|----------:|-------:|----------:|
-|    GetDataFeed |  81.25 μs | 1.577 μs | 2.844 μs |  80.48 μs | 5.6152 |     23 KB |
-| CreateDataFeed | 101.91 μs | 2.009 μs | 3.725 μs | 101.08 μs | 7.8125 |     33 KB |
-| UpdateDataFeed | 105.84 μs | 2.374 μs | 6.925 μs | 103.58 μs | 7.8125 |     33 KB |
-| DeleteDataFeed |  67.39 μs | 1.345 μs | 1.841 μs |  67.17 μs | 5.0049 |     21 KB |
-|   GetDataFeeds | 115.01 μs | 2.237 μs | 3.612 μs | 114.69 μs | 7.0801 |     29 KB |
+|         Method |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
+|--------------- |---------:|---------:|---------:|-------:|----------:|
+|    GetDataFeed | 79.21 μs | 1.571 μs | 1.613 μs | 5.6152 |     23 KB |
+| CreateDataFeed | 97.11 μs | 1.887 μs | 2.938 μs | 7.8125 |     33 KB |
+| UpdateDataFeed | 99.16 μs | 1.953 μs | 2.470 μs | 7.8125 |     33 KB |
+| DeleteDataFeed | 66.12 μs | 1.024 μs | 0.908 μs | 5.0049 |     21 KB |
+|   GetDataFeeds | 99.94 μs | 1.953 μs | 2.983 μs | 7.0801 |     29 KB |
