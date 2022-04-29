@@ -759,7 +759,6 @@ namespace Azure.AI.TextAnalytics
                 input.Language = language;
                 textEntityInputs.AnalysisInput.Documents.Add(input);
             }
-            textEntityInputs.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
             return textEntityInputs;
         }
@@ -773,7 +772,6 @@ namespace Azure.AI.TextAnalytics
                 input.Language = document.Language;
                 textEntityInputs.AnalysisInput.Documents.Add(input);
             }
-            textEntityInputs.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
             return textEntityInputs;
         }
