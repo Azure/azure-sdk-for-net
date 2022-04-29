@@ -14,6 +14,8 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
@@ -34,6 +36,8 @@ namespace Azure.Messaging.EventHubs.Stress
 
             var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
             publishCancellationSource.CancelAfter(runDuration);
+
+            using var azureEventListener = new AzureEventSourceListener(SendHeardException, EventLevel.Error);
 
             var publishingTasks = default(IEnumerable<Task>);
 
@@ -95,6 +99,12 @@ namespace Azure.Messaging.EventHubs.Stress
             _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
             _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
             _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
+        }
+
+        private void SendHeardException(EventWrittenEventArgs args, string level)
+        {
+            var output = args.ToString();
+            _metrics.Client.TrackTrace($"EventWritten: {output} Level: {level}.");
         }
     }
 }

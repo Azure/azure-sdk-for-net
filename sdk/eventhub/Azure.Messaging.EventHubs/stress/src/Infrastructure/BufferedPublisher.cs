@@ -93,26 +93,25 @@ namespace Azure.Messaging.EventHubs.Stress
                                 }
                             }));
                         }
+                    }
+                    // Perform one of the sends in the foreground, which will allow easier detection of a
+                    // processor-level issue.
 
-                        // Perform one of the sends in the foreground, which will allow easier detection of a
-                        // processor-level issue.
-
-                        while (!cancellationToken.IsCancellationRequested)
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        try
                         {
-                            try
-                            {
-                                await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
+                            await PerformEnqueue(producer, cancellationToken).ConfigureAwait(false);
 
-                                if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                                {
-                                    await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
-                                }
-                            }
-                            catch (TaskCanceledException)
+                            if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                             {
-                                backgroundCancellationSource.Cancel();
-                                await Task.WhenAll(enqueueTasks).ConfigureAwait(false);
+                                await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
                             }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            backgroundCancellationSource.Cancel();
+                            await Task.WhenAll(enqueueTasks).ConfigureAwait(false);
                         }
                     }
                 }

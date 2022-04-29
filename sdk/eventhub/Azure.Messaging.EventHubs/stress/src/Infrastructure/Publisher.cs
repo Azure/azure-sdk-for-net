@@ -15,8 +15,8 @@ using Microsoft.ApplicationInsights;
 namespace Azure.Messaging.EventHubs.Stress
 {
     internal class Publisher
-    {   
-        private readonly Metrics _metrics;      
+    {
+        private readonly Metrics _metrics;
         private readonly EventProducerTestConfig _testConfiguration;
 
         public Publisher(EventProducerTestConfig configuration,
@@ -66,26 +66,25 @@ namespace Azure.Messaging.EventHubs.Stress
                                 }
                             }));
                         }
+                    }
+                    // Perform one of the sends in the foreground, which will allow easier detection of a
+                    // processor-level issue.
 
-                        // Perform one of the sends in the foreground, which will allow easier detection of a
-                        // processor-level issue.
-
-                        while (!cancellationToken.IsCancellationRequested)
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        try
                         {
-                            try
-                            {
-                                await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+                            await PerformSend(producer, cancellationToken).ConfigureAwait(false);
 
-                                if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                                {
-                                    await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
-                                }
-                            }
-                            catch (TaskCanceledException)
+                            if ((_testConfiguration.ProducerPublishingDelay.HasValue) && (_testConfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                             {
-                                backgroundCancellationSource.Cancel();
-                                await Task.WhenAll(sendTasks).ConfigureAwait(false);
+                                await Task.Delay(_testConfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
                             }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            backgroundCancellationSource.Cancel();
+                            await Task.WhenAll(sendTasks).ConfigureAwait(false);
                         }
                     }
                 }
