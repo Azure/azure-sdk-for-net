@@ -24,12 +24,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly AnalyzeHealthcareEntitiesOptions DefaultHeathcareEntitiesOptions = new();
         private static readonly AnalyzeSentimentOptions DefaultAnalyzeSentimentOptions = new();
 
-        internal readonly TextAnalyticsRestClient _serviceRestClient;
-        internal readonly ClientDiagnostics _clientDiagnostics;
-
+        private readonly TextAnalyticsRestClient _serviceRestClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
         private readonly string _defaultLanguage;
         private readonly string _defaultCountryHint;
+
+        public override ClientDiagnostics Diagnostics => _clientDiagnostics;
 
         public LegacyServiceClient(Uri endpoint, TokenCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
         {
@@ -591,6 +592,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #endregion
 
         #region Analyze Sentiment
+
         public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));

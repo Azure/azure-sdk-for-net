@@ -3,8 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Models;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {
@@ -16,87 +20,2193 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal class LanguageServiceClient : ServiceClient
     {
+        private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new TextAnalyticsRequestOptions();
+
+        private readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _baseUri;
+        private readonly string _defaultLanguage;
+        private readonly string _defaultCountryHint;
+
+        public override ClientDiagnostics Diagnostics => _clientDiagnostics;
+
+        public LanguageServiceClient(Uri endpoint, TokenCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Argument.AssertNotNullOrEmpty(defaultLanguage, nameof(defaultLanguage));
+            Argument.AssertNotNullOrEmpty(defaultCountryHint, nameof(defaultCountryHint));
+            Argument.AssertNotNull(authorizationScope, nameof(authorizationScope));
+            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+
+            _baseUri = endpoint;
+            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
+            _defaultLanguage = defaultLanguage;
+            _defaultCountryHint = defaultCountryHint;
+
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
+        }
+
+        public LanguageServiceClient(Uri endpoint, AzureKeyCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Argument.AssertNotNullOrEmpty(defaultLanguage, nameof(defaultLanguage));
+            Argument.AssertNotNullOrEmpty(defaultCountryHint, nameof(defaultCountryHint));
+            Argument.AssertNotNull(authorizationScope, nameof(authorizationScope));
+            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+
+            _baseUri = endpoint;
+            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
+            _defaultLanguage = defaultLanguage;
+            _defaultCountryHint = defaultCountryHint;
+
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
+        }
+
         #region Detect Language
 
-        public override Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// document is written in, and returns the detected language as well
+        /// as a score indicating the model's confidence that the inferred
+        /// language is correct. Scores close to 1 indicate high certainty in
+        /// the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of the
+        /// document to assist the Text Analytics model in predicting the language
+        /// it is written in. If unspecified, this value will be set to the
+        /// default country hint in <see cref="TextAnalyticsClientOptions.DefaultCountryHint"/>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the document.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                var input = new LanguageDetectionAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var languageDetection = (LanguageDetectionTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+                if (languageDetection.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// document is written in, and returns the detected language as well
+        /// as a score indicating the model's confidence that the inferred
+        /// language is correct. Scores close to 1 indicate high certainty in
+        /// the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of the
+        /// document to assist the Text Analytics model in predicting the language
+        /// it is written in. If unspecified, this value will be set to the
+        /// default country hint in <see cref="TextAnalyticsClientOptions.DefaultCountryHint"/>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the document.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                var input = new LanguageDetectionAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, cancellationToken: cancellationToken);
+
+                var languageDetection = (LanguageDetectionTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+                if (languageDetection.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
+        /// language as well as a score indicating the model's confidence that
+        /// the inferred language is correct. Scores close to 1 indicate high
+        /// certainty in the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">A collection of documents to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of all of
+        /// the documents to assist the Text Analytics model in predicting
+        /// the language they are written in. If unspecified, this value will be
+        /// set to the default country hint in <see cref="TextAnalyticsClientOptions.DefaultCountryHint"/>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
+        /// language as well as a score indicating the model's confidence that
+        /// the inferred language is correct. Scores close to 1 indicate high
+        /// certainty in the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">A collection of documents to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of all of
+        /// the documents to assist the Text Analytics model in predicting
+        /// the language they are written in. If unspecified, this value will be
+        /// set to the default country hint in <see cref="TextAnalyticsClientOptions.DefaultCountryHint"/>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
+        /// language as well as a score indicating the model's confidence that
+        /// the inferred language is correct. Scores close to 1 indicate high
+        /// certainty in the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">A collection of documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+
+            return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
+        /// language as well as a score indicating the model's confidence that
+        /// the inferred language is correct. Scores close to 1 indicate high
+        /// certainty in the result.
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">A collection of documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the detected language or an error if
+        /// the model could not analyze the document.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
+            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+
+            return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
+            scope.Start();
+
+            try
+            {
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput
+                {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var languageDetection = result.Value as LanguageDetectionTaskResult;
+                var response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<DetectLanguageResultCollection> DetectLanguageBatch(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
+            scope.Start();
+
+            try
+            {
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput
+                {
+                    AnalysisInput = batchInput,
+                    Parameters = new LanguageDetectionTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzeLanguageDetection, options.IncludeStatistics, cancellationToken: cancellationToken);
+                var languageDetection = result.Value as LanguageDetectionTaskResult;
+                var response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(languageDetection.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        {
+            int id = 0;
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = ConvertToLanguageInput(document, countryHint, id);
+                id++;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
+        }
+
+        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents, LanguageDetectionAnalysisInput detectLanguageInputs)
+        {
+            foreach (var document in documents)
+            {
+                LanguageInput languageInput = new LanguageInput(document.Id, document.Text);
+                languageInput.CountryHint = document.CountryHint;
+                detectLanguageInputs.Documents.Add(languageInput);
+            }
+            return detectLanguageInputs;
+        }
 
         #endregion
 
         #region Recognize Entities
 
-        public override Task<Response<CategorizedEntityCollection>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<CategorizedEntityCollection> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in document, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<CategorizedEntityCollection>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    analyzeRecognizeEntities,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var entityRecognition = (EntitiesTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (entityRecognition.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+                return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in document, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<CategorizedEntityCollection> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    analyzeRecognizeEntities,
+                    cancellationToken: cancellationToken);
+
+                var entityRecognition = (EntitiesTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (entityRecognition.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+                return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in documents, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
+            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in documents, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
+            //return RecognizeEntitiesBatch(input, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in documents, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
+            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait
+            //(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of named entities
+        /// in the passed-in documents, and categorize those entities into types
+        /// such as person, location, or organization.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
+            //return RecognizeEntitiesBatch(input, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        //CHANGED: Overload for new Swagger
+        private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                var input = entityRecognitionInput.AnalysisInput;
+                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
+                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var entityRecognition = (EntitiesTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        //CHANGED: Overload for new Swagger
+        private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                var input = entityRecognitionInput.AnalysisInput;
+                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
+                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                var entityRecognition = (EntitiesTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         #endregion
 
         #region Recognize PII Entities
 
-        public override Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= new RecognizePiiEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntites, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var piiEntities = (PiiTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (piiEntities.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= new RecognizePiiEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntites, cancellationToken: cancellationToken);
+
+                var piiEntities = (PiiTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (piiEntities.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new RecognizePiiEntitiesOptions();
+            //AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToLanguageInputs(documents, language);
+            //return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new RecognizePiiEntitiesOptions();
+            //AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToLanguageInputs(documents, language);
+
+            //return RecognizePiiEntitiesBatch(input, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new RecognizePiiEntitiesOptions();
+            //AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToMultiLanguageInputs(documents);
+
+            //return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// <para>For more information on available categories, see
+        /// <see href="https://aka.ms/tanerpii"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new RecognizePiiEntitiesOptions();
+            //AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToMultiLanguageInputs(documents);
+
+            //return RecognizePiiEntitiesBatch(input, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                var input = piiEntitiesRecognitionInput.AnalysisInput;
+                var analyzeRecognizeEntities = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
+                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
+                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var entityRecognition = (PiiTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(entityRecognition.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                var input = piiEntitiesRecognitionInput.AnalysisInput;
+                var analyzeRecognizeEntities = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
+                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
+                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                var entityRecognition = (PiiTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(entityRecognition.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         #endregion
 
         #region Analyze Sentiment
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative, neutral
+        /// or mixed sentiment contained in the document, as well as a score
+        /// indicating the model's confidence in the predicted sentiment.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for the document
+        /// and each of the sentences it contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            //options ??= new AnalyzeSentimentOptions();
 
-        public override Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
 
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            //    Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
+            //        new MultiLanguageBatchInput(documents),
+            //        options.ModelVersion,
+            //        options.IncludeStatistics,
+            //        options.DisableServiceLogs,
+            //        options.IncludeOpinionMining,
+            //        Constants.DefaultStringIndexType,
+            //        cancellationToken).ConfigureAwait(false);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+            //    }
+
+            //    return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative or neutral
+        /// sentiment contained in the document, as well as a score indicating the model's
+        /// confidence in the predicted sentiment.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The text to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for the document
+        /// and each of the sentences it contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            //options ??= new AnalyzeSentimentOptions();
+
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
+
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            //    Response<SentimentResponse> result = _serviceRestClient.Sentiment(
+            //        new MultiLanguageBatchInput(documents),
+            //        options.ModelVersion,
+            //        options.IncludeStatistics,
+            //        options.DisableServiceLogs,
+            //        options.IncludeOpinionMining,
+            //        Constants.DefaultStringIndexType,
+            //        cancellationToken);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+            //    }
+
+            //    return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative or neutral
+        /// sentiment contained in the documents, as well as scores indicating
+        /// the model's confidence in each of the predicted sentiments.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all of the documents are written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeSentimentOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative or neutral
+        /// sentiment contained in the documents, as well as scores indicating
+        /// the model's confidence in each of the predicted sentiments.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all of the documents are written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeSentimentOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative or neutral
+        /// sentiment contained in the documents, as well as scores indicating
+        /// the model's confidence in each of the predicted sentiments.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeSentimentOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify the positive, negative or neutral
+        /// sentiment contained in the documents, as well as scores indicating
+        /// the model's confidence in each of the predicted sentiments.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeSentimentOptions"/> that may be passed when
+        /// analyzing sentiments. Options include Opinion mining, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeSentimentOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Extract Key Phrases
 
-        public override Task<Response<KeyPhraseCollection>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<KeyPhraseCollection> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in document.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in the document.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<KeyPhraseCollection>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
 
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
+
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            //    Response<KeyPhraseResult> result = await _serviceRestClient.KeyPhrasesAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+            //    }
+
+            //    return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in document.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in the document.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<KeyPhraseCollection> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
+
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            //    Response<KeyPhraseResult> result = _serviceRestClient.KeyPhrases(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+            //    }
+
+            //    return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in documents.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in each of the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in documents.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions"/> in the request
+        /// sent to the service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in each of the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in documents.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in each of the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a model to identify a collection of significant phrases
+        /// found in the passed-in documents.
+        /// <para>For example, for the document "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of key phrases identified
+        /// in each of the documents.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Linked Entities
 
-        public override Task<Response<LinkedEntityCollection>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<LinkedEntityCollection> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of linked entities identified
+        /// in the document, as well as scores indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<LinkedEntityCollection>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
 
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
+
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+
+            //    Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
+            //        new MultiLanguageBatchInput(documents),
+            //        stringIndexType: Constants.DefaultStringIndexType,
+            //        cancellationToken: cancellationToken).ConfigureAwait(false);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+            //    }
+
+            //    return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of linked entities identified
+        /// in the document, as well as scores indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<LinkedEntityCollection> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
+            //scope.AddAttribute("document", document);
+            //scope.Start();
+
+            //try
+            //{
+            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+
+            //    Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
+            //        new MultiLanguageBatchInput(documents),
+            //        stringIndexType: Constants.DefaultStringIndexType,
+            //        cancellationToken: cancellationToken);
+            //    Response response = result.GetRawResponse();
+
+            //    if (result.Value.Errors.Count > 0)
+            //    {
+            //        // only one document, so we can ignore the id and grab the first error message.
+            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+            //    }
+
+            //    return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in documents, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return await RecognizeLinkedEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in documents, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return RecognizeLinkedEntitiesBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in documents, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return await RecognizeLinkedEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities
+        /// found in the passed-in documents, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new TextAnalyticsRequestOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return RecognizeLinkedEntitiesBatch(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Healthcare
 
-        public override Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeHealthcareEntitiesOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
+            //return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //options ??= new AnalyzeHealthcareEntitiesOptions();
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNull(documents, nameof(documents));
+
+            //options ??= new AnalyzeHealthcareEntitiesOptions();
+
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNull(documents, nameof(documents));
+
+            //options ??= new AnalyzeHealthcareEntitiesOptions();
+
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Analyze Operation
 
-        public override Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public override Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// </remarks>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //Argument.AssertNotNull(actions, nameof(actions));
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// </remarks>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //Argument.AssertNotNull(actions, nameof(actions));
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            //return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// </remarks>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //Argument.AssertNotNull(actions, nameof(actions));
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
+        /// </remarks>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public override async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            //Argument.AssertNotNull(actions, nameof(actions));
+            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            //return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        private static JobManifestTasks CreateTasks(TextAnalyticsActions actions)
+        {
+            //JobManifestTasks tasks = new();
+
+            //if (actions.RecognizePiiEntitiesActions != null)
+            //{
+            //    tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
+            //}
+            //if (actions.RecognizeEntitiesActions != null)
+            //{
+            //    tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
+            //}
+            //if (actions.RecognizeCustomEntitiesActions != null)
+            //{
+            //    tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions);
+            //}
+            //if (actions.ExtractKeyPhrasesActions != null)
+            //{
+            //    tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
+            //}
+            //if (actions.RecognizeLinkedEntitiesActions != null)
+            //{
+            //    tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
+            //}
+            //if (actions.AnalyzeSentimentActions != null)
+            //{
+            //    tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
+            //}
+            //if (actions.ExtractSummaryActions != null)
+            //{
+            //    tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
+            //}
+            //if (actions.SingleCategoryClassifyActions != null)
+            //{
+            //    tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
+            //}
+            //if (actions.MultiCategoryClassifyActions != null)
+            //{
+            //    tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
+            //}
+            //return tasks;
+
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Common
+
+        private static IDictionary<string, int> CreateIdToIndexMap<T>(IEnumerable<T> documents)
+        {
+            var map = new Dictionary<string, int>(documents.Count());
+
+            int i = 0;
+            foreach (T item in documents)
+            {
+                string id = item switch
+                {
+                    LanguageInput li => li.Id,
+                    MultiLanguageInput mli => mli.Id,
+                    _ => throw new NotSupportedException(),
+                };
+
+                map[id] = i++;
+            }
+
+            return map;
+        }
+
+        private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? _defaultLanguage };
+
+        private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
+        {
+            MultiLanguageAnalysisInput input = new MultiLanguageAnalysisInput();
+            foreach (var document in documents)
+            {
+                input.Documents.Add(ConvertToMultiLanguageInput(document, language));
+            }
+            return input;
+        }
+
+        private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<TextDocumentInput> documents)
+        {
+            MultiLanguageAnalysisInput input = new MultiLanguageAnalysisInput();
+            foreach (var document in documents)
+            {
+                input.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _defaultLanguage });
+            }
+            return input;
+        }
+
+        private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _defaultCountryHint };
+
+        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
+            (string.IsNullOrEmpty(error.Target))
+                ? null
+                : new Dictionary<string, string> { { "Target", error.Target } };
 
         #endregion
     }
