@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,25 +93,22 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: QuotaRequestStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubRequest> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubRequest>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
+            scope.Start();
+            try
             {
-                using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -121,25 +117,22 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: QuotaRequestStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubRequest> Get(CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailsResource> Get(CancellationToken cancellationToken = default)
         {
-            Page<SubRequest> FirstPageFunc(int? pageSizeHint)
+            using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
+            scope.Start();
+            try
             {
-                using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
-                scope.Start();
-                try
-                {
-                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

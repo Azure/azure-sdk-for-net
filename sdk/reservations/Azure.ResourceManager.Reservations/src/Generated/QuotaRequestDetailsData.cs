@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of QuotaRequestDetailsData. </summary>
         internal QuotaRequestDetailsData()
         {
-            Value = new ChangeTrackingList<SubRequest>();
+            QuotaRequestValue = new ChangeTrackingList<SubRequest>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailsData. </summary>
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User friendly status message. </param>
         /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="value"> The quotaRequests. </param>
-        internal QuotaRequestDetailsData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> value) : base(id, name, resourceType, systemData)
+        /// <param name="quotaRequestValue"> The quotaRequests. </param>
+        internal QuotaRequestDetailsData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> quotaRequestValue) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;
             RequestSubmitOn = requestSubmitOn;
-            Value = value;
+            QuotaRequestValue = quotaRequestValue;
         }
 
         /// <summary> The quota request status. </summary>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         public DateTimeOffset? RequestSubmitOn { get; }
         /// <summary> The quotaRequests. </summary>
-        public IReadOnlyList<SubRequest> Value { get; }
+        public IReadOnlyList<SubRequest> QuotaRequestValue { get; }
     }
 }

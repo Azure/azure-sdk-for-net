@@ -37,4 +37,10 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+directive:
+  - from: quota.json
+    where: $.definitions
+    transform: >
+      $.QuotaRequestProperties.properties.value['x-ms-client-name'] = 'QuotaRequestValue';
+
 ```

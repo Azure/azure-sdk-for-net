@@ -325,11 +325,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/>, <paramref name="location"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/>, <paramref name="location"/> or <paramref name="id"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static AsyncPageable<SubRequest> GetQuotaRequestDetailsAsync(this SubscriptionResource subscriptionResource, string providerId, string location, string id, CancellationToken cancellationToken = default)
+        public static async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(this SubscriptionResource subscriptionResource, string providerId, string location, string id, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken);
+            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,9 +343,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/>, <paramref name="location"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/>, <paramref name="location"/> or <paramref name="id"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static Pageable<SubRequest> GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, string location, string id, CancellationToken cancellationToken = default)
+        public static Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, string location, string id, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
         }

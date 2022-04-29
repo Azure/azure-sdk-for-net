@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of QuotaRequestProperties. </summary>
         internal QuotaRequestProperties()
         {
-            Value = new ChangeTrackingList<SubRequest>();
+            QuotaRequestValue = new ChangeTrackingList<SubRequest>();
         }
 
         /// <summary> The quota request status. </summary>
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         public DateTimeOffset? RequestSubmitOn { get; }
         /// <summary> The quotaRequests. </summary>
-        public IReadOnlyList<SubRequest> Value { get; }
+        public IReadOnlyList<SubRequest> QuotaRequestValue { get; }
     }
 }

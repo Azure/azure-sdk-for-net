@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
@@ -72,27 +71,24 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubRequest> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            async Task<Page<SubRequest>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, id, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -104,27 +100,24 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubRequest" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubRequest> Get(string id, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailsResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Page<SubRequest> FirstPageFunc(int? pageSizeHint)
+            using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _quotaRequestDetailsQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
-                scope.Start();
-                try
-                {
-                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, _location, id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, _location, id, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -234,8 +227,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <returns> An async collection of <see cref="bool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<bool> ExistsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -262,8 +254,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <returns> A collection of <see cref="bool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<bool> Exists(string id, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
