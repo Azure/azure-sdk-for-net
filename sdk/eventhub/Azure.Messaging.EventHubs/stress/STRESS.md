@@ -1,34 +1,27 @@
-# Azure Event Hubs client library for .NET
-
-## Local Stress Test Runs
-
-## Getting Started
-
-The scenarios in this directory provide a suite of stress tests that test the Event Hubs producer and buffered producer client types for long-term durability and reliability. For more in-depth information about the Azure SDK stress test tools, see the [stress test README](https://github.com/Azure/azure-sdk-tools/blob/main/tools/stress-cluster/chaos/README.md).
+# Event Hub Stress Tests
+The scenarios in this directory provide a suite of stress tests that test the Event Hubs producer and buffered producer client types for long-term durability and reliability. For more in-depth information about the Azure SDK stress test tools, see the [stress test readme](https://github.com/Azure/azure-sdk-tools/blob/main/tools/stress-cluster/chaos/README.md).
 
 Test runs can call any of the following tests:
 - "EventProducerTest"
 - "EventBufferedProducerTest"
 - "BurstBufferedProducerTest"
 - "ConcurrentBufferedProducerTest"
-- 
 
-### Prerequisites
+Or, you can run all tests with the "--all" flag.
 
-When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://docs.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
-
-To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0` directory.
-
-### Install the Package
-
+## Local Stress Test Runs
+### Setting up resources and packages
 ```cmd
 (env) <git root>/sdk/eventhub/Azure.Messaging.EventHubs/stress/src> dotnet clean
 (env) <git root>/sdk/eventhub/Azure.Messaging.EventHubs/stress/src> dotnet publish
 ```
 
-### Authenticate the Client
+### Running Tests
+When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://docs.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
 
-In order for the stress tests to be able to interact with Azure, the user is required to input the connection strings upon request on the command line when the test is being run, or include them in a .env file. To use the CLI input, add the `-i` or `--interactive` flag to the call: 
+To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0` directory.
+
+The user is required to input the connection strings upon request on the command line when the test is being run, or include them in a .env file. To use the CLI input, add the `-i` or `--interactive` flag to the call:
 
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests <test/s-to-run> --interactive
@@ -51,52 +44,35 @@ In order to deploy stress tests to be run in kubernetes clusters, run:
 ```
 This command requires Azure login credentials.
 
-## Key Concepts
-
-### Scenario: Event Producer Test
+## Scenario Information
+### Event Producer Test
 This test requires an event hub namespace, an event hub, and an application insights resource. Note that an event hub may experience throttling if too few partitions are used. This test creates 2 producers and has 5 concurrent processes per producer sending batches of events. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests EventProducerTest --interactive
 ```
 
-### Scenario: Event Buffered Producer Test
+### Event Buffered Producer Test
 This test requires an event hub namespace, an event hub, and an application insights resource. High CPU usage may be experienced if too few partitions are used. This test creates 2 producers and continuously sends to each producer separately. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests BufferedProducerTest --interactive
 ```
 
-### Scenario: Concurrent Buffered Producer Test
+### Concurrent Buffered Producer Test
 This test requires an event hub namespace, an event hub, and an application insights resource. High CPU usage may be experienced if too few partitions are used. This test creates 2 producers and has 5 concurrent processes per producer continuously sending events. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests ConcurrentBufferedProducerTest --interactive
 ```
 
-### Scenario: Burst Buffered Producer Test
+### Burst Buffered Producer Test
 This test requires an event hub namespace, an event hub, and an application insights resource. Note that this test may have a high CPU usage. This test creates 2 producers and sends sets of events to each producer separately every 15 minutes. This is a long-running, variable volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests BurstBufferedProducerTest --interactive
-```
-
-## Examples
-Running all tests in interactive mode:
-```cmd
-(env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --all --interactive
-```
-Running all tests when an .env file exists:
-```cmd
-(env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --all
 ```
 
 ## Seeing Metrics and Logging in App Insights
 All metrics and logging are sent to App Insights via the Instrumentation Key provided during the initialization of the test. A brief explanation of the metrics collection approach is described below.
 - Any exceptions that occur are tracked by the telemetry client as exception telemetry. They can be accessed through the logs by filtering for exceptions, or through the application insights portal in the "Exceptions" blade. If an exception occured during send, the exception telemetry will include a "process" property containing "send"
 - Successful enqueues and sends are tracked through Metrics. For the buffered producer, the total number of enqueues is tracked, and the actual sends include the ability to separate counts into partition Ids.
-
-## Troubleshooting
-
-- Make sure that all connection strings, instrumentation keys, and event hub names are correct when running tests
-
-## Next Steps
 
 ## Contributing  
 
