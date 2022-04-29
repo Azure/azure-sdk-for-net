@@ -392,3 +392,32 @@ public class TableServiceClient
     // ...
 }
 ```
+
+### Resolve ambiguous calls
+
+There are cases that your protocol method and convenience method have the same required parameter list, e.g.,
+
+```csharp
+// protocol method
+public virtual async Task<Response> GetMetricFeedbackAsync(string feedId, string category = null, RequestContext context = null);
+// Convenience method
+public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(string feedId, string category = null, CancellationToken cancellationToken = default);
+```
+
+In such cases, you have to change the protocol method you've just added, otherwise the following codes will fail the compilation.
+
+```csharp
+// ambiguous call
+GetMetricFeedbackAsync(feedId);
+```
+
+#### Suggested solution for ambiguous calls
+
+We suggest to make the all the optional parameters including the tailing `RequestContxt context` in the protocol method as **required parameters**. Below is an example.
+
+```csharp
+// protocol method, all parameters are required
+public virtual async Task<Response> GetMetricFeedbackAsync(string feedId, string category, RequestContext context);
+// Convenience method
+public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(string feedId, string category = null, CancellationToken cancellationToken = default);
+```
