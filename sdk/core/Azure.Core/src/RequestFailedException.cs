@@ -2,19 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure
 {
-    #pragma warning disable CA2229, CA2235 // False positive
+#pragma warning disable CA2229, CA2235 // False positive
     /// <summary>
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
     public class RequestFailedException : Exception, ISerializable
     {
+        private const string DefaultMessage = "Service request failed.";
+
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
         /// </summary>
@@ -67,16 +73,37 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, ResponseError? Error) details):
+        internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
             this(status, details.Message, details.Error?.Code, null)
         {
+        }
+
+        internal RequestFailedException(int status, (string FormatMessage, string? ErrorCode, IDictionary<string, string>? Data) details, Exception? innerException) :
+            this(status, details.FormatMessage, details.ErrorCode, innerException)
+        {
+            if (details.Data != null)
+            {
+                foreach (KeyValuePair<string, string> keyValuePair in details.Data)
+                {
+                    Data.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
         }
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
-            : this(response.Status, GetErrorDetails(response))
+            : this(response, null)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">An optional inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        public RequestFailedException(Response response, Exception? innerException = null)
+            : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
         {
         }
 
@@ -88,20 +115,6 @@ namespace Azure
             ErrorCode = info.GetString(nameof(ErrorCode));
         }
 
-        private static (string Message, ResponseError? Error) GetErrorDetails(Response response)
-        {
-            string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
-            ResponseError? error = ClientDiagnostics.ExtractAzureErrorContent(content);
-            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
-                response,
-                error,
-                content,
-                null,
-                response.Sanitizer);
-
-            return (exceptionMessage, error);
-        }
-
         /// <inheritdoc />
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -111,6 +124,135 @@ namespace Azure
             info.AddValue(nameof(ErrorCode), ErrorCode);
 
             base.GetObjectData(info, context);
+        }
+
+        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response)
+        {
+            bool parseSuccess = response.RequestFailedDetailsParser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? data) : response.RequestFailedDetailsParser.TryParse(response, out error, out data);
+            StringBuilder messageBuilder = new();
+
+            messageBuilder
+                .AppendLine(error?.Message ?? DefaultMessage)
+                .Append("Status: ")
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+
+            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            {
+                messageBuilder.Append(" (")
+                    .Append(response.ReasonPhrase)
+                    .AppendLine(")");
+            }
+            else
+            {
+                messageBuilder.AppendLine();
+            }
+
+            if (!string.IsNullOrWhiteSpace(error?.Code))
+            {
+                messageBuilder.Append("ErrorCode: ")
+                    .Append(error?.Code)
+                    .AppendLine();
+            }
+
+            if (parseSuccess && data != null && data.Count > 0)
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Additional Information:");
+                foreach (KeyValuePair<string, string> info in data)
+                {
+                    messageBuilder
+                        .Append(info.Key)
+                        .Append(": ")
+                        .AppendLine(info.Value);
+                }
+            }
+
+            if (response.ContentStream is MemoryStream)
+            {
+                string content = response.Content.ToString();
+                if (content.Length > 0)
+                {
+                    messageBuilder
+                        .AppendLine()
+                        .AppendLine("Content:")
+                        .AppendLine(content);
+                }
+            }
+
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
+
+            foreach (HttpHeader responseHeader in response.Headers)
+            {
+                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
+            }
+
+            var formatMessage = messageBuilder.ToString();
+            return (formatMessage, error?.Code, data);
+        }
+
+        /// <summary>
+        /// This is intentionally sync-only as it will only be called by the ctor.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        internal static string? ReadContent(Response response)
+        {
+            string? content = null;
+
+            if (response.ContentStream != null &&
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            {
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    content = streamReader.ReadToEnd();
+                }
+            }
+
+            return content;
+        }
+
+        internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
+        {
+            error = null;
+            data = null;
+            try
+            {
+                string? content = null;
+                if (response.ContentStream != null && response.ContentStream.CanSeek)
+                {
+                    content = response.Content.ToString();
+                }
+                else
+                {
+                    // this path should only happen in exceptional cases such as when
+                    // the RFE ctor was called directly by client or customer code with an un-buffered response.
+                    // Generated code would never do this.
+                    content = ReadContent(response);
+                }
+                // Optimistic check for JSON object we expect
+                if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
+            }
+            catch (Exception)
+            {
+                // Ignore any failures - unexpected content will be
+                // included verbatim in the detailed error message
+            }
+
+            return error != null;
+        }
+
+        private class ErrorResponse
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("error")]
+            public ResponseError? Error { get; set; }
         }
     }
 }

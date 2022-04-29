@@ -218,11 +218,13 @@ namespace Azure.Data.Tables
                 // This is for SAS key generation.
                 _tableSharedKeyCredential = credential;
             }
-            _pipeline = HttpPipelineBuilder.Build(
+            var pipelineOptions = new HttpPipelineBuildOptions(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new[] { policy },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                new TablesRequestFailedDetailsParser());
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -256,11 +258,13 @@ namespace Azure.Data.Tables
             var endpointString = _endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
-            _pipeline = HttpPipelineBuilder.Build(
+            var pipelineOptions = new HttpPipelineBuildOptions(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                new TablesRequestFailedDetailsParser());
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -286,11 +290,14 @@ namespace Azure.Data.Tables
                 null when sasCredential != null || !string.IsNullOrWhiteSpace(_endpoint.Query) => new AzureSasCredentialSynchronousPolicy(sasCredential ?? new AzureSasCredential(_endpoint.Query)),
                 _ => policy
             };
-            _pipeline = HttpPipelineBuilder.Build(
+
+            var pipelineOptions = new HttpPipelineBuildOptions(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new[] { authPolicy },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                new TablesRequestFailedDetailsParser());
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);

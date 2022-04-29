@@ -5,6 +5,7 @@
 
 using System;
 using System.Buffers;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -243,7 +244,9 @@ namespace Azure.Core
                 return toCopy;
             }
 
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
             return await _inner.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
         }
 
         /// <summary>
@@ -275,7 +278,9 @@ namespace Azure.Core
             }
             // Downshift to make room
             _bufferOffset = 0;
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
             _bufferCount = await _inner.ReadAsync(_buffer, 0, _buffer.Length, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
             return _bufferCount > 0;
         }
 
@@ -288,7 +293,7 @@ namespace Azure.Core
         {
             if (minCount > _buffer.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(minCount), minCount, "The value must be smaller than the buffer size: " + _buffer.Length.ToString());
+                throw new ArgumentOutOfRangeException(nameof(minCount), minCount, "The value must be smaller than the buffer size: " + _buffer.Length.ToString(CultureInfo.InvariantCulture));
             }
             while (_bufferCount < minCount)
             {
@@ -321,7 +326,7 @@ namespace Azure.Core
         {
             if (minCount > _buffer.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(minCount), minCount, "The value must be smaller than the buffer size: " + _buffer.Length.ToString());
+                throw new ArgumentOutOfRangeException(nameof(minCount), minCount, "The value must be smaller than the buffer size: " + _buffer.Length.ToString(CultureInfo.InvariantCulture));
             }
             while (_bufferCount < minCount)
             {
@@ -334,7 +339,9 @@ namespace Azure.Core
                     }
                     _bufferOffset = 0;
                 }
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
                 int read = await _inner.ReadAsync(_buffer, _bufferOffset + _bufferCount, _buffer.Length - _bufferCount - _bufferOffset, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
                 _bufferCount += read;
                 if (read == 0)
                 {
@@ -415,7 +422,7 @@ namespace Azure.Core
             foundCR = b == CR;
         }
 
-        private string DecodeLine(MemoryStream builder, bool foundCRLF, bool foundLF)
+        private static string DecodeLine(MemoryStream builder, bool foundCRLF, bool foundLF)
         {
             // Drop the final CRLF or LF, if any
             var length = foundCRLF switch
@@ -435,7 +442,7 @@ namespace Azure.Core
             }
         }
 
-        private void ValidateBuffer(byte[] buffer, int offset, int count)
+        private static void ValidateBuffer(byte[] buffer, int offset, int count)
         {
             // Delegate most of our validation.
             var ignored = new ArraySegment<byte>(buffer, offset, count);
