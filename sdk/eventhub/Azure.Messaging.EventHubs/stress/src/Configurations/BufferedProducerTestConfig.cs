@@ -15,6 +15,6 @@ namespace Azure.Messaging.EventHubs.Stress
 
         // Buffered Producer Configuration
 
-        public TimeSpan MaxWaitTime = TimeSpan.FromMilliseconds(5000);
+        public TimeSpan MaxWaitTime = TimeSpan.FromSeconds(5);
     }
 }
