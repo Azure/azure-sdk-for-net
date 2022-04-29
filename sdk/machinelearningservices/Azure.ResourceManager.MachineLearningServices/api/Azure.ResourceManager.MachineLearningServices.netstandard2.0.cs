@@ -4076,7 +4076,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class TableVerticalValidationDataSettings : Azure.ResourceManager.MachineLearningServices.Models.ValidationDataSettings
     {
         public TableVerticalValidationDataSettings() { }
-        public System.Collections.Generic.IList<string> CvSplitColumnNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> CvSplitColumnNames { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetAggregationFunction : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction>

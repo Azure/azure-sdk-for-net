@@ -87,6 +87,10 @@ directive:
     transform: >
         $["x-nullable"] = true;       
   - from: swagger-document
+    where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
+    transform: >
+        $["x-nullable"] = true; 
+  - from: swagger-document
     where: $.definitions.AssetReferenceBase
     transform:  >
         $ = {

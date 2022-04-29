@@ -18,13 +18,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
-                writer.WritePropertyName("cvSplitColumnNames");
-                writer.WriteStartArray();
-                foreach (var item in CvSplitColumnNames)
+                if (CvSplitColumnNames != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("cvSplitColumnNames");
+                    writer.WriteStartArray();
+                    foreach (var item in CvSplitColumnNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("cvSplitColumnNames");
+                }
             }
             if (Optional.IsDefined(NCrossValidations))
             {
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cvSplitColumnNames = null;
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Columns to use for CVSplit data. </summary>
-        public IList<string> CvSplitColumnNames { get; }
+        public IList<string> CvSplitColumnNames { get; set; }
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
