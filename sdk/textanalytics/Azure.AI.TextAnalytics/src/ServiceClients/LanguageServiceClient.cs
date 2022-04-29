@@ -23,14 +23,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new TextAnalyticsRequestOptions();
 
         private readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
+        private readonly TextAnalyticsClientOptions _options;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
-        private readonly string _defaultLanguage;
-        private readonly string _defaultCountryHint;
 
         public override ClientDiagnostics Diagnostics => _clientDiagnostics;
 
-        public LanguageServiceClient(Uri endpoint, TokenCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        public LanguageServiceClient(Uri endpoint, TokenCredential credential, string authorizationScope, string serviceVersion, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -41,26 +40,23 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _defaultLanguage = defaultLanguage;
-            _defaultCountryHint = defaultCountryHint;
+            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
             _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
-        public LanguageServiceClient(Uri endpoint, AzureKeyCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        public LanguageServiceClient(Uri endpoint, AzureKeyCredential credential, string serviceVersion, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Argument.AssertNotNullOrEmpty(authorizationScope, nameof(authorizationScope));
             Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _defaultLanguage = defaultLanguage;
-            _defaultCountryHint = defaultCountryHint;
+            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
@@ -2174,7 +2170,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         }
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _defaultLanguage };
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
 
         private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
@@ -2191,13 +2187,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             MultiLanguageAnalysisInput input = new MultiLanguageAnalysisInput();
             foreach (var document in documents)
             {
-                input.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _defaultLanguage });
+                input.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage });
             }
             return input;
         }
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
-            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _defaultCountryHint };
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
         private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
             (string.IsNullOrEmpty(error.Target))

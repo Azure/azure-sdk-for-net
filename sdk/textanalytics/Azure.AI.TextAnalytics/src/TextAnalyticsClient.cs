@@ -74,17 +74,14 @@ namespace Azure.AI.TextAnalytics
                     new LegacyServiceClient(
                         endpoint,
                         credential,
-                        options.DefaultLanguage,
-                        options.DefaultCountryHint,
                         authorizationScope,
-                        TextAnalyticsClientOptions.GetVersionString(options.Version), options),
+                        TextAnalyticsClientOptions.GetVersionString(options.Version),
+                        options),
 
                 _ =>
                     new LanguageServiceClient(
                         endpoint,
                         credential,
-                        options.DefaultLanguage,
-                        options.DefaultCountryHint,
                         authorizationScope,
                         TextAnalyticsClientOptions.GetVersionString(options.Version),
                         options)
@@ -122,26 +119,18 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? TextAnalyticsAudience.AzurePublicCloud : options.Audience)}/.default";
-
             _serviceClient = options.Version switch
             {
                 var version when s_legacyServiceVersions.Contains(version) =>
                     new LegacyServiceClient(
                         endpoint,
                         credential,
-                        options.DefaultLanguage,
-                        options.DefaultCountryHint,
-                        authorizationScope,
                         TextAnalyticsClientOptions.GetVersionString(options.Version), options),
 
                 _ =>
                     new LanguageServiceClient(
                         endpoint,
                         credential,
-                        options.DefaultLanguage,
-                        options.DefaultCountryHint,
-                        authorizationScope,
                         TextAnalyticsClientOptions.GetVersionString(options.Version),
                         options)
             };
