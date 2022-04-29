@@ -46,7 +46,8 @@ namespace Azure.Messaging.EventHubs.Stress
                 {
                     RetryOptions = new EventHubsRetryOptions
                     {
-                        TryTimeout = _testConfiguration.SendTimeout
+                        TryTimeout = _testConfiguration.SendTimeout,
+                        MaximumRetries = 15
                     },
                     MaximumWaitTime = _testConfiguration.MaxWaitTime
                 };
