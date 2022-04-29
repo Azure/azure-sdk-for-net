@@ -233,40 +233,37 @@ namespace Azure.AI.TextAnalytics
             return entityList;
         }
 
-        // CHANGED: added overload for New Swagger
         internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
         {
-            //List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
-            //foreach (var warning in documentLanguage.Warnings)
-            //{
-            //    warnings.Add(new TextAnalyticsWarning(warning));
-            //}
-            //return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
+            var entities = new List<PiiEntity>();
+            foreach (var entity in piiResult.Entities)
+            {
+                var piiEntity = new PiiEntity(entity);
+                entities.Add(piiEntity);
+            }
 
-            throw new NotImplementedException();
+            return new PiiEntityCollection(entities, piiResult.RedactedText, ConvertToWarnings(piiResult.Warnings));
         }
 
         internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            //var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Errors.Count);
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Errors.Count);
 
-            ////Read errors
-            //foreach (DocumentError error in results.Errors)
-            //{
-            //    recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
-            //}
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
 
-            ////Read document entities
-            //foreach (PiiDocumentEntities docEntities in results.Documents)
-            //{
-            //    recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
-            //}
+            //Read document entities
+            foreach (var docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
+            }
 
-            //recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
-            //return new RecognizePiiEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
-
-            throw new NotImplementedException();
+            return new RecognizePiiEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
         }
 
         #endregion
