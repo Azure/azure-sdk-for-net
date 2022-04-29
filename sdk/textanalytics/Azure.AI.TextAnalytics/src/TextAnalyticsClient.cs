@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -946,7 +947,15 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _piiEntitiesOptions;
-            AnalyzeTextPiiEntitiesRecognitionInput input = ConvertToLanguageInputs(documents, language);
+            AnalyzeTextPiiEntitiesRecognitionInput input = new AnalyzeTextPiiEntitiesRecognitionInput();
+            int id = 0;
+            foreach (var document in documents)
+            {
+                var minput = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
+                minput.Language = language;
+                input.AnalysisInput.Documents.Add(minput);
+            }
+            input.Parameters = new PiiTaskParameters(options.DisableServiceLogs, options.ModelVersion, new PiiDomain(options.DomainFilter.GetString()), options.CategoriesFilter, Constants.DefaultStringIndexType);
 
             return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
