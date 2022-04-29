@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Stress
                 // Begin publishing events in the background.
 
                 publishingTasks = Enumerable
-                    .Range(0, 1)
+                    .Range(0, 2)
                     .Select(_ => Task.Run(() => new Publisher(_testConfiguration, _metrics).Start(publishCancellationSource.Token)))
                     .ToList();
 
