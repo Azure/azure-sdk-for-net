@@ -591,7 +591,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, options, language);
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -627,7 +627,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, options, language);
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
@@ -658,7 +658,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents, options);
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -689,7 +689,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents, options);
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
@@ -748,7 +748,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, TextAnalyticsRequestOptions options, string language)
+        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, string language)
         {
             AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
             int id = 0;
@@ -763,7 +763,7 @@ namespace Azure.AI.TextAnalytics
             return textEntityInputs;
         }
 
-        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options)
+        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents)
         {
             AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
             foreach (var document in documents)
