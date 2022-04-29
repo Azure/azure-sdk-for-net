@@ -54,10 +54,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Argument.AssertNotNullOrEmpty(defaultLanguage, nameof(defaultLanguage));
-            Argument.AssertNotNullOrEmpty(defaultCountryHint, nameof(defaultCountryHint));
-            Argument.AssertNotNull(authorizationScope, nameof(authorizationScope));
-            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+            Argument.AssertNotNullOrEmpty(authorizationScope, nameof(authorizationScope));
+            Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
