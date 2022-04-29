@@ -1,0 +1,14 @@
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.event-hub") -}}
+{{- define "stress.event-hub" -}}
+metadata:
+  labels:
+    testName: "net-eh-stress-{{ .Scenario }}"
+    testInstance: "eventhubs-{{.Scenario }}-{{ .Release.Name }}-{{ .Release.Revision }}"
+spec:
+  containers:
+    - name: net-eh-stress
+      image: {{ .Values.image }}
+      imagePullPolicy: Always
+      command: ['dotnet', 'Azure.Messaging.EventHubs.Stress.dll', '--tests', {{ .Scenario }}]
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+{{- end -}}
