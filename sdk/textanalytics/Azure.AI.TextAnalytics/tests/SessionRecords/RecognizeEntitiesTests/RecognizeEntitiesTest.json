@@ -1,82 +1,82 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/general?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "103",
+        "Accept": "application/json",
+        "Content-Length": "148",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-90c07af61ab7a14c8261ea382b6c01e7-4b6b621e29737e44-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "483a789eb74f49281b818c10882907cc",
+        "traceparent": "00-23f6c0e76e30694bace3f8cf4d5aa0d5-3c32968e185c864a-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c7cc0f4eef4116020cd08fc1ac18bb3a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            }
+          ]
+        },
+        "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "03f771ff-692b-4bb2-af6c-b8fc6d3bb5e0",
+        "apim-request-id": "a034f1df-02f7-4535-8d05-e2e2efdf7bfa",
+        "Content-Length": "406",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 25 Oct 2021 21:20:09 GMT",
+        "Date": "Fri, 29 Apr 2022 23:10:05 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "14"
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "entities": [
-              {
-                "text": "Microsoft",
-                "category": "Organization",
-                "offset": 0,
-                "length": 9,
-                "confidenceScore": 1.0
-              },
-              {
-                "text": "Bill Gates",
-                "category": "Person",
-                "offset": 25,
-                "length": 10,
-                "confidenceScore": 1.0
-              },
-              {
-                "text": "Paul Allen",
-                "category": "Person",
-                "offset": 40,
-                "length": 10,
-                "confidenceScore": 1.0
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2021-06-01"
+        "kind": "EntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "entities": [
+                {
+                  "text": "Microsoft",
+                  "category": "Organization",
+                  "offset": 0,
+                  "length": 9,
+                  "confidenceScore": 1.0
+                },
+                {
+                  "text": "Bill Gates",
+                  "category": "Person",
+                  "offset": 25,
+                  "length": 10,
+                  "confidenceScore": 1.0
+                },
+                {
+                  "text": "Paul Allen",
+                  "category": "Person",
+                  "offset": 40,
+                  "length": 10,
+                  "confidenceScore": 1.0
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-06-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "958901847",
+    "RandomSeed": "1821881223",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }
