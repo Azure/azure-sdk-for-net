@@ -243,8 +243,7 @@ namespace Azure.AI.TextAnalytics
             scope.Start();
             try
             {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
-                _operationInternal.RawResponse = response.GetRawResponse();
+                _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
             }
             catch (Exception e)
             {
@@ -265,8 +264,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
-                _operationInternal.RawResponse = response.GetRawResponse();
+                await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
