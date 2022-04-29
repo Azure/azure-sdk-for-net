@@ -18,6 +18,8 @@ namespace Azure.Communication.Rooms.Tests
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
+            IgnoredHeaders.Add("Repeatability-Request-ID");
+            IgnoredHeaders.Add("Repeatability-First-Sent");
         }
         protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {
